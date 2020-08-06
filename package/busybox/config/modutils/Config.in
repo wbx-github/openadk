@@ -136,6 +136,21 @@ config BUSYBOX_DEPMOD
 
 comment "Options common to multiple modutils"
 
+config BUSYBOX_FEATURE_CMDLINE_MODULE_OPTIONS
+	bool "Accept module options on modprobe command line"
+	default y
+	depends on BUSYBOX_INSMOD || BUSYBOX_MODPROBE
+	help
+	Allow insmod and modprobe take module options from the applets'
+	command line.
+
+config BUSYBOX_FEATURE_MODPROBE_SMALL_CHECK_ALREADY_LOADED
+	bool "Skip loading of already loaded modules"
+	default y
+	depends on BUSYBOX_MODPROBE_SMALL && (BUSYBOX_DEPMOD || BUSYBOX_INSMOD || BUSYBOX_MODPROBE)
+	help
+	Check if the module is already loaded.
+
 config BUSYBOX_FEATURE_2_4_MODULES
 	bool "Support version 2.2/2.4 Linux kernels"
 	default n

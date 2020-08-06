@@ -39,12 +39,30 @@ config BUSYBOX_FEATURE_USE_BSS_TAIL
 	        appletlib.c:(.text.main+0xd): undefined reference to '_end'
 	  disable this option.
 
+config BUSYBOX_FLOAT_DURATION
+	bool "Enable fractional duration arguments"
+	default y
+	help
+	Allow sleep N.NNN, top -d N.NNN etc.
+
 config BUSYBOX_FEATURE_RTMINMAX
 	bool "Support RTMIN[+n] and RTMAX[-n] signal names"
 	default y
 	help
 	  Support RTMIN[+n] and RTMAX[-n] signal names
 	  in kill, killall etc. This costs ~250 bytes.
+
+config BUSYBOX_FEATURE_RTMINMAX_USE_LIBC_DEFINITIONS
+	bool "Use the definitions of SIGRTMIN/SIGRTMAX provided by libc"
+	default y
+	depends on BUSYBOX_FEATURE_RTMINMAX
+	help
+	Some C libraries reserve a few real-time signals for internal
+	use, and adjust the values of SIGRTMIN/SIGRTMAX seen by
+	applications accordingly. Saying yes here means that a signal
+	name RTMIN+n will be interpreted according to the libc definition
+	of SIGRTMIN, and not the raw definition provided by the kernel.
+	This behavior matches "kill -l RTMIN+n" from bash.
 
 config BUSYBOX_PASSWORD_MINLEN
 	int "Minimum password length"
@@ -91,6 +109,19 @@ config BUSYBOX_FEATURE_ETC_NETWORKS
 	  Enable support for network names in /etc/networks. This is
 	  a rarely used feature which allows you to use names
 	  instead of IP/mask pairs in route command.
+
+config BUSYBOX_FEATURE_ETC_SERVICES
+	bool "Consult /etc/services even for well-known ports"
+	default n
+	help
+	Look up e.g. "telnet" and "http" in /etc/services file
+	instead of assuming ports 23 and 80.
+	This is almost never necessary (everybody uses standard ports),
+	and it makes sense to avoid reading this file.
+	If you disable this option, in the cases where port is explicitly
+	specified as a service name (e.g. "telnet HOST PORTNAME"),
+	it will still be looked up in /etc/services.
+
 
 config BUSYBOX_FEATURE_USE_TERMIOS
 	bool "Use termios to manipulate the screen"
@@ -179,6 +210,11 @@ config BUSYBOX_FEATURE_EDITING_FANCY_PROMPT
 	help
 	  Setting this option allows for prompts to use things like \w and
 	  \$ and escape codes.
+
+config BUSYBOX_FEATURE_EDITING_WINCH
+	bool "Enable automatic tracking of window size changes"
+	default y
+	depends on BUSYBOX_FEATURE_EDITING
 
 config BUSYBOX_FEATURE_EDITING_ASK_TERMINAL
 	bool "Query cursor position from terminal"

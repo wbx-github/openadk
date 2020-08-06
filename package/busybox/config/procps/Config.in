@@ -219,6 +219,14 @@ config BUSYBOX_TOP
 	  The top program provides a dynamic real-time view of a running
 	  system.
 
+config BUSYBOX_FEATURE_TOP_INTERACTIVE
+	bool "Accept keyboard commands"
+	default y
+	depends on BUSYBOX_TOP
+	help
+	Without this, top will only refresh display every 5 seconds.
+	No keyboard commands will work, only ^C to terminate.
+
 config BUSYBOX_FEATURE_TOP_CPU_USAGE_PERCENTAGE
 	bool "Show CPU per-process usage percentage"
 	default y

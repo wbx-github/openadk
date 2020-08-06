@@ -41,7 +41,7 @@ config BUSYBOX_SV
 config BUSYBOX_SV_DEFAULT_SERVICE_DIR
 	string "Default directory for services"
 	default "/var/service"
-	depends on BUSYBOX_SV
+	depends on BUSYBOX_SV || BUSYBOX_SVC || BUSYBOX_SVOK
 	help
 	  Default directory for services.
 	  Defaults to "/var/service"
@@ -52,6 +52,13 @@ config BUSYBOX_SVC
 	help
 	  svc controls the state of services monitored by the runsv supervisor.
 	  It is comaptible with daemontools command with the same name.
+
+config BUSYBOX_SVOK
+	bool "svok (1.5 kb)"
+	default n
+	help
+	svok checks whether runsv supervisor is running.
+	It is compatible with daemontools command with the same name.
 
 config BUSYBOX_SVLOGD
 	bool "svlogd"

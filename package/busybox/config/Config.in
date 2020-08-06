@@ -30,6 +30,19 @@ config BUSYBOX_EXTRA_COMPAT
 	  some GNU extensions in libc. You probably only need this option
 	  if you plan to run busybox on desktop.
 
+config BUSYBOX_FEDORA_COMPAT
+	bool "Building for Fedora distribution"
+	default n
+	help
+	This option makes some tools behave like they do on Fedora.
+
+	At the time of this writing (2017-08) this only affects uname:
+	normally, uname -p (processor) and uname -i (platform)
+	are shown as "unknown", but with this option uname -p
+	shows the same string as uname -m (machine type),
+	and so does uname -i unless machine type is i486/i586/i686 -
+	then uname -i shows "i386".
+
 config BUSYBOX_INCLUDE_SUSv2
 	bool "Enable obsolete features removed before SUSv3"
 	default n
@@ -46,6 +59,14 @@ config BUSYBOX_USE_PORTABLE_CODE
 	  Use this option if you are trying to compile busybox with
 	  compiler other than gcc.
 	  If you do use gcc, this option may needlessly increase code size.
+
+config BUSYBOX_STACK_OPTIMIZATION_386
+	bool "Use -mpreferred-stack-boundary=2 on i386 arch"
+	default n
+	help
+	This option makes for smaller code, but some libc versions
+	do not work with it (they use SSE instructions without
+	ensuring stack alignment).
 
 config BUSYBOX_INSTALL_NO_USR
         bool "Don't use /usr"
@@ -134,6 +155,11 @@ config BUSYBOX_BUSYBOX
 
 	  If you can live without these features disabling this will save
 	  some space.
+
+config BUSYBOX_FEATURE_SHOW_SCRIPT
+	bool "Support --show SCRIPT"
+	default n
+	depends on BUSYBOX_BUSYBOX
 
 config BUSYBOX_FEATURE_INSTALLER
 	bool "Support --install [-s] to install applet links at runtime"
@@ -315,6 +341,15 @@ config BUSYBOX_FEATURE_CLEAN_UP
 
 	  Don't enable this unless you have a really good reason to clean
 	  things up manually.
+
+config BUSYBOX_FEATURE_SYSLOG_INFO
+	bool "Support LOG_INFO level syslog messages"
+	default y
+	depends on BUSYBOX_FEATURE_SYSLOG
+	help
+	Applets which send their output to syslog use either LOG_INFO or
+	LOG_ERR log levels, but by disabling this option all messages will
+	be logged at the LOG_ERR level, saving just under 200 bytes.
 
 config BUSYBOX_FEATURE_UTMP
 	bool "Support utmp file"
@@ -728,6 +763,19 @@ config BUSYBOX_WERROR
 
 	  Most people should answer N.
 
+config BUSYBOX_WARN_SIMPLE_MSG
+	bool "Warn about single parameter bb_xx_msg calls"
+	default n
+	help
+	This will cause warnings to be shown for any instances of
+	bb_error_msg(), bb_error_msg_and_die(), bb_perror_msg(),
+	bb_perror_msg_and_die(), bb_herror_msg() or bb_herror_msg_and_die()
+	being called with a single parameter. In these cases the equivalent
+	bb_simple_xx_msg function should be used instead.
+	Note that use of STRERROR_FMT may give false positives.
+
+	If you aren't developing busybox, say N here.
+
 choice
 	prompt "Additional debugging library"
 	default NO_DEBUG_LIB
@@ -850,6 +898,7 @@ source package/busybox/config/archival/Config.in
 source package/busybox/config/coreutils/Config.in
 source package/busybox/config/console-tools/Config.in
 source package/busybox/config/debianutils/Config.in
+source package/busybox/config/klibc-utils/Config.in
 source package/busybox/config/editors/Config.in
 source package/busybox/config/findutils/Config.in
 source package/busybox/config/init/Config.in

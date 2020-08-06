@@ -338,6 +338,11 @@ config BUSYBOX_FEATURE_SU_CHECKS_SHELLS
 	depends on BUSYBOX_SU
 	default y
 
+config BUSYBOX_FEATURE_SU_BLANK_PW_NEEDS_SECURE_TTY
+	bool "Allow blank passwords only on TTYs in /etc/securetty"
+	default n
+	depends on BUSYBOX_SU
+
 config BUSYBOX_SULOGIN
 	bool "sulogin"
 	default n

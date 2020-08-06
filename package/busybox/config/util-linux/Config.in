@@ -18,6 +18,12 @@ config BUSYBOX_BLOCKDEV
 	help
 	  Performs some ioctls with block devices.
 
+config BUSYBOX_FALLOCATE
+	bool "fallocate (4.1 kb)"
+	default n
+	help
+	Preallocate space for files.
+
 config BUSYBOX_FATATTR
 	bool "fatattr"
 	default n
@@ -89,6 +95,17 @@ config BUSYBOX_FEATURE_MDEV_LOAD_FIRMWARE
 	  These devices will request userspace look up the files in
 	  /lib/firmware/ and if it exists, send it to the kernel for
 	  loading into the hardware.
+
+config BUSYBOX_FEATURE_MDEV_DAEMON
+	bool "Support daemon mode"
+	default y
+	depends on BUSYBOX_MDEV
+	help
+	Adds the -d option to run mdev in daemon mode handling hotplug
+	events from the kernel like udev. If the system generates many
+	hotplug events this mode of operation will consume less
+	resources than registering mdev as hotplug helper or using the
+	uevent applet.
 
 config BUSYBOX_MKE2FS
 	bool "mke2fs"
@@ -389,6 +406,14 @@ config BUSYBOX_FSCK_MINIX
 	  check for and attempt to repair any corruption that occurs to a minix
 	  filesystem.
 
+config BUSYBOX_FSFREEZE
+	bool "fsfreeze (3.5 kb)"
+	default n
+	select BUSYBOX_PLATFORM_LINUX
+	select BUSYBOX_LONG_OPTS
+	help
+	Halt new accesses and flush writes on a mounted filesystem.
+
 config BUSYBOX_MKFS_EXT2
 	bool "mkfs_ext2"
 	default n
@@ -469,6 +494,13 @@ config BUSYBOX_HD
 	default n
 	help
 	  hd is an alias to hexdump -C.
+
+config BUSYBOX_XXD
+	bool "xxd (8.9 kb)"
+	default n
+	help
+	The xxd utility is used to display binary data in a readable
+	way that is comparable to the output from most hex editors.
 
 config BUSYBOX_HWCLOCK
 	bool "hwclock"
@@ -755,6 +787,43 @@ config BUSYBOX_LINUX64
 	help
 	  Alias to "setarch linux64".
 
+config BUSYBOX_SETPRIV
+	bool "setpriv (6.6 kb)"
+	default n
+	select BUSYBOX_PLATFORM_LINUX
+	select BUSYBOX_LONG_OPTS
+	help
+	Run a program with different Linux privilege settings.
+	Requires kernel >= 3.5
+
+config BUSYBOX_FEATURE_SETPRIV_DUMP
+	bool "Support dumping current privilege state"
+	default y
+	depends on BUSYBOX_SETPRIV
+	help
+	Enables the "--dump" switch to print out the current privilege
+	state. This is helpful for diagnosing problems.
+
+config BUSYBOX_FEATURE_SETPRIV_CAPABILITIES
+	bool "Support capabilities"
+	default y
+	depends on BUSYBOX_SETPRIV
+	help
+	Capabilities can be used to grant processes additional rights
+	without the necessity to always execute as the root user.
+	Enabling this option enables "--dump" to show information on
+	capabilities.
+
+config BUSYBOX_FEATURE_SETPRIV_CAPABILITY_NAMES
+	bool "Support capability names"
+	default y
+	depends on BUSYBOX_SETPRIV && BUSYBOX_FEATURE_SETPRIV_CAPABILITIES
+	help
+	Capabilities can be either referenced via a human-readble name,
+	e.g. "net_admin", or using their index, e.g. "cap_12". Enabling
+	this option allows using the human-readable names in addition to
+	the index-based names.
+
 config BUSYBOX_SWAPON
 	bool "swapon"
 	default n
@@ -951,6 +1020,11 @@ config BUSYBOX_FEATURE_VOLUMEID_HFS
 	depends on BUSYBOX_VOLUMEID
 	help
 	  TODO
+
+config BUSYBOX_FEATURE_VOLUMEID_MINIX
+	bool "minix filesystem"
+	default y
+	depends on BUSYBOX_VOLUMEID
 
 config BUSYBOX_FEATURE_VOLUMEID_NILFS
        bool "nilfs filesystem"

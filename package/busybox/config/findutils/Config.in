@@ -54,6 +54,11 @@ config BUSYBOX_FEATURE_FIND_TYPE
 	  Enable searching based on file type (file,
 	  directory, socket, device, etc.).
 
+config BUSYBOX_FEATURE_FIND_EXECUTABLE
+	bool "Enable -executable: file is executable"
+	default y
+	depends on BUSYBOX_FIND
+
 config BUSYBOX_FEATURE_FIND_XDEV
 	bool "Enable -xdev: 'stay in filesystem'"
 	default y
@@ -160,6 +165,13 @@ config BUSYBOX_FEATURE_FIND_PRUNE
 	help
 	  If the file is a directory, dont descend into it. Useful for
 	  exclusion .svn and CVS directories.
+
+config BUSYBOX_FEATURE_FIND_QUIT
+	bool "Enable -quit: exit"
+	default y
+	depends on BUSYBOX_FIND
+	help
+	If this action is reached, 'find' exits.
 
 config BUSYBOX_FEATURE_FIND_DELETE
 	bool "Enable -delete: delete files/dirs"
@@ -273,5 +285,15 @@ config BUSYBOX_FEATURE_XARGS_SUPPORT_REPL_STR
 	depends on BUSYBOX_XARGS
 	help
 	  Support -I STR and -i[STR] options.
+
+config BUSYBOX_FEATURE_XARGS_SUPPORT_PARALLEL
+	bool "Enable -P N: processes to run in parallel"
+	default y
+	depends on BUSYBOX_XARGS
+
+config BUSYBOX_FEATURE_XARGS_SUPPORT_ARGS_FILE
+	bool "Enable -a FILE: use FILE instead of stdin"
+	default y
+	depends on BUSYBOX_XARGS
 
 endmenu

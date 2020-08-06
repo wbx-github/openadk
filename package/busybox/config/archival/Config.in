@@ -457,4 +457,37 @@ config BUSYBOX_UNZIP
 	  current directory. Use the `-d' option to extract to a
 	  directory of your choice.
 
+config BUSYBOX_FEATURE_UNZIP_CDF
+	bool "Read and use Central Directory data"
+	default y
+	depends on BUSYBOX_UNZIP
+	help
+	If you know that you only need to deal with simple
+	ZIP files without deleted/updated files, SFX archives etc,
+	you can reduce code size by unselecting this option.
+	To support less trivial ZIPs, say Y.
+
+config BUSYBOX_FEATURE_UNZIP_BZIP2
+	bool "Support compression method 12 (bzip2)"
+	default y
+	depends on BUSYBOX_FEATURE_UNZIP_CDF && BUSYBOX_DESKTOP
+
+config BUSYBOX_FEATURE_UNZIP_LZMA
+	bool "Support compression method 14 (lzma)"
+	default y
+	depends on BUSYBOX_FEATURE_UNZIP_CDF && BUSYBOX_DESKTOP
+
+config BUSYBOX_FEATURE_UNZIP_XZ
+	bool "Support compression method 95 (xz)"
+	default y
+	depends on BUSYBOX_FEATURE_UNZIP_CDF && BUSYBOX_DESKTOP
+
+config BUSYBOX_FEATURE_LZMA_FAST
+	bool "Optimize lzma for speed"
+	default n
+	depends on BUSYBOX_UNLZMA || BUSYBOX_LZCAT || BUSYBOX_LZMA || BUSYBOX_FEATURE_SEAMLESS_LZMA
+	help
+	This option reduces decompression time by about 25% at the cost of
+	a 1K bigger binary.
+
 endmenu

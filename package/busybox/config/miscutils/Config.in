@@ -44,6 +44,13 @@ config BUSYBOX_I2CDETECT
 	help
 	  Detect I2C chips.
 
+config BUSYBOX_I2CTRANSFER
+	bool "i2ctransfer (4.0 kb)"
+	default n
+	select BUSYBOX_PLATFORM_LINUX
+	help
+	Send user-defined I2C messages in one transfer.
+
 config BUSYBOX_LESS
 	bool "less"
 	depends on !BUSYBOX_DISABLE_LESS
@@ -129,6 +136,32 @@ config BUSYBOX_FEATURE_LESS_LINENUMS
 	help
 	  Enables "-N" command.
 
+config BUSYBOX_FEATURE_LESS_RAW
+	bool "Enable -R ('raw control characters')"
+	default y
+	depends on BUSYBOX_FEATURE_LESS_DASHCMD
+	help
+	This is essential for less applet to work with tools that use colors
+	and paging, such as git, systemd tools or nmcli.
+
+config BUSYBOX_FEATURE_LESS_ENV
+	bool "Take options from $LESS environment variable"
+	default y
+	depends on BUSYBOX_FEATURE_LESS_DASHCMD
+	help
+	This is essential for less applet to work with tools that use colors
+	and paging, such as git, systemd tools or nmcli.
+
+config BUSYBOX_LSSCSI
+	bool "lsscsi (2.5 kb)"
+	default n
+	#select PLATFORM_LINUX
+	help
+	lsscsi is a utility for displaying information about SCSI buses in the
+	system and devices connected to them.
+
+	This version uses sysfs (/sys/bus/scsi/devices) only.
+
 config BUSYBOX_NANDWRITE
 	bool "nandwrite"
 	default n
@@ -142,6 +175,19 @@ config BUSYBOX_NANDDUMP
 	select BUSYBOX_PLATFORM_LINUX
 	help
 	  Dump the content of raw NAND chip
+
+config BUSYBOX_PARTPROBE
+	bool "partprobe (3.5 kb)"
+	default n
+	select BUSYBOX_PLATFORM_LINUX
+	help
+	Ask kernel to rescan partition table.
+
+config BUSYBOX_SETFATTR
+	bool "setfattr (3.7 kb)"
+	default n
+	help
+	Set/delete extended attributes on files
 
 config BUSYBOX_SETSERIAL
 	bool "setserial"
@@ -367,6 +413,31 @@ config BUSYBOX_CRONTAB
 	  the superuser may specify a different user and/or crontab directory.
 	  Note that Busybox binary must be setuid root for this applet to
 	  work properly.
+
+config BUSYBOX_BC
+	bool "bc (45 kb)"
+	default n
+	select BUSYBOX_FEATURE_DC_BIG
+	help
+	bc is a command-line, arbitrary-precision calculator with a
+	Turing-complete language. See the GNU bc manual
+	(https://www.gnu.org/software/bc/manual/bc.html) and bc spec
+	(http://pubs.opengroup.org/onlinepubs/9699919799/utilities/bc.html).
+
+	This bc has five differences to the GNU bc:
+	  1) The period (.) is a shortcut for "last", as in the BSD bc.
+	  2) Arrays are copied before being passed as arguments to
+	     functions. This behavior is required by the bc spec.
+	  3) Arrays can be passed to the builtin "length" function to get
+	     the number of elements in the array. This prints "1":
+		a[0] = 0; length(a[])
+	  4) The precedence of the boolean "not" operator (!) is equal to
+	     that of the unary minus (-) negation operator. This still
+	     allows POSIX-compliant scripts to work while somewhat
+	     preserving expected behavior (versus C) and making parsing
+	     easier.
+	  5) "read()" accepts expressions, not only numeric literals.
+
 
 config BUSYBOX_DC
 	bool "dc"
@@ -612,6 +683,12 @@ config BUSYBOX_FEATURE_HDPARM_HDIO_GETSET_DMA
 	help
 	  Enables the 'hdparm -d' option to get/set using_dma flag.
 
+config BUSYBOX_HEXEDIT
+	bool "hexedit (21 kb)"
+	default n
+	help
+	Edit file in hexadecimal.
+
 config BUSYBOX_MAKEDEVS
 	bool "makedevs"
 	default n
@@ -762,6 +839,10 @@ config BUSYBOX_TIME
 	  The time command runs the specified program with the given arguments.
 	  When the command finishes, time writes a message to standard output
 	  giving timing statistics about this program run.
+
+config BUSYBOX_TS
+	bool "ts (450 bytes)"
+	default n
 
 config BUSYBOX_TIMEOUT
 	bool "timeout"

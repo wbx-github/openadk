@@ -21,6 +21,20 @@ config BUSYBOX_CAT
 	  cat is used to concatenate files and print them to the standard
 	  output. Enable this option if you wish to enable the 'cat' utility.
 
+config BUSYBOX_FEATURE_CATN
+	bool "Enable -n and -b options"
+	default n
+	depends on BUSYBOX_CAT
+	help
+	-n numbers all output lines while -b numbers nonempty output lines.
+
+config BUSYBOX_FEATURE_CATV
+	bool "cat -v[etA]"
+	default y
+	depends on BUSYBOX_CAT
+	help
+	Display nonprinting characters as escape sequences
+
 config BUSYBOX_DATE
 	bool "date"
 	default y
@@ -430,6 +444,12 @@ config BUSYBOX_EXPR_MATH_SUPPORT_64
 	  the applet slightly larger, but will allow computation with very
 	  large numbers.
 
+config BUSYBOX_FACTOR
+	bool "factor (2.7 kb)"
+	default n
+	help
+	factor factorizes integers
+
 config BUSYBOX_FALSE
 	bool "false"
 	default n
@@ -480,6 +500,11 @@ config BUSYBOX_FEATURE_INSTALL_LONG_OPTIONS
 ####	default y
 ####	help
 ####	  length is used to print out the length of a specified string.
+config BUSYBOX_LINK
+	bool "link (3.2 kb)"
+	default n
+	help
+	link creates hard links between files.
 
 config BUSYBOX_LN
 	bool "ln"
@@ -519,6 +544,11 @@ config BUSYBOX_FEATURE_LS_RECURSIVE
 	depends on BUSYBOX_LS
 	help
 	  Enable the ls option (-R).
+
+config BUSYBOX_FEATURE_LS_WIDTH
+	bool "Enable -w WIDTH and window size autodetection"
+	default y
+	depends on BUSYBOX_LS
 
 config BUSYBOX_FEATURE_LS_SORTFILES
 	bool "Sort the file names"
@@ -611,17 +641,36 @@ config BUSYBOX_NICE
 	help
 	  nice runs a program with modified scheduling priority.
 
+config BUSYBOX_NL
+	bool "nl (4.6 kb)"
+	default n
+	help
+	nl is used to number lines of files.
+
 config BUSYBOX_NOHUP
 	bool "nohup"
 	default n
 	help
 	  run a command immune to hangups, with output to a non-tty.
 
+config BUSYBOX_NPROC
+	bool "nproc (3.7 kb)"
+	default n
+	help
+	Print number of CPUs
+
 config BUSYBOX_OD
 	bool "od"
 	default n
 	help
 	  od is used to dump binary files in octal and other formats.
+
+config BUSYBOX_PASTE
+	bool "paste (4.9 kb)"
+	default n
+	help
+	paste is used to paste lines of different files together
+	and write the result to stdout
 
 config BUSYBOX_PRINTENV
 	bool "printenv"
@@ -688,6 +737,12 @@ config BUSYBOX_SEQ
 	default n
 	help
 	  print a sequence of numbers
+
+config BUSYBOX_SHRED
+	bool "shred (4.9 kb)"
+	default n
+	help
+	Overwrite a file to hide its contents, and optionally delete it
 
 config BUSYBOX_SHA1SUM
 	bool "sha1sum"
@@ -758,6 +813,14 @@ config BUSYBOX_FEATURE_SORT_BIG
 
 	  The SuSv3 sort standard is available at:
 	  http://www.opengroup.org/onlinepubs/007904975/utilities/sort.html
+
+config BUSYBOX_FEATURE_SORT_OPTIMIZE_MEMORY
+	bool "Use less memory (but might be slower)"
+	default n   # defaults to N since we are size-paranoid tribe
+	depends on BUSYBOX_SORT
+	help
+	Attempt to use less memory (by storing only one copy
+	of duplicated lines, and such). Useful if you work on huge files.
 
 config BUSYBOX_SPLIT
 	bool "split"
@@ -890,6 +953,12 @@ config BUSYBOX_UNAME_OSNAME
 	help
 	  Sets the operating system name reported by uname -o.  The
 	  default is "GNU/Linux".
+
+config BUSYBOX_BB_ARCH
+	bool "arch (1.1 kb)"
+	default n
+	help
+	Same as uname -m.
 
 config BUSYBOX_UNEXPAND
 	bool "unexpand"

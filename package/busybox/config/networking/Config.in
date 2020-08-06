@@ -49,6 +49,12 @@ config BUSYBOX_NC
 	  A simple Unix utility which reads and writes data across network
 	  connections.
 
+config BUSYBOX_NETCAT
+	bool "netcat (11 kb)"
+	default y
+	help
+	Alias to nc.
+
 config BUSYBOX_NC_SERVER
 	bool "Netcat server options (-l)"
 	default y
@@ -144,6 +150,17 @@ config BUSYBOX_VERBOSE_RESOLUTION_ERRORS
 	  Enable if you are not satisfied with simplistic
 	  "can't resolve 'hostname.com'" and want to know more.
 	  This may increase size of your executable a bit.
+
+config BUSYBOX_FEATURE_TLS_SHA1
+	bool "In TLS code, support ciphers which use deprecated SHA1"
+	depends on BUSYBOX_TLS
+	default n
+	help
+	Selecting this option increases interoperability with very old
+	servers, but slightly increases code size.
+
+	Most TLS servers support SHA256 today (2018), since SHA1 is
+	considered possibly insecure (although not yet definitely broken).
 
 config BUSYBOX_ARP
 	bool "arp"
@@ -745,6 +762,16 @@ config BUSYBOX_NSLOOKUP
 	help
 	  nslookup is a tool to query Internet name servers.
 
+config BUSYBOX_FEATURE_NSLOOKUP_BIG
+	bool "Use internal resolver code instead of libc"
+	depends on BUSYBOX_NSLOOKUP
+	default n
+
+config BUSYBOX_FEATURE_NSLOOKUP_LONG_OPTIONS
+	bool "Enable long options"
+	default n
+	depends on BUSYBOX_FEATURE_NSLOOKUP_BIG && BUSYBOX_LONG_OPTS
+
 config BUSYBOX_NTPD
 	bool "ntpd"
 	depends on !BUSYBOX_DISABLE_NTPD
@@ -791,11 +818,18 @@ config BUSYBOX_SLATTACH
 	  slattach is a small utility to attach network interfaces to serial
 	  lines.
 
-#config TC
-#	bool "tc"
-#	default y
-#	help
-#	  show / manipulate traffic control settings
+config BUSYBOX_SSL_CLIENT
+	bool "ssl_client (25 kb)"
+	default n
+	select BUSYBOX_TLS
+	help
+	This tool pipes data to/from a socket, TLS-encrypting it.
+
+config BUSYBOX_TC
+	bool "tc"
+	default n
+	help
+	  show / manipulate traffic control settings
 #
 #config FEATURE_TC_INGRESS
 #	def_bool n
@@ -833,6 +867,11 @@ config BUSYBOX_FEATURE_TELNET_AUTOLOGIN
 	  remote host you are connecting to. This is useful when you need to
 	  log into a machine without telling the username (autologin). This
 	  option enables `-a' and `-l USER' arguments.
+
+config BUSYBOX_FEATURE_TELNET_WIDTH
+	bool "Enable window size autodetection"
+	default y
+	depends on BUSYBOX_TELNET
 
 config BUSYBOX_TELNETD
 	bool "telnetd"
@@ -969,6 +1008,10 @@ config BUSYBOX_TFTP_DEBUG
 	help
 	  Make tftp[d] print debugging messages on stderr.
 	  This is useful if you are diagnosing a bug in tftp[d].
+
+config BUSYBOX_TLS
+	bool #No description makes it a hidden option
+	default n
 
 config BUSYBOX_TRACEROUTE
 	bool "traceroute"
