@@ -1,9 +1,0 @@
---- libffi-3.1.orig/include/Makefile.am	2014-04-25 19:45:13.000000000 +0200
-+++ libffi-3.1/include/Makefile.am	2014-06-12 15:22:08.000000000 +0200
-@@ -5,5 +5,5 @@ AUTOMAKE_OPTIONS=foreign
- DISTCLEANFILES=ffitarget.h
- EXTRA_DIST=ffi.h.in ffi_common.h
- 
--includesdir = $(libdir)/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
-+includesdir = $(prefix)/include
- nodist_includes_HEADERS = ffi.h ffitarget.h
