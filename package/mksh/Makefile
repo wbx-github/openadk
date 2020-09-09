@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mksh
-PKG_VERSION:=		57
+PKG_VERSION:=		59b
 PKG_RELEASE:=		1
-PKG_HASH:=		3d101154182d52ae54ef26e1360c95bc89c929d28859d378cc1c84f3439dbe75
+PKG_HASH:=		907ed1a9586e7f18bdefdd4a763aaa8397b755e15034aa54f4d753bfb272e0e6
 PKG_DESCR:=		mirbsd korn shell
 PKG_SECTION:=		base/shells
 PKG_NEEDS:=		mmu
@@ -37,7 +37,7 @@ BUILD_STYLE:=		manual
 INSTALL_STYLE:=		manual
 
 host-build:
-	cd $(WRKBUILD) && $(BASH) $(WRKSRC)/Build.sh -Q -r -c lto
+	cd $(WRKBUILD) && $(BASH) $(WRKSRC)/Build.sh -Q -r
 
 mksh-hostinstall:
 	$(INSTALL_DIR) $(STAGING_HOST_DIR)/usr/bin
@@ -48,7 +48,7 @@ do-build:
 	cd $(WRKBUILD) && CC='$(TARGET_CC)' CFLAGS='$(TARGET_CFLAGS)' \
 	    CPPFLAGS='$(TARGET_CPPFLAGS)' LDFLAGS='$(TARGET_LDFLAGS)' \
 	    HAVE_CAN_FSTACKPROTECTORALL=0 HAVE_CAN_FSTACKPROTECTORSTRONG=0 \
-	    TARGET_OS=Linux $(BASH) $(WRKSRC)/Build.sh -Q -r -c lto
+	    TARGET_OS=Linux $(BASH) $(WRKSRC)/Build.sh -Q -r
 
 mksh-install:
 	$(INSTALL_DIR) $(IDIR_MKSH)/root
