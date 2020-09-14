@@ -1,6 +1,6 @@
---- linux-atm-2.5.1.orig/src/sigd/Makefile.in	2009-11-30 17:21:19.000000000 +0100
-+++ linux-atm-2.5.1/src/sigd/Makefile.in	2009-12-17 16:21:42.636433571 +0100
-@@ -244,7 +244,7 @@ atmsigd_XTRAS = mess.o $(top_builddir)/s
+--- linux-atm-2.5.2.orig/src/sigd/Makefile.in	2010-12-28 17:06:11.000000000 +0100
++++ linux-atm-2.5.2/src/sigd/Makefile.in	2020-09-14 15:22:00.557233015 +0200
+@@ -245,7 +245,7 @@ atmsigd_XTRAS = mess.o $(top_builddir)/s
  			$(top_builddir)/src/lib/libatm.la \
  			$(top_builddir)/src/saal/libsaal.a
  

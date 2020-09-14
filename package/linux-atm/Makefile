@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		linux-atm
-PKG_VERSION:=		2.5.1
-PKG_RELEASE:=		3
-PKG_HASH:=		6bc60fe53c9e9c828a6d7f3675da11ad7fb54491863584e01c1051740fe2a286
+PKG_VERSION:=		2.5.2
+PKG_RELEASE:=		1
+PKG_HASH:=		9645481a2b16476b59220aa2d6bc5bc41043f291326c9b37581018fbd16dd53a
 PKG_DESCR:=		atm library
 PKG_SECTION:=		libs/net
 PKG_BUILDDEP:=		flex-host bison-host
@@ -16,14 +16,12 @@ PKG_NOPARALLEL:=	1
 PKG_LIBNAME:=		libatm
 PKG_OPTS:=		dev
 
-PKG_HOST_DEPENDS:=	!freebsd
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_SUBPKGS:=		LIBATM BR2684CTL
 PKGSD_BR2684CTL:=	br2684ctl ATM utility
 PKGSS_BR2684CTL:=	libatm
 PKGSC_BR2684CTL:=	net/route
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tgz
 
 include ${ADK_TOPDIR}/mk/package.mk
 

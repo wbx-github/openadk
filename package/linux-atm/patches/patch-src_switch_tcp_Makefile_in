@@ -1,6 +1,6 @@
---- linux-atm-2.5.1.orig/src/switch/tcp/Makefile.in	2009-11-30 17:21:19.000000000 +0100
-+++ linux-atm-2.5.1/src/switch/tcp/Makefile.in	2009-12-17 16:33:08.832418828 +0100
-@@ -199,7 +199,7 @@ sw_tcp_SOURCES = tcpsw.c
+--- linux-atm-2.5.2.orig/src/switch/tcp/Makefile.in	2010-12-28 17:06:11.000000000 +0100
++++ linux-atm-2.5.2/src/switch/tcp/Makefile.in	2020-09-14 15:22:00.593235307 +0200
+@@ -200,7 +200,7 @@ sw_tcp_SOURCES = tcpsw.c
  sw_tcp_XTRAS = $(top_builddir)/src/switch/libsw.a \
  		$(top_builddir)/src/lib/libatm.la
  
