@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		iptables
-PKG_VERSION:=		1.6.2
+PKG_VERSION:=		1.8.5
 PKG_RELEASE:=		1
-PKG_HASH:=		55d02dfa46263343a401f297d44190f2a3e5113c8933946f094ed40237053733
+PKG_HASH:=		d457d74512e63aa3f50336e0597d4023c0e3c6845594d38532efb6ebcb294309
 PKG_DESCR:=		netfilter firewalling software
 PKG_SECTION:=		net/firewall
 PKG_DEPENDS:=		libnetfilter_conntrack libmnl libnfnetlink
@@ -23,7 +23,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,IPTABLES,iptables,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-AUTOTOOL_STYLE:=	autoreconf
 TARGET_LDFLAGS+=	-fPIC
 CONFIGURE_ARGS+=	--enable-devel \
 			--disable-nftables
@@ -36,8 +35,6 @@ iptables-install:
 	${CP} ${WRKINST}/usr/sbin/ip6tables ${IDIR_IPTABLES}/usr/sbin
 	${CP} ${WRKINST}/usr/sbin/iptables-{save,restore} \
 		 ${IDIR_IPTABLES}/usr/sbin
-	${CP} ${WRKINST}/usr/sbin/xtables-multi ${IDIR_IPTABLES}/usr/sbin
-	${CP} ${WRKINST}/usr/lib/libiptc.so* ${IDIR_IPTABLES}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libip4tc.so* ${IDIR_IPTABLES}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libip6tc.so* ${IDIR_IPTABLES}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libxtables.so* ${IDIR_IPTABLES}/usr/lib
