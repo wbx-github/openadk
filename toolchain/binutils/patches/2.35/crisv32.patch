@@ -1,0 +1,12 @@
+diff -Nur binutils-2.35.orig/bfd/elf32-cris.c binutils-2.35/bfd/elf32-cris.c
+--- binutils-2.35.orig/bfd/elf32-cris.c	2020-07-24 11:12:19.000000000 +0200
++++ binutils-2.35/bfd/elf32-cris.c	2020-09-16 10:45:43.610956675 +0200
+@@ -3358,7 +3358,7 @@
+ 
+ 	  /* No need to do anything if we're not creating a shared object.  */
+ 	  if (! bfd_link_pic (info)
+-	      || UNDEFWEAK_NO_DYNAMIC_RELOC (info, h))
++	      || (h != NULL && UNDEFWEAK_NO_DYNAMIC_RELOC (info, h)))
+ 	    break;
+ 
+ 	  /* We may need to create a reloc section in the dynobj and made room
