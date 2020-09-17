@@ -15,6 +15,12 @@ config ADK_TOOLCHAIN_BINUTILS_GIT
 	depends on !ADK_TARGET_ARCH_BFIN
 	depends on !ADK_TARGET_ARCH_NDS32
 
+config ADK_TOOLCHAIN_BINUTILS_2_35
+	bool "2.35"
+	depends on !ADK_TARGET_ARCH_AVR32
+	depends on !ADK_TARGET_ARCH_BFIN
+	depends on !ADK_TARGET_ARCH_NDS32
+
 config ADK_TOOLCHAIN_BINUTILS_2_34
 	bool "2.34"
 	depends on ADK_TARGET_ARCH_BFIN # ld segfault for FDPIC
