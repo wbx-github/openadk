@@ -57,15 +57,15 @@ config BUSYBOX_NETCAT
 
 config BUSYBOX_NC_SERVER
 	bool "Netcat server options (-l)"
-	default y
-	depends on BUSYBOX_NC
+	default n
+	depends on BUSYBOX_NC || BUSYBOX_NETCAT
 	help
 	  Allow netcat to act as a server.
 
 config BUSYBOX_NC_EXTRA
 	bool "Netcat extensions (-eiw and filename)"
 	default y
-	depends on BUSYBOX_NC
+	depends on BUSYBOX_NC || BUSYBOX_NETCAT
 	help
 	  Add -e (support for executing the rest of the command line after
 	  making or receiving a successful connection), -i (delay interval for
@@ -74,7 +74,7 @@ config BUSYBOX_NC_EXTRA
 config BUSYBOX_NC_110_COMPAT
 	bool "Netcat 1.10 compatibility (+2.5k)"
 	default n  # off specially for Rob
-	depends on BUSYBOX_NC
+	depends on BUSYBOX_NC || BUSYBOX_NETCAT
 	help
 	  This option makes nc closely follow original nc-1.10.
 	  The code is about 2.5k bigger. It enables
