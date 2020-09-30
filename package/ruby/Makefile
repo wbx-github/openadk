@@ -4,16 +4,17 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ruby
-PKG_VERSION:=		2.4.1
+PKG_VERSION:=		2.7.1
 PKG_RELEASE:=		1
-PKG_HASH:=		a330e10d5cb5e53b3a0078326c5731888bb55e32c4abfeb27d9e7f8e5d000250
+PKG_HASH:=		d418483bdd0000576c1370571121a6eb24582116db0b7bb2005e90e250eae418
 PKG_DESCR:=		scripting language
 PKG_SECTION:=		dev/lang
+PKG_DEPENDS:=		libressl zlib
 PKG_BUILDDEP:=		ruby-host libressl zlib
+HOST_BUILDDEP:=		libressl-host
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.ruby-lang.org/
-PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/2.4/
-#PKG_NOPARALLEL:=	1
+PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/2.7/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -38,7 +39,7 @@ INSTALL_TARGET:=	install-nodoc
 
 HOST_CONFIGURE_ARGS+=	--disable-install-doc \
 			--disable-shared \
-			--with-out-ext=curses,openssl,readline \
+			--with-out-ext=curses,readline \
 			--disable-rubygems
 HOST_ALL_TARGET:=	main
 HOST_INSTALL_TARGET:=	install-nodoc
