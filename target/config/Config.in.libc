@@ -169,8 +169,8 @@ config ADK_TARGET_LIB_MUSL_GIT
 	bool "git"
 	depends on ADK_TARGET_LIB_MUSL && ADK_EXPERIMENTAL
 
-config ADK_TARGET_LIB_NEWLIB_3_1_0
-	bool "3.1.0"
+config ADK_TARGET_LIB_NEWLIB_3_3_0
+	bool "3.3.0"
 	depends on ADK_TARGET_LIB_NEWLIB \
 		&& !ADK_TARGET_ARCH_XTENSA
 
