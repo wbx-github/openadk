@@ -23,6 +23,13 @@ PKG_HASH:=		cd717966fc761d840d451dbd58d44e1e5b92949d2073d75b73fccb476d772fcf
 PKG_SITES:=		${MASTER_SITE_GNU:=binutils/}
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 endif
+ifeq ($(ADK_TOOLCHAIN_BINUTILS_ARC),y)
+PKG_VERSION:=          arc-2020.09-eng007
+PKG_GIT:=              tag
+PKG_RELEASE:=          1
+PKG_SITES:=            https://github.com/foss-for-synopsys-dwc-arc-processors/binutils-gdb.git
+DISTFILES:=            ${PKG_NAME}-${PKG_VERSION}.tar.xz
+endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_NDS32),y)
 PKG_VERSION:=		nds32-binutils-2.30-branch-open
 PKG_GIT:=		branch
