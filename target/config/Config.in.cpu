@@ -507,6 +507,14 @@ config ADK_TARGET_CPU_IA64
 	select ADK_TARGET_USE_STATIC_LIBS_ONLY if ADK_TARGET_LIB_UCLIBC_NG
 	depends on ADK_TARGET_ARCH_IA64
 
+# kvx
+config ADK_TARGET_CPU_KVX
+	bool "kvx"
+	select ADK_TARGET_SUPPORTS_THREADS
+	select ADK_TARGET_SUPPORTS_NPTL
+	select ADK_TARGET_WITH_MMU
+	depends on ADK_TARGET_ARCH_KVX
+
 # lm32
 config ADK_TARGET_CPU_LM32
 	bool "lm32"
@@ -2172,6 +2180,7 @@ config ADK_TARGET_CPU_ARCH
 	default "h8300" if ADK_TARGET_ARCH_H8300
 	default "hppa" if ADK_TARGET_ARCH_HPPA
 	default "ia64" if ADK_TARGET_ARCH_IA64
+	default "kvx" if ADK_TARGET_ARCH_KVX
 	default "lm32" if ADK_TARGET_ARCH_LM32
 	default "m32c" if ADK_TARGET_ARCH_M32C
 	default "m32r" if ADK_TARGET_ARCH_M32R
