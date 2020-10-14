@@ -4,14 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		grub
-PKG_VERSION:=		07662af7aed55bcec448bc2a6610de1f0cb62100
+PKG_VERSION:=		2.04
 PKG_RELEASE:=		1
+PKG_HASH:=		e5292496995ad42dabe843a0192cf2a2c502e7ffcc7479398232b10a472df77d
 PKG_DESCR:=		multiboot boot loader
 PKG_SECTION:=		base/boot
 PKG_BUILDDEP:=		bison-host grub-host
 HOST_BUILDDEP:=		python2-host
 PKG_URL:=		http://www.gnu.org/software/grub
-PKG_SITES:=		https://git.savannah.gnu.org/git/grub.git
+PKG_SITES:=		https://ftp.gnu.org/gnu/grub/
 PKG_NOPARALLEL:=	1
 
 PKG_ARCH_DEPENDS:=	x86 x86_64 mips mips64 ppc ppc64
@@ -35,8 +36,6 @@ $(eval $(call PKG_template,GRUB_TOOLS,grub-tools,$(PKG_VERSION)-${PKG_RELEASE},$
 
 TARGET_CFLAGS:=$(filter-out -fstack-protector-all,$(TARGET_CFLAGS))
 TARGET_CFLAGS:=$(filter-out -flto,$(TARGET_CFLAGS))
-
-AUTOTOOL_STYLE:=	autogen
 
 ifeq ($(ADK_PACKAGE_GRUB_ARC),y)
 GRUB_ARCH=		mips-arc
