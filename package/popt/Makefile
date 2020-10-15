@@ -10,7 +10,7 @@ PKG_HASH:=		e728ed296fe9f069a0e005003c3d6b2dde3d9cad453422a10d6558616d304cc8
 PKG_DESCR:=		command line option parsing library
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://rpm5.org/
-PKG_SITES:=		http://rpm5.org/files/popt/
+PKG_SITES:=		https://distfiles.openadk.org/
 PKG_LIBNAME:=		libpopt
 PKG_OPTS:=		dev
 
