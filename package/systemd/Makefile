@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		systemd
-PKG_VERSION:=		237
+PKG_VERSION:=		246
 PKG_RELEASE:=		1
-PKG_HASH:=		c83dabbe1c9de6b9db1dafdb7e04140c7d0535705c68842f6c0768653ba4913c
+PKG_HASH:=		4268bd88037806c61c5cd1c78d869f7f20bf7e7368c63916d47b5d1c3411bd6f
 PKG_DESCR:=		system and service manager
 PKG_SECTION:=		base/init
 PKG_DEPENDS:=		libcap libmount libuuid libblkid libncurses libkmod
@@ -123,7 +123,7 @@ systemd-install:
 	$(INSTALL_DIR) $(IDIR_SYSTEMD)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/*.so* \
 		$(IDIR_SYSTEMD)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/{systemd,kernel,udev,sysctl.d,tmpfiles.d} \
+	$(CP) $(WRKINST)/usr/lib/{systemd,kernel,sysctl.d,tmpfiles.d} \
 		$(IDIR_SYSTEMD)/usr/lib
 	$(INSTALL_DIR) $(IDIR_SYSTEMD)/usr/bin
 	$(CP) $(WRKINST)/usr/bin/* \
@@ -133,6 +133,6 @@ systemd-install:
 		$(IDIR_SYSTEMD)/usr/share
 	$(CP) ./files/*.network \
 		$(IDIR_SYSTEMD)/etc/systemd/network
-	(cd $(IDIR_SYSTEMD)/usr/lib/systemd/system && ln -sf multi-user.target default.target)
+	#(cd $(IDIR_SYSTEMD)/usr/lib/systemd/system && ln -sf multi-user.target default.target)
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
