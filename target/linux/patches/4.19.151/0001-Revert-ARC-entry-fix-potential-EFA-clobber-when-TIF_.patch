@@ -1,0 +1,66 @@
+From af5e43cd88d4b7d59260de6bdacbf715e2a7ff5d Mon Sep 17 00:00:00 2001
+From: Waldemar Brodkorb <wbx@openadk.org>
+Date: Fri, 16 Oct 2020 01:17:24 +0200
+Subject: [PATCH] Revert "ARC: entry: fix potential EFA clobber when
+ TIF_SYSCALL_TRACE"
+
+This reverts commit 01b636cbc4c39c7073c02c2f1dfbe8c36c11938f.
+
+Signed-off-by: Waldemar Brodkorb <wbx@openadk.org>
+---
+ arch/arc/kernel/entry.S | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arc/kernel/entry.S b/arch/arc/kernel/entry.S
+index 705a68208423..85d9ea4a0acc 100644
+--- a/arch/arc/kernel/entry.S
++++ b/arch/arc/kernel/entry.S
+@@ -156,6 +156,7 @@ END(EV_Extension)
+ tracesys:
+ 	; save EFA in case tracer wants the PC of traced task
+ 	; using ERET won't work since next-PC has already committed
++	lr  r12, [efa]
+ 	GET_CURR_TASK_FIELD_PTR   TASK_THREAD, r11
+ 	st  r12, [r11, THREAD_FAULT_ADDR]	; thread.fault_address
+ 
+@@ -198,9 +199,15 @@ tracesys_exit:
+ ; Breakpoint TRAP
+ ; ---------------------------------------------
+ trap_with_param:
+-	mov r0, r12	; EFA in case ptracer/gdb wants stop_pc
++
++	; stop_pc info by gdb needs this info
++	lr  r0, [efa]
+ 	mov r1, sp
+ 
++	; Now that we have read EFA, it is safe to do "fake" rtie
++	;   and get out of CPU exception mode
++	FAKE_RET_FROM_EXCPN
++
+ 	; Save callee regs in case gdb wants to have a look
+ 	; SP will grow up by size of CALLEE Reg-File
+ 	; NOTE: clobbers r12
+@@ -227,10 +234,6 @@ ENTRY(EV_Trap)
+ 
+ 	EXCEPTION_PROLOGUE
+ 
+-	lr  r12, [efa]
+-
+-	FAKE_RET_FROM_EXCPN
+-
+ 	;============ TRAP 1   :breakpoints
+ 	; Check ECR for trap with arg (PROLOGUE ensures r9 has ECR)
+ 	bmsk.f 0, r9, 7
+@@ -238,6 +241,9 @@ ENTRY(EV_Trap)
+ 
+ 	;============ TRAP  (no param): syscall top level
+ 
++	; First return from Exception to pure K mode (Exception/IRQs renabled)
++	FAKE_RET_FROM_EXCPN
++
+ 	; If syscall tracing ongoing, invoke pre-post-hooks
+ 	GET_CURR_THR_INFO_FLAGS   r10
+ 	btst r10, TIF_SYSCALL_TRACE
+-- 
+2.11.0
+
