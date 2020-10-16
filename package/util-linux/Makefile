@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		util-linux
-PKG_VERSION:=		2.32
-PKG_RELEASE:=		2
-PKG_HASH:=		6c7397abc764e32e8159c2e96042874a190303e77adceb4ac5bd502a272a4734
+PKG_VERSION:=		2.36
+PKG_RELEASE:=		1
+PKG_HASH:=		9e4b1c67eb13b9b67feb32ae1dc0d50e08ce9e5d82e1cccd0ee771ad2fa9e0b1
 PKG_DESCR:=		basic utilities
 PKG_SECTION:=		base/apps
 PKG_BUILDDEP:=		ncurses
@@ -109,7 +109,8 @@ endif
 TARGET_CFLAGS+=		-fPIC
 FAKE_FLAGS+=		INSTALLSUID="install -m 4755"
 HOST_CONFIGURE_ARGS+=	--enable-libblkid \
-			--enable-libmount \
+			--enable-libuuid \
+			--disable-libmount \
 			--disable-all-programs \
 			--disable-use-tty-group
 ifneq ($(OS_FOR_BUILD),Darwin)
