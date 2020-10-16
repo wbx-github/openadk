@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		php
-PKG_VERSION:=		7.0.27
+PKG_VERSION:=		7.4.11
 PKG_RELEASE:=		1
-PKG_HASH:=		4b2bc823e806dbf7b62fe0b92b0d14b0c6e03f88c3fc5d96278416c54ce11f6c
+PKG_HASH:=		5d31675a9b9c21b5bd03389418218c30b26558246870caba8eb54f5856e2d6ce
 PKG_DESCR:=		php language interpreter
 PKG_SECTION:=		dev/lang
 PKG_NEEDS:=		threads
@@ -21,7 +21,7 @@ PKGSN_PHP_FPM:=		php
 PKGSD_PHP_CLI:=		php cli
 PKGSN_PHP_CLI:=		php
 
-PKG_FLAVOURS_PHP:=	MOD_BZ2 MOD_CURL MOD_FTP MOD_GD MOD_GMP MOD_MARIADB
+PKG_FLAVOURS_PHP:=	MOD_BZ2 MOD_CURL MOD_FTP MOD_GMP MOD_MARIADB
 PKG_FLAVOURS_PHP+=	MOD_SSL MOD_SESSION MOD_SNMP MOD_SQLITE 
 PKG_FLAVOURS_PHP+=	MOD_SOCKETS MOD_XML MOD_SIMPLEXML MOD_ZLIB MOD_JSON
 PKG_FLAVOURS_PHP+=	MOD_LDAP MOD_PCNTL
@@ -33,9 +33,6 @@ PKGFD_MOD_CURL:=	curl support
 PKGFB_MOD_CURL:=	curl
 PKGFS_MOD_CURL:=	libcurl
 PKGFD_MOD_FTP:=		ftp support
-PKGFD_MOD_GD:=		gd support
-PKGFB_MOD_GD:=		libgd libpng libjpeg-turbo libXpm
-PKGFS_MOD_GD:=		libgd libpng libjpeg-turbo libxpm
 PKGFD_MOD_GMP:=		gmp support
 PKGFB_MOD_GMP:=		gmp
 PKGFS_MOD_GMP:=		libgmp
@@ -92,7 +89,6 @@ PKG_CONFIGURE_OPTS:=	\
 	--enable-cgi \
 	--enable-fpm \
 	--enable-opcache=no \
-	--disable-hash \
 	--disable-mbstring \
 	--disable-mbregex \
 	--disable-phar \
@@ -126,17 +122,6 @@ ifneq ($(ADK_PACKAGE_PHP_MOD_FTP),)
 PKG_CONFIGURE_OPTS+=	--enable-ftp=shared
 else
 PKG_CONFIGURE_OPTS+=	--disable-ftp
-endif
-ifneq ($(ADK_PACKAGE_PHP_MOD_GD),)
-PKG_CONFIGURE_OPTS+=	--with-gd=shared,"$(STAGING_TARGET_DIR)/usr" \
-			--with-png-dir="$(STAGING_TARGET_DIR)/usr" \
-			--with-jpeg-dir="$(STAGING_TARGET_DIR)/usr" \
-			--without-freetype-dir \
-			--without-t1lib	\
-			--enable-gd-native-ttf \
-			--disable-gd-jis-conv
-else
-PKG_CONFIGURE_OPTS+=	--without-gd
 endif
 ifneq ($(ADK_PACKAGE_PHP_MOD_GMP),)
 PKG_CONFIGURE_OPTS+=	--with-gmp=shared,"$(STAGING_TARGET_DIR)/usr"
@@ -213,7 +198,6 @@ endif
 $(eval $(call PKG_template,PHP_MOD_BZ2,php-mod-bz2,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,PHP_MOD_CURL,php-mod-curl,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,PHP_MOD_FTP,php-mod-ftp,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
-$(eval $(call PKG_template,PHP_MOD_GD,php-mod-gd,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,PHP_MOD_GMP,php-mod-gmp,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,PHP_MOD_JSON,php-mod-json,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,PHP_MOD_LDAP,php-mod-ldap,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
@@ -230,7 +214,6 @@ $(eval $(call PKG_template,PHP_MOD_ZLIB,php-mod-zlib,$(PKG_VERSION)-${PKG_RELEAS
 $(eval $(call PKG_mod_template,PHP_MOD_BZ2,bz2))
 $(eval $(call PKG_mod_template,PHP_MOD_CURL,curl))
 $(eval $(call PKG_mod_template,PHP_MOD_FTP,ftp))
-$(eval $(call PKG_mod_template,PHP_MOD_GD,gd))
 $(eval $(call PKG_mod_template,PHP_MOD_GMP,gmp))
 $(eval $(call PKG_mod_template,PHP_MOD_JSON,json))
 $(eval $(call PKG_mod_template,PHP_MOD_LDAP,ldap))
