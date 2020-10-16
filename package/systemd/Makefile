@@ -5,14 +5,15 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		systemd
 PKG_VERSION:=		246
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		4268bd88037806c61c5cd1c78d869f7f20bf7e7368c63916d47b5d1c3411bd6f
 PKG_DESCR:=		system and service manager
 PKG_SECTION:=		base/init
 PKG_DEPENDS:=		libcap libmount libuuid libblkid libncurses libkmod
-PKG_BUILDDEP:=		intltool-host gperf-host libcap util-linux 
+PKG_BUILDDEP:=		intltool-host gperf-host libcap util-linux
 PKG_BUILDDEP+=		gettext-host kmod meson-host ninja-host
 PKG_KDEPENDS:=		inotify-user cgroups namespaces fhandle tmpfs-posix-acl tmpfs-xattr
+PKG_KDEPENDS+=		uts-ns
 PKG_NEEDS:=		locale intl
 PKG_URL:=		https://wiki.freedesktop.org/www/Software/systemd/
 PKG_SITES:=		https://github.com/systemd/systemd/archive/
@@ -74,6 +75,7 @@ MESON_FLAGS+=		-Drootlibdir='/usr/lib' \
 			-Dmicrohttpd=false \
 			-Dselinux=false \
 			-Dhwdb=false \
+			-Dportabled=false \
 			-Dbinfmt=false \
 			-Dvconsole=false \
 			-Dquotacheck=false \
@@ -91,6 +93,7 @@ MESON_FLAGS+=		-Drootlibdir='/usr/lib' \
 			-Dnetworkd=true \
 			-Dtimesyncd=true \
 			-Dtmpfiles=true \
+			-Dnss-systemd=true \
 			-Dfirstboot=true \
 			-Drandomseed=true \
 			-Dlogind=true \
@@ -120,11 +123,20 @@ systemd-install:
 	touch $(IDIR_SYSTEMD)/etc/machine-id
 	$(CP) $(WRKINST)/etc/* \
 		$(IDIR_SYSTEMD)/etc
+	$(INSTALL_DIR) $(IDIR_SYSTEMD)/lib/systemd
+	$(CP) $(WRKINST)/lib/systemd/* \
+		$(IDIR_SYSTEMD)/lib/systemd
 	$(INSTALL_DIR) $(IDIR_SYSTEMD)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/*.so* \
 		$(IDIR_SYSTEMD)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/{systemd,kernel,sysctl.d,tmpfiles.d} \
 		$(IDIR_SYSTEMD)/usr/lib
+	$(INSTALL_DIR) $(IDIR_SYSTEMD)/sbin
+	$(CP) $(WRKINST)/sbin/* \
+		$(IDIR_SYSTEMD)/sbin
+	$(INSTALL_DIR) $(IDIR_SYSTEMD)/bin
+	$(CP) $(WRKINST)/bin/* \
+		$(IDIR_SYSTEMD)/bin
 	$(INSTALL_DIR) $(IDIR_SYSTEMD)/usr/bin
 	$(CP) $(WRKINST)/usr/bin/* \
 		$(IDIR_SYSTEMD)/usr/bin
@@ -133,6 +145,8 @@ systemd-install:
 		$(IDIR_SYSTEMD)/usr/share
 	$(CP) ./files/*.network \
 		$(IDIR_SYSTEMD)/etc/systemd/network
-	#(cd $(IDIR_SYSTEMD)/usr/lib/systemd/system && ln -sf multi-user.target default.target)
+	(cd $(IDIR_SYSTEMD)/lib/systemd/system && ln -sf multi-user.target default.target)
+	$(CP) $(WRKBUILD)/systemd $(IDIR_SYSTEMD)/usr/lib/systemd/
+	mv $(IDIR_SYSTEMD)/lib/systemd/libsystemd-shared-246.so $(IDIR_SYSTEMD)/lib
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
