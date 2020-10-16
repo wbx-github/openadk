@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		python3
-PKG_VERSION:=		3.8.2
-PKG_RELEASE:=		2
-PKG_HASH:=		2646e7dc233362f59714c6193017bb2d6f7b38d6ab4a0cb5fbac5c36c4d845df
+PKG_VERSION:=		3.9.0
+PKG_RELEASE:=		1
+PKG_HASH:=		9c73e63c99855709b9be0b3cc9e5b072cb60f37311e8c4e50f15576a0bf82854
 PKG_DESCR:=		python3 scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libffi zlib
@@ -59,9 +59,9 @@ define PKG_mod_template
 INSTALL_MODS_$${ADK_PACKAGE_${1}}+=    ${2}-install
 
 ${2}-install:
-	${INSTALL_DIR} $$(IDIR_$(1))/usr/lib/python3.8/lib-dynload
+	${INSTALL_DIR} $$(IDIR_$(1))/usr/lib/python3.9/lib-dynload
 	for m in ${2}; do \
-		${INSTALL_DATA} $(WRKINST)/usr/lib/python3.8/lib-dynload/$$$${m}*.so $$(IDIR_$(1))/usr/lib/python3.8/lib-dynload ;\
+		${INSTALL_DATA} $(WRKINST)/usr/lib/python3.9/lib-dynload/$$$${m}*.so $$(IDIR_$(1))/usr/lib/python3.9/lib-dynload ;\
 	done
 endef
 
@@ -104,13 +104,13 @@ HOST_CONFIGURE_ARGS+=	--without-cxx-main \
 
 python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
-	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.8
-	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.8
+	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.9
+	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.9
 	${INSTALL_BIN} ${WRKINST}/usr/bin/python3 ${IDIR_PYTHON3}/usr/bin
 	${CP} ${WRKINST}/usr/lib/libpython*.so* ${IDIR_PYTHON3}/usr/lib
-	${CP} ${WRKINST}/usr/lib/python3.8/* ${IDIR_PYTHON3}/usr/lib/python3.8
-	${CP} ${WRKINST}/usr/include/python3.8/pyconfig.h \
-		 ${IDIR_PYTHON3}/usr/include/python3.8
+	${CP} ${WRKINST}/usr/lib/python3.9/* ${IDIR_PYTHON3}/usr/lib/python3.9
+	${CP} ${WRKINST}/usr/include/python3.9/pyconfig.h \
+		 ${IDIR_PYTHON3}/usr/include/python3.9
 	@-for i in zlib _bz2 _curses _ssl _gdbm _sqlite pyexpat readline; do \
 		rm ${IDIR_PYTHON3}/usr/lib/python3.8/lib-dynload/$${i}*so; \
 	done
