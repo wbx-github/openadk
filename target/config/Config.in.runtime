@@ -24,20 +24,6 @@ config ADK_RUNTIME_INIT_SIMPLEINIT
 	bool "Use a very simple init"
 	select ADK_PACKAGE_SIMPLEINIT
 
-config ADK_RUNTIME_INIT_SYSVINIT
-	bool "Use system V init"
-	select ADK_PACKAGE_SYSVINIT
-	select ADK_PACKAGE_AGETTY
-	select ADK_PACKAGE_GAWK
-	select ADK_PACKAGE_IP
-	select ADK_PACKAGE_MOUNT
-
-config ADK_RUNTIME_INIT_S6
-	bool "Use s6 init and supervision"
-	select ADK_PACKAGE_S6
-	select ADK_PACKAGE_S6_PORTABLE_UTILS
-	select ADK_PACKAGE_S6_LINUX_UTILS
-
 config ADK_RUNTIME_INIT_SYSTEMD
 	bool "Use systemd init and supervision"
 	select ADK_PACKAGE_SYSTEMD

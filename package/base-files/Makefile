@@ -91,9 +91,6 @@ endif
 	$(SED) 's#@SPEED@#$(ADK_RUNTIME_CONSOLE_SERIAL_SPEED)#' $(IDIR_BASE_FILES)/etc/inittab
 	$(SED) 's#@AUTOLOGIN@#$(ADK_RUNTIME_GETTY_SERIAL_AUTOLOGIN_STANZA)#' $(IDIR_BASE_FILES)/etc/inittab
 endif
-ifeq ($(ADK_RUNTIME_INIT_SYSVINIT),y)
-	cp ./files/inittab.sysvinit $(IDIR_BASE_FILES)/etc/inittab
-endif
 ifeq ($(ADK_RUNTIME_MOUNT_DEBUGFS),y)
 	echo debugfs    /sys/kernel/debug      debugfs  defaults  0 0 >> $(IDIR_BASE_FILES)/etc/fstab
 	echo null::sysinit:/bin/mount -a -t debugfs >> $(IDIR_BASE_FILES)/etc/inittab
