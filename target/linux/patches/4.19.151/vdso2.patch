@@ -1,0 +1,24 @@
+diff -Nur linux-4.19.151.orig/arch/x86/entry/vdso/vdso2c.c linux-4.19.151/arch/x86/entry/vdso/vdso2c.c
+--- linux-4.19.151.orig/arch/x86/entry/vdso/vdso2c.c	2020-10-14 10:31:27.000000000 +0200
++++ linux-4.19.151/arch/x86/entry/vdso/vdso2c.c	2020-10-17 06:09:50.000000000 +0200
+@@ -64,8 +64,20 @@
+ #include <tools/le_byteshift.h>
+ 
+ #include <linux/elf.h>
++#ifdef __linux__
+ #include <linux/types.h>
+ #include <linux/kernel.h>
++#else
++
++#define __must_be_array(a)	0
++#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
++
++typedef _Bool			bool;
++enum {
++        false   = 0,
++        true    = 1
++};
++#endif
+ 
+ const char *outfilename;
+ 
