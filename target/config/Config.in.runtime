@@ -176,6 +176,7 @@ config ADK_RUNTIME_MOUNT_DEBUGFS
 
 config ADK_RUNTIME_START_SERVICES
 	bool "start services by default"
+	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	default n
 	help
 	  Enable this option to start selected services on boot.
@@ -284,6 +285,7 @@ endchoice
 
 choice
 prompt "start getty or shell after bootup"
+depends on !ADK_RUNTIME_INIT_SYSTEMD
 default ADK_RUNTIME_GETTY
 
 config ADK_RUNTIME_GETTY
@@ -305,6 +307,7 @@ endchoice
 
 config ADK_RUNTIME_GETTY_VGA
 	bool "start getty on VGA console (tty1-tty6)"
+	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_RUNTIME_GETTY \
                 && (ADK_TARGET_WITH_VGA || ADK_TARGET_GENERIC)
 	default y if ADK_TARGET_QEMU_WITH_GRAPHIC_ONLY
@@ -327,6 +330,7 @@ config ADK_RUNTIME_GETTY_VGA
 
 config ADK_RUNTIME_GETTY_SERIAL
 	bool "start getty on serial console"
+	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_RUNTIME_GETTY && ( ADK_TARGET_WITH_SERIAL \
 		|| ADK_TARGET_QEMU \
 		|| ADK_TARGET_GENERIC \
@@ -347,16 +351,19 @@ config ADK_RUNTIME_GETTY_SERIAL
 
 config ADK_RUNTIME_GETTY_SERIAL_AUTOLOGIN
        bool "run autologin on serial getty"
+	depends on !ADK_RUNTIME_INIT_SYSTEMD
        depends on ADK_RUNTIME_GETTY_SERIAL
        select ADK_PACKAGE_AUTOLOGIN
 
 config ADK_RUNTIME_CONSOLE_VGA_DEVICE
 	string "VGA console device"
+	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_TARGET_WITH_VGA || ADK_TARGET_GENERIC
 	default "tty0"
 
 config ADK_RUNTIME_CONSOLE_SERIAL_DEVICE
 	string "serial console device"
+	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_TARGET_WITH_SERIAL \
 		|| ADK_TARGET_QEMU \
 		|| ADK_TARGET_GENERIC \
@@ -393,6 +400,7 @@ config ADK_RUNTIME_CONSOLE_SERIAL_DEVICE
 
 config ADK_RUNTIME_CONSOLE_SERIAL_SPEED
 	string "serial console speed"
+	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_TARGET_WITH_SERIAL \
 		|| ADK_TARGET_QEMU \
 		|| ADK_TARGET_GENERIC \
@@ -534,6 +542,7 @@ config ADK_RUNTIME_WAIT_FOR_ETHERNET
 
 config ADK_SIMPLE_NETWORK_CONFIG
 	bool "simple network configuration"
+	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	help
 	  Manually change network config
 	  
