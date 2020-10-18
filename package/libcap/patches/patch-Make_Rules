@@ -1,50 +1,11 @@
---- libcap-2.25.orig/Make.Rules	2016-01-31 02:14:53.000000000 +0100
-+++ libcap-2.25/Make.Rules	2016-11-21 12:54:45.000000000 +0100
-@@ -13,21 +13,14 @@ FAKEROOT=$(DESTDIR)
+--- libcap-2.44.orig/Make.Rules	2020-10-05 03:42:13.000000000 +0200
++++ libcap-2.44/Make.Rules	2020-10-18 13:17:04.354503478 +0200
+@@ -18,7 +18,7 @@ FAKEROOT=$(DESTDIR)
  # administrative operations that could be needed to recover a system.
  
  ifndef lib
 -lib=$(shell ldd /usr/bin/ld|egrep "ld-linux|ld.so"|cut -d/ -f2)
-+lib=lib
++lib=/usr/lib
  endif
  
--ifdef prefix
--exec_prefix=$(prefix)
--lib_prefix=$(exec_prefix)
--inc_prefix=$(lib_prefix)
--man_prefix=$(prefix)/share
--else
- prefix=/usr
--exec_prefix=
-+exec_prefix=$(prefix)
- lib_prefix=$(exec_prefix)
- inc_prefix=$(prefix)
- man_prefix=$(prefix)/share
--endif
- 
- # Target directories
- 
-@@ -48,10 +41,10 @@ MINOR=25
- KERNEL_HEADERS := $(topdir)/libcap/include/uapi
- IPATH += -fPIC -I$(KERNEL_HEADERS) -I$(topdir)/libcap/include
- 
--CC := gcc
--CFLAGS := -O2 -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
--BUILD_CC := $(CC)
--BUILD_CFLAGS := $(CFLAGS) $(IPATH)
-+CC ?= gcc
-+CFLAGS ?= -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
-+BUILD_CC := $(CC_FOR_BUILD)
-+BUILD_CFLAGS := $(CFLAGS_FOR_BUILD) $(IPATH)
- AR := ar
- RANLIB := ranlib
- DEBUG = -g #-DDEBUG
-@@ -68,7 +61,7 @@ INCS=$(topdir)/libcap/include/sys/capabi
- LDFLAGS += -L$(topdir)/libcap
- CFLAGS += -Dlinux $(WARNINGS) $(DEBUG)
- PAM_CAP := $(shell if [ -f /usr/include/security/pam_modules.h ]; then echo yes ; else echo no ; fi)
--INDENT := $(shell if [ -n "$$(which indent 2>/dev/null)" ]; then echo "| indent -kr" ; fi)
-+#INDENT := $(shell if [ -n "$$(which indent 2>/dev/null)" ]; then echo "| indent -kr" ; fi)
- DYNAMIC := $(shell if [ ! -d "$(topdir)/.git" ]; then echo yes; fi)
- 
- # When installing setcap, set its inheritable bit to be able to place
+ ifdef prefix
