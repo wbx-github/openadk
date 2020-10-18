@@ -13,7 +13,7 @@ PKG_DEPENDS:=		libcap libmount libuuid libblkid libncurses libkmod
 PKG_BUILDDEP:=		intltool-host gperf-host libcap util-linux
 PKG_BUILDDEP+=		gettext-host kmod meson-host ninja-host
 PKG_KDEPENDS:=		inotify-user cgroups namespaces fhandle tmpfs-posix-acl tmpfs-xattr
-PKG_KDEPENDS+=		uts-ns
+PKG_KDEPENDS+=		uts-ns autofs4-fs
 PKG_NEEDS:=		locale intl
 PKG_URL:=		https://wiki.freedesktop.org/www/Software/systemd/
 PKG_SITES:=		https://github.com/systemd/systemd/archive/
@@ -45,6 +45,9 @@ BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
 MESON_FLAGS+=		-Drootlibdir='/usr/lib' \
+			-Dsysvinit-path='' \
+			-Dsplit-bin=true \
+			-Dsplit-usr=true \
 			-Dman=false \
 			-Dima=false \
 			-Dlibcryptsetup=false \
@@ -56,9 +59,9 @@ MESON_FLAGS+=		-Drootlibdir='/usr/lib' \
 			-Dkill-path=/usr/bin/kill \
 			-Dkmod-path=/usr/bin/kmod \
 			-Dkexec-path=/usr/sbin/kexec \
-			-Dsulogin-path=/usr/sbin/sulogin \
-			-Dmount-path=/usr/bin/mount \
-			-Dumount-path=/usr/bin/umount \
+			-Dsulogin-path=/sbin/sulogin \
+			-Dmount-path=/bin/mount \
+			-Dumount-path=/bin/umount \
 			-Dacl=false \
 			-Daudit=false \
 			-Didn=false \
