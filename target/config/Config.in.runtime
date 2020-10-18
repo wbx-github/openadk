@@ -525,7 +525,7 @@ endchoice
 
 # workaround for USB ethernet f.e. Raspberry Pi 2/3
 config ADK_RUNTIME_WAIT_FOR_ETHERNET
-	bool
+	bool "Wait for ethernet to come up on boot"
 	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI2
 	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI3
 	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI3_64
