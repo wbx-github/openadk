@@ -56,7 +56,6 @@ MESON_FLAGS+=		-Drootlibdir='/usr/lib' \
 			-Dldconfig=false \
 			-Ddefault-dnssec=no \
 			-Dtests=false \
-			-Dkill-path=/usr/bin/kill \
 			-Dkmod-path=/usr/bin/kmod \
 			-Dkexec-path=/usr/sbin/kexec \
 			-Dsulogin-path=/sbin/sulogin \
@@ -66,7 +65,6 @@ MESON_FLAGS+=		-Drootlibdir='/usr/lib' \
 			-Daudit=false \
 			-Didn=false \
 			-Dnss-systemd=false \
-			-Dmyhostname=false \
 			-Dresolve=false \
 			-Dseccomp=false \
 			-Dxkbcommon=false \
