@@ -4,16 +4,18 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		rsyslog
-PKG_VERSION:=		8.21.0
+PKG_VERSION:=		8.2010.0
 PKG_RELEASE:=		1
-PKG_HASH:=		bdb1fde87b75107b58d1cd5d00408822fb15b9f3efb8d9dbb93a1dee128339ab
+PKG_HASH:=		19b232f765c4ba7a35b91ef1f5f9af775f6ff78ef56bb7737a2ce79ccbb32b98
 PKG_DESCR:=		syslog daemon
 PKG_SECTION:=		sys/misc
-PKG_DEPENDS:=		libestr liblogging libfastjson libuuid zlib libncurses
-PKG_BUILDDEP:=		libestr liblogging libfastjson util-linux zlib ncurses
+PKG_DEPENDS:=		libestr liblogging libfastjson libuuid zlib libncurses libgcrypt
+PKG_DEPENDS+=		libcurl
+PKG_BUILDDEP:=		libestr liblogging libfastjson util-linux zlib ncurses libgcrypt
+PKG_BUILDDEP+=		curl
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.rsyslog.com/
-PKG_SITES:=		http://www.rsyslog.com/files/download/rsyslog/
+PKG_SITES:=		https://www.rsyslog.com/files/download/rsyslog/
 
 DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.gz
 

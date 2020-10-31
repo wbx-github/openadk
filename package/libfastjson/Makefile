@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libfastjson
-PKG_VERSION:=		0.99.4
+PKG_VERSION:=		0.99.8
 PKG_RELEASE:=		1
-PKG_HASH:=		03ef63dcc88417e71c19ce4436804159e3397e3a20d3529efef6a43c3bef5c8d
+PKG_HASH:=		7e49057b26a5a9e3c6623e024f95f9fd9a14b571b9150aeb89d6d475fc3633e3
 PKG_DESCR:=		another json library
 PKG_SECTION:=		libs/data
 PKG_URL:=		https://github.com/rsyslog/libfastjson
