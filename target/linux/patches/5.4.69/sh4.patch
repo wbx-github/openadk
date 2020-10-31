@@ -1,0 +1,11 @@
+diff -Nur linux-5.4.69.orig/arch/sh/boot/compressed/vmlinux.scr linux-5.4.69/arch/sh/boot/compressed/vmlinux.scr
+--- linux-5.4.69.orig/arch/sh/boot/compressed/vmlinux.scr	2020-10-01 13:19:27.000000000 +0200
++++ linux-5.4.69/arch/sh/boot/compressed/vmlinux.scr	2020-10-31 07:13:51.213954737 +0100
+@@ -1,6 +1,6 @@
+ SECTIONS
+ {
+-  .rodata..compressed : {
++  .rodata..compressed : ALIGN(8) {
+ 	input_len = .;
+ 	LONG(input_data_end - input_data) input_data = .;
+ 	*(.data)
