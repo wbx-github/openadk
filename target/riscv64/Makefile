@@ -6,7 +6,7 @@ include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/arch/riscv/boot/Image
-QEMU_ARGS:=-M virt -m 256 -nographic
+QEMU_ARGS:=-M virt -m 512 -nographic -bios $(FW_DIR)/fw_jump.elf
 ifeq ($(ADK_TARGET_QEMU_WITH_VIRTIO),y)
 QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 endif
@@ -60,8 +60,8 @@ boot:
 		CROSS_COMPILE=$(GNU_TARGET_NAME)- \
 		FW_PAYLOAD_PATH=$(KERNEL) \
 		PLATFORM=generic make)
-	cp $(BUILD_DIR)/opensbi/build/platform/generic/firmware/fw_payload.elf \
-		$(FW_DIR)/$(TARGET_KERNEL)
+	cp $(BUILD_DIR)/opensbi/build/platform/generic/firmware/fw_jump.elf \
+		$(FW_DIR)
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)
