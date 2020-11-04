@@ -1,6 +1,6 @@
---- dropbear-2014.63.orig/Makefile.in	2014-02-19 15:05:24.000000000 +0100
-+++ dropbear-2014.63/Makefile.in	2014-03-01 18:27:41.000000000 +0100
-@@ -81,10 +81,10 @@ AR=@AR@
+--- dropbear-2020.81.orig/Makefile.in	2020-10-29 14:35:50.000000000 +0100
++++ dropbear-2020.81/Makefile.in	2020-11-04 03:02:49.901343218 +0100
+@@ -106,10 +106,10 @@ AR=@AR@
  RANLIB=@RANLIB@
  STRIP=@STRIP@
  INSTALL=@INSTALL@
@@ -15,16 +15,16 @@
  
  EXEEXT=@EXEEXT@
  
-@@ -163,7 +163,7 @@ dropbearkey: $(dropbearkeyobjs)
+@@ -198,7 +198,7 @@ dropbearkey: $(dropbearkeyobjs)
  dropbearconvert: $(dropbearconvertobjs)
  
  dropbear: $(HEADERS) $(LIBTOM_DEPS) Makefile
--	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $($@objs) $(LIBTOM_LIBS) $(LIBS) @CRYPTLIB@
-+	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $($@objs) $(LIBTOM_LIBS) $(LIBS)
+-	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $($@objs) $(LIBTOM_LIBS) $(LIBS) @CRYPTLIB@ $(PLUGIN_LIBS)
++	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $($@objs) $(LIBTOM_LIBS) $(LIBS) $(PLUGIN_LIBS)
  
  dbclient: $(HEADERS) $(LIBTOM_DEPS) Makefile
  	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $($@objs) $(LIBTOM_LIBS) $(LIBS)
-@@ -184,7 +184,7 @@ ifeq ($(MULTI),1)
+@@ -219,7 +219,7 @@ ifeq ($(MULTI),1)
  endif
  
  dropbearmulti$(EXEEXT): $(HEADERS) $(MULTIOBJS) $(LIBTOM_DEPS) Makefile
