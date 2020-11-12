@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		afboot-stm32
-PKG_VERSION:=		8e9e03159ce47629d40dbed4c50c1879b69bb197
+PKG_VERSION:=		3566acd582e5536fb60864281788a30f5527df2d
 PKG_RELEASE:=		1
 PKG_DESCR:=		bootloader for stm32 devices
 PKG_SECTION:=		base/boot
