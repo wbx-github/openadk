@@ -460,6 +460,17 @@ defconfig: .menu $(CONFIG)/conf
 		printf "# ADK_TARGET_WITH_MMU is not set\n" \
 			>> $(ADK_TOPDIR)/.defconfig; \
 	fi
+	@if [ ! -z "$(ADK_TARGET_THREADS)" ];then \
+		if [ "$(ADK_TARGET_THREADS)" = "nptl" ];then \
+			printf "ADK_TARGET_WITH_NPTL=y\n" >> $(ADK_TOPDIR)/.defconfig; \
+		fi; \
+		if [ "$(ADK_TARGET_THREADS)" = "lt" ];then \
+			printf "ADK_TARGET_WITH_LT=y\n" >> $(ADK_TOPDIR)/.defconfig; \
+		fi; \
+		if [ "$(ADK_TARGET_THREADS)" = "none" ];then \
+			printf "ADK_TARGET_WITHOUT_THREADS=y\n" >> $(ADK_TOPDIR)/.defconfig; \
+		fi; \
+	fi
 	@if [ ! -z "$(ADK_TARGET_LIBC)" ];then \
 		libc=$$(echo "$(ADK_TARGET_LIBC)"|sed -e "s/-/_/"); \
 		grep "^config" target/config/Config.in.libc \
