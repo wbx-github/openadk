@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gdbserver
-PKG_VERSION:=		9.2
+PKG_VERSION:=		10.1
 PKG_RELEASE:=		1
-PKG_HASH:=		360cd7ae79b776988e89d8f9a01c985d0b1fa21c767a4295e5f88cb49175c555
+PKG_HASH:=		f82f1eceeec14a3afa2de8d9b0d3c91d5a3820e23e0a01bbb70ef9f0276b62c0
 PKG_DESCR:=		remote program debugger utility
 PKG_SECTION:=		app/debug
 PKG_NEEDS:=		c++

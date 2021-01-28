@@ -33,8 +33,8 @@ config ADK_TOOLCHAIN_GDB_H8300_GIT
 	bool "h8300-git"
 	depends on ADK_TARGET_ARCH_H8300
 
-config ADK_TOOLCHAIN_GDB_9_2
-	bool "9.2"
+config ADK_TOOLCHAIN_GDB_10_1
+	bool "10.1"
 	depends on !ADK_TARGET_ARCH_AVR32
 	depends on !ADK_TARGET_ARCH_H8300
 	depends on !ADK_TARGET_ARCH_NDS32
