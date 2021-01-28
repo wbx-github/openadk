@@ -1,0 +1,11 @@
+--- clamav-0.103.0.orig/libclamav/mbox.c	2020-09-13 02:27:10.000000000 +0200
++++ clamav-0.103.0/libclamav/mbox.c	2021-01-28 04:48:50.156979494 +0100
+@@ -91,7 +91,7 @@
+ #include <features.h>
+ #endif
+ 
+-#if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 1
++#if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 1 && !defined(__UCLIBC__) || defined(__UCLIBC_HAS_BACKTRACE__)
+ #define HAVE_BACKTRACE
+ #endif
+ #endif

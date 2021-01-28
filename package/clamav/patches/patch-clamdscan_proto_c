@@ -1,6 +1,6 @@
---- clamav-0.98.7.orig/clamdscan/proto.c	2015-04-22 21:49:57.000000000 +0200
-+++ clamav-0.98.7/clamdscan/proto.c	2015-11-11 19:22:21.000000000 +0100
-@@ -36,6 +36,7 @@
+--- clamav-0.103.0.orig/clamdscan/proto.c	2020-09-13 02:27:09.000000000 +0200
++++ clamav-0.103.0/clamdscan/proto.c	2021-01-28 04:40:12.604606645 +0100
+@@ -39,6 +39,7 @@
  #include <errno.h>
  #include <stdlib.h>
  #include <sys/types.h>

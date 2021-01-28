@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		clamav
-PKG_VERSION:=		0.99.2
+PKG_VERSION:=		0.103.0
 PKG_RELEASE:=		1
-PKG_HASH:=		167bd6a13e05ece326b968fdb539b05c2ffcfef6018a274a10aeda85c2c0027a
+PKG_HASH:=		32a9745277bfdda80e77ac9ca2f5990897418e9416880f3c31553ca673e80546
 PKG_DESCR:=		anti-virus software
 PKG_SECTION:=		sys/misc
-PKG_DEPENDS:=		libressl zlib libpcre
-PKG_BUILDDEP:=		libressl zlib pcre
-PKG_NEEDS:=		threads
+PKG_DEPENDS:=		libressl zlib libpcre libncurses libcurl libmspack
+PKG_BUILDDEP:=		libressl zlib pcre ncurses curl libmspack
+PKG_NEEDS:=		c++ threads
 PKG_URL:=		http://www.clamav.net/
 PKG_SITES:=		http://www.clamav.net/downloads/production/
 
@@ -24,6 +24,7 @@ $(eval $(call PKG_template,CLAMAV,clamav,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEP
 TARGET_LDFLAGS+=	-ltinfo
 CONFIGURE_ENV+=		ac_cv_c_mmap_private=yes
 CONFIGURE_ARGS+=	--enable-mempool \
+			--with-system-libmspack \
 			--disable-xml \
 			--disable-check \
 			--with-openssl="$(STAGING_TARGET_DIR)/usr" \
