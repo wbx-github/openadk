@@ -23,12 +23,13 @@ else
 DISTFILES:=		gdb-${PKG_VERSION}.tar.xz
 WRKDIST=		${WRKDIR}/gdb-${PKG_VERSION}
 endif
-WRKSRC=                 ${WRKDIST}/gdb/gdbserver
+WRKBUILD=		${WRKSRC}/build
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,GDBSERVER,gdbserver,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+CONFIGURE_ARGS+=	--enable-static
 ifneq ($(ADK_TARGET_BINFMT_FLAT)$(ADK_TARGET_USE_STATIC_LIBS_ONLY)$(ADK_TARGET_USE_STATIC_AND_SHARED_LIBS),)
 TARGET_LDFLAGS+=	-static-libstdc++
 CONFIGURE_ARGS+=	--disable-build-with-cxx --with-libthread-db=$(STAGING_TARGET_DIR)/usr/lib/libthread_db.a
