@@ -1,0 +1,11 @@
+diff -Nur linux-5.4.92.orig/arch/arm/vfp/vfphw.S linux-5.4.92/arch/arm/vfp/vfphw.S
+--- linux-5.4.92.orig/arch/arm/vfp/vfphw.S	2021-01-23 15:58:01.000000000 +0100
++++ linux-5.4.92/arch/arm/vfp/vfphw.S	2021-01-28 02:56:42.871473417 +0100
+@@ -81,6 +81,7 @@
+ 	ldr	r3, [sp, #S_PSR]	@ Neither lazy restore nor FP exceptions
+ 	and	r3, r3, #MODE_MASK	@ are supported in kernel mode
+ 	teq	r3, #USR_MODE
++THUMB(  it      ne			)
+ 	bne	vfp_kmode_exception	@ Returns through lr
+ 
+ 	VFPFMRX	r1, FPEXC		@ Is the VFP enabled?
