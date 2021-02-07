@@ -41,6 +41,7 @@ CONFIGURE_ARGS+=	--enable-static \
 			--disable-install-libiberty \
 			--disable-install-libbfd \
 			--with-system-zlib \
+			--with-system-readline \
 			--with-curses \
 			--enable-gdbmi
 
