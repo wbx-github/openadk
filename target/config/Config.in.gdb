@@ -21,7 +21,7 @@ choice
 prompt "GNU debugger version"
 depends on ADK_TOOLCHAIN_WITH_GDB
 default ADK_TOOLCHAIN_GDB_H8300_GIT if ADK_TARGET_ARCH_H8300
-default ADK_TOOLCHAIN_GDB_9_2
+default ADK_TOOLCHAIN_GDB_10_1
 
 config ADK_TOOLCHAIN_GDB_GIT
 	bool "git"

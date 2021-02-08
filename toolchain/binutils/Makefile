@@ -56,6 +56,7 @@ endif
 		--disable-nls \
 		--disable-sim \
 		--disable-gdb \
+		--enable-obsolete \
 		--disable-werror \
 		--disable-install-libiberty \
 		${CONFOPTS} \
