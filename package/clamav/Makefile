@@ -27,6 +27,7 @@ CONFIGURE_ARGS+=	--enable-mempool \
 			--with-system-libmspack \
 			--disable-xml \
 			--disable-check \
+			--with-libcurl="$(STAGING_TARGET_DIR)/usr" \
 			--with-openssl="$(STAGING_TARGET_DIR)/usr" \
 			--with-pcre="$(STAGING_TARGET_DIR)/usr"
 
