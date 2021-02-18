@@ -54,7 +54,7 @@ for tool in $tools; do
           FETCHCMD="$(which $tool) --progress-bar -L -k -f -o "
         ;;
       wget)
-          FETCHCMD="$(which $tool) --no-check-certificate -O "
+          FETCHCMD="$(which $tool) -t2 --no-check-certificate -O "
         ;;
     esac
     break
