@@ -8,10 +8,10 @@ PKG_RELEASE:=		1
 PKG_SITES:=		git://sourceware.org/git/newlib-cygwin.git
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
 endif
-ifeq ($(ADK_TARGET_LIB_NEWLIB_3_3_0),y)
-PKG_VERSION:=		3.3.0
+ifeq ($(ADK_TARGET_LIB_NEWLIB_4_1_0),y)
+PKG_VERSION:=		4.1.0
 PKG_RELEASE:=		1
-PKG_HASH:=		58dd9e3eaedf519360d92d84205c3deef0b3fc286685d1c562e245914ef72c66
+PKG_HASH:=		f296e372f51324224d387cc116dc37a6bd397198756746f93a2b02e9a5d40154
 PKG_SITES:=		ftp://sourceware.org/pub/newlib/
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 endif
