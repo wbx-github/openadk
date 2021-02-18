@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		readline
-PKG_VERSION:=		6.1
-PKG_RELEASE:=		2
-PKG_HASH:=		f0caf608c06ccd6d56b3bee1843458d509c53f9b53dffffe07cc11d8f03fa969
+PKG_VERSION:=		8.1
+PKG_RELEASE:=		1
+PKG_HASH:=		f8ceb4ee131e3232226a17f51b164afc46cd0b9e6cef344be87c65962cb82b02
 PKG_DESCR:=		command line editing library
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libncurses
