@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		radvd
-PKG_VERSION:=		2.12
+PKG_VERSION:=		2.18
 PKG_RELEASE:=		1
-PKG_HASH:=		b070e77238e789e298a82cba2b1bfb0b0180b4ebc1adfc4e75058adfdbff747b
+PKG_HASH:=		e1bffefe6537e4b205d33afda35fec6014e5f860cc364850068a6ed9c6a65cdc
 PKG_DESCR:=		routing advertisement daemon for ipv6
 PKG_SECTION:=		net/ipv6
 PKG_DEPENDS:=		libdaemon
