@@ -4,12 +4,12 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		freeradius-server
-PKG_VERSION:=		3.0.13
+PKG_VERSION:=		3.0.21
 PKG_RELEASE:=		1
-PKG_HASH:=		34da25c1a0e39dc57821ed6d1af1c1cc8bb7e280169cc8b4003acbfc4184328e
+PKG_HASH:=		2bf914d471d4409fd72e708e308fa32ca8d01d698c518497a1d4b867d50132ae
 PKG_DESCR:=		flexible radius server
 PKG_SECTION:=		net/radius
-PKG_DEPENDS:=		libltdl libpcre libtalloc libressl
+PKG_DEPENDS:=		libltdl libpcre libtalloc libressl libatomic
 PKG_BUILDDEP:=		libtool pcre talloc libressl
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.freeradius.org/
@@ -203,14 +203,10 @@ freeradius-server-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 		  ${IDIR_FREERADIUS_SERVER}/etc/freeradius/ ; \
 	done
 	${INSTALL_DIR} ${IDIR_FREERADIUS_SERVER}/usr/share/freeradius
-	${CP} ${WRKINST}/usr/share/freeradius/dictionary \
+	${CP} ${WRKINST}/usr/share/freeradius/dictionary* \
 		${IDIR_FREERADIUS_SERVER}/usr/share/freeradius/
-	for f in freeradius freeradius.internal rfc2865 rfc2866 rfc2867 rfc2868 rfc2869 rfc3162 rfc3576 rfc3580 rfc4072 rfc4372 rfc4675 rfc4679 rfc5176; do \
-		cp ${WRKINST}/usr/share/freeradius/dictionary.$${f} \
-		    ${IDIR_FREERADIUS_SERVER}/usr/share/freeradius/ ; \
-	done
 	${INSTALL_DIR} ${IDIR_FREERADIUS_SERVER}/usr/lib/freeradius
-	${CP} ${WRKINST}/usr/lib/freeradius/libfreeradius-radius.so \
+	${CP} ${WRKINST}/usr/lib/freeradius/libfreeradius-{dhcp,eap,server,radius}.so \
 	  ${IDIR_FREERADIUS_SERVER}/usr/lib
 	${INSTALL_DIR} ${IDIR_FREERADIUS_SERVER}/usr/sbin
 	${CP} ${WRKINST}/usr/sbin/radiusd \
