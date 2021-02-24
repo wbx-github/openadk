@@ -304,6 +304,24 @@ if ! which git >/dev/null 2>&1; then
 fi
 printf "found\n"
 
+printf " --->  checking if pkg-config is installed.. "
+if ! which pkg-config >/dev/null 2>&1; then
+  printf "not found\n"
+  out=1
+else
+  printf "found\n"
+fi
+
+printf " --->  checking if ncurses is installed.. "
+check_lxdialog=${topdir}/adk/config/lxdialog/check-lxdialog.sh
+CURSES_CFLAGS=$(/bin/sh ${check_lxdialog} -ccflags | tr '\n' ' ')
+CURSES_LIBS=$(/bin/sh ${check_lxdialog} -ldflags ${CC})
+if [ $? -eq 0 ]; then
+	printf "found\n"
+else
+	printf "not found\n"
+	out=1
+fi
 
 # creating prereq.mk
 echo "ADK_TOPDIR:=$(readlink -nf . 2>/dev/null || pwd -P)" > $topdir/prereq.mk
@@ -327,6 +345,8 @@ echo "ARCH_FOR_BUILD:=$(${CC} -dumpmachine | sed \
     -e 's/mipsel-.*/mipsel/' \
     -e 's/i[3-9]86/x86/' \
     )" >>prereq.mk
+echo "CURSES_LIBS:=${CURSES_LIBS}" >> $topdir/prereq.mk
+echo "CURSES_CFLAGS:=${CURSES_CFLAGS}" >> $topdir/prereq.mk
 
 if [ "$CC" = "clang" ]; then
   echo "HOST_CC:=${CC} -fbracket-depth=1024" >> $topdir/prereq.mk
@@ -422,17 +442,6 @@ fi
 
 rm test.c test 2>/dev/null
 rm Makefile.tmp 2>/dev/null
-
-# for make kernelconfig pkg-config is required to find ncurses
-if [ $os = "Darwin" ]; then
-  printf " --->  checking if pkg-config is installed.. "
-  if ! which pkg-config >/dev/null 2>&1; then
-    printf "not found\n"
-    out=1
-  else
-    printf "found\n"
-  fi
-fi
 
 # error out on any required prerequisite
 if [ $out -ne 0 ]; then

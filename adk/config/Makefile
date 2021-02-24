@@ -8,57 +8,10 @@ include ${ADK_TOPDIR}/rules.mk
 endif
 
 CP=cp -fpR
-HOST_CFLAGS+=-DKBUILD_NO_NLS -w
+HOST_CFLAGS+=	-DKBUILD_NO_NLS -w ${CURSES_CFLAGS}
+LIBS=		${CURSES_LIBS}
 
 all: ncurses conf mconf
-
-LIBS=
-ifeq (/usr/lib/libtinfo.so, $(wildcard /usr/lib/libtinfo.so))
-LIBS=		-ltinfo
-endif
-
-ifeq (/usr/include/ncursesw/curses.h, $(wildcard /usr/include/ncursesw/curses.h))
-HOST_CFLAGS+=	-I/usr/include/ncursesw -DCURSES_LOC="<curses.h>"
-LIBS+=		-lncursesw
-else
-ifeq (/usr/include/ncurses/ncurses.h, $(wildcard /usr/include/ncurses/ncurses.h))
-HOST_CFLAGS+=	-I/usr/include/ncurses -DCURSES_LOC="<ncurses.h>"
-LIBS+=		-lncurses
-else
-ifeq (/usr/include/ncurses/curses.h, $(wildcard /usr/include/ncurses/curses.h))
-HOST_CFLAGS+=	-I/usr/include/ncurses -DCURSES_LOC="<ncurses/curses.h>"
-LIBS+=		-lncurses
-else
-ifeq (/usr/include/ncurses.h, $(wildcard /usr/include/ncurses.h))
-HOST_CFLAGS+=	-DCURSES_LOC="<ncurses.h>"
-LIBS+=		-lncurses
-else
-ifeq (/usr/local/include/ncurses/ncurses.h, $(wildcard /usr/local/include/ncurses/ncurses.h))
-HOST_CFLAGS+=	-I/usr/local/include/ncurses -DCURSES_LOC="<ncurses.h>"
-LIBS+=		-lncurses
-else
-ifeq (/usr/local/include/ncurses/curses.h, $(wildcard /usr/local/include/ncurses/curses.h))
-HOST_CFLAGS+=	-I/usr/local/include/ncurses -DCURSES_LOC="<ncurses/curses.h>"
-LIBS+=		-lncurses
-else
-ifeq (/usr/local/opt/ncurses/include/ncursesw/ncurses.h, $(wildcard /usr/local/opt/ncurses/include/ncursesw/ncurses.h))
-HOST_CFLAGS+=	-I/usr/local/opt/ncurses/include -DCURSES_LOC="<ncursesw/ncurses.h>"
-LIBS+=		-L/usr/local/opt/ncurses/lib -Wl,-rpath -Wl,/usr/local/opt/ncurses/lib -lncursesw
-else
-ifeq (/usr/pkg/include/ncurses.h, $(wildcard /usr/pkg/include/ncurses.h))
-HOST_CFLAGS+=	-I/usr/pkg/include -DCURSES_LOC="<ncurses.h>"
-LIBS+=		-L/usr/pkg/lib -Wl,-rpath -Wl,/usr/pkg/lib -lncurses
-else
-HOST_CFLAGS+=	-DCURSES_LOC="<curses.h>"
-LIBS=		-lcurses
-endif
-endif
-endif
-endif
-endif
-endif
-endif
-endif
 
 CONF_SRC  =conf.c
 MCONF_SRC =mconf.c $(wildcard lxdialog/*.c)
