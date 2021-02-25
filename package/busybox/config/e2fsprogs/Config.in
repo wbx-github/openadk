@@ -1,16 +1,35 @@
 # DO NOT EDIT. This file is generated from Config.src
 #
 # For a description of the syntax of this configuration file,
-# see scripts/kbuild/config-language.txt.
+# see docs/Kconfig-language.txt.
 #
 
 menu "Linux Ext2 FS Progs"
 
 config BUSYBOX_CHATTR
-	bool "chattr"
-	default n
+	bool "chattr (3.8 kb)"
+	default y
 	help
-	  chattr changes the file attributes on a second extended file system.
+	chattr changes the file attributes on a second extended file system.
+config BUSYBOX_FSCK
+	bool "fsck (7.4 kb)"
+	default y
+	help
+	fsck is used to check and optionally repair one or more filesystems.
+	In actuality, fsck is simply a front-end for the various file system
+	checkers (fsck.fstype) available under Linux.
+config BUSYBOX_LSATTR
+	bool "lsattr (5.5 kb)"
+	default y
+	select BUSYBOX_PLATFORM_LINUX
+	help
+	lsattr lists the file attributes on a second extended file system.
+config BUSYBOX_TUNE2FS
+	bool "tune2fs (4.4 kb)"
+	default n  # off: it is too limited compared to upstream version
+	help
+	tune2fs allows the system administrator to adjust various tunable
+	filesystem parameters on Linux ext2/ext3 filesystems.
 
 ### config E2FSCK
 ###	bool "e2fsck"
@@ -21,34 +40,12 @@ config BUSYBOX_CHATTR
 ###	  The normal compat symlinks 'fsck.ext2' and 'fsck.ext3' are also
 ###	  provided.
 
-config BUSYBOX_FSCK
-	bool "fsck"
-	default n
-	help
-	  fsck is used to check and optionally repair one or more filesystems.
-	  In actuality, fsck is simply a front-end for the various file system
-	  checkers (fsck.fstype) available under Linux.
-
-config BUSYBOX_LSATTR
-	bool "lsattr"
-	default n
-	select BUSYBOX_PLATFORM_LINUX
-	help
-	  lsattr lists the file attributes on a second extended file system.
-
-### config MKE2FS
+### config BUSYBOX_MKE2FS
 ###	bool "mke2fs"
 ###	default y
 ###	help
 ###	  mke2fs is used to create an ext2/ext3 filesystem. The normal compat
 ###	  symlinks 'mkfs.ext2' and 'mkfs.ext3' are also provided.
-
-config BUSYBOX_TUNE2FS
-	bool "tune2fs"
-	default n  # off: it is too limited compared to upstream version
-	help
-	  tune2fs allows the system administrator to adjust various tunable
-	  filesystem parameters on Linux ext2/ext3 filesystems.
 
 ### config E2LABEL
 ###	bool "e2label"
@@ -59,7 +56,7 @@ config BUSYBOX_TUNE2FS
 ###	  filesystem located on device.
 
 ### NB: this one is now provided by util-linux/volume_id/*
-### config FINDFS
+### config BUSYBOX_FINDFS
 ###	bool "findfs"
 ###	default y
 ###	depends on BUSYBOX_TUNE2FS
