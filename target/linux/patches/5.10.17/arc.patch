@@ -1,0 +1,12 @@
+diff -Nur linux-4.17.1.orig/arch/arc/boot/Makefile linux-4.17.1/arch/arc/boot/Makefile
+--- linux-4.17.1.orig/arch/arc/boot/Makefile	2018-06-11 22:43:19.000000000 +0200
++++ linux-4.17.1/arch/arc/boot/Makefile	2018-06-16 18:28:02.000000000 +0200
+@@ -7,7 +7,7 @@
+ 
+ OBJCOPYFLAGS= -O binary -R .note -R .note.gnu.build-id -R .comment -S
+ 
+-LINUX_START_TEXT = $$(readelf -h vmlinux | \
++LINUX_START_TEXT = $$(${CROSS_COMPILE}readelf -h vmlinux | \
+ 			grep "Entry point address" | grep -o 0x.*)
+ 
+ UIMAGE_LOADADDR    = $(CONFIG_LINUX_LINK_BASE)

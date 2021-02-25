@@ -161,8 +161,7 @@ ${FW_DIR}/${ROOTFSUSERTARBALL}: ${TARGET_DIR}/.adk
 		$(CPIO) --quiet -o -Hustar --owner=0:0 | $(XZ) -c >$@
 
 ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
-ifeq ($(ADK_TARGET_LINUX_KERNEL_NEW),y)
-	PATH='${HOST_PATH}' $(BASH) ${LINUX_DIR}/usr/gen_initramfs_list.sh -u squash -g squash \
+	PATH='${HOST_PATH}' $(BASH) ${ADK_TOPDIR}/scripts/gen_initramfs_list.sh -u squash -g squash \
 		${TARGET_DIR}/ >$@
 	( \
 		echo "nod /dev/console 0644 0 0 c 5 1"; \
@@ -186,32 +185,6 @@ ifeq ($(ADK_TARGET_LINUX_KERNEL_NEW),y)
 		echo "nod /dev/ttyUL0 0660 0 0 c 204 187"; \
 		echo "nod /dev/ttyUL1 0660 0 0 c 204 188"; \
 	) >>$@
-else
-	PATH='${HOST_PATH}' $(BASH) ${LINUX_DIR}/scripts/gen_initramfs_list.sh -u squash -g squash \
-		${TARGET_DIR}/ >$@
-	( \
-		echo "nod /dev/console 0644 0 0 c 5 1"; \
-		echo "nod /dev/tty 0644 0 0 c 5 0"; \
-		for i in 0 1 2 3 4; do \
-			echo "nod /dev/tty$$i 0644 0 0 c 4 $$$$i"; \
-		done; \
-		echo "nod /dev/null 0644 0 0 c 1 3"; \
-		echo "nod /dev/ram 0655 0 0 b 1 1"; \
-		echo "nod /dev/ttyS0 0660 0 0 c 4 64"; \
-		echo "nod /dev/ttyS1 0660 0 0 c 4 65"; \
-		echo "nod /dev/ttyB0 0660 0 0 c 11 0"; \
-		echo "nod /dev/ttyB1 0660 0 0 c 11 1"; \
-		echo "nod /dev/ttyAMA0 0660 0 0 c 204 64"; \
-		echo "nod /dev/ttyAMA1 0660 0 0 c 204 65"; \
-		echo "nod /dev/ttySC0 0660 0 0 c 204 8"; \
-		echo "nod /dev/ttySC1 0660 0 0 c 204 9"; \
-		echo "nod /dev/ttySC2 0660 0 0 c 204 10"; \
-		echo "nod /dev/ttyBF0 0660 0 0 c 204 64"; \
-		echo "nod /dev/ttyBF1 0660 0 0 c 204 65"; \
-		echo "nod /dev/ttyUL0 0660 0 0 c 204 187"; \
-		echo "nod /dev/ttyUL1 0660 0 0 c 204 188"; \
-	) >>$@
-endif
 
 ${FW_DIR}/${INITRAMFS}: ${STAGING_TARGET_DIR}/${INITRAMFS}_list
 	${LINUX_DIR}/usr/gen_init_cpio ${STAGING_TARGET_DIR}/${INITRAMFS}_list | \
@@ -269,6 +242,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMP_XZ),y)
 		echo "CONFIG_RD_LZ4=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZO=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_XZ=y" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_INITRAMFS_COMPRESSION_XZ=y" >> ${LINUX_DIR}/.config
 		echo "CONFIG_XZ_DEC_X86=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_XZ_DEC_POWERPC=n" >> ${LINUX_DIR}/.config
@@ -285,6 +259,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMP_LZ4),y)
 		echo "CONFIG_RD_LZO=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZ4=y" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZMA=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_INITRAMFS_COMPRESSION_LZ4=y" >> ${LINUX_DIR}/.config
 endif
 ifeq ($(ADK_LINUX_KERNEL_COMP_LZMA),y)
@@ -294,6 +269,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMP_LZMA),y)
 		echo "CONFIG_RD_LZO=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZ4=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZMA=y" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_INITRAMFS_COMPRESSION_LZMA=y" >> ${LINUX_DIR}/.config
 endif
 ifeq ($(ADK_LINUX_KERNEL_COMP_LZO),y)
@@ -303,6 +279,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMP_LZO),y)
 		echo "CONFIG_RD_LZMA=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZ4=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZO=y" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_INITRAMFS_COMPRESSION_LZO=y" >> ${LINUX_DIR}/.config
 endif
 ifeq ($(ADK_LINUX_KERNEL_COMP_GZIP),y)
@@ -312,6 +289,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMP_GZIP),y)
 		echo "CONFIG_RD_LZMA=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZ4=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_GZIP=y" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_INITRAMFS_COMPRESSION_GZIP=y" >> ${LINUX_DIR}/.config
 endif
 ifeq ($(ADK_LINUX_KERNEL_COMP_BZIP2),y)
@@ -321,6 +299,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMP_BZIP2),y)
 		echo "CONFIG_RD_LZO=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZ4=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_BZIP2=y" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_INITRAMFS_COMPRESSION_BZIP2=y" >> ${LINUX_DIR}/.config
 endif
 ifeq ($(ADK_LINUX_KERNEL_COMPRESS_NONE),y)
@@ -330,6 +309,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMPRESS_NONE),y)
 		echo "CONFIG_RD_LZMA=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_LZ4=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_GZIP=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 endif
 	@-rm $(LINUX_DIR)/usr/initramfs_data.cpio* 2>/dev/null
 	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
