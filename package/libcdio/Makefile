@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libcdio
-PKG_VERSION:=		0.92
-PKG_RELEASE:=		2
-PKG_HASH:=		3336bf352aff43b5023e41a6d23525172a3b4ee433c467bd0fab5b8becb33fad
+PKG_VERSION:=		2.1.0
+PKG_RELEASE:=		1
+PKG_HASH:=		8550e9589dbd594bfac93b81ecf129b1dc9d0d51e90f9696f1b2f9b2af32712b
 PKG_DESCR:=		library for cd-rom and cd image access
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.gnu.org/software/libcdio
-PKG_SITES:=		${MASTER_SITE_GNU:=libcdio/}
+PKG_SITES:=		http://ftp.gnu.org/gnu/libcdio/
 PKG_OPTS:=		dev
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
 include $(ADK_TOPDIR)/mk/package.mk
 

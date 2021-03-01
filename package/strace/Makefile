@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		strace
-PKG_VERSION:=		5.9
+PKG_VERSION:=		5.11
 PKG_RELEASE:=		1
-PKG_HASH:=		39473eb8465546c3e940fb663cb381eba5613160c7302794699d194a4d5d66d9
+PKG_HASH:=		ffe340b10c145a0f85734271e9cce56457d23f21a7ea5931ab32f8cf4e793879
 PKG_DESCR:=		system call trace program
 PKG_SECTION:=		app/debug
 PKG_URL:=		https://strace.io
@@ -38,6 +38,6 @@ INSTALL_STYLE:=		manual
 
 do-install:
 	${INSTALL_DIR} ${IDIR_STRACE}/usr/sbin
-	${INSTALL_BIN} ${WRKBUILD}/strace ${IDIR_STRACE}/usr/sbin
+	${INSTALL_BIN} ${WRKBUILD}/src/strace ${IDIR_STRACE}/usr/sbin
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

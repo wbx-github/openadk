@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libx265
-PKG_VERSION:=		2.7
-PKG_HASH:=		d5e75fa62ffe6ed49e691f8eb8ab8c1634ffcc0725dd553c6fdb4d5443b494a2
+PKG_VERSION:=		3.2
+PKG_HASH:=		364d79bcd56116a9e070fdeb1d9d2aaef1a786b4970163fb56ff0991a183133b
 PKG_RELEASE:=		1
 PKG_DESCR:=		h265 encoding library
 PKG_SECTION:=		libs/video
 PKG_BUILDDEP:=		cmake-host
 PKG_URL:=		http://x265.org
-PKG_SITES:=		https://bitbucket.org/multicoreware/x265/downloads/
+PKG_SITES:=		http://ftp.videolan.org/pub/videolan/x265/
 PKG_OPTS:=		dev
 
 DISTFILES:=		x265_${PKG_VERSION}.tar.gz

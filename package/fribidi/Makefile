@@ -4,16 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		fribidi
-PKG_VERSION:=		0.19.7
+PKG_VERSION:=		1.0.9
 PKG_RELEASE:=		1
-PKG_HASH:=		08222a6212bbc2276a2d55c3bf370109ae4a35b689acbc66571ad2a670595a8e
+PKG_HASH:=		c5e47ea9026fb60da1944da9888b4e0a18854a0e2410bbfe7ad90a054d36e0c7
 PKG_DESCR:=		unicode bidirectional algorithm
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.fribidi.org/
-PKG_SITES:=		http://fribidi.org/download/
+PKG_SITES:=		https://github.com/fribidi/fribidi/releases/download/v1.0.9/
 PKG_OPTS:=		dev
-
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
 include $(ADK_TOPDIR)/mk/package.mk
 

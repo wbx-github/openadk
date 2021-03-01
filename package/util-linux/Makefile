@@ -110,7 +110,7 @@ TARGET_CFLAGS+=		-fPIC
 FAKE_FLAGS+=		INSTALLSUID="install -m 4755"
 HOST_CONFIGURE_ARGS+=	--enable-libblkid \
 			--enable-libuuid \
-			--disable-libmount \
+			--enable-libmount \
 			--disable-all-programs \
 			--disable-use-tty-group
 ifneq ($(OS_FOR_BUILD),Darwin)

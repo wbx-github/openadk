@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libssh
-PKG_VERSION:=		0.7.5
+PKG_VERSION:=		0.9.5
 PKG_RELEASE:=		1
-PKG_HASH:=		54e86dd5dc20e5367e58f3caab337ce37675f863f80df85b6b1614966a337095
+PKG_HASH:=		acffef2da98e761fc1fd9c4fddde0f3af60ab44c4f5af05cd1b2d60a3fa08718
 PKG_DESCR:=		secure shell library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		zlib libressl
 PKG_BUILDDEP:=		cmake-host zlib libressl
 PKG_URL:=		http://www.libssh.org/
-PKG_SITES:=		https://red.libssh.org/attachments/download/218/
+PKG_SITES:=		https://www.libssh.org/files/0.9/
 PKG_OPTS:=		dev
 
 include $(ADK_TOPDIR)/mk/package.mk
@@ -26,6 +26,7 @@ CMAKE_FLAGS:=		-DOPENSSL_INCLUDE_DIRS='$(STAGING_TARGET_DIR)/usr/include' \
 			-DZLIB_INCLUDE_DIR='$(STAGING_TARGET_DIR)/usr/include' \
 			-DZLIB_LIBRARY='$(STAGING_TARGET_DIR)/usr/lib' \
 			-DWITH_GSSAPI=off \
+			-DWITH_STACK_PROTECTOR=off \
 			-DWITH_EXAMPLES=off
 
 libssh-install:
