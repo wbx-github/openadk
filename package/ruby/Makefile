@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ruby
-PKG_VERSION:=		2.7.1
+PKG_VERSION:=		3.0.0
 PKG_RELEASE:=		1
-PKG_HASH:=		d418483bdd0000576c1370571121a6eb24582116db0b7bb2005e90e250eae418
+PKG_HASH:=		68bfaeef027b6ccd0032504a68ae69721a70e97d921ff328c0c8836c798f6cb1
 PKG_DESCR:=		scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libressl zlib
@@ -14,9 +14,7 @@ PKG_BUILDDEP:=		ruby-host libressl zlib
 HOST_BUILDDEP:=		libressl-host
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.ruby-lang.org/
-PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/2.7/
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/3.0/
 
 include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
@@ -24,6 +22,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,RUBY,ruby,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,RUBY,ruby,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+AUTOTOOL_STYLE:=	autoreconf
 # uClibc setpgrp does not take arguments
 CONFIGURE_ENV+=         ac_cv_func_setpgrp_void=yes \
 			stack_protector=no \
