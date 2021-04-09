@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		openocd
-PKG_VERSION:=		0.10.0
+PKG_VERSION:=		0.11.0
 PKG_RELEASE:=		1
-PKG_HASH:=		7312e7d680752ac088b8b8f2b5ba3ff0d30e0a78139531847be4b75c101316ae
+PKG_HASH:=		43a3ce734aff1d3706ad87793a9f3a5371cb0e357f0ffd0a151656b06b3d1e7d
 PKG_DESCR:=		jtag flash and debugging utility
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		libusb-host
