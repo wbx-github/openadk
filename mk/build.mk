@@ -459,6 +459,8 @@ defconfig: .menu $(CONFIG)/conf
 	@if [ ! -z "$(ADK_TARGET_MMU)" ];then \
 		printf "# ADK_TARGET_WITH_MMU is not set\n" \
 			>> $(ADK_TOPDIR)/.defconfig; \
+		printf "BUSYBOX_NOMMU=y\n" \
+                        >> $(ADK_TOPDIR)/.defconfig; \
 	fi
 	@if [ ! -z "$(ADK_TARGET_THREADS)" ];then \
 		if [ "$(ADK_TARGET_THREADS)" = "nptl" ];then \

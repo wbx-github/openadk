@@ -554,7 +554,7 @@ config BUSYBOX_MKFS_VFAT
 	Alias to "mkdosfs".
 config BUSYBOX_MKSWAP
 	bool "mkswap (6.3 kb)"
-	default y
+	default n
 	help
 	The mkswap utility is used to configure a file or disk partition as
 	Linux swap space. This allows Linux to use the entire file or
@@ -827,7 +827,7 @@ config BUSYBOX_SETSID
 	setsid runs a program in a new session
 config BUSYBOX_SWAPON
 	bool "swapon (15 kb)"
-	default y
+	default n
 	select BUSYBOX_PLATFORM_LINUX
 	help
 	Once you have created some swap space using 'mkswap', you also need
@@ -854,7 +854,7 @@ config BUSYBOX_FEATURE_SWAPON_PRI
 
 config BUSYBOX_SWAPOFF
 	bool "swapoff (14 kb)"
-	default y
+	default n
 	select BUSYBOX_PLATFORM_LINUX
 
 config BUSYBOX_FEATURE_SWAPONOFF_LABEL
@@ -933,7 +933,7 @@ config BUSYBOX_FEATURE_UMOUNT_ALL
 	Support -a option to unmount all currently mounted filesystems.
 config BUSYBOX_UNSHARE
 	bool "unshare (7.2 kb)"
-	default y
+	default n
 	depends on !BUSYBOX_NOMMU
 	select BUSYBOX_PLATFORM_LINUX
 	select BUSYBOX_LONG_OPTS
