@@ -61,7 +61,8 @@ GCC_CONFOPTS:=		--prefix=$(TOOLCHAIN_DIR)/usr \
 			--without-cloog \
 			--without-isl \
 			--disable-werror \
-			--disable-nls
+			--disable-nls \
+			--enable-obsolete
 
 ifeq ($(ADK_TARGET_OS_LINUX),y)
 ifeq ($(ADK_TARGET_LIB_UCLIBC_NG),y)
