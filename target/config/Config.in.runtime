@@ -495,7 +495,7 @@ config ADK_BINSH_MKSH
 
 config ADK_BINSH_HUSH
 	bool "hush (busybox)"
-	select ADK_PACKAGE_HUSH if !ADK_APPLIANCE_TOOLCHAIN
+	select BUSYBOX_HUSH if !ADK_APPLIANCE_TOOLCHAIN
 	help
 	  hush shell.
 

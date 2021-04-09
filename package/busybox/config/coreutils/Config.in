@@ -114,7 +114,6 @@ config BUSYBOX_FEATURE_DATE_NANO
 	bool "Support %[num]N nanosecond format specifier"
 	default n # stat's nanosecond field is a bit non-portable
 	depends on BUSYBOX_DATE
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Support %[num]N format specifier. Adds ~250 bytes of code.
 
@@ -635,7 +634,6 @@ config BUSYBOX_FEATURE_STAT_FILESYSTEM
 	bool "Enable display of filesystem status (-f)"
 	default y
 	depends on BUSYBOX_STAT
-	select BUSYBOX_PLATFORM_LINUX # statfs()
 	help
 	Without this, stat will not support the '-f' option to display
 	information about filesystem status.
@@ -836,6 +834,11 @@ config BUSYBOX_UUDECODE
 	default y
 	help
 	uudecode is used to decode a uuencoded file.
+config BUSYBOX_BASE32
+	bool "base32 (4.9 kb)"
+	default y
+	help
+	Base32 encode and decode
 config BUSYBOX_BASE64
 	bool "base64 (4.9 kb)"
 	default y

@@ -9,7 +9,6 @@ menu "Miscellaneous Utilities"
 config BUSYBOX_ADJTIMEX
 	bool "adjtimex (4.7 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Adjtimex reads and optionally sets adjustment parameters for
 	the Linux clock adjustment algorithm.
@@ -122,7 +121,6 @@ endif
 config BUSYBOX_BEEP
 	bool "beep (2.4 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	The beep applets beeps in a given freq/Hz.
 
@@ -210,7 +208,6 @@ config BUSYBOX_FEATURE_CHAT_CLR_ABORT
 config BUSYBOX_CONSPY
 	bool "conspy (10 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	A text-mode VNC like program for Linux virtual terminals.
 	example:  conspy NUM      shared access to console num
@@ -276,7 +273,6 @@ config BUSYBOX_CRONTAB
 config BUSYBOX_DEVFSD
 	bool "devfsd (obsolete)"
 	default n
-	select BUSYBOX_PLATFORM_LINUX
 	select BUSYBOX_FEATURE_SYSLOG
 	help
 	This is deprecated and should NOT be used anymore.
@@ -319,7 +315,6 @@ config BUSYBOX_DEVFSD_VERBOSE
 config BUSYBOX_FEATURE_DEVFS
 	bool "Use devfs names for all devices (obsolete)"
 	default n
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	This is obsolete and should NOT be used anymore.
 	Use linux >= 2.6 (optionally with hotplug) and mdev instead!
@@ -337,7 +332,6 @@ config BUSYBOX_DEVMEM
 config BUSYBOX_FBSPLASH
 	bool "fbsplash (26 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Shows splash image and progress bar on framebuffer device.
 	Can be used during boot phase of an embedded device.
@@ -383,7 +377,6 @@ config BUSYBOX_FLASHCP
 config BUSYBOX_HDPARM
 	bool "hdparm (25 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Get/Set hard drive parameters. Primarily intended for ATA
 	drives.
@@ -445,35 +438,30 @@ config BUSYBOX_HEXEDIT
 config BUSYBOX_I2CGET
 	bool "i2cget (5.5 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Read from I2C/SMBus chip registers.
 
 config BUSYBOX_I2CSET
 	bool "i2cset (6.7 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Set I2C registers.
 
 config BUSYBOX_I2CDUMP
 	bool "i2cdump (7.1 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Examine I2C registers.
 
 config BUSYBOX_I2CDETECT
 	bool "i2cdetect (7.1 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Detect I2C chips.
 
 config BUSYBOX_I2CTRANSFER
 	bool "i2ctransfer (4.0 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Send user-defined I2C messages in one transfer.
 
@@ -582,7 +570,6 @@ config BUSYBOX_FEATURE_LESS_ENV
 config BUSYBOX_LSSCSI
 	bool "lsscsi (2.5 kb)"
 	default y
-	#select BUSYBOX_PLATFORM_LINUX
 	help
 	lsscsi is a utility for displaying information about SCSI buses in the
 	system and devices connected to them.
@@ -646,26 +633,22 @@ config BUSYBOX_MT
 config BUSYBOX_NANDWRITE
 	bool "nandwrite (4.8 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Write to the specified MTD device, with bad blocks awareness
 
 config BUSYBOX_NANDDUMP
 	bool "nanddump (5.2 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Dump the content of raw NAND chip
 config BUSYBOX_PARTPROBE
 	bool "partprobe (3.5 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Ask kernel to rescan partition table.
 config BUSYBOX_RAIDAUTORUN
 	bool "raidautorun (1.3 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	raidautorun tells the kernel md driver to
 	search and start RAID arrays.
@@ -673,7 +656,6 @@ config BUSYBOX_READAHEAD
 	bool "readahead (1.5 kb)"
 	default y
 	depends on BUSYBOX_LFS
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Preload the files listed on the command line into RAM cache so that
 	subsequent reads on these files will not block on disk I/O.
@@ -689,7 +671,6 @@ config BUSYBOX_READAHEAD
 config BUSYBOX_RFKILL
 	bool "rfkill (4.4 kb)"
 	default n # doesn't build on Ubuntu 9.04
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Enable/disable wireless devices.
 
@@ -710,7 +691,6 @@ config BUSYBOX_RUNLEVEL
 config BUSYBOX_RX
 	bool "rx (2.9 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Receive files using the Xmodem protocol.
 config BUSYBOX_SETFATTR
@@ -721,7 +701,6 @@ config BUSYBOX_SETFATTR
 config BUSYBOX_SETSERIAL
 	bool "setserial (6.9 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Retrieve or set Linux serial port.
 config BUSYBOX_STRINGS
@@ -751,48 +730,41 @@ config BUSYBOX_TTYSIZE
 config BUSYBOX_UBIATTACH
 	bool "ubiattach (4.2 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Attach MTD device to an UBI device.
 
 config BUSYBOX_UBIDETACH
 	bool "ubidetach (4.1 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Detach MTD device from an UBI device.
 
 config BUSYBOX_UBIMKVOL
 	bool "ubimkvol (5.3 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Create a UBI volume.
 
 config BUSYBOX_UBIRMVOL
 	bool "ubirmvol (4.9 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Delete a UBI volume.
 
 config BUSYBOX_UBIRSVOL
 	bool "ubirsvol (4.2 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Resize a UBI volume.
 
 config BUSYBOX_UBIUPDATEVOL
 	bool "ubiupdatevol (5.2 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Update a UBI volume.
 config BUSYBOX_UBIRENAME
 	bool "ubirename (2.4 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	Utility to rename UBI volumes
 config BUSYBOX_VOLNAME
@@ -803,7 +775,6 @@ config BUSYBOX_VOLNAME
 config BUSYBOX_WATCHDOG
 	bool "watchdog (5.3 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	The watchdog utility is used with hardware or software watchdog
 	device drivers. It opens the specified watchdog device special file

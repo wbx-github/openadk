@@ -23,7 +23,6 @@ config BUSYBOX_FEATURE_KLOGD_KLOGCTL
 	bool "Use the klogctl() interface"
 	default y
 	depends on BUSYBOX_KLOGD
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	The klogd applet supports two interfaces for reading
 	kernel messages. Linux provides the klogctl() interface
@@ -161,7 +160,6 @@ config BUSYBOX_FEATURE_KMSG_SYSLOG
 	bool "Linux kernel printk buffer support"
 	default y
 	depends on BUSYBOX_SYSLOGD
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	When you enable this feature, the syslogd utility will
 	write system log message to the Linux kernel's printk buffer.

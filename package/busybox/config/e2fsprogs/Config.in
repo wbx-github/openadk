@@ -21,7 +21,6 @@ config BUSYBOX_FSCK
 config BUSYBOX_LSATTR
 	bool "lsattr (5.5 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	lsattr lists the file attributes on a second extended file system.
 config BUSYBOX_TUNE2FS

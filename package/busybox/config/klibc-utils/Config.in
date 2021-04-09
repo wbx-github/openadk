@@ -24,7 +24,6 @@ config BUSYBOX_RESUME
 config BUSYBOX_RUN_INIT
 	bool "run-init (7.7 kb)"
 	default y
-	select BUSYBOX_PLATFORM_LINUX
 	help
 	The run-init utility is used from initramfs to select a new
 	root device. Under initramfs, you have to use this instead of
