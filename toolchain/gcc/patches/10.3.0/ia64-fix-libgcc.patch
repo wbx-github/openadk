@@ -1,0 +1,17 @@
+diff -Nur gcc-6.3.0.orig/libgcc/config/ia64/fde-glibc.c gcc-6.3.0/libgcc/config/ia64/fde-glibc.c
+--- gcc-6.3.0.orig/libgcc/config/ia64/fde-glibc.c	2016-01-04 15:30:50.000000000 +0100
++++ gcc-6.3.0/libgcc/config/ia64/fde-glibc.c	2017-03-05 13:07:33.316600613 +0100
+@@ -25,6 +25,8 @@
+ /* Locate the FDE entry for a given address, using glibc ld.so routines
+    to avoid register/deregister calls at DSO load/unload.  */
+ 
++#ifndef inhibit_libc
++
+ #ifndef _GNU_SOURCE
+ #define _GNU_SOURCE 1
+ #endif
+@@ -159,3 +161,4 @@
+ 
+   return data.ret;
+ }
++#endif
