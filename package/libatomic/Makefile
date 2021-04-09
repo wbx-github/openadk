@@ -25,7 +25,7 @@ libatomic-install:
 	$(INSTALL_DIR) ${IDIR_LIBATOMIC}/$(ADK_TARGET_LIBC_PATH)
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),)
 	# XXX: properly install libatomic
-	${CP} ${TOOLCHAIN_BUILD_DIR}/w-gcc*/gcc-*-final/*/libatomic/.libs/libatomic*.so* ${IDIR_LIBATOMIC}/$(ADK_TARGET_LIBC_PATH)
+	-${CP} ${TOOLCHAIN_BUILD_DIR}/w-gcc*/gcc-*-final/*/libatomic/.libs/libatomic*.so* ${IDIR_LIBATOMIC}/$(ADK_TARGET_LIBC_PATH)
 endif
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
