@@ -1,0 +1,12 @@
+diff -Nur linux-4.9.257.orig/arch/arm/boot/dts/stm32f429-disco.dts linux-4.9.257/arch/arm/boot/dts/stm32f429-disco.dts
+--- linux-4.9.257.orig/arch/arm/boot/dts/stm32f429-disco.dts	2021-02-10 09:09:27.000000000 +0100
++++ linux-4.9.257/arch/arm/boot/dts/stm32f429-disco.dts	2021-04-09 20:08:56.113152788 +0200
+@@ -53,7 +53,7 @@
+ 	compatible = "st,stm32f429i-disco", "st,stm32f429";
+ 
+ 	chosen {
+-		bootargs = "root=/dev/ram rdinit=/linuxrc";
++		bootargs = "";
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 

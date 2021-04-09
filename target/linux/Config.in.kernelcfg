@@ -44,6 +44,8 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "edosk2674_defconfig" if ADK_TARGET_SYSTEM_HITACHI_EDOSK2674
 	default "x86_64_defconfig" if ADK_TARGET_SYSTEM_GENERIC_X86_64
 	default "i386_defconfig" if ADK_TARGET_SYSTEM_GENERIC_X86
+	default "stm32_defconfig" if ADK_TARGET_SYSTEM_ST_STM32F429
+	default "stm32_defconfig" if ADK_TARGET_SYSTEM_ST_STM32F769
 	default ""
 
 config ADK_TARGET_LINUX_KERNEL_CUSTOMCONFIG_PATH
