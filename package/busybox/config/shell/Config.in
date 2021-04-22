@@ -88,7 +88,7 @@ config BUSYBOX_SHELL_ASH
 
 config BUSYBOX_ASH
 	bool "ash (78 kb)"
-	default y
+	default n
 	depends on !BUSYBOX_NOMMU
 	select BUSYBOX_SHELL_ASH
 	help
