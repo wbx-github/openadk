@@ -39,7 +39,7 @@ GCC_CONFOPTS:=		--prefix=$(TOOLCHAIN_DIR)/usr \
 			--target=$(GNU_TARGET_NAME) \
 			--with-gmp=$(STAGING_HOST_DIR)/usr \
 			--with-mpfr=$(STAGING_HOST_DIR)/usr \
-			--disable-__cxa_atexit \
+			--enable-__cxa_atexit \
 			--with-system-zlib \
 			--with-gnu-ld \
 			--with-gnu-as \
