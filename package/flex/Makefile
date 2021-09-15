@@ -12,7 +12,7 @@ PKG_SECTION:=		dev/tools
 PKG_BUILDDEP:=		m4-host
 HOST_BUILDDEP:=		m4-host bison-host patch-host libtool-host
 PKG_URL:=		https://github.com/westes/flex
-PKG_SITES:=		https://github.com/westes/flex/releases/download/v$(PKG_VERSION)/
+PKG_SITES:=		https://github.com/westes/flex/files/981163/
 PKG_OPTS:=		dev
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
