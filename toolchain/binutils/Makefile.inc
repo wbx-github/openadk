@@ -2,10 +2,10 @@
 # material, please see the LICENCE file in the top-level directory.
 
 PKG_NAME:=		binutils
-ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_36_1),y)
-PKG_VERSION:=		2.36.1
+ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_37),y)
+PKG_VERSION:=		2.37
 PKG_RELEASE:=		1
-PKG_HASH:=		e81d9edf373f193af428a0f256674aea62a9d74dfe93f65192d4eae030b0f3b0
+PKG_HASH:=		820d9724f020a3e69cb337893a0b63c2db161dadcb0e06fc11dc29eb1e84a32c
 PKG_SITES:=		${MASTER_SITE_GNU:=binutils/}
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
 endif
