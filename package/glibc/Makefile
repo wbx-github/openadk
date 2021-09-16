@@ -52,7 +52,7 @@ ifeq ($(ADK_TARGET_ARCH_RISCV64),y)
 endif
 	for file in libc libpthread librt libcrypt libdl libm libanl libnsl libresolv libutil libnss_dns libnss_files; do \
 		$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
-		$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file-$(PKG_GLIBCVER).so $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
+		#$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file-$(PKG_GLIBCVER).so $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
 	done
 else
 	${INSTALL_DIR} ${IDIR_GLIBC}/$(ADK_TARGET_LIBC_PATH)
