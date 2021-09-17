@@ -1,6 +1,6 @@
---- gnupg-1.4.10.orig/doc/Makefile.in	2009-09-02 18:20:22.000000000 +0200
-+++ gnupg-1.4.10/doc/Makefile.in	2011-02-24 15:30:49.000000000 +0100
-@@ -833,7 +833,7 @@ uninstall-man: uninstall-man1 uninstall-
+--- gnupg-1.4.23.orig/doc/Makefile.in	2018-06-11 10:47:56.000000000 +0200
++++ gnupg-1.4.23/doc/Makefile.in	2021-09-17 16:02:49.904418167 +0200
+@@ -952,7 +952,7 @@ uninstall-man: uninstall-man1
  
  
  yat2m: Makefile yat2m.c

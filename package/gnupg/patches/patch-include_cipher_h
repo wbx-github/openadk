@@ -1,0 +1,11 @@
+--- gnupg-1.4.23.orig/include/cipher.h	2016-04-22 09:30:18.000000000 +0200
++++ gnupg-1.4.23/include/cipher.h	2021-09-17 16:07:15.504427621 +0200
+@@ -117,6 +117,8 @@ typedef struct gcry_md_context *MD_HANDL
+ #ifndef EXTERN_UNLESS_MAIN_MODULE
+ #if defined (__riscos__) && !defined (INCLUDED_BY_MAIN_MODULE)
+ #define EXTERN_UNLESS_MAIN_MODULE extern
++#elif defined (__GNUC__) && __GNUC__ >= 10
++#define EXTERN_UNLESS_MAIN_MODULE __attribute__((__common__))
+ #else
+ #define EXTERN_UNLESS_MAIN_MODULE
+ #endif

@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gnupg
-PKG_VERSION:=		1.4.22
+PKG_VERSION:=		1.4.23
 PKG_RELEASE:=		1
-PKG_HASH:=		324f70b5df76a4825bce50d2b1702ec3a0fac0d681540bbea1c9aa1e39814fbc
+PKG_HASH:=		c9462f17e651b6507848c08c430c791287cd75491f8b5a8b50c6ed46b12678ba
 PKG_DESCR:=		gnu privacy guard
 PKG_SECTION:=		app/crypto
 PKG_DEPENDS:=		libreadline libncurses
@@ -14,7 +14,7 @@ PKG_BUILDDEP:=		readline ncurses
 PKG_URL:=		http://www.gnupg.org/
 PKG_SITES:=		ftp://ftp.gnupg.org/gcrypt/gnupg/
 
-DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
 PKG_SUBPKGS:=		GNUPG GPGV
  
