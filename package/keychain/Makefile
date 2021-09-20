@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		keychain
-PKG_VERSION:=		2.7.1
+PKG_VERSION:=		2.8.5
 PKG_RELEASE:=		1
-PKG_HASH:=		1107fe3f78f6429d4861d64c5666f068f159326d22ab80a8ed0948cb25375191
+PKG_HASH:=		dcce703e5001211c8ebc0528f45b523f84d2bceeb240600795b4d80cb8475a0b
 PKG_DESCR:=		manage ssh and gpg keys in a secure manner
 PKG_SECTION:=		app/crypto
 PKG_URL:=		http://www.funtoo.org/en/security/keychain/intro/
-PKG_SITES:=		http://www.funtoo.org/archive/keychain/
+PKG_SITES:=		https://github.com/funtoo/keychain/archive/refs/tags/
 
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
+DISTFILES:=             ${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
