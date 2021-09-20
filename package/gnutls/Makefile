@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gnutls
-PKG_VERSION:=		3.5.18
+PKG_VERSION:=		3.6.16
 PKG_RELEASE:=		1
-PKG_HASH:=		ae2248d9e78747cf9c469dde81ff8f90b56838b707a0637f3f7d4eee90e80234
+PKG_HASH:=		1b79b381ac283d8b054368b335c408fedcb9b7144e0c07f531e3537d4328f3b3
 PKG_DESCR:=		transport layer security library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgcrypt libtasn1 zlib libnettle libgmp libunistring
 PKG_BUILDDEP:=		libgcrypt liblzo libtasn1
 PKG_BUILDDEP+=		zlib ncurses libnettle libunistring
 PKG_URL:=		http://www.gnutls.org/
-PKG_SITES:=		https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/
+PKG_SITES:=		https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/
 PKG_LIBNAME:=		libgnutls
 PKG_OPTS:=		dev
 
@@ -39,6 +39,8 @@ endif
 TARGET_LDFLAGS+=	-pthread
 CONFIGURE_ARGS+=	--disable-rpath \
 			--disable-doc \
+			--disable-tests \
+			--disable-seccomp-tests \
 			--with-libunistring-prefix='$(STAGING_TARGET_DIR)/usr' \
 			--without-libz-prefix \
 			--without-p11-kit

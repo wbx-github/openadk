@@ -6,7 +6,7 @@ include $(ADK_TOPDIR)/rules.mk
 PKG_NAME:=		pinentry
 PKG_VERSION:=		1.2.0
 PKG_RELEASE:=		1
-PKG_HASH:=		e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+PKG_HASH:=		10072045a3e043d0581f91cd5676fcac7ffee957a16636adedaa4f583a616470
 PKG_DESCR:=		pinentry application
 PKG_SECTION:=		app/crypto
 PKG_URL:=		https://www.gnupg.org
