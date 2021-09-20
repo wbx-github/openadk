@@ -1,0 +1,11 @@
+--- libgcrypt-1.9.4.orig/cipher/Makefile.in	2021-08-22 18:00:24.000000000 +0200
++++ libgcrypt-1.9.4/cipher/Makefile.in	2021-09-20 10:06:00.483879720 +0200
+@@ -1370,7 +1370,7 @@ gost-sb.h: gost-s-box
+ 
+ gost-s-box: gost-s-box.c
+ 	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) \
+-	    $(CPPFLAGS_FOR_BUILD)-o $@ $(srcdir)/gost-s-box.c
++	    $(CPPFLAGS_FOR_BUILD) -o $@ $(srcdir)/gost-s-box.c
+ 
+ # We need to lower the optimization for this module.
+ tiger.o: $(srcdir)/tiger.c Makefile

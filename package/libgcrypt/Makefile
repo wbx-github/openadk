@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libgcrypt
-PKG_VERSION:=		1.8.2
+PKG_VERSION:=		1.9.4
 PKG_RELEASE:=		1
-PKG_HASH:=		c8064cae7558144b13ef0eb87093412380efa16c4ee30ad12ecb54886a524c07
+PKG_HASH:=		ea849c83a72454e3ed4267697e8ca03390aee972ab421e7df69dfe42b65caaf7
 PKG_DESCR:=		crypto library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgpg-error
@@ -22,6 +22,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,LIBGCRYPT,libgcrypt,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
 CONFIGURE_ARGS+=	--disable-asm \
+			--disable-doc \
 			--with-gpg-error-prefix="$(STAGING_TARGET_DIR)/usr"
 
 libgcrypt-install:

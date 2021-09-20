@@ -1,0 +1,11 @@
+--- libgpg-error-1.42.orig/src/gen-lock-obj.sh	2021-03-04 11:05:29.000000000 +0100
++++ libgpg-error-1.42/src/gen-lock-obj.sh	2021-09-17 16:43:42.304505465 +0200
+@@ -38,7 +38,7 @@
+ #     AWK=gawk ./gen-lock-obj.sh
+ #
+ 
+-if test -n `echo -n`; then
++if test -n "`echo -n`"; then
+     ECHO_C='\c'
+     ECHO_N=''
+ else

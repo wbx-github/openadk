@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gnupg2
-PKG_VERSION:=		2.2.7
+PKG_VERSION:=		2.3.2
 PKG_RELEASE:=		1
-PKG_HASH:=		d95b361ee6ef7eff86af40c8c72bf9313736ac9f7010d6604d78bf83818e976e
+PKG_HASH:=		e1d953e0e296072fca284215103ef168885eaac596c4660c5039a36a83e3041b
 PKG_DESCR:=		gnu privacy guard (modern)
 PKG_SECTION:=		app/crypto
 PKG_DEPENDS:=		libreadline libncurses libgcrypt libgpg-error libassuan
-PKG_DEPENDS+=		libksba npth
+PKG_DEPENDS+=		libksba npth pinentry
 PKG_BUILDDEP:=		readline ncurses libgcrypt libgpg-error libassuan
 PKG_BUILDDEP+=		libksba npth
 PKG_NEEDS:=		iconv
@@ -35,7 +35,9 @@ CONFIGURE_ARGS+=	--disable-dirmngr \
 			--disable-exec \
 			--disable-ldap \
 			--disable-rpath \
-			--disable-regex
+			--disable-regex \
+			--disable-tests \
+			--disable-doc
 
 gpgv2-install:
 	$(INSTALL_DIR) $(IDIR_GPGV2)/usr/bin
@@ -45,6 +47,7 @@ gpgv2-install:
 gnupg2-install:
 	$(INSTALL_DIR) $(IDIR_GNUPG2)/usr/bin/
 	$(INSTALL_BIN) $(WRKBUILD)/g10/gpg $(IDIR_GNUPG2)/usr/bin/
+	$(INSTALL_BIN) $(WRKBUILD)/agent/gpg-agent $(IDIR_GNUPG2)/usr/bin/
 	# we need root privileges for secure memory (locked pages)
 	chmod u+s $(IDIR_GNUPG2)/usr/bin/gpg
 
