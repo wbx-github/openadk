@@ -1,0 +1,8 @@
+--- ninja-1.8.2.orig/configure.py	2017-09-11 03:20:10.000000000 +0200
++++ ninja-1.8.2/configure.py	2021-09-21 11:39:51.729841404 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ # Copyright 2001 Google Inc. All Rights Reserved.
+ #
