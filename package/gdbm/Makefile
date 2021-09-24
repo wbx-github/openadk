@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gdbm
-PKG_VERSION:=		1.12
+PKG_VERSION:=		1.21
 PKG_RELEASE:=		1
-PKG_HASH:=		d97b2166ee867fd6ca5c022efee80702d6f30dd66af0e03ed092285c3af9bcea
+PKG_HASH:=		b0b7dbdefd798de7ddccdd8edf6693a30494f7789777838042991ef107339cc2
 PKG_DESCR:=		disk file format database
 PKG_SECTION:=		libs/db
 PKG_URL:=		http://www.gnu.org/software/gdbm/
