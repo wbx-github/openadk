@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		cmake
-PKG_VERSION:=		3.8.2
+PKG_VERSION:=		3.21.3
 PKG_RELEASE:=		1
-PKG_HASH:=		da3072794eb4c09f2d782fcee043847b99bb4cf8d4573978d9b2024214d6e92d
+PKG_HASH:=		e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 PKG_DESCR:=		build utility
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		curl-host
 PKG_URL:=		http://www.cmake.org/
-PKG_SITES:=		http://www.cmake.org/files/v3.8/
+PKG_SITES:=		https://github.com/Kitware/CMake/releases/download/v3.21.3/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
