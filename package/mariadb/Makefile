@@ -4,13 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		mariadb
-PKG_VERSION:=		10.1.25
+PKG_VERSION:=		10.6.4
 PKG_RELEASE:=		1
-PKG_HASH:=		7205ecaa6f1bc16335ad88faa5c46be52b3ac628a5e795cb942a3f4335b2a0d6
+PKG_HASH:=		75bf9b147a95d38160d01a73b098d50a1960563b46d16a235971fff64d99643c
 PKG_DESCR:=		sql client library
 PKG_SECTION:=		libs/db
-PKG_DEPENDS:=		libncurses zlib libevent libpcre
+PKG_DEPENDS:=		libncurses zlib libevent libpcre boost
 PKG_BUILDDEP:=		cmake-host mariadb-host ncurses zlib readline libevent pcre libressl
+PKG_BUILDDEP+=		boost
 HOST_BUILDDEP:=		cmake-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.mariadb.org/
@@ -39,13 +40,13 @@ CMAKE_FLAGS+=		-DCMAKE_CROSSCOMPILING=ON \
 			-DIMPORT_EXECUTABLES=${BASE_DIR}/host_build_${GNU_HOST_NAME}/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)-host/$(PKG_NAME)-$(PKG_VERSION)/import_executables.cmake \
 			-DWITH_SSL=system \
 			-DWITHOUT_SERVER=OFF \
+			-DWITH_SYSTEMD=auto \
 			-DSECURITY_HARDENED=OFF \
 			-DWITHOUT_DYNAMIC_PLUGINS=ON \
 			-DWITHOUT_MROONGA=ON \
 			-DWITHOUT_TOKUDB=ON \
 			-DSTACK_DIRECTION=-1 \
 			-DWITH_JEMALLOC=OFF \
-			-DWITH_SYSTEMD=OFF \
 			-DWITH_UNIT_TESTS=OFF
 
 host-configure:
