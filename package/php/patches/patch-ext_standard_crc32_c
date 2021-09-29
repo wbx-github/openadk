@@ -1,0 +1,38 @@
+--- php-7.4.24.orig/ext/standard/crc32.c	2021-09-21 13:23:20.000000000 +0200
++++ php-7.4.24/ext/standard/crc32.c	2021-09-29 10:27:37.144637295 +0200
+@@ -23,7 +23,6 @@
+ #if HAVE_AARCH64_CRC32
+ # include <arm_acle.h>
+ # if defined(__linux__)
+-#  include <sys/auxv.h>
+ #  include <asm/hwcap.h>
+ # endif
+ 
+@@ -32,13 +31,6 @@ static inline int has_crc32_insn() {
+ 	static int res = -1;
+ 	if (res != -1)
+ 		return res;
+-# if defined(HWCAP_CRC32)
+-	res = getauxval(AT_HWCAP) & HWCAP_CRC32;
+-	return res;
+-# elif defined(HWCAP2_CRC32)
+-	res = getauxval(AT_HWCAP2) & HWCAP2_CRC32;
+-	return res;
+-# else
+ 	res = 0;
+ 	return res;
+ # endif
+@@ -85,13 +77,6 @@ PHP_NAMED_FUNCTION(php_if_crc32)
+ 
+ 	crc = crcinit^0xFFFFFFFF;
+ 
+-#if HAVE_AARCH64_CRC32
+-	if (has_crc32_insn()) {
+-		crc = crc32_aarch64(crc, p, nr);
+-		RETURN_LONG(crc^0xFFFFFFFF);
+-	}
+-#endif
+-
+ 	for (; nr--; ++p) {
+ 		crc = ((crc >> 8) & 0x00FFFFFF) ^ crc32tab[(crc ^ (*p)) & 0xFF ];
+ 	}

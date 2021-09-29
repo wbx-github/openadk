@@ -4,11 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		php
-PKG_VERSION:=		7.4.11
+PKG_VERSION:=		7.4.24
 PKG_RELEASE:=		1
-PKG_HASH:=		5d31675a9b9c21b5bd03389418218c30b26558246870caba8eb54f5856e2d6ce
+PKG_HASH:=		ff7658ee2f6d8af05b48c21146af5f502e121def4e76e862df5ec9fa06e98734
 PKG_DESCR:=		php language interpreter
 PKG_SECTION:=		dev/lang
+PKG_BUILDDEP:=		libpng
+PKG_DEPENDS:=		libpng
 PKG_NEEDS:=		threads
 PHP_URL:=		http://www.php.net/
 PKG_SITES:=		http://de2.php.net/distributions/
@@ -146,6 +148,7 @@ PKG_CONFIGURE_OPTS+=	--without-ldap
 endif
 ifneq ($(ADK_PACKAGE_PHP_MOD_MARIADB),)
 PKG_CONFIGURE_OPTS+=	--with-pdo-mysql=shared,"$(STAGING_TARGET_DIR)/usr"
+TARGET_CFLAGS+=		-I$(STAGING_TARGET_DIR)/usr/include/mysql
 else
 PKG_CONFIGURE_OPTS+=	--without-pdo-mysql
 endif
