@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libcap
-PKG_VERSION:=		2.44
+PKG_VERSION:=		2.59
 PKG_RELEASE:=		1
-PKG_HASH:=		92188359cd5be86e8e5bd3f6483ac6ce582264f912398937ef763def2205c8e1
+PKG_HASH:=		49f64ae40b113e53cbc161e22af7094e3bb4a0611fa33ef5a4257b011779f034
 PKG_DESCR:=		capabilities library
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.friedhoff.org/posixfilecaps.html

@@ -1,5 +1,5 @@
---- libcap-2.44.orig/Make.Rules	2020-10-05 03:42:13.000000000 +0200
-+++ libcap-2.44/Make.Rules	2020-10-18 13:17:04.354503478 +0200
+--- libcap-2.59.orig/Make.Rules	2021-09-27 03:18:19.000000000 +0200
++++ libcap-2.59/Make.Rules	2021-10-12 14:15:43.966424789 +0200
 @@ -18,7 +18,7 @@ FAKEROOT=$(DESTDIR)
  # administrative operations that could be needed to recover a system.
  
@@ -8,4 +8,4 @@
 +lib=/usr/lib
  endif
  
- ifdef prefix
+ ifndef sbin

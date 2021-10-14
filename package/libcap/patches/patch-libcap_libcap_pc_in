@@ -1,5 +1,5 @@
---- libcap-2.25.orig/libcap/libcap.pc.in	2013-12-24 18:08:53.000000000 +0100
-+++ libcap-2.25/libcap/libcap.pc.in	2018-01-01 20:11:08.911444653 +0100
+--- libcap-2.59.orig/libcap/libcap.pc.in	2020-07-01 04:43:01.000000000 +0200
++++ libcap-2.59/libcap/libcap.pc.in	2021-10-12 14:15:43.958424789 +0200
 @@ -1,7 +1,7 @@
  prefix=@prefix@
 -exec_prefix=@exec_prefix@
@@ -10,4 +10,4 @@
 +includedir=${prefix}/include
  
  Name: libcap
- Description: libcap
+ Description: libcap - linux capabilities library

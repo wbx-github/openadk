@@ -1,0 +1,11 @@
+--- libcap-2.59.orig/libcap/Makefile	2021-09-18 05:56:21.000000000 +0200
++++ libcap-2.59/libcap/Makefile	2021-10-12 14:20:14.254434411 +0200
+@@ -76,7 +76,7 @@ $(PSXTITLE).pc: $(PSXTITLE).pc.in
+ 		$< >$@
+ 
+ _makenames: _makenames.c cap_names.list.h
+-	$(BUILD_CC) $(BUILD_CFLAGS) $(BUILD_CPPFLAGS) $< -o $@
++	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(CPPFLAGS_FOR_BUILD) $< -o $@
+ 
+ cap_names.h: _makenames
+ 	./_makenames > cap_names.h
