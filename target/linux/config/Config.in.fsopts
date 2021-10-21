@@ -9,4 +9,7 @@ config ADK_LINUX_KERNEL_INOTIFY_USER
 config ADK_LINUX_KERNEL_DNOTIFY
 	bool "Enable DNOTIFY"
 
+config ADK_LINUX_KERNEL_FANOTIFY
+	bool "Enable FANOTIFY"
+
 endmenu

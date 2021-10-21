@@ -4,16 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		systemd
-PKG_VERSION:=		246
-PKG_RELEASE:=		2
-PKG_HASH:=		4268bd88037806c61c5cd1c78d869f7f20bf7e7368c63916d47b5d1c3411bd6f
+PKG_VERSION:=		249
+PKG_RELEASE:=		1
+PKG_HASH:=		174091ce5f2c02123f76d546622b14078097af105870086d18d55c1c2667d855
 PKG_DESCR:=		system and service manager
 PKG_SECTION:=		base/init
 PKG_DEPENDS:=		libcap libmount libuuid libblkid libncurses libkmod
 PKG_BUILDDEP:=		intltool-host gperf-host libcap util-linux
-PKG_BUILDDEP+=		gettext-host kmod meson-host ninja-host
+PKG_BUILDDEP+=		python3-host gettext-host kmod meson-host ninja-host
+PKG_BUILDDEP+=		python3-jinja2-host
 PKG_KDEPENDS:=		inotify-user cgroups namespaces fhandle tmpfs-posix-acl tmpfs-xattr
-PKG_KDEPENDS+=		uts-ns autofs4-fs
+PKG_KDEPENDS+=		uts-ns autofs4-fs fanotify
 PKG_NEEDS:=		locale intl
 PKG_URL:=		https://wiki.freedesktop.org/www/Software/systemd/
 PKG_SITES:=		https://github.com/systemd/systemd/archive/
@@ -64,7 +65,8 @@ MESON_FLAGS+=		-Drootlibdir='/usr/lib' \
 			-Dacl=false \
 			-Daudit=false \
 			-Didn=false \
-			-Dnss-systemd=false \
+			-Dmode=release \
+			-Dnss-systemd=true \
 			-Dresolve=false \
 			-Dseccomp=false \
 			-Dxkbcommon=false \
@@ -90,7 +92,7 @@ MESON_FLAGS+=		-Drootlibdir='/usr/lib' \
 			-Dsmack=false \
 			-Dsysusers=false \
 			-Dhibernate=false \
-			-Dpolkit=false \
+			-Dpolkit=true \
 			-Dnetworkd=true \
 			-Dtimesyncd=true \
 			-Dtmpfiles=true \
@@ -148,6 +150,6 @@ systemd-install:
 		$(IDIR_SYSTEMD)/etc/systemd/network
 	(cd $(IDIR_SYSTEMD)/lib/systemd/system && ln -sf multi-user.target default.target)
 	$(CP) $(WRKBUILD)/systemd $(IDIR_SYSTEMD)/usr/lib/systemd/
-	mv $(IDIR_SYSTEMD)/lib/systemd/libsystemd-shared-246.so $(IDIR_SYSTEMD)/lib
+	mv $(IDIR_SYSTEMD)/lib/systemd/libsystemd-shared-249.so $(IDIR_SYSTEMD)/lib
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk

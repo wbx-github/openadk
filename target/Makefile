@@ -56,7 +56,7 @@ ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_VGA_ONLY),y)
 		$(BUILD_DIR)/.kernelconfig.board
 endif
 ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_SERIAL_ONLY),y)
-	$(SED) 's#^\(CONFIG_.*CMDLINE="\)\(.*\)"#\1\2 console=$(ADK_RUNTIME_CONSOLE_SERIAL_DEVICE),$(ADK_RUNTIME_CONSOLE_SERIAL_SPEED)"#' \
+	$(SED) 's#^\(CONFIG_.*CMDLINE="\)\(.*\)"#\1\2 console=$(ADK_RUNTIME_CONSOLE_SERIAL_DEVICE),$(ADK_RUNTIME_CONSOLE_SERIAL_SPEED)" systemd.log_level=debug systemd.log_target=console#' \
 		$(BUILD_DIR)/.kernelconfig.board
 endif
 ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_VGA_SERIAL),y)
