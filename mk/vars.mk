@@ -236,11 +236,9 @@ endif
 
 # special architecture optimization flags
 ifeq ($(ADK_TARGET_ARCH_XTENSA),y)
-ifeq ($(ADK_TARGET_BIG_ENDIAN),)
 ifeq ($(ADK_TARGET_LIB_NEWLIB),)
 TARGET_CFLAGS+=		-mlongcalls -mauto-litpools
 TARGET_CXXFLAGS+=	-mlongcalls -mauto-litpools
-endif
 endif
 endif
 ifeq ($(ADK_TARGET_ARCH_MICROBLAZE),y)
