@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2019.10
+PKG_VERSION:=		2021.10
 PKG_RELEASE:=		1
-PKG_HASH:=		8d6d6070739522dd236cba7055b8736bfe92b4fac0ea18ad809829ca79667014
+PKG_HASH:=		cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host
