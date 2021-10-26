@@ -1,0 +1,81 @@
+diff -Nur linux-5.4.155.orig/arch/arm/include/asm/mach/map.h linux-5.4.155/arch/arm/include/asm/mach/map.h
+--- linux-5.4.155.orig/arch/arm/include/asm/mach/map.h	2021-10-20 11:40:18.000000000 +0200
++++ linux-5.4.155/arch/arm/include/asm/mach/map.h	2021-10-26 11:20:50.164712192 +0200
+@@ -59,6 +59,7 @@
+ #else
+ #define iotable_init(map,num)	do { } while (0)
+ #define vm_reserve_area_early(a,s,c)	do { } while (0)
++#define debug_ll_io_init()	do { } while (0)
+ #endif
+ 
+ #endif
+diff -Nur linux-5.4.155.orig/arch/arm/Kconfig linux-5.4.155/arch/arm/Kconfig
+--- linux-5.4.155.orig/arch/arm/Kconfig	2021-10-20 11:40:18.000000000 +0200
++++ linux-5.4.155/arch/arm/Kconfig	2021-10-26 11:20:50.164712192 +0200
+@@ -340,6 +340,17 @@
+ 	select SPARSE_IRQ
+ 	select USE_OF
+ 
++config ARM_SINGLE_ARCH_VERSATILE
++	bool "ARM Ltd. Versatile family"
++	depends on !MMU
++	select AUTO_ZRELADDR
++	select CLKSRC_OF
++	select COMMON_CLK
++	select GENERIC_CLOCKEVENTS
++	select GPIOLIB
++	select SPARSE_IRQ
++	select USE_OF
++
+ config ARCH_EBSA110
+ 	bool "EBSA-110"
+ 	select ARCH_USES_GETTIMEOFFSET
+diff -Nur linux-5.4.155.orig/arch/arm/Kconfig.debug linux-5.4.155/arch/arm/Kconfig.debug
+--- linux-5.4.155.orig/arch/arm/Kconfig.debug	2021-10-20 11:40:18.000000000 +0200
++++ linux-5.4.155/arch/arm/Kconfig.debug	2021-10-26 11:20:50.168712192 +0200
+@@ -1878,7 +1878,8 @@
+ config UNCOMPRESS_INCLUDE
+ 	string
+ 	default "debug/uncompress.h" if ARCH_MULTIPLATFORM || ARCH_MSM || \
+-					PLAT_SAMSUNG || ARM_SINGLE_ARMV7M
++					PLAT_SAMSUNG || ARM_SINGLE_ARMV7M || \
++					ARM_SINGLE_ARCH_VERSATILE
+ 	default "mach/uncompress.h"
+ 
+ config EARLY_PRINTK
+diff -Nur linux-5.4.155.orig/arch/arm/mach-versatile/Kconfig linux-5.4.155/arch/arm/mach-versatile/Kconfig
+--- linux-5.4.155.orig/arch/arm/mach-versatile/Kconfig	2021-10-20 11:40:18.000000000 +0200
++++ linux-5.4.155/arch/arm/mach-versatile/Kconfig	2021-10-26 11:20:50.168712192 +0200
+@@ -1,7 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
+ config ARCH_VERSATILE
+-	bool "ARM Ltd. Versatile family"
+-	depends on ARCH_MULTI_V5
++	bool "ARM Ltd. Versatile family" if ARCH_MULTI_V5
++	depends on ARCH_MULTI_V5 || ARM_SINGLE_ARCH_VERSATILE
++	default y if ARM_SINGLE_ARCH_VERSATILE
+ 	select ARM_AMBA
+ 	select ARM_TIMER_SP804
+ 	select ARM_VIC
+diff -Nur linux-5.4.155.orig/arch/arm/mach-versatile/Makefile.boot linux-5.4.155/arch/arm/mach-versatile/Makefile.boot
+--- linux-5.4.155.orig/arch/arm/mach-versatile/Makefile.boot	1970-01-01 01:00:00.000000000 +0100
++++ linux-5.4.155/arch/arm/mach-versatile/Makefile.boot	2021-10-26 11:20:50.168712192 +0200
+@@ -0,0 +1,3 @@
++# Empty file waiting for deletion once Makefile.boot isn't needed any more.
++# Patch waits for application at
++# http://www.arm.linux.org.uk/developer/patches/viewpatch.php?id=7889/1 .
+diff -Nur linux-5.4.155.orig/arch/arm/mach-versatile/versatile_dt.c linux-5.4.155/arch/arm/mach-versatile/versatile_dt.c
+--- linux-5.4.155.orig/arch/arm/mach-versatile/versatile_dt.c	2021-10-20 11:40:18.000000000 +0200
++++ linux-5.4.155/arch/arm/mach-versatile/versatile_dt.c	2021-10-26 11:20:50.168712192 +0200
+@@ -22,7 +22,11 @@
+ #include <asm/mach/map.h>
+ 
+ /* macro to get at MMIO space when running virtually */
++#ifdef CONFIG_MMU
+ #define IO_ADDRESS(x)		(((x) & 0x0fffffff) + (((x) >> 4) & 0x0f000000) + 0xf0000000)
++#else
++#define IO_ADDRESS(x)		(x)
++#endif
+ #define __io_address(n)		((void __iomem __force *)IO_ADDRESS(n))
+ 
+ /*
