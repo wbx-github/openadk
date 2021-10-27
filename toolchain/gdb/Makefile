@@ -29,6 +29,7 @@ $(WRKBUILD)/.configured:
 		--build=$(GNU_HOST_NAME) \
 		--host=$(GNU_HOST_NAME) \
 		--target=$(GNU_TARGET_NAME) \
+		--with-libgmp-prefix='${STAGING_HOST_DIR}/usr' \
 		--disable-dependency-tracking \
 		--without-uiout \
 		--enable-gdbmi \
