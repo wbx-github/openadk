@@ -31,7 +31,7 @@ TARGET_CFLAGS:=	$(filter-out -static,$(TARGET_CFLAGS))
 TARGET_LDFLAGS:=$(filter-out -static,$(TARGET_LDFLAGS))
 endif
 
-ifeq ($(ADK_TARGET_BINFMT_FLAT)$(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
+ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 CONFIGURE_ARGS+=	--with-static
 else
 CONFIGURE_ARGS+=	--with-shared
