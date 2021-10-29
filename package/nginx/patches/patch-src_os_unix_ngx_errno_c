@@ -1,5 +1,5 @@
---- nginx-1.2.2.orig/src/os/unix/ngx_errno.c	2012-07-02 18:51:02.000000000 +0200
-+++ nginx-1.2.2/src/os/unix/ngx_errno.c	2012-07-16 09:32:48.000000000 +0200
+--- nginx-1.21.3.orig/src/os/unix/ngx_errno.c	2021-09-07 17:21:03.000000000 +0200
++++ nginx-1.21.3/src/os/unix/ngx_errno.c	2021-10-29 14:50:09.101546624 +0200
 @@ -8,6 +8,9 @@
  #include <ngx_config.h>
  #include <ngx_core.h>
@@ -8,5 +8,5 @@
 +#define NGX_SYS_NERR  128
 +#endif
  
- /*
-  * The strerror() messages are copied because:
+ static ngx_str_t   ngx_unknown_error = ngx_string("Unknown error");
+ 

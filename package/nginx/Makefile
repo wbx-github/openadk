@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nginx
-PKG_VERSION:=		1.12.0
+PKG_VERSION:=		1.21.3
 PKG_RELEASE:=		1
-PKG_HASH:=		b4222e26fdb620a8d3c3a3a8b955e08b713672e1bc5198d1e4f462308a795b30
+PKG_HASH:=		14774aae0d151da350417efc4afda5cce5035056e71894836797e1f6e2d1175a
 PKG_DESCR:=		powerful http reverse proxy and webserver
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		pcre zlib
@@ -47,7 +47,8 @@ CONFIGURE_ARGS:=        --prefix=/srv/www \
                         --http-proxy-temp-path=/var/lib/nginx/proxy \
                         --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
 			--http-scgi-temp-path=/var/lib/nginx/uwsgi \
-			--http-uwsgi-temp-path=/var/lib/nginx/uwsgi
+			--http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
+			--without-http_upstream_zone_module
 
 ifeq ($(ADK_PACKAGE_NGINX_WITH_LIBRESSL),y)
 CONFIGURE_ARGS+=	--with-http_ssl_module
