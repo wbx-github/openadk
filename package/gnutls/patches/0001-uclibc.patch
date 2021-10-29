@@ -1,0 +1,32 @@
+diff -ur gnutls-3.6.16.orig/gl/fopen.c gnutls-3.6.16/gl/fopen.c
+--- gnutls-3.6.16.orig/gl/fopen.c	2021-05-24 10:04:41.000000000 +0200
++++ gnutls-3.6.16/gl/fopen.c	2021-10-29 14:28:33.850290352 +0200
+@@ -19,12 +19,10 @@
+ /* If the user's config.h happens to include <stdio.h>, let it include only
+    the system's <stdio.h> here, so that orig_fopen doesn't recurse to
+    rpl_fopen.  */
+-#define __need_FILE
+ #include <config.h>
+ 
+ /* Get the original definition of fopen.  It might be defined as a macro.  */
+ #include <stdio.h>
+-#undef __need_FILE
+ 
+ static FILE *
+ orig_fopen (const char *filename, const char *mode)
+diff -ur gnutls-3.6.16.orig/src/gl/fopen.c gnutls-3.6.16/src/gl/fopen.c
+--- gnutls-3.6.16.orig/src/gl/fopen.c	2021-05-24 10:05:13.000000000 +0200
++++ gnutls-3.6.16/src/gl/fopen.c	2021-10-29 14:28:41.435290892 +0200
+@@ -19,12 +19,10 @@
+ /* If the user's config.h happens to include <stdio.h>, let it include only
+    the system's <stdio.h> here, so that orig_fopen doesn't recurse to
+    rpl_fopen.  */
+-#define __need_FILE
+ #include <config.h>
+ 
+ /* Get the original definition of fopen.  It might be defined as a macro.  */
+ #include <stdio.h>
+-#undef __need_FILE
+ 
+ static FILE *
+ orig_fopen (const char *filename, const char *mode)
