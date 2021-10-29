@@ -43,6 +43,7 @@ CONFIGURE_ARGS+=	--enable-static \
 			--with-system-zlib \
 			--with-system-readline \
 			--with-curses \
+			--with-libexpat-prefix="${STAGING_TARGET_DIR}/usr" \
 			--enable-gdbmi
 
 gdb-install:
