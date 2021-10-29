@@ -1,0 +1,12 @@
+--- libuv-1.42.0.orig/libuv.pc.in	2021-07-20 04:44:04.000000000 +0200
++++ libuv-1.42.0/libuv.pc.in	2021-10-29 13:40:49.561398557 +0200
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+ exec_prefix=${prefix}
+-libdir=@libdir@
+-includedir=@includedir@
++libdir=${prefix}/@libdir@
++includedir=${prefix}/@includedir@
+ 
+ Name: libuv
+ Version: @PACKAGE_VERSION@

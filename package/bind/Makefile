@@ -4,20 +4,18 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		bind
-PKG_VERSION:=		9.10.4
+PKG_VERSION:=		9.16.22
 PKG_RELEASE:=		1
-PKG_HASH:=		f8d412b38d5ac390275b943bde69f4608f67862a45487ec854b30e4448fcb056
+PKG_HASH:=		65e7b2af6479db346e2fc99bcfb6ec3240066468e09dbec575ebc7c57d994061
 PKG_DESCR:=		dns server
 PKG_SECTION:=		net/dns
-PKG_DEPENDS:=		libxml2 libressl
-PKG_BUILDDEP:=		libxml2 libressl
+PKG_DEPENDS:=		libxml2 libressl libuv libressl-util
+PKG_BUILDDEP:=		libxml2 libressl libuv
 PKG_NEEDS:=		c++
 PKG_URL:=		https://www.isc.org/software/bind/
 PKG_SITES:=		ftp://ftp.isc.org/isc/bind9/${PKG_VERSION}/
 PKG_LIBNAME:=		libbind
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 PKG_SUBPKGS:=		LIBBIND BIND_SERVER BIND_NSUPDATE BIND_RNDC BIND_CHECK BIND_DNSSEC BIND_HOST BIND_DIG
 PKGSD_LIBBIND:=		library for the bind software suite
@@ -67,7 +65,8 @@ CONFIGURE_ARGS+=	--with-randomdev=/dev/urandom \
 			--with-gost=no \
 			--with-gssapi=no \
 			--with-openssl=${STAGING_TARGET_DIR}/usr \
-			--with-libxml2=${STAGING_TARGET_DIR}/usr \
+			--without-python \
+			--disable-linux-caps \
 			--enable-epoll \
 			--with-libtool
 
@@ -116,11 +115,12 @@ bind-dig-install:
 
 libbind-install:
 	${INSTALL_DIR} ${IDIR_LIBBIND}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libbind9.so.* ${IDIR_LIBBIND}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libdns.so.* ${IDIR_LIBBIND}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libisccc.so.* ${IDIR_LIBBIND}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libisccfg.so.* ${IDIR_LIBBIND}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libisc.so.* ${IDIR_LIBBIND}/usr/lib
-	${CP} ${WRKINST}/usr/lib/liblwres.so.* ${IDIR_LIBBIND}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libbind9*.so ${IDIR_LIBBIND}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libdns*.so ${IDIR_LIBBIND}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libisccc*.so ${IDIR_LIBBIND}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libisccfg*.so ${IDIR_LIBBIND}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libisc*.so ${IDIR_LIBBIND}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libirs*.so ${IDIR_LIBBIND}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libns*.so ${IDIR_LIBBIND}/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

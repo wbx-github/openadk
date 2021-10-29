@@ -1,0 +1,14 @@
+--- bind-9.16.22.orig/lib/isc/backtrace.c	2021-10-13 12:56:16.000000000 +0200
++++ bind-9.16.22/lib/isc/backtrace.c	2021-10-29 13:57:20.009433814 +0200
+@@ -80,10 +80,7 @@ isc_backtrace_gettrace(void **addrs, int
+ 	return (ISC_R_SUCCESS);
+ }
+ #elif defined(BACKTRACE_GCC)
+-extern int
+-_Unwind_Backtrace(void *fn, void *a);
+-extern void *
+-_Unwind_GetIP(void *ctx);
++#include <unwind.h>
+ 
+ typedef struct {
+ 	void **result;
