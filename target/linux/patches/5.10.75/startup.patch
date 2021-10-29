@@ -14,15 +14,6 @@ diff -Nur linux-5.10.17.orig/init/initramfs.c linux-5.10.17/init/initramfs.c
 diff -Nur linux-5.10.17.orig/init/main.c linux-5.10.17/init/main.c
 --- linux-5.10.17.orig/init/main.c	2021-02-17 11:02:30.000000000 +0100
 +++ linux-5.10.17/init/main.c	2021-02-23 13:39:32.238650450 +0100
-@@ -158,7 +158,7 @@
- #endif
- 
- static char *execute_command;
--static char *ramdisk_execute_command = "/init";
-+static char *ramdisk_execute_command = "/sbin/init";
- 
- /*
-  * Used to generate warnings if static_key manipulation functions are used
 @@ -1483,6 +1483,8 @@
  		pr_err("Warning: unable to open an initial console.\n");
  		return;

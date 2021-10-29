@@ -23,12 +23,3 @@ diff -Nur linux-5.4.147.orig/init/main.c linux-5.4.147/init/main.c
  	(void) ksys_dup(0);
  	(void) ksys_dup(0);
  	/*
-@@ -1206,7 +1208,7 @@
- 	 */
- 
- 	if (!ramdisk_execute_command)
--		ramdisk_execute_command = "/init";
-+		ramdisk_execute_command = "/sbin/init";
- 
- 	if (ksys_access((const char __user *)
- 			ramdisk_execute_command, 0) != 0) {

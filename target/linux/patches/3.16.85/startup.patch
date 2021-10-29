@@ -23,15 +23,3 @@ diff -Nur linux-3.13.6.orig/init/initramfs.c linux-3.13.6/init/initramfs.c
  	return 0;
  }
  rootfs_initcall(populate_rootfs);
-diff -Nur linux-3.13.6.orig/init/main.c linux-3.13.6/init/main.c
---- linux-3.13.6.orig/init/main.c	2014-03-07 07:07:02.000000000 +0100
-+++ linux-3.13.6/init/main.c	2014-03-15 12:13:16.459024452 +0100
-@@ -924,7 +924,7 @@
- 	 */
- 
- 	if (!ramdisk_execute_command)
--		ramdisk_execute_command = "/init";
-+		ramdisk_execute_command = "/sbin/init";
- 
- 	if (sys_access((const char __user *) ramdisk_execute_command, 0) != 0) {
- 		ramdisk_execute_command = NULL;
