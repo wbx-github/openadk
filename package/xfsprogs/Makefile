@@ -21,7 +21,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,XFSPROGS,xfsprogs,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-lblkid
+TARGET_LDFLAGS+=	-lblkid -luuid
 INSTALL_STYLE:=		manual
 CONFIGURE_ARGS+=	--enable-gettext=no \
 			--enable-blkid=yes \
