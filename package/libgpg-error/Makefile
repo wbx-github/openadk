@@ -61,9 +61,11 @@ LIBGPG_PREFIX:=		x86_64-pc-linux-gnu
 endif
 
 post-extract:
-	cd $(WRKSRC)/src/syscfg && \
+	cd $(WRKSRC)/src/syscfg && ( \
 	ln -s lock-obj-pub.$(LIBGPG_PREFIX).h \
-		lock-obj-pub.$(GNU_TARGET_NAME).h
+		lock-obj-pub.$(GNU_TARGET_NAME).h ; \
+	ln -s lock-obj-pub.$(LIBGPG_PREFIX).h \
+		lock-obj-pub.$(ADK_TARGET_LINUXTYPE)-$(ADK_TARGET_SUFFIX).h )
 
 libgpg-error-install:
 	${INSTALL_DIR} ${IDIR_LIBGPG_ERROR}/usr/lib
