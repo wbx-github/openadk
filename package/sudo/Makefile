@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		sudo
-PKG_VERSION:=		1.8.28
+PKG_VERSION:=		1.9.8p2
 PKG_RELEASE:=		1
-PKG_HASH:=		9129fa745a08caff0ce2042d2162b38eb9bf73bf43fcb248ac8b3a750c1f13a1
+PKG_HASH:=		9e3b8b8da7def43b6e60c257abe80467205670fd0f7c081de1423c414b680f2d
 PKG_DESCR:=		su do
 PKG_SECTION:=		sys/misc
 PKG_NEEDS:=		mmu
