@@ -25,6 +25,10 @@ endif
 
 HOST_STYLE:=		manual
 CONFIG_STYLE:=		manual
+MAKE_ENV+=		BUILD_CC="${HOST_CC}"
+ifeq ($(ADK_PACKAGE_PAM),)
+MAKE_ENV+=		PAM_CAP=no
+endif
 
 host-build:
 	(cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -f ${MAKE_FILE} \
