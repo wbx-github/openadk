@@ -170,39 +170,31 @@ endif
 
 dtb-install:
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_XILINX_ZYNQ),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		dtbs $(MAKE_TRACE)
+	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		vexpress-v2p-ca9.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} vexpress-v2p-ca9.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_REALVIEW_EB_MPCORE),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		arm-realview-eb-11mp-ctrevb.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} arm-realview-eb-11mp-ctrevb.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VERSATILEPB),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		versatile-pb.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} versatile-pb.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_PHYTEC_WEGA),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		am335x-wega-rdk.dtb
+	${KERNEL_MAKE} am335x-wega-rdk.dtb $(MAKE_TRACE)
 	cp $(LINUX_DIR)/arch/arm/boot/dts/am335x-wega-rdk.dtb ${TARGET_DIR}/boot
 endif
 ifeq ($(ADK_TARGET_SYSTEM_PHYTEC_IMX6),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
- 		imx6q-phytec-pbab01.dtb
+	${KERNEL_MAKE} imx6q-phytec-pbab01.dtb $(MAKE_TRACE)
 	cp $(LINUX_DIR)/arch/arm/boot/dts/imx6q-phytec-pbab01.dtb ${TARGET_DIR}/boot
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		am335x-boneblack.dtb
+	${KERNEL_MAKE} am335x-boneblack.dtb $(MAKE_TRACE)
 	cp $(LINUX_DIR)/arch/arm/boot/dts/am335x-boneblack.dtb ${TARGET_DIR}/boot
 endif
 ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		dtbs $(MAKE_TRACE)
+	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 	mkdir -p $(FW_DIR)/overlays
 	for x in $(LINUX_DIR)/arch/arm/boot/dts/overlays/*.dtbo; do \
 		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm/boot/dts/overlays/*.dtbo $(FW_DIR)/overlays; \
@@ -210,28 +202,23 @@ ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 	done
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		sun7i-a20-bananapro.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} sun7i-a20-bananapro.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		sun8i-h2-plus-orangepi-zero.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} sun8i-h2-plus-orangepi-zero.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_IMX6),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		imx6q-cubox-i.dtb imx6dl-cubox-i.dtb imx6dl-hummingboard.dtb imx6q-hummingboard.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} imx6q-cubox-i.dtb imx6dl-cubox-i.dtb \
+		imx6dl-hummingboard.dtb imx6q-hummingboard.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		armada-388-clearfog.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} armada-388-clearfog.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F429),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		dtbs $(MAKE_TRACE)
+	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F769),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		dtbs $(MAKE_TRACE)
+	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 endif
 	for x in $(LINUX_DIR)/arch/arm/boot/dts/*.dtb; do \
 		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm/boot/dts/*.dtb $(FW_DIR); \

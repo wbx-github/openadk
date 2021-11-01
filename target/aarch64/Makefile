@@ -63,8 +63,7 @@ kernel-install: kernel-strip
 
 dtb-install:
 ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		dtbs $(MAKE_TRACE)
+	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 	mkdir -p $(FW_DIR)/overlays
 	for x in $(LINUX_DIR)/arch/arm64/boot/dts/overlays/*.dtbo; do \
 		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm64/boot/dts/overlays/*.dtbo $(FW_DIR)/overlays; \

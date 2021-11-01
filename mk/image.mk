@@ -313,8 +313,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMPRESS_NONE),y)
 		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 endif
 	@-rm $(LINUX_DIR)/usr/initramfs_data.cpio* 2>/dev/null
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		-j${ADK_MAKE_JOBS} $(ADK_TARGET_KERNEL) $(MAKE_TRACE)
+	${KERNEL_MAKE} $(ADK_TARGET_KERNEL) $(MAKE_TRACE)
 	@cp $(KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
 
 ${FW_DIR}/${ROOTFSISO}: ${TARGET_DIR} kernel-package

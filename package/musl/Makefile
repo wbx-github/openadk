@@ -48,11 +48,7 @@ endif
 musl-dev-install:
 	${INSTALL_DIR} ${IDIR_MUSL_DEV}/usr/lib 
 	${CP} ${STAGING_TARGET_DIR}/usr/lib/crt*.o ${IDIR_MUSL_DEV}/usr/lib
-	${KERNEL_MAKE_ENV} \
-	$(MAKE) -C $(TOOLCHAIN_BUILD_DIR)/w-linux-$(KERNEL_VERSION)/linux-$(KERNEL_FILE_VER) \
-		$(KERNEL_MAKE_OPTS) \
-		INSTALL_HDR_PATH=$(IDIR_MUSL_DEV)/usr \
-		headers_install
+	${KERNEL_MAKE} INSTALL_HDR_PATH=$(IDIR_MUSL_DEV)/usr headers_install
 	$(MAKE) -C $(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/${PKG_NAME}-${PKG_VERSION} \
 		DESTDIR=$(IDIR_MUSL_DEV) \
 		install-headers

@@ -59,8 +59,7 @@ kernel-install: kernel-strip
 	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
 
 dtb-install:
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		10m50_devboard.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} 10m50_devboard.dtb $(MAKE_TRACE)
 	for x in $(LINUX_DIR)/arch/nios2/boot/*.dtb; do \
 		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/nios2/boot/*.dtb $(FW_DIR); \
 		break; \

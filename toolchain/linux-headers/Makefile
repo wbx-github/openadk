@@ -44,9 +44,7 @@ endif
 	touch $@
 
 $(WRKBUILD)/.configured: $(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/linux-$(KERNEL_FILE_VER)/.patched
-	$(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		INSTALL_HDR_PATH=$(STAGING_TARGET_DIR)/usr \
-		headers_install
+	${KERNEL_MAKE} INSTALL_HDR_PATH=$(STAGING_TARGET_DIR)/usr headers_install
 ifeq ($(ADK_TARGET_ARCH_CRIS),y)
 ifeq ($(ADK_TARGET_CPU_ARCH),crisv32)
 	cd $(STAGING_TARGET_DIR)/usr/include && ln -sf arch-v32/arch arch

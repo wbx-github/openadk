@@ -35,3 +35,6 @@ endif
 
 KERNEL_MAKE_ENV:=	PATH="${TOOLCHAIN_DIR}/usr/bin:${STAGING_HOST_DIR}/usr/bin:$$PATH"
 LINUX_BUILD_DIR:=	$(BUILD_DIR)/$(ADK_TARGET_OS)-$(ADK_TARGET_ARCH)
+
+# wrapper to simplify calling make in kernel tree
+KERNEL_MAKE:=		env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) -j${ADK_MAKE_JOBS}

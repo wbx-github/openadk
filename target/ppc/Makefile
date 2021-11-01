@@ -74,8 +74,7 @@ kernel-install: kernel-strip
 
 dtb-install:
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_PPC_VIRTEX_ML507),y)
-	env $(KERNEL_MAKE_ENV) $(MAKE) -C "${LINUX_DIR}" $(KERNEL_MAKE_OPTS) \
-		-j${ADK_MAKE_JOBS} virtex440-ml507.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} virtex440-ml507.dtb $(MAKE_TRACE)
 	$(CP) $(LINUX_DIR)/arch/powerpc/boot/virtex440-ml507.dtb \
 		$(FW_DIR)/ppc.dtb
 endif

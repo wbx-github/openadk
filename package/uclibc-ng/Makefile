@@ -49,11 +49,7 @@ uclibc-ng-dev-install:
 	-${CP} ${STAGING_TARGET_DIR}/usr/lib/libc.so ${IDIR_UCLIBC_NG_DEV}/usr/lib
 	-${CP} ${STAGING_TARGET_DIR}/usr/lib/uclibc_nonshared.a ${IDIR_UCLIBC_NG_DEV}/usr/lib
 	${CP} ${STAGING_TARGET_DIR}/usr/lib/crt*.o ${IDIR_UCLIBC_NG_DEV}/usr/lib
-	${KERNEL_MAKE_ENV} \
-	$(MAKE) -C $(TOOLCHAIN_BUILD_DIR)/w-linux-$(KERNEL_FILE_VER)-1/linux-$(KERNEL_FILE_VER) \
-		$(KERNEL_MAKE_OPTS) \
-		INSTALL_HDR_PATH=$(IDIR_UCLIBC_NG_DEV)/usr \
-		headers_install
+	${KERNEL_MAKE} INSTALL_HDR_PATH=$(IDIR_UCLIBC_NG_DEV)/usr headers_install
 	$(MAKE) -C $(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/${PKG_NAME}-${PKG_VERSION} \
 		PREFIX=$(IDIR_UCLIBC_NG_DEV)/ \
 		DEVEL_PREFIX=/usr \

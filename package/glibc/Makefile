@@ -113,11 +113,7 @@ endif
 		cd $(IDIR_GLIBC_DEV)/$(ADK_TARGET_LIBC_PATH); ln -sf $$file-$(PKG_GLIBCVER).so $$file.so; \
 	done
 	# header package
-	${KERNEL_MAKE_ENV} \
-	$(MAKE) -C $(TOOLCHAIN_BUILD_DIR)/w-linux-$(KERNEL_FILE_VER)-1/linux-$(KERNEL_FILE_VER) \
-		$(KERNEL_MAKE_OPTS) \
-		INSTALL_HDR_PATH=$(IDIR_GLIBC_DEV)/usr \
-		headers_install
+	${KERNEL_MAKE} INSTALL_HDR_PATH=$(IDIR_GLIBC_DEV)/usr headers_install
 	(cd $(WRKBUILD); \
 		$(GLIBC_ENV) \
 		$(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/$(PKG_NAME)-$(PKG_VERSION)/configure \
