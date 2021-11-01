@@ -161,7 +161,7 @@ ${FW_DIR}/${ROOTFSUSERTARBALL}: ${TARGET_DIR}/.adk
 		$(CPIO) --quiet -o -Hustar --owner=0:0 | $(XZ) -c >$@
 
 ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
-	PATH='${HOST_PATH}' $(BASH) ${ADK_TOPDIR}/scripts/gen_initramfs_list.sh -u squash -g squash \
+	PATH='${HOST_PATH}' $(BASH) ${SCRIPT_DIR}/gen_initramfs_list.sh -u squash -g squash \
 		${TARGET_DIR}/ >$@
 	( \
 		echo "nod /dev/console 0644 0 0 c 5 1"; \
