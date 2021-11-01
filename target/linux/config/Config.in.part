@@ -11,4 +11,9 @@ config ADK_LINUX_KERNEL_MSDOS_PARTITION
 	bool "MSDOS partitions"
 	default y
 
+config ADK_LINUX_KERNEL_EFI_PARTITION
+	bool "EFI GUID Partition support"
+	help
+	  Support hard disks partitioned using EFI GPT.
+
 endmenu
