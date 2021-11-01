@@ -252,6 +252,12 @@ config ADK_LINUX_KERNEL_UBIFS_FS
 	help
 	  UBIFS is a file system for flash devices which works on top of UBI.
 
+config ADK_LINUX_KERNEL_OVERLAY_FS
+	bool "Overlay filesystem support"
+	help
+	  This enables the overlay filesystem which is present
+	  in upstream kernels starting with version 3.18.
+
 endmenu
 
 
