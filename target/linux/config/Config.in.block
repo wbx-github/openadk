@@ -645,6 +645,33 @@ config ADK_LINUX_KERNEL_DM_MIRROR
          Allow volume managers to mirror logical volumes, also
          needed for live data migration tools such as 'pvmove'.
 
+config ADK_LINUX_KERNEL_DM_RAID
+       tristate "RAID 1/4/5/6/10 target"
+       depends on ADK_LINUX_KERNEL_BLK_DEV_DM
+       select ADK_LINUX_KERNEL_MD_RAID0
+       select ADK_LINUX_KERNEL_MD_RAID1
+       select ADK_LINUX_KERNEL_MD_RAID10
+       select ADK_LINUX_KERNEL_MD_RAID456
+       select ADK_LINUX_KERNEL_BLK_DEV_MD
+       ---help---
+	 A dm target that supports RAID1, RAID10, RAID4, RAID5 and RAID6 mappings
+
+	 A RAID-5 set of N drives with a capacity of C MB per drive provides
+	 the capacity of C * (N - 1) MB, and protects against a failure
+	 of a single drive. For a given sector (row) number, (N - 1) drives
+	 contain data sectors, and one drive contains the parity protection.
+	 For a RAID-4 set, the parity blocks are present on a single drive,
+	 while a RAID-5 set distributes the parity across the drives in one
+	 of the available parity distribution methods.
+
+	 A RAID-6 set of N drives with a capacity of C MB per drive
+	 provides the capacity of C * (N - 2) MB, and protects
+	 against a failure of any two drives. For a given sector
+	 (row) number, (N - 2) drives contain data sectors, and two
+	 drives contains two independent redundancy syndromes.  Like
+	 RAID-5, RAID-6 distributes the syndromes across the drives
+	 in one of the available parity distribution methods.
+
 config ADK_LINUX_KERNEL_BLK_DEV_DRBD
 	tristate "DRBD support (Network RAID 1)"
 	select ADK_LINUX_KERNEL_BLOCK
