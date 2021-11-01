@@ -565,11 +565,17 @@ allconfig:
 			|sed -e "s#^config \(.*\)#\1=y#" \
 			>> $(ADK_TOPDIR)/all.config; \
 	fi
+	@if [ ! -z "$(ADK_TARGET_OS)" ];then \
+		grep "^config" target/config/Config.in.os \
+			|grep -i "_$(ADK_TARGET_OS)$$" \
+			|sed -e "s#^config \(.*\)#\1=y#" \
+			 >> $(ADK_TOPDIR)/all.config; \
+	fi
 	@if [ ! -z "$(ADK_TARGET_ARCH)" ];then \
 		grep "^config" target/config/Config.in.arch.choice \
-			|grep -i "$(ADK_TARGET_ARCH)"\$$ \
+			|grep -i "$(ADK_TARGET_OS)_ARCH_$(ADK_TARGET_ARCH)$$" \
 			|sed -e "s#^config \(.*\)#\1=y#" \
-			>> $(ADK_TOPDIR)/all.config; \
+			 >> $(ADK_TOPDIR)/all.config; \
 	fi
 	@for symbol in ${DEFCONFIG}; do \
 		echo $$symbol >> $(ADK_TOPDIR)/all.config; \
