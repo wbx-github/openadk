@@ -557,4 +557,61 @@ config ADK_LINUX_KERNEL_CRYPTO_CRC32C
           Module will be crc32c.
 
 endmenu
+
+menu "User-space interface"
+
+config ADK_LINUX_KERNEL_CRYPTO_USER_API
+	tristate
+
+config ADK_LINUX_KERNEL_CRYPTO_USER_API_HASH
+	tristate "User-space interface for hash algorithms"
+	depends on ADK_LINUX_KERNEL_NET
+	select ADK_LINUX_KERNEL_CRYPTO_HASH
+	select ADK_LINUX_KERNEL_CRYPTO_USER_API
+	help
+	  This option enables the user-spaces interface for hash
+	  algorithms.
+
+config ADK_LINUX_KERNEL_CRYPTO_USER_API_SKCIPHER
+	tristate "User-space interface for symmetric key cipher algorithms"
+	depends on ADK_LINUX_KERNEL_NET
+	select ADK_LINUX_KERNEL_CRYPTO_BLKCIPHER
+	select ADK_LINUX_KERNEL_CRYPTO_USER_API
+	help
+	  This option enables the user-spaces interface for symmetric
+	  key cipher algorithms.
+
+config ADK_LINUX_KERNEL_CRYPTO_USER_API_RNG
+	tristate "User-space interface for random number generator algorithms"
+	depends on ADK_LINUX_KERNEL_NET
+	select ADK_LINUX_KERNEL_CRYPTO_RNG
+	select ADK_LINUX_KERNEL_CRYPTO_USER_API
+	help
+	  This option enables the user-spaces interface for random
+	  number generator algorithms.
+
+config ADK_LINUX_KERNEL_CRYPTO_USER_API_AEAD
+	tristate "User-space interface for AEAD cipher algorithms"
+	depends on ADK_LINUX_KERNEL_NET
+	select ADK_LINUX_KERNEL_CRYPTO_AEAD
+	select ADK_LINUX_KERNEL_CRYPTO_BLKCIPHER
+	select ADK_LINUX_KERNEL_CRYPTO_NULL
+	select ADK_LINUX_KERNEL_CRYPTO_USER_API
+	help
+	  This option enables the user-spaces interface for AEAD
+	  cipher algorithms.
+
+config ADK_LINUX_KERNEL_CRYPTO_STATS
+	bool "Crypto usage statistics for User-space"
+	depends on ADK_LINUX_KERNEL_CRYPTO_USER
+	help
+	  This option enables the gathering of crypto stats.
+	  This will collect:
+	  - encrypt/decrypt size and numbers of symmeric operations
+	  - compress/decompress size and numbers of compress operations
+	  - size and numbers of hash operations
+	  - encrypt/decrypt/sign/verify numbers for asymmetric operations
+	  - generate/seed numbers for rng operations
+
+endmenu
 endmenu
