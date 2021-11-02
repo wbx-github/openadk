@@ -8,6 +8,7 @@ PKG_VERSION:=		4.1
 PKG_RELEASE:=		1
 PKG_HASH:=		ab7688842908d3583a704d491956f31324c3a5fc9f6a04653cb75d19f1934f4a
 PKG_DESCR:=		tool for managing software raid arrays
+PKG_KDEPENDS:=		md md-raid0 md-raid1 md-raid456
 PKG_SECTION:=		sys/fs
 PKG_URL:=		http://neil.brown.name/blog/mdadm
 PKG_SITES:=		${MASTER_SITE_KERNEL:=utils/raid/mdadm/}
