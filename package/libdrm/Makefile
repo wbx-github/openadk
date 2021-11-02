@@ -4,24 +4,25 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libdrm
-PKG_VERSION:=		2.4.99
+PKG_VERSION:=		2.4.107
 PKG_RELEASE:=		1
-PKG_HASH:=		597fb879e2f45193431a0d352d10cd79ef61a24ab31f44320168583e10cb6302
+PKG_HASH:=		c554cef03b033636a975543eab363cc19081cb464595d3da1ec129f87370f888
 PKG_DESCR:=		direct rendering manager library
 PKG_SECTION:=		libs/video
-PKG_BUILDDEP:=		libpthread-stubs cairo libpciaccess
+PKG_BUILDDEP:=		meson-host libpthread-stubs cairo libpciaccess
 PKG_URL:=		http://dri.freedesktop.org/wiki/
 PKG_SITES:=		http://dri.freedesktop.org/libdrm/
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBDRM,libdrm,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-CONFIGURE_ARGS+=	--disable-manpages \
-			--disable-valgrind
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
 
 libdrm-install:
 	$(INSTALL_DIR) $(IDIR_LIBDRM)/usr/lib
