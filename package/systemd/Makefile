@@ -15,12 +15,12 @@ PKG_BUILDDEP+=		python3-host gettext-host kmod meson-host ninja-host
 PKG_BUILDDEP+=		python3-jinja2-host
 PKG_KDEPENDS:=		inotify-user cgroups namespaces fhandle tmpfs-posix-acl tmpfs-xattr
 PKG_KDEPENDS+=		uts-ns autofs4-fs fanotify
+PKG_LIBC_DEPENDS:=	glibc
 PKG_NEEDS:=		locale intl
 PKG_URL:=		https://wiki.freedesktop.org/www/Software/systemd/
 PKG_SITES:=		https://github.com/systemd/systemd/archive/
 
 PKG_CFLINE_SYSTEMD:=	select BUSYBOX_SULOGIN if ADK_RUNTIME_BASE_BUSYBOX
-PKG_LIBC_DEPENDS:=	!musl
 
 PKG_FLAVOURS_SYSTEMD:=	WITH_PAM WITH_XZ WITH_ZLIB
 PKGFD_WITH_PAM:=	enable pam support
