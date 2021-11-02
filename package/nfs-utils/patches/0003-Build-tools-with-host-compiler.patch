@@ -1,0 +1,24 @@
+From 9c48cf1a9e3cbb2dce76696dbf6898eb6886c7b5 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Mon, 4 Jan 2021 16:49:30 +0100
+Subject: [PATCH] Build tools with host compiler
+
+---
+ tools/rpcgen/Makefile.am | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/tools/rpcgen/Makefile.am b/tools/rpcgen/Makefile.am
+index 457cd5074a1b1..e70af70a7e469 100644
+--- a/tools/rpcgen/Makefile.am
++++ b/tools/rpcgen/Makefile.am
+@@ -1,5 +1,10 @@
+ CLEANFILES = *~
+ 
++CC=$(CC_FOR_BUILD)
++CFLAGS=$(CFLAGS_FOR_BUILD)
++CPPFLAGS=$(CPPFLAGS_FOR_BUILD)
++LDFLAGS=$(LDFLAGS_FOR_BUILD)
++
+ bin_PROGRAMS = rpcgen
+ man_MANS = rpcgen.1
+ 

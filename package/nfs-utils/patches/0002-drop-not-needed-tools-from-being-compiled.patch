@@ -1,0 +1,21 @@
+From ed62ca8e4466dc92f3f176d1cf38c1d99a07a4a5 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Mon, 4 Jan 2021 16:47:28 +0100
+Subject: [PATCH] drop not needed tools from being compiled
+
+---
+ tools/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/Makefile.am b/tools/Makefile.am
+index 9b4b0803db394..3389f8c44ed0c 100644
+--- a/tools/Makefile.am
++++ b/tools/Makefile.am
+@@ -12,6 +12,6 @@ if CONFIG_NFSDCLD
+ OPTDIRS += nfsdclddb
+ endif
+ 
+-SUBDIRS = locktest rpcdebug nlmtest mountstats nfs-iostat nfsdclnts $(OPTDIRS)
++SUBDIRS = $(OPTDIRS)
+ 
+ MAINTAINERCLEANFILES = Makefile.in
