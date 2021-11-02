@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		perl
-PKG_VERSION:=		5.24.1
+PKG_VERSION:=		5.32.1
 PKG_RELEASE:=		1
-PKG_HASH:=		03a77bac4505c270f1890ece75afc7d4b555090b41aa41ea478747e23b2afb3f
+PKG_HASH:=		57cc47c735c8300a8ce2fa0643507b44c4ae59012bfdad0121313db639e02309
 PKG_DESCR:=		perl interpreter
 PKG_SECTION:=		dev/lang
 PKG_NEEDS:=		threads
@@ -14,7 +14,7 @@ PKG_URL:=		http://www.perl.org/
 PKG_SITES:=		http://www.cpan.org/src/
 PKG_NOPARALLEL:=	1
 
-PC_VERSION:=		1.1.5
+PC_VERSION:=		1.3.5
 PC_SITE:=		https://github.com/arsv/perl-cross/releases/download/$(PC_VERSION)
 
 include ${ADK_TOPDIR}/mk/host.mk
