@@ -24,6 +24,7 @@ XAKE_FLAGS+=		MAKEINFO=true
 
 WRKBUILD=		$(WRKDIR)/$(PKG_NAME)-obj
 
+CONFIGURE_ENV+=		host_configargs='--with-libgmp-prefix="${STAGING_TARGET_DIR}/usr"'
 # --enable-static is required to build libbfd.a
 CONFIGURE_ARGS+=	--enable-static \
 			--without-uiout \
@@ -44,6 +45,7 @@ CONFIGURE_ARGS+=	--enable-static \
 			--with-system-readline \
 			--with-curses \
 			--with-libexpat-prefix="${STAGING_TARGET_DIR}/usr" \
+			--with-gmp="${STAGING_TARGET_DIR}/usr" \
 			--enable-gdbmi
 
 gdb-install:
