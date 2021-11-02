@@ -4,13 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		zile
-PKG_VERSION:=		2.4.11
+PKG_VERSION:=		2.6.2
 PKG_RELEASE:=		1
-PKG_HASH:=		1fd27bbddc61491b1fbb29a345d0d344734aa9e80cfa07b02892eedf831fa9cc
+PKG_HASH:=		77eb7daff3c98bdc88daa1ac040dccca72b81dc32fc3166e079dd7a63e42c741
 PKG_DESCR:=		tiny emacs clone
 PKG_SECTION:=		app/editor
-PKG_DEPENDS:=		libgc
-PKG_BUILDDEP:=		libgc
+PKG_DEPENDS:=		libgc glib libgee libmount libblkid
+PKG_BUILDDEP:=		libgc glib libgee
+PKG_LIBC_DEPENDS:=	glibc
 PKG_URL:=		http://www.gnu.org/software/zile/
 PKG_SITES:=		${MASTER_SITE_GNU:=zile/}
 
