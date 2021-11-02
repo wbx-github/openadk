@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libgc
-PKG_VERSION:=		7.4.0
-PKG_RELEASE:=		2
-PKG_HASH:=		61f8fc6991f8cb003a0d3c7d251c5b9a76093615ef793e0c588a4661e0b5e283
+PKG_VERSION:=		8.2.0
+PKG_RELEASE:=		1
+PKG_HASH:=		2540f7356cb74f6c5b75326c6d38a066edd796361fd7d4ed26e494d9856fed8f
 PKG_DESCR:=		garbage collector library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		libatomic_ops
