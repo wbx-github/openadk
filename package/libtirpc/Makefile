@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libtirpc
-PKG_VERSION:=		1.0.3
+PKG_VERSION:=		1.3.1
 PKG_RELEASE:=		1
-PKG_HASH:=		86c3a78fc1bddefa96111dd233124c703b22a78884203c55c3e06b3be6a0fd5e
+PKG_HASH:=		245895caf066bec5e3d4375942c8cb4366adad184c29c618d97f724ea309ee17
 PKG_DESCR:=		transport independent rpc library
 PKG_SECTION:=		libs/net
 PKG_URL:=		http://sourceforge.net/projects/libtirpc/
@@ -26,7 +26,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call PKG_template,LIBTIRPC,libtirpc,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 MAKE_ENV+=		V=1
-AUTOTOOL_STYLE:=	autoreconf
 HOST_CPPFLAGS+=		-I/usr/include/tirpc
 
 ifeq (${ADK_PACKAGE_LIBTIRPC_WITH_GSS},y)
@@ -41,10 +40,6 @@ CFG:=			.ipv6
 else
 CONFIGURE_ARGS+=	--disable-ipv6
 endif
-
-post-extract:
-	rm $(WRKBUILD)/tirpc/rpcsvc/crypt.h
-	rm $(WRKBUILD)/tirpc/rpc/rpcb_prot.h
 
 libtirpc-install:
 	${INSTALL_DIR} ${IDIR_LIBTIRPC}/usr/lib ${IDIR_LIBTIRPC}/etc
