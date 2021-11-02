@@ -4,13 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		lvm
-PKG_VERSION:=		2.02.177
+PKG_VERSION:=		2.02.188
 PKG_RELEASE:=		1
-PKG_HASH:=		4025a23ec9b15c2cb7486d151c29dc953b75efc4d452cfe9dbbc7c0fac8e80f2
+PKG_HASH:=		7101e8b0816ad77e4390fed9749a090214ba520061cd083437871e19e50cc9bd
 PKG_DESCR:=		logical volume management
 PKG_SECTION:=		sys/fs
-PKG_DEPENDS:=		libdevmapper libncurses
-PKG_BUILDDEP:=		ncurses util-linux
+PKG_DEPENDS:=		libdevmapper libncurses libaio
+PKG_KDEPENDS:=		blk-dev-dm
+PKG_BUILDDEP:=		ncurses util-linux libaio
 PKG_NEEDS:=		threads
 PKG_URL:=		http://sourceware.org/lvm2/
 PKG_SITES:=		http://ftp.gwdg.de/pub/linux/sources.redhat.com/lvm2/
@@ -40,6 +41,8 @@ CONFIGURE_ARGS+=	--with-user="" --with-group="" \
 			--with-optimisation="" \
 			--disable-testing \
 			--disable-blkid_wiping \
+			--disable-udev-systemd-background-jobs \
+			--with-symvers=no \
 			--with-lvm1=none
 CONFIGURE_ENV+=		ac_cv_flag_HAVE_PIE=no \
 			ac_cv_func_malloc_0_nonnull=yes \

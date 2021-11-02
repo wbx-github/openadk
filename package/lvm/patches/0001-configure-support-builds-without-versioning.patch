@@ -1,0 +1,273 @@
+From 7a45d4d688d4966664ca94619b2ad0fc8d333d77 Mon Sep 17 00:00:00 2001
+From: Zdenek Kabelac <zkabelac@redhat.com>
+Date: Mon, 29 Mar 2021 21:46:12 +0200
+Subject: [PATCH] configure: support builds without versioning
+
+Not all libc (like musl, uclibc dietlibc) libraries support full symbol
+version resolution in runtime like glibc.
+Add support to not generate symbol versions when compiling against them.
+
+Additionally libdevmapper.so was broken when compiled against
+uclibc. Runtime linker loader caused calling dm_task_get_info_base()
+function recursively, leading to segmentation fault.
+
+Introduce --with-symvers=STYLE option, which allows to choose
+between gnu and disabled symbol versioning. By default gnu symbol
+versioning is used.
+__GNUC__ check is replaced now with GNU_SYMVER.
+Additionally ld version script is included only in
+case of gnu option, which slightly reduces output size.
+
+Providing --without-symvers to configure script when building against
+uclibc library fixes segmentation fault error described above, due to
+lack of several versions of the same symbol in libdevmapper.so
+library.
+
+Based on:
+https://patchwork.kernel.org/project/dm-devel/patch/20180831144817.31207-1-m.niestroj@grinn-global.com/
+
+Suggested-by: Marcin Niestroj <m.niestroj@grinn-global.com>
+---
+ configure                 | 35 ++++++++++++++++++++++++++++++++---
+ configure.ac              | 26 +++++++++++++++++++++++---
+ include/configure.h.in    |  3 +++
+ lib/misc/lib.h            |  4 ++--
+ libdm/datastruct/bitset.c |  4 +---
+ libdm/ioctl/libdm-iface.c |  2 +-
+ libdm/libdm-deptree.c     |  2 +-
+ libdm/libdm-stats.c       |  2 +-
+ 8 files changed, 64 insertions(+), 14 deletions(-)
+
+diff --git a/configure b/configure
+index bb8d502209d60..eeb8397a27d0b 100755
+--- a/configure
++++ b/configure
+@@ -942,6 +942,7 @@ enable_cmirrord
+ with_cmirrord_pidfile
+ enable_debug
+ with_optimisation
++with_symvers
+ enable_profiling
+ enable_valgrind_pool
+ enable_devmapper
+@@ -1792,6 +1793,8 @@ Optional Packages:
+   --with-cmirrord-pidfile=PATH
+                           cmirrord pidfile [PID_DIR/cmirrord.pid]
+   --with-optimisation=OPT C optimisation flag [OPT=-O2]
++  --with-symvers=STYLE    use symbol versioning of the shared library
++                          [default=gnu]
+   --with-lvmlockd-pidfile=PATH
+                           lvmlockd pidfile [PID_DIR/lvmlockd.pid]
+   --with-lvmetad-pidfile=PATH
+@@ -3168,13 +3171,11 @@ if test -z "$CFLAGS"; then :
+ fi
+ case "$host_os" in
+ 	linux*)
+-		CLDFLAGS="$CLDFLAGS -Wl,--version-script,.export.sym"
+ 		# equivalent to -rdynamic
+ 		ELDFLAGS="-Wl,--export-dynamic"
+ 		# FIXME Generate list and use --dynamic-list=.dlopen.sym
+ 		CLDWHOLEARCHIVE="-Wl,-whole-archive"
+ 		CLDNOWHOLEARCHIVE="-Wl,-no-whole-archive"
+-		LDDEPS="$LDDEPS .export.sym"
+ 		LIB_SUFFIX=so
+ 		DEVMAPPER=yes
+ 		BUILD_LVMETAD=no
+@@ -3190,7 +3191,6 @@ case "$host_os" in
+ 		;;
+ 	darwin*)
+ 		CFLAGS="$CFLAGS -no-cpp-precomp -fno-common"
+-		CLDFLAGS="$CLDFLAGS"
+ 		ELDFLAGS=
+ 		CLDWHOLEARCHIVE="-all_load"
+ 		CLDNOWHOLEARCHIVE=
+@@ -11182,6 +11182,35 @@ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $COPTIMISE_FLAG" >&5
+ $as_echo "$COPTIMISE_FLAG" >&6; }
+ 
++################################################################################
++{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to use symbol versioning" >&5
++$as_echo_n "checking whether to use symbol versioning... " >&6; }
++
++# Check whether --with-symvers was given.
++if test "${with_symvers+set}" = set; then :
++  withval=$with_symvers;  case "$withval" in
++				gnu|no) symvers=$withval ;;
++				*) as_fn_error $? "Unknown argument to with-symvers" "$LINENO" 5 ;;
++			     esac
++else
++  symvers=gnu
++fi
++
++{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $symvers" >&5
++$as_echo "$symvers" >&6; }
++
++if test "$GCC" = "yes" && test "$symvers" = "gnu" ; then
++
++$as_echo "#define GNU_SYMVER 1" >>confdefs.h
++
++		   case "$host_os" in
++			linux*)
++			CLDFLAGS="${CLDFLAGS-"$LDFLAGS"} -Wl,--version-script,.export.sym"
++			LDDEPS="$LDDEPS .export.sym"
++			;;
++		   esac
++fi
++
+ ################################################################################
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to gather gcov profiling data" >&5
+ $as_echo_n "checking whether to gather gcov profiling data... " >&6; }
+diff --git a/configure.ac b/configure.ac
+index f040a5a713d7f..a2697d15c9150 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -30,13 +30,11 @@ AC_CANONICAL_TARGET([])
+ AS_IF([test -z "$CFLAGS"], [COPTIMISE_FLAG="-O2"])
+ case "$host_os" in
+ 	linux*)
+-		CLDFLAGS="$CLDFLAGS -Wl,--version-script,.export.sym"
+ 		# equivalent to -rdynamic
+ 		ELDFLAGS="-Wl,--export-dynamic"
+ 		# FIXME Generate list and use --dynamic-list=.dlopen.sym
+ 		CLDWHOLEARCHIVE="-Wl,-whole-archive"
+ 		CLDNOWHOLEARCHIVE="-Wl,-no-whole-archive"
+-		LDDEPS="$LDDEPS .export.sym"
+ 		LIB_SUFFIX=so
+ 		DEVMAPPER=yes
+ 		BUILD_LVMETAD=no
+@@ -52,7 +50,6 @@ case "$host_os" in
+ 		;;
+ 	darwin*)
+ 		CFLAGS="$CFLAGS -no-cpp-precomp -fno-common"
+-		CLDFLAGS="$CLDFLAGS"
+ 		ELDFLAGS=
+ 		CLDWHOLEARCHIVE="-all_load"
+ 		CLDNOWHOLEARCHIVE=
+@@ -981,6 +978,29 @@ AC_ARG_WITH(optimisation,
+ 	    COPTIMISE_FLAG=$withval)
+ AC_MSG_RESULT($COPTIMISE_FLAG)
+ 
++################################################################################
++dnl -- Symbol versioning
++AC_MSG_CHECKING(whether to use symbol versioning)
++AC_ARG_WITH(symvers,
++	    AC_HELP_STRING([--with-symvers=STYLE],
++			   [use symbol versioning of the shared library [default=gnu]]),
++			   [ case "$withval" in
++				gnu|no) symvers=$withval ;;
++				*) AC_MSG_ERROR(Unknown argument to with-symvers) ;;
++			     esac], symvers=gnu)
++AC_MSG_RESULT($symvers)
++
++if test "$GCC" = "yes" && test "$symvers" = "gnu" ; then
++	AC_DEFINE(GNU_SYMVER, 1,
++		  [Define to use GNU versioning in the shared library.])
++		   case "$host_os" in
++			linux*)
++			CLDFLAGS="${CLDFLAGS-"$LDFLAGS"} -Wl,--version-script,.export.sym"
++			LDDEPS="$LDDEPS .export.sym"
++			;;
++		   esac
++fi
++
+ ################################################################################
+ dnl -- Enable profiling
+ AC_MSG_CHECKING(whether to gather gcov profiling data)
+diff --git a/include/configure.h.in b/include/configure.h.in
+index 49663e484e0b2..af0fa31e063a3 100644
+--- a/include/configure.h.in
++++ b/include/configure.h.in
+@@ -150,6 +150,9 @@
+ /* Path to fsadm binary. */
+ #undef FSADM_PATH
+ 
++/* Define to use GNU versioning in the shared library. */
++#undef GNU_SYMVER
++
+ /* Define to 1 if you have the `alarm' function. */
+ #undef HAVE_ALARM
+ 
+diff --git a/lib/misc/lib.h b/lib/misc/lib.h
+index d7fa5c721c118..3cd7a76ae3486 100644
+--- a/lib/misc/lib.h
++++ b/lib/misc/lib.h
+@@ -42,7 +42,7 @@
+  * specified version string.
+  *
+  * Since versioning is only available when compiling with GCC the entire
+- * compatibility version should be enclosed in '#if defined(__GNUC__)',
++ * compatibility version should be enclosed in '#if defined(GNU_SYMVER)',
+  * for example:
+  *
+  *   int dm_foo(int bar)
+@@ -67,7 +67,7 @@
+  * versions of library symbols prior to the introduction of symbol
+  * versioning: it must never be used for new symbols.
+  */
+-#if defined(__GNUC__)
++#if defined(GNU_SYMVER)
+ #define DM_EXPORT_SYMBOL(func, ver) \
+ 	__asm__(".symver " #func "_v" #ver ", " #func "@DM_" #ver )
+ #define DM_EXPORT_SYMBOL_BASE(func) \
+diff --git a/libdm/datastruct/bitset.c b/libdm/datastruct/bitset.c
+index b0826e1eb54ec..642587e5472b1 100644
+--- a/libdm/datastruct/bitset.c
++++ b/libdm/datastruct/bitset.c
+@@ -242,7 +242,7 @@ bad:
+ 	return NULL;
+ }
+ 
+-#if defined(__GNUC__)
++#if defined(GNU_SYMVER)
+ /*
+  * Maintain backward compatibility with older versions that did not
+  * accept a 'min_num_bits' argument to dm_bitset_parse_list().
+@@ -254,6 +254,4 @@ dm_bitset_t dm_bitset_parse_list_v1_02_129(const char *str, struct dm_pool *mem)
+ }
+ DM_EXPORT_SYMBOL(dm_bitset_parse_list, 1_02_129);
+ 
+-#else /* if defined(__GNUC__) */
+-
+ #endif
+diff --git a/libdm/ioctl/libdm-iface.c b/libdm/ioctl/libdm-iface.c
+index 14186e680d97d..4be7ab34a704f 100644
+--- a/libdm/ioctl/libdm-iface.c
++++ b/libdm/ioctl/libdm-iface.c
+@@ -2176,7 +2176,7 @@ void dm_lib_exit(void)
+ 	_version_checked = 0;
+ }
+ 
+-#if defined(__GNUC__)
++#if defined(GNU_SYMVER)
+ /*
+  * Maintain binary backward compatibility.
+  * Version script mechanism works with 'gcc' compatible compilers only.
+diff --git a/libdm/libdm-deptree.c b/libdm/libdm-deptree.c
+index ba1ed1991a0cf..802db076e27f1 100644
+--- a/libdm/libdm-deptree.c
++++ b/libdm/libdm-deptree.c
+@@ -3849,7 +3849,7 @@ void dm_tree_node_set_callback(struct dm_tree_node *dnode,
+ 	dnode->callback_data = data;
+ }
+ 
+-#if defined(__GNUC__)
++#if defined(GNU_SYMVER)
+ /*
+  * Backward compatible implementations.
+  *
+diff --git a/libdm/libdm-stats.c b/libdm/libdm-stats.c
+index a3697c74dfde8..9f09f1c2f082e 100644
+--- a/libdm/libdm-stats.c
++++ b/libdm/libdm-stats.c
+@@ -5069,7 +5069,7 @@ int dm_stats_start_filemapd(int fd, uint64_t group_id, const char *path,
+  * current dm_stats_create_region() version.
+  */
+ 
+-#if defined(__GNUC__)
++#if defined(GNU_SYMVER)
+ int dm_stats_create_region_v1_02_106(struct dm_stats *dms, uint64_t *region_id,
+ 				     uint64_t start, uint64_t len, int64_t step,
+ 				     int precise, const char *program_id,
+-- 
+2.33.1
+
