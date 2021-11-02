@@ -37,3 +37,7 @@ Checking value of NSIG: "65"
 Checking value of _NSIG: "65"
 Checking value of SIGRTMAX: "64"
 Checking value of SIGRTMIN: "34"
+Checking whether the WRFILE -keytab is supported: OK
+Checking errno of iconv for illegal multibyte sequence: OK
+Checking value of GNUTLS_CIPHER_AES_128_CFB8: "29"
+Checking value of GNUTLS_MAC_AES_CMAC_128: "203"

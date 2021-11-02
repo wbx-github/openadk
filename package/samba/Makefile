@@ -4,15 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		samba
-PKG_VERSION:=		4.6.9
+PKG_VERSION:=		4.13.2
 PKG_RELEASE:=		1
-PKG_HASH:=		c31db4aad82f0b9588ef6c4b4dab5dce3fa1787bd298e62d953c2628bb1af21a
+PKG_HASH:=		276464396a05d88b775bda01ac2eb1e5a636ccf7010b0fd28efc3d85583af2b4
 PKG_DESCR:=		file and print server
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		libuuid libpopt libgnutls libtirpc
-PKG_DEPENDS+=		libtalloc
-PKG_BUILDDEP:=		util-linux popt python2 gnutls talloc
-PKG_BUILDDEP+=		heimdal-host python2-host libtirpc
+PKG_DEPENDS+=		libtalloc libkrb5
+PKG_BUILDDEP:=		util-linux talloc p5-parse-yapp-host
 PKG_NEEDS:=		threads intl
 PKG_URL:=		http://www.samba.org/
 PKG_SITES:=		http://samba.org/samba/ftp/stable/
@@ -33,6 +32,7 @@ CONFIGURE_ARGS+=	--enable-fhs \
 			--cross-compile \
 			--cross-answers=$(WRKSRC)/cache.txt \
 			--hostcc=gcc \
+			--with-system-mitkrb5 \
 			--without-pie \
 			--without-gettext \
 			--without-relro \
@@ -44,20 +44,32 @@ CONFIGURE_ARGS+=	--enable-fhs \
 			--without-ads \
 			--without-ldap \
 			--without-acl-support \
+			--without-ad-dc \
+			--without-json \
+			--without-libarchive \
+			--without-iconv \
 			--disable-glusterfs \
 			--disable-iprint \
 			--disable-cups \
 			--disable-avahi \
 			--disable-rpath \
+			--disable-python \
 			--bundled-libraries='com_err,!asn1_compile,!compile_et' \
+			--with-shared-modules=!vfs_snapper \
 			--disable-rpath-install
 CONFIGURE_ENV+=		PYTHON_CONFIG="$(STAGING_TARGET_DIR)/usr/bin/python-config" \
 			python_LDFLAGS="" \
-			python_LIBDIR=""
+			python_LIBDIR="" \
+			PERL="$(STAGING_HOST_DIR)/usr/bin/perl-host"
 
 pre-configure:
 	$(CP) ./files/cache.txt $(WRKSRC)
 	echo 'Checking uname machine type: "$(ADK_TARGET_ARCH)"' >>$(WRKSRC)/cache.txt
+ifneq ($(ADK_LINUX_64),)
+	echo 'Checking for a 64-bit host to support lmdb: OK' >>$(WRKSRC)/cache.txt
+else
+	echo 'Checking for a 64-bit host to support lmdb: NO' >>$(WRKSRC)/cache.txt
+endif
 
 samba-install:
 	$(INSTALL_DIR) $(IDIR_SAMBA)/etc/samba
