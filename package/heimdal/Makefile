@@ -4,13 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		heimdal
-PKG_VERSION:=		1.5.3
-PKG_RELEASE:=		3
-PKG_HASH:=		aac27bedb33c341b6aed202af07ccc816146a893148721f8123abbbf93bbfea5
+PKG_VERSION:=		7.7.0
+PKG_RELEASE:=		1
+PKG_HASH:=		f02d3314d634cc55eb9cf04a1eae0d96b293e45a1f837de9d894e800161b7d1b
 PKG_DESCR:=		kerberos server
 PKG_SECTION:=		app/crypto
+HOST_BUILDDEP:=		ncurses-host
 PKG_URL:=		http://www.h5l.org/
-PKG_SITES:=		http://www.h5l.org/dist/src/
+PKG_SITES:=		https://github.com/heimdal/heimdal/releases/download/heimdal-${PKG_VERSION}/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -20,6 +21,9 @@ include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call HOST_template,HEIMDAL,heimdal,$(PKG_VERSION)-${PKG_RELEASE}))
+
+# patch changes configure.ac, have to recreate
+AUTOTOOL_STYLE:=	autoreconf
 
 HOST_STYLE:=		manual
 
