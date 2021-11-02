@@ -1,0 +1,23 @@
+--- freeglut-3.2.1.orig/src/fg_gl2.h	2012-04-21 20:22:24.000000000 +0200
++++ freeglut-3.2.1/src/fg_gl2.h	2021-11-02 10:29:44.673793670 +0100
+@@ -67,13 +67,13 @@ typedef void (APIENTRY *FGH_PFNGLENABLEV
+ typedef void (APIENTRY *FGH_PFNGLDISABLEVERTEXATTRIBARRAYPROC) (GLuint);
+ typedef void (APIENTRY *FGH_PFNGLVERTEXATTRIBPOINTERPROC) (GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+ 
+-FGH_PFNGLGENBUFFERSPROC fghGenBuffers;
+-FGH_PFNGLDELETEBUFFERSPROC fghDeleteBuffers;
+-FGH_PFNGLBINDBUFFERPROC fghBindBuffer;
+-FGH_PFNGLBUFFERDATAPROC fghBufferData;
+-FGH_PFNGLENABLEVERTEXATTRIBARRAYPROC fghEnableVertexAttribArray;
+-FGH_PFNGLDISABLEVERTEXATTRIBARRAYPROC fghDisableVertexAttribArray;
+-FGH_PFNGLVERTEXATTRIBPOINTERPROC fghVertexAttribPointer;
++extern FGH_PFNGLGENBUFFERSPROC fghGenBuffers;
++extern FGH_PFNGLDELETEBUFFERSPROC fghDeleteBuffers;
++extern FGH_PFNGLBINDBUFFERPROC fghBindBuffer;
++extern FGH_PFNGLBUFFERDATAPROC fghBufferData;
++extern FGH_PFNGLENABLEVERTEXATTRIBARRAYPROC fghEnableVertexAttribArray;
++extern FGH_PFNGLDISABLEVERTEXATTRIBARRAYPROC fghDisableVertexAttribArray;
++extern FGH_PFNGLVERTEXATTRIBPOINTERPROC fghVertexAttribPointer;
+ 
+ #    endif
+ 

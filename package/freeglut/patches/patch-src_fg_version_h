@@ -1,0 +1,16 @@
+--- freeglut-3.2.1.orig/src/fg_version.h	2014-08-18 04:00:40.000000000 +0200
++++ freeglut-3.2.1/src/fg_version.h	2021-11-02 09:37:27.466889937 +0100
+@@ -37,11 +37,11 @@
+ #endif
+ 
+ #ifndef VERSION_MINOR
+-#define VERSION_MINOR 0
++#define VERSION_MINOR 2
+ #endif
+ 
+ #ifndef VERSION_PATCH
+-#define VERSION_PATCH 0
++#define VERSION_PATCH 1
+ #endif
+ 
+ #endif
