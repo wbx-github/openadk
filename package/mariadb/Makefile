@@ -15,7 +15,7 @@ PKG_BUILDDEP+=		boost
 HOST_BUILDDEP:=		cmake-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.mariadb.org/
-PKG_SITES=		https://downloads.mariadb.org/interstitial/mariadb-$(PKG_VERSION)/source/
+PKG_SITES=		https://distfiles.openadk.org/
 PKG_LIBNAME:=		libmariadbclient
 PKG_OPTS:=		dev
 
