@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		curl
-PKG_VERSION:=		7.75.0
+PKG_VERSION:=		7.79.1
 PKG_RELEASE:=		1
-PKG_HASH:=		fe0c49d8468249000bda75bcfdf9e30ff7e9a86d35f1a21f428d79c389d55675
+PKG_HASH:=		0606f74b1182ab732a17c11613cbbaf7084f2e6cca432642d0e3ad7c224c3689
 PKG_DESCR:=		client-side url transfer tool
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		libcurl
 PKG_BUILDDEP:=		zlib
 PKG_NEEDS:=		threads
-PKG_URL:=		http://curl.haxx.se/
-PKG_SITES:=		http://curl.haxx.se/download/
+PKG_URL:=		https://curl.se/
+PKG_SITES:=		https://curl.se/download/
 PKG_LIBNAME:=		libcurl
 PKG_OPTS:=		dev
 
@@ -43,6 +43,8 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,LIBCURL,libcurl,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_LIBCURL},${PKGSD_LIBCURL},${PKGSC_LIBCURL},${PKG_OPTS}))
+
+HOST_CONFIGURE_ARGS+=	--without-ssl
 
 ifeq (${ADK_PACKAGE_CURL_WITH_LIBRESSL},y)
 CONFIGURE_ARGS+=	--with-ssl="${STAGING_TARGET_DIR}/usr" \
