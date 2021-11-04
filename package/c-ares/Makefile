@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		c-ares
-PKG_VERSION:=		1.16.1
+PKG_VERSION:=		1.18.1
 PKG_RELEASE:=		1
-PKG_HASH:=		d08312d0ecc3bd48eee0a4cc0d2137c9f194e0a28de2028928c0f6cae85f86ce
+PKG_HASH:=		1a7d52a8a84a9fbffb1be9133c0f6e17217d91ea5a6fa61f6b4729cda78ebbcf
 PKG_DESCR:=		asynchronous dns library
 PKG_SECTION:=		libs/net
-PKG_URL:=		http://c-ares.haxx.se
-PKG_SITES:=		http://c-ares.haxx.se/download/
+PKG_URL:=		https://c-ares.org
+PKG_SITES:=		https://c-ares.org/download/
 PKG_OPTS:=		dev
 
 DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.gz
