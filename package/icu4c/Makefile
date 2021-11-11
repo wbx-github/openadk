@@ -4,18 +4,18 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		icu4c
-PKG_VERSION:=		54.1
-PKG_RELEASE:=		2
-PKG_HASH:=		d42bc9a8ca6a91c55eb0925c279f49e5b508d51ef26ac9850d9be55de5bb8ab3
+PKG_VERSION:=		70.1
+PKG_RELEASE:=		1
+PKG_HASH:=		8d205428c17bf13bb535300669ed28b338a157b1c01ae66d31d0d3e2d47c3fd5
 PKG_DESCR:=		unicode and globalization library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		icu4c-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://icu-project.org
-PKG_SITES:=		http://download.icu-project.org/files/icu4c/$(PKG_VERSION)/
+PKG_SITES:=		https://github.com/unicode-org/icu/releases/download/release-70-1/
 PKG_OPTS:=		dev
 
-DISTFILES:=             ${PKG_NAME}-54_1-src.tgz
+DISTFILES:=             ${PKG_NAME}-70_1-src.tgz
 
 WRKDIST=		${WRKDIR}/icu/source
 
