@@ -10,7 +10,7 @@ PKG_RELEASE:=		2
 PKG_HASH:=		90572c626d8a708225560c42b4421f7941315247fa1679d4ef569bde7f4bb379
 PKG_DESCR:=		gnome keyring library
 PKG_SECTION:=		libs/crypto
-PKG_BUILDDEP:=		p11-kit
+PKG_BUILDDEP:=		p11-kit intltool-host libgtk3
 PKG_URL:=		https://wiki.gnome.org/action/show/Projects/GnomeKeyring
 PKG_SITES:=		http://ftp.acc.umu.se/pub/gnome/sources/gcr/$(PKG_EXTRAVER)/
 
