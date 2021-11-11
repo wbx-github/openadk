@@ -1,0 +1,14 @@
+--- tiff-4.3.0.orig/libtiff-4.pc.in	2021-03-05 14:01:43.000000000 +0100
++++ tiff-4.3.0/libtiff-4.pc.in	2021-11-06 16:42:35.662674034 +0100
+@@ -1,7 +1,7 @@
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
+-includedir=@includedir@
++prefix=/usr
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
+ 
+ Name: libtiff
+ Description:  Tag Image File Format (TIFF) library.
