@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		meson
-PKG_VERSION:=		0.55.3
+PKG_VERSION:=		0.60.1
 PKG_RELEASE:=		1
-PKG_HASH:=		2b276df50c5b13ccdbfb14d3333141e9e7985aca31b60400b3f3e0be2ee6897e
+PKG_HASH:=		b06f7d621b90e094be0ea2157fa435648e069f19182d8d9402aa039727652b0c
 PKG_DESCR:=		build utility
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		python3-host ninja-host
@@ -42,6 +42,13 @@ meson-hostinstall:
 		$(WRKBUILD)/cross-compilation.conf.in \
 		> $(STAGING_HOST_DIR)/etc/meson/cross-compilation.conf
 	sed -i "s/\"/'/g" $(STAGING_HOST_DIR)/etc/meson/cross-compilation.conf
+	sed -e "s%@HOST_CFLAGS@%`printf '"%s", ' $(HOST_CFLAGS)`%g" \
+	    -e "s%@HOST_LDFLAGS@%`printf '"%s", ' $(HOST_LDFLAGS)`%g" \
+	    -e "s%@HOST_CXXFLAGS@%`printf '"%s", ' $(HOST_CXXFLAGS)`%g" \
+	    -e "s%@STAGING_HOST_DIR@%$(STAGING_HOST_DIR)%g" \
+		$(WRKBUILD)/host-compilation.conf.in \
+		> $(STAGING_HOST_DIR)/etc/meson/host-compilation.conf
+	sed -i "s/\"/'/g" $(STAGING_HOST_DIR)/etc/meson/host-compilation.conf
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
