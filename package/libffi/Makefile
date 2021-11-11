@@ -24,8 +24,8 @@ $(eval $(call PKG_template,LIBFFI,libffi,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEP
 
 AUTOTOOL_STYLE:=	autoreconf
 HOST_STYLE:=		auto
-HOST_CONFIGURE_ARGS+=	--disable-builddir --with-pic
-CONFIGURE_ARGS+=	--disable-builddir --with-pic
+HOST_CONFIGURE_ARGS+=	--disable-builddir --with-pic --disable-symvers
+CONFIGURE_ARGS+=	--disable-builddir --with-pic --disable-symvers
 
 ifeq ($(ADK_PACKAGE_OPENJDK7),y)
 CONFIGURE_ARGS+=	--enable-static
