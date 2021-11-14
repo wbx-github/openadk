@@ -234,7 +234,9 @@ targethelp:
 	$(MAKE) -C target targethelp 
 
 kernelconfig:
-	${KERNEL_MAKE} menuconfig
+	${MAKE} -C "${LINUX_DIR}" \
+		ARCH=$(ADK_TARGET_KARCH) \
+		menuconfig
 
 ifeq ($(ADK_TARGET_LINUX_KERNEL_USE_CUSTOMCONFIG),y)
 savekconfig:
