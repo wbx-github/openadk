@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		grub
-PKG_VERSION:=		2.04
+PKG_VERSION:=		2.06
 PKG_RELEASE:=		1
-PKG_HASH:=		e5292496995ad42dabe843a0192cf2a2c502e7ffcc7479398232b10a472df77d
+PKG_HASH:=		b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1
 PKG_DESCR:=		multiboot boot loader
 PKG_SECTION:=		base/boot
 PKG_BUILDDEP:=		bison-host grub-host
