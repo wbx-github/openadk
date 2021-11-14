@@ -46,10 +46,6 @@ do-install:
 ifneq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 	${INSTALL_DIR} ${IDIR_GLIBC}/$(ADK_TARGET_LIBC_PATH)
 	$(CP) $(STAGING_TARGET_DIR)/lib/ld*.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH)
-ifeq ($(ADK_TARGET_ARCH_RISCV64),y)
-	${INSTALL_DIR} ${IDIR_GLIBC}/$(ADK_TARGET_LIBC_PATH)/$(ADK_TARGET_ABI_RISCV)
-	$(CP) $(STAGING_TARGET_DIR)/lib/$(ADK_TARGET_ABI_RISCV)/ld*.so* ${IDIR_GLIBC}/$(ADK_TARGET_LIBC_PATH)/$(ADK_TARGET_ABI_RISCV)
-endif
 	for file in libc libpthread librt libcrypt libdl libm libanl libnsl libresolv libutil libnss_dns libnss_files; do \
 		$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
 		#$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file-$(PKG_GLIBCVER).so $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
