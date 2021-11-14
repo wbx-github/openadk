@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		fetchmail
-PKG_VERSION:=		6.3.26
+PKG_VERSION:=		6.4.23
 PKG_RELEASE:=		1
-PKG_HASH:=		79b4c54cdbaf02c1a9a691d9948fcb1a77a1591a813e904283a8b614b757e850
+PKG_HASH:=		5f7a5e13731431134a2ca535bbced7adc666d3aeb93169a0830945d91f492300
 PKG_DESCR:=		fetch mail from a pop3 or imap server
 PKG_SECTION:=		net/mail
 PKG_URL:=		http://www.fetchmail.info
@@ -22,7 +22,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,FETCHMAIL,fetchmail,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-AUTOTOOL_STYLE:=	autoreconf
+CONFIGURE_ENV+=		ac_cv_have_decl_TLS1_3_VERSION=no
 CONFIGURE_ARGS+=	--without-hesiod
 
 ifeq (${ADK_PACKAGE_FETCHMAIL_WITH_LIBRESSL},y)
