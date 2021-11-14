@@ -1,0 +1,12 @@
+# Note: OpenADK's and Meson's terminologies differ about the meaning       
+# of 'build', 'host' and 'target':                                           
+# - OpenADK's 'host' is Meson's 'build'                                    
+# - OpenADK's 'target' is Meson's 'host'                                   
+                                                                             
+[binaries]                                                                   
+pkgconfig = '@STAGING_HOST_DIR@/usr/bin/pkg-config'
+[properties]                                                                 
+c_args = [@HOST_CFLAGS@]                                                   
+c_link_args = [@HOST_LDFLAGS@]                                             
+cpp_args = [@HOST_CXXFLAGS@]                                               
+cpp_link_args = [@HOST_LDFLAGS@]                                           
