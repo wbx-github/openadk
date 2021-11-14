@@ -1,0 +1,10 @@
+--- glib-2.56.1.orig/gobject-2.0.pc.in	2016-10-22 07:12:49.000000000 +0200
++++ glib-2.56.1/gobject-2.0.pc.in	2021-11-04 05:31:24.191433397 +0100
+@@ -7,6 +7,6 @@ Name: GObject
+ Description: GLib Type, Object, Parameter and Signal Library
+ Requires: glib-2.0
+ Version: @VERSION@
+-Libs: -L${libdir} -lgobject-2.0
++Libs: -L${libdir} -lgobject-2.0 -lffi
+ Libs.private: @LIBFFI_LIBS@
+ Cflags:

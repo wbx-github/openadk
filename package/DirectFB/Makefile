@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		DirectFB
-PKG_VERSION:=		1.6.3
-PKG_RELEASE:=		3
-PKG_EXTRAVER:=		1.6-0
-PKG_HASH:=		7a96aced0f69b2ec0810e9923068e61c21e6b19dd593e09394c872414df75e70
+PKG_VERSION:=		1.7.7
+PKG_EXTRAVER:=		1.7-7
+PKG_RELEASE:=		1
+PKG_HASH:=		b785c638dc31b8fe3a7c81be1475c89b2255ab3d67b777c747d3fbc52f8027a3
 PKG_DESCR:=		thin graphic library for framebuffer devices
 PKG_SECTION:=		libs/image
 PKG_DEPENDS:=		libpng libjpeg-turbo libfreetype
 PKG_BUILDDEP:=		libpng libjpeg-turbo freetype
 PKG_URL:=		http://www.directfb.org/
-PKG_SITES:=		http://directfb.org/downloads/Core/DirectFB-1.6/
+PKG_SITES:=		https://distfiles.openadk.org/
 PKG_LIBNAME:=		directfb
 PKG_OPTS:=		dev
 

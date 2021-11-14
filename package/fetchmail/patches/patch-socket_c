@@ -1,20 +1,20 @@
---- fetchmail-6.3.26.orig/socket.c	2013-04-23 22:00:45.000000000 +0200
-+++ fetchmail-6.3.26/socket.c	2016-09-29 16:00:20.683625569 +0200
-@@ -910,11 +910,16 @@ int SSLOpen(int sock, char *mycert, char
- #if HAVE_DECL_SSLV2_CLIENT_METHOD + 0 > 0
- 			_ctx[sock] = SSL_CTX_new(SSLv2_client_method());
- #else
--			report(stderr, GT_("Your operating system does not support SSLv2.\n"));
-+			report(stderr, GT_("Your OpenSSL version does not support SSLv2.\n"));
- 			return -1;
+--- fetchmail-6.4.23.orig/socket.c	2021-08-28 11:13:58.000000000 +0200
++++ fetchmail-6.4.23/socket.c	2021-11-12 23:58:36.082986247 +0100
+@@ -966,17 +966,9 @@ static int OSSL10X_proto_version_logic(i
+ 		report(stderr, GT_("Your OpenSSL version does not support TLS v1.2.\n"));
+ 		return -1;
  #endif
- 		} else if(!strcasecmp("ssl3",myproto)) {
-+#if HAVE_DECL_SSLV3_CLIENT_METHOD + 0 > 0
- 			_ctx[sock] = SSL_CTX_new(SSLv3_client_method());
-+#else
-+			report(stderr, GT_("Your OpenSSL version does not support SSLv3.\n"));
-+			return -1;
-+#endif
- 		} else if(!strcasecmp("tls1",myproto)) {
- 			_ctx[sock] = SSL_CTX_new(TLSv1_client_method());
- 		} else if (!strcasecmp("ssl23",myproto)) {
+-#if defined(TLS1_3_VERSION)
+-	} else if (!strcasecmp("tls1.3", *myproto)) {
+-		_ctx[sock] = SSL_CTX_new(TLSv1_3_client_method());
+-	} else if (!strcasecmp("tls1.3+", *myproto)) {
+-		*myproto = NULL;
+-		*avoid_ssl_versions |= SSL_OP_NO_TLSv1 | SSL_OP_NO_TLSv1_1 | SSL_OP_NO_TLSv1_2;
+-#else
+ 	} else if(!strcasecmp("tls1.3",*myproto) || !strcasecmp("tls1.3+", *myproto)) {
+ 		report(stderr, GT_("Your OpenSSL version does not support TLS v1.3.\n"));
+ 		return -1;
+-#endif
+ 	} else if (!strcasecmp("ssl23", *myproto)
+ 	        || 0 == strcasecmp("auto", *myproto))
+ 	{

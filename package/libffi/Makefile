@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libffi
-PKG_VERSION:=		3.3
+PKG_VERSION:=		3.4.2
 PKG_RELEASE:=		1
-PKG_HASH:=		72fba7922703ddfa7a028d513ac15a85c8d54c8d67f55fa5a4802885dc652056
+PKG_HASH:=		540fb721619a6aba3bdeef7d940d8e9e0e6d2c193595bc243241b77ff9e93620
 PKG_DESCR:=		foreign function interface library
 PKG_SECTION:=		libs/misc
 HOST_BUILDDEP:=		libtool-host
 PKG_URL:=		http://sourceware.org/libffi/
-PKG_SITES:=		ftp://sourceware.org/pub/libffi/
+PKG_SITES:=		https://github.com/libffi/libffi/releases/download/v${PKG_VERSION}/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
@@ -24,8 +24,8 @@ $(eval $(call PKG_template,LIBFFI,libffi,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEP
 
 AUTOTOOL_STYLE:=	autoreconf
 HOST_STYLE:=		auto
-HOST_CONFIGURE_ARGS+=	--disable-builddir --with-pic
-CONFIGURE_ARGS+=	--disable-builddir --with-pic
+HOST_CONFIGURE_ARGS+=	--disable-builddir --with-pic --disable-symvers
+CONFIGURE_ARGS+=	--disable-builddir --with-pic --disable-symvers
 
 ifeq ($(ADK_PACKAGE_OPENJDK7),y)
 CONFIGURE_ARGS+=	--enable-static
