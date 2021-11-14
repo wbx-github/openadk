@@ -1,0 +1,29 @@
+config ADK_APPLIANCE_NAS
+	bool "network attached storage appliance"
+	select ADK_RUNTIME_HOSTNAME adknas
+	select ADK_PACKAGE_GPTFDISK
+	select ADK_PACKAGE_CRYPTSETUP
+	select ADK_PACKAGE_LVM
+	select ADK_PACKAGE_MDADM
+	select ADK_PACKAGE_NTFS_3G
+	select ADK_PACKAGE_MKE2FS
+	select ADK_PACKAGE_RESIZE2FS
+	select ADK_PACKAGE_TUNE2FS
+	select ADK_PACKAGE_E2FSCK
+	select ADK_PACKAGE_NFS_UTILS
+	select ADK_PACKAGE_SAMBA
+	select ADK_PACKAGE_VSFTPD
+	select ADK_PACKAGE_DROPBEAR
+	select ADK_PACKAGE_SMARTMONTOOLS
+	select BUSYBOX_NTPD
+	select BUSYBOX_WATCHDOG
+	select ADK_RUNTIME_START_SERVICES
+	select ADK_RUNTIME_START_DROPBEAR
+	select ADK_RUNTIME_START_BUSYBOX_NTPD
+	select ADK_RUNTIME_START_BUSYBOX_SYSLOGD
+	select ADK_LINUX_KERNEL_DM_RAID m
+	select ADK_LINUX_KERNEL_BLK_DEV_LOOP m
+	help
+	  Create a NAS appliance, the typical file server at home providing
+	  content to workstations and media servers and backup space.
+
