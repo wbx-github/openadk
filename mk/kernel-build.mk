@@ -88,6 +88,11 @@ endif
 
 $(LINUX_DIR)/$(KERNEL_FILE): $(LINUX_DIR)/.config
 	$(START_TRACE) "target/$(ADK_TARGET_ARCH)-kernel-compile.. "
+ifneq ($(ADK_TARGET_KERNEL_APPEND_DTB),)
+	${KERNEL_MAKE} zImage dtbs $(MAKE_TRACE)
+	(cd $(LINUX_DIR)/arch/$(ADK_TARGET_ARCH)/boot && \
+	 cat dts/${ADK_TARGET_KERNEL_APPEND_DTB}.dtb >> zImage)
+endif
 	${KERNEL_MAKE}  $(KERNEL_TARGET) $(MAKE_TRACE)
 	$(CMD_TRACE) " done"
 	$(END_TRACE)

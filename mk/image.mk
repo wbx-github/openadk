@@ -313,6 +313,11 @@ ifeq ($(ADK_LINUX_KERNEL_COMPRESS_NONE),y)
 		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
 endif
 	@-rm $(LINUX_DIR)/usr/initramfs_data.cpio* 2>/dev/null
+ifneq ($(ADK_TARGET_KERNEL_APPEND_DTB),)
+	${KERNEL_MAKE} zImage dtbs $(MAKE_TRACE)
+	(cd $(LINUX_DIR)/arch/$(ADK_TARGET_ARCH)/boot && \
+	 cat dts/${ADK_TARGET_KERNEL_APPEND_DTB}.dtb >> zImage)
+endif
 	${KERNEL_MAKE} $(ADK_TARGET_KERNEL) $(MAKE_TRACE)
 	@cp $(KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
 
