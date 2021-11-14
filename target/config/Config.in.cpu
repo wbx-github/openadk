@@ -215,6 +215,15 @@ config ADK_TARGET_CPU_ARM_XSCALE
 	select ADK_TARGET_SUPPORTS_LT
 	depends on ADK_TARGET_ARCH_ARM
 
+config ADK_TARGET_CPU_ARM_MVEBU
+	bool "mvebu"
+	select ADK_TARGET_SUPPORTS_THREADS
+	select ADK_TARGET_SUPPORTS_NPTL
+	select ADK_TARGET_WITH_MMU
+	select ADK_TARGET_CPU_WITH_FPU_VFPV3
+	select ADK_TARGET_SOFTFP_FLOAT
+	depends on ADK_TARGET_ARCH_ARM
+
 # avr32
 config ADK_TARGET_CPU_AVR32
 	bool "avr32"
@@ -1936,6 +1945,7 @@ config ADK_TARGET_GCC_CPU
 	default "8540" if ADK_TARGET_CPU_PPC_8540
 	default "8548" if ADK_TARGET_CPU_PPC_8548
 	default "970" if ADK_TARGET_CPU_PPC_970
+	default "marvell-pj4" if ADK_TARGET_CPU_ARM_MVEBU
 
 # for gcc --with-arch
 config ADK_TARGET_GCC_ARCH
