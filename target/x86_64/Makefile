@@ -9,14 +9,14 @@ KERNEL:=$(LINUX_DIR)/arch/x86/boot/bzImage
 
 QEMU_ARCH:=x86_64
 
-QEMU_ARGS:=-M pc
+QEMU_ARGS:=-M pc -m 256
 ifeq ($(ADK_PACKAGE_GRUB_EFI_X86_64),y)
 QEMU_ARGS+=-L . -bios bios-x86_64.bin
 endif
 QEMU_ARGS+=${ADK_QEMU_ARGS}
 QEMU_ARGS+=-net user -net nic,model=e1000
 ifeq ($(ADK_TARGET_QEMU_WITH_AUDIO),y)
-QEMU_ARGS+=-soundhw ac97
+QEMU_ARGS+=-device AC97
 endif
 
 ifeq ($(ADK_TARGET_QEMU_WITH_BOOTLOADER),y)

@@ -4,27 +4,26 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xorg-server
-PKG_VERSION:=		1.19.7
+PKG_VERSION:=		21.1.1
 PKG_RELEASE:=		1
-PKG_HASH:=		5f6d3da0d1e341f27a7706779a24a5fa7174d5f161b5f8530f103753f0152de7
+PKG_HASH:=		782e7fef2ca0c7cbe60a937b8bf42dac69c904fb841950fd0363e1c2346ea755
 PKG_DESCR:=		xorg server
 PKG_SECTION:=		x11/drivers
-PKG_DEPENDS:=		libxfont2 pixman libpciaccess libxkbfile
+PKG_DEPENDS:=		libxfont2 pixman libpciaccess libxkbfile libxcvt
 PKG_DEPENDS+=		libfontenc xkeyboard-config xkbcomp libxau libxaw
 PKG_DEPENDS+=		libxmu libxpm libxrender libxt libxxf86dga libxext
-PKG_DEPENDS+=		libxdmcp libxv libsm libice libx11 libxcb
+PKG_DEPENDS+=		libxdmcp libxv libsm libice libx11 libxcb libdrm
 PKG_DEPENDS+=		libxshmfence libfreetype libfontenc libpciaccess
 PKG_BUILDDEP:=		libX11 randrproto renderproto fixesproto damageproto
 PKG_BUILDDEP+=		scrnsaverproto resourceproto fontsproto videoproto
 PKG_BUILDDEP+=		compositeproto evieext libxkbfile libXfont2 pixman
 PKG_BUILDDEP+=		libpciaccess xf86dgaproto recordproto dri3proto
 PKG_BUILDDEP+=		xineramaproto presentproto xf86driproto glproto mesa
+PKG_BUILDDEP+=		xorgproto libxcvt libdrm
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.x.org/
 PKG_SITES:=		http://www.x.org/releases/individual/xserver/
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 PKG_CFLINE_XORG_SERVER:=depends on ADK_TARGET_WITH_VGA || ADK_TARGET_QEMU_WITH_GRAPHIC
 
@@ -68,7 +67,6 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--disable-xephyr \
 			--disable-xf86bigfont \
 			--disable-xf86vidmode \
-			--disable-xfake \
 			--disable-xnest \
 			--disable-xselinux \
 			--disable-xcsecurity \
@@ -78,17 +76,15 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--disable-strict-compilation \
 			--enable-dri \
 			--enable-dri2 \
-			--disable-dri3 \
+			--enable-dri3 \
 			--enable-glx \
-			--enable-aiglx \
 			--with-xkb-output=/tmp \
-			--with-os-vendor="$(ADK_VENDOR)" \
 			--with-vendor-web="$(ADK_VENDOR_URL)"
 
 ifeq (${ADK_PACKAGE_XORG_SERVER_WITH_KDRIVE},y)
-CONFIGURE_ARGS+=	--enable-kdrive --enable-xfbdev --enable-kdrive-kbd --enable-kdrive-mouse --enable-kdrive-evdev
+CONFIGURE_ARGS+=	--enable-kdrive --enable-kdrive-kbd --enable-kdrive-mouse --enable-kdrive-evdev
 else
-CONFIGURE_ARGS+=	--disable-kdrive --disable-xfbdev
+CONFIGURE_ARGS+=	--disable-kdrive
 endif
 
 ifeq (${ADK_TARGET_SYSTEM_LEMOTE_YEELONG},y)
@@ -99,6 +95,7 @@ xorg-server-install:
 	$(INSTALL_DIR) $(IDIR_XORG_SERVER)/etc/X11
 	$(INSTALL_DIR) $(IDIR_XORG_SERVER)/usr/bin
 	$(INSTALL_DIR) $(IDIR_XORG_SERVER)/usr/lib/xorg/modules/extensions
+	$(INSTALL_DIR) $(IDIR_XORG_SERVER)/usr/lib/xorg/modules/drivers
 	$(INSTALL_DIR) $(IDIR_XORG_SERVER)/usr/lib/xorg/modules/fonts
 	$(INSTALL_DIR) $(IDIR_XORG_SERVER)/usr/lib/xorg/modules/multimedia
 	${CP} ${WRKINST}/usr/lib/xorg/protocol.txt \
@@ -106,6 +103,8 @@ xorg-server-install:
 	${CP} ${WRKINST}/usr/bin/* $(IDIR_XORG_SERVER)/usr/bin
 	${CP} ${WRKINST}/usr/lib/xorg/modules/*.so \
 		$(IDIR_XORG_SERVER)/usr/lib/xorg/modules
+	${CP} ${WRKINST}/usr/lib/xorg/modules/drivers/*.so \
+		$(IDIR_XORG_SERVER)/usr/lib/xorg/modules/drivers
 ifeq (${ADK_PACKAGE_XORG_SERVER_WITH_DRI},y)
 	${CP} ${WRKINST}/usr/lib/xorg/modules/extensions/*.so \
 		$(IDIR_XORG_SERVER)/usr/lib/xorg/modules/extensions

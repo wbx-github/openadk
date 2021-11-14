@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xf86-input-mouse
-PKG_VERSION:=		1.9.2
+PKG_VERSION:=		1.9.3
 PKG_RELEASE:=		1
-PKG_HASH:=		82bb4b01b26853b180e87ab97510316c741af2bded359c994c0d689386947095
+PKG_HASH:=		71f3aa0a18dfe1ca5cb235ec9210f33571cf5fbbd90ac5b55306a954f67aa5c6
 PKG_DESCR:=		x11 driver for mouse
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		xorg-server

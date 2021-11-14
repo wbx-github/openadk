@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libX11
-PKG_VERSION:=		1.6.4
+PKG_VERSION:=		1.7.2
 PKG_RELEASE:=		1
-PKG_HASH:=		5d7fbb9e15c27900ea8963218a59750b674a8d7c94161b66e96fcfbdaa1c6263
+PKG_HASH:=		2c26ccd08f43a6214de89110554fbe97c71692eeb7e7d4829f3004ae6fafd2c0
 PKG_DESCR:=		x11 client-side library
 PKG_SECTION:=		x11/libs
 PKG_BUILDDEP:=		libX11-host xproto xextproto xtrans libXdmcp libXau xcb-proto
