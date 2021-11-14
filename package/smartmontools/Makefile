@@ -8,8 +8,8 @@ PKG_NAME:=		smartmontools
 PKG_VERSION:=		7.1
 PKG_RELEASE:=		1
 PKG_HASH:=		3f734d2c99deb1e4af62b25d944c6252de70ca64d766c4c7294545a2e659b846
-PKG_DESCR:=		add short description
-PKG_SECTION:=		sys/hw	
+PKG_DESCR:=		Tools to provide advanced warning of disk degradation
+PKG_SECTION:=		sys/hw
 PKG_URL:=		www.smartmontools.org
 PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=smartmontools/)
 
