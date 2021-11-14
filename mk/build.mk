@@ -160,6 +160,8 @@ endif
 ifeq ($(strip $(ADK_HAVE_DOT_CONFIG)),y)
 include $(ADK_TOPDIR)/rules.mk
 
+include $(ADK_TOPDIR)/mk/kernel-vars.mk
+
 all: world
 
 ${ADK_TOPDIR}/package/Depends.mk: ${ADK_TOPDIR}/.config $(wildcard ${ADK_TOPDIR}/package/*/Makefile) $(ADK_TOPDIR)/adk/tools/depmaker
