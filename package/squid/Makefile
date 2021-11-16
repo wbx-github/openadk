@@ -4,18 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		squid
-PKG_VERSION:=		3.5.26
+PKG_VERSION:=		5.2
 PKG_RELEASE:=		1
-PKG_HASH:=		baa1eecb7d6e18881f4455060d80ee7cb95ae7e2695fdccf7e21ccc8f879a982
+PKG_HASH:=		ea921f055c6cc4b3c6542d995f5a7c5980f2f91adaaa10fe8260d0f1527aaf80
 PKG_DESCR:=		web and cache proxy
 PKG_SECTION:=		net/proxy
 PKG_DEPENDS:=		libltdl
 PKG_BUILDDEP:=		libtool
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.squid-cache.org/
-PKG_SITES:=		http://www.squid-cache.org/Versions/v3/3.5/
-
-PKG_SYSTEM_DEPENDS:=	!mikrotik-rb532
+PKG_SITES:=		http://www.squid-cache.org/Versions/v5/
 
 PKG_SUBPKGS:=		SQUID SQUID_MOD_BASIC_AUTH_GETPWNAM SQUID_MOD_BASIC_AUTH_NCSA
 PKG_SUBPKGS+=		SQUID_MOD_BASIC_AUTH_SMB SQUID_MOD_DIGEST_AUTH_FILE
@@ -41,8 +39,6 @@ PKGSN_SQUID_MOD_BASIC_AUTH_LDAP:=		squid
 
 PKGSS_SQUID_MOD_BASIC_AUTH_LDAP:=	libopenldap
 PKGSB_SQUID_MOD_BASIC_AUTH_LDAP:=	openldap
-
-PKG_HOST_DEPENDS:=	!netbsd !cygwin
 
 ifneq (${ADK_PACKAGE_SQUID_MOD_BASIC_AUTH_GETPWNAM},)
 BASIC_AUTH_HELPERS+=	getpwnam
@@ -116,7 +112,6 @@ $(eval $(call PKG_mod_template,SQUID_MOD_NTLM_AUTH_FAKE,ntlm_fake_auth))
 TARGET_LDFLAGS+=	-lpthread
 HOST_CXXFLAGS+=		-static-libstdc++
 
-AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ENV+=		ac_cv_sizeof_void_p=4 \
 			ac_cv_sizeof_short=2 \
 			ac_cv_sizeof_int=4 \
@@ -151,17 +146,18 @@ CONFIGURE_ARGS+=	--datadir=/usr/share/squid \
 			--with-dl \
 			--disable-debug-cbdata \
 			--disable-strict-error-checking \
+			--enable-dependency-tracking \
 			--enable-kill-parent-hack \
 			--enable-arp-acl \
 			--enable-err-languages=English \
 			--enable-default-err-language=English \
 			--enable-linux-netfilter \
-			--enable-icmp \
 			--enable-underscores \
 			--enable-cache-digests \
 			--enable-referer-log \
 			--enable-delay-pools \
 			--without-libcap \
+			--enable-icmp \
 			--disable-snmp \
 			--disable-esi \
 			--disable-ssl \

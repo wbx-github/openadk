@@ -1,6 +1,6 @@
---- squid-3.5.26.orig/src/Makefile.am	2017-06-01 15:49:00.000000000 +0200
-+++ squid-3.5.26/src/Makefile.am	2017-06-13 02:16:52.592883945 +0200
-@@ -968,7 +968,7 @@ cache_cf.o: cf_parser.cci
+--- squid-5.2.orig/src/Makefile.in	2021-10-03 17:04:37.000000000 +0200
++++ squid-5.2/src/Makefile.in	2021-11-16 13:09:30.751245296 +0100
+@@ -8142,7 +8142,7 @@ cache_cf.o: cf_parser.cci
  
  # cf_gen builds the configuration files.
  cf_gen$(EXEEXT): $(cf_gen_SOURCES) $(cf_gen_DEPENDENCIES) cf_gen_defines.cci
