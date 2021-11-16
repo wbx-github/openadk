@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libressl
 PKG_VERSION:=		3.4.1
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		107ceae6ca800e81cb563584c16afa36d6c7138fade94a2b3e9da65456f7c61c
 PKG_DESCR:=		ssl/tls library
 PKG_SECTION:=		libs/crypto
@@ -26,6 +26,10 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,LIBRESSL,libressl,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBRESSL,libressl,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 $(eval $(call PKG_template,LIBRESSL_UTIL,libressl-util,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_LIBRESSL_UTIL},${PKGSD_LIBRESSL_UTIL},${PKGSC_LIBRESSL_UTIL}))
+
+ifeq ($(ADK_TARGET_ARCH_ARM),y)
+CONFIGURE_ARGS+=	--disable-asm
+endif
 
 ifeq ($(ADK_TARGET_USE_SSP),y)
 CONFIGURE_ARGS+=	--enable-hardening
