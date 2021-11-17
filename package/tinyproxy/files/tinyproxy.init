@@ -13,10 +13,10 @@ autostart)
 start)
 	mkdir -p /var/run/tinyproxy
 	chown tinyproxy.tinyproxy /var/run/tinyproxy
-	/usr/sbin/tinyproxy
+	/usr/bin/tinyproxy
 	;;
 stop)
-	kill $(pgrep -f /usr/sbin/tinyproxy)
+	kill $(pgrep -f /usr/bin/tinyproxy)
 	;;
 restart)
 	sh $0 stop
