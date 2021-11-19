@@ -47,18 +47,18 @@ $(eval $(call PKG_template,LIBCURL,libcurl,${PKG_VERSION}-${PKG_RELEASE},${PKGSS
 HOST_CONFIGURE_ARGS+=	--without-ssl
 
 ifeq (${ADK_PACKAGE_CURL_WITH_LIBRESSL},y)
-CONFIGURE_ARGS+=	--with-ssl="${STAGING_TARGET_DIR}/usr" \
+CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
 			--without-gnutls \
 			--without-axtls
 endif
 ifeq (${ADK_PACKAGE_CURL_WITH_GNUTLS},y)
 CONFIGURE_ARGS+=	--with-gnutls="${STAGING_TARGET_DIR}/usr" \
-			--without-ssl \
+			--without-openssl \
 			--without-axtls
 endif
 ifeq (${ADK_PACKAGE_CURL_WITH_WOLFSSL},y)
 CONFIGURE_ARGS+=	--with-cyassl="${STAGING_TARGET_DIR}/usr" \
-			--without-ssl \
+			--without-openssl \
 			--without-gnutls \
 			--without-axtls
 endif
