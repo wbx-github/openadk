@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		neon
-PKG_VERSION:=		0.30.1
+PKG_VERSION:=		0.32.1
 PKG_RELEASE:=		1
-PKG_HASH:=		00c626c0dc18d094ab374dbd9a354915bfe4776433289386ed489c2ec0845cdd
+PKG_HASH:=		05c54bc115030c89e463a4fb28d3a3f8215879528ba5ca70d676d3d21bf3af52
 PKG_DESCR:=		http and webdav library
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libxml2 zlib libressl
 PKG_BUILDDEP:=		libxml2 zlib libressl
 PKG_NEEDS:=		threads
-PKG_URL:=		http://webdav.org/neon/
-PKG_SITES:=		http://webdav.org/neon/
+PKG_URL:=		https://notroj.github.io/neon/
+PKG_SITES:=		https://notroj.github.io/neon/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz

@@ -23,7 +23,8 @@ $(eval $(call PKG_template,APR_UTIL,apr-util,${PKG_VERSION}-${PKG_RELEASE},${PKG
 
 CONFIGURE_ARGS+=	--without-berkeley-db \
 			--with-apr=${STAGING_TARGET_DIR}/usr \
-			--with-expat=${STAGING_TARGET_DIR}/usr
+			--with-expat=${STAGING_TARGET_DIR}/usr \
+			--without-iconv
 XAKE_FLAGS+=		apr_builddir=${STAGING_TARGET_DIR}/usr/share/build-1 \
 			apr_builders=${STAGING_TARGET_DIR}/usr/share/build-1
 

@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		subversion
-PKG_VERSION:=		1.9.5
+PKG_VERSION:=		1.14.1
 PKG_RELEASE:=		1
-PKG_HASH:=		280ba586c5d51d7b976b65d22d5e8e42f3908ed1c968d71120dcf534ce857a83
+PKG_HASH:=		dee2796abaa1f5351e6cc2a60b1917beb8238af548b20d3e1ec22760ab2f0cad
 PKG_DESCR:=		revision control program
 PKG_SECTION:=		dev/scm
-PKG_DEPENDS:=		zlib apr apr-util libexpat libsqlite neon
-PKG_BUILDDEP:=		apr-util expat apr zlib sqlite neon
+PKG_DEPENDS:=		zlib apr apr-util libexpat libsqlite neon liblz4
+PKG_BUILDDEP:=		apr-util expat apr zlib sqlite neon lz4
 PKG_URL:=		http://subversion.apache.org/
 PKG_SITES:=		http://artfiles.org/apache.org/subversion/
 
@@ -23,6 +23,7 @@ $(eval $(call PKG_template,SUBVERSION,subversion,${PKG_VERSION}-${PKG_RELEASE},$
 TARGET_LDFLAGS+=	-ltinfo
 CONFIGURE_ARGS+=	--with-apr=${STAGING_TARGET_DIR}/usr/bin/apr-1-config \
 			--with-apr-util=${STAGING_TARGET_DIR}/usr/bin/apr-1-config \
+			--with-utf8proc=internal \
 			--disable-mod-activation \
 			--disable-keychain \
 			--without-apxs \
