@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		sngrep
-PKG_VERSION:=		1.4.3
+PKG_VERSION:=		1.4.10
 PKG_RELEASE:=		1
-PKG_HASH:=		7385ac202de6d6a1feffb2fd514600563133d9dfa7fb47be052de839abcc1d52
+PKG_HASH:=		cedbe521c9730deda004bff71e88c8c56ae66d3d147ddc6f5f965df2ca67a8df
 PKG_DESCR:=		displaying sip calls message flows from terminal 
 PKG_SECTION:=		net/debug
 PKG_BUILDDEP:=		libpcap ncurses
