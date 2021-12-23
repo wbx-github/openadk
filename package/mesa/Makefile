@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mesa
 PKG_VERSION:=		18.3.6
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		aaf17638dcf5a90b93b6389e152fdc9ef147768b09598f24d2c5cf482fcfc705
 PKG_DESCR:=		3d graphics library
 PKG_SECTION:=		libs/video
@@ -47,6 +47,8 @@ mesa-install:
 	$(CP) $(WRKINST)/usr/lib/libGL*.so* \
 		$(IDIR_MESA)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libglapi.so* \
+		$(IDIR_MESA)/usr/lib
+	$(CP) $(WRKINST)/usr/lib/libgbm.so* \
 		$(IDIR_MESA)/usr/lib
 	${CP} $(WRKINST)/usr/lib/dri/*.so \
 		${IDIR_MESA}/usr/lib/dri/

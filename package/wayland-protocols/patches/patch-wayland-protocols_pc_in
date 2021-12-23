@@ -1,0 +1,10 @@
+--- wayland-protocols-1.23.orig/wayland-protocols.pc.in	2021-09-15 14:52:03.145998200 +0200
++++ wayland-protocols-1.23/wayland-protocols.pc.in	2021-11-14 04:59:17.121707638 +0100
+@@ -1,6 +1,6 @@
+ prefix=@prefix@
+ datarootdir=@datarootdir@
+-pkgdatadir=${pc_sysrootdir}${datarootdir}/@PACKAGE@
++pkgdatadir=${datarootdir}/@PACKAGE@
+ 
+ Name: Wayland Protocols
+ Description: Wayland protocol files

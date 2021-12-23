@@ -1,0 +1,8 @@
+--- wayland-1.19.0.orig/src/wayland-client.pc.in	2021-01-27 17:49:04.000000000 +0100
++++ wayland-1.19.0/src/wayland-client.pc.in	2021-11-14 05:40:27.300530861 +0100
+@@ -9,4 +9,4 @@ Name: Wayland Client
+ Description: Wayland client side library
+ Version: @WAYLAND_VERSION@
+ Cflags: -I${includedir}
+-Libs: -L${libdir} -lwayland-client
++Libs: -L${libdir} -lwayland-client -lffi
