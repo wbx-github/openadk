@@ -55,6 +55,7 @@ else ifneq ($(filter meson,${CONFIG_STYLE}),)
 	(cd ${WRKSRC} && $(MESON_ENV) \
 		meson --prefix /usr --libdir lib \
 		 --cross-file $(STAGING_HOST_DIR)/etc/meson/cross-compilation.conf \
+		 --build.pkg-config-path $(STAGING_HOST_DIR)/usr/lib/pkgconfig \
 		 --buildtype release $(MESON_FLAGS) \
 		$(WRKSRC) $(WRKBUILD))
 else ifneq ($(filter cmake,${CONFIG_STYLE}),)
@@ -212,7 +213,7 @@ endif
 ifeq (,$(filter nostaging,${PKG_OPTS}))
 	@-cd ${WRKINST}; \
 	    find usr ! -type d 2>/dev/null | \
-	    grep -E -v -e '^usr/share' -e '^usr/src' -e '^usr/doc' -e '^usr/local' -e '^usr/man' -e '^usr/info' \
+	    grep -E -v -e '^usr/src' -e '^usr/doc' -e '^usr/local' -e '^usr/man' -e '^usr/info' \
 			-e '^usr/lib/libc.so' -e '^usr/bin/[a-z0-9-]+-config*' -e '^usr/lib/.*\.la$$' \
 			-e '^/usr/lib/libpthread_nonshared.a' | \
 	    tee '${STAGING_PKG_DIR}/${PKG_NAME}' | \
