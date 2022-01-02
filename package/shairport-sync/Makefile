@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		shairport-sync
-PKG_VERSION:=		3.3.6
+PKG_VERSION:=		3.3.8
 PKG_RELEASE:=		1
 PKG_GIT:=		tag
 PKG_DESCR:=		airplay daemon	
