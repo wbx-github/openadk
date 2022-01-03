@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		systemd
-PKG_VERSION:=		249
+PKG_VERSION:=		250
 PKG_RELEASE:=		1
-PKG_HASH:=		174091ce5f2c02123f76d546622b14078097af105870086d18d55c1c2667d855
+PKG_HASH:=		389935dea020caf6e2e81a4e90e556bd5599a2086861045efdc06197776e94e1
 PKG_DESCR:=		system and service manager
 PKG_SECTION:=		base/init
 PKG_DEPENDS:=		libcap libmount libuuid libblkid libncurses libkmod
@@ -150,6 +150,6 @@ systemd-install:
 		$(IDIR_SYSTEMD)/etc/systemd/network
 	(cd $(IDIR_SYSTEMD)/lib/systemd/system && ln -sf multi-user.target default.target)
 	$(CP) $(WRKBUILD)/systemd $(IDIR_SYSTEMD)/usr/lib/systemd/
-	mv $(IDIR_SYSTEMD)/lib/systemd/libsystemd-shared-249.so $(IDIR_SYSTEMD)/lib
+	mv $(IDIR_SYSTEMD)/lib/systemd/libsystemd-shared-250.so $(IDIR_SYSTEMD)/lib
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
