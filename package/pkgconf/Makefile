@@ -4,16 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pkgconf
-PKG_VERSION:=		0.9.6
+PKG_VERSION:=		1.1.0
 PKG_RELEASE:=		1
-PKG_HASH:=		8f5f48e52ddef0c3cbffe93f32d5148041e0030b8798b49b0b5fe72f4968d7ec
+PKG_HASH:=		5f1ef65d73a880fa5e7012102a17f7b32010e5e46139aed85851a541ba828a63
 PKG_DESCR:=		smart pkg-config replacement
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		sed-host
-PKG_URL:=		https://github.com/pkgconf/pkgconf
-PKG_SITES:=		http://rabbit.dereferenced.org/~nenolod/distfiles/
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_URL:=		http://pkgconf.org/
+PKG_SITES:=		https://distfiles.dereferenced.org/pkgconf/
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
