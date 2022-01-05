@@ -41,7 +41,9 @@ CONFIGURE_ARGS+=	--enable-rrdcgi \
 			--disable-ruby \
 			--disable-tcl \
 			--disable-python \
-			--disable-libwrap
+			--disable-libwrap \
+			--disable-docs \
+			--disable-examples
 TARGET_CPPFLAGS+=	-I${STAGING_TARGET_DIR}/usr/include/freetype2
 TARGET_LDFLAGS+=	-lglib-2.0 -lm
 
