@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xcb-proto
 PKG_VERSION:=		1.12
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		cfa49e65dd390233d560ce4476575e4b76e505a0e0bacdfb5ba6f8d0af53fd59
 PKG_DESCR:=		xml-xcb protocol descriptions
 PKG_SECTION:=		dev/header
@@ -30,16 +30,13 @@ include $(ADK_TOPDIR)/mk/python.mk
 HOST_STYLE:=		auto
 CONFIGURE_ENV+=		PYTHON=$(PYTHON)
 
-# pkg-config variables are not fixed up with sysroot
 hostpost-install:
-	$(SED) 's|^\(xcbincludedir=\)|\1$(STAGING_HOST_DIR)|' \
-		$(STAGING_HOST_DIR)/usr/lib/pkgconfig/xcb-proto.pc
+	${INSTALL_DIR} ${STAGING_HOST_DIR}/usr/share/xcb
+	${CP} ${WRKBUILD}/src/*.xml ${STAGING_HOST_DIR}/usr/share/xcb
 
 post-build:
 	${INSTALL_DIR} ${STAGING_TARGET_DIR}/usr/share/xcb
 	${CP} ${WRKBUILD}/src/*.xml ${STAGING_TARGET_DIR}/usr/share/xcb
-	$(SED) 's|^\(xcbincludedir=\)|\1$(STAGING_TARGET_DIR)|' \
-		$(WRKBUILD)/xcb-proto.pc
 
 xcb-python-install:
 	$(INSTALL_DIR) ${STAGING_TARGET_DIR}/usr/lib/python${PYTHON_VERSION}/site-packages/xcbgen
