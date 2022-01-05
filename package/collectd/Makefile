@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		collectd
-PKG_VERSION:=		5.7.0
+PKG_VERSION:=		5.12.0
 PKG_RELEASE:=		1
-PKG_HASH:=		25a05fbdc6baad571554342bbac6141928bf95a47fc60ee3b32e46d0c89ef2b2
+PKG_HASH:=		5bae043042c19c31f77eb8464e56a01a5454e0b39fa07cf7ad0f1bfc9c3a09d6
 PKG_DESCR:=		system statistics collection daemon
 PKG_SECTION:=		sys/misc
 PKG_BUILDDEP:=		libtool
