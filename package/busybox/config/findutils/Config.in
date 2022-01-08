@@ -23,19 +23,51 @@ config BUSYBOX_FEATURE_FIND_PRINT0
 	interpreted by other programs.
 
 config BUSYBOX_FEATURE_FIND_MTIME
-	bool "Enable -mtime: modified time matching"
+	bool "Enable -mtime: modification time matching"
 	default y
 	depends on BUSYBOX_FIND
 	help
 	Allow searching based on the modification time of
 	files, in days.
 
+config BUSYBOX_FEATURE_FIND_ATIME
+	bool "Enable -atime: access time matching"
+	default y
+	depends on BUSYBOX_FEATURE_FIND_MTIME
+	help
+	Allow searching based on the access time of
+	files, in days.
+
+config BUSYBOX_FEATURE_FIND_CTIME
+	bool "Enable -ctime: status change timestamp matching"
+	default y
+	depends on BUSYBOX_FEATURE_FIND_MTIME
+	help
+	Allow searching based on the status change timestamp of
+	files, in days.
+
 config BUSYBOX_FEATURE_FIND_MMIN
-	bool "Enable -mmin: modified time matching by minutes"
+	bool "Enable -mmin: modification time matching by minutes"
 	default y
 	depends on BUSYBOX_FIND
 	help
 	Allow searching based on the modification time of
+	files, in minutes.
+
+config BUSYBOX_FEATURE_FIND_AMIN
+	bool "Enable -amin: access time matching by minutes"
+	default y
+	depends on BUSYBOX_FEATURE_FIND_MMIN
+	help
+	Allow searching based on the access time of
+	files, in minutes.
+
+config BUSYBOX_FEATURE_FIND_CMIN
+	bool "Enable -cmin: status change timestamp matching by minutes"
+	default y
+	depends on BUSYBOX_FEATURE_FIND_MMIN
+	help
+	Allow searching based on the status change timestamp of
 	files, in minutes.
 
 config BUSYBOX_FEATURE_FIND_PERM
@@ -78,6 +110,13 @@ config BUSYBOX_FEATURE_FIND_INUM
 	bool "Enable -inum: inode number matching"
 	default y
 	depends on BUSYBOX_FIND
+
+config BUSYBOX_FEATURE_FIND_SAMEFILE
+	bool "Enable -samefile: reference file matching"
+	default y
+	depends on BUSYBOX_FIND
+	help
+	Support the 'find -samefile' option for searching by a reference file.
 
 config BUSYBOX_FEATURE_FIND_EXEC
 	bool "Enable -exec: execute commands"

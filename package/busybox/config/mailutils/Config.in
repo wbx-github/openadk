@@ -1,6 +1,13 @@
 # DO NOT EDIT. This file is generated from Config.src
 menu "Mail Utilities"
 
+config BUSYBOX_FEATURE_MIME_CHARSET
+	string "Default charset"
+	default "us-ascii"
+	depends on BUSYBOX_MAKEMIME || BUSYBOX_REFORMIME || BUSYBOX_SENDMAIL
+	help
+	Default charset of the message.
+
 config BUSYBOX_MAKEMIME
 	bool "makemime (5.4 kb)"
 	default y
@@ -40,12 +47,5 @@ config BUSYBOX_SENDMAIL
 	default y
 	help
 	Barebones sendmail.
-
-config BUSYBOX_FEATURE_MIME_CHARSET
-	string "Default charset"
-	default "us-ascii"
-	depends on BUSYBOX_MAKEMIME || BUSYBOX_REFORMIME || BUSYBOX_SENDMAIL
-	help
-	Default charset of the message.
 
 endmenu

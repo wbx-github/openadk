@@ -47,6 +47,32 @@ config BUSYBOX_VERBOSE_RESOLUTION_ERRORS
 	"can't resolve 'hostname.com'" and want to know more.
 	This may increase size of your executable a bit.
 
+config BUSYBOX_FEATURE_ETC_NETWORKS
+	bool "Support /etc/networks"
+	default n
+	help
+	Enable support for network names in /etc/networks. This is
+	a rarely used feature which allows you to use names
+	instead of IP/mask pairs in route command.
+
+config BUSYBOX_FEATURE_ETC_SERVICES
+	bool "Consult /etc/services even for well-known ports"
+	default n
+	help
+	Look up e.g. "telnet" and "http" in /etc/services file
+	instead of assuming ports 23 and 80.
+	This is almost never necessary (everybody uses standard ports),
+	and it makes sense to avoid reading this file.
+	If you disable this option, in the cases where port is explicitly
+	specified as a service name (e.g. "telnet HOST PORTNAME"),
+	it will still be looked up in /etc/services.
+
+config BUSYBOX_FEATURE_HWIB
+	bool "Support infiniband HW"
+	default y
+	help
+	Support for printing infiniband addresses in network applets.
+
 config BUSYBOX_FEATURE_TLS_SHA1
 	bool "In TLS code, support ciphers which use deprecated SHA1"
 	depends on BUSYBOX_TLS
@@ -172,6 +198,12 @@ config BUSYBOX_HTTPD
 	default y
 	help
 	HTTP server.
+
+config BUSYBOX_FEATURE_HTTPD_PORT_DEFAULT
+	int "Default port"
+	default 80
+	range 1 65535
+	depends on BUSYBOX_HTTPD
 
 config BUSYBOX_FEATURE_HTTPD_RANGES
 	bool "Support 'Ranges:' header"
@@ -939,6 +971,12 @@ config BUSYBOX_FEATURE_TELNETD_STANDALONE
 	help
 	Selecting this will make telnetd able to run standalone.
 
+config BUSYBOX_FEATURE_TELNETD_PORT_DEFAULT
+	int "Default port"
+	default 23
+	range 1 65535
+	depends on BUSYBOX_FEATURE_TELNETD_STANDALONE
+
 config BUSYBOX_FEATURE_TELNETD_INETD_WAIT
 	bool "Support -w SEC option (inetd wait mode)"
 	default y
@@ -1086,6 +1124,13 @@ config BUSYBOX_FEATURE_WGET_STATUSBAR
 	default y
 	depends on BUSYBOX_WGET
 
+config BUSYBOX_FEATURE_WGET_FTP
+	bool "Enable FTP protocol (+1k)"
+	default y
+	depends on BUSYBOX_WGET
+	help
+	To support FTPS, enable FEATURE_WGET_HTTPS as well.
+
 config BUSYBOX_FEATURE_WGET_AUTHENTICATION
 	bool "Enable HTTP authentication"
 	default y
@@ -1114,6 +1159,7 @@ config BUSYBOX_FEATURE_WGET_HTTPS
 	select BUSYBOX_TLS
 	help
 	wget will use internal TLS code to connect to https:// URLs.
+	It also enables FTPS support, but it's not well tested yet.
 	Note:
 	On NOMMU machines, ssl_helper applet should be available
 	in the $PATH for this to work. Make sure to select that applet.

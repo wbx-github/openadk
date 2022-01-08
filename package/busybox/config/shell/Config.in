@@ -88,7 +88,7 @@ config BUSYBOX_SHELL_ASH
 
 config BUSYBOX_ASH
 	bool "ash (78 kb)"
-	default n
+	default y
 	depends on !BUSYBOX_NOMMU
 	select BUSYBOX_SHELL_ASH
 	help
@@ -299,17 +299,17 @@ config BUSYBOX_HUSH_BRACE_EXPANSION
 	help
 	Enable {abc,def} extension.
 
-config BUSYBOX_HUSH_LINENO_VAR
-	bool "$LINENO variable"
-	default y
-	depends on BUSYBOX_HUSH_BASH_COMPAT
-
 config BUSYBOX_HUSH_BASH_SOURCE_CURDIR
 	bool "'source' and '.' builtins search current directory after $PATH"
 	default n   # do not encourage non-standard behavior
 	depends on BUSYBOX_HUSH_BASH_COMPAT
 	help
 	This is not compliant with standards. Avoid if possible.
+
+config BUSYBOX_HUSH_LINENO_VAR
+	bool "$LINENO variable (bashism)"
+	default y
+	depends on BUSYBOX_SHELL_HUSH
 
 config BUSYBOX_HUSH_INTERACTIVE
 	bool "Interactive mode"
