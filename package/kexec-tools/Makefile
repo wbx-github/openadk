@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kexec-tools
 PKG_VERSION:=		2.0.23
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		aa63cd6c7dd95b06ceba6240a7fdc6792789cada75a655e6714987175224241b
 PKG_DESCR:=		kernel exec tools
 PKG_SECTION:=		sys/misc
@@ -14,8 +14,6 @@ PKG_BUILDEP:=		zlib
 PKG_KDEPENDS:=		kexec
 PKG_URL:=		http://kernel.org/pub/linux/utils/kernel/kexec/
 PKG_SITES:=		${MASTER_SITE_KERNEL:=utils/kernel/kexec/}
-
-PKG_ARCH_DEPENDS:=	!aarch64 !m68k
 
 include $(ADK_TOPDIR)/mk/package.mk
 
