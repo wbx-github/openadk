@@ -1,0 +1,10 @@
+--- mpd-0.23.5.orig/src/lib/alsa/Error.cxx	2021-12-01 20:00:00.000000000 +0100
++++ mpd-0.23.5/src/lib/alsa/Error.cxx	2022-01-09 00:34:09.731074233 +0100
+@@ -29,6 +29,7 @@
+ 
+ #include "Error.hxx"
+ 
++#include <stdarg.h>
+ #include <alsa/error.h>
+ 
+ namespace Alsa {

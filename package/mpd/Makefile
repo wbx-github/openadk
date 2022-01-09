@@ -4,17 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mpd
-PKG_VERSION:=		0.20.13
+PKG_VERSION:=		0.23.5
 PKG_RELEASE:=		1
-PKG_HASH:=		46c1c534d80a52de00263e8ef43a6011ff9d765232443749539ef26b1b48ff40
+PKG_HASH:=		f22c2c25093a05f4566f9cd7207cfbcd8405af67ed29a989bcf8905f80b7a299
 PKG_DESCR:=		music player daemon
 PKG_SECTION:=		mm/audio
-PKG_DEPENDS:=		libmpdclient boost libncurses libexpat
-PKG_BUILDDEP:=		libmpdclient boost ncurses expat
+PKG_DEPENDS:=		libmpdclient boost libncurses libexpat libsqlite
+PKG_BUILDDEP:=		libmpdclient boost ncurses expat sqlite
 PKG_FDEPENDS:=		libmpdclient
 PKG_NEEDS:=		threads c++ data
 PKG_URL:=		http://www.musicpd.org/
-PKG_SITES:=		http://www.musicpd.org/download/mpd/0.20/
+PKG_SITES:=		http://www.musicpd.org/download/mpd/0.23/
 
 PKG_FLAVOURS_MPD:=	WITH_ALSA WITH_AO WITH_MP3 WITH_MP4
 PKG_FLAVOURS_MPD+=	WITH_OGG WITH_FLAC WITH_WAV WITH_MMS WITH_FFMPEG
@@ -91,7 +91,7 @@ PKGFD_WITH_CURL:=	enable CURL support
 PKGFS_WITH_CURL:=	libcurl
 PKGFB_WITH_CURL:=	curl
 ifeq ($(ADK_PACKAGE_MPD_WITH_CURL),y)
-PKG_FDEPENDS+=		libcurl
+PKG_FDEPENDS+=		curl
 endif
 
 PKGFD_WITH_SAMPLERATE:=	enable samplerate support
@@ -135,142 +135,128 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,MPD,mpd,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_FDEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
+
 TARGET_CPPFLAGS+=	-D_GNU_SOURCE -D_POSIX_SOURCE
 TARGET_CFLAGS+=		-std=gnu99
-CONFIGURE_ENV+=		ac_cv_lib_nsl_gethostbyname=no
-CONFIGURE_ARGS+=	--disable-fifo \
-			--disable-oss \
-			--disable-icu \
-			--disable-bzip2 \
-			--disable-libwrap \
-			--disable-smbclient \
-			--disable-mpc \
-			--disable-wavpack \
-			--disable-modplug \
-			--disable-sqlite \
-			--disable-mpg123 \
-			--disable-soundcloud \
-			--enable-inotify \
-			--enable-pipe-output
+
+MESON_FLAGS+=	-Dfifo=false \
+		-Doss=disabled
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_JACK),)
-CONFIGURE_ARGS+=	--enable-jack
+MESON_FLAGS+=	-Djack=enabled
 else
-CONFIGURE_ARGS+=	--disable-jack
+MESON_FLAGS+=	-Djack=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_SNDFILE),)
-CONFIGURE_ARGS+=	--enable-sndfile
+MESON_FLAGS+=	-Dsndfile=enabled
 else
-CONFIGURE_ARGS+=	--disable-sndfile
+MESON_FLAGS+=	-Dsndfile=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_HTTPD),)
-CONFIGURE_ARGS+=	--enable-httpd-output
+MESON_FLAGS+=	-Dhttpd=true
 else
-CONFIGURE_ARGS+=	--disable-httpd-output
+MESON_FLAGS+=	-Dhttpd=false
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_AVAHI),)
-CONFIGURE_ARGS+=	--with-zeroconf=avahi
+MESON_FLAGS+=	-Dzeroconf=avahi
 else
-CONFIGURE_ARGS+=	--with-zeroconf=no
+MESON_FLAGS+=	-Dzeroconf=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_PULSE),)
-CONFIGURE_ARGS+=	--enable-pulse
+MESON_FLAGS+=	-Dpulse=enabled
 else
-CONFIGURE_ARGS+=	--disable-pulse
+MESON_FLAGS+=	-Dpulse=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_ALSA),)
-CONFIGURE_ARGS+=	--enable-alsa
+MESON_FLAGS+=	-Dalsa=enabled
 else
-CONFIGURE_ARGS+=	--disable-alsa
+MESON_FLAGS+=	-Dalsa=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_AO),)
-CONFIGURE_ARGS+=	--enable-ao
+MESON_FLAGS+=	-Dao=enabled
 else
-CONFIGURE_ARGS+=	--disable-ao
+MESON_FLAGS+=	-Dao=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_MP3),)
-CONFIGURE_ARGS+=	--enable-id3 --enable-mad
+MESON_FLAGS+=	-Dmad=enabled
 else
-CONFIGURE_ARGS+=	--disable-id3 --disable-mad
+MESON_FLAGS+=	-Dmad=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_MP4),)
-CONFIGURE_ARGS+=	--enable-aac
+MESON_FLAGS+=	-Dfaad=enabled
 else
-CONFIGURE_ARGS+=	--disable-aac
+MESON_FLAGS+=	-Dfaad=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_OGG),)
-CONFIGURE_ARGS+=	--enable-vorbis
+MESON_FLAGS+=	-Dvorbis=enabled
 else
-CONFIGURE_ARGS+=	--disable-vorbis
+MESON_FLAGS+=	-Dvorbis=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_TREMOR),)
-CONFIGURE_ARGS+=	\
-			--disable-vorbis \
-			--with-tremor \
-			--with-tremor-includes=$(STAGING_TARGET_DIR)/usr/include \
-			--with-tremor-libraries=$(STAGING_TARGET_DIR)/usr/lib
+MESON_FLAGS+=	-Dtremor=enabled 
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_FLAC),)
-CONFIGURE_ARGS+=	--enable-flac
+MESON_FLAGS+=	-Dflac=enabled
 else
-CONFIGURE_ARGS+=	--disable-flac
+MESON_FLAGS+=	-Dflac=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_WAV),)
-CONFIGURE_ARGS+=	--enable-audiofile
+MESON_FLAGS+=	-Daudiofile=enabled
 else
-CONFIGURE_ARGS+=	--disable-audiofile
+MESON_FLAGS+=	-Daudiofile=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_SHOUT),)
-CONFIGURE_ARGS+=	--enable-shout \
-			--enable-lame-encoder \
-			--enable-vorbis-encoder
+MESON_FLAGS+=	-Dshout=enabled
 else
-CONFIGURE_ARGS+=	--disable-shout \
-			--disable-lame-encoder \
-			--disable-vorbis-encoder
+MESON_FLAGS+=	-Dshout=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_CURL),)
-CONFIGURE_ARGS+=	--enable-curl
+MESON_FLAGS+=	-Dcurl=enabled
 else
-CONFIGURE_ARGS+=	--disable-curl
+MESON_FLAGS+=	-Dcurl=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_MMS),)
-CONFIGURE_ARGS+=	--enable-mms
+MESON_FLAGS+=	-Dmms=enabled
 else
-CONFIGURE_ARGS+=	--disable-mms
+MESON_FLAGS+=	-Dmms=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_FFMPEG),)
-CONFIGURE_ARGS+=	--enable-ffmpeg
+MESON_FLAGS+=	-Dffmpeg=enabled
 else
-CONFIGURE_ARGS+=	--disable-ffmpeg
+MESON_FLAGS+=	-Dffmpeg=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_SAMPLERATE),)
-CONFIGURE_ARGS+=	--enable-lsr
+MESON_FLAGS+=	-Dlibsamplerate=enabled
 else
-CONFIGURE_ARGS+=	--disable-lsr
+MESON_FLAGS+=	-Dlibsamplerate=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_OPUS),)
-CONFIGURE_ARGS+=	--enable-opus
+MESON_FLAGS+=	-Dopus=enabled
 else
-CONFIGURE_ARGS+=	--disable-opus
+MESON_FLAGS+=	-Dopus=disabled
 endif
 
 mpd-install:
