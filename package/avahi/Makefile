@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		avahi
-PKG_VERSION:=		0.6.32
+PKG_VERSION:=		0.8
 PKG_RELEASE:=		1
-PKG_HASH:=		d54991185d514a0aba54ebeb408d7575b60f5818a772e28fa0e18b98bc1db454
+PKG_HASH:=		060309d7a333d38d951bc27598c677af1796934dbd98e1024e7ad8de798fedda
 PKG_DESCR:=		multicast dns daemon and dns-sd server
 PKG_SECTION:=		net/dns
-PKG_BUILDDEP:=		libdaemon expat gdbm glib
+PKG_BUILDDEP:=		libdaemon expat gdbm glib libevent
 PKG_NEEDS:=		c++ intl
 PKG_URL:=		http://avahi.org/
 PKG_SITES:=		https://github.com/lathiat/avahi/releases/download/v$(PKG_VERSION)/
@@ -31,12 +31,12 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,AVAHI,avahi,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_AVAHI),$(PKG_DESCR),$(PKG_SECTION)))
 $(eval $(call PKG_template,LIBAVAHI,libavahi,$(PKG_VERSION)-$(PKG_RELEASE),,$(PKGSD_LIBAVAHI),$(PKGSC_LIBAVAHI),$(PKG_OPTS)))
 
-AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--enable-glib \
 			--enable-libdaemon \
 			--enable-dbus \
 			--disable-qt3 \
 			--disable-qt4 \
+			--disable-qt5 \
 			--disable-gtk \
 			--disable-gtk3 \
 			--disable-python \
