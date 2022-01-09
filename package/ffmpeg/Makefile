@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ffmpeg
-PKG_VERSION:=		3.4.2
-PKG_RELEASE:=		2
-PKG_HASH:=		eb0370bf223809b9ebb359fed5318f826ac038ce77933b3afd55ab1a0a21785a
+PKG_VERSION:=		4.4.1
+PKG_RELEASE:=		1
+PKG_HASH:=		8fc9f20ac5ed95115a9e285647add0eedd5cc1a98a039ada14c132452f98ac42
 PKG_DESCR:=		record, convert and stream audio & video
 PKG_SECTION:=		libs/video
 PKG_NEEDS:=		threads
@@ -171,6 +171,8 @@ endif
 
 ifeq ($(ADK_TARGET_ARCH_ARM_WITH_NEON),y)
 CONFIGURE_CPU_OPTS+=	--enable-neon
+else ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
+CONFIGURE_CPU_OPTS+=	--enable-neon
 else
 CONFIGURE_CPU_OPTS+=	--disable-neon
 endif
@@ -253,9 +255,6 @@ ffmpeg-install:
 		$(IDIR_FFMPEG)/usr/bin
 
 ffserver-install:
-	$(INSTALL_DIR) $(IDIR_FFSERVER)/etc
-	$(INSTALL_DATA) $(WRKBUILD)/doc/ffserver.conf \
-		$(IDIR_FFSERVER)/etc
 	$(INSTALL_DIR) $(IDIR_FFSERVER)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/ffserver \
 		$(IDIR_FFSERVER)/usr/bin
