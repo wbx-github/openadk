@@ -52,7 +52,7 @@ ifneq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 	done
 else
 	${INSTALL_DIR} ${IDIR_GLIBC}/$(ADK_TARGET_LIBC_PATH)
-	for file in libnss_dns libnss_files; do \
+	-for file in libnss_dns libnss_files; do \
 		$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
 		$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file-$(PKG_GLIBCVER).so $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
 	done
