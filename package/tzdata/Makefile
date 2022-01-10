@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		tzdata
-PKG_VERSION:=		2019c
+PKG_VERSION:=		2021e
 PKG_RELEASE:=		1
-PKG_HASH:=		79c7806dab09072308da0e3d22c37d3b245015a591891ea147d3b133b60ffc7c f6ebd3668e02d5ed223d3b7b1947561bf2d2da2f4bd1db61efefd9e06c167ed4
+PKG_HASH:=		07ec42b737d0d3c6be9c337f8abb5f00554a0f9cc4fcf01a703d69403b6bb2b1 584666393a5424d13d27ec01183da17703273664742e049d4f62f62dab631775
 PKG_DESCR:=		timezone data (/usr/share/zoneinfo)
 PKG_SECTION:=		base/apps
 PKG_URL:=		http://www.iana.org/time-zones/

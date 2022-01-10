@@ -1,6 +1,6 @@
---- w-tzdata-2019c-1.orig/Makefile	2019-07-01 09:06:38.000000000 +0200
-+++ w-tzdata-2019c-1/Makefile	2020-02-04 09:33:12.012662611 +0100
-@@ -365,7 +365,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fn
+--- w-tzdata-2021e-1.orig/Makefile	2021-09-25 16:47:39.000000000 +0200
++++ w-tzdata-2021e-1/Makefile	2022-01-09 06:05:17.958089388 +0100
+@@ -370,7 +370,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fn
  # January's first Monday when a "%V" format is used and January 1
  # falls on a Friday, Saturday, or Sunday.
  
@@ -9,7 +9,7 @@
  
  # Linker flags.  Default to $(LFLAGS) for backwards compatibility
  # to release 2012h and earlier.
-@@ -380,7 +380,7 @@ LEAPSECONDS=
+@@ -385,7 +385,7 @@ LEAPSECONDS=
  # The zic command and its arguments.
  
  zic=		./zic
@@ -18,8 +18,8 @@
  
  # To shrink the size of installed TZif files,
  # append "-r @N" to omit data before N-seconds-after-the-Epoch.
-@@ -579,7 +579,7 @@ SHELL=		/bin/sh
- all:		tzselect yearistype zic zdump libtz.a $(TABDATA) \
+@@ -562,7 +562,7 @@ SHELL=		/bin/sh
+ all:		tzselect zic zdump libtz.a $(TABDATA) \
  		  vanguard.zi main.zi rearguard.zi
  
 -ALL:		all date $(ENCHILADA)
@@ -27,7 +27,7 @@
  
  install:	all $(DATA) $(REDO) $(MANS)
  		mkdir -p '$(DESTDIR)$(BINDIR)' \
-@@ -646,6 +646,12 @@ zdump:		$(TZDOBJS)
+@@ -637,6 +637,12 @@ zdump:		$(TZDOBJS)
  zic:		$(TZCOBJS)
  		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZCOBJS) $(LDLIBS)
  
@@ -37,6 +37,6 @@
 +		$(CC_FOR_BUILD) -c $(CFLAGS_FOR_BUILD) asctime.c -o asctime_build.o
 +		$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) -o $@ zic_build.o localtime_build.o asctime_build.o
 +
- yearistype:	yearistype.sh
- 		cp yearistype.sh yearistype
- 		chmod +x yearistype
+ leapseconds:	$(LEAP_DEPS)
+ 		$(AWK) -v EXPIRES_LINE=$(EXPIRES_LINE) \
+ 		  -f leapseconds.awk leap-seconds.list >$@.out
