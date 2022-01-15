@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libsndfile
-PKG_VERSION:=		1.0.27
+PKG_VERSION:=		1.0.28
 PKG_RELEASE:=		1
-PKG_HASH:=		a391952f27f4a92ceb2b4c06493ac107896ed6c76be9a613a4731f076d30fac0
+PKG_HASH:=		1ff33929f042fa333aed1e8923aa628c3ee9e1eb85512686c55092d1e5a9dfa9
 PKG_DESCR:=		reading and writing files containing sampled sound
 PKG_SECTION:=		libs/audio
 PKG_URL:=		http://www.mega-nerd.com/libsndfile/
