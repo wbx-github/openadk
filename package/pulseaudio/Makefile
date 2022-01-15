@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pulseaudio
-PKG_VERSION:=		10.0
+PKG_VERSION:=		15.0
 PKG_RELEASE:=		1
-PKG_HASH:=		a3186824de9f0d2095ded5d0d0db0405dc73133983c2fbb37291547e37462f57
+PKG_HASH:=		a40b887a3ba98cc26976eb11bdb6613988f145b19024d1b6555c6a03c9cba1a0
 PKG_DESCR:=		sound system
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		libltdl json-c libsndfile libspeex libncurses
 PKG_DEPENDS+=		libflac libvorbis libogg libuuid libsndfile
 PKG_DEPENDS+=		alsa-lib
-PKG_BUILDDEP:=		libtool json-c libsndfile speex
+PKG_BUILDDEP:=		libtool json-c libsndfile speex check
 PKG_BUILDDEP+=		flac libvorbis libogg util-linux ncurses alsa-lib
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.freedesktop.org/wiki/Software/PulseAudio/
@@ -23,40 +23,18 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,PULSEAUDIO,pulseaudio,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
+
 TARGET_CPPFLAGS+=	-D_GNU_SOURCE -D_POSIX_SOURCE
 
-# use libtool from host directory
-AUTOTOOL_STYLE:=	autoreconf
-
-ifeq ($(ADK_TARGET_ARCH_ARM_WITH_NEON),y)
-CONFIGURE_ARGS+=	--enable-neon-opt
-else
-CONFIGURE_ARGS+=	--disable-neon-opt
-endif
-
-CONFIGURE_ARGS+=	--disable-manpages \
-			--disable-tests \
-			--disable-x11 \
-			--disable-avahi \
-			--disable-lirc \
-			--disable-openssl \
-			--disable-orc \
-			--disable-tcpwrap \
-			--disable-oss-output \
-			--disable-oss-wrapper \
-			--disable-esound \
-			--disable-jack \
-			--disable-gconf \
-			--disable-udev \
-			--disable-rpath \
-			--disable-dbus \
-			--disable-hal-compat \
-			--disable-samplerate \
-			--without-caps \
-			--with-database=simple \
-			--enable-alsa \
-			--with-speex \
-			--with-access-group=audio
+MESON_FLAGS+=		-Ddatabase=simple \
+			-Ddoxygen=false \
+			-Dgcov=false \
+			-Dtests=false
 
 pulseaudio-install:
 	$(INSTALL_DIR) $(IDIR_PULSEAUDIO)/etc/pulse
