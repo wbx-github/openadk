@@ -1,0 +1,12 @@
+--- minijail-linux-v17.orig/libminijail.c	2021-08-11 08:01:06.000000000 +0200
++++ minijail-linux-v17/libminijail.c	2022-01-13 04:24:57.190934413 +0100
+@@ -2620,9 +2620,6 @@ static int fd_is_open(int fd)
+ 	return fcntl(fd, F_GETFD) != -1 || errno != EBADF;
+ }
+ 
+-static_assert(FD_SETSIZE >= MAX_PRESERVED_FDS * 2 - 1,
+-	      "If true, ensure_no_fd_conflict will always find an unused fd.");
+-
+ /* If parent_fd will be used by a child fd, move it to an unused fd. */
+ static int ensure_no_fd_conflict(const fd_set *child_fds,
+ 				 int child_fd, int *parent_fd)

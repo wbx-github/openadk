@@ -1,0 +1,15 @@
+--- minijail-linux-v17.orig/common.mk	2021-08-11 08:01:06.000000000 +0200
++++ minijail-linux-v17/common.mk	2022-01-13 04:53:35.432449083 +0100
+@@ -306,12 +306,6 @@ check_libs_cxx = $(call check_compile,$(
+ check_cc = $(call check_compile_cc,'int main() { return 0; }',$(1),$(2))
+ check_cxx = $(call check_compile_cxx,'int main() { return 0; }',$(1),$(2))
+ 
+-# Choose the stack protector flags based on whats supported by the compiler.
+-SSP_CFLAGS := $(call check_cc,-fstack-protector-strong)
+-ifeq ($(SSP_CFLAGS),)
+- SSP_CFLAGS := $(call check_cc,-fstack-protector-all)
+-endif
+-
+ # To update these from an including Makefile:
+ #  CXXFLAGS += -mahflag  # Append to the list
+ #  CXXFLAGS := -mahflag $(CXXFLAGS) # Prepend to the list
