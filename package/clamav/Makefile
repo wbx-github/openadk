@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		clamav
-PKG_VERSION:=		0.103.0
+PKG_VERSION:=		0.103.4
 PKG_RELEASE:=		1
-PKG_HASH:=		32a9745277bfdda80e77ac9ca2f5990897418e9416880f3c31553ca673e80546
+PKG_HASH:=		def0ad15500fa6aff81d8e68b9f83aa75ee5b607a01335c1d26dbcc959932f85
 PKG_DESCR:=		anti-virus software
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		libressl zlib libpcre libncurses libcurl libmspack
