@@ -4,15 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		opensc
-PKG_VERSION:=		0.15.0
+PKG_VERSION:=		0.22.0
 PKG_RELEASE:=		1
-PKG_HASH:=		7c8600a37d11f82410699ee5c60bfebc46f6714d0d87b4125dd99215c87d4db8
+PKG_HASH:=		8d4e5347195ebea332be585df61dcc470331c26969e4b0447c851fb0844c7186
 PKG_DESCR:=		utilities to access smart cards
 PKG_SECTION:=		app/crypto
 PKG_BUILDDEP:=		openct pcsc-lite readline libressl
 PKG_DEPENDS:=		libopensc libopenct pcsc-lite libreadline libressl
 PKG_URL:=		https://github.com/OpenSC/OpenSC/wiki
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=opensc/}
+PKG_SITES:=		https://github.com/OpenSC/OpenSC/releases/download/$(PKG_VERSION)/
 PKG_LIBNAME:=		libopensc
 PKG_OPTS:=		dev
 
@@ -29,7 +29,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call PKG_template,OPENSC,${PKG_NAME},${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,LIBOPENSC,libopensc,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_LIBOPENSC},${PKGSD_LIBOPENSC},${PKGSC_LIBOPENSC},${PKG_OPTS}))
 
-AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--disable-man \
 			--disable-iconv \
 			--disable-pcsc \
