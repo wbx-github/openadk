@@ -12,7 +12,7 @@ KERNEL_MAKE_OPTS:=	V=1 \
 ifeq ($(ADK_TARGET_BINFMT_FDPIC),y)
 KERNEL_MAKE_OPTS+=	CC="$(TARGET_CC) -mno-fdpic"
 else
-KERNEL_MAKE_OPTS+=	CC="$(TARGET_CC)"
+KERNEL_MAKE_OPTS+=	CC="$(TARGET_CC) -fno-tree-loop-distribute-patterns"
 endif
 
 

@@ -242,8 +242,8 @@ TARGET_CXXFLAGS+=	-mlongcalls -mauto-litpools
 endif
 endif
 ifeq ($(ADK_TARGET_ARCH_MICROBLAZE),y)
-TARGET_CFLAGS+=		-mxl-barrel-shift
-TARGET_CXXFLAGS+=	-mxl-barrel-shift
+TARGET_CFLAGS+=		-mxl-barrel-shift -fno-tree-loop-distribute-patterns
+TARGET_CXXFLAGS+=	-mxl-barrel-shift -fno-tree-loop-distribute-patterns
 endif
 
 endif
