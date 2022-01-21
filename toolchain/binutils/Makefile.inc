@@ -30,13 +30,6 @@ PKG_RELEASE:=		1
 PKG_SITES:=		https://github.com/kalray/gdb-binutils.git
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
 endif
-ifeq ($(ADK_TOOLCHAIN_BINUTILS_NDS32),y)
-PKG_VERSION:=		nds32-binutils-2.30-branch-open
-PKG_GIT:=		branch
-PKG_RELEASE:=		1
-PKG_SITES:=		https://github.com/andestech/binutils.git
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
-endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_AVR32),y)
 PKG_VERSION:=		2.20.1
 PKG_RELEASE:=		1
