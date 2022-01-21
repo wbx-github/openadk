@@ -58,6 +58,7 @@ endif
 		--disable-gdb \
 		--enable-obsolete \
 		--disable-werror \
+		--disable-gprof \
 		--disable-install-libiberty \
 		${CONFOPTS} \
 	);
