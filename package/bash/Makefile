@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		bash
-PKG_VERSION:=		5.1.8
+PKG_VERSION:=		5.1.16
 PKG_RELEASE:=		1
-PKG_HASH:=		0cfb5c9bb1a29f800a97bd242d19511c997a1013815b805e0fdd32214113d6be
+PKG_HASH:=		5bac17218d3911834520dad13cd1f85ab944e1c09ae1aba55906be1f8192f558
 PKG_DESCR:=		bourne-again shell
 PKG_SECTION:=		base/shells
 PKG_URL:=		http://www.gnu.org/software/bash/
