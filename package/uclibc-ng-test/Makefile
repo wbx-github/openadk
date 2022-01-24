@@ -22,6 +22,9 @@ CONFIG_STYLE:=          manual
 
 # disable math tests
 XAKE_FLAGS+=		NO_MATH=1
+ifeq ($(ADK_TARGET_LIB_GLIBC),y)
+XAKE_FLAGS+=		NO_CRYPT=1
+endif
 ifeq ($(ADK_TARGET_LIB_MUSL),y)
 XAKE_FLAGS+=		NO_MATH=1
 endif
