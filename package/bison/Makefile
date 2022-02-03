@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		bison
-PKG_VERSION:=		3.0.4
+PKG_VERSION:=		3.8.2
 PKG_RELEASE:=		1
-PKG_HASH:=		a72428c7917bdf9fa93cb8181c971b6e22834125848cf1d03ce10b1bb0716fe1
+PKG_HASH:=		9bba0214ccf7f1079c5d59210045227bcf619519840ebfa80cd3849cff5a5bf2
 PKG_DESCR:=		parser generator
 PKG_SECTION:=		dev/tools
 PKG_BUILDDEP:=		m4-host bison-host
