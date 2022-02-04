@@ -1,8 +1,0 @@
---- cpio-2.11.orig/src/filetypes.h	2010-02-12 11:19:23.000000000 +0100
-+++ cpio-2.11/src/filetypes.h	2010-06-08 18:26:43.633473938 +0200
-@@ -82,4 +82,4 @@
- #define lstat stat
- #endif
- int lstat ();
--int stat ();
-+//int stat ();

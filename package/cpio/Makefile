@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		cpio
-PKG_VERSION:=		2.11
+PKG_VERSION:=		2.13
 PKG_RELEASE:=		1
-PKG_HASH:=		601b1d774cd6e4cd39416203c91ec59dbd65dd27d79d75e1a9b89497ea643978
+PKG_HASH:=		e87470d9c984317f658567c03bfefb6b0c829ff17dbf6b0de48d71a4c8f3db88
 PKG_DESCR:=		archive utility
 PKG_SECTION:=		app/archive
 PKG_URL:=		http://www.gnu.org/software/cpio/
