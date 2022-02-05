@@ -6,7 +6,7 @@ include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/arch/riscv/boot/Image
-QEMU_ARGS:=-M virt -m 256 -nographic -device loader,file=$(FW_DIR)/$(TARGET_KERNEL),addr=0x80200000 
+QEMU_ARGS:=-M virt -m 512 -nographic
 ifeq ($(ADK_TARGET_QEMU_WITH_VIRTIO),y)
 QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 endif
@@ -45,7 +45,7 @@ targethelp:
 	@echo 'The kernel+initramfs file is: $(FW_DIR)/${TARGET_KERNEL}'
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Start qemu with following command line:"
-	@echo 'qemu-system-riscv32 ${QEMU_ARGS} -kernel $(FW_DIR)/fw_jump.elf'
+	@echo 'qemu-system-riscv32 ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
 
@@ -54,21 +54,13 @@ kernel-strip:
 kernel-install: kernel-strip
 	 @cp $(KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
 
-bbl:
-	@rm -rf $(BUILD_DIR)/opensbi
-	(cd $(BUILD_DIR)/ && git clone https://github.com/riscv/opensbi.git)
-	(cd $(BUILD_DIR)/opensbi && PATH='$(HOST_PATH)' \
-		CROSS_COMPILE=$(GNU_TARGET_NAME)- \
-		PLATFORM=qemu/virt make)
-	cp $(BUILD_DIR)/opensbi/build/platform/qemu/virt/firmware/fw_jump.elf $(FW_DIR)
-
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),initramfs)
-imageinstall: kernel-install bbl $(FW_DIR)/$(INITRAMFS) targethelp
+imageinstall: kernel-install $(FW_DIR)/$(INITRAMFS) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),initramfsarchive)
-imageinstall: kernel-install bbl $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
+imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
-imageinstall: createinitramfs bbl targethelp
+imageinstall: createinitramfs targethelp
 endif
