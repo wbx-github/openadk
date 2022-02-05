@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		pcre
-PKG_VERSION:=		8.41
+PKG_VERSION:=		8.45
 PKG_RELEASE:=		1
-PKG_HASH:=		244838e1f1d14f7e2fa7681b857b3a8566b74215f28133f14a8f5e59241b682c
+PKG_HASH:=		4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09
 PKG_DESCR:=		perl compatible regular expression library
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.pcre.org/
