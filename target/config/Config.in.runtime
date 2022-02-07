@@ -24,52 +24,35 @@ config ADK_RUNTIME_INIT_SIMPLEINIT
 	bool "Use a very simple init"
 	select ADK_PACKAGE_SIMPLEINIT
 
-config ADK_RUNTIME_INIT_SYSTEMD
-	bool "Use systemd init and supervision"
-	select ADK_PACKAGE_SYSTEMD
-	select ADK_PACKAGE_DBUS
-	select ADK_PACKAGE_DBUS_WITH_SYSTEMD
-	select ADK_TARGET_LIBC_WITH_LOCALE if ADK_TARGET_LIB_UCLIBC_NG
-	select ADK_TARGET_LIBC_WITH_LIBINTL_STUB if ADK_TARGET_LIB_UCLIBC_NG
-	depends on ADK_TARGET_LIB_GLIBC || ADK_TARGET_LIB_UCLIBC_NG
-
 endchoice
 
 choice
 prompt "system for /dev management"
 depends on !ADK_APPLIANCE_TOOLCHAIN
-default ADK_RUNTIME_DEV_STATIC if ADK_TARGET_ARCH_CRIS || !ADK_TARGET_WITH_MMU
-default ADK_RUNTIME_DEV_MDEV
+default ADK_RUNTIME_DEV_STATIC
+
+config ADK_RUNTIME_DEV_STATIC
+	bool "Use static /dev (devtmpfs)"
+	select ADK_LINUX_KERNEL_DEVTMPFS if ADK_TARGET_OS_LINUX
+	select ADK_LINUX_KERNEL_DEVTMPFS_MOUNT if ADK_TARGET_OS_LINUX
 
 config ADK_RUNTIME_DEV_MDEV
-	bool "Use mdev"
+	bool "Use dynamic /dev with mdev"
 	select ADK_LINUX_KERNEL_DEVTMPFS if ADK_TARGET_OS_LINUX
 	select ADK_LINUX_KERNEL_DEVTMPFS_MOUNT if ADK_TARGET_OS_LINUX
 	depends on ADK_PACKAGE_BUSYBOX
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 
 config ADK_RUNTIME_DEV_MDEV_LOGGING
 	bool "Log mdev events into /dev/mdev.log"
 	depends on ADK_RUNTIME_DEV_MDEV
 
 config ADK_RUNTIME_DEV_UDEV
-	bool "Use udev"
+	bool "Use dynamic /dev with udev"
 	select ADK_PACKAGE_UDEV
 	# needs depmod for module dependency generation on host
 	select ADK_HOST_BUILD_KMOD
 	select ADK_LINUX_KERNEL_DEVTMPFS if ADK_TARGET_OS_LINUX
 	select ADK_LINUX_KERNEL_DEVTMPFS_MOUNT if ADK_TARGET_OS_LINUX
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
-
-config ADK_RUNTIME_DEV_SYSTEMD_UDEV
-	bool "Use systemd udev"
-	select ADK_LINUX_KERNEL_DEVTMPFS if ADK_TARGET_OS_LINUX
-	select ADK_LINUX_KERNEL_DEVTMPFS_MOUNT if ADK_TARGET_OS_LINUX
-	depends on ADK_RUNTIME_INIT_SYSTEMD
-
-config ADK_RUNTIME_DEV_STATIC
-	bool "Use static /dev"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 
 endchoice
 
@@ -170,13 +153,11 @@ config ADK_RUNTIME_USER_SHELL
 
 config ADK_RUNTIME_MOUNT_DEBUGFS
 	bool "mount debugfs"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	help
 	  mount debugfs under /sys/kernel/debug
 
 config ADK_RUNTIME_START_SERVICES
 	bool "start services by default"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	default n
 	help
 	  Enable this option to start selected services on boot.
@@ -197,7 +178,7 @@ config ADK_RUNTIME_TMPFS_SIZE
 	default "16384" if ADK_TARGET_SYSTEM_LEMOTE_YEELONG
 	default "8192" if ADK_TARGET_SYSTEM_MIKROTIK_RB532
 	default "1024"
-	depends on !ADK_RUNTIME_INIT_SIMPLEINIT && !ADK_RUNTIME_INIT_SYSTEMD
+	depends on !ADK_RUNTIME_INIT_SIMPLEINIT
 	help
 	  Size of /tmp in memory in Kilobyte.
 
@@ -285,7 +266,6 @@ endchoice
 
 choice
 prompt "start getty or shell after bootup"
-depends on !ADK_RUNTIME_INIT_SYSTEMD
 default ADK_RUNTIME_GETTY
 
 config ADK_RUNTIME_GETTY
@@ -307,7 +287,6 @@ endchoice
 
 config ADK_RUNTIME_GETTY_VGA
 	bool "start getty on VGA console (tty1-tty6)"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_RUNTIME_GETTY \
                 && (ADK_TARGET_WITH_VGA || ADK_TARGET_GENERIC)
 	default y if ADK_TARGET_QEMU_WITH_GRAPHIC_ONLY
@@ -330,7 +309,6 @@ config ADK_RUNTIME_GETTY_VGA
 
 config ADK_RUNTIME_GETTY_SERIAL
 	bool "start getty on serial console"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_RUNTIME_GETTY && ( ADK_TARGET_WITH_SERIAL \
 		|| ADK_TARGET_QEMU \
 		|| ADK_TARGET_GENERIC \
@@ -351,19 +329,16 @@ config ADK_RUNTIME_GETTY_SERIAL
 
 config ADK_RUNTIME_GETTY_SERIAL_AUTOLOGIN
        bool "run autologin on serial getty"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
        depends on ADK_RUNTIME_GETTY_SERIAL
        select ADK_PACKAGE_AUTOLOGIN
 
 config ADK_RUNTIME_CONSOLE_VGA_DEVICE
 	string "VGA console device"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_TARGET_WITH_VGA || ADK_TARGET_GENERIC
 	default "tty0"
 
 config ADK_RUNTIME_CONSOLE_SERIAL_DEVICE
 	string "serial console device"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_TARGET_WITH_SERIAL \
 		|| ADK_TARGET_QEMU \
 		|| ADK_TARGET_GENERIC \
@@ -400,7 +375,6 @@ config ADK_RUNTIME_CONSOLE_SERIAL_DEVICE
 
 config ADK_RUNTIME_CONSOLE_SERIAL_SPEED
 	string "serial console speed"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	depends on ADK_TARGET_WITH_SERIAL \
 		|| ADK_TARGET_QEMU \
 		|| ADK_TARGET_GENERIC \
@@ -542,7 +516,6 @@ config ADK_RUNTIME_WAIT_FOR_ETHERNET
 
 config ADK_SIMPLE_NETWORK_CONFIG
 	bool "simple network configuration"
-	depends on !ADK_RUNTIME_INIT_SYSTEMD
 	help
 	  Manually change network config
 	  

@@ -1,9 +1,0 @@
-[Unit]
-Description=Firmware Update Validation
-After=dropbear.service
-
-[Service]
-ExecStart=/usr/sbin/fwvalidate
-
-[Install]
-WantedBy=multi-user.target

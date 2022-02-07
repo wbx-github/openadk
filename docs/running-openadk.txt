@@ -60,8 +60,6 @@ OpenADK is generated while producing the +base-files+ package.  The main job
 the default inittab does is to start the +/etc/init.d/rcS+ shell script, and
 start one or more +getty+ programs (which provides a login prompt).
 
-Support for systemd and s6 is very experimental at the moment.
-
 /dev management
 ~~~~~~~~~~~~~~~
 
@@ -73,19 +71,21 @@ hardware devices, even if they are properly recognized by the Linux
 kernel.
 
 In OpenADK you can choose between different types of device managements.
-OpenADK defaults to *dynamic device nodes using devtmpfs and mdev*. This method
-relies on the _devtmpfs_ virtual filesystem in the kernel, which is enabled by
-default for all OpenADK generated kernels, and adds the +mdev+ userspace
-utility on top of it. +mdev+ is a program part of Busybox that the kernel will
-call every time a device is added or removed. Thanks to the +/etc/mdev.conf+
-configuration file, +mdev+ can be configured to for example, set specific
-permissions or ownership on a device file, call a script or application
-whenever a device appears or disappear, etc. Basically, it allows _userspace_
-to react on device addition and removal events. +mdev+ is also important if you
-have devices that require a firmware, as it will be responsible for pushing the
-firmware contents to the kernel. +mdev+ is a lightweight implementation (with
-fewer features) of +udev+. For more details about +mdev+ and the syntax of its
-configuration file, see http://git.busybox.net/busybox/tree/docs/mdev.txt.
+OpenADK defaults to *static device nodes using devtmpfs*. That is the simplest
+way available. Most users might like to change it to *dynamic device nodes
+using devtmpfs and mdev*. This method relies on the _devtmpfs_ virtual
+filesystem in the kernel, which is enabled by default for all OpenADK generated
+kernels, and adds the +mdev+ userspace utility on top of it. +mdev+ is a
+program part of Busybox that the kernel will call every time a device is added
+or removed. Thanks to the +/etc/mdev.conf+ configuration file, +mdev+ can be
+configured to for example, set specific permissions or ownership on a device
+file, call a script or application whenever a device appears or disappear, etc.
+Basically, it allows _userspace_ to react on device addition and removal
+events. +mdev+ is also important if you have devices that require a firmware,
+as it will be responsible for pushing the firmware contents to the kernel.
++mdev+ is a lightweight implementation (with fewer features) of +udev+. For
+more details about +mdev+ and the syntax of its configuration file, see
+http://git.busybox.net/busybox/tree/docs/mdev.txt.
 
 initscripts
 ~~~~~~~~~~~

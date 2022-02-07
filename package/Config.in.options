@@ -47,7 +47,7 @@ config ADK_LEAVE_ETC_ALONE
 
 config ADK_INSTALL_PACKAGE_INIT_SCRIPTS
 	bool "ship custom init-scripts along with packages"
-	default y if !ADK_RUNTIME_INIT_SYSTEMD
+	default y
 	depends on !ADK_LEAVE_ETC_ALONE
 	help
 	  Turning this option to false will prevent the ADK from
@@ -59,7 +59,7 @@ config ADK_INSTALL_PACKAGE_INIT_SCRIPTS
 
 config ADK_INSTALL_PACKAGE_NETWORK_SCRIPTS
 	bool "ship custom network-scripts along with packages"
-	default y if !ADK_RUNTIME_INIT_SYSTEMD
+	default y
 	depends on !ADK_LEAVE_ETC_ALONE
 	help
 	  Turning this option to false will prevent the ADK from

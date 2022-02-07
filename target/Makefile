@@ -56,7 +56,7 @@ ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_VGA_ONLY),y)
 		$(BUILD_DIR)/.kernelconfig.board
 endif
 ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_SERIAL_ONLY),y)
-	$(SED) 's#^\(CONFIG_.*CMDLINE="\)\(.*\)"#\1\2 console=$(ADK_RUNTIME_CONSOLE_SERIAL_DEVICE),$(ADK_RUNTIME_CONSOLE_SERIAL_SPEED)" systemd.log_level=debug systemd.log_target=console#' \
+	$(SED) 's#^\(CONFIG_.*CMDLINE="\)\(.*\)"#\1\2 console=$(ADK_RUNTIME_CONSOLE_SERIAL_DEVICE),$(ADK_RUNTIME_CONSOLE_SERIAL_SPEED)"#' \
 		$(BUILD_DIR)/.kernelconfig.board
 endif
 ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_VGA_SERIAL),y)
@@ -71,14 +71,12 @@ ifeq ($(ADK_TARGET_SYSTEM_QEMU_M68K_Q800)$(ADK_TARGET_SYSTEM_QEMU_M68K_MCF5208),
 	@$(SED) 's#^\(CONFIG_.*BOOTPARAM_STRING="\)\(.*\)"#\1\2 ro $(FS_CMDLINE)"#' \
 		$(BUILD_DIR)/.kernelconfig.board
 endif
-ifneq ($(ADK_RUNTIME_INIT_SYSTEMD),y)
 ifeq ($(ADK_TARGET_ROOTFS_NFSROOT),)
 	@$(SED) 's#^\(CONFIG_.*CMDLINE="\)\(.*\)"#\1\2 ro"#' \
 		$(BUILD_DIR)/.kernelconfig.board
 else
 	@$(SED) 's#^\(CONFIG_.*CMDLINE="\)\(.*\)"#\1\2 rw"#' \
 		$(BUILD_DIR)/.kernelconfig.board
-endif
 endif
 	@$(SED) 's#^\(CONFIG_.*CMDLINE="\)\(.*\)"#\1\2 $(FS_CMDLINE)"#' \
 		$(BUILD_DIR)/.kernelconfig.board

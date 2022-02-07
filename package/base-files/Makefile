@@ -40,7 +40,6 @@ do-install:
 	ln -sf ../run $(IDIR_BASE_FILES)/var/run
 	chmod 600 $(IDIR_BASE_FILES)/etc/shadow
 	chmod 1777 ${IDIR_BASE_FILES}/tmp
-ifeq ($(ADK_RUNTIME_INIT_SYSTEMD),)
 	echo $(ADK_RUNTIME_TMPFS_SIZE) > $(IDIR_BASE_FILES)/etc/tmpfs
 	mkdir -p $(IDIR_BASE_FILES)/etc/init.d
 	cp ./files/init.d/* $(IDIR_BASE_FILES)/etc/init.d
@@ -63,7 +62,6 @@ ifeq (${ADK_TARGET_ROOTFS_NFSROOT},y)
 	(cd $(IDIR_BASE_FILES)/etc; ln -sf ../proc/net/pnp resolv.conf)
 else
 	(cd $(IDIR_BASE_FILES)/etc; ln -sf ../tmp/resolv.conf .)
-endif
 endif
 ifeq ($(ADK_RUNTIME_DEV_MDEV),y)
 	$(CP) ./files/rcdev.mdev $(IDIR_BASE_FILES)/etc/init.d/rcdev

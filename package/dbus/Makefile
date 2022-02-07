@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		dbus
 PKG_VERSION:=		1.10.20
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		e574b9780b5425fde4d973bb596e7ea0f09e00fe2edd662da9016e976c460b48
 PKG_DESCR:=		desktop bus daemon
 PKG_SECTION:=		sys/misc
@@ -24,10 +24,6 @@ PKGSD_LIBDBUS:=		DBUS library
 PKGSC_LIBDBUS:=		libs/misc
 PKGSS_LIBDBUS:=		libexpat libuuid
 
-PKG_FLAVOURS_DBUS:=	WITH_SYSTEMD
-PKGFD_WITH_SYSTEMD:=	enable systemd support
-PKGFB_WITH_SYSTEMD:=	systemd
-
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,DBUS,dbus,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
@@ -36,14 +32,8 @@ $(eval $(call PKG_template,LIBDBUS,libdbus,${PKG_VERSION}-${PKG_RELEASE},${PKGSS
 TARGET_LDFLAGS+=	-luuid
 
 AUTOTOOL_STYLE:=	autoreconf
-ifeq ($(ADK_PACKAGE_DBUS_WITH_SYSTEMD),y)
-CONFIGURE_ARGS+=	--enable-systemd --with-systemdsystemunitdir=/usr/lib/systemd/system
-TARGET_LDFLAGS+=	-lsystemd
-else
-CONFIGURE_ARGS+=	--disable-systemd
-endif
-
-CONFIGURE_ARGS+=	--disable-tests \
+CONFIGURE_ARGS+=	--disable-systemd \
+			--disable-tests \
 			--disable-asserts \
 			--enable-abstract-sockets \
 			--with-dbus-user=dbus \
@@ -76,10 +66,6 @@ dbus-install:
 	${CP} ${WRKINST}/etc/dbus-1 ${IDIR_DBUS}/etc
 	${CP} ${WRKINST}/usr/share/dbus-1 ${IDIR_DBUS}/usr/share
 	${CP} ${WRKINST}/usr/bin/dbus-* ${IDIR_DBUS}/usr/bin
-ifeq ($(ADK_PACKAGE_DBUS_WITH_SYSTEMD),y)
-	${INSTALL_DIR} ${IDIR_DBUS}/usr/lib/systemd
-	${CP} ${WRKINST}/usr/lib/systemd/* ${IDIR_DBUS}/usr/lib/systemd
-endif
 	# workaround for dev subpackage
 	${INSTALL_DIR} $(IDIR_DBUS_DEV)/usr/include/dbus-1.0/dbus
 	$(CP) $(WRKBUILD)/dbus/dbus-arch-deps.h \
