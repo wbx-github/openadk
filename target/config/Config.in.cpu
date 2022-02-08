@@ -2002,6 +2002,7 @@ config ADK_TARGET_GCC_ARCH
 	default "rv32imac" if ADK_TARGET_CPU_RISCV32_RV32IMAC
 	default "rv64imafdc" if ADK_TARGET_CPU_RISCV64_RV64IMAFDC
 	default "rv64imac" if ADK_TARGET_CPU_RISCV64_RV64IMAC
+	default "kv3-1" if ADK_TARGET_ARCH_KVX
 
 # for CFLAGS/CXXFLAGS if gcc does not support --with-cpu
 config ADK_TARGET_CPU_FLAGS

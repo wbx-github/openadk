@@ -142,7 +142,7 @@ TARGET_CFLAGS+=		-mcpu=$(ADK_TARGET_GCC_CPU)
 TARGET_CXXFLAGS+=	-mcpu=$(ADK_TARGET_GCC_CPU)
 endif
 
-# for archiectures where gcc --with-arch matches -march=
+# for architectures where gcc --with-arch matches -march=
 ifneq ($(ADK_TARGET_GCC_ARCH),)
 TARGET_CFLAGS+=		-march=$(ADK_TARGET_GCC_ARCH)
 TARGET_CXXFLAGS+=	-march=$(ADK_TARGET_GCC_ARCH)

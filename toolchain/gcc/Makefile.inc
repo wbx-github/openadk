@@ -66,7 +66,7 @@ DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 LIBSTDCXXVER:=		19
 endif
 ifeq ($(ADK_TOOLCHAIN_GCC_KVX),y)
-PKG_VERSION:=		50bb1935d20f383c3d37c98b681f63de873688b2
+PKG_VERSION:=		f98c17b1e78dd3a3da45c0ac1af7b105edf2bf66
 PKG_GIT:=		hash
 PKG_SITES:=		https://github.com/kalray/gcc.git
 PKG_RELEASE:=		1

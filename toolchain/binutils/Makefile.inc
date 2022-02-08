@@ -24,7 +24,7 @@ PKG_SITES:=            https://github.com/foss-for-synopsys-dwc-arc-processors/b
 DISTFILES:=            ${PKG_NAME}-${PKG_VERSION}.tar.xz
 endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_KVX),y)
-PKG_VERSION:=		c5e8437af055869c8666a1c1e5a391d9af5be0c0
+PKG_VERSION:=		782547a4e2bdf1308728032853678ca69bb154ea
 PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_SITES:=		https://github.com/kalray/gdb-binutils.git
