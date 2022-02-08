@@ -82,23 +82,14 @@ config ADK_TARGET_ABI_MIPS64
 
 config ADK_TARGET_LIBC_PATH
 	string
-	default "lib32" if ADK_TARGET_ABI_N32
+	default "lib32" if ADK_TARGET_ABI_N32 || ADK_TARGET_ARCH_RISC32
 	default "libx32" if ADK_TARGET_ABI_X32
 	default "lib64" if ADK_TARGET_ABI_64 || ADK_TARGET_ABI_N64 \
 			|| ADK_TARGET_ARCH_AARCH64 \
 			|| ADK_TARGET_ARCH_SPARC64 \
 			|| ADK_TARGET_ARCH_PPC64 \
+			|| ADK_TARGET_ARCH_RISC64 \
 			|| ADK_TARGET_ARCH_X86_64
-	default "lib"
-
-config ADK_TARGET_LIBC_ABI_PATH
-	string
-	default "lib/lp64" if ADK_TARGET_ABI_LP64
-	default "lib/lp64f" if ADK_TARGET_ABI_LP64F
-	default "lib/lp64d" if ADK_TARGET_ABI_LP64D
-	default "lib/ilp32" if ADK_TARGET_ABI_ILP32
-	default "lib/ilp32f" if ADK_TARGET_ABI_ILP32F
-	default "lib/ilp32d" if ADK_TARGET_ABI_ILP32D
 	default "lib"
 
 config ADK_TARGET_ABI_CFLAGS

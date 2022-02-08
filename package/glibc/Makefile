@@ -47,14 +47,12 @@ ifneq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 	${INSTALL_DIR} ${IDIR_GLIBC}/$(ADK_TARGET_LIBC_PATH)
 	$(CP) $(STAGING_TARGET_DIR)/lib/ld*.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH)
 	for file in libc libpthread librt libcrypt libdl libm libanl libnsl libresolv libutil libnss_dns libnss_files; do \
-		$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
-		#$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file-$(PKG_GLIBCVER).so $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
+		$(CP) $(STAGING_TARGET_DIR)/lib/$$file.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
 	done
 else
 	${INSTALL_DIR} ${IDIR_GLIBC}/$(ADK_TARGET_LIBC_PATH)
 	-for file in libnss_dns libnss_files; do \
-		$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
-		$(CP) $(STAGING_TARGET_DIR)/$(ADK_TARGET_LIBC_ABI_PATH)/$$file-$(PKG_GLIBCVER).so $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
+		$(CP) $(STAGING_TARGET_DIR)/lib/$$file.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
 	done
 endif
 	${INSTALL_DIR} $(IDIR_GLIBC)/usr/bin
@@ -72,11 +70,7 @@ glibc-gconv-install:
 
 glibc-dev-install:
 	${INSTALL_DIR} $(IDIR_GLIBC_DEV)/$(ADK_TARGET_LIBC_PATH) $(IDIR_GLIBC_DEV)/usr/lib
-ifeq ($(ADK_TARGET_ARCH_RISCV64),y)
-	${CP} ${STAGING_TARGET_DIR}/usr/lib/*/libc.so ${IDIR_GLIBC_DEV}/usr/lib
-else
-	${CP} ${STAGING_TARGET_DIR}/usr/lib/*/libc.so ${IDIR_GLIBC_DEV}/usr/lib
-endif
+	${CP} ${STAGING_TARGET_DIR}/usr/lib/libc.so ${IDIR_GLIBC_DEV}/usr/lib
 ifeq ($(ADK_TARGET_ABI_O32),y)
 ifeq ($(ADK_TARGET_BIG_ENDIAN),y)
 	$(SED) "s#@@ELFTARGET@@#elf32-tradbigmips#" $(IDIR_GLIBC_DEV)/usr/lib/libc.so

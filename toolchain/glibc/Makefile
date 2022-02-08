@@ -40,6 +40,13 @@ GLIBC_ENV:=             PATH='${HOST_PATH}:${TARGET_PATH}' \
                         libc_cv_gnu99_inline=yes \
 			libc_cv_initfini_array=yes
 
+ifeq ($(ADK_TARGET_ARCH_RISCV64),y)
+GLIBC_ENV+=		libc_cv_slibdir=/lib libc_cv_rtlddir=/lib
+endif
+ifeq ($(ADK_TARGET_ARCH_RISCV32),y)
+GLIBC_ENV+=		libc_cv_slibdir=/lib libc_cv_rtlddir=/lib
+endif
+
 GLIBC_MAKEOPTS+=	cross-compiling=yes
 ifeq (${ADK_MAKE_PARALLEL},y)
 GLIBC_MAKEOPTS+=	PARALLELMFLAGS="-j$(ADK_MAKE_JOBS)"
