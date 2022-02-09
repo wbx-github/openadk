@@ -253,7 +253,9 @@ config ADK_LINUX_KERNEL_HIGHMEM
 config ADK_LINUX_KERNEL_CC_OPTIMIZE_FOR_SIZE
 	bool "Optimize for size"
 	# does not boot in qemu-microblaze
-	depends on !ADK_TARGET_ARCH_MICROBLAZE && !ADK_TARGET_ARCH_RISC64
+	depends on !ADK_TARGET_ARCH_MICROBLAZE && \
+		   !ADK_TARGET_ARCH_RISC64 && \
+		   !ADK_TARGET_ARCH_KVX
 	default y
 
 
