@@ -1,7 +1,7 @@
 #!/bin/sh
 arch=$(uname -m)
 case $arch in
-  arc|blackfin|m68k|metag|openrisc|riscv64|s390x|sh4eb)
+  arc|blackfin|kvx|m68k|metag|openrisc|riscv64|s390x|sh4eb)
     poweroff
     ;;
   *)
