@@ -43,11 +43,11 @@ DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
 LIBSTDCXXVER:=		23
 endif
 ifeq ($(ADK_TOOLCHAIN_GCC_ARC),y)
-PKG_VERSION:=          arc-2021.09
-PKG_GIT:=              tag
-PKG_SITES:=            https://github.com/foss-for-synopsys-dwc-arc-processors/gcc.git
-PKG_RELEASE:=          1
-DISTFILES:=            ${PKG_NAME}-${PKG_VERSION}.tar.xz
+PKG_VERSION:=		arc-2021.09
+PKG_GIT:=		tag
+PKG_SITES:=		https://github.com/foss-for-synopsys-dwc-arc-processors/gcc.git
+PKG_RELEASE:=		1
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
 endif
 ifeq ($(ADK_TOOLCHAIN_GCC_AVR32),y)
 PKG_VERSION:=		4.4.7
@@ -71,14 +71,6 @@ PKG_GIT:=		hash
 PKG_SITES:=		https://github.com/kalray/gcc.git
 PKG_RELEASE:=		1
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
-endif
-ifeq ($(ADK_TOOLCHAIN_GCC_LM32),y)
-PKG_VERSION:=		4.5.4
-PKG_HASH:=		33fb968907ef7b6c528f6395ba049eb34c4df859bf5aa6c2bc3856268801e078
-PKG_SITES:=		https://ftp.gnu.org/gnu/gcc/gcc-$(PKG_VERSION)/
-PKG_RELEASE:=		1
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
-LIBSTDCXXVER:=		19
 endif
 ifeq ($(ADK_TOOLCHAIN_GCC_GIT),y)
 PKG_VERSION:=		git
