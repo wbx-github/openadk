@@ -4,6 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
+# last working hash fa0e8426833edc1be3c2ea3acaf248157048a15a
 PKG_VERSION:=		h8300
 PKG_GIT:=		branch
 PKG_RELEASE:=		1
@@ -12,7 +13,6 @@ PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host
 PKG_BUILDDEP:=		u-boot-h8300-host
 PKG_SITES:=		git://git.pf.osdn.jp/gitroot/y/ys/ysato/uboot.git
-
 
 PKG_SYSTEM_DEPENDS:=	hitachi-edosk2674
 
@@ -23,7 +23,6 @@ $(eval $(call HOST_template,U_BOOT,u-boot,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,U_BOOT,u-boot,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
 UBOOT:=			u-boot.bin
-CONFIG:=		clearfog_defconfig
 
 HOST_MAKE_FLAGS+=	HOSTCFLAGS="$(HOST_CPPFLAGS) $(HOST_CFLAGS)" \
 			HOSTLDFLAGS="$(HOST_LDFLAGS) -ldl"
