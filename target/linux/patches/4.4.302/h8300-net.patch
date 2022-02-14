@@ -1,0 +1,81 @@
+diff -Nur linux-4.4.302.orig/arch/h8300/boot/dts/edosk2674.dts linux-4.4.302/arch/h8300/boot/dts/edosk2674.dts
+--- linux-4.4.302.orig/arch/h8300/boot/dts/edosk2674.dts	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/arch/h8300/boot/dts/edosk2674.dts	2022-02-14 05:05:26.253691787 +0100
+@@ -6,7 +6,7 @@
+ 	interrupt-parent = <&h8intc>;
+ 
+ 	chosen {
+-		bootargs = "console=ttySC2,38400";
++		bootargs = "console=ttySC2,38400 root=/dev/nfs ip=dhcp";
+ 		stdout-path = &sci2;
+ 	};
+ 	aliases {
+@@ -104,4 +104,9 @@
+ 		clocks = <&fclk>;
+ 		clock-names = "sci_ick";
+ 	};
++        ethernet: ethernet@f80000 {                                             
++                compatible = "smsc,lan91c94";                                   
++                reg = <0xf80000 0xfbffff>;                                      
++                interrupts = <16 0>;                                            
++        };                
+ };
+diff -Nur linux-4.4.302.orig/drivers/net/ethernet/smsc/Kconfig linux-4.4.302/drivers/net/ethernet/smsc/Kconfig
+--- linux-4.4.302.orig/drivers/net/ethernet/smsc/Kconfig	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/drivers/net/ethernet/smsc/Kconfig	2022-02-14 04:21:54.546112552 +0100
+@@ -7,7 +7,7 @@
+ 	default y
+ 	depends on ARM || ARM64 || ATARI_ETHERNAT || BLACKFIN || COLDFIRE || \
+ 		   ISA || M32R || MAC || MIPS || MN10300 || NIOS2 || PCI || \
+-		   PCMCIA || SUPERH || XTENSA
++		   PCMCIA || SUPERH || XTENSA || H8300
+ 	---help---
+ 	  If you have a network (Ethernet) card belonging to this class, say Y.
+ 
+@@ -36,9 +36,8 @@
+ 	tristate "SMC 91C9x/91C1xxx support"
+ 	select CRC32
+ 	select MII
+-	depends on !OF || GPIOLIB
+ 	depends on ARM || ARM64 || ATARI_ETHERNAT || BLACKFIN || COLDFIRE || \
+-		   M32R || MIPS || MN10300 || NIOS2 || SUPERH || XTENSA
++		   M32R || MIPS || MN10300 || NIOS2 || SUPERH || XTENSA || H8300
+ 	---help---
+ 	  This is a driver for SMC's 91x series of Ethernet chipsets,
+ 	  including the SMC91C94 and the SMC91C111. Say Y if you want it
+diff -Nur linux-4.4.302.orig/drivers/net/ethernet/smsc/smc91x.c linux-4.4.302/drivers/net/ethernet/smsc/smc91x.c
+--- linux-4.4.302.orig/drivers/net/ethernet/smsc/smc91x.c	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/drivers/net/ethernet/smsc/smc91x.c	2022-02-14 05:31:18.727485106 +0100
+@@ -61,7 +61,7 @@
+ 
+ /* Debugging level */
+ #ifndef SMC_DEBUG
+-#define SMC_DEBUG		0
++#define SMC_DEBUG		1
+ #endif
+ 
+ 
+@@ -2204,6 +2204,7 @@
+ };
+ MODULE_DEVICE_TABLE(of, smc91x_match);
+ 
++#if defined(CONFIG_GPIOLIB)
+ /**
+  * of_try_set_control_gpio - configure a gpio if it exists
+  */
+@@ -2228,6 +2229,15 @@
+ 
+ 	return 0;
+ }
++#else
++static int try_toggle_control_gpio(struct device *dev,
++                                  struct gpio_desc **desc,
++                                  const char *name, int index,
++                                  int value, unsigned int nsdelay)
++{
++	return 0;
++}
++#endif
+ #endif
+ 
+ /*
