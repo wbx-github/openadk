@@ -26,7 +26,7 @@ PKGSC_BCM28XX_VC_GL_LIBS:=libs/video
 PKGSS_BCM28XX_VC_GL_LIBS:=bcm28xx-vc-libs
 PKGSD_BCM28XX_VC_GL_LIBS:=videocore gl library
 
-PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi0 raspberry-pi2 raspberry-pi3 raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64
+PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi0 raspberry-pi2 raspberry-pi3 raspberry-pi3-64 raspberry-pi4 raspberry-pi3p-64
 
 include $(ADK_TOPDIR)/mk/package.mk
 

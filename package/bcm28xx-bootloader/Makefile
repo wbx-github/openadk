@@ -12,7 +12,7 @@ PKG_SECTION:=		base/boot
 PKG_URL:=		https://github.com/raspberrypi/firmware
 PKG_SITES:=		https://github.com/raspberrypi/firmware.git
 
-PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi0 raspberry-pi2 raspberry-pi3 raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64
+PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi0 raspberry-pi2 raspberry-pi3 raspberry-pi3-64 raspberry-pi4 raspberry-pi3p-64
 
 PKG_CHOICES_BCM28XX_BOOTLOADER:=	DEFAULT EXTRA CUTDOWN
 PKGCD_DEFAULT:=		default bootloader
@@ -42,9 +42,15 @@ do-install:
 	printf "dtparam=audio,i2s,spi,i2c\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 ifeq ($(ADK_PACKAGE_BCM28XX_BOOTLOADER_DEFAULT),y)
+ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI4)$(ADK_TARGET_SYSTEM_RASPBERRY_PI4_64),y)
+	$(CP) $(WRKBUILD)/boot/{start4.elf,fixup4.dat} $(IDIR_BCM28XX_BOOTLOADER)/boot/
+	printf "start_file=start4.elf\n" >> $(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+	printf "fixup_file=fixup4.dat\n" >> $(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+else
 	$(CP) $(WRKBUILD)/boot/{start.elf,fixup.dat} $(IDIR_BCM28XX_BOOTLOADER)/boot/
 	printf "start_file=start.elf\n" >> $(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 	printf "fixup_file=fixup.dat\n" >> $(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+endif
 endif
 ifeq ($(ADK_PACKAGE_BCM28XX_BOOTLOADER_EXTRA),y)
 	$(CP) $(WRKBUILD)/boot/{start_x.elf,fixup_x.dat} $(IDIR_BCM28XX_BOOTLOADER)/boot/
