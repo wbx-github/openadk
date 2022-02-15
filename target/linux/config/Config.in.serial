@@ -2,7 +2,7 @@
 # material, please see the LICENCE file in the top-level directory.
 
 menu "Serial devices support"
-depends on ADK_TARGET_WITH_SERIAL || ADK_TARGET_QEMU || ADK_TARGET_VBOX || ADK_TARGET_SIM || ADK_TARGET_GENERIC
+depends on ADK_TARGET_WITH_SERIAL || ADK_TARGET_QEMU || ADK_TARGET_SIM || ADK_TARGET_GENERIC
 
 config ADK_LINUX_KERNEL_SERIAL_8250_DMA
 	bool

@@ -4,7 +4,6 @@
 menu "Graphic devices support"
 depends on ADK_TARGET_WITH_VGA \
 	|| ADK_TARGET_QEMU \
-	|| ADK_TARGET_VBOX \
 	|| ADK_TARGET_GENERIC
 
 config ADK_LINUX_KERNEL_VT
@@ -211,7 +210,6 @@ config ADK_LINUX_KERNEL_FB_VESA
 	bool "Framebuffer support for VESA"
 	select ADK_LINUX_KERNEL_FB
 	select ADK_LINUX_KERNEL_FRAMEBUFFER_CONSOLE
-	default y if ADK_TARGET_VBOX
  	default n
  	help
 	  Generic VESA Framebuffer support.

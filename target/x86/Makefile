@@ -45,11 +45,6 @@ else
 	@echo 'qemu-system-${QEMU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) qemu-${ADK_TARGET_CPU_ARCH}.img'
 endif
 endif
-ifeq ($(ADK_TARGET_VBOX),y)
-	@cp $(KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
-	@echo "Use following command to create a VirtualBox Image:"
-	@echo "./scripts/create.sh -g -T vdi vbox-${ADK_TARGET_CPU_ARCH}.img $(FW_DIR)/$(ROOTFSTARBALL)"
-endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)
 targethelp:

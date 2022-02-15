@@ -173,7 +173,6 @@ menu "SATA/PATA devices support"
 depends on ADK_TARGET_WITH_PATA \
 	|| ADK_TARGET_WITH_SATA \
 	|| ADK_TARGET_QEMU \
-	|| ADK_TARGET_VBOX \
 	|| ADK_TARGET_GENERIC
 
 config ADK_LINUX_KERNEL_PATA_RB532
@@ -231,10 +230,8 @@ config ADK_LINUX_KERNEL_SATA_AHCI
 	select ADK_LINUX_KERNEL_BLK_DEV_SD
 	depends on \
 		   ADK_TARGET_SYSTEM_PCENGINES_APU || \
-		   ADK_TARGET_GENERIC || \
-		   ADK_TARGET_VBOX
+		   ADK_TARGET_GENERIC
 	default y if ADK_TARGET_SYSTEM_PCENGINES_APU
-	default y if ADK_TARGET_VBOX
 	default n
 	help
 	  Enables support for AHCI Serial ATA.

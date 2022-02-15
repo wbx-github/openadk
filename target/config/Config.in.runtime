@@ -166,7 +166,6 @@ source "target/config/Config.in.scripts"
 
 config ADK_RUNTIME_TMPFS_SIZE
 	string "size of /tmp in memory (kB)"
-	default "32768" if ADK_TARGET_SYSTEM_LENOVO_X200
 	default "32768" if ADK_TARGET_SYSTEM_RASPBERRY_PI
 	default "32768" if ADK_TARGET_SYSTEM_RASPBERRY_PI2
 	default "32768" if ADK_TARGET_SYSTEM_RASPBERRY_PI3
@@ -174,7 +173,6 @@ config ADK_RUNTIME_TMPFS_SIZE
 	default "32768" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	default "16384" if ADK_TARGET_SYSTEM_QEMU_X86_64
 	default "16384" if ADK_TARGET_SYSTEM_QEMU_X86
-	default "16384" if ADK_TARGET_VBOX
 	default "16384" if ADK_TARGET_SYSTEM_LEMOTE_YEELONG
 	default "8192" if ADK_TARGET_SYSTEM_MIKROTIK_RB532
 	default "1024"
@@ -302,7 +300,6 @@ config ADK_RUNTIME_GETTY_VGA
 	default y if ADK_TARGET_SYSTEM_LEMOTE_YEELONG
 	default y if ADK_TARGET_SYSTEM_ARANYM_M68K
 	default y if ADK_TARGET_MODEL_PCENGINES_ALIX1C
-	default y if ADK_TARGET_VBOX
 	default n
 	help
           Start getty on VGA console. (tty1-tty6)
@@ -322,7 +319,6 @@ config ADK_RUNTIME_GETTY_SERIAL
 	default n if ADK_TARGET_SYSTEM_LEMOTE_YEELONG
 	default n if ADK_TARGET_SYSTEM_ARANYM_M68K
 	default n if ADK_TARGET_MODEL_PCENGINES_ALIX1C
-	default n if ADK_TARGET_VBOX
 	default y
 	help
 	  Start getty on serial console.
