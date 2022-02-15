@@ -29,7 +29,7 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "bcm2709_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI3
 	default "bcm2711_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI4
 	default "bcmrpi3_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI3_64
-	default "bcmrpi3_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI3P_64
+	default "bcm2711_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI4_64
 	default "twr-k70f120m_defconfig" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "imx_v7_cbi_hb_defconfig" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6 && ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	default "imx_v6_v7_defconfig" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6

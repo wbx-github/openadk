@@ -12,7 +12,7 @@ PKG_SECTION:=		base/boot
 PKG_URL:=		https://github.com/raspberrypi/firmware
 PKG_SITES:=		https://github.com/raspberrypi/firmware.git
 
-PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi0 raspberry-pi2 raspberry-pi3 raspberry-pi3-64 raspberry-pi4 raspberry-pi3p-64
+PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi0 raspberry-pi2 raspberry-pi3 raspberry-pi3-64 raspberry-pi4 raspberry-pi4-64
 
 PKG_CHOICES_BCM28XX_BOOTLOADER:=	DEFAULT EXTRA CUTDOWN
 PKGCD_DEFAULT:=		default bootloader
@@ -104,7 +104,7 @@ ifeq ($(ADK_TARGET_HARDWARE_RPI3_SERIAL),y)
 	printf "enable_uart=1\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 endif
-ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI3_64)$(ADK_TARGET_SYSTEM_RASPBERRY_PI3_64),y)
+ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI3_64)$(ADK_TARGET_SYSTEM_RASPBERRY_PI4_64),y)
 	printf "arm_control=0x200\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 	printf "enable_uart=1\n" >> \

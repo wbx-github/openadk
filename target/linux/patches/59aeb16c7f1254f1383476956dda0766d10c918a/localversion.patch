@@ -1,0 +1,18 @@
+diff -Nur linux-59aeb16c7f1254f1383476956dda0766d10c918a.orig/arch/arm/configs/bcm2711_defconfig linux-59aeb16c7f1254f1383476956dda0766d10c918a/arch/arm/configs/bcm2711_defconfig
+--- linux-59aeb16c7f1254f1383476956dda0766d10c918a.orig/arch/arm/configs/bcm2711_defconfig	2022-01-21 19:27:36.000000000 +0100
++++ linux-59aeb16c7f1254f1383476956dda0766d10c918a/arch/arm/configs/bcm2711_defconfig	2022-02-15 12:41:31.879194595 +0100
+@@ -1,4 +1,4 @@
+-CONFIG_LOCALVERSION="-v7l"
++CONFIG_LOCALVERSION=""
+ # CONFIG_LOCALVERSION_AUTO is not set
+ CONFIG_SYSVIPC=y
+ CONFIG_POSIX_MQUEUE=y
+diff -Nur linux-59aeb16c7f1254f1383476956dda0766d10c918a.orig/arch/arm64/configs/bcm2711_defconfig linux-59aeb16c7f1254f1383476956dda0766d10c918a/arch/arm64/configs/bcm2711_defconfig
+--- linux-59aeb16c7f1254f1383476956dda0766d10c918a.orig/arch/arm64/configs/bcm2711_defconfig	2022-01-21 19:27:37.000000000 +0100
++++ linux-59aeb16c7f1254f1383476956dda0766d10c918a/arch/arm64/configs/bcm2711_defconfig	2022-02-15 12:41:11.014686670 +0100
+@@ -1,4 +1,4 @@
+-CONFIG_LOCALVERSION="-v8"
++CONFIG_LOCALVERSION=""
+ # CONFIG_LOCALVERSION_AUTO is not set
+ CONFIG_SYSVIPC=y
+ CONFIG_POSIX_MQUEUE=y

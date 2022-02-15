@@ -137,7 +137,7 @@ config ADK_LINUX_KERNEL_BT_HCIUART_BCM
 	select ADK_LINUX_KERNEL_BT_HCIUART
 	select ADK_LINUX_KERNEL_BT_HCIUART_3WIRE
 	select ADK_LINUX_KERNEL_BT_BCM
-	depends on ADK_TARGET_SYSTEM_RASPBERRY_PI3 || ADK_TARGET_SYSTEM_RASPBERRY_PI3P
+	depends on ADK_TARGET_SYSTEM_RASPBERRY_PI3
 	default n
 	help
 	  The Broadcom protocol support enables Bluetooth HCI over serial

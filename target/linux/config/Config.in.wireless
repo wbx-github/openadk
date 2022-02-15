@@ -158,7 +158,6 @@ config ADK_LINUX_KERNEL_BRCMFMAC_SDIO
 		ADK_TARGET_SYSTEM_PHYTEC_IMX6
 	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI0
 	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI3
-	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI3P
 	default n
 	help
 	  Driver for Broadcom FullMac wireless cards (SDIO).
