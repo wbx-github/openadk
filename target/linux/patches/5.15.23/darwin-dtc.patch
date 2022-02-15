@@ -1,0 +1,26 @@
+diff -Nur linux-4.19.132.orig/scripts/dtc/dtc.h linux-4.19.132/scripts/dtc/dtc.h
+--- linux-4.19.132.orig/scripts/dtc/dtc.h	2020-07-09 09:37:13.000000000 +0200
++++ linux-4.19.132/scripts/dtc/dtc.h	2020-07-15 02:38:00.000000000 +0200
+@@ -33,8 +33,8 @@
+ #include <unistd.h>
+ #include <inttypes.h>
+ 
+-#include <libfdt_env.h>
+-#include <fdt.h>
++#include "libfdt/libfdt_env.h"
++#include "libfdt/fdt.h"
+ 
+ #include "util.h"
+ 
+diff -Nur linux-4.19.132.orig/scripts/dtc/util.c linux-4.19.132/scripts/dtc/util.c
+--- linux-4.19.132.orig/scripts/dtc/util.c	2020-07-09 09:37:13.000000000 +0200
++++ linux-4.19.132/scripts/dtc/util.c	2020-07-15 02:38:18.000000000 +0200
+@@ -32,7 +32,7 @@
+ #include <fcntl.h>
+ #include <unistd.h>
+ 
+-#include "libfdt.h"
++#include "libfdt/libfdt.h"
+ #include "util.h"
+ #include "version_gen.h"
+ 

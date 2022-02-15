@@ -1,0 +1,12 @@
+diff -Nur linux-4.8.11.orig/arch/openrisc/boot/dts/or1ksim.dts linux-4.8.11/arch/openrisc/boot/dts/or1ksim.dts
+--- linux-4.8.11.orig/arch/openrisc/boot/dts/or1ksim.dts	2016-11-26 09:57:13.000000000 +0100
++++ linux-4.8.11/arch/openrisc/boot/dts/or1ksim.dts	2016-12-04 14:39:46.092952799 +0100
+@@ -11,7 +11,7 @@
+ 
+ 	memory@0 {
+ 		device_type = "memory";
+-		reg = <0x00000000 0x02000000>;
++		reg = <0x00000000 0x04000000>;
+ 	};
+ 
+ 	cpus {

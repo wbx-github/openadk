@@ -1,0 +1,16 @@
+diff -Nur linux-5.4.53.orig/scripts/dtc/dtc.c linux-5.4.53/scripts/dtc/dtc.c
+--- linux-5.4.53.orig/scripts/dtc/dtc.c	2020-07-22 09:33:18.000000000 +0200
++++ linux-5.4.53/scripts/dtc/dtc.c	2020-07-28 14:20:10.000000000 +0200
+@@ -349,12 +349,6 @@
+ 
+ 	if (streq(outform, "dts")) {
+ 		dt_to_source(outf, dti);
+-#ifndef NO_YAML
+-	} else if (streq(outform, "yaml")) {
+-		if (!streq(inform, "dts"))
+-			die("YAML output format requires dts input format\n");
+-		dt_to_yaml(outf, dti);
+-#endif
+ 	} else if (streq(outform, "dtb")) {
+ 		dt_to_blob(outf, dti, outversion);
+ 	} else if (streq(outform, "asm")) {

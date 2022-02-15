@@ -1,0 +1,64 @@
+diff -Nur linux-5.10.93.orig/arch/nds32/boot/dts/ag101p.dts linux-5.10.93/arch/nds32/boot/dts/ag101p.dts
+--- linux-5.10.93.orig/arch/nds32/boot/dts/ag101p.dts	1970-01-01 01:00:00.000000000 +0100
++++ linux-5.10.93/arch/nds32/boot/dts/ag101p.dts	2022-01-21 03:39:21.936044612 +0100
+@@ -0,0 +1,60 @@
++/dts-v1/;
++/ {
++	compatible = "nds32 ag101p";
++	#address-cells = <1>;
++	#size-cells = <1>;
++	interrupt-parent = <&intc>;
++
++	chosen {
++		bootargs = "console=ttyS0,38400n8 earlyprintk=uart8250-32bit,0x99600000 debug loglevel=7";
++	};
++
++	memory@0 {
++		device_type = "memory";
++		reg = <0x00000000 0x40000000>;
++	};
++
++	cpus {
++		cpu@0 {
++			device_type = "cpu";
++			compatible = "andestech,n13";
++			next-level-cache = <&L2>;
++		};
++	};
++
++	intc: interrupt-controller {
++		compatible = "andestech,atnointc010";
++		#interrupt-cells = <2>;
++		interrupt-controller;
++	};
++
++	serial0: serial@99600000 {
++		compatible = "andestech,uart16550", "ns16550a";
++		reg = <0x99600000 0x1000>;
++		interrupts = <7 4>;
++		clock-frequency = <14745600>;
++		reg-shift = <2>;
++		no-loopback-test = <1>;
++	};
++
++	timer0: timer@98400000 {
++		compatible = "andestech,atftmr010";
++		reg = <0x98400000 0x1000>;
++		interrupts = <19 4>;
++		clock-frequency = <15000000>;
++		cycle-count-offset = <0x20>;
++	};
++
++	mac0: mac@90900000 {
++		compatible = "andestech,atmac100";
++		reg = <0x90900000 0x1000>;
++		interrupts = <25 4>;
++	};
++
++	L2: l2-cache {
++		compatible = "andestech,atl2c";
++		reg = <0x90f00000 0x1000>;
++		cache-unified;
++		cache-level = <2>;
++	};
++};
