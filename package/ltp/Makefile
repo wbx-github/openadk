@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ltp
-PKG_VERSION:=		20210524
+PKG_VERSION:=		20220121
 PKG_RELEASE:=		1
 PKG_DESCR:=		linux test project
-PKG_HASH:=		831678c64b85a8c24957c71632752537b2266890f2d2f352da9ed0ec45458189
+PKG_HASH:=		ad002520616fac52362229ea0f1bb9d304fc03ff0096ccb5b1820cee9fc8413a
 PKG_DEPENDS:=		bash mke2fs mkfs
 PKG_NEEDS:=		threads
 PKG_SECTION:=		base/tests
@@ -28,7 +28,8 @@ CONFIGURE_ARGS+=	--with-open-posix-testsuite \
 			--without-power-management-testsuite \
 			--without-python \
 			--without-perl \
-			--without-expect
+			--without-expect \
+			--disable-metadata
 
 pre-configure:
 	PATH="$(HOST_PATH)" $(MAKE) -C $(WRKBUILD) autotools

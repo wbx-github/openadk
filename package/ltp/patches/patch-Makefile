@@ -1,0 +1,11 @@
+--- ltp-full-20220121.orig/Makefile	2022-01-21 20:33:16.000000000 +0100
++++ ltp-full-20220121/Makefile	2022-02-23 15:14:48.211207957 +0100
+@@ -62,7 +62,7 @@ $(1):: | $$(abs_top_builddir)/$$(basenam
+ endif
+ endef
+ 
+-COMMON_TARGETS		+= testcases tools metadata
++COMMON_TARGETS		+= testcases tools
+ 
+ # Don't want to nuke the original files if we're installing in-build-tree.
+ ifneq ($(BUILD_TREE_STATE),$(BUILD_TREE_SRCDIR_INSTALL))

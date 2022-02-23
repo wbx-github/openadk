@@ -1,6 +1,6 @@
---- ltp-full-20190930.orig/runtest/syscalls	2019-09-30 13:30:25.000000000 +0200
-+++ ltp-full-20190930/runtest/syscalls	2019-10-29 14:36:35.746144285 +0100
-@@ -330,7 +330,7 @@ fork08 fork08
+--- ltp-full-20220121.orig/runtest/syscalls	2022-01-21 20:33:16.000000000 +0100
++++ ltp-full-20220121/runtest/syscalls	2022-02-23 14:13:22.704797624 +0100
+@@ -369,7 +369,7 @@ fork08 fork08
  fork09 fork09
  fork10 fork10
  fork11 fork11

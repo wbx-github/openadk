@@ -1,6 +1,6 @@
---- ltp-full-20190930.orig/testcases/kernel/syscalls/fanotify/fanotify04.c	2019-09-30 13:30:25.000000000 +0200
-+++ ltp-full-20190930/testcases/kernel/syscalls/fanotify/fanotify04.c	2019-10-29 14:36:35.806148130 +0100
-@@ -11,6 +11,7 @@
+--- ltp-full-20220121.orig/testcases/kernel/syscalls/fanotify/fanotify04.c	2022-01-21 20:33:16.000000000 +0100
++++ ltp-full-20220121/testcases/kernel/syscalls/fanotify/fanotify04.c	2022-02-23 14:13:22.724797124 +0100
+@@ -13,6 +13,7 @@
  #define _GNU_SOURCE
  #include "config.h"
  
