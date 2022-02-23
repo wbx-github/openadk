@@ -21,6 +21,12 @@ TARGET_CFLAGS:=		$(filter-out -msep-data,$(TARGET_CFLAGS))
 TARGET_CXXFLAGS:=	$(filter-out -msep-data,$(TARGET_CXXFLAGS))
 endif
 
+# for ARM, we need to filter out some flags
+ifeq ($(ADK_TARGET_ARCH_ARM),y)
+TARGET_CFLAGS:=		$(filter-out -mcpu=cortex-a9,$(TARGET_CFLAGS))
+TARGET_CXXFLAGS:=	$(filter-out -mcpu=cortex-a9,$(TARGET_CXXFLAGS))
+endif
+
 ifeq ($(ADK_TARGET_USE_STATIC_AND_SHARED_LIBS),y)
 TARGET_CFLAGS:=		$(filter-out -static,$(TARGET_CFLAGS))
 TARGET_CXXFLAGS:=	$(filter-out -static,$(TARGET_CXXFLAGS))
