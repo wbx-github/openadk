@@ -44,7 +44,6 @@ ifeq ($(ADK_TARGET_ARCH_XTENSA),y)
 		--strip-components=1 -C $(WRKSRC) binutils
 endif
 	(cd $(WRKBUILD); PATH='$(HOST_PATH)' \
-		LDFLAGS=-ldl \
 		MAKEINFO=true \
 		M4='${STAGING_HOST_DIR}/usr/bin/m4' \
 		$(WRKBUILD)/configure \
