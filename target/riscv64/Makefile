@@ -48,10 +48,17 @@ ifeq ($(ADK_TARGET_QEMU),y)
 	@echo 'qemu-system-riscv64 ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
+ifeq ($(ADK_TARGET_FS),nfsroot)
+targethelp:
+	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
+	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSUSERTARBALL)"
+endif
 
 kernel-strip:
+	@cp $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
 
 kernel-install: kernel-strip
+	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)
@@ -65,4 +72,7 @@ imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
 imageinstall: createinitramfs targethelp
+endif
+ifeq ($(ADK_TARGET_FS),nfsroot)
+imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif

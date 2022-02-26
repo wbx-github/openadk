@@ -171,9 +171,9 @@ endif
 endif
 
 ifeq ($(ADK_TARGET_BINFMT_FLAT),y)
-TARGET_LDFLAGS+=	-Wl,-elf2flt
-TARGET_CFLAGS+=		-Wl,-elf2flt
-TARGET_CXXFLAGS+=	-Wl,-elf2flt
+TARGET_LDFLAGS+=	-Wl,-elf2flt=-r
+TARGET_CFLAGS+=		-Wl,-elf2flt=-r
+TARGET_CXXFLAGS+=	-Wl,-elf2flt=-r
 endif
 
 ifeq ($(ADK_TARGET_BINFMT_FLAT_SEP_DATA),y)

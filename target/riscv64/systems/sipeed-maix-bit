@@ -1,0 +1,6 @@
+config ADK_TARGET_SYSTEM_SIPEED_MAIX_BIT
+	bool "Sipeed MAiX Bit"
+	select ADK_TARGET_CPU_RISCV64
+	select ADK_TARGET_KERNEL_IMAGE
+	help
+	  Sipeed MAiX Bit support.
