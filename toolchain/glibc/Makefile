@@ -6,6 +6,12 @@ include ../rules.mk
 include Makefile.inc
 include ${ADK_TOPDIR}/mk/buildhlp.mk
 
+# glibc does not boot with Os and CPU specific FLAGS for nios2
+ifeq ($(ADK_TARGET_ARCH_NIOS2),y)
+TARGET_CFLAGS:=		-O2
+TARGET_CXXFLAGS:=	-O2
+endif
+
 # glibc does not compile with NEON suggested CFLAGS/CXXFLAGS
 TARGET_CFLAGS:=		$(filter-out -ffast-math,$(TARGET_CFLAGS))
 TARGET_CXXFLAGS:=	$(filter-out -ffast-math,$(TARGET_CXXFLAGS))
