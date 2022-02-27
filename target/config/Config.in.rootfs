@@ -103,6 +103,7 @@ config ADK_TARGET_ROOTFS_NFSROOT
 		   !ADK_TARGET_SIM && \
 		   !ADK_TARGET_SYSTEM_ARANYM_M68K && \
 		   !ADK_TARGET_SYSTEM_LINKSYS_NSLU2 
+	depends on ADK_TARGET_WITH_NETDEVICE
 	help
 	  Root filesystem mounted via NFS. (DHCP)
 
