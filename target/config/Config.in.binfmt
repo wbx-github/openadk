@@ -49,11 +49,6 @@ config ADK_TARGET_BINFMT_FLAT_SEP_DATA
 	  Allow for the data and text segments to be separated and placed in
 	  different regions of memory.
 
-config ADK_TARGET_BINFMT_FLAT_SHARED
-	bool "Shared binary"
-	help
-	  Allow to load and link indiviual FLAT binaries at run time.
-
 endchoice
 
 config ADK_TARGET_BINFMT
