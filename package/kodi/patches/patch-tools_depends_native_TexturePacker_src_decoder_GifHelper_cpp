@@ -1,0 +1,15 @@
+--- xbmc-19.3-Matrix.orig/tools/depends/native/TexturePacker/src/decoder/GifHelper.cpp	2021-10-24 12:09:58.000000000 +0200
++++ xbmc-19.3-Matrix/tools/depends/native/TexturePacker/src/decoder/GifHelper.cpp	2022-02-26 00:09:15.499548854 +0100
+@@ -18,11 +18,11 @@
+  *
+  */
+ 
+-#include "GifHelper.h"
+ 
+ #include <algorithm>
+ #include <cstdlib>
+ #include <cstring>
++#include "GifHelper.h"
+ 
+ #define UNSIGNED_LITTLE_ENDIAN(lo, hi)	((lo) | ((hi) << 8))
+ #define GIF_MAX_MEMORY 82944000U // about 79 MB, which is equivalent to 10 full hd frames.

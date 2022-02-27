@@ -1,0 +1,31 @@
+--- xbmc-19.3-Matrix.orig/xbmc/platform/linux/CPUInfoLinux.cpp	2021-10-24 12:09:58.000000000 +0200
++++ xbmc-19.3-Matrix/xbmc/platform/linux/CPUInfoLinux.cpp	2022-02-26 13:55:19.357313177 +0100
+@@ -18,10 +18,7 @@
+ #include <sstream>
+ #include <vector>
+ 
+-#if (defined(__arm__) && defined(HAS_NEON)) || defined(__aarch64__)
+-#include <asm/hwcap.h>
+-#include <sys/auxv.h>
+-#elif defined(__i386__) || defined(__x86_64__)
++#if defined(__i386__) || defined(__x86_64__)
+ #include <cpuid.h>
+ #endif
+ 
+@@ -252,16 +249,6 @@ CCPUInfoLinux::CCPUInfoLinux()
+   }
+ #endif
+ 
+-#if defined(HAS_NEON) && defined(__arm__)
+-  if (getauxval(AT_HWCAP) & HWCAP_NEON)
+-    m_cpuFeatures |= CPU_FEATURE_NEON;
+-#endif
+-
+-#if defined(HAS_NEON) && defined(__aarch64__)
+-  if (getauxval(AT_HWCAP) & HWCAP_ASIMD)
+-    m_cpuFeatures |= CPU_FEATURE_NEON;
+-#endif
+-
+   // Set MMX2 when SSE is present as SSE is a superset of MMX2 and Intel doesn't set the MMX2 cap
+   if (m_cpuFeatures & CPU_FEATURE_SSE)
+     m_cpuFeatures |= CPU_FEATURE_MMX2;

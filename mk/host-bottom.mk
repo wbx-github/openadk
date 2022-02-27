@@ -56,7 +56,7 @@ endif
 ifeq (${HOST_CONFIG_STYLE},cmake)
 	@$(CMD_TRACE) "configuring cmake.. "
 	cd ${WRKBUILD}; PATH='${HOST_PATH}' \
-		cmake -Wno-dev -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+		cmake -Wno-dev -DCMAKE_INSTALL_PREFIX:PATH=$(STAGING_HOST_DIR)/usr \
 		${HOST_CMAKE_FLAGS} ${WRKSRC} $(MAKE_TRACE)
 endif
 ifeq (${HOST_CONFIG_STYLE},meson)

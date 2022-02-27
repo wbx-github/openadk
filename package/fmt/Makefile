@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		fmt
-PKG_VERSION:=		5.0.0
+PKG_VERSION:=		8.1.1
 PKG_RELEASE:=		1
-PKG_HASH:=		fc33d64d5aa2739ad2ca1b128628a7fc1b7dca1ad077314f09affc57d59cf88a
+PKG_HASH:=		3d794d3cf67633b34b2771eb9f073bde87e846e0d395d254df7b211ef1ec7346
 PKG_DESCR:=		modern formatting library
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://fmtlib.net/latest/index.html

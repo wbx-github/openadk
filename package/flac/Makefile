@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		flac
-PKG_VERSION:=		1.3.3
+PKG_VERSION:=		1.3.4
 PKG_RELEASE:=		1
-PKG_HASH:=		213e82bd716c9de6db2f98bcadbc4c24c7e2efe8c75939a1a84e28539c4e1748
+PKG_HASH:=		8ff0607e75a322dd7cd6ec48f4f225471404ae2730d0ea945127b1355155e737
 PKG_DESCR:=		free lossless audio codec utility
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		libflac
 PKG_URL:=		https://xiph.org/flac/
-PKG_SITES:=		http://downloads.xiph.org/releases/flac/
+PKG_SITES:=		https://ftp.osuosl.org/pub/xiph/releases/flac/
 PKG_LIBNAME:=		libflac
 PKG_OPTS:=		dev
 
@@ -25,6 +25,7 @@ $(eval $(call PKG_template,FLAC,flac,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBFLAC,libflac,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 CONFIGURE_ARGS+=	--enable-asm-optimizations \
+			--disable-stack-smash-protection \
 			--disable-xmms-plugin \
 			--disable-cpplibs \
 			--disable-ogg

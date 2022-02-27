@@ -17,13 +17,10 @@ PKG_SITES:=		http://www.ffmpeg.org/releases/
 PKG_LIBNAME:=		libffmpeg
 PKG_OPTS:=		dev
 
-PKG_SUBPKGS:=		LIBFFMPEG FFSERVER FFPROBE FFMPEG
+PKG_SUBPKGS:=		LIBFFMPEG FFPROBE FFMPEG
 PKGSD_FFMPEG:=		video converter
 PKGSC_FFMPEG:=		mm/video
 PKGSS_FFMPEG:=		libffmpeg
-PKGSD_FFSERVER:=	streaming server
-PKGSC_FFSERVER:=	mm/video
-PKGSS_FFSERVER:=	libffmpeg
 PKGSD_FFPROBE:=		simple multimedia stream analyzer
 PKGSC_FFPROBE:=		mm/video
 PKGSS_FFPROBE:=		libffmpeg
@@ -97,7 +94,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBFFMPEG,libffmpeg,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_FDEPENDS),$(PKGSD_LIBFFMPEG),$(PKGSC_LIBFFMPEG),$(PKG_OPTS)))
 $(eval $(call PKG_template,FFMPEG,ffmpeg,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_FFMPEG),$(PKGSC_FFMPEG)))
-$(eval $(call PKG_template,FFSERVER,ffserver,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_FFSERVER),$(PKGSC_FFSERVER)))
 $(eval $(call PKG_template,FFPROBE,ffprobe,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_FFPROBE),$(PKGSC_FFPROBE)))
 
 ifeq ($(ADK_DEBUG),y)
@@ -106,6 +102,7 @@ else
 TARGET_CFLAGS:=		$(subst Os,O2,$(TARGET_CFLAGS))
 endif
 TARGET_CPPFLAGS+=	-D_POSIX_SOURCE -D_GNU_SOURCE
+TARGET_LDFLAGS+=	-latomic
 
 ifeq ($(ADK_TARGET_CPU_WITH_MMX),y)
 CONFIGURE_CPU_OPTS+=	--enable-mmx
@@ -253,11 +250,6 @@ ffmpeg-install:
 	$(INSTALL_DIR) $(IDIR_FFMPEG)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/ffmpeg \
 		$(IDIR_FFMPEG)/usr/bin
-
-ffserver-install:
-	$(INSTALL_DIR) $(IDIR_FFSERVER)/usr/bin
-	$(INSTALL_BIN) $(WRKINST)/usr/bin/ffserver \
-		$(IDIR_FFSERVER)/usr/bin
 
 ffprobe-install:
 	$(INSTALL_DIR) $(IDIR_FFPROBE)/usr/bin

@@ -6,16 +6,15 @@ include $(ADK_TOPDIR)/rules.mk
 PKG_NAME:=		yajl
 PKG_VERSION:=		2.1.0
 PKG_RELEASE:=		1
-PKG_HASH:=		510a13e0be57cd4ba99e60ac806a3635854af51316d3131d3742a90298ccde38
+PKG_HASH:=		3fb73364a5a30efe615046d07e6db9d09fd2b41c763c5f7d3bfb121cd5c5ac5a
 PKG_DESCR:=		small event-driven json parser
 PKG_SECTION:=		libs/data
 PKG_BUILDDEP:=		cmake-host ruby-host
 PKG_URL:=		http://lloyd.github.com/yajl/
-PKG_SITES:=		http://github.com/lloyd/yajl/tarball/$(PKG_VERSION)/
+PKG_SITES:=		https://github.com/lloyd/yajl/archive/refs/tags/
 PKG_OPTS:=		dev
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
-WRKDIST=		$(WRKDIR)/lloyd-yajl-66cb08c/
+DISTFILES:=		${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 

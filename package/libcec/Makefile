@@ -4,24 +4,29 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libcec
-PKG_VERSION:=		d156e7cb684f86a9d73f8dcf087d4799c62d9721
+PKG_VERSION:=		6.0.2
 PKG_RELEASE:=		1
-PKG_GIT:=		hash
+PKG_HASH:=		090696d7a4fb772d7acebbb06f91ab92e025531c7c91824046b9e4e71ecb3377
 PKG_DESCR:=		control your device with your tv remote control
 PKG_SECTION:=		libs/video
-PKG_DEPENDS:=		libudev libplatform
-PKG_BUILDDEP:=		eudev cmake-host platform
+PKG_DEPENDS:=		libudev p8-platform
+PKG_BUILDDEP:=		eudev cmake-host p8-platform
 PKG_URL:=		http://libcec.pulse-eight.com/
-PKG_SITES:=		https://github.com/Pulse-Eight/libcec.git
+PKG_SITES:=		https://github.com/Pulse-Eight/libcec/archive/refs/tags/
 PKG_OPTS:=		dev
 
+PKG_DEPENDS_RASPBERRY_PI4:=	bcm28xx-vc
+PKG_BUILDDEP_RASPBERRY_PI4:=	bcm28xx-vc
 PKG_DEPENDS_RASPBERRY_PI3:=	bcm28xx-vc
 PKG_BUILDDEP_RASPBERRY_PI3:=	bcm28xx-vc
 PKG_DEPENDS_RASPBERRY_PI2:=	bcm28xx-vc
 PKG_BUILDDEP_RASPBERRY_PI2:=	bcm28xx-vc
 PKG_DEPENDS_RASPBERRY_PI:=	bcm28xx-vc
 PKG_BUILDDEP_RASPBERRY_PI:=	bcm28xx-vc
-PKG_SYSTEM_DEPENDS:=    raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi3p solidrun-imx6
+PKG_SYSTEM_DEPENDS:=    raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 solidrun-imx6
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
+WRKDIST=		$(WRKDIR)/$(PKG_NAME)-$(PKG_NAME)-$(PKG_VERSION)
 
 include $(ADK_TOPDIR)/mk/package.mk
 

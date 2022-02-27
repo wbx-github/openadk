@@ -1,9 +1,0 @@
---- bcm28xx-vc-c2f27fb8e581f8e5af83bf28422553ade8f7a7c8.orig/interface/vmcs_host/linux/vcfiled/CMakeLists.txt	2015-10-27 10:59:48.000000000 +0100
-+++ bcm28xx-vc-c2f27fb8e581f8e5af83bf28422553ade8f7a7c8/interface/vmcs_host/linux/vcfiled/CMakeLists.txt	2015-11-16 20:16:31.801734911 +0100
-@@ -1,6 +1,4 @@
- 
--add_definitions(-Werror)
--
- # vcfiled - serves files to videocore. used for media handlers from
- # OpenMAX/IL and loading VLLs.
- add_executable(vcfiled vcfiled.c)

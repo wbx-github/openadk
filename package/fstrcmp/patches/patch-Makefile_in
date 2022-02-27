@@ -1,0 +1,11 @@
+--- fstrcmp-0.7.D001.orig/Makefile.in	2014-03-05 01:13:45.000000000 +0100
++++ fstrcmp-0.7.D001/Makefile.in	2022-02-26 01:14:24.379687998 +0100
+@@ -588,7 +588,7 @@ bin/test_user$(EXEEXT): $(test_user_obj)
+ 	$(LIBTOOL) --mode=link --tag=CC $(CC) $(CPPFLAGS) $(CFLAGS) -o $@ \
+ 		$(test_user_obj) lib/libfstrcmp.la $(LDFLAGS) $(LIBS)
+ 
+-all: all-bin all-doc
++all: all-bin
+ 
+ all-bin: bin/fstrcmp$(EXEEXT) bin/test_prelude$(EXEEXT) bin/test_user$(EXEEXT)
+ 
