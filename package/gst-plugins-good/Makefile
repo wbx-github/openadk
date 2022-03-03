@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gst-plugins-good
-PKG_VERSION:=		1.8.2
+PKG_VERSION:=		1.19.3
 PKG_RELEASE:=		1
-PKG_HASH:=		8d7549118a3b7a009ece6bb38a05b66709c551d32d2adfd89eded4d1d7a23944
+PKG_HASH:=		79ea32a77fa47e6596530e38113bf97c113fd95658087d9a91ffb8af47d11d07
 PKG_DESCR:=		gstreamer good plugins
 PKG_SECTION:=		libs/video
 PKG_DEPENDS:=		gstreamer
@@ -19,8 +19,13 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,GST_PLUGINS_GOOD,gst-plugins-good,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
+
 TARGET_CPPFLAGS+=	-D_GNU_SOURCE -D_POSIX_SOURCE
-CONFIGURE_ARGS+=	--without-x
 
 gst-plugins-good-install:
 	$(INSTALL_DIR) $(IDIR_GST_PLUGINS_GOOD)/usr/lib/gstreamer-1.0/

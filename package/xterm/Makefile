@@ -4,17 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xterm
-PKG_VERSION:=		369
+PKG_VERSION:=		371
 PKG_RELEASE:=		1
-PKG_HASH:=		71ed6a48d064893d2149741a002781a973496fd24d52dadd364f63439a764e26
+PKG_HASH:=		32f888277b19e28ebc0a3112bff000607c07bed0679caa0beebb36f9cad484f5
 PKG_DESCR:=		terminal emulator
 PKG_SECTION:=		x11/apps
 PKG_DEPENDS:=		libxaw libxt libncurses libxft fontconfig libuuid
 PKG_BUILDDEP:=		ncurses libXt libXmu libXaw libXft util-linux libSM
 PKG_URL:=		http://invisible-island.net/xterm/xterm.html
-PKG_SITES:=		https://invisible-island.net/datafiles/release/
+PKG_SITES:=		http://invisible-mirror.net/archives/xterm/
 
-DISTFILES:=             ${PKG_NAME}.tar.gz
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tgz
 
 include $(ADK_TOPDIR)/mk/package.mk
 

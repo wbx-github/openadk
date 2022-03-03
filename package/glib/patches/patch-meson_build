@@ -1,0 +1,10 @@
+--- glib-2.70.0.orig/meson.build	2021-09-17 12:17:56.849962700 +0200
++++ glib-2.70.0/meson.build	2022-02-28 20:24:15.048295012 +0100
+@@ -449,6 +449,7 @@ if cc.get_id() == 'gcc' or cc.get_id() =
+     '-Werror=missing-include-dirs',
+     '-Werror=missing-prototypes',
+     '-Werror=pointer-arith',
++    '-Wno-error=format-nonliteral',
+   ]
+   warning_c_link_args = [
+     '-Wl,-z,nodelete',

@@ -1,7 +1,0 @@
---- webkitgtk-2.12.0.orig/Source/PlatformGTK.cmake	2016-03-17 08:51:05.000000000 +0100
-+++ webkitgtk-2.12.0/Source/PlatformGTK.cmake	2016-04-03 10:54:31.244767406 +0200
-@@ -1,4 +1,3 @@
--add_subdirectory(${WEBCORE_DIR}/platform/gtk/po)
- 
- # This allows exposing a 'gir' target which builds all GObject introspection files.
- if (ENABLE_INTROSPECTION)

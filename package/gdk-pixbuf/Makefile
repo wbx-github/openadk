@@ -11,7 +11,7 @@ PKG_HASH:=		d55e5b383ee219bd0e23bf6ed4427d56a7db5379729a6e3e0a0e0eba9a8d8879
 PKG_DESCR:=		image loading and pixel buffer manipulation library
 PKG_SECTION:=		libs/image
 PKG_BUILDDEP:=		libjpeg-turbo libtiff glib libpng
-HOST_BUILDDEP:=		glib-host libffi-host
+HOST_BUILDDEP:=		libiconv-host glib-host libffi-host
 PKG_NEEDS:=		c++
 PKG_SITES:=		$(MASTER_SITE_GNOME:=gdk-pixbuf/$(PKG_EXTRAVER)/)
 PKG_OPTS:=		dev

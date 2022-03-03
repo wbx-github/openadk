@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		glib
-PKG_VERSION:=		2.56.1
+PKG_VERSION:=		2.70.0
 PKG_RELEASE:=		1
-PKG_EXTRAVER:=		2.56
-PKG_HASH:=		40ef3f44f2c651c7a31aedee44259809b6f03d3d20be44545cd7d177221c0b8d
+PKG_EXTRAVER:=		2.70
+PKG_HASH:=		200d7df811c5ba634afbf109f14bb40ba7fde670e89389885da14e27c0840742
 PKG_DESCR:=		low-level core library that forms the basis of gtk+
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libpcre zlib libffi
@@ -24,42 +24,33 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,GLIB,glib,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,GLIB,glib,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
-ifeq ($(ADK_PACKAGE_LIBICONV),y)
-CONFIGURE_ARGS+=	--with-libiconv=yes
-else
-CONFIGURE_ARGS+=	--with-libiconv=no
-endif
-CONFIGURE_ARGS+=	--disable-mem-pools \
-			--disable-rebuilds \
-			--disable-fam \
-			--disable-dtrace \
-			--disable-compile-warnings \
-			--with-pcre=system \
-			--with-threads=posix
-CONFIGURE_ENV+=		glib_cv_long_long_format=ll \
-			glib_cv_stack_grows=no \
-			glib_cv_have_strlcpy=no \
-			glib_cv_uscore=no \
-			ac_cv_func_posix_getpwuid_r=yes \
-			ac_cv_func_posix_getgrgid_r=yes
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
-HOST_STYLE:=		auto
-HOST_CPPFLAGS+=		-I$(STAGING_HOST_DIR)/usr/include/libmount
-ifneq ($(OS_FOR_BUILD),CYGWIN)
-HOST_CFLAGS+=		-fPIC
-endif
-HOST_CONFIGURE_ARGS+=	--disable-fam \
-			--disable-selinux \
-			--disable-dtrace \
-			--enable-static \
-			--with-pcre=internal \
-			--with-libiconv=yes \
-			--disable-shared \
-			--disable-compile-warnings
+TARGET_CFLAGS+=		-Wno-error=format-nonliteral
 
-hostpost-install:
-	$(CP) $(STAGING_HOST_DIR)/usr/lib/glib-2.0/include/glibconfig.h \
-		$(STAGING_HOST_DIR)/usr/include/glib-2.0/
+HOST_CONFIG_STYLE:=	manual
+HOST_STYLE:=		manual
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
+
+MESON_FLAGS:=		-Dtests=false -Dxattr=false -Doss_fuzz=disabled
+
+host-configure:
+	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson setup --prefix $(STAGING_HOST_DIR)/usr _build)
+
+host-build:
+	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson compile -C _build)
+
+glib-hostinstall:
+	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson install -C _build)
+
+do-configure:
+	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson setup --prefix /usr \
+		--libdir lib --cross-file $(STAGING_HOST_DIR)/etc/meson/cross-compilation.conf -Dtests=false _build)
+
+do-build:
+	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson compile -C _build)
 
 glib-install:
 	$(INSTALL_DIR) $(IDIR_GLIB)/usr/lib

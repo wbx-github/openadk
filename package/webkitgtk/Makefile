@@ -4,18 +4,18 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		webkitgtk
-PKG_VERSION:=		2.18.0
+PKG_VERSION:=		2.34.6
 PKG_RELEASE:=		1
-PKG_HASH:=		b583e46a3de36a3e80ba33b084ead60512a2046aca01ff61e50e519436e5038d
+PKG_HASH:=		6bc8fd034aad0432a2459ce4fc7ee25ad65a4924c618bf8d93b52b0c1a84c1f6
 PKG_DESCR:=		web browser engine
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		glib icu4c zlib libwebp libgtk3 libsoup
 PKG_DEPENDS+=		libsecret libxt harfbuzz cairo libgcrypt
-PKG_DEPENDS+=		gst-plugins-base gstreamer libnotify
+PKG_DEPENDS+=		gstreamer libnotify libwebp gst-plugins-base
 PKG_BUILDDEP:=		glib icu4c zlib libwebp libgtk3 cmake-host
 PKG_BUILDDEP+=		libsoup libsecret libXt harfbuzz libnotify
-PKG_BUILDDEP+=		gst-plugins-base gstreamer cairo enchant
-PKG_BUILDDEP+=		gnutls libgcrypt
+PKG_BUILDDEP+=		gstreamer cairo enchant libwebp gst-plugins-base
+PKG_BUILDDEP+=		gnutls libgcrypt ruby-host
 PKG_URL:=		http://www.webkitgtk.org/
 PKG_SITES:=		http://webkitgtk.org/releases/
 PKG_OPTS:=		dev
@@ -41,6 +41,14 @@ CMAKE_FLAGS+= 		-DPORT=GTK \
 			-DUSE_LIBNOTIFY=OFF \
 			-DENABLE_JIT=OFF \
 			-DUSE_LIBHYPHEN=OFF \
+			-DUSE_SOUP2=ON \
+			-DUSE_WPE_RENDERER=OFF \
+			-DENABLE_GAMEPAD=OFF \
+			-DUSE_OPENJPEG=OFF \
+			-DUSE_WOFF2=OFF \
+			-DUSE_SYSTEMD=OFF \
+			-DUSE_LCMS=OFF \
+			-DENABLE_BUBBLEWRAP_SANDBOX=OFF \
 			-DENABLE_INTROSPECTION=OFF
 
 webkitgtk-install:

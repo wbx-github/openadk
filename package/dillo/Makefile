@@ -24,6 +24,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,DILLO,dillo,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+TARGET_CFLAGS+=		-fcommon
+TARGET_CXXFLAGS+=	-fcommon
 TARGET_LDFLAGS+=	-liconv
 CONFIGURE_ENV+=		PNG_CONFIG=$(STAGING_TARGET_DIR)/scripts/libpng-config
 CONFIGURE_ARGS+=	--enable-ssl

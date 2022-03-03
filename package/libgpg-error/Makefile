@@ -54,7 +54,7 @@ ifeq ($(ADK_TARGET_ARCH_SPARC64),y)
 LIBGPG_PREFIX:=		sparc64-unknown-linux-gnu
 endif
 ifeq ($(ADK_TARGET_ARCH_X86),y)
-LIBGPG_PREFIX:=		i686-pc-linux-gnu
+LIBGPG_PREFIX:=		i686-unknown-linux-gnu
 endif
 ifeq ($(ADK_TARGET_ARCH_X86_64),y)
 LIBGPG_PREFIX:=		x86_64-pc-linux-gnu

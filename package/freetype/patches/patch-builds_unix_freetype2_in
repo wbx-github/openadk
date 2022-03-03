@@ -1,14 +1,13 @@
---- freetype-2.6.1.orig/builds/unix/freetype2.in	2015-09-25 07:58:57.000000000 +0200
-+++ freetype-2.6.1/builds/unix/freetype2.in	2015-10-23 10:43:36.000000000 +0200
-@@ -1,7 +1,8 @@
+--- freetype-2.11.1.orig/builds/unix/freetype2.in	2021-02-13 09:16:54.000000000 +0100
++++ freetype-2.11.1/builds/unix/freetype2.in	2022-03-01 21:51:10.996321135 +0100
+@@ -1,7 +1,7 @@
  prefix=%prefix%
 -exec_prefix=%exec_prefix%
 -libdir=%libdir%
 -includedir=%includedir%
-+exec_prefix=${prefix}
-+libdir=${prefix}/lib
-+includedir=${prefix}/include
-+
++exec_prefix=%prefix%
++libdir=%prefix%/lib
++includedir=%prefix%/include
  
  Name: FreeType 2
- URL: http://freetype.org
+ URL: https://freetype.org

@@ -22,9 +22,11 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,FONT_ADOBE_75DPI,font-adobe-75dpi,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+XAKE_FLAGS+=		DESTDIR=''
+
 font-adobe-75dpi-install:
 	$(INSTALL_DIR) $(IDIR_FONT_ADOBE_75DPI)/usr/share/fonts/X11/75dpi
-	$(CP) ${WRKINST}/usr/share/fonts/X11/75dpi/* \
+	$(CP) ${STAGING_TARGET_DIR}/usr/share/fonts/X11/75dpi/* \
 		$(IDIR_FONT_ADOBE_75DPI)/usr/share/fonts/X11/75dpi
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

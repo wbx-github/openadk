@@ -55,6 +55,7 @@ MASTER_SITE_MYSQL?=		\
 	http://mysql.easynet.be/ \
 
 MASTER_SITE_GNOME?=	\
+	https://download.gnome.org/sources/ \
 	ftp://ftp.gnome.org/pub/GNOME/sources/ \
 	ftp://ftp.linux.org.uk/mirrors/ftp.gnome.org/sources/ \
 	ftp://ftp.acc.umu.se/pub/GNOME/sources/	\

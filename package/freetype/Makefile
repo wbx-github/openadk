@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		freetype
-PKG_VERSION:=		2.7
+PKG_VERSION:=		2.11.1
 PKG_RELEASE:=		1
-PKG_HASH:=		7b657d5f872b0ab56461f3bd310bd1c5ec64619bd15f0d8e08282d494d9cfea4
+PKG_HASH:=		f8db94d307e9c54961b39a1cc799a67d46681480696ed72ecf78d4473770f09b
 PKG_DESCR:=		free, high-quality and portable font engine
 PKG_SECTION:=		libs/fonts
 PKG_DEPENDS:=		zlib
@@ -27,11 +27,19 @@ $(eval $(call PKG_template,LIBFREETYPE,libfreetype,${PKG_VERSION}-${PKG_RELEASE}
 HOST_STYLE:=		auto
 HOST_CONFIGURE_ARGS+=	--with-zlib \
 			--without-png \
-			--without-bzip2
+			--without-bzip2 \
+			--enable-freetype-config
 CONFIGURE_ARGS+=	--with-zlib \
 			--without-png \
 			--with-harfbuzz=no \
-			--without-bzip2
+			--without-bzip2 \
+			--enable-freetype-config
+
+hostpost-install:
+	$(SED) 's:^includedir=.*:includedir="$${prefix}/include":' \
+                -e 's:^libdir=.*:libdir="$${exec_prefix}/lib":' \
+                $(STAGING_HOST_DIR)/usr/bin/freetype-config
+
 
 libfreetype-install:
 	${INSTALL_DIR} ${IDIR_LIBFREETYPE}/usr/lib
