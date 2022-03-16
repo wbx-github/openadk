@@ -4,13 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		screen
-PKG_VERSION:=		4.7.0
+PKG_VERSION:=		4.9.0
 PKG_RELEASE:=		1
-PKG_HASH:=		da775328fa783bd2a787d722014dbd99c6093effc11f337827604c2efc5d20c1
+PKG_HASH:=		f9335281bb4d1538ed078df78a20c2f39d3af9a4e91c57d084271e0289c730f4
 PKG_DESCR:=		window manager for the terminal session
 PKG_SECTION:=		sys/utils
 PKG_DEPENDS:=		libncurses libelf
 PKG_BUILDDEP:=		ncurses libelf
+PKG_NEEDS:=		mmu
 PKG_URL:=		http://www.gnu.org/software/screen/
 PKG_SITES:=		${MASTER_SITE_GNU:=screen/}
 
@@ -20,6 +21,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,SCREEN,screen,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+AUTOTOOL_STYLE:=	autoreconf
 TARGET_LDFLAGS+=	-ltinfo
 CONFIGURE_ENV+=		$(foreach flag,rename fchmod fchown strerror lstat _exit utimes vsnprintf getcwd setlocale strftime,ac_cv_func_${flag}=yes)
 CONFIGURE_ARGS+=	--with-sys-screenrc=/etc/screenrc
