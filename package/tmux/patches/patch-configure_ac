@@ -1,0 +1,22 @@
+--- tmux-3.2a.orig/configure.ac	2021-06-10 10:20:51.000000000 +0200
++++ tmux-3.2a/configure.ac	2022-03-16 12:00:53.916934376 +0100
+@@ -150,18 +150,10 @@ AC_REPLACE_FUNCS([ \
+ 	strlcpy \
+ 	strndup \
+ 	strsep \
++	strtonum \
+ ])
+ AC_FUNC_STRNLEN
+ 
+-# Check if strtonum works.
+-AC_MSG_CHECKING([for working strtonum])
+-AC_RUN_IFELSE([AC_LANG_PROGRAM(
+-         [#include <stdlib.h>],
+-         [return (strtonum("0", 0, 1, NULL) == 0 ? 0 : 1);]
+-	 )],
+-	 [AC_DEFINE(HAVE_STRTONUM) AC_MSG_RESULT(yes)],
+-	 [AC_LIBOBJ(strtonum) AC_MSG_RESULT(no)]
+-)
+ 
+ # Clang sanitizers wrap reallocarray even if it isn't available on the target
+ # system. When compiled it always returns NULL and crashes the program. To
