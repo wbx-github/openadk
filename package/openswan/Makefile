@@ -4,19 +4,20 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		openswan
-PKG_VERSION:=		2.6.51.5
+PKG_VERSION:=		3.0.0
 PKG_RELEASE:=		1
-PKG_HASH:=		4124f4ce970089f301c34b9c48f54b021cf6b2b8813877942337f8022104f70d
+PKG_HASH:=		69fe7a71e54aaf0ea93b874db4963057c1ff4904b3617b36f2c9be2010c23331
 PKG_DESCR:=		ipsec software
 PKG_SECTION:=		net/security
 PKG_DEPENDS:=		libgmp
 PKG_BUILDDEP:=		gmp
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.openswan.org/
-PKG_SITES:=		http://www.openswan.org/download/
+PKG_SITES:=		https://github.com/xelerance/Openswan/archive/refs/tags/
 PKG_NOPARALLEL:=	1
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+DISTFILES:=		v${PKG_VERSION}.tar.gz
+WRKDIST=		$(WRKDIR)/Openswan-$(PKG_VERSION)
 
 # GLOB_BRACE usage
 PKG_LIBC_DEPENDS:=	uclibc-ng glibc
@@ -32,7 +33,9 @@ XAKE_FLAGS+=		KERNELSRC="${LINUX_DIR}" \
 			MODPROBE="insmod" \
 			OSDEP="linux" \
 			WERROR="" \
-			BUILDENV="linux"
+			BUILDENV="linux" \
+			ARCH=$(ADK_TARGET_KARCH) \
+			V=1
 ALL_TARGET:=		programs
 
 openswan-install:

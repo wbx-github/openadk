@@ -1,15 +1,20 @@
---- openswan-2.6.51.5.orig/Makefile.inc	2019-06-14 21:35:45.000000000 +0200
-+++ openswan-2.6.51.5/Makefile.inc	2019-10-07 20:44:06.511702433 +0200
-@@ -194,10 +194,10 @@ BISONOSFLAGS=
- #Example for a cross compile:
- #USERCOMPILE?=-g ${PORTDEFINE} -I/usr/local/arm_tools/arm-elf/inc -L/usr/local/arm_tools/lib/gcc-lib
- GCC_LINT ?= -DGCC_LINT
--USERCOMPILE?=-g -O3 -fPIE -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Werror=format-security -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 ${WERROR} $(GCC_LINT) ${USERCOMPILEEXTRA}
-+USERCOMPILE?=-g -fPIC -Wformat -Wformat-security -Werror=format-security -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 ${WERROR} $(GCC_LINT) ${USERCOMPILEEXTRA}
+--- Openswan-3.0.0.orig/Makefile.inc	2021-01-22 19:25:50.000000000 +0100
++++ Openswan-3.0.0/Makefile.inc	2022-03-21 19:40:09.287360911 +0100
+@@ -188,7 +188,7 @@ BISONOSFLAGS=
+ # USER* should be empty for end users/vendors to use
+ 
+ OPTIMIZE?=-g -O3
+-GCCOPTIONS=${OPTIMIZE} -fPIE -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Werror=format-security -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 ${WERROR} $(GCC_LINT) ${USERCOMPILEEXTRA}
++GCCOPTIONS=${OPTIMIZE} -fPIE -Wformat -Wformat-security -Werror=format-security -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 ${WERROR} $(GCC_LINT) ${USERCOMPILEEXTRA}
+ # extra compile flags, for userland and kernel stuff, e.g. -g for debug info
+ # you can add to this in the defaults file using +=
+ # -DGCC_LINT uses gcc-specific declarations to improve compile-time diagnostics.
+@@ -199,7 +199,7 @@ GCC_LINT ?= -DGCC_LINT
+ USERCOMPILE?=${GCCOPTIONS}
  # on fedora/rhel
  #USERCOMPILE?=-g -O2 -g -pipe -Wall -Wp,-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4  -m64 -mtune=generic -fPIE -pie -DSUPPORT_BROKEN_ANDROID_ICS
 -KLIPSCOMPILE=-O2 -fPIE -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Werror=format-security -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -DCONFIG_KLIPS_ALG -DDISABLE_UDP_CHECKSUM
-+KLIPSCOMPILE=-O2 -Wformat -Wformat-security -Werror=format-security -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -DCONFIG_KLIPS_ALG -DDISABLE_UDP_CHECKSUM
++KLIPSCOMPILE=-O2 -fPIE -Wformat -Wformat-security -Werror=format-security -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -DCONFIG_KLIPS_ALG -DDISABLE_UDP_CHECKSUM
  # Additional debugging for developers (warning: can crash openswan!)
  #USERCOMPILE?=-g -DLEAK_DETECTIVE ${LIBEFENCE}
  # You can also run this before starting openswan on glibc systems:
