@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		openvpn
-PKG_VERSION:=		2.4.7
+PKG_VERSION:=		2.5.6
 PKG_RELEASE:=		1
-PKG_HASH:=		a42f53570f669eaf10af68e98d65b531015ff9e12be7a62d9269ea684652f648
+PKG_HASH:=		333a7ef3d5b317968aca2c77bdc29aa7c6d6bb3316eb3f79743b59c53242ad3d
 PKG_DESCR:=		vpn solution using ssl/tls
 PKG_DEPENDS:=		libressl
 PKG_BUILDDEP:=		libressl
@@ -14,6 +14,8 @@ PKG_KDEPENDS:=		tun
 PKG_SECTION:=		net/security
 PKG_URL:=		http://openvpn.net/
 PKG_SITES:=		http://swupdate.openvpn.org/community/releases/
+
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 PKG_FLAVOURS_OPENVPN:=	WITH_LZO WITH_LZ4 WITH_MANAGEMENT WITH_SMALL
 PKGFD_WITH_LZO:=	enable lzo compression support
