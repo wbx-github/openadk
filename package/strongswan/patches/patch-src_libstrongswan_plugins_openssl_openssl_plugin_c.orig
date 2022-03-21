@@ -1,6 +1,24 @@
---- strongswan-5.5.0.orig/src/libstrongswan/plugins/openssl/openssl_plugin.c	2016-06-30 16:20:10.000000000 +0200
-+++ strongswan-5.5.0/src/libstrongswan/plugins/openssl/openssl_plugin.c	2016-09-30 05:36:45.015692462 +0200
-@@ -573,7 +573,7 @@ plugin_t *openssl_plugin_create()
+--- strongswan-5.8.1.orig/src/libstrongswan/plugins/openssl/openssl_plugin.c	2019-08-27 15:26:53.000000000 +0200
++++ strongswan-5.8.1/src/libstrongswan/plugins/openssl/openssl_plugin.c	2019-10-08 02:05:20.954742229 +0200
+@@ -310,7 +310,7 @@ static private_key_t *openssl_private_ke
+ 				case EVP_PKEY_EC:
+ 					return openssl_ec_private_key_create(key, FALSE);
+ #endif
+-#if OPENSSL_VERSION_NUMBER >= 0x1010100fL && !defined(OPENSSL_NO_EC)
++#if OPENSSL_VERSION_NUMBER >= 0x1010100fL && !defined(OPENSSL_NO_EC) && !defined(LIBRESSL_VERSION_NUMBER)
+ 				case EVP_PKEY_ED25519:
+ 				case EVP_PKEY_ED448:
+ 					return openssl_ed_private_key_create(key, FALSE);
+@@ -462,7 +462,7 @@ static private_key_t *openssl_private_ke
+ 		case EVP_PKEY_EC:
+ 			return openssl_ec_private_key_create(key, TRUE);
+ #endif
+-#if OPENSSL_VERSION_NUMBER >= 0x1010100fL && !defined(OPENSSL_NO_EC)
++#if OPENSSL_VERSION_NUMBER >= 0x1010100fL && !defined(OPENSSL_NO_EC) && !defined(LIBRESSL_VERSION_NUMBER)
+ 		case EVP_PKEY_ED25519:
+ 		case EVP_PKEY_ED448:
+ 			return openssl_ed_private_key_create(key, TRUE);
+@@ -814,7 +814,7 @@ plugin_t *openssl_plugin_create()
  		},
  	);
  

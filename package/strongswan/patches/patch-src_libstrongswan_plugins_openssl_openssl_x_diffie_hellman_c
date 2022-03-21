@@ -1,5 +1,5 @@
---- strongswan-5.8.1.orig/src/libstrongswan/plugins/openssl/openssl_x_diffie_hellman.c	2018-12-14 16:48:24.000000000 +0100
-+++ strongswan-5.8.1/src/libstrongswan/plugins/openssl/openssl_x_diffie_hellman.c	2019-10-08 02:05:54.116867134 +0200
+--- strongswan-5.9.5.orig/src/libstrongswan/plugins/openssl/openssl_x_diffie_hellman.c	2022-01-08 12:54:02.000000000 +0100
++++ strongswan-5.9.5/src/libstrongswan/plugins/openssl/openssl_x_diffie_hellman.c	2022-03-21 16:41:08.744944336 +0100
 @@ -17,7 +17,7 @@
  
  /* basic support for X25519 was added with 1.1.0a, but we require features (e.g.
@@ -8,4 +8,4 @@
 +#if OPENSSL_VERSION_NUMBER >= 0x1010100fL && !defined(OPENSSL_NO_ECDH) && !defined(LIBRESSL_VERSION_NUMBER)
  
  #include "openssl_x_diffie_hellman.h"
- 
+ #include "openssl_util.h"
