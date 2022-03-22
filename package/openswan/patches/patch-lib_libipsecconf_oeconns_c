@@ -1,0 +1,11 @@
+--- Openswan-3.0.0.orig/lib/libipsecconf/oeconns.c	2021-01-22 19:25:50.000000000 +0100
++++ Openswan-3.0.0/lib/libipsecconf/oeconns.c	2022-03-22 16:21:06.271957222 +0100
+@@ -16,7 +16,7 @@
+ #include <string.h>
+ #include <limits.h>
+ #include <assert.h>
+-#include <sys/queue.h>
++#include "queue.h"
+ 
+ #include "ipsecconf/parser.h"
+ #include "ipsecconf/confread.h"

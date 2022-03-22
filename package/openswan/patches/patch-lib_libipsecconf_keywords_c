@@ -1,0 +1,11 @@
+--- Openswan-3.0.0.orig/lib/libipsecconf/keywords.c	2021-01-22 19:25:50.000000000 +0100
++++ Openswan-3.0.0/lib/libipsecconf/keywords.c	2022-03-22 16:20:38.212636657 +0100
+@@ -20,7 +20,7 @@
+  *
+  */
+ 
+-#include <sys/queue.h>
++#include "queue.h"
+ #include <string.h>
+ #include <assert.h>
+ #include <stdlib.h>

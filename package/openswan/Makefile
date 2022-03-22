@@ -19,9 +19,6 @@ PKG_NOPARALLEL:=	1
 DISTFILES:=		v${PKG_VERSION}.tar.gz
 WRKDIST=		$(WRKDIR)/Openswan-$(PKG_VERSION)
 
-# GLOB_BRACE usage
-PKG_LIBC_DEPENDS:=	uclibc-ng glibc
-
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,OPENSWAN,openswan,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))

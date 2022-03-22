@@ -1,0 +1,11 @@
+--- Openswan-3.0.0.orig/lib/libalgoparse/kernel_alg.c	2021-01-22 19:25:50.000000000 +0100
++++ Openswan-3.0.0/lib/libalgoparse/kernel_alg.c	2022-03-22 16:18:54.795141065 +0100
+@@ -27,7 +27,7 @@
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+ #include <unistd.h>
+-#include <sys/queue.h>
++#include "queue.h"
+ 
+ #include <openswan.h>
+ 
