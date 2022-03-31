@@ -10,6 +10,7 @@ PKG_HASH:=		36245242c59b5a33698388e415a3e1efa2d48fc4aead91aeb2810b4c0744f4e3
 PKG_DESCR:=		command line option parsing library
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://rpm5.org/
+PKG_BUILDDEP:=		gettext-host
 PKG_SITES:=		https://github.com/rpm-software-management/popt/archive/refs/tags/
 PKG_LIBNAME:=		libpopt
 PKG_OPTS:=		dev
