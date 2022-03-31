@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		protobuf
-PKG_VERSION:=		3.1.0
+PKG_VERSION:=		3.19.4
 PKG_RELEASE:=		1
-PKG_HASH:=		fb2a314f4be897491bb2446697be693d489af645cb0e165a85e7e64e07eb134d
+PKG_HASH:=		3bd7828aa5af4b13b99c191e8b1e884ebfa9ad371b0ce264605d347f135d2568
 PKG_DESCR:=		extensible mechanism for serializing structured data
 PKG_SECTION:=		libs/misc
 PKG_URL:=		https://developers.google.com/protocol-buffers/
