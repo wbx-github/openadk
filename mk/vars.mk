@@ -198,6 +198,12 @@ ifneq ($(ADK_TARGET_USE_LD_BIND_NOW),)
 TARGET_LDFLAGS+=	-Wl,-z,now
 endif
 
+ifeq ($(ADK_TARGET_ARCH_RISCV64),y)
+ifeq ($(ADK_TARGET_BINFMT_FLAT),y)
+TARGET_CFLAGS+=		-fPIC
+endif
+endif
+
 # needed for musl ppc 
 ifeq ($(ADK_TARGET_ARCH_PPC),y)
 ifeq ($(ADK_TARGET_LIB_MUSL),y)
