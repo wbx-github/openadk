@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ruby
-PKG_VERSION:=		3.0.3
+PKG_VERSION:=		3.1.2
 PKG_RELEASE:=		1
-PKG_HASH:=		88cc7f0f021f15c4cd62b1f922e3a401697f7943551fe45b1fdf4f2417a17a9c
+PKG_HASH:=		ca10d017f8a1b6d247556622c841fc56b90c03b1803f87198da1e4fd3ec3bf2a
 PKG_DESCR:=		scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libressl zlib
@@ -14,7 +14,7 @@ PKG_BUILDDEP:=		ruby-host libressl zlib
 HOST_BUILDDEP:=		libressl-host
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.ruby-lang.org/
-PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/3.0/
+PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/3.1/
 
 include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
@@ -22,7 +22,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,RUBY,ruby,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,RUBY,ruby,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-AUTOTOOL_STYLE:=	autoreconf
 # uClibc setpgrp does not take arguments
 CONFIGURE_ENV+=         ac_cv_func_setpgrp_void=yes \
 			stack_protector=no \
@@ -38,7 +37,7 @@ INSTALL_TARGET:=	install-nodoc
 
 HOST_CONFIGURE_ARGS+=	--disable-install-doc \
 			--disable-shared \
-			--with-out-ext=curses,readline \
+			--with-out-ext=curses,readline,openssl \
 			--disable-rubygems
 HOST_ALL_TARGET:=	main
 HOST_INSTALL_TARGET:=	install-nodoc
