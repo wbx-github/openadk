@@ -1,0 +1,7 @@
+config ADK_TARGET_SYSTEM_QEMU_LOONGARCH
+	bool "Qemu Emulator"
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_CPU_LOONGARCH
+	help
+	  Support for Qemu Emulator Loongarch architecture.
+

@@ -553,6 +553,14 @@ config ADK_TARGET_CPU_LM32
 	select ADK_TARGET_UCLINUX
 	depends on ADK_TARGET_ARCH_LM32
 
+# loongarch
+config ADK_TARGET_CPU_LOONGARCH
+	bool "loongarch64"
+	select ADK_TARGET_SUPPORTS_THREADS
+	select ADK_TARGET_SUPPORTS_NPTL
+	select ADK_TARGET_WITH_MMU
+	depends on ADK_TARGET_ARCH_LOONGARCH
+
 # coldfire
 config ADK_TARGET_CPU_CF_51
 	bool "coldfire 51"
@@ -2214,6 +2222,7 @@ config ADK_TARGET_CPU_ARCH
 	default "ia64" if ADK_TARGET_ARCH_IA64
 	default "kvx" if ADK_TARGET_ARCH_KVX
 	default "lm32" if ADK_TARGET_ARCH_LM32
+	default "loongarch64" if ADK_TARGET_ARCH_LOONGARCH
 	default "m32c" if ADK_TARGET_ARCH_M32C
 	default "m32r" if ADK_TARGET_ARCH_M32R
 	default "m68k" if ADK_TARGET_ARCH_M68K
