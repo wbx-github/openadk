@@ -5,9 +5,9 @@ include $(ADK_TOPDIR)/rules.mk
 include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
-KERNEL:=$(LINUX_DIR)/vmlinux
+KERNEL:=$(LINUX_DIR)/arch/loongarch/boot/vmlinux.efi
 
-QEMU_ARGS:=-M virt
+QEMU_ARGS:=-M virt -bios target/loongarch/QEMU_EFI.fd -append "console=ttyS0,115200"
 QEMU_ARGS+=-nographic
 #
 # target helper text

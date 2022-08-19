@@ -98,7 +98,7 @@ ifneq ($(ADK_TARGET_ARCH_AARCH64)$(ADK_TARGET_ARCH_X86_64)$(ADK_TARGET_ARCH_PPC6
 	test ! -d ${TARGET_DIR}/usr/lib || rm -rf ${TARGET_DIR}/usr/lib/
 	(cd ${TARGET_DIR}/usr ; ln -sf ${ADK_TARGET_LIBC_PATH} lib)
 endif
-ifeq ($(ADK_TARGET_ARCH_S390),y)
+ifeq ($(ADK_TARGET_ARCH_LOONGARCH)$(ADK_TARGET_ARCH_S390),y)
 	(cd ${TARGET_DIR}/; ln -sf lib lib64)
 endif
 

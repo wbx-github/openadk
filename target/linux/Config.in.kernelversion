@@ -167,6 +167,7 @@ endchoice
 config ADK_TARGET_LINUX_KERNEL_GIT_REPO
 	string "git repository"
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
+	default "https://github.com/loongson/linux.git" if ADK_TARGET_LINUX_ARCH_LOONGARCH
 	default "https://github.com/raspberrypi/linux.git" if ADK_TARGET_BOARD_BCM28XX
 	default "git://git.code.sf.net/p/adi-linux/code" if ADK_TARGET_SYSTEM_ADSP_BF537
 	default "https://github.com/EmcraftSystems/linux-emcraft.git" if ADK_TARGET_SYSTEM_KINETIS_K70
@@ -183,6 +184,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO
 config ADK_TARGET_LINUX_KERNEL_GIT_REPO_NAME
 	string
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
+	default "loongarch" if ADK_TARGET_LINUX_ARCH_LOONGARCH
 	default "kvx" if ADK_TARGET_ARCH_KVX
 	default "lm32" if ADK_TARGET_ARCH_LM32
 	default "rpi" if ADK_TARGET_BOARD_BCM28XX
@@ -206,10 +208,12 @@ config ADK_TARGET_LINUX_KERNEL_GIT
 	default "c85fbc86c61a8c8fd45ab1fe3d1bdd2df12f7962" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	default "8624998967676862843aed1f8ee2141e98987f81" if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK
 	default "v4.4.52-phy" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
+	default "loongarch-next" if ADK_TARGET_LINUX_ARCH_LOONGARCH
 
 config ADK_TARGET_LINUX_KERNEL_GIT_VER
 	string "kernel version"
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
+	default "5.19" if ADK_TARGET_LINUX_ARCH_LOONGARCH
 	default "5.10.92" if ADK_TARGET_BOARD_BCM28XX
 	default "4.4.37" if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK
 	default "4.4.52" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
@@ -221,6 +225,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT_VER
 config ADK_TARGET_LINUX_KERNEL_GIT_TYPE
 	string
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
+	default "branch" if ADK_TARGET_LINUX_ARCH_LOONGARCH 
 	default "branch" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "hash"
 

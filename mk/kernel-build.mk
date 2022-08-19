@@ -27,6 +27,10 @@ ifeq ($(ADK_TARGET_KERNEL_VMLINUX_BOOTP),y)
 KERNEL_FILE:=bootpfile
 KERNEL_TARGET:=bootpfile
 endif
+ifeq ($(ADK_TARGET_KERNEL_VMLINUX_EFI),y)
+KERNEL_FILE:=vmlinux.efi
+KERNEL_TARGET:=all
+endif
 ifeq ($(ADK_TARGET_KERNEL_VMLINUX_GZ),y)
 KERNEL_FILE:=vmlinux
 KERNEL_TARGET:=all
