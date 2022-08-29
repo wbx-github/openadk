@@ -29,7 +29,7 @@ config ADK_TOOLCHAIN_GCC_GIT
 	depends on !ADK_TARGET_ARCH_NDS32
 
 config ADK_TOOLCHAIN_GCC_12
-	bool "12.1.0"
+	bool "12.2.0"
 	depends on !ADK_TARGET_ARCH_AVR32
 	depends on !ADK_TARGET_ARCH_METAG
 
