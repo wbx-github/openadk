@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		wpa_supplicant
-PKG_VERSION:=		2.5
+PKG_VERSION:=		2.10
 PKG_RELEASE:=		1
-PKG_HASH:=		cce55bae483b364eae55c35ba567c279be442ed8bab5b80a3c7fb0d057b9b316
+PKG_HASH:=		e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 PKG_DESCR:=		wpa supplicant
 PKG_SECTION:=		net/wifi
 PKG_DEPENDS:=		libnl
 PKG_BUILDDEP:=		libnl
 PKG_NEEDS:=		threads
 PKG_URL:=		http://hostap.epitest.fi/wpa_supplicant/
-PKG_SITES:=		http://hostap.epitest.fi/releases/
+PKG_SITES:=		http://w1.fi/releases/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
