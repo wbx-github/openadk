@@ -155,7 +155,7 @@ tgt=$2
 src=$3
 
 case $target {
-(banana-pro|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|solidrun-imx6|solidrun-clearfog|default) ;;
+(banana-pro|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|solidrun-imx6|solidrun-clearfog|imgtec-ci20|default) ;;
 (*)
 	print -u2 "Unknown target '$target', exiting"
 	exit 1 ;;
@@ -545,6 +545,10 @@ fi
 fwdir=$(dirname "$src")
 
 case $target {
+(imgtec-ci20)
+	dd if="$fwdir/u-boot-spl.bin" of="$tgt" obs=512 seek=1 > /dev/null 2>&1
+	dd if="$fwdir/u-boot-dtb.img" of="$tgt" obs=1k seek=14 > /dev/null 2>&1
+	;;
 (banana-pro|orange-pi0)
 	dd if="$fwdir/u-boot-sunxi-with-spl.bin" of="$tgt" bs=1024 seek=8 > /dev/null 2>&1
 	;;

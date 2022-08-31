@@ -125,7 +125,7 @@ ifeq ($(ADK_RUNTIME_DEV_UDEV),)
 	$(END_TRACE)
 endif
 	$(START_TRACE) "target/${ADK_TARGET_ARCH}-kernel-modules-install-packages.. "
-	for pkg in $(PACKAGE_DIR)/kmod-*; do \
+	-for pkg in $(PACKAGE_DIR)/kmod-*; do \
 		[[ -e "$$pkg" ]] && $(PKG_INSTALL) $$pkg; \
 	done
 	$(CMD_TRACE) " done"

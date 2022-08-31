@@ -9,6 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		3d794d3cf67633b34b2771eb9f073bde87e846e0d395d254df7b211ef1ec7346
 PKG_DESCR:=		modern formatting library
 PKG_SECTION:=		libs/misc
+PKG_BUILDDEP:=		cmake-host
 PKG_URL:=		http://fmtlib.net/latest/index.html
 PKG_SITES:=		https://github.com/fmtlib/fmt/archive/
 PKG_LIBNAME:=		libfmt

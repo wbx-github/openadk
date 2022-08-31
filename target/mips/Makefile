@@ -38,6 +38,10 @@ ifeq ($(ADK_TARGET_SYSTEM_MIKROTIK_RB532),y)
 	@echo 'then install kernel and filesystem via:'
 	@echo 'adkinstall -c -a ${ROOTFSTARBALL}'
 endif
+ifeq ($(ADK_TARGET_SYSTEM_IMGTEC_CI20),y)
+	@echo "Use following command to install it on SD card:"
+	@echo "sudo ./scripts/install.sh $(ADK_TARGET_SYSTEM) /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
+endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)
 targethelp:

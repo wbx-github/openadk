@@ -16,7 +16,7 @@ PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
-PKG_SYSTEM_DEPENDS:=	beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 phytec-imx6 pcduino-3b
+PKG_SYSTEM_DEPENDS:=	beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 phytec-imx6 pcduino-3b imgtec-ci20
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -70,6 +70,10 @@ ifeq ($(ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK),y)
 CONFIG:=		am335x_evm_defconfig
 UBOOT:=			u-boot.img
 endif
+ifeq ($(ADK_TARGET_SYSTEM_IMGTEC_CI20),y)
+CONFIG:=		ci20_mmc_defconfig
+UBOOT:=			u-boot-dtb.img
+endif
 
 HOST_MAKE_FLAGS+=	HOSTCFLAGS="$(HOST_CPPFLAGS) $(HOST_CFLAGS)" \
 			HOSTLDFLAGS="$(HOST_LDFLAGS) -ldl"
@@ -105,6 +109,9 @@ endif
 
 u-boot-install:
 	$(CP) $(WRKBUILD)/$(UBOOT) $(FW_DIR)
+ifeq ($(ADK_TARGET_SYSTEM_IMGTEC_CI20),y)
+	$(CP) $(WRKBUILD)/spl/u-boot-spl.bin $(FW_DIR)
+endif
 	$(INSTALL_DIR) $(IDIR_U_BOOT)/etc
 	$(CP) ./files/fw_env.config $(IDIR_U_BOOT)/etc
 ifneq ($(OS_FOR_BUILD),Darwin)
