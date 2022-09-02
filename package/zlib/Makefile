@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		zlib
-PKG_VERSION:=		1.2.11
-PKG_RELEASE:=		2
-PKG_HASH:=		4ff941449631ace0d4d203e3483be9dbc9da454084111f97ea0a2114e19bf066
+PKG_VERSION:=		1.2.12
+PKG_RELEASE:=		1
+PKG_HASH:=		7db46b8d7726232a621befaab4a1c870f00a90805511c0e0090441dac57def18
 PKG_DESCR:=		implementation of the deflate compression method
 PKG_SECTION:=		libs/comp
 PKG_URL:=		http://www.zlib.net/
