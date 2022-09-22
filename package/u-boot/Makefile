@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2021.10
+PKG_VERSION:=		2022.10-rc5
 PKG_RELEASE:=		1
-PKG_HASH:=		cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4
+PKG_HASH:=		064bf54541fc4eb30f0dd336702484ba5d39c4aceb48042216d8e72294c5787d
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host
@@ -16,7 +16,7 @@ PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
-PKG_SYSTEM_DEPENDS:=	beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 phytec-imx6 pcduino-3b imgtec-ci20
+PKG_SYSTEM_DEPENDS:=	beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -74,6 +74,10 @@ ifeq ($(ADK_TARGET_SYSTEM_IMGTEC_CI20),y)
 CONFIG:=		ci20_mmc_defconfig
 UBOOT:=			u-boot-dtb.img
 endif
+ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
+CONFIG:=		stm32f746-disco_spl_defconfig
+UBOOT:=			u-boot-dtb.bin
+endif
 
 HOST_MAKE_FLAGS+=	HOSTCFLAGS="$(HOST_CPPFLAGS) $(HOST_CFLAGS)" \
 			HOSTLDFLAGS="$(HOST_LDFLAGS) -ldl"
@@ -97,6 +101,7 @@ do-configure:
 
 do-build:
 	(cd $(WRKBUILD) && env \
+		V=1 \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
 		$(MAKE))

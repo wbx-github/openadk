@@ -167,7 +167,6 @@ config ADK_TARGET_ROOTFS_GENIMAGE
 	select ADK_TARGET_QEMU_WITH_BLOCK if ADK_TARGET_QEMU
 	select ADK_TARGET_QEMU_WITH_BOOTLOADER if ADK_TARGET_QEMU
 	select ADK_HOST_BUILD_GENIMAGE
-	depends on ADK_TARGET_ARCH_X86_64
 	help
 	  Create a complete disk image for the target with genimage.
 
@@ -199,3 +198,7 @@ config ADK_TARGET_GENIMAGE_FILENAME
 	default "genimage-efi.cfg" if ADK_PACKAGE_GRUB_EFI_X86_64 || ADK_PACKAGE_GRUB_EFI_X86
 	default "genimage-dual.cfg" if ADK_TARGET_DUAL_BOOT
 	default "genimage.cfg"
+
+config ADK_TARGET_EXTLINUX_FILENAME
+	string
+	default "extlinux.conf"

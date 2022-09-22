@@ -1,0 +1,11 @@
+--- dtc-1.6.1.orig/Makefile	2021-06-08 09:00:49.000000000 +0200
++++ dtc-1.6.1/Makefile	2022-09-20 08:58:33.198381442 +0200
+@@ -23,7 +23,7 @@ ASSUME_MASK ?= 0
+ CPPFLAGS = -I libfdt -I . -DFDT_ASSUME_MASK=$(ASSUME_MASK)
+ WARNINGS = -Wall -Wpointer-arith -Wcast-qual -Wnested-externs \
+ 	-Wstrict-prototypes -Wmissing-prototypes -Wredundant-decls -Wshadow
+-CFLAGS = -g -Os $(SHAREDLIB_CFLAGS) -Werror $(WARNINGS) $(EXTRA_CFLAGS)
++CFLAGS = -g -Os $(SHAREDLIB_CFLAGS) $(WARNINGS) $(EXTRA_CFLAGS)
+ 
+ BISON = bison
+ LEX = flex

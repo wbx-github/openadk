@@ -1,0 +1,11 @@
+--- popt-popt-1.19-release.orig/Makefile.am	2022-09-16 09:05:46.000000000 +0200
++++ popt-popt-1.19-release/Makefile.am	2022-09-21 02:11:30.830446841 +0200
+@@ -4,7 +4,7 @@ MCCABE =	pmccabe
+ 
+ EXTRA_DIST = autogen.sh CREDITS $(man_MANS) ci/Dockerfile build-aux popt.pdf
+ 
+-SUBDIRS = src po tests
++SUBDIRS = src
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = popt.pc

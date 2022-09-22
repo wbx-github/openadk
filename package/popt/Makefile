@@ -4,13 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		popt
-PKG_VERSION:=		1.18
+PKG_VERSION:=		1.19
 PKG_RELEASE:=		1
-PKG_HASH:=		36245242c59b5a33698388e415a3e1efa2d48fc4aead91aeb2810b4c0744f4e3
+PKG_HASH:=		6eb40d650526cb9fe63eb4415bcecdf9cf306f7556e77eff689abc5a44670060
 PKG_DESCR:=		command line option parsing library
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://rpm5.org/
 PKG_BUILDDEP:=		gettext-host
+HOST_BUILDDEP:=		gettext-host libtool-host
 PKG_SITES:=		https://github.com/rpm-software-management/popt/archive/refs/tags/
 PKG_LIBNAME:=		libpopt
 PKG_OPTS:=		dev

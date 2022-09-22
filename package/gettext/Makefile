@@ -9,6 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		9c1781328238caa1685d7bc7a2e1dcf1c6c134e86b42ed554066734b621bd12f
 PKG_DESCR:=		i18n tools and libs
 PKG_SECTION:=		libs/misc
+HOST_BUILDDEP:=		automake-host
 PKG_URL:=		https://www.gnu.org/software/gettext/
 PKG_SITES:=		http://ftp.gnu.org/pub/gnu/gettext/
 PKG_OPTS:=		dev

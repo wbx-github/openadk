@@ -332,12 +332,19 @@ GENCFG:=$(ADK_TOPDIR)/adk/genimage/$(ADK_TARGET_GENIMAGE_FILENAME)
 else
 GENCFG:=$(ADK_TOPDIR)/target/$(ADK_TARGET_ARCH)/$(ADK_TARGET_SYSTEM)/$(ADK_TARGET_GENIMAGE_FILENAME)
 endif
+ifeq (,$(wildcard $(ADK_TOPDIR)/target/$(ADK_TARGET_ARCH)/$(ADK_TARGET_SYSTEM)/$(ADK_TARGET_EXTLINUX_FILENAME)))
+EXTLINUX:=$(ADK_TOPDIR)/adk/extlinux/$(ADK_TARGET_EXTLINUX_FILENAME)
+else
+EXTLINUX:=$(ADK_TOPDIR)/target/$(ADK_TARGET_ARCH)/$(ADK_TARGET_SYSTEM)/$(ADK_TARGET_EXTLINUX_FILENAME)
+endif
 
 ${FW_DIR}/${GENIMAGE}: ${TARGET_DIR} kernel-package
 	@rm -rf ${FW_DIR}/temp
 	@mkdir -p ${FW_DIR}/temp
 	@$(CP) $(KERNEL) $(FW_DIR)/kernel
 	@dd if=/dev/zero of=${FW_DIR}/cfgfs.img bs=16384 count=1 $(MAKE_TRACE)
+	@mkdir -p ${FW_DIR}/extlinux
+	@$(CP) $(EXTLINUX) $(FW_DIR)/extlinux
 ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
 	echo '#!/bin/sh' > $(ADK_TOPDIR)/scripts/fakeroot.sh
 	echo "chown -R 0:0 $(TARGET_DIR)" >> $(ADK_TOPDIR)/scripts/fakeroot.sh
@@ -347,10 +354,10 @@ ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
 	PATH='$(HOST_PATH)' $(FAKEROOT) $(ADK_TOPDIR)/scripts/fakeroot.sh
 	rm $(ADK_TOPDIR)/scripts/fakeroot.sh $(STAGING_TARGET_DIR)/scripts/permissions.sh
 endif
-	PATH='${HOST_PATH}' $(FAKEROOT) mke2img \
-		-G 4 \
+	PATH='${HOST_PATH}' $(FAKEROOT) mkfs.ext2 \
 		-d "$(TARGET_DIR)" \
-		-o $(FW_DIR)/rootfs.ext $(MAKE_TRACE)
+		-r 1 -N 0 -m 5 -L "rootfs" \
+		$(FW_DIR)/rootfs.ext "32M" $(MAKE_TRACE)
 	PATH='${HOST_PATH}' genimage \
 		--config "$(GENCFG)" \
 		--tmppath "${FW_DIR}/temp" \

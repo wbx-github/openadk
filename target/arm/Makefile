@@ -148,9 +148,9 @@ endif
 endif
 ifeq ($(ADK_TARGET_FS),genimage)
 targethelp:
-	@echo "The disk image is: $(FW_DIR)/disk.img"
+	@echo "The disk image is: $(FW_DIR)/sdcard.img"
 	@echo "Use following command to install it on SD card:"
-	@echo 'sudo dd if=$(FW_DIR)/disk.img of=/dev/sdX bs=2048k'
+	@echo 'sudo dd if=$(FW_DIR)/sdcard.img of=/dev/sdX bs=2048k'
 endif
 
 kernel-strip:
@@ -218,6 +218,9 @@ ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F429),y)
 	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F769),y)
+	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
+endif
+ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
 	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 endif
 	for x in $(LINUX_DIR)/arch/arm/boot/dts/*.dtb; do \
