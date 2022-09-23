@@ -20,8 +20,6 @@ $(eval $(call PKG_template,UCLIBC_NG_TEST,uclibc-ng-test,$(PKG_VERSION)-${PKG_RE
 
 CONFIG_STYLE:=          manual
 
-# disable math tests
-XAKE_FLAGS+=		NO_MATH=1
 ifeq ($(ADK_TARGET_LIB_GLIBC),y)
 XAKE_FLAGS+=		NO_CRYPT=1
 endif
