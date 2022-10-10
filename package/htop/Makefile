@@ -4,17 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		htop
-PKG_VERSION:=		2.0.1
+PKG_VERSION:=		3.2.1
 PKG_RELEASE:=		1
-PKG_HASH:=		f410626dfaf6b70fdf73cd7bb33cae768869707028d847fed94a978e974f5666
+PKG_HASH:=		5a17121cf1c69d2f2e557c0b29d45a2c353ab983f644742e1c2e4ece15aa6cbb
 PKG_DESCR:=		graphical process manager
 PKG_SECTION:=		sys/utils
 PKG_DEPENDS:=		libncurses
 PKG_BUILDDEP:=		ncurses
 PKG_URL:=		http://hisham.hm/htop
-PKG_SITES:=		http://hisham.hm/htop/releases/$(PKG_VERSION)/
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_SITES:=		https://github.com/htop-dev/htop/releases/download/$(PKG_VERSION)/
 
 include $(ADK_TOPDIR)/mk/package.mk
 
