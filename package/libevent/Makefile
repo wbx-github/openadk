@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libevent
-PKG_VERSION:=		2.0.22
+PKG_VERSION:=		2.1.12
 PKG_RELEASE:=		1
-PKG_HASH:=		71c2c49f0adadacfdbe6332a372c38cf9c8b7895bb73dabeaa53cdcc1d4e1fa3
+PKG_HASH:=		92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
 PKG_DESCR:=		event notification library for event-driven network servers
 PKG_SECTION:=		libs/net
 PKG_URL:=		http://libevent.org/
@@ -23,6 +23,8 @@ $(eval $(call PKG_template,LIBEVENT,libevent,$(PKG_VERSION)-${PKG_RELEASE},${PKG
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 MAKE_FLAGS+=		LDFLAGS="$(TARGET_LDFLAGS) -all-static"
 endif
+
+CONFIGURE_ARGS+=	--disable-openssl
 
 libevent-install:
 	$(INSTALL_DIR) $(IDIR_LIBEVENT)/usr/lib
