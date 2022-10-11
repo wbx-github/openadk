@@ -57,7 +57,7 @@
   SUBDIR+= lsof
   SUBDIR+= md5
   SUBDIR+= mkdir
-  SUBDIR+= mknod
+#  SUBDIR+= mknod # does not compile with glibc
   SUBDIR+= mount
   SUBDIR+= mv
   SUBDIR+= netstat
