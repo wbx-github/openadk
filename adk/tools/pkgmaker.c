@@ -19,6 +19,7 @@
 
 #include <ctype.h>
 #include <dirent.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -290,22 +291,44 @@ static char *tolowerstr(char *string) {
 
 static char *toupperstr(char *string) {
 
+	static char *sdup = NULL;
+	static int sduplen = 0;
 	int i;
-	char *str;
-	
-	/* transform to uppercase variable name */
-	str = strdup(string);
-	for (i=0; i<(int)strlen(str); i++) {
-		if (str[i] == '+')
-			str[i] = 'X';
-		if (str[i] == '-')
-			str[i] = '_';
-		/* remove negation here, useful for package host depends */
-		if (str[i] == '!')
-			str[i] = '_';
-		str[i] = toupper(str[i]);
+
+	if (!string) {
+		free(sdup);
+		sduplen = 0;
+		return NULL;
 	}
-	return(str);
+
+	if (sduplen <= strlen(string)) {
+		sduplen = strlen(string) + 1;
+		sdup = realloc(sdup, sduplen);
+		if (!sdup)
+			fatal_error("%s: memory allocation failed: %s\n",
+				    __func__, strerror(errno));
+	}
+
+	/* transform to uppercase variable name */
+	for (i = 0; i < strlen(string) + 1; i++) {
+		switch (string[i]) {
+		case '+':
+			sdup[i] = 'X';
+			break;
+		case '-':
+			sdup[i] = '_';
+			break;
+		case '!':
+			sdup[i] = '_';
+			break;
+		case '\0':
+			sdup[i] = '\0';
+			break;
+		default:
+			sdup[i] = toupper(string[i]);
+		}
+	}
+	return sdup;
 }
 
 
@@ -463,10 +486,12 @@ int main() {
 									icfg = fopen(runtime, "a");
 									if (icfg == NULL)
 										continue;
-									if (strncmp("busybox", sname, 7) == 0)
-										fprintf(icfg, "config ADK_RUNTIME_START_%s_%s\n", toupperstr(sname), toupperstr(sname2));
-									else
+									if (strncmp("busybox", sname, 7) == 0) {
+										fprintf(icfg, "config ADK_RUNTIME_START_%s", toupperstr(sname));
+										fprintf(icfg, "_%s\n", toupperstr(sname2));
+									} else {
 										fprintf(icfg, "config ADK_RUNTIME_START_%s\n", toupperstr(sname));
+									}
 									fprintf(icfg, "\tprompt \"Start %s on boot\"\n", sname2);
 									fprintf(icfg, "\ttristate\n");
 									if (strncmp("busybox", sname, 7) == 0)
@@ -1282,6 +1307,7 @@ int main() {
 				fatal_error("removing file failed.");
 		}
 	}
+	toupperstr(NULL);
 	closedir(pkglistdir);
 	return(0);
 }
