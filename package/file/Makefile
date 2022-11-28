@@ -4,12 +4,11 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		file
-PKG_VERSION:=		5.33
+PKG_VERSION:=		5.41
 PKG_RELEASE:=		1
-PKG_HASH:=		1c52c8c3d271cd898d5511c36a68059cda94036111ab293f01f83c3525b737c6
+PKG_HASH:=		13e532c7b364f7d57e23dfeea3147103150cb90593a57af86c10e4f6e411603f
 PKG_DESCR:=		file type guesser
 PKG_SECTION:=		sys/utils
-PKG_BUILDDEP:=		file-host
 PKG_DEPENDS:=		libmagic magic
 PKG_URL:=		http://www.darwinsys.com/file
 PKG_SITES:=		ftp://ftp.astron.com/pub/file/
