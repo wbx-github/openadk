@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		samba
 PKG_VERSION:=		4.13.2
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		276464396a05d88b775bda01ac2eb1e5a636ccf7010b0fd28efc3d85583af2b4
 PKG_DESCR:=		file and print server
 PKG_SECTION:=		net/fs
@@ -28,7 +28,7 @@ CONFIGURE_ARGS+=	--enable-fhs \
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			--localstatedir=/var \
-			--with-privatedir=/etc/samba \
+			--with-privatedir=/var/lib/samba \
 			--cross-compile \
 			--cross-answers=$(WRKSRC)/cache.txt \
 			--hostcc=gcc \

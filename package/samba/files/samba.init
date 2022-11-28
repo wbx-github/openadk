@@ -11,12 +11,13 @@ autostart)
 	exec sh $0 start
 	;;
 start)
-	[ -d /var/lib/samba ] || mkdir -p /var/lib/samba
+	[ -d /var/lib/samba/msg.sock ] || mkdir -p /var/lib/samba/msg.sock
 	[ -d /var/run/samba ] || mkdir -p /var/run/samba
 	[ -d /var/log/samba ] || mkdir -p /var/log/samba
 	[ -d /var/cache/samba ] || mkdir -p /var/cache/samba
 	[ -d /var/lock/samba ] || mkdir -p /var/lock/samba
-	/usr/sbin/nmbd -D 
+	chmod 700 /var/lib/samba/msg.sock
+	/usr/sbin/nmbd -D
 	/usr/sbin/smbd -D
 	;;
 stop)
