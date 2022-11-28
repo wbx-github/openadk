@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		lvm
 PKG_VERSION:=		2.02.188
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		7101e8b0816ad77e4390fed9749a090214ba520061cd083437871e19e50cc9bd
 PKG_DESCR:=		logical volume management
 PKG_SECTION:=		sys/fs
@@ -52,6 +52,8 @@ lvm-install:
 	${INSTALL_DIR} ${IDIR_LVM}/usr/sbin
 	${INSTALL_BIN} ${WRKINST}/usr/sbin/lvm \
 		${IDIR_LVM}/usr/sbin
+	${INSTALL_DIR} ${IDIR_LVM}/etc/
+	${INSTALL_DATA} ./files/lvm.conf ${IDIR_LVM}/etc/
 
 libdevmapper-install:
 	${INSTALL_DIR} ${IDIR_LIBDEVMAPPER}/usr/lib
