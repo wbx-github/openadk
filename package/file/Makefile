@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		file
 PKG_VERSION:=		5.41
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		13e532c7b364f7d57e23dfeea3147103150cb90593a57af86c10e4f6e411603f
 PKG_DESCR:=		file type guesser
 PKG_SECTION:=		sys/utils
@@ -46,9 +46,9 @@ file-install:
 	${INSTALL_BIN} ${WRKINST}/usr/bin/file ${IDIR_FILE}/usr/bin
 
 magic-install:
-	${INSTALL_DIR} ${IDIR_LIBMAGIC}/usr/share/misc
+	${INSTALL_DIR} ${IDIR_MAGIC}/usr/share/misc
 	${INSTALL_DATA} ${WRKINST}/usr/share/misc/magic.mgc \
-		${IDIR_LIBMAGIC}/usr/share/misc
+		${IDIR_MAGIC}/usr/share/misc
 
 libmagic-install:
 	${INSTALL_DIR} ${IDIR_LIBMAGIC}/usr/lib
