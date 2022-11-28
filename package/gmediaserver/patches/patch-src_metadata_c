@@ -1,0 +1,78 @@
+	- magic_file() returns strings like 'audio/mpeg; charset=binary',
+	  ignore the last part
+	- Add flv and flac file type definitions
+--- gmediaserver-0.13.0.orig/src/metadata.c	2007-10-20 11:41:32.000000000 +0200
++++ gmediaserver-0.13.0/src/metadata.c	2022-03-28 07:44:13.332180349 +0200
+@@ -86,6 +86,8 @@ typedef enum {
+     FILE_JPG,
+     FILE_PNG,
+     FILE_TIFF,
++    FILE_FLV,
++    FILE_FLAC,
+     FILE_UNKNOWN,
+     FILE_TYPES_COUNT,
+ } FileType;
+@@ -122,6 +124,8 @@ static const char *file_type_dlna_pn[] =
+     [FILE_JPG]		= "JPEG_TN",
+     [FILE_PNG]		= NULL,
+     [FILE_TIFF]		= NULL,
++    [FILE_FLV]		= NULL,
++    [FILE_FLAC]		= NULL,
+     [FILE_UNKNOWN] 	= NULL,
+ };
+ 
+@@ -134,6 +138,8 @@ static const char *file_type_mime_types[
+     [FILE_OGG]		= "audio/vorbis",
+     [FILE_MPG] 		= "video/mpeg",
+     [FILE_MP4] 		= "video/mp4",
++    [FILE_MP4] 		= "video/x-msvideo",
++    [FILE_MP4] 		= "video/x-matroska",
+     [FILE_PLS] 		= "audio/x-scpls",
+     [FILE_M3U] 		= "audio/m3u",
+     [FILE_EXTM3U] 	= "audio/m3u",
+@@ -142,6 +148,8 @@ static const char *file_type_mime_types[
+     [FILE_JPG]		= "image/jpeg",
+     [FILE_PNG]		= "image/png",
+     [FILE_TIFF]		= "image/tiff",
++    [FILE_FLV]		= "video/x-flv",
++    [FILE_FLAC]		= "audio/flac",
+     [FILE_UNKNOWN] 	= "application/octet-stream",
+ };
+ 
+@@ -162,6 +170,8 @@ static const char *file_type_names[] = {
+     [FILE_JPG]		= "jpg",
+     [FILE_PNG]		= "png",
+     [FILE_TIFF]		= "tiff",
++    [FILE_FLV]		= "flv",
++    [FILE_FLAC]		= "flac",
+     [FILE_UNKNOWN] 	= "unknown",
+ };
+ 
+@@ -183,6 +193,8 @@ static const char *file_type_descs[] = {
+     [FILE_JPG]		= "JPEG image",
+     [FILE_PNG]		= "PNG image",
+     [FILE_TIFF]		= "TIFF image",
++    [FILE_FLV]		= "Flash video",
++    [FILE_FLAC]		= "FLAC audio",
+ };
+ 
+ static ItemClass file_type_item_classes[] = {
+@@ -202,6 +214,8 @@ static ItemClass file_type_item_classes[
+     [FILE_JPG]         = ITEM_IMAGE,
+     [FILE_PNG]         = ITEM_IMAGE,
+     [FILE_TIFF]        = ITEM_IMAGE,
++    [FILE_FLV]         = ITEM_VIDEO,
++    [FILE_FLAC]        = ITEM_AUDIO,
+ };
+ 
+ static Entry *scan_entry(const char *fullpath, const char *name, int32_t parent, int indent_size, InodeList *inl);
+@@ -325,6 +339,9 @@ check_file_content_type(const char *full
+ 	return FILE_UNKNOWN;
+     }
+ 
++    /* ignore trailing data */
++    *strchrnul(magic, ';') = '\0';
++
+     if (strcmp(magic, "application/octet-stream") != 0
+ 	    && strncmp(magic, "text/plain", 10) != 0) {
+ 	struct {

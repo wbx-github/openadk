@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gmediaserver
 PKG_VERSION:=		0.13.0
-PKG_RELEASE:=		3
+PKG_RELEASE:=		4
 PKG_HASH:=		357030911bcce4ac9e47c2c9219b72e88705a8465899d4e0553bce540fb0fd12
 PKG_DESCR:=		media server
 PKG_SECTION:=		mm/video
