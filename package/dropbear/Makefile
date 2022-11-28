@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		dropbear
 PKG_VERSION:=		2020.81
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		48235d10b37775dbda59341ac0c4b239b82ad6318c31568b985730c788aac53b
 PKG_DESCR:=		ssh server/client designed for embedded systems
 PKG_SECTION:=		net/security
@@ -48,8 +48,7 @@ endif
 
 
 pre-configure:
-	$(SED) 's,^/\* #define PKG_MULTI.*,#define PKG_MULTI,g' $(WRKBUILD)/options.h
-	$(SED) 's,^#define DO_HOST_LOOKUP,/* & */,g' $(WRKBUILD)/options.h
+	echo "#define DO_HOST_LOOKUP 0" >>$(WRKBUILD)/localoptions.h
 
 do-build:
 	cd ${WRKBUILD} && env ${MAKE_ENV} ${MAKE} \
