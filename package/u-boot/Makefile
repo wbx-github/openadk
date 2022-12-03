@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2022.10-rc5
+PKG_VERSION:=		2022.10
 PKG_RELEASE:=		1
-PKG_HASH:=		064bf54541fc4eb30f0dd336702484ba5d39c4aceb48042216d8e72294c5787d
+PKG_HASH:=		50b4482a505bc281ba8470c399a3c26e145e29b23500bc35c50debd7fa46bdf8
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host
@@ -75,7 +75,7 @@ CONFIG:=		ci20_mmc_defconfig
 UBOOT:=			u-boot-dtb.img
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
-CONFIG:=		stm32f746-disco_spl_defconfig
+CONFIG:=		stm32f746-disco_defconfig
 UBOOT:=			u-boot-dtb.bin
 endif
 
@@ -104,6 +104,7 @@ do-build:
 		V=1 \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
+		KCFLAGS='-mno-fdpic' \
 		$(MAKE))
 ifneq ($(OS_FOR_BUILD),Darwin)
 	(cd $(WRKBUILD) && env \
