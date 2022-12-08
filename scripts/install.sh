@@ -155,7 +155,7 @@ tgt=$2
 src=$3
 
 case $target {
-(banana-pro|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|solidrun-imx6|solidrun-clearfog|imgtec-ci20|default) ;;
+(banana-pro|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|default) ;;
 (*)
 	print -u2 "Unknown target '$target', exiting"
 	exit 1 ;;
@@ -351,7 +351,7 @@ fi
 #(( partofs = ((coreendsec / secs) + 1) * secs ))
 # we just use 2048 all the time, since some loaders are longer
 partofs=2048
-if [[ $target = raspberry-pi || $target = raspberry-pi0 || $target = raspberry-pi2 || $target = raspberry-pi3 || $target = raspberry-pi3-64 || $target = raspberry-pi4 || $target = raspberry-pi4-64 || $target = phytec-wega ]]; then
+if [[ $target = raspberry-pi || $target = raspberry-pi0 || $target = raspberry-pi2 || $target = raspberry-pi3 || $target = raspberry-pi3-64 || $target = raspberry-pi4 || $target = raspberry-pi4-64 || $target = phytec-wega || $target = rockpi4-plus ]]; then
 	(( spartofs = partofs + (100 * 2048) ))
 else
 	spartofs=$partofs
@@ -545,6 +545,10 @@ fi
 fwdir=$(dirname "$src")
 
 case $target {
+(rockpi4-plus)
+	dd if="$fwdir/idbloader.img" of="$tgt" bs=512 seek=64 > /dev/null 2>&1
+	dd if="$fwdir/u-boot.itb" of="$tgt" bs=512 seek=16384 > /dev/null 2>&1
+	;;
 (imgtec-ci20)
 	dd if="$fwdir/u-boot-spl.bin" of="$tgt" obs=512 seek=1 > /dev/null 2>&1
 	dd if="$fwdir/u-boot-dtb.img" of="$tgt" obs=1k seek=14 > /dev/null 2>&1
@@ -630,6 +634,12 @@ case $target {
 		break
 	done
 	umount_fs "$B"
+	;;
+(rockpi4-plus)
+	for x in "$fwdir"/*.dtb; do
+		[[ -e "$x" ]] && cp "$fwdir"/*.dtb "$R/boot/"
+		break
+	done
 	;;
 (solidrun-clearfog)
 	for x in "$fwdir"/*.dtb; do

@@ -1,0 +1,23 @@
+diff -Nur linux-stable-4.4-rockpi4.orig/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi linux-stable-4.4-rockpi4/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+--- linux-stable-4.4-rockpi4.orig/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi	2022-12-09 18:12:00.000000000 +0100
++++ linux-stable-4.4-rockpi4/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi	2022-12-09 22:12:59.489123950 +0100
+@@ -58,7 +58,7 @@
+ 		rockchip,signal-irq = <182>;
+ 		rockchip,wake-irq = <0>;
+ 		rockchip,irq-mode-enable = <1>;  /* If enable uart uses irq instead of fiq */
+-		rockchip,baudrate = <1500000>;  /* Only 115200 and 1500000 */
++		rockchip,baudrate = <115200>;  /* Only 115200 and 1500000 */
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&uart2c_xfer>;
+ 	};
+diff -Nur linux-stable-4.4-rockpi4.orig/scripts/dtc/dtc-lexer.lex.c_shipped linux-stable-4.4-rockpi4/scripts/dtc/dtc-lexer.lex.c_shipped
+--- linux-stable-4.4-rockpi4.orig/scripts/dtc/dtc-lexer.lex.c_shipped	2022-12-09 18:12:07.000000000 +0100
++++ linux-stable-4.4-rockpi4/scripts/dtc/dtc-lexer.lex.c_shipped	2022-12-09 22:11:26.298627242 +0100
+@@ -631,7 +631,6 @@
+ #include "srcpos.h"
+ #include "dtc-parser.tab.h"
+ 
+-YYLTYPE yylloc;
+ extern bool treesource_error;
+ 
+ /* CAUTION: this will stop working if we ever use yyless() or yyunput() */

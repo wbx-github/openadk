@@ -34,8 +34,8 @@ config ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	select ADK_TARGET_LINUX_KERNEL_IMAGE if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	select ADK_TARGET_LINUX_KERNEL_IMAGE if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK
 
-config ADK_TARGET_LINUX_KERNEL_VERSION_5_19
-	bool "5.19.12"
+config ADK_TARGET_LINUX_KERNEL_VERSION_6_0
+	bool "6.0.11"
 	depends on !ADK_TARGET_ARCH_AVR32
 	depends on !ADK_TARGET_ARCH_BFIN
 	depends on !ADK_TARGET_ARCH_CRIS
@@ -43,7 +43,7 @@ config ADK_TARGET_LINUX_KERNEL_VERSION_5_19
 	depends on !ADK_TARGET_ARCH_METAG
 
 config ADK_TARGET_LINUX_KERNEL_VERSION_5_15
-	bool "5.15.71"
+	bool "5.15.81"
 	depends on !ADK_TARGET_ARCH_AVR32
 	depends on !ADK_TARGET_ARCH_BFIN
 	depends on !ADK_TARGET_ARCH_CRIS
@@ -177,6 +177,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO
 	default "https://git.phytec.de/git/linux-ti.git" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "https://github.com/kalray/linux_coolidge.git" if ADK_TARGET_ARCH_KVX
 	default "https://github.com/shenki/linux-lm32.git" if ADK_TARGET_ARCH_LM32
+	default "https://github.com/radxa/kernel.git" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
 	help
 	  GIT repository to use.
@@ -194,6 +195,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO_NAME
 	default "phytec" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "clearfog" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 	default "fslc" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
+	default "radxa" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "linus"
 
 config ADK_TARGET_LINUX_KERNEL_GIT
@@ -207,6 +209,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT
 	default "902739f3353150ac9eb69ad995098f3079d862a3" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 	default "c85fbc86c61a8c8fd45ab1fe3d1bdd2df12f7962" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	default "8624998967676862843aed1f8ee2141e98987f81" if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK
+	default "stable-4.4-rockpi4" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "v4.4.52-phy" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "loongarch-next" if ADK_TARGET_LINUX_ARCH_LOONGARCH
 
@@ -215,6 +218,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT_VER
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	default "5.19" if ADK_TARGET_LINUX_ARCH_LOONGARCH
 	default "5.10.110" if ADK_TARGET_BOARD_BCM28XX
+	default "5.10.110" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "4.4.37" if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK
 	default "4.4.52" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "2.6.33" if ADK_TARGET_SYSTEM_KINETIS_K70
@@ -227,6 +231,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT_TYPE
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	default "branch" if ADK_TARGET_LINUX_ARCH_LOONGARCH 
 	default "branch" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
+	default "branch" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "hash"
 
 config ADK_TARGET_LINUX_KERNEL_NO_MIRROR

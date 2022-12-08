@@ -9,7 +9,8 @@ PKG_GIT:=	$(ADK_TARGET_LINUX_KERNEL_GIT_TYPE)
 PKG_SITES:=	$(ADK_TARGET_LINUX_KERNEL_GIT_REPO)
 else
 PKG_VERSION:=	$(KERNEL_FILE_VER)
-PKG_SITES:=  	${MASTER_SITE_KERNEL:=kernel/v5.x/} \
+PKG_SITES:=  	${MASTER_SITE_KERNEL:=kernel/v6.x/} \
+		${MASTER_SITE_KERNEL:=kernel/v5.x/} \
 		${MASTER_SITE_KERNEL:=kernel/v4.x/} \
 		${MASTER_SITE_KERNEL:=kernel/v3.x/} \
 		${MASTER_SITE_KERNEL:=kernel/v3.0/testing/} \

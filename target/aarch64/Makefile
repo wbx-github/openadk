@@ -24,6 +24,10 @@ ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 	@echo "Use following command to install it on SD card:"
 	@echo "sudo ./scripts/install.sh $(ADK_TARGET_SYSTEM) /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
 endif
+ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS),y)
+	@echo "Use following command to install it on SD card:"
+	@echo "sudo ./scripts/install.sh $(ADK_TARGET_SYSTEM) /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
+endif
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
 	@echo "Use following command to create a QEMU Image:"
@@ -54,6 +58,12 @@ ifeq ($(ADK_TARGET_QEMU),y)
 	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
+ifeq ($(ADK_TARGET_FS),genimage)
+targethelp:
+	@echo "The disk image is: $(FW_DIR)/sdcard.img"
+	@echo "Use following command to install it on SD card:"
+	@echo 'sudo dd if=$(FW_DIR)/sdcard.img of=/dev/sdX bs=2048k'
+endif
 
 kernel-strip:
 	@cp $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
@@ -74,6 +84,13 @@ ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 		break; \
 	done
 endif
+ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS),y)
+	${KERNEL_MAKE} rockchip/rk3399-rock-pi-4c-plus.dtb $(MAKE_TRACE)
+endif
+	for x in $(LINUX_DIR)/arch/arm64/boot/dts/*/*.dtb; do \
+		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm64/boot/dts/*/*.dtb $(FW_DIR); \
+		break; \
+	done
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)
@@ -87,4 +104,7 @@ imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
 imageinstall: createinitramfs targethelp
+endif
+ifeq ($(ADK_TARGET_FS),genimage)
+imageinstall: dtb-install $(FW_DIR)/$(GENIMAGE) targethelp
 endif
