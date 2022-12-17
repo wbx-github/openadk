@@ -16,7 +16,7 @@ PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
-PKG_SYSTEM_DEPENDS:=	beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g
+PKG_SYSTEM_DEPENDS:=	banana-p2-zero beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -64,6 +64,10 @@ UBOOT:=			u-boot.itb
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 CONFIG:=		Bananapro_defconfig
+UBOOT:=			u-boot-sunxi-with-spl.bin
+endif
+ifeq ($(ADK_TARGET_SYSTEM_BANANA_P2_ZERO),y)
+CONFIG:=		bananapi_m2_p2_zero_defconfig
 UBOOT:=			u-boot-sunxi-with-spl.bin
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
@@ -133,6 +137,9 @@ ifneq ($(OS_FOR_BUILD),Darwin)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 	$(INSTALL_BIN) ./files/boot.script.bpi $(FW_DIR)
+endif
+ifeq ($(ADK_TARGET_SYSTEM_BANANA_P2_ZERO),y)
+	$(INSTALL_BIN) ./files/boot.script.bpizero $(FW_DIR)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
 	$(INSTALL_BIN) ./files/boot.script.opi $(FW_DIR)

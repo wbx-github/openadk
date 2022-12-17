@@ -48,6 +48,7 @@ endif
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
+	@echo "#################################################"
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSTARBALL)"
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9)$(ADK_TARGET_SYSTEM_QEMU_ARM_VERSATILEPB)$(ADK_TARGET_SYSTEM_QEMU_ARM_TERRIER)$(ADK_TARGET_SYSTEM_QEMU_ARM_SPITZ),y)
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
@@ -89,6 +90,12 @@ ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 	@echo "sudo ./scripts/install.sh banana-pro /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
 	@echo "Use following command to install with a writable data partition"
 	@echo "sudo ./scripts/install.sh -d 256 banana-pro /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
+endif
+ifeq ($(ADK_TARGET_SYSTEM_BANANA_P2_ZERO),y)
+	@echo "Use following command to install it on SD card:"
+	@echo "sudo ./scripts/install.sh banana-pro-zero /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
+	@echo "Use following command to install with a writable data partition"
+	@echo "sudo ./scripts/install.sh -d 256 banana-pro-zero /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
 	@echo "Use following command to install it on SD card:"
@@ -206,6 +213,9 @@ ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
 	${KERNEL_MAKE} sun8i-h2-plus-orangepi-zero.dtb $(MAKE_TRACE)
+endif
+ifeq ($(ADK_TARGET_SYSTEM_BANANA_P2_ZERO),y)
+	${KERNEL_MAKE} sun8i-h2-plus-bananapi-m2-zero.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_IMX6),y)
 	${KERNEL_MAKE} imx6q-cubox-i.dtb imx6dl-cubox-i.dtb \

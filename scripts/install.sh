@@ -155,7 +155,7 @@ tgt=$2
 src=$3
 
 case $target {
-(banana-pro|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|default) ;;
+(banana-pro|banana-pro-zero|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|default) ;;
 (*)
 	print -u2 "Unknown target '$target', exiting"
 	exit 1 ;;
@@ -553,7 +553,7 @@ case $target {
 	dd if="$fwdir/u-boot-spl.bin" of="$tgt" obs=512 seek=1 > /dev/null 2>&1
 	dd if="$fwdir/u-boot-dtb.img" of="$tgt" obs=1k seek=14 > /dev/null 2>&1
 	;;
-(banana-pro|orange-pi0)
+(banana-pro|banana-pro-zero|orange-pi0)
 	dd if="$fwdir/u-boot-sunxi-with-spl.bin" of="$tgt" bs=1024 seek=8 > /dev/null 2>&1
 	;;
 (solidrun-clearfog)
@@ -685,6 +685,15 @@ case $target {
 	mkimage -A arm -O linux -T script -C none -a 0 -e 0 \
 		-n "BananaPro" \
 		-d $fwdir/boot.script.bpi $R/boot/boot.scr.uimg
+	;;
+(banana-pro-zero)
+	for x in "$fwdir"/*.dtb; do
+		[[ -e "$x" ]] && cp "$fwdir"/*.dtb "$R/boot/"
+		break
+	done
+	mkimage -A arm -O linux -T script -C none -a 0 -e 0 \
+		-n "BananaProZero" \
+		-d $fwdir/boot.script.bpizero $R/boot/boot.scr.uimg
 	;;
 }
 

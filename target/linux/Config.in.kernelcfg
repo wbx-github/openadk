@@ -43,6 +43,7 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "am335x_phytec_defconfig" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "j2_defconfig" if ADK_TARGET_SYSTEM_NUMATO_MIMASV2
 	default "sunxi_defconfig" if ADK_TARGET_SYSTEM_ORANGE_PI0
+	default "sunxi_defconfig" if ADK_TARGET_SYSTEM_BANANA_P2_ZERO
 	default "edosk2674_defconfig" if ADK_TARGET_SYSTEM_HITACHI_EDOSK2674
 	default "x86_64_defconfig" if ADK_TARGET_SYSTEM_GENERIC_X86_64
 	default "i386_defconfig" if ADK_TARGET_SYSTEM_GENERIC_X86

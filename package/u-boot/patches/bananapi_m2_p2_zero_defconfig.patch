@@ -1,0 +1,28 @@
+commit c14386c561d59fef8e3e47085ab494e2626f04d9
+Author: Martin Thomas <m.thomas@infodas.de>
+Date:   Mon Oct 10 15:19:03 2022 +0200
+
+    added default config für the banana pi zero p2
+
+diff --git a/configs/bananapi_m2_p2_zero_defconfig b/configs/bananapi_m2_p2_zero_defconfig
+new file mode 100644
+index 0000000000..fcd7f636a5
+--- /dev/null
++++ b/configs/bananapi_m2_p2_zero_defconfig
+@@ -0,0 +1,15 @@
++CONFIG_ARM=y
++CONFIG_ARCH_SUNXI=y
++# CONFIG_DEFAULT_DEVICE_TREE="sun8i-h3-bananapi-m2-plus-v1.2"
++CONFIG_DEFAULT_DEVICE_TREE="sun8i-h2-plus-bananapi-m2-zero"
++CONFIG_SPL=y
++CONFIG_MACH_SUN8I_H3=y
++CONFIG_DRAM_CLK=408
++CONFIG_MMC0_CD_PIN=""
++CONFIG_MMC_SUNXI_SLOT_EXTRA=2
++# CONFIG_SYS_MALLOC_CLEAR_ON_INIT is not set
++CONFIG_PREBOOT=""
++# CONFIG_SYS_DEVICE_NULLDEV is not set
++CONFIG_SPL_STACK=0x8000
++CONFIG_SYS_PBSIZE=1024
++CONFIG_SUN8I_EMAC=y
++CONFIG_USB_EHCI_HCD=y
