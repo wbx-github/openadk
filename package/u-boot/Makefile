@@ -59,7 +59,7 @@ ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI3P_64),y)
 CONFIG:=		rpi_3_defconfig
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS),y)
-CONFIG:=		rock-pi-4c-rk3399_defconfig
+CONFIG:=		rock-pi-4-rk3399_defconfig
 UBOOT:=			u-boot.itb
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
@@ -140,6 +140,9 @@ ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_P2_ZERO),y)
 	$(INSTALL_BIN) ./files/boot.script.bpizero $(FW_DIR)
+endif
+ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS),y)
+	$(INSTALL_BIN) ./files/boot.script.rockpi4 $(FW_DIR)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
 	$(INSTALL_BIN) ./files/boot.script.opi $(FW_DIR)

@@ -94,6 +94,15 @@ config ADK_LINUX_KERNEL_SUNXI_WATCHDOG
 	help
 	  Support for SunXi hardware watchdog.
 
+config ADK_LINUX_KERNEL_DW_WATCHDOG
+	bool "Synopsys DesignWare watchdog"
+	depends on ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	select ADK_LINUX_KERNEL_WATCHDOG
+	default y if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	default n
+	help
+	  Support for Synopsys DesignWare hardware watchdog.
+
 config ADK_LINUX_KERNEL_SOFT_WATCHDOG
 	tristate "Software watchdog"
 	select ADK_LINUX_KERNEL_WATCHDOG

@@ -1,0 +1,12 @@
+diff -Nur linux-5.15.81.orig/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi linux-5.15.81/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+--- linux-5.15.81.orig/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi	2022-12-02 17:41:12.000000000 +0100
++++ linux-5.15.81/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi	2022-12-22 09:51:57.370394227 +0100
+@@ -17,7 +17,7 @@
+ 	};
+ 
+ 	chosen {
+-		stdout-path = "serial2:1500000n8";
++		stdout-path = "serial2:115200n8";
+ 	};
+ 
+ 	clkin_gmac: external-gmac-clock {

@@ -52,6 +52,17 @@ config ADK_LINUX_KERNEL_RTC_DRV_AT91SAM9
 	help
  	  Fox G20 RTC support.
 
+config ADK_LINUX_KERNEL_RTC_DRV_RK808
+	bool "RTC support for Rockchip"
+	select ADK_LINUX_KERNEL_RTC_CLASS
+	select ADK_LINUX_KERNEL_RTC_HCTOSYS
+	select ADK_LINUX_KERNEL_RTC_INTF_DEV
+	default y if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	default n
+	depends on ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	help
+	  Rockchip RTC support.
+
 config ADK_LINUX_KERNEL_RTC_DRV_CMOS
 	bool "RTC support for PC CMOS"
 	select ADK_LINUX_KERNEL_RTC_CLASS

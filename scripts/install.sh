@@ -640,6 +640,9 @@ case $target {
 		[[ -e "$x" ]] && cp "$fwdir"/*.dtb "$R/boot/"
 		break
 	done
+	mkimage -A arm64 -O linux -T script -C none -a 0 -e 0 \
+		-n "RockPI4-Plus" \
+		-d $fwdir/boot.script.rockpi4 $R/boot/boot.scr.uimg
 	;;
 (solidrun-clearfog)
 	for x in "$fwdir"/*.dtb; do

@@ -140,6 +140,14 @@ config ADK_LINUX_KERNEL_SND_INTEL8X0
 	help
 	  Driver for intel chipsets.
 
+config ADK_LINUX_KERNEL_SND_ROCKCHIP
+	tristate "Rockchip driver"
+	select ADK_LINUX_KERNEL_SND
+	default m if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	default n
+	help
+	  ALSA Rockchip driver
+	
 config ADK_LINUX_KERNEL_SND_VIA82XX
 	tristate "VIA82XX driver"
 	select ADK_LINUX_KERNEL_SND

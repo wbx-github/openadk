@@ -1,0 +1,16 @@
+diff -Nur linux-6.0.11.orig/drivers/pci/controller/pcie-rockchip-host.c linux-6.0.11/drivers/pci/controller/pcie-rockchip-host.c
+--- linux-6.0.11.orig/drivers/pci/controller/pcie-rockchip-host.c	2022-12-02 17:43:18.000000000 +0100
++++ linux-6.0.11/drivers/pci/controller/pcie-rockchip-host.c	2022-12-24 11:12:25.753213273 +0100
+@@ -327,10 +327,10 @@
+ 
+ 	gpiod_set_value_cansleep(rockchip->ep_gpio, 1);
+ 
+-	/* 500ms timeout value should be enough for Gen1/2 training */
++	/* 1000ms timeout value should be enough for Gen1/2 training */
+ 	err = readl_poll_timeout(rockchip->apb_base + PCIE_CLIENT_BASIC_STATUS1,
+ 				 status, PCIE_LINK_UP(status), 20,
+-				 500 * USEC_PER_MSEC);
++				 1000 * USEC_PER_MSEC);
+ 	if (err) {
+ 		dev_err(dev, "PCIe link training gen1 timeout!\n");
+ 		goto err_power_off_phy;

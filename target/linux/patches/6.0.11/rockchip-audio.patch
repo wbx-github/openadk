@@ -1,0 +1,12 @@
+diff -Nur linux-6.0.11.orig/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi linux-6.0.11/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+--- linux-6.0.11.orig/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi	2022-12-02 17:43:18.000000000 +0100
++++ linux-6.0.11/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi	2022-12-24 19:48:31.620199852 +0100
+@@ -452,6 +452,8 @@
+ 		clocks = <&cru SCLK_I2S_8CH_OUT>;
+ 		clock-names = "mclk";
+ 		#sound-dai-cells = <0>;
++		interrupt-parent = <&gpio1>;
++		interrupts = <RK_PA0 IRQ_TYPE_LEVEL_HIGH>;
+ 
+ 		port {
+ 			es8316_p0_0: endpoint {

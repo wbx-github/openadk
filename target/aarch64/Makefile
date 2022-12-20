@@ -85,7 +85,7 @@ ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 	done
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS),y)
-	${KERNEL_MAKE} rockchip/rk3399-rock-pi-4c-plus.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} rockchip/rk3399-rock-pi-4b.dtb $(MAKE_TRACE)
 endif
 	for x in $(LINUX_DIR)/arch/arm64/boot/dts/*/*.dtb; do \
 		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm64/boot/dts/*/*.dtb $(FW_DIR); \
