@@ -81,6 +81,8 @@ case "$IF_WIRELESS_MODE" in
 			cat /etc/hostapd.conf.post >> /tmp/hostapd.conf
 		;;
 	sta)
+		# need to wait for wlan drivers to settle down
+		sleep 1
 		ip link set up dev ${IFACE}
 		[ $IF_WIRELESS_EXTENSION -eq 1 ] && {
 			[ -x /usr/sbin/iwconfig ] || {
@@ -96,9 +98,9 @@ case "$IF_WIRELESS_MODE" in
 			}
 			driver=nl80211
 			[ $sec -eq 2 ] && {
-				iw dev ${IFACE} connect $IF_WIRELESS_SSID key d:0:$IF_WIRELESS_PASSPHRASE
+				iw dev ${IFACE} connect "$IF_WIRELESS_SSID" key d:0:$IF_WIRELESS_PASSPHRASE
 			} || {
-				iw dev ${IFACE} connect $IF_WIRELESS_SSID
+				iw dev ${IFACE} connect "$IF_WIRELESS_SSID" 2>/dev/null
 			}
 		}
 		[ $wpa2 -eq 1 ] && {
