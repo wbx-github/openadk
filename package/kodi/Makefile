@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kodi
-PKG_VERSION:=		19.3
+PKG_VERSION:=		19.5
 PKG_RELEASE:=		1
-PKG_HASH:=		440f47e475dd8a48e0a6d41349e83b74890f3fbe8275d3e401d3c50f5b9ea09b
+PKG_HASH:=		56e0074f27f08496b2a21af5704a15378a2f0979ae3e9fa9a50a2630d0313d19
 PKG_DESCR:=		software media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		python3 libsquish libressl libxz libfmt rapidjson
@@ -14,14 +14,14 @@ PKG_DEPENDS+=		libass libmpeg2 libmad libmodplug libcurl
 PKG_DEPENDS+=		libflac libbz2 libtiff libnettle librtmp liblzo
 PKG_DEPENDS+=		yajl tinyxml libsqlite libpcrecpp libncurses libpng
 PKG_DEPENDS+=		libpcre libcdio libfreetype libsamplerate libuuid
-PKG_DEPENDS+=		taglib libjasper libmp3lame libgpg-error
+PKG_DEPENDS+=		taglib libjasper libmp3lame libgpg-error giflib
 PKG_DEPENDS+=		glib libdcadec bcm28xx-vc-gl-libs libffmpeg libxvidcore
 PKG_DEPENDS+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
 PKG_BUILDDEP:=		python3 libass ffmpeg rtmpdump bcm28xx-vc
 PKG_BUILDDEP+=		libmpeg2 libmad libjpeg-turbo fmt rapidjson
 PKG_BUILDDEP+=		curl flac bzip2 libtiff yajl cmake-host
 PKG_BUILDDEP+=		tinyxml sqlite pcre libcdio freetype libpng
-PKG_BUILDDEP+=		libsamplerate taglib libjasper
+PKG_BUILDDEP+=		libsamplerate taglib libjasper giflib
 PKG_BUILDDEP+=		glib libmodplug libgpg-error xvidcore
 PKG_BUILDDEP+=		swig-host liblzo-host libpng-host libjpeg-turbo-host
 PKG_BUILDDEP+=		zip-host unzip-host giflib-host libsquish libdcadec

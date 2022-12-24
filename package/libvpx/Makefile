@@ -4,19 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libvpx
-PKG_VERSION:=		1.6.0
+PKG_VERSION:=		1.12.0
 PKG_RELEASE:=		1
-PKG_HASH:=		d0afbb5eb1ecae68f8d578abace160a97e2e8a230e3028cf4db115d59a695aad
+PKG_HASH:=		f1acc15d0fd0cb431f4bf6eac32d5e932e40ea1186fe78e074254d6d003957bb
 PKG_DESCR:=		vp8/vp9 codec library
 PKG_SECTION:=		libs/video
 PKG_BUILDDEP:=		yasm-host
 PKG_URL:=		http://www.webmproject.org/about/
-PKG_SITES:=		http://storage.googleapis.com/downloads.webmproject.org/releases/webm/
+PKG_SITES:=		https://github.com/webmproject/libvpx/archive/refs/tags/
 PKG_OPTS:=		dev
 
-PKG_ARCH_DEPENDS:=	!m68k
-
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
+DISTFILES:=             v${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -41,6 +39,9 @@ ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI3),y)
 CONFIGURE_ARGS+=	--target=armv7-linux-gcc
 endif
 ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI3P),y)
+CONFIGURE_ARGS+=	--target=armv7-linux-gcc
+endif
+ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI4),y)
 CONFIGURE_ARGS+=	--target=armv7-linux-gcc
 endif
 ifeq ($(ADK_TARGET_SYSTEM_SHARP_ZAURUS),y)

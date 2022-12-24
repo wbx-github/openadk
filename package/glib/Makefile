@@ -4,15 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		glib
-PKG_VERSION:=		2.70.0
+PKG_VERSION:=		2.72.3
 PKG_RELEASE:=		1
-PKG_EXTRAVER:=		2.70
-PKG_HASH:=		200d7df811c5ba634afbf109f14bb40ba7fde670e89389885da14e27c0840742
+PKG_EXTRAVER:=		2.72
+PKG_HASH:=		4a39a2f624b8512d500d5840173eda7fa85f51c109052eae806acece85d345f0
 PKG_DESCR:=		low-level core library that forms the basis of gtk+
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libpcre zlib libffi
 PKG_BUILDDEP:=		glib-host util-linux libffi zlib dbus pcre
 HOST_BUILDDEP:=		pkgconf-host libiconv-host libffi-host python2-host gettext-host util-linux-host
+HOST_BUILDDEP+=		pcre-host meson-host
 PKG_NEEDS:=		threads intl iconv
 PKG_URL:=		http://www.gtk.org/
 PKG_SITES:=		http://ftp.gnome.org/pub/GNOME/sources/glib/$(PKG_EXTRAVER)/
@@ -24,6 +25,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,GLIB,glib,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,GLIB,glib,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
+HOSTWRKBUILD=           $(WRKSRC)
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
 TARGET_CFLAGS+=		-Wno-error=format-nonliteral
@@ -37,13 +39,13 @@ INSTALL_STYLE:=		meson
 MESON_FLAGS:=		-Dtests=false -Dxattr=false -Doss_fuzz=disabled
 
 host-configure:
-	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson setup --prefix $(STAGING_HOST_DIR)/usr _build)
+	(cd $(HOSTWRKBUILD) && PATH='$(HOST_PATH)' meson setup --prefix $(STAGING_HOST_DIR)/usr _build)
 
 host-build:
-	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson compile -C _build)
+	(cd $(HOSTWRKBUILD) && PATH='$(HOST_PATH)' meson compile -C _build)
 
 glib-hostinstall:
-	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson install -C _build)
+	(cd $(HOSTWRKBUILD) && PATH='$(HOST_PATH)' meson install -C _build)
 
 do-configure:
 	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson setup --prefix /usr \
