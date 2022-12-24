@@ -1248,7 +1248,8 @@ source package/busybox/config/networking/udhcp/Config.in
 
 config BUSYBOX_IFUPDOWN_UDHCPC_CMD_OPTIONS
 	string "ifup udhcpc command line options"
-	default "-R -n"
+	default "-R -n" if BUSYBOX_NOMMU
+	default "-R -n -b"
 	depends on BUSYBOX_IFUP || BUSYBOX_IFDOWN
 	help
 	Command line options to pass to udhcpc from ifup.
