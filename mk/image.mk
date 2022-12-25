@@ -342,7 +342,7 @@ ${FW_DIR}/${GENIMAGE}: ${TARGET_DIR} kernel-package
 	@rm -rf ${FW_DIR}/temp
 	@mkdir -p ${FW_DIR}/temp
 	@$(CP) $(KERNEL) $(FW_DIR)/kernel
-	@dd if=/dev/zero of=${FW_DIR}/cfgfs.img bs=16384 count=1 $(MAKE_TRACE)
+	@dd if=/dev/zero of=${FW_DIR}/cfgfs.img bs=16384 count=1024 $(MAKE_TRACE)
 	@mkdir -p ${FW_DIR}/extlinux
 	@$(CP) $(EXTLINUX) $(FW_DIR)/extlinux
 ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
