@@ -140,9 +140,10 @@ config ADK_LINUX_KERNEL_SND_INTEL8X0
 	help
 	  Driver for intel chipsets.
 
-config ADK_LINUX_KERNEL_SND_ROCKCHIP
+config ADK_LINUX_KERNEL_SND_SOC_ES8316
 	tristate "Rockchip driver"
 	select ADK_LINUX_KERNEL_SND
+	select ADK_LINUX_KERNEL_SND_SOC
 	default m if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default n
 	help
