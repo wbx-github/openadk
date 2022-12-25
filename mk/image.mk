@@ -354,18 +354,41 @@ ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
 	PATH='$(HOST_PATH)' $(FAKEROOT) $(ADK_TOPDIR)/scripts/fakeroot.sh
 	rm $(ADK_TOPDIR)/scripts/fakeroot.sh $(STAGING_TARGET_DIR)/scripts/permissions.sh
 endif
+ifeq ($(ADK_TARGET_DUAL_BOOT),y)
+	$(CP) $(FW_DIR)/kernel $(TARGET_DIR)
+	$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR)
+	mkdir $(TARGET_DIR)/extlinux
+	$(CP) $(EXTLINUX) $(TARGET_DIR)/extlinux
+	$(SED) "s#root=.*#root=/dev/$(ADK_TARGET_ROOTDEV)p1#" $(TARGET_DIR)/extlinux/extlinux.conf
 	PATH='${HOST_PATH}' $(FAKEROOT) mkfs.ext2 \
 		-d "$(TARGET_DIR)" \
-		-r 1 -N 0 -m 5 -L "rootfs" \
-		$(FW_DIR)/rootfs.ext "48M" $(MAKE_TRACE)
+		-r 1 -N 0 -m 5 -L "rootfs1" \
+		$(FW_DIR)/rootfs1.ext "64M" $(MAKE_TRACE)
+	$(SED) "s#root=.*#root=/dev/$(ADK_TARGET_ROOTDEV)p2#" $(TARGET_DIR)/extlinux/extlinux.conf
+	PATH='${HOST_PATH}' $(FAKEROOT) mkfs.ext2 \
+		-d "$(TARGET_DIR)" \
+		-r 1 -N 0 -m 5 -L "rootfs2" \
+		$(FW_DIR)/rootfs2.ext "64M" $(MAKE_TRACE)
 	PATH='${HOST_PATH}' genimage \
 		--config "$(GENCFG)" \
 		--tmppath "${FW_DIR}/temp" \
 		--rootpath "$(TARGET_DIR)" \
 		--inputpath "$(FW_DIR)" \
 		--outputpath "$(FW_DIR)" $(MAKE_TRACE)
+else
+	PATH='${HOST_PATH}' $(FAKEROOT) mkfs.ext2 \
+		-d "$(TARGET_DIR)" \
+		-r 1 -N 0 -m 5 -L "rootfs" \
+		$(FW_DIR)/rootfs.ext "64M" $(MAKE_TRACE)
+	PATH='${HOST_PATH}' genimage \
+		--config "$(GENCFG)" \
+		--tmppath "${FW_DIR}/temp" \
+		--rootpath "$(TARGET_DIR)" \
+		--inputpath "$(FW_DIR)" \
+		--outputpath "$(FW_DIR)" $(MAKE_TRACE)
+endif
 ifeq ($(ADK_TARGET_DUAL_BOOT),y)
-	(cd ${TARGET_DIR}; find . | grep -v ./boot/ | sed -n '/^\.\//s///p' | sort | \
+	(cd ${TARGET_DIR}; find . | sed -n '/^\.\//s///p' | sort | \
 		PATH='${HOST_PATH}' $(CPIO) -o --quiet -Hustar --owner=0:0 | \
 		${XZ} -c > ${FW_DIR}/openadk.tar.xz)
 	(cd ${FW_DIR}; PATH='${HOST_PATH}' sha256sum openadk.tar.xz \

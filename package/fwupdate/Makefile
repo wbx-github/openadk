@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		fwupdate
 PKG_VERSION:=		1.0
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_DESCR:=		update firmware
 PKG_SECTION:=		base/adk
 PKG_DEPENDS:=		mke2fs
@@ -27,5 +27,9 @@ fwupdate-install:
 	$(INSTALL_DIR) $(IDIR_FWUPDATE)/usr/sbin
 	$(INSTALL_BIN) $(WRKBUILD)/fwupdate $(IDIR_FWUPDATE)/usr/sbin
 	$(INSTALL_BIN) $(WRKBUILD)/fwvalidate $(IDIR_FWUPDATE)/usr/sbin
+	$(SED) "s/@@DISK@@/$(ADK_TARGET_ROOTDEV)/g" \
+		$(IDIR_FWUPDATE)/usr/sbin/fwupdate
+	$(SED) "s/@@DISK@@/$(ADK_TARGET_ROOTDEV)/g" \
+		$(IDIR_FWUPDATE)/usr/sbin/fwvalidate
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

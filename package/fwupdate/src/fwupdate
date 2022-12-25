@@ -2,8 +2,22 @@
 # This file is part of the OpenADK project.
 # Do update.
 
-PART0="/dev/sda2"
-PART1="/dev/sda3"
+GRUB=$(which grub-reboot)
+if [ "${GRUB}" = "/usr/sbin/grub-reboot" ]; then
+  REVERSE=0
+else
+  REVERSE=1
+fi
+
+DISK=@@DISK@@
+
+if [ $REVERSE -eq 1 ]; then
+  PART0="/dev/${DISK}p1"
+  PART1="/dev/${DISK}p2"
+else
+  PART0="/dev/${DISK}2"
+  PART1="/dev/${DISK}3"
+fi
 
 # Name of the archive, which is the firmware. For this file is the checksum calculated and
 # checked against the one from the tar archive.
@@ -59,10 +73,12 @@ CURRENT_SYS="$(rdev /|awk '{ print $1 }')"
 case "$CURRENT_SYS" in
   "$PART0")
     MOUNTPART="$PART1"
+    PARTNUM=2
     OS=OpenADK2
     ;;
   "$PART1")
     MOUNTPART="$PART0"
+    PARTNUM=1
     OS=OpenADK1
     ;;
   *)
@@ -130,18 +146,23 @@ fi
 
 cd /
 umount $MOUNTPART
-grep /boot /proc/mounts 2>/dev/null
-if [ $? -eq 0 ]; then
-  mount -o remount,rw /boot
+if [ $REVERSE -eq 1 ]; then
+  echo "Switch bootable partition to new system"
+  sfdisk -A /dev/$DISK $PARTNUM >/dev/null 2>&1
 else
-  mount /dev/sda1 /boot
-fi
-grub-reboot $OS
 grep /boot /proc/mounts 2>/dev/null
-if [ $? -eq 0 ]; then
-  mount -o remount,ro /boot
-else
-  umount /boot
+  if [ $? -eq 0 ]; then
+    mount -o remount,rw /boot
+  else
+    mount /dev/sda1 /boot
+  fi
+  grub-reboot $OS
+  grep /boot /proc/mounts 2>/dev/null
+  if [ $? -eq 0 ]; then
+    mount -o remount,ro /boot
+  else
+    umount /boot
+  fi
 fi
 sync
 echo "Reboot now to the updated system $OS"

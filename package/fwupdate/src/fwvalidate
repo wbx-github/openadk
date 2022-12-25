@@ -2,8 +2,22 @@
 # This file is part of the OpenADK project.
 # Validate update.
 
-PART0="/dev/sda2"
-PART1="/dev/sda3"
+GRUB=$(which grub-reboot)
+if [ "${GRUB}" = "/usr/sbin/grub-reboot" ]; then
+  REVERSE=0
+else
+  REVERSE=1
+fi
+
+DISK=@@DISK@@
+
+if [ $REVERSE -eq 1 ]; then
+  PART0="/dev/${DISK}p1"
+  PART1="/dev/${DISK}p2"
+else
+  PART0="/dev/${DISK}2"
+  PART1="/dev/${DISK}3"
+fi
 
 APPLIANCE_NAME=OpenADK
 
@@ -43,6 +57,24 @@ chk_initial_save(){
     echo "please save configuration"
   fi
 }
+
+updatebootflag(){
+
+  case "$CURRENT_SYS" in
+    "$PART1")
+      sfdisk -A /dev/$DISK 1
+      ;;
+    "$PART0")
+      sfdisk -A /dev/$DISK 2
+      ;;
+    *)
+      echo "Current partition $CURRENT_SYS not recognized"
+      exit 1
+      ;;
+  esac
+
+}
+
 updategrub(){
   
   mount -o remount,rw /boot
@@ -120,12 +152,22 @@ if [ $TESTS -eq $TESTSUM ]; then
     logger -t update "All Tests passed."
     if [ "x$1" = "x" ]; then
       logger -t update "Set default boot partition for bootloader."
+      mount -o remount,rw /
       rm /firmware_check
+      mount -o remount,ro /
       echo "System check was successful" >> $STAT_FILE
-      updategrub
+      if [ $REVERSE -eq 1 ]; then
+        echo "Nothing todo. All fine." 
+        logger -t update "Nothing todo. All fine."
+      else
+	updategrub
+      fi
     fi
 else
-    logger -t update "Not all tests passed. The the default system remains on the current partition."
+    if [ $REVERSE -eq 1 ]; then
+      updatebootflag
+    fi
+    logger -t update "Not all tests passed. The default system remains on the current partition."
     logger -t update "Please try to reboot the system and repeat the update."
     echo "ERROR last system update failed, please reboot and try again." >> $STAT_FILE
     exit 1

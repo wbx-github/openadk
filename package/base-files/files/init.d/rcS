@@ -17,6 +17,7 @@ fi
 mkdir -p /var/log
 mkdir -p /var/run
 mkdir -p /var/tmp
+mkdir -p /var/lock
 touch /var/log/lastlog
 touch /var/log/wtmp
 
