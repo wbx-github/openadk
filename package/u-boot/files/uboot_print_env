@@ -1,5 +1,0 @@
-#!/bin/sh
-
-mount -r /dev/mmcblk0p1 /mnt
-fw_printenv "$@"
-umount /mnt

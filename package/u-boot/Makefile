@@ -113,27 +113,24 @@ do-build:
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
 		$(MAKE))
-ifneq ($(OS_FOR_BUILD),Darwin)
 	(cd $(WRKBUILD) && env \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
-		$(MAKE) env)
-endif
+		$(MAKE) envtools)
 
 u-boot-install:
 	$(CP) $(WRKBUILD)/$(UBOOT) $(FW_DIR)
+	$(INSTALL_DIR) $(IDIR_U_BOOT)/etc
+	$(CP) ./files/fw_env.config $(IDIR_U_BOOT)/etc
+	$(INSTALL_DIR) $(IDIR_U_BOOT)/usr/bin
+	$(INSTALL_BIN) $(WRKBUILD)/tools/env/fw_printenv \
+		$(IDIR_U_BOOT)/usr/bin
+	cd $(IDIR_U_BOOT)/usr/bin && ln -s fw_printenv fw_setenv
 ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS),y)
 	$(CP) $(WRKBUILD)/idbloader.img $(FW_DIR)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_IMGTEC_CI20),y)
 	$(CP) $(WRKBUILD)/spl/u-boot-spl.bin $(FW_DIR)
-endif
-	$(INSTALL_DIR) $(IDIR_U_BOOT)/etc
-	$(CP) ./files/fw_env.config $(IDIR_U_BOOT)/etc
-ifneq ($(OS_FOR_BUILD),Darwin)
-	$(INSTALL_DIR) $(IDIR_U_BOOT)/usr/bin
-	$(INSTALL_BIN) ./files/uboot_print_env $(IDIR_U_BOOT)/usr/bin
-	$(INSTALL_BIN) ./files/uboot_set_env $(IDIR_U_BOOT)/usr/bin
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 	$(INSTALL_BIN) ./files/boot.script.bpi $(FW_DIR)
