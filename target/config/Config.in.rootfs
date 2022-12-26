@@ -175,9 +175,10 @@ endchoice
 config ADK_TARGET_ROOTDEV
 	string "Root device name"
 	depends on ADK_TARGET_ROOTFS_GENIMAGE
+	default "mmcblk0" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "sda"
 	help
-	  If you a embedded device with multiple block devices and want to
+	  If you have a embedded device with multiple block devices and want to
 	  set the root device name.
 
 config ADK_TARGET_DUAL_BOOT
