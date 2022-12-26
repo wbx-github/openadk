@@ -109,6 +109,9 @@ config ADK_LINUX_KERNEL_SND_SOC_PCM512x_SPI
 	select ADK_LINUX_KERNEL_SND_SOC_PCM512x
 	select ADK_LINUX_KERNEL_SND_SOC_I2C_AND_SPI
 
+config ADK_LINUX_KERNEL_SND_AUDIO_GRAPH_CARD
+	tristate
+
 config ADK_LINUX_KERNEL_SND
 	tristate
 	select ADK_LINUX_KERNEL_SOUND
@@ -141,9 +144,10 @@ config ADK_LINUX_KERNEL_SND_INTEL8X0
 	  Driver for intel chipsets.
 
 config ADK_LINUX_KERNEL_SND_SOC_ES8316
-	tristate "Rockchip driver"
+	tristate "Rockchip driver (ES8316 Codec)"
 	select ADK_LINUX_KERNEL_SND
 	select ADK_LINUX_KERNEL_SND_SOC
+	select ADK_LINUX_KERNEL_SND_AUDIO_GRAPH_CARD
 	default m if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default n
 	help
