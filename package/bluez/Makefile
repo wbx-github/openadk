@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		bluez
-PKG_VERSION:=		5.43
+PKG_VERSION:=		5.66
 PKG_RELEASE:=		1
-PKG_HASH:=		16c9c05d2a1da644ce3570d975ada3643d2e60c007a955bac09c0a0efeb58d15
+PKG_HASH:=		39fea64b590c9492984a0c27a89fc203e1cdc74866086efb8f4698677ab2b574
 PKG_DESCR:=		bluetooth applications
 PKG_SECTION:=		net/wifi
 PKG_DEPENDS:=		glib dbus libreadline libudev
@@ -36,6 +36,7 @@ CONFIGURE_ARGS+=	--enable-tools \
 			--enable-udev \
 			--with-udevdir=/usr/bin \
 			--disable-test \
+			--disable-manpages \
 			--disable-systemd \
 			--disable-obex \
 			--disable-cups
