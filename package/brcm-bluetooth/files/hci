@@ -11,10 +11,9 @@ start)
 	target=$(cat /etc/.adktarget)
 	case $target in
 	  raspberry-pi3 | raspberry-pi3p)
-	    hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -
+	    btattach -B /dev/ttyAMA0 -P bcm
 	    ;;
 	  *)
-	    echo "No supported target found"
 	    ;;
 	esac
 	;;
