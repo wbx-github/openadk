@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		dropbear
 PKG_VERSION:=		2020.81
-PKG_RELEASE:=		2
+PKG_RELEASE:=		3
 PKG_HASH:=		48235d10b37775dbda59341ac0c4b239b82ad6318c31568b985730c788aac53b
 PKG_DESCR:=		ssh server/client designed for embedded systems
 PKG_SECTION:=		net/security

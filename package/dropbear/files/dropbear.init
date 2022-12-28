@@ -40,6 +40,14 @@ start)
 			echo "dropbear: key generation exited with code $?"
 		fi
 	fi
+	if test ! -f /etc/dropbear/dropbear_ed25519_host_key; then
+		# take it easy here, since above already catched the worst cases
+		if test -x /usr/bin/dropbearkey; then
+			echo "dropbear: generating SSH private key (ED25519)"
+			/usr/bin/dropbearkey -f /etc/dropbear/dropbear_ed25519_host_key -t ed25519
+			echo "dropbear: key generation exited with code $?"
+		fi
+	fi
 	/usr/sbin/dropbear $dropbear_flags
 	;;
 stop)
