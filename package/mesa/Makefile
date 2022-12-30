@@ -21,7 +21,7 @@ PKG_SITES:=		ftp://ftp.freedesktop.org/pub/mesa/
 PKG_LIBNAME:=		mesa
 PKG_OPTS:=		dev
 
-PKG_ARCH_DEPENDS:=	x86 x86_64 mips mipsel mips64 mips64el arm
+PKG_ARCH_DEPENDS:=	x86 x86_64 mips mipsel mips64 mips64el arm aarch64
 
 include $(ADK_TOPDIR)/mk/package.mk
 
