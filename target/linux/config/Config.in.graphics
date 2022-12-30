@@ -312,6 +312,19 @@ config ADK_LINUX_KERNEL_FB_RADEON
  	help
 	  Framebuffer support for RADEON chips.
 
+config ADK_LINUX_KERNEL_DRM_ROCKCHIP
+	bool "Support for Rockchip graphic cards"
+	select ADK_LINUX_KERNEL_FB
+	select ADK_LINUX_KERNEL_DRM
+	select ADK_LINUX_KERNEL_FRAMEBUFFER_CONSOLE
+	select ADK_LINUX_KERNEL_DRM_KMS_HELPER
+	select ADK_LINUX_KERNEL_DRM_FBDEV_EMULATION
+	depends on ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	default y if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	default n
+	help
+          Support for Rockchip chipsets.
+
 config ADK_LINUX_KERNEL_DRM_I915
 	bool "Support for Intel graphic cards"
 	select ADK_LINUX_KERNEL_FB
