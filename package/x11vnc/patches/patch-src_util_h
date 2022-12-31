@@ -1,0 +1,15 @@
+--- x11vnc-0.9.16.orig/src/util.h	2019-01-05 14:22:11.000000000 +0100
++++ x11vnc-0.9.16/src/util.h	2022-12-30 16:45:15.598697256 +0100
+@@ -102,9 +102,9 @@ extern struct timeval _mysleep;
+ #ifdef LIBVNCSERVER_HAVE_LIBPTHREAD
+ extern MUTEX(x11Mutex);
+ extern MUTEX(scrollMutex);
+-MUTEX(clientMutex);
+-MUTEX(inputMutex);
+-MUTEX(pointerMutex);
++extern MUTEX(clientMutex);
++extern MUTEX(inputMutex);
++extern MUTEX(pointerMutex);
+ #endif
+ 
+ #define X_INIT INIT_MUTEX(x11Mutex)

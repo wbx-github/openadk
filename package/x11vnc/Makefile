@@ -4,17 +4,19 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		x11vnc
-PKG_VERSION:=		0.9.13
+PKG_VERSION:=		0.9.16
 PKG_RELEASE:=		1
-PKG_HASH:=		f6829f2e629667a5284de62b080b13126a0736499fe47cdb447aedb07a59f13b
+PKG_HASH:=		885e5b5f5f25eec6f9e4a1e8be3d0ac71a686331ee1cfb442dba391111bd32bd
 PKG_DESCR:=		vnc server for x11 displays
 PKG_SECTION:=		x11/apps
-PKG_BUILDDEP:=		libX11 libXtst libjpeg-turbo
+PKG_DEPENDS:=		libvncserver libpng libjpeg-turbo zlib liblzo
+PKG_DEPENDS+=		libgnutls libxi libxdamage libxtst cairo
+PKG_DEPENDS+=		libxfixes libxrandr
+PKG_BUILDDEP:=		libX11 libXtst libjpeg-turbo libvncserver
 PKG_URL:=		http://www.karlrunge.com/x11vnc/
-PKG_SITES:=		http://sourceforge.net/projects/libvncserver/files/x11vnc/0.9.13/
+PKG_SITES:=		https://github.com/LibVNC/x11vnc/archive/refs/tags/
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
-
+DISTFILES:=		${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -25,7 +27,9 @@ MAKE_FLAGS+=		CFLAGS="${TARGET_CFLAGS} -static" \
 			LIBS="-lxcb -lXau -lXdmcp -ldl -pthread -ljpeg -lz"
 endif
 
-CONFIGURE_ARGS+=	--without-ssl
+AUTOTOOL_STYLE:=	autoreconf
+CONFIGURE_ARGS+=	--without-ssl \
+			--without-crypto
 
 x11vnc-install:
 	$(INSTALL_DIR) $(IDIR_X11VNC)/usr/bin
