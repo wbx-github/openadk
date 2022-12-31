@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mesa
-PKG_VERSION:=		18.3.6
-PKG_RELEASE:=		2
-PKG_HASH:=		aaf17638dcf5a90b93b6389e152fdc9ef147768b09598f24d2c5cf482fcfc705
+PKG_VERSION:=		22.3.2
+PKG_RELEASE:=		1
+PKG_HASH:=		c15df758a8795f53e57f2a228eb4593c22b16dffd9b38f83901f76cd9533140b
 PKG_DESCR:=		3d graphics library
 PKG_SECTION:=		libs/video
 PKG_DEPENDS:=		libxdamage libxfixes libdrm libxxf86vm libexpat
@@ -14,7 +14,7 @@ PKG_DEPENDS+=		libxml2 libxml2-python
 PKG_BUILDDEP:=		python2 libxml2 libXdamage libXfixes libXrandr
 PKG_BUILDDEP+=		libXxf86vm libdrm dri2proto glproto expat libXext
 PKG_BUILDDEP+=		eudev dri3proto presentproto xcb-proto libxcb
-PKG_BUILDDEP+=		libxshmfence
+PKG_BUILDDEP+=		libxshmfence python-mako-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.mesa3d.org/
 PKG_SITES:=		ftp://ftp.freedesktop.org/pub/mesa/
@@ -27,18 +27,16 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,MESA,mesa,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-DRI_DRIVERS:=		swrast
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
 
-CONFIGURE_ARGS+=	--disable-static \
-			--disable-gallium-llvm \
-			--without-gallium-drivers \
-			--enable-dri \
-			--enable-dri3 \
-			--enable-glx=dri \
-			--with-dri-driverdir=/usr/lib/dri \
-			--with-dri-drivers=${DRI_DRIVERS}
-CONFIGURE_ENV+=		MISSING="echo"
-XAKE_FLAGS+=		HOST_CC=${CC_FOR_BUILD}
+MESON_FLAGS+=		-Dllvm=disabled \
+			-Dgallium-drivers=swrast,panfrost,vc4,v3d \
+			-Dvulkan-drivers= \
+			-Dgbm=enabled \
+			-Dplatforms=x11
 
 mesa-install:
 	$(INSTALL_DIR) $(IDIR_MESA)/usr/lib/dri
