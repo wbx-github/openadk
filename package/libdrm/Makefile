@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libdrm
-PKG_VERSION:=		2.4.107
+PKG_VERSION:=		2.4.114
 PKG_RELEASE:=		1
-PKG_HASH:=		c554cef03b033636a975543eab363cc19081cb464595d3da1ec129f87370f888
+PKG_HASH:=		3049cf843a47d12e5eeefbc3be3496d782fa09f42346bf0b7defe3d1e598d026
 PKG_DESCR:=		direct rendering manager library
 PKG_SECTION:=		libs/video
 PKG_BUILDDEP:=		meson-host libpthread-stubs cairo libpciaccess
