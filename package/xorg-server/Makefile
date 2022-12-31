@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xorg-server
-PKG_VERSION:=		21.1.1
+PKG_VERSION:=		21.1.5
 PKG_RELEASE:=		1
-PKG_HASH:=		782e7fef2ca0c7cbe60a937b8bf42dac69c904fb841950fd0363e1c2346ea755
+PKG_HASH:=		05b0c8301cee7c5a78083df421ba3a071891553541a417b3d85adf5cf20f8720
 PKG_DESCR:=		xorg server
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		libxfont2 pixman libpciaccess libxkbfile libxcvt
@@ -14,12 +14,13 @@ PKG_DEPENDS+=		libfontenc xkeyboard-config xkbcomp libxau libxaw
 PKG_DEPENDS+=		libxmu libxpm libxrender libxt libxxf86dga libxext
 PKG_DEPENDS+=		libxdmcp libxv libsm libice libx11 libxcb libdrm
 PKG_DEPENDS+=		libxshmfence libfreetype libfontenc libpciaccess
+PKG_DEPENDS+=		libepoxy
 PKG_BUILDDEP:=		libX11 randrproto renderproto fixesproto damageproto
 PKG_BUILDDEP+=		scrnsaverproto resourceproto fontsproto videoproto
 PKG_BUILDDEP+=		compositeproto evieext libxkbfile libXfont2 pixman
 PKG_BUILDDEP+=		libpciaccess xf86dgaproto recordproto dri3proto
 PKG_BUILDDEP+=		xineramaproto presentproto xf86driproto glproto mesa
-PKG_BUILDDEP+=		xorgproto libxcvt libdrm
+PKG_BUILDDEP+=		xorgproto libxcvt libdrm libepoxy
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.x.org/
 PKG_SITES:=		http://www.x.org/releases/individual/xserver/
@@ -78,6 +79,7 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--enable-dri2 \
 			--enable-dri3 \
 			--enable-glx \
+			--enable-glamor \
 			--with-xkb-output=/tmp \
 			--with-vendor-web="$(ADK_VENDOR_URL)"
 
@@ -105,10 +107,8 @@ xorg-server-install:
 		$(IDIR_XORG_SERVER)/usr/lib/xorg/modules
 	${CP} ${WRKINST}/usr/lib/xorg/modules/drivers/*.so \
 		$(IDIR_XORG_SERVER)/usr/lib/xorg/modules/drivers
-ifeq (${ADK_PACKAGE_XORG_SERVER_WITH_DRI},y)
 	${CP} ${WRKINST}/usr/lib/xorg/modules/extensions/*.so \
 		$(IDIR_XORG_SERVER)/usr/lib/xorg/modules/extensions
-endif
 ifeq (${ADK_TARGET_SYSTEM_LEMOTE_YEELONG},y)
 	${CP} ./files/xorg.conf.lemote-yeelong \
 		$(IDIR_XORG_SERVER)/etc/X11/xorg.conf

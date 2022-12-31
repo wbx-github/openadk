@@ -1,0 +1,11 @@
+--- xorg-server-21.1.5.orig/configure	2022-12-14 03:25:26.000000000 +0100
++++ xorg-server-21.1.5/configure	2022-12-31 10:38:30.017910171 +0100
+@@ -29281,7 +29281,7 @@ printf "%s\n" "#define BASE_FONT_PATH \"
+   test "$prefix_NONE" && prefix=NONE
+   test "$exec_prefix_NONE" && exec_prefix=NONE
+ 
+-dridriverdir=`$PKG_CONFIG --variable=dridriverdir dri`
++dridriverdir=/usr/lib/dri
+ 
+   prefix_NONE=
+   exec_prefix_NONE=
