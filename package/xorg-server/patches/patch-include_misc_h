@@ -1,0 +1,13 @@
+--- xorg-server-21.1.5.orig/include/misc.h	2022-12-14 03:25:18.000000000 +0100
++++ xorg-server-21.1.5/include/misc.h	2023-01-01 08:13:51.736653806 +0100
+@@ -187,6 +187,10 @@ typedef struct _xReq *xReqPtr;
+ #endif
+ #endif
+ 
++#undef bswap_16
++#undef bswap_32
++#undef bswap_64
++
+ /**
+  * Calculate the number of bytes needed to hold bits.
+  * @param bits The minimum number of bits needed.
