@@ -27,6 +27,7 @@ CONFIGURE_ARGS+=	--with-app-defaults=/usr/lib/X11/app-defaults \
 			--x-libraries="$(STAGING_TARGET_DIR)/usr/lib" \
 			--with-freetype-cflags="-I$(STAGING_TARGET_DIR)/usr/include/freetype2" \
 			--disable-regex \
+			--disable-wide-chars \
 			--disable-pty-handshake
 
 xterm-install:
