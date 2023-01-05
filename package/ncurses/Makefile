@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ncurses
-PKG_VERSION:=		6.1
+PKG_VERSION:=		6.4
 PKG_RELEASE:=		1
-PKG_HASH:=		aa057eeeb4a14d470101eff4597d5833dcef5965331be3528c08d99cebaa0d17
+PKG_HASH:=		6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159
 PKG_DESCR:=		terminal handling library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		ncurses-host
@@ -66,9 +66,10 @@ ALL_TARGET:=		libs
 INSTALL_TARGET:=	install.libs install.data
 
 # use sth which does not exist
-HOST_ALL_TARGET:=	progs
-HOST_INSTALL_TARGET:=	install.includes install.progs
-HOST_CONFIGURE_ARGS+=	--without-shared \
+#HOST_ALL_TARGET:=	progs
+#HOST_INSTALL_TARGET:=	install.includes install.progs
+HOST_CFLAGS+=		-fPIC
+HOST_CONFIGURE_ARGS+=	--with-shared \
 			--with-build-cc="${HOST_CC}" \
 			--with-progs \
 			--with-ticlib \

@@ -31,7 +31,7 @@ $(eval $(call PKG_template,BZIP2,bzip2,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPEN
 $(eval $(call PKG_template,LIBBZ2,libbz2,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_LIBBZ2},${PKGSC_LIBBZ2},${PKG_OPTS}))
 
 HOST_STYLE:=		manual
-HOST_MAKE_FILE:=	Makefile
+HOST_MAKE_FILE:=	Makefile-libbz2_so
 
 ifneq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 MAKE_FILE:=		Makefile-libbz2_so
@@ -50,8 +50,13 @@ host-build:
 		PREFIX=${HOST_WRKINST}/usr ${HOST_ALL_TARGET})
 
 bzip2-hostinstall:
+	${INSTALL_DIR} ${STAGING_HOST_DIR}/usr/include
+	$(CP) ${WRKBUILD}/bzlib.h ${STAGING_HOST_DIR}/usr/include
+	${INSTALL_DIR} ${STAGING_HOST_DIR}/usr/lib
+	$(CP) ${WRKBUILD}/libbz2.so* ${STAGING_HOST_DIR}/usr/lib
+	(cd ${STAGING_HOST_DIR}/usr/lib; ln -sf libbz2.so.1.0.8 libbz2.so)
 	${INSTALL_DIR} ${STAGING_HOST_DIR}/usr/bin
-	$(INSTALL_BIN) ${WRKBUILD}/bzip2 ${STAGING_HOST_DIR}/usr/bin/bzip2
+	$(INSTALL_BIN) ${WRKBUILD}/bzip2-shared ${STAGING_HOST_DIR}/usr/bin/bzip2
 
 do-install:
 	${INSTALL_DIR} $(STAGING_TARGET_DIR)/usr/include

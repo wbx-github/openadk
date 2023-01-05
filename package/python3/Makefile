@@ -11,7 +11,7 @@ PKG_DESCR:=		python3 scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libffi zlib
 PKG_BUILDDEP:=		python3-host libffi zlib
-HOST_BUILDDEP:=		libffi-host libressl-host zlib-host
+HOST_BUILDDEP:=		libffi-host libressl-host zlib-host bzip2-host ncurses-host sqlite-host
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.python.org/
 PKG_SITES:=		http://legacy.python.org/ftp/python/${PKG_VERSION}/
@@ -89,8 +89,7 @@ $(eval $(call PKG_mod_template,PYTHON3_MOD_SSL,_ssl))
 
 MAKE_ENV+=		HOSTPGEN=$(STAGING_HOST_DIR)/usr/bin/pgen3
 FAKE_FLAGS+=		ENSUREPIP=no
-CONFIGURE_ARGS:=	--with-threads \
-			--with-system-ffi \
+CONFIGURE_ARGS:=	--with-system-ffi \
 			--with-system-expat \
 			--disable-ipv6 \
 			--without-cxx-main
@@ -99,8 +98,7 @@ CONFIGURE_ENV+=		ac_cv_have_long_long_format=yes \
 			ac_cv_file__dev_ptmx=yes \
 			ac_cv_file__dev_ptc=no
 
-HOST_CONFIGURE_ARGS+=	--without-cxx-main \
-			--with-threads
+HOST_CONFIGURE_ARGS+=	--without-cxx-main
 
 python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
@@ -112,7 +110,7 @@ python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${CP} ${WRKINST}/usr/include/python3.9/pyconfig.h \
 		 ${IDIR_PYTHON3}/usr/include/python3.9
 	@-for i in zlib _bz2 _curses _ssl _gdbm _sqlite pyexpat readline; do \
-		rm ${IDIR_PYTHON3}/usr/lib/python3.8/lib-dynload/$${i}*so; \
+		rm ${IDIR_PYTHON3}/usr/lib/python3.9/lib-dynload/$${i}*so; \
 	done
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
