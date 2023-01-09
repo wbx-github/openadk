@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		dbus-python
-PKG_VERSION:=		1.2.0
-PKG_RELEASE:=		2
-PKG_HASH:=		e12c6c8b2bf3a9302f75166952cbe41d6b38c3441bbc6767dbd498942316c6df
+PKG_VERSION:=		1.3.2
+PKG_RELEASE:=		1
+PKG_HASH:=		ad67819308618b5069537be237f8e68ca1c7fcc95ee4a121fe6845b1418248f8
 PKG_DESCR:=		python bindings for dbus
 PKG_SECTION:=		dev/python
 PKG_DEPENDS:=		dbus dbus-glib
@@ -20,15 +20,17 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,DBUS_PYTHON,dbus-python,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+include $(ADK_TOPDIR)/mk/python3.mk
+
 dbus-python-install:
-	$(INSTALL_DIR) $(IDIR_DBUS_PYTHON)/usr/lib/python2.7/site-packages/
-	$(CP) $(WRKINST)/usr/lib/python2.7/site-packages/*.so \
-		$(IDIR_DBUS_PYTHON)/usr/lib/python2.7/site-packages/
-	$(INSTALL_DIR) $(IDIR_DBUS_PYTHON)/usr/lib/python2.7/site-packages/dbus
-	$(CP) $(WRKINST)/usr/lib/python2.7/site-packages/dbus/*.py \
-		$(IDIR_DBUS_PYTHON)/usr/lib/python2.7/site-packages/dbus/
-	$(INSTALL_DIR) $(IDIR_DBUS_PYTHON)/usr/lib/python2.7/site-packages/dbus/mainloop
-	$(CP) $(WRKINST)/usr/lib/python2.7/site-packages/dbus/mainloop/*.py \
-		$(IDIR_DBUS_PYTHON)/usr/lib/python2.7/site-packages/dbus/mainloop
+	$(INSTALL_DIR) $(IDIR_DBUS_PYTHON)/usr/lib/python$(PYTHON_VERSION)/site-packages/
+	$(CP) $(WRKINST)/usr/lib/python$(PYTHON_VERSION)/site-packages/*.so \
+		$(IDIR_DBUS_PYTHON)/usr/lib/python$(PYTHON_VERSION)/site-packages/
+	$(INSTALL_DIR) $(IDIR_DBUS_PYTHON)/usr/lib/python$(PYTHON_VERSION)/site-packages/dbus
+	$(CP) $(WRKINST)/usr/lib/python$(PYTHON_VERSION)/site-packages/dbus/*.py \
+		$(IDIR_DBUS_PYTHON)/usr/lib/python$(PYTHON_VERSION)/site-packages/dbus/
+	$(INSTALL_DIR) $(IDIR_DBUS_PYTHON)/usr/lib/python$(PYTHON_VERSION)/site-packages/dbus/mainloop
+	$(CP) $(WRKINST)/usr/lib/python$(PYTHON_VERSION)/site-packages/dbus/mainloop/*.py \
+		$(IDIR_DBUS_PYTHON)/usr/lib/python$(PYTHON_VERSION)/site-packages/dbus/mainloop
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

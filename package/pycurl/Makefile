@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pycurl
-PKG_VERSION:=		7.19.0.2
+PKG_VERSION:=		7.45.2
 PKG_RELEASE:=		1
-PKG_HASH:=		7a9e793b9181654d5eef3f6d22c244c57d2b51d38feb4c1b71d68efda99b0547
+PKG_HASH:=		5730590be0271364a5bddd9e245c9cc0fb710c4cbacbdd95264a3122d23224ca
 PKG_DESCR:=		python module for fetching of files
 PKG_SECTION:=		dev/python
-PKG_BUILDDEP:=		python2 curl
-PKG_DEPENDS:=		python2 libcurl
-PKG_URL:=		http://pycurl.sourceforge.net/
-PKG_SITES:=		http://pycurl.sourceforge.net/download/
+PKG_BUILDDEP:=		python3 curl
+PKG_DEPENDS:=		python3 libcurl
+PKG_URL:=		http://pycurl.io/
+PKG_SITES:=		https://files.pythonhosted.org/packages/a8/af/24d3acfa76b867dbd8f1166853c18eefc890fc5da03a48672b38ea77ddae/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -28,7 +28,7 @@ TARGET_CFLAGS+=		-fPIC
 MAKE_ENV+=		LDSHARED="$(TARGET_CC) -shared"
 CURL_CONFIG:=		$(STAGING_TARGET_DIR)/usr/bin/curl-config
 
-include $(ADK_TOPDIR)/mk/python.mk
+include $(ADK_TOPDIR)/mk/python3.mk
 
 do-build:
 	(cd $(WRKBUILD); env PYTHONPATH=$(PYTHON_LIBDIR) $(PYTHON) ./setup.py --curl-config=$(CURL_CONFIG) build)

@@ -10,7 +10,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		5347464af5b14ac54bb945dc68f1dd7c56f0dad7262816b956138fc53bcc0131
 PKG_DESCR:=		portable c++ library
 PKG_SECTION:=		libs/misc
-PKG_BUILDDEP:=		python2-host
+PKG_BUILDDEP:=		python3-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.boost.org/
 PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=boost/}
@@ -23,8 +23,8 @@ PKG_FLAVOURS_BOOST:=	DATE_TIME GRAPH GRAPH_PARALLEL IOSTREAMS LOG MATH PROGRAM_O
 
 PKGFD_DATE_TIME:=	with date-time
 PKGFD_PYTHON:=		with python
-PKGFB_PYTHON:=		python2
-PKGFS_PYTHON:=		python2
+PKGFB_PYTHON:=		python3
+PKGFS_PYTHON:=		python3
 PKGFD_IOSTREAMS:=	with iostreams
 PKGFD_GRAPH:=		with graph
 PKGFD_GRAPH_PARALLEL:=	with graph_parallel
@@ -40,7 +40,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,BOOST,boost,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-include ${ADK_TOPDIR}/mk/python.mk
+include ${ADK_TOPDIR}/mk/python3.mk
 
 CONFIG_STYLE:=		manual
 BUILD_STYLE:=		manual

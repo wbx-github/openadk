@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		talloc
-PKG_VERSION:=		2.1.9
+PKG_VERSION:=		2.3.4
 PKG_RELEASE:=		1
-PKG_HASH:=		f0aad4cb88a3322207c82136ddc07bed48a37c2c21f82962d6c5ccb422711062
+PKG_HASH:=		179f9ebe265e67e4ab2c26cad2b7de4b6a77c6c212f966903382869f06be6505
 PKG_DESCR:=		memory allocation library
 PKG_SECTION:=		libs/misc
-PKG_BUILDDEP:=		python2-host python2
+PKG_BUILDDEP:=		python3-host python3
 PKG_URL:=		https://talloc.samba.org/talloc/doc/html/index.html
 PKG_SITES:=		https://www.samba.org/ftp/talloc/
 PKG_LIBNAME:=		libtalloc

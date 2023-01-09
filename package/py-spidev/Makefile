@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_GIT:=		hash
 PKG_DESCR:=		module for interfacing with spi devices from user space via the spidev linux kernel driver
 PKG_SECTION:=		dev/python
-PKG_DEPENDS:=		python2
-PKG_BUILDDEP:=		python2
+PKG_DEPENDS:=		python3
+PKG_BUILDDEP:=		python3
 PKG_URL:=		https://github.com/doceme/py-spidev
 PKG_SITES:=		https://github.com/doceme/py-spidev.git
 
@@ -18,7 +18,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,PY_SPIDEV,py-spidev,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-include $(ADK_TOPDIR)/mk/python.mk
+include $(ADK_TOPDIR)/mk/python3.mk
 
 CONFIG_STYLE:=		manual
 BUILD_STYLE:=		manual

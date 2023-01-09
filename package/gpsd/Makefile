@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gpsd
-PKG_VERSION:=		3.16
+PKG_VERSION:=		3.24
 PKG_RELEASE:=		1
-PKG_HASH:=		03579af13a4d3fe0c5b79fa44b5f75c9f3cac6749357f1d99ce5d38c09bc2029
+PKG_HASH:=		00ee13f615655284874a661be13553abe66128e6deb5cd648af9bc0cb345fe5c
 PKG_DESCR:=		interface daemon for gps receivers
 PKG_SECTION:=		sys/hw
 PKG_BUILDDEP:=		scons-host ncurses
@@ -31,7 +31,7 @@ INSTALL_STYLE:=		manual
 
 do-install:
 	(cd $(WRKBUILD); env PATH='$(TARGET_PATH)' CCFLAGS='' DESTDIR='$(WRKINST)' \
-		scons install prefix=/usr platform=linux python=no chrpath=no bluez=no usb=no libgpsmm=no)
+		$(STAGING_HOST_DIR)/usr/bin/python3 $(STAGING_HOST_DIR)/usr/bin/scons install prefix=/usr platform=linux python=no chrpath=no bluez=no usb=no libgpsmm=no)
 
 gpsd-install:
 	${INSTALL_DIR} ${IDIR_GPSD}/usr/lib ${IDIR_GPSD}/usr/sbin

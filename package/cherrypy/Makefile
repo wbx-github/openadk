@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		5fccc9ad3bf9a1df83bbb934772f34f42571421bdd75f90f74c170b6c0ef13b1
 PKG_DESCR:=		python web framework
 PKG_SECTION:=		dev/python	
-PKG_DEPENDS:=		python2
-PKG_BUILDDEP:=		python2
+PKG_DEPENDS:=		python3
+PKG_BUILDDEP:=		python3
 PKG_URL:=		http://www.cherrypy.org/
 PKG_SITES:=		https://pypi.python.org/packages/source/C/CherryPy/
 
@@ -25,7 +25,7 @@ CONFIG_STYLE:=		manual
 BUILD_STYLE:=		manual
 INSTALL_STYLE:=		manual
 
-include $(ADK_TOPDIR)/mk/python.mk
+include $(ADK_TOPDIR)/mk/python3.mk
 
 do-build:
 	cd $(WRKBUILD); env PYTHONPATH=$(PYTHON_LIBDIR) $(PYTHON) ./setup.py build
@@ -35,6 +35,6 @@ do-install:
 	$(INSTALL_DIR) $(IDIR_CHERRYPY)/usr/bin
 	$(INSTALL_DIR) $(IDIR_CHERRYPY)/usr/lib/python$(PYTHON_VERSION)
 	$(CP) $(WRKINST)/usr/lib/python$(PYTHON_VERSION)/* $(IDIR_CHERRYPY)/usr/lib/python$(PYTHON_VERSION)
-	$(CP) $(WRKINST)/usr/lib/python$(PYTHON_VERSION)/site-packages/cherrypy/cherryd $(IDIR_CHERRYPY)/usr/bin
+	$(CP) $(WRKINST)/usr/lib/python$(PYTHON_VERSION)/site-packages/CherryPy-$(PKG_VERSION)-py3.9.egg/cherrypy/cherryd $(IDIR_CHERRYPY)/usr/bin
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
