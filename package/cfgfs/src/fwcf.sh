@@ -56,7 +56,7 @@ usage() {
 $what
 Usage:
 	{ halt | poweroff | reboot } [-Ffn] [-d delay]
-	cfgfs { commit | erase | setup | status | dump | restore } [flags]
+	cfgfs { commit | erase | setup | status | diff | dump | restore } [flags]
 EOF
 	exit 1
 }
@@ -101,7 +101,7 @@ if [[ $me != cfgfs ]]; then
 fi
 
 case $1 in
-(commit|erase|setup|status|dump|restore) ;;
+(commit|erase|setup|status|diff|dump|restore) ;;
 (*)	cat >&2 <<EOF
 $what
 Syntax:
@@ -109,6 +109,7 @@ Syntax:
 	$0 erase
 	$0 setup [-N]
 	$0 status [-rq]
+	$0 diff [<diff options>]
 	$0 { dump | restore } [<filename>]
 EOF
 	exit 1 ;;
@@ -432,6 +433,43 @@ if test $1 = restore; then
 		ls -l "$fn" >&2
 		;;
 	esac
+	exit 0
+fi
+
+if test $1 = diff; then
+	if test ! -e /tmp/.cfgfs; then
+		cat >&2 <<-EOF
+			cfgfs: error: not yet initialised
+			explanation: "cfgfs setup" was not yet run
+		EOF
+		[[ $1 = -f ]] || exit 11
+	fi
+	shift
+	tempd=/tmp/.cfgfs/temp
+	mount -t tmpfs none $tempd
+	(cd /tmp/.cfgfs/root; tar cf - .) | (cd $tempd; tar xpf - 2>/dev/null)
+	x=$(dd if="$part" bs=4 count=1 2>/dev/null)
+	[[ "$x" = "FWCF" ]] && cfgfs.helper -U $tempd <"$part"
+
+	if test -e $tempd/.cfgfs_deleted; then
+		while IFS= read -r file; do
+			rm -f "$tempd/$file"
+		done <$tempd/.cfgfs_deleted
+		rm -f $tempd/.cfgfs_deleted
+	fi
+	(cd /etc; find . -type f; \
+	 cd $tempd; find . -type f \
+	) | grep -v -e '^./.cfgfs' -e '^./.rnd$' | sort -u | while read f; do
+		f=${f#./}
+		if [ ! -e "/etc/$f" ]; then
+			echo "Deleted: /etc/$f"
+		elif [ ! -e "$tempd/$f" ]; then
+			echo "New: /etc/$f"
+		else
+			diff "$@" "$tempd/$f" "/etc/$f"
+		fi
+	done
+	umount $tempd
 	exit 0
 fi
 
