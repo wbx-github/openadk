@@ -1,0 +1,49 @@
+diff -Nur linux-6.0.15.orig/arch/riscv/include/uapi/asm/unistd.h linux-6.0.15/arch/riscv/include/uapi/asm/unistd.h
+--- linux-6.0.15.orig/arch/riscv/include/uapi/asm/unistd.h	2022-12-21 17:41:16.000000000 +0100
++++ linux-6.0.15/arch/riscv/include/uapi/asm/unistd.h	2023-01-09 11:28:16.590796198 +0100
+@@ -15,9 +15,14 @@
+  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+-#if defined(__LP64__) && !defined(__SYSCALL_COMPAT)
++#ifndef __SYSCALL_COMPAT
+ #define __ARCH_WANT_NEW_STAT
+ #define __ARCH_WANT_SET_GET_RLIMIT
++#endif /* __SYSCALL_COMPAT */
++
++#ifndef __LP64__
++#define __ARCH_WANT_STAT64
++#define __ARCH_WANT_TIME32_SYSCALLS
+ #endif /* __LP64__ */
+ 
+ #define __ARCH_WANT_SYS_CLONE3
+diff -Nur linux-6.0.15.orig/arch/riscv/Kconfig linux-6.0.15/arch/riscv/Kconfig
+--- linux-6.0.15.orig/arch/riscv/Kconfig	2022-12-21 17:41:16.000000000 +0100
++++ linux-6.0.15/arch/riscv/Kconfig	2023-01-09 14:27:16.560750598 +0100
+@@ -163,8 +163,9 @@
+ 
+ config PAGE_OFFSET
+ 	hex
+-	default 0xC0000000 if 32BIT
++	default 0xC0000000 if 32BIT && MMU
+ 	default 0x80000000 if 64BIT && !MMU
++	default 0x80000000 if !MMU
+ 	default 0xff60000000000000 if 64BIT
+ 
+ config KASAN_SHADOW_OFFSET
+@@ -262,7 +263,6 @@
+ 	select GENERIC_LIB_ASHRDI3
+ 	select GENERIC_LIB_LSHRDI3
+ 	select GENERIC_LIB_UCMPDI2
+-	select MMU
+ 
+ config ARCH_RV64I
+ 	bool "RV64I"
+@@ -670,7 +670,6 @@
+ 	default !NONPORTABLE
+ 	select EFI
+ 	select OF
+-	select MMU
+ 
+ menu "Power management options"
+ 
