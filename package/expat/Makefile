@@ -4,7 +4,7 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		expat
-PKG_VERSION:=		2.4.3
+PKG_VERSION:=		2.5.0
 PKG_RELEASE:=		1
 PKG_HASH:=		6f262e216a494fbf42d8c22bc841b3e117c21f2467a19dc4c27c991b5622f986
 PKG_DESCR:=		xml parsing library
