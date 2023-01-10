@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		rsync
-PKG_VERSION:=		3.2.3
+PKG_VERSION:=		3.2.7
 PKG_RELEASE:=		1
-PKG_HASH:=		becc3c504ceea499f4167a260040ccf4d9f2ef9499ad5683c179a697146ce50e
+PKG_HASH:=		4e7d9d3f6ed10878c58c5fb724a67dacf4b6aac7340b13e488fb2dc41346f2bb
 PKG_DESCR:=		utility that provides fast incremental file transfer
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libpopt
