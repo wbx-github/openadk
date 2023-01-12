@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xorg-server
-PKG_VERSION:=		21.1.5
+PKG_VERSION:=		21.1.6
 PKG_RELEASE:=		1
-PKG_HASH:=		05b0c8301cee7c5a78083df421ba3a071891553541a417b3d85adf5cf20f8720
+PKG_HASH:=		1eb86ed674d042b6c8b1f9135e59395cbbca35ed551b122f73a7d8bb3bb22484
 PKG_DESCR:=		xorg server
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		libxfont2 pixman libpciaccess libxkbfile libxcvt
@@ -81,6 +81,7 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--enable-glx \
 			--enable-glamor \
 			--with-xkb-output=/tmp \
+			--with-fontrootdir=/usr/share/fonts/X11/ \
 			--with-vendor-web="$(ADK_VENDOR_URL)"
 
 ifeq (${ADK_PACKAGE_XORG_SERVER_WITH_KDRIVE},y)
