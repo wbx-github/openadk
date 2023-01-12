@@ -57,7 +57,7 @@ else ifneq ($(filter meson,${CONFIG_STYLE}),)
 		 --cross-file $(STAGING_HOST_DIR)/etc/meson/cross-compilation.conf \
 		 --build.pkg-config-path $(STAGING_HOST_DIR)/usr/lib/pkgconfig \
 		 --buildtype release $(MESON_FLAGS) \
-		$(WRKSRC) $(WRKBUILD))
+		$(WRKSRC) $(WRKBUILD)) $(MAKE_TRACE)
 else ifneq ($(filter cmake,${CONFIG_STYLE}),)
 	@$(CMD_TRACE) "configuring cmake.. "
 	sed -e "s#@@TARGET_CC@@#$(TARGET_CC_NO_CCACHE)#" \
@@ -139,7 +139,7 @@ ${_BUILD_COOKIE}: ${_CONFIGURE_COOKIE}
 	@env ${MAKE_ENV} ${MAKE} pre-build $(MAKE_TRACE)
 	@$(CMD_TRACE) "compiling.. "
 ifneq ($(filter meson,${BUILD_STYLE}),)
-	PATH='$(HOST_PATH)' ninja -v -C $(WRKBUILD)
+	PATH='$(HOST_PATH)' ninja -v -C $(WRKBUILD) $(MAKE_TRACE)
 else ifneq ($(filter manual,${BUILD_STYLE}),)
 	env ${MAKE_ENV} ${MAKE} ${MAKE_FLAGS} do-build $(MAKE_TRACE)
 else ifeq ($(strip ${BUILD_STYLE}),)

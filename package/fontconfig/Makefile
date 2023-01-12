@@ -24,6 +24,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,FONTCONFIG,fontconfig,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,FONTCONFIG,fontconfig,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+AUTOTOOL_STYLE:=	autoreconf
 HOST_STYLE:=		auto
 CONFIGURE_ARGS+=	--with-arch=${ADK_TARGET_ARCH} \
 			--enable-libxml2 \

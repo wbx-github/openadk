@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		freetype
 PKG_VERSION:=		2.11.1
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		f8db94d307e9c54961b39a1cc799a67d46681480696ed72ecf78d4473770f09b
 PKG_DESCR:=		free, high-quality and portable font engine
 PKG_SECTION:=		libs/fonts
@@ -26,12 +26,14 @@ $(eval $(call PKG_template,LIBFREETYPE,libfreetype,${PKG_VERSION}-${PKG_RELEASE}
 
 HOST_STYLE:=		auto
 HOST_CONFIGURE_ARGS+=	--with-zlib \
+			--with-brotli=no \
 			--without-png \
 			--without-bzip2 \
 			--enable-freetype-config
 CONFIGURE_ARGS+=	--with-zlib \
 			--without-png \
 			--with-harfbuzz=no \
+			--with-brotli=no \
 			--without-bzip2 \
 			--enable-freetype-config
 

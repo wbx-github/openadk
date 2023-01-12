@@ -64,8 +64,8 @@ ifeq (${HOST_CONFIG_STYLE},meson)
 	cd ${WRKSRC}; PATH='${HOST_PATH}' \
 		meson --prefix $(STAGING_HOST_DIR)/usr \
 		 --pkg-config-path $(STAGING_HOST_DIR)/usr/lib/pkgconfig \
-		 --buildtype release $(MESON_FLAGS) \
-		$(WRKSRC) $(WRKBUILD)
+		 --buildtype release $(HOST_MESON_FLAGS) \
+		$(WRKSRC) $(WRKBUILD) $(MAKE_TRACE)
 endif
 ifeq (${HOST_CONFIG_STYLE},perl)
 	@$(CMD_TRACE) "configuring perl module.. "
@@ -86,7 +86,7 @@ host-build:
 ${_HOST_BUILD_COOKIE}: ${_HOST_CONFIGURE_COOKIE}
 	@$(CMD_TRACE) "compiling.. "
 ifneq ($(filter meson,${HOST_STYLE}),)
-	PATH='$(HOST_PATH)' ninja -v -C $(WRKBUILD)
+	PATH='$(HOST_PATH)' ninja -v -C $(WRKBUILD) $(MAKE_TRACE)
 else ifneq (${HOST_STYLE},manual)
 	cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -j${ADK_MAKE_JOBS} -f ${MAKE_FILE} \
 	    ${HOST_MAKE_FLAGS} ${HOST_ALL_TARGET} $(MAKE_TRACE)

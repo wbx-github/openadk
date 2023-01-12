@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		weston
-PKG_VERSION:=		9.0.0
+PKG_VERSION:=		11.0.0
 PKG_RELEASE:=		1
-PKG_HASH:=		82b17ab1766f13557fc620c21e3c89165342d3a3ead79ba01181b4f7d2144487
+PKG_HASH:=		5816a9e7bd67d03f268553a7af2f0c3430b409f7606244dada65188478f90800
 PKG_DESCR:=		wayland compositor
 PKG_SECTION:=		x11/drivers
-PKG_DEPENDS:=		wayland libxkbcommon libinput libpng libjpeg-turbo
-PKG_DEPENDS+=		libwebp pam libxcursor libudev xkeyboard-config cairo
+PKG_DEPENDS:=		wayland libxkbcommon libinput libpng libjpeg-turbo libseat
+PKG_DEPENDS+=		libwebp pam libxcursor libudev xkeyboard-config cairo libffi
 PKG_BUILDDEP:=		wayland libxkbcommon libinput libpng libjpeg-turbo
-PKG_BUILDDEP+=		libwebp pam libXcursor eudev cairo
+PKG_BUILDDEP+=		libwebp pam libXcursor eudev cairo libseat libffi
 PKG_SITES:=		https://github.com/wayland-project/weston/archive/refs/tags/
 
 PKG_CFLINE_WESTON:=	select ADK_PACKAGE_CAIRO_WITH_PNG@
@@ -24,11 +24,11 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,WESTON,weston,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
 MESON_FLAGS+=		-Dlauncher-logind=false \
+			-Dlauncher-libseat=true \
 			-Dsystemd=false \
 			-Dbackend-drm-screencast-vaapi=false \
 			-Dbackend-rdp=false \
 			-Dcolor-management-lcms=false \
-			-Dcolor-management-colord=false \
 			-Dremoting=false \
 			-Dpipewire=false \
 			-Ddemo-clients=false 
@@ -49,7 +49,7 @@ weston-install:
 	$(INSTALL_DIR) $(IDIR_WESTON)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/weston \
 		$(IDIR_WESTON)/usr/lib/
-	$(CP) $(WRKINST)/usr/lib/libweston-9 \
+	$(CP) $(WRKINST)/usr/lib/libweston-11 \
 		$(IDIR_WESTON)/usr/lib/
 	$(CP) $(WRKINST)/usr/lib/libweston*so* \
 		$(IDIR_WESTON)/usr/lib/

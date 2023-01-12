@@ -20,6 +20,8 @@ $(eval $(call PKG_template,LIBDRM,libdrm,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEP
 
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
+MESON_FLAGS+=		-Dvalgrind=disabled
+
 CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson

@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		dbus
 PKG_VERSION:=		1.10.20
-PKG_RELEASE:=		2
+PKG_RELEASE:=		3
 PKG_HASH:=		e574b9780b5425fde4d973bb596e7ea0f09e00fe2edd662da9016e976c460b48
 PKG_DESCR:=		desktop bus daemon
 PKG_SECTION:=		sys/misc
@@ -40,6 +40,7 @@ CONFIGURE_ARGS+=	--disable-systemd \
 			--with-system-socket=/run/dbus/system_bus_socket \
 			--with-system-pid-file=/run/dbus/dbus.pid \
 			--disable-verbose-mode \
+			--disable-apparmor \
 			--disable-kqueue \
 			--disable-selinux \
 			--disable-libaudit \
