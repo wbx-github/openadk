@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		fluxbox
 PKG_VERSION:=		1.3.7
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		fc8c75fe94c54ed5a5dd3fd4a752109f8949d6df67a48e5b11a261403c382ec0
 PKG_DESCR:=		window manager featuring tabs and an iconbar
 PKG_SECTION:=		x11/apps
