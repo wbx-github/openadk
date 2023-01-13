@@ -23,6 +23,9 @@ $(eval $(call PKG_template,LIBVPX,libvpx,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEP
 CONFIGURE_ENV+=		LD=$(TARGET_CC)
 
 CONFIG_STYLE:=		minimal
+ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
+CONFIGURE_ARGS+=	--target=armv8-linux-gcc
+endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9),y)
 CONFIGURE_ARGS+=	--target=armv7-linux-gcc
 endif
