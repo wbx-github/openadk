@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		mplayer
-PKG_VERSION:=		1.3.0
+PKG_VERSION:=		1.5
 PKG_RELEASE:=		1
-PKG_HASH:=		3ad0846c92d89ab2e4e6fb83bf991ea677e7aa2ea775845814cbceb608b09843
+PKG_HASH:=		650cd55bb3cb44c9b39ce36dac488428559799c5f18d16d98edb2b7256cbbf85
 PKG_DESCR:=		popular video player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		alsa-lib libjpeg-turbo libfaad2 libmad libncurses
@@ -23,7 +23,7 @@ PKG_SITES:=		http://www.mplayerhq.hu/MPlayer/releases/
 DISTFILES:=		MPlayer-$(PKG_VERSION).tar.xz
 WRKDIST=		${WRKDIR}/MPlayer-${PKG_VERSION}
 
-PKG_ARCH_DEPENDS:=	x86 x86_64 mips arm
+PKG_ARCH_DEPENDS:=	x86 x86_64 mips arm aarch64
 
 PKG_FLAVOURS_MPLAYER:=	WITH_DIRECTFB
 PKGFD_WITH_DIRECTFB:=	enable DirectFB video output support
@@ -161,7 +161,6 @@ CONFIGURE_ARGS:=	--prefix=/usr \
 			--disable-live \
 			--disable-pvr \
 			--disable-ftp \
-			--disable-ivtv \
 			--disable-freetype \
 			--disable-mpg123 \
 			--disable-arts \
