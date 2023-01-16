@@ -4,21 +4,23 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xkeyboard-config
-PKG_VERSION:=		2.11
+PKG_VERSION:=		2.37
 PKG_RELEASE:=		1
-PKG_HASH:=		e7125460892c2b5c3a8d843cb18c24b60c46051e925c2888a61fa672a2f76d76
+PKG_HASH:=		eb1383a5ac4b6210d7c7302b9d6fab052abdf51c5d2c9b55f1f779997ba68c6c
 PKG_DESCR:=		keyboard config
 PKG_SECTION:=		x11/misc
 PKG_BUILDDEP:=		util-macros-host xkbcomp
 PKG_SITES:=		http://www.x.org/releases/individual/data/xkeyboard-config/
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
-
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,XKEYBOARD_CONFIG,xkeyboard-config,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-AUTOTOOL_STYLE:=	autoreconf
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
 
 xkeyboard-config-install:
 	${INSTALL_DIR} ${IDIR_XKEYBOARD_CONFIG}/usr/share/X11/xkb
