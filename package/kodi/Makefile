@@ -15,9 +15,9 @@ PKG_DEPENDS+=		libflac libbz2 libtiff libnettle librtmp liblzo
 PKG_DEPENDS+=		yajl tinyxml libsqlite libpcrecpp libncurses libpng
 PKG_DEPENDS+=		libpcre libcdio libfreetype libsamplerate libuuid
 PKG_DEPENDS+=		taglib libjasper libmp3lame libgpg-error giflib
-PKG_DEPENDS+=		glib libdcadec bcm28xx-vc-gl-libs libffmpeg libxvidcore
+PKG_DEPENDS+=		glib libdcadec libffmpeg libxvidcore libiconv
 PKG_DEPENDS+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
-PKG_BUILDDEP:=		python3 libass ffmpeg rtmpdump bcm28xx-vc
+PKG_BUILDDEP:=		python3 libass ffmpeg rtmpdump libiconv
 PKG_BUILDDEP+=		libmpeg2 libmad libjpeg-turbo fmt rapidjson
 PKG_BUILDDEP+=		curl flac bzip2 libtiff yajl cmake-host
 PKG_BUILDDEP+=		tinyxml sqlite pcre libcdio freetype libpng
@@ -35,7 +35,7 @@ DISTFILES:=		$(PKG_VERSION)-Matrix.tar.gz
 WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Matrix
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
-PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4
+PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 rockpi4-plus
 
 PKG_FLAVOURS_KODI:=	WITH_ALSA WITH_CEC WITH_PULSEAUDIO WITH_SMB
 PKG_FLAVOURS_KODI+=	WITH_MICROHTTPD WITH_SSH WITH_AVAHI
@@ -99,6 +99,16 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DLIBDVDNAV_URL=$(DL_DIR)/libdvdnav-6.0.0-Leia-Alpha-3.tar.gz \
 			-DLIBDVDREAD_URL=$(DL_DIR)/libdvdread-6.0.0-Leia-Alpha-3.tar.gz
 			
+ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
+CMAKE_FLAGS+=		-DCORE_PLATFORM_NAME=gbm \
+			-DAPP_RENDER_SYSTEM=gles \
+			-DWITH_ARCH=aarch64 \
+			-DWITH_CPU=aarch64 \
+			-DENABLE_NEON=ON \
+			-DENABLE_OPENGL=OFF \
+			-DENABLE_X11=OFF \
+			-DENABLE_OPENGLES=ON
+endif
 
 ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 CMAKE_FLAGS+=		-DCORE_PLATFORM_NAME=gbm \
