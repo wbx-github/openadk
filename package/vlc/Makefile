@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		vlc
-PKG_VERSION:=		2.2.6
+PKG_VERSION:=		3.0.18
 PKG_RELEASE:=		1
-PKG_HASH:=		c403d3accd9a400eb2181c958f3e7bc5524fe5738425f4253d42883b425a42a8
+PKG_HASH:=		57094439c365d8aa8b9b41fa3080cc0eef2befe6025bb5cef722accc625aedec
 PKG_DESCR:=		popular media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		libffmpeg xcb-util libgcrypt alsa-lib
@@ -16,16 +16,13 @@ PKG_URL:=		http://www.videolan.org/vlc/
 PKG_SITES:=		http://download.videolan.org/pub/videolan/vlc/$(PKG_VERSION)/
 
 PKG_FLAVOURS_VLC:=	WITH_BLURAY WITH_MAD WITH_OGG WITH_OPUS WITH_SPEEX WITH_THEORA
-PKG_FLAVOURS_VLC+=	WITH_VPX WITH_MATROSKA
+PKG_FLAVOURS_VLC+=	WITH_VPX WITH_X264
 PKGFD_WITH_BLURAY:=	enable bluray support
 PKGFB_WITH_BLURAY:=	libbluray
 PKGFS_WITH_BLURAY:=	libbluray
 PKGFD_WITH_MAD:=	enable mp3 support
 PKGFB_WITH_MAD:=	libmad
 PKGFS_WITH_MAD:=	libmad
-PKGFD_WITH_MATROSKA:=	enable matroska support
-PKGFB_WITH_MATROSKA:=	libmatroska
-PKGFS_WITH_MATROSKA:=	libmatroska
 PKGFD_WITH_OGG:=	enable ogg support
 PKGFB_WITH_OGG:=	libogg
 PKGFS_WITH_OGG:=	libogg
@@ -41,6 +38,9 @@ PKGFS_WITH_THEORA:=	libtheora
 PKGFD_WITH_VPX:=	enable vpx support
 PKGFB_WITH_VPX:=	libvpx
 PKGFS_WITH_VPX:=	libvpx
+PKGFD_WITH_X264:=	enable h264 support
+PKGFB_WITH_X264:=	libx264
+PKGFS_WITH_X264:=	libx264
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -66,7 +66,10 @@ CONFIGURE_ARGS+=	--disable-lua \
 			--enable-libgcrypt \
 			--disable-optimizations \
 			--disable-static \
-			--disable-avcodec
+			--disable-swscale \
+			--disable-avformat \
+			--disable-avcodec \
+			--disable-mpg123
 
 ifeq ($(ADK_TARGET_ARCH_ARM_WITH_NEON),)
 CONFIGURE_ARGS+=	--disable-neon
@@ -81,11 +84,6 @@ ifneq ($(ADK_PACKAGE_VLC_WITH_MAD),)
 CONFIGURE_ARGS+=	--enable-mad
 else
 CONFIGURE_ARGS+=	--disable-mad
-endif
-ifneq ($(ADK_PACKAGE_VLC_WITH_MATROSKA),)
-CONFIGURE_ARGS+=	--enable-mkv
-else
-CONFIGURE_ARGS+=	--disable-mkv
 endif
 ifneq ($(ADK_PACKAGE_VLC_WITH_OGG),)
 CONFIGURE_ARGS+=	--enable-ogg
@@ -111,6 +109,11 @@ ifneq ($(ADK_PACKAGE_VLC_WITH_VPX),)
 CONFIGURE_ARGS+=	--enable-vpx
 else
 CONFIGURE_ARGS+=	--disable-vpx
+endif
+ifneq ($(ADK_PACKAGE_VLC_WITH_X264),)
+CONFIGURE_ARGS+=	--enable-x264
+else
+CONFIGURE_ARGS+=	--disable-x264
 endif
 
 vlc-install:
