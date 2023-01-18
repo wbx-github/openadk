@@ -38,6 +38,14 @@ INSTALL_STYLE:=         manual
 do-install:
 	$(INSTALL_DIR) $(IDIR_BCM28XX_BOOTLOADER)/boot
 	$(CP) $(WRKBUILD)/boot/bootcode.bin $(IDIR_BCM28XX_BOOTLOADER)/boot/
+ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_SERIAL_ONLY),y)
+	printf "console=serial0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait" > \
+			$(IDIR_BCM28XX_BOOTLOADER)/boot/cmdline.txt
+endif
+ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_VGA_ONLY),y)
+	printf "console=tty0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait" > \
+			$(IDIR_BCM28XX_BOOTLOADER)/boot/cmdline.txt
+endif
 	printf "kernel=kernel\n" > $(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 	printf "dtparam=audio,i2s,spi,i2c\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
@@ -101,6 +109,10 @@ ifeq ($(ADK_TARGET_HARDWARE_RPI3_NO_BT),y)
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 endif
 ifeq ($(ADK_TARGET_HARDWARE_RPI3_SERIAL),y)
+	printf "enable_uart=1\n" >> \
+		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+endif
+ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI4),y)
 	printf "enable_uart=1\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 endif
