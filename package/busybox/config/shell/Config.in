@@ -201,6 +201,11 @@ config BUSYBOX_ASH_TEST
 	default y
 	depends on BUSYBOX_SHELL_ASH
 
+config BUSYBOX_ASH_SLEEP
+	bool "sleep builtin"
+	default y
+	depends on BUSYBOX_SHELL_ASH
+
 config BUSYBOX_ASH_HELP
 	bool "help builtin"
 	default y
