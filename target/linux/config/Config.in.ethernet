@@ -21,6 +21,9 @@ config ADK_LINUX_KERNEL_NET_VENDOR_AMD
 config ADK_LINUX_KERNEL_NET_VENDOR_ATHEROS
 	bool
 
+config ADK_LINUX_KERNEL_NET_VENDOR_BROADCOM
+	bool
+
 config ADK_LINUX_KERNEL_NET_VENDOR_DEC
 	bool
 
@@ -154,6 +157,17 @@ config ADK_LINUX_KERNEL_AG71XX
 	default n
 	help
 	  Atheros AG71XX ethernet driver
+
+config ADK_LINUX_KERNEL_BCMGENET
+	tristate "Broadcom GENET internal MAC support"
+	select ADK_LINUX_KERNEL_NET_VENDOR_BROADCOM
+	depends on ADK_TARGET_SYSTEM_RASPBERRY_PI4 || \
+		   ADK_TARGET_SYSTEM_RASPBERRY_PI4_64
+	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI4 || \
+		     ADK_TARGET_SYSTEM_RAPSBERRY_PI4_64
+	default n
+	help
+	  Broadcom GENET internal MAC support
 
 config ADK_LINUX_KERNEL_DE2104X
 	tristate "DE2104X ethernet driver"
