@@ -8,6 +8,7 @@ include $(ADK_TOPDIR)/mk/image.mk
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 QEMU:=qemu-system-hppa
 QEMU_ARGS:=-nographic
+QEMU_ARGS+=-device e1000,netdev=adk0 -netdev user,id=adk0
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
