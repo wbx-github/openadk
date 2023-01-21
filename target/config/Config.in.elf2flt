@@ -1,0 +1,16 @@
+# This file is part of the OpenADK project. OpenADK is copyrighted
+# material, please see the LICENCE file in the top-level directory.
+
+choice
+prompt "elf2flt version"
+default ADK_TOOLCHAIN_ELF2FLT_2021_08
+
+config ADK_TOOLCHAIN_ELF2FLT_2021_08
+	bool "2021-08"
+	depends on !ADK_TARGET_ARCH_BFIN
+
+config ADK_TOOLCHAIN_ELF2FLT_OLD
+	bool "old version"
+	depends on ADK_TARGET_ARCH_BFIN
+
+endchoice

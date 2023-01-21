@@ -52,6 +52,8 @@ config ADK_TARGET_BINFMT_FLAT_SEP_DATA
 
 endchoice
 
+source "target/config/Config.in.elf2flt"
+
 config ADK_TARGET_BINFMT
 	string
 	depends on ADK_TARGET_ARCH_BFIN
