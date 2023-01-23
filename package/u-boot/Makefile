@@ -109,7 +109,7 @@ do-configure:
 
 do-build:
 	(cd $(WRKBUILD) && env \
-		V=1 \
+		KBUILD_VERBOSE=1 \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
 		$(MAKE))
