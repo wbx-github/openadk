@@ -15,7 +15,7 @@ c_args = [@TARGET_CFLAGS@]
 c_link_args = [@TARGET_LDFLAGS@]                                             
 cpp_args = [@TARGET_CXXFLAGS@]                                               
 cpp_link_args = [@TARGET_LDFLAGS@]                                           
-needs_exe_wrapper = false
+needs_exe_wrapper = true
                                                                              
 [host_machine]                                                               
 system = 'linux'                                                             
