@@ -31,6 +31,11 @@ TARGET_CFLAGS:=		$(filter-out -mcpu=cortex-a7,$(TARGET_CFLAGS))
 TARGET_CXXFLAGS:=	$(filter-out -mcpu=cortex-a7,$(TARGET_CXXFLAGS))
 endif
 
+ifeq ($(ADK_TARGET_ARCH_ARM),y)
+TARGET_CFLAGS:=		$(filter-out -mcpu=xscale,$(TARGET_CFLAGS))
+TARGET_CXXFLAGS:=	$(filter-out -mcpu=xscale,$(TARGET_CXXFLAGS))
+endif
+
 ifeq ($(ADK_TARGET_USE_STATIC_AND_SHARED_LIBS),y)
 TARGET_CFLAGS:=		$(filter-out -static,$(TARGET_CFLAGS))
 TARGET_CXXFLAGS:=	$(filter-out -static,$(TARGET_CXXFLAGS))
