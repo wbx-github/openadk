@@ -4,6 +4,7 @@
 choice
 prompt "elf2flt version"
 default ADK_TOOLCHAIN_ELF2FLT_2021_08
+depends on ADK_TARGET_BINFMT_FLAT
 
 config ADK_TOOLCHAIN_ELF2FLT_2021_08
 	bool "2021-08"
