@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ympd
-PKG_VERSION:=		ec008a4995666d673bd4cb3926fae7f4b6aa3239
+PKG_VERSION:=		612f8fc0b2c47fc89d403e4a044541c6b2b238c8
 PKG_GIT:=		hash
 PKG_RELEASE:=		4
 PKG_DESCR:=		standalone music player daemon web gui
