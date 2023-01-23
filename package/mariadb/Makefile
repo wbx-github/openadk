@@ -9,13 +9,13 @@ PKG_RELEASE:=		1
 PKG_HASH:=		75bf9b147a95d38160d01a73b098d50a1960563b46d16a235971fff64d99643c
 PKG_DESCR:=		sql client library
 PKG_SECTION:=		libs/db
-PKG_DEPENDS:=		libncurses zlib libevent libpcre boost
-PKG_BUILDDEP:=		cmake-host mariadb-host ncurses zlib readline libevent pcre libressl
-PKG_BUILDDEP+=		boost
+PKG_DEPENDS:=		libncurses zlib libevent libpcre boost libfmt
+PKG_BUILDDEP:=		cmake-host mariadb-host ncurses zlib readline libevent
+PKG_BUILDDEP+=		boost fmt gnutls pcre2
 HOST_BUILDDEP:=		cmake-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.mariadb.org/
-PKG_SITES=		https://distfiles.openadk.org/
+PKG_SITES=		https://downloads.mariadb.org/interstitial/mariadb-$(PKG_VERSION)/source/
 PKG_LIBNAME:=		libmariadbclient
 PKG_OPTS:=		dev
 
@@ -38,8 +38,8 @@ HOST_ALL_TARGET:=	import_executables
 CONFIG_STYLE:=		cmake
 CMAKE_FLAGS+=		-DCMAKE_CROSSCOMPILING=ON \
 			-DIMPORT_EXECUTABLES=${BASE_DIR}/host_build_${GNU_HOST_NAME}/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)-host/$(PKG_NAME)-$(PKG_VERSION)/import_executables.cmake \
-			-DWITH_SSL=system \
 			-DWITHOUT_SERVER=OFF \
+			-DWITH_SSL=bundled \
 			-DWITH_SYSTEMD=auto \
 			-DSECURITY_HARDENED=OFF \
 			-DWITHOUT_DYNAMIC_PLUGINS=ON \
@@ -62,6 +62,8 @@ mariadb-hostinstall:
 libmariadbclient-install:
 	${INSTALL_DIR} ${IDIR_LIBMARIADBCLIENT}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libmysqlclient.so* \
+	    ${IDIR_LIBMARIADBCLIENT}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libmariadb.so* \
 	    ${IDIR_LIBMARIADBCLIENT}/usr/lib
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
