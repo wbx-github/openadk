@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		glib
-PKG_VERSION:=		2.72.3
+PKG_VERSION:=		2.75.2
 PKG_RELEASE:=		1
-PKG_EXTRAVER:=		2.72
-PKG_HASH:=		4a39a2f624b8512d500d5840173eda7fa85f51c109052eae806acece85d345f0
+PKG_EXTRAVER:=		2.75
+PKG_HASH:=		360d6fb75202c0eb0d07f0ab812b19b526f1c05ccc0a8ed7e5d2c988616d343a
 PKG_DESCR:=		low-level core library that forms the basis of gtk+
 PKG_SECTION:=		libs/misc
-PKG_DEPENDS:=		libpcre zlib libffi
-PKG_BUILDDEP:=		glib-host util-linux libffi zlib dbus pcre
+PKG_DEPENDS:=		pcre2 zlib libffi
+PKG_BUILDDEP:=		glib-host util-linux libffi zlib dbus pcre2
 HOST_BUILDDEP:=		pkgconf-host libiconv-host libffi-host python3-host gettext-host util-linux-host
-HOST_BUILDDEP+=		pcre-host meson-host
+HOST_BUILDDEP+=		pcre2-host meson-host
 PKG_NEEDS:=		threads intl iconv
 PKG_URL:=		http://www.gtk.org/
 PKG_SITES:=		http://ftp.gnome.org/pub/GNOME/sources/glib/$(PKG_EXTRAVER)/
@@ -27,8 +27,6 @@ $(eval $(call PKG_template,GLIB,glib,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS
 
 HOSTWRKBUILD=           $(WRKSRC)
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
-
-TARGET_CFLAGS+=		-Wno-error=format-nonliteral
 
 HOST_CONFIG_STYLE:=	manual
 HOST_STYLE:=		manual
