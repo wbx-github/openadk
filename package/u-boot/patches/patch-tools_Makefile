@@ -1,0 +1,14 @@
+--- u-boot-2022.10.orig/tools/Makefile	2022-10-03 21:25:32.000000000 +0200
++++ u-boot-2022.10/tools/Makefile	2023-01-26 10:01:05.399923828 +0100
+@@ -174,9 +174,9 @@ endif
+ # MXSImage needs LibSSL
+ ifneq ($(CONFIG_MX23)$(CONFIG_MX28)$(CONFIG_ARMADA_38X)$(CONFIG_TOOLS_LIBCRYPTO),)
+ HOSTCFLAGS_kwbimage.o += \
+-	$(shell pkg-config --cflags libssl libcrypto 2> /dev/null || echo "")
++	$(shell echo "-lssl -lcrypto")
+ HOSTLDLIBS_mkimage += \
+-	$(shell pkg-config --libs libssl libcrypto 2> /dev/null || echo "-lssl -lcrypto")
++	$(shell echo "-lssl -lcrypto")
+ 
+ # OS X deprecate openssl in favour of CommonCrypto, supress deprecation
+ # warnings on those systems
