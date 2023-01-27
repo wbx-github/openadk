@@ -586,7 +586,7 @@ if (( datafssz )); then
 	(raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|phytec-wega)
 		echo "/dev/mmcblk0p3	/data	ext4	rw	0	0" >> "$R"/etc/fstab 
 	;;
-	(banana-pro|orange-pi0|solidrun-clearfog)
+	(banana-pro|orange-pi0|solidrun-clearfog|rockpi4-plus)
 		echo "/dev/mmcblk0p2	/data	ext4	rw	0	0" >> "$R"/etc/fstab
 	;;
 	(solidrun-imx6|phytec-imx6)
