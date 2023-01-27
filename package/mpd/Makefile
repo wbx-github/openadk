@@ -4,13 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mpd
-PKG_VERSION:=		0.23.5
+PKG_VERSION:=		0.23.12
 PKG_RELEASE:=		1
-PKG_HASH:=		f22c2c25093a05f4566f9cd7207cfbcd8405af67ed29a989bcf8905f80b7a299
+PKG_HASH:=		b7fca62284ecc25a681ea6a07abc49200af5353be42cb5a31e3173be9d8702e7
 PKG_DESCR:=		music player daemon
 PKG_SECTION:=		mm/audio
-PKG_DEPENDS:=		libmpdclient boost libncurses libexpat libsqlite
-PKG_BUILDDEP:=		libmpdclient boost ncurses expat sqlite
+PKG_DEPENDS:=		libmpdclient boost libncurses libexpat libsqlite libfmt libxcb
+PKG_DEPENDS+=		libxau libxdmcp
+PKG_BUILDDEP:=		libmpdclient boost ncurses expat sqlite fmt libxcb
+PKG_BUILDDEP+=		libXau libXdmcp
 PKG_FDEPENDS:=		libmpdclient
 PKG_NEEDS:=		threads c++ data
 PKG_URL:=		http://www.musicpd.org/
