@@ -11,7 +11,7 @@ autostart)
 	exec sh $0 start
 	;;
 start)
-	for shell in $(ls /etc/amixer.d/*.sh); do
+	for shell in $(ls /etc/amixer.d/*.sh 2>/dev/null); do
 		./$shell >/dev/null
 	done
 	;;
