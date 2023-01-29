@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		lighttpd
-PKG_VERSION:=		1.4.45
+PKG_VERSION:=		1.4.68
 PKG_RELEASE:=		1
-PKG_HASH:=		1c97225deea33eefba6d4158c2cef27913d47553263516bbe9d2e2760fc43a3f
+PKG_HASH:=		e56f37ae52b63e1ada4d76ce78005affb6e56eea2f6bdb0ce17d6d36e9583384
 PKG_DESCR:=		lightweight web server
 PKG_SECTION:=		net/http
 PKG_URL:=		http://www.lighttpd.net/
@@ -22,9 +22,9 @@ PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 PKG_SUBPKGS:=		LIGHTTPD LIGHTTPD_MOD_ALIAS LIGHTTPD_MOD_AUTH
-PKG_SUBPKGS+=		LIGHTTPD_MOD_CGI LIGHTTPD_MOD_DIRLIST LIGHTTPD_MOD_EVASIVE LIGHTTPD_MOD_EXPIRE LIGHTTPD_MOD_FASTCGI
+PKG_SUBPKGS+=		LIGHTTPD_MOD_CGI LIGHTTPD_MOD_DIRLIST LIGHTTPD_MOD_EXPIRE LIGHTTPD_MOD_FASTCGI
 PKG_SUBPKGS+=		LIGHTTPD_MOD_PROXY LIGHTTPD_MOD_REDIRECT LIGHTTPD_MOD_REWRITE LIGHTTPD_MOD_SETENV
-PKG_SUBPKGS+=		LIGHTTPD_MOD_VHOST LIGHTTPD_MOD_SSI LIGHTTPD_MOD_STATUS LIGHTTPD_MOD_USERTRACK
+PKG_SUBPKGS+=		LIGHTTPD_MOD_VHOST LIGHTTPD_MOD_SSI LIGHTTPD_MOD_STATUS
 PKGSD_LIGHTTPD_MOD_ALIAS:=	alias support
 PKGSN_LIGHTTPD_MOD_ALIAS:=	lighttpd
 PKGSD_LIGHTTPD_MOD_AUTH:=	authentication support
@@ -35,8 +35,6 @@ PKGSD_LIGHTTPD_MOD_DIRLIST:=	Dirlisting support
 PKGSB_LIGHTTPD_MOD_DIRLIST:=	pcre
 PKGSS_LIGHTTPD_MOD_DIRLIST:=	libpcre
 PKGSN_LIGHTTPD_MOD_DIRLIST:=	lighttpd
-PKGSD_LIGHTTPD_MOD_EVASIVE:=	Evasive support
-PKGSN_LIGHTTPD_MOD_EVASIVE:=	lighttpd
 PKGSD_LIGHTTPD_MOD_EXPIRE:=	Expire support
 PKGSN_LIGHTTPD_MOD_EXPIRE:=	lighttpd
 PKGSD_LIGHTTPD_MOD_FASTCGI:=	FastCGI support
@@ -55,8 +53,6 @@ PKGSD_LIGHTTPD_MOD_SSI:=	SSI support
 PKGSN_LIGHTTPD_MOD_SSI:=	lighttpd
 PKGSD_LIGHTTPD_MOD_STATUS:=	Status support
 PKGSN_LIGHTTPD_MOD_STATUS:=	lighttpd
-PKGSD_LIGHTTPD_MOD_USERTRACK:=	Usertracking support
-PKGSN_LIGHTTPD_MOD_USERTRACK:=	lighttpd
 PKGSD_LIGHTTPD_MOD_WEBDAV:=	Webdav support
 PKGSB_LIGHTTPD_MOD_WEBDAV:=	libxml2 sqlite util-linux
 PKGSS_LIGHTTPD_MOD_WEBDAV:=	libxml2 libsqlite libuuid
@@ -79,7 +75,6 @@ $(eval $(call PKG_template,LIGHTTPD_MOD_ALIAS,lighttpd-mod-alias,$(PKG_VERSION)-
 $(eval $(call PKG_template,LIGHTTPD_MOD_AUTH,lighttpd-mod-auth,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_AUTH},${PKG_SECTION}))
 $(eval $(call PKG_template,LIGHTTPD_MOD_CGI,lighttpd-mod-cgi,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_CGI},${PKG_SECTION}))
 $(eval $(call PKG_template,LIGHTTPD_MOD_DIRLIST,lighttpd-mod-dirlist,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_DIRLIST},${PKG_SECTION}))
-$(eval $(call PKG_template,LIGHTTPD_MOD_EVASIVE,lighttpd-mod-evasive,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_EVASIVE},${PKG_SECTION}))
 $(eval $(call PKG_template,LIGHTTPD_MOD_EXPIRE,lighttpd-mod-expire,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_EXPIRE},${PKG_SECTION}))
 $(eval $(call PKG_template,LIGHTTPD_MOD_FASTCGI,lighttpd-mod-fastcgi,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_FASTCGI},${PKG_SECTION}))
 $(eval $(call PKG_template,LIGHTTPD_MOD_PROXY,lighttpd-mod-proxy,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_PROXY},${PKG_SECTION}))
@@ -89,13 +84,11 @@ $(eval $(call PKG_template,LIGHTTPD_MOD_SETENV,lighttpd-mod-setenv,$(PKG_VERSION
 $(eval $(call PKG_template,LIGHTTPD_MOD_VHOST,lighttpd-mod-vhost,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_VHOST},${PKG_SECTION}))
 $(eval $(call PKG_template,LIGHTTPD_MOD_SSI,lighttpd-mod-ssi,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_SSI},${PKG_SECTION}))
 $(eval $(call PKG_template,LIGHTTPD_MOD_STATUS,lighttpd-mod-status,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_STATUS},${PKG_SECTION}))
-$(eval $(call PKG_template,LIGHTTPD_MOD_USERTRACK,lighttpd-mod-usertrack,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIGHTTPD_MOD_USERTRACK},${PKG_SECTION}))
 
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_ALIAS,alias))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_AUTH,auth))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_CGI,cgi))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_DIRLIST,dirlisting))
-$(eval $(call PKG_mod_template,LIGHTTPD_MOD_EVASIVE,evasive))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_EXPIRE,expire))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_FASTCGI,fastcgi))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_PROXY,proxy))
@@ -105,7 +98,6 @@ $(eval $(call PKG_mod_template,LIGHTTPD_MOD_SETENV,setenv))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_VHOST,simple_vhost))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_SSI,ssi))
 $(eval $(call PKG_mod_template,LIGHTTPD_MOD_STATUS,status))
-$(eval $(call PKG_mod_template,LIGHTTPD_MOD_USERTRACK,usertrack))
 
 CONFIGURE_ARGS+=	--libdir=/usr/lib/lighttpd \
 			--sysconfdir=/etc/lighttpd \
@@ -113,10 +105,8 @@ CONFIGURE_ARGS+=	--libdir=/usr/lib/lighttpd \
 			--without-zlib \
 			--without-bzip2 \
 			--without-fam \
-			--without-gdbm \
 			--without-ldap \
 			--without-lua \
-			--without-memcache \
 			--without-mysql \
 			--without-webdav-props \
 			--without-webdav-locks \
