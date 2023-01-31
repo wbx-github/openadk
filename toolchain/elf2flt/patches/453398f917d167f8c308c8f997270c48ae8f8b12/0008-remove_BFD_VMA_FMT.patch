@@ -1,0 +1,125 @@
+diff -Nur elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/elf2flt.c elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/elf2flt.c
+--- elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/elf2flt.c	2023-01-30 08:48:56.632981732 +0100
++++ elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/elf2flt.c	2023-01-30 08:53:34.510426754 +0100
+@@ -222,7 +222,7 @@
+   long i;
+   printf("SYMBOL TABLE:\n");
+   for (i=0; i<number_of_symbols; i++) {
+-	printf("  NAME=%s  VALUE=0x%"BFD_VMA_FMT"x\n",
++	printf("  NAME=%s  VALUE=0x%x\n",
+ 		symbol_table[i]->name, symbol_table[i]->value);
+   }
+   printf("\n");
+@@ -458,7 +458,7 @@
+ 	if (r == NULL)
+ 	  continue;
+ 	if (verbose)
+-	  printf(" RELOCS: %s [%p]: flags=0x%x vma=0x%"BFD_VMA_FMT"x\n",
++	  printf(" RELOCS: %s [%p]: flags=0x%x vma=0x%x\n",
+ 			r->name, r, r->flags, elf2flt_bfd_section_vma(abs_bfd, r));
+   	if ((r->flags & SEC_RELOC) == 0)
+   	  continue;
+@@ -903,8 +903,8 @@
+ 					if (verbose)
+ 						fprintf(stderr,
+ 							"%s vma=0x%x, "
+-							"value=0x%"BFD_VMA_FMT"x, "
+-							"address=0x%"BFD_VMA_FMT"x "
++							"value=0x%x, "
++							"address=0x%x "
+ 							"sym_addr=0x%x rs=0x%x, opcode=0x%x\n",
+ 							"ABS32",
+ 							sym_vma, (*(q->sym_ptr_ptr))->value,
+@@ -922,8 +922,8 @@
+ 					if (verbose)
+ 						fprintf(stderr,
+ 							"%s vma=0x%x, "
+-							"value=0x%"BFD_VMA_FMT"x, "
+-							"address=0x%"BFD_VMA_FMT"x "
++							"value=0x%x, "
++							"address=0x%x "
+ 							"sym_addr=0x%x rs=0x%x, opcode=0x%x\n",
+ 							"PLT32",
+ 							sym_vma, (*(q->sym_ptr_ptr))->value,
+@@ -945,7 +945,7 @@
+ 				case R_V850_ZDA_16_16_OFFSET:
+ 				case R_V850_ZDA_16_16_SPLIT_OFFSET:
+ 					/* Can't support zero-relocations.  */
+-					printf ("ERROR: %s+0x%"BFD_VMA_FMT"x: zero relocations not supported\n",
++					printf ("ERROR: %s+0x%x: zero relocations not supported\n",
+ 							sym_name, q->addend);
+ 					continue;
+ #endif /* TARGET_v850 */
+@@ -1038,15 +1038,15 @@
+ 			sprintf(&addstr[0], "+0x%ld", sym_addr - (*(q->sym_ptr_ptr))->value -
+ 					 elf2flt_bfd_section_vma(abs_bfd, sym_section));
+ 			if (verbose)
+-				printf("  RELOC[%d]: offset=0x%"BFD_VMA_FMT"x symbol=%s%s "
++				printf("  RELOC[%d]: offset=0x%x symbol=%s%s "
+ 					"section=%s size=%d "
+-					"fixup=0x%x (reloc=0x%"BFD_VMA_FMT"x)\n",
++					"fixup=0x%x (reloc=0x%x)\n",
+ 					flat_reloc_count,
+ 					q->address, sym_name, addstr,
+ 					section_name, sym_reloc_size,
+ 					sym_addr, section_vma + q->address);
+ 			if (verbose)
+-				printf("reloc[%d] = 0x%"BFD_VMA_FMT"x\n",
++				printf("reloc[%d] = 0x%x\n",
+ 					 flat_reloc_count, section_vma + q->address);
+ 
+ 					continue;
+@@ -1163,9 +1163,9 @@
+ 					temp |= (exist_val & 0x3f);
+ 					*(unsigned long *)r_mem = htoniosl(temp);
+ 					if (verbose)
+-						printf("omit: offset=0x%"BFD_VMA_FMT"x symbol=%s%s "
++						printf("omit: offset=0x%x symbol=%s%s "
+ 								"section=%s size=%d "
+-								"fixup=0x%x (reloc=0x%"BFD_VMA_FMT"x) GPREL\n",
++								"fixup=0x%x (reloc=0x%x) GPREL\n",
+ 								q->address, sym_name, addstr,
+ 								section_name, sym_reloc_size,
+ 								sym_addr, section_vma + q->address);
+@@ -1183,9 +1183,9 @@
+ 					exist_val |= ((sym_addr & 0xFFFF) << 6);
+ 					*(unsigned long *)r_mem = htoniosl(exist_val);
+ 					if (verbose)
+-						printf("omit: offset=0x%"BFD_VMA_FMT"x symbol=%s%s "
++						printf("omit: offset=0x%x symbol=%s%s "
+ 								"section=%s size=%d "
+-								"fixup=0x%x (reloc=0x%"BFD_VMA_FMT"x) PCREL\n",
++								"fixup=0x%x (reloc=0x%x) PCREL\n",
+ 								q->address, sym_name, addstr,
+ 								section_name, sym_reloc_size,
+ 								sym_addr, section_vma + q->address);
+@@ -1200,7 +1200,7 @@
+ 					    && (p[-1]->sym_ptr_ptr == p[0]->sym_ptr_ptr)
+ 					    && (p[-1]->addend == p[0]->addend)) {
+ 						if (verbose)
+-							printf("omit: offset=0x%"BFD_VMA_FMT"x symbol=%s%s "
++							printf("omit: offset=0x%x symbol=%s%s "
+ 								"section=%s size=%d LO16\n", 
+ 								q->address, sym_name, addstr,
+ 								section_name, sym_reloc_size);
+@@ -1610,9 +1610,9 @@
+ 			}
+ 
+ 			if (verbose)
+-				printf("  RELOC[%d]: offset=0x%"BFD_VMA_FMT"x symbol=%s%s "
++				printf("  RELOC[%d]: offset=0x%x symbol=%s%s "
+ 					"section=%s size=%d "
+-					"fixup=0x%x (reloc=0x%"BFD_VMA_FMT"x)\n",
++					"fixup=0x%x (reloc=0x%x)\n",
+ 					flat_reloc_count,
+ 					q->address, sym_name, addstr,
+ 					section_name, sym_reloc_size,
+@@ -1630,7 +1630,7 @@
+ 					(section_vma + q->address);
+ 
+ 				if (verbose)
+-					printf("reloc[%d] = 0x%"BFD_VMA_FMT"x\n",
++					printf("reloc[%d] = 0x%x\n",
+ 							flat_reloc_count, section_vma + q->address);
+ #else
+ 				switch ((*p)->howto->type) {
