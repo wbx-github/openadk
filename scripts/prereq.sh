@@ -359,8 +359,8 @@ else
   echo "HOST_CXX:=${CXX}" >> $topdir/prereq.mk
 fi
 
-echo "HOST_CFLAGS:=-O0 -g0" >> $topdir/prereq.mk
-echo "HOST_CXXFLAGS:=-O0 -g0" >> $topdir/prereq.mk
+echo "HOST_CFLAGS:=-O0 -g0 -fcommon" >> $topdir/prereq.mk
+echo "HOST_CXXFLAGS:=-O0 -g0 -fcommon" >> $topdir/prereq.mk
 echo 'LANGUAGE:=C' >> $topdir/prereq.mk
 echo 'LC_ALL:=C' >> $topdir/prereq.mk
 echo "_PATH:=$PATH" >> $topdir/prereq.mk
