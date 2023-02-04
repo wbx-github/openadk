@@ -1,0 +1,24 @@
+diff -Nur binutils-2.20.1.orig/binutils/readelf.c binutils-2.20.1/binutils/readelf.c
+--- binutils-2.20.1.orig/binutils/readelf.c	2023-02-03 11:04:53.722082738 +0100
++++ binutils-2.20.1/binutils/readelf.c	2023-02-03 11:05:27.049296372 +0100
+@@ -150,7 +150,7 @@
+ #include "filenames.h"
+ 
+ char * program_name = "readelf";
+-int do_wide;
++extern int do_wide;
+ static long archive_file_offset;
+ static unsigned long archive_file_size;
+ static unsigned long dynamic_addr;
+diff -Nur binutils-2.20.1.orig/gas/config/tc-avr32.c binutils-2.20.1/gas/config/tc-avr32.c
+--- binutils-2.20.1.orig/gas/config/tc-avr32.c	2023-02-03 11:04:53.726082644 +0100
++++ binutils-2.20.1/gas/config/tc-avr32.c	2023-02-03 11:06:12.164234434 +0100
+@@ -47,7 +47,7 @@
+ 
+ /* Flags given on the command line */
+ static int avr32_pic	= FALSE;
+-int linkrelax	= FALSE;
++//extern int linkrelax	= FALSE;
+ int avr32_iarcompat	= FALSE;
+ 
+ /* This array holds the chars that always start a comment. */
