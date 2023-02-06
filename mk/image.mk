@@ -247,6 +247,7 @@ ifeq ($(ADK_LINUX_KERNEL_COMP_XZ),y)
 		echo "CONFIG_XZ_DEC_ARMTHUMB=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_XZ_DEC_SPARC=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_XZ_DEC_TEST=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_XZ_DEC_MICROLZMA=n" >> ${LINUX_DIR}/.config
 endif
 ifeq ($(ADK_LINUX_KERNEL_COMP_LZ4),y)
 		echo "CONFIG_RD_XZ=n" >> ${LINUX_DIR}/.config
