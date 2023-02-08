@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pciutils
 PKG_VERSION:=		3.5.1
-PKG_RELEASE:=		2
+PKG_RELEASE:=		3
 PKG_HASH:=		2bf3a4605a562fb6b8b7673bff85a474a5cf383ed7e4bd8886b4f0939013d42f
 PKG_DESCR:=		pci utilities
 PKG_SECTION:=		sys/hw
@@ -13,7 +13,6 @@ PKG_DEPENDS:=		zlib
 PKG_BUILDDEP:=		zlib
 PKG_URL:=		http://www.kernel.org/pub/software/utils/pciutils/
 PKG_SITES:=		http://www.kernel.org/pub/software/utils/pciutils/
-PKG_BB:=		1
 
 include $(ADK_TOPDIR)/mk/package.mk
 
