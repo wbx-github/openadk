@@ -11,6 +11,17 @@ else
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 endif
 
+QEMU_ARGS:=-monitor none -serial stdio
+QEMU_ARGS+=${ADK_QEMU_ARGS}
+
+ifeq ($(ADK_TARGET_CPU_ARC_ARC700),y)
+QEMU_ARGS+=-cpu arc700
+endif
+
+ifeq ($(ADK_TARGET_CPU_ARC_ARCHS),y)
+QEMU_ARGS+=-cpu archs
+endif
+
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
@@ -29,6 +40,10 @@ endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
 targethelp:
 	@echo 'The kernel+initramfs file is: $(FW_DIR)/${TARGET_KERNEL}'
+ifeq ($(ADK_TARGET_QEMU),y)
+	@echo "Start qemu with following command line:"
+	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+endif
 ifeq ($(ADK_TARGET_SYSTEM_SYNOPSYS_NSIM),y)
 ifeq ($(ADK_TARGET_LITTLE_ENDIAN),y)
 ifeq ($(ADK_TARGET_CPU_ARC_ARC700),y)
