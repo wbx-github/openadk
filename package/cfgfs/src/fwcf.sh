@@ -1,7 +1,7 @@
 #!/bin/sh
 # Copyright (c) 2006-2007
 #	Thorsten Glaser <tg@mirbsd.de>
-# Copyright (c) 2009-2017
+# Copyright (c) 2009-2023
 #	Waldemar Brodkorb <wbx@openadk.org>
 #
 # Provided that these terms and disclaimer and all copyright notices
@@ -43,7 +43,7 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 wd=$(pwd)
 cd /
-what='Configuration Filesystem Utility (cfgfs), Version 1.10'
+what='Configuration Filesystem Utility (cfgfs), Version 1.11'
 
 who=$(id -u)
 if [ $who -ne 0 ]; then
@@ -140,6 +140,13 @@ if [ -f .cfgfs ]; then
 fi
 if [ -z $part ]; then
 	part=$(fdisk -l /dev/sda 2>/dev/null|awk '{if ($2=="*")  { print $1" "$9} else {print $1" "$8}}'|grep '^/dev.*88.*'|tail -1|awk '{ print $1 }')
+	# find GPT partition
+	if [ -z $part ]; then
+		partnum=$(gdisk -l /dev/sda 2>/dev/null|fgrep "cfgfs"|awk '{ print $1 }')
+		if [ ! -z $partnum ]; then
+			part=/dev/sda${partnum}
+		fi
+	fi
 	if [ -z $part ]; then
 		# otherwise search for MTD device with name cfgfs
 		part=/dev/mtd$(fgrep '"cfgfs"' /proc/mtd 2>/dev/null | sed 's/^mtd\([^:]*\):.*$/\1/')ro

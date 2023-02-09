@@ -9,8 +9,10 @@ PKG_RELEASE:=		1
 PKG_HASH:=		864c8aee2efdda50346804d7e6230407d5f42a8ae754df70404dd8b2fdfaeac7
 PKG_DESCR:=		utilities to create gpt partition tables
 PKG_SECTION:=		sys/fs
-PKG_BUILDDEP:=		util-linux popt
+PKG_DEPENDS:=		libncurses libuuid
+PKG_BUILDDEP:=		util-linux popt ncurses
 HOST_BUILDDEP:=		util-linux-host popt-host
+PKG_NEEDS:=		c++
 PKG_URL:=		http://www.rodsbooks.com/gdisk/
 PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=gptfdisk/}
 
