@@ -357,7 +357,7 @@ ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
 endif
 ifeq ($(ADK_TARGET_DUAL_BOOT),y)
 	$(CP) $(FW_DIR)/kernel $(TARGET_DIR)
-	$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR)
+	-$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR)
 	mkdir $(TARGET_DIR)/extlinux
 	$(CP) $(EXTLINUX) $(TARGET_DIR)/extlinux
 	$(SED) "s#root=.*#root=/dev/$(ADK_TARGET_ROOTDEV)p1#" $(TARGET_DIR)/extlinux/extlinux.conf
