@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #-
-# Copyright © 2010-2022
+# Copyright © 2010-2023
 #	Waldemar Brodkorb <wbx@openadk.org>
 #	Thorsten Glaser <tg@mirbsd.org>
 #
@@ -155,7 +155,7 @@ tgt=$2
 src=$3
 
 case $target {
-(banana-pro|banana-pro-zero|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|default) ;;
+(atmel-ngw100|banana-pro|banana-pro-zero|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|default) ;;
 (*)
 	print -u2 "Unknown target '$target', exiting"
 	exit 1 ;;
@@ -571,8 +571,15 @@ case $target {
 	;;
 }
 
-(( noformat )) || create_fs "$rootpart" ADKROOT ext4
-(( noformat )) || tune_fs "$rootpart"
+case $target {
+(atmel-ngw100)
+	(( noformat )) || create_fs "$rootpart" ADKROOT ext2
+	(( noformat )) || tune_fs "$rootpart"
+	;;
+(*)
+	(( noformat )) || create_fs "$rootpart" ADKROOT ext4
+	(( noformat )) || tune_fs "$rootpart"
+}
 
 (( quiet )) || print Extracting installation archive...
 mount_fs "$rootpart" "$R" ext4
