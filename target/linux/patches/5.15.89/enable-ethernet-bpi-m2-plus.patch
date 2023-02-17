@@ -1,0 +1,15 @@
+diff -Nur linux-6.0.11.orig/arch/arm/boot/dts/sunxi-h3-h5.dtsi linux-6.0.11/arch/arm/boot/dts/sunxi-h3-h5.dtsi
+--- linux-6.0.11.orig/arch/arm/boot/dts/sunxi-h3-h5.dtsi	2022-12-02 17:43:18.000000000 +0100
++++ linux-6.0.11/arch/arm/boot/dts/sunxi-h3-h5.dtsi	2022-12-19 08:06:16.836436057 +0100
+@@ -532,7 +532,10 @@
+ 			reset-names = "stmmaceth";
+ 			clocks = <&ccu CLK_BUS_EMAC>;
+ 			clock-names = "stmmaceth";
+-			status = "disabled";
++			status = "okay";
++			phy-handle = <&int_mii_phy>;
++			phy-mode = "mii";
++			allwinner,leds-active-low;
+ 
+ 			mdio: mdio {
+ 				#address-cells = <1>;
