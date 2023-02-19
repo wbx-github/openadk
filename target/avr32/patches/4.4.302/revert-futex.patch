@@ -1,0 +1,22 @@
+diff -Nur linux-4.4.302.orig/kernel/futex.c linux-4.4.302/kernel/futex.c
+--- linux-4.4.302.orig/kernel/futex.c	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/kernel/futex.c	2023-02-19 14:03:07.727035123 +0100
+@@ -1701,16 +1701,8 @@
+ 	int oldval, ret;
+ 
+ 	if (encoded_op & (FUTEX_OP_OPARG_SHIFT << 28)) {
+-		if (oparg < 0 || oparg > 31) {
+-			char comm[sizeof(current->comm)];
+-			/*
+-			 * kill this print and return -EINVAL when userspace
+-			 * is sane again
+-			 */
+-			pr_info_ratelimited("futex_wake_op: %s tries to shift op by %d; fix this program\n",
+-					get_task_comm(comm, current), oparg);
+-			oparg &= 31;
+-		}
++		if (oparg < 0 || oparg > 31)
++			return -EINVAL;
+ 		oparg = 1 << oparg;
+ 	}
+ 
