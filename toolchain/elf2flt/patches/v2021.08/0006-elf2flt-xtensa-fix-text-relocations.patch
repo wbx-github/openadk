@@ -23,24 +23,3 @@ diff -Nur elf2flt-v2021.08.orig/elf2flt.c elf2flt-v2021.08/elf2flt.c
  				default:
  					goto bad_resolved_reloc;
  #elif defined(TARGET_riscv64)
-diff -Nur elf2flt-v2021.08.orig/elf2flt.c.orig elf2flt-v2021.08/elf2flt.c.orig
---- elf2flt-v2021.08.orig/elf2flt.c.orig	2023-01-09 11:08:22.417478947 +0100
-+++ elf2flt-v2021.08/elf2flt.c.orig	2023-01-09 11:08:28.637676113 +0100
-@@ -349,8 +349,15 @@
- static bool
- ro_reloc_data_section_should_be_in_text(asection *s)
- {
--  return (s->flags & (SEC_DATA | SEC_READONLY | SEC_RELOC)) ==
--	  (SEC_DATA | SEC_READONLY | SEC_RELOC);
-+  if ((s->flags & (SEC_DATA | SEC_READONLY | SEC_RELOC)) ==
-+      (SEC_DATA | SEC_READONLY | SEC_RELOC)) {
-+#if defined(TARGET_m68k) || defined(TARGET_riscv64) || defined(TARGET_xtensa)
-+    if (!strcmp(".eh_frame", s->name))
-+      return false;
-+#endif
-+    return true;
-+  }
-+  return false;
- }
- 
- static uint32_t *

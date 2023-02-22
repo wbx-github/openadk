@@ -4,31 +4,28 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		aircrack-ng
-PKG_VERSION:=		1.2
+PKG_VERSION:=		1.7
 PKG_RELEASE:=		1
-PKG_HASH:=		d93ac16aade5b4d37ab8cdf6ce4b855835096ccf83deb65ffdeff6d666eaff36
+PKG_HASH:=		05a704e3c8f7792a17315080a21214a4448fd2452c1b0dd5226a3a55f90b58c3
 PKG_DESCR:=		set of tools for auditing wireless networks
 PKG_SECTION:=		net/wifi
-PKG_DEPENDS:=		libpcap libnl libressl
-PKG_BUILDDEP:=		libpcap libnl libressl
-PKG_NEEDS:=		threads
+PKG_DEPENDS:=		libpcap libnl libressl zlib
+PKG_BUILDDEP:=		libpcap libnl libressl zlib
+PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.aircrack-ng.org/
 PKG_SITES:=		http://download.aircrack-ng.org/
 # do not build parallel, otherwise libosdep.a may not be ready when compiling airtun-ng
 PKG_NOPARALLEL:=	1
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}-rc4.tar.gz
-WRKDIST=		${WRKDIR}/${PKG_NAME}-${PKG_VERSION}-rc4
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,AIRCRACK_NG,${PKG_NAME},$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-CONFIG_STYLE:=		manual
-
-XAKE_FLAGS+=		CC="$(TARGET_CC)" \
-			TOOL_PREFIX="$(TARGET_CROSS)" \
-			OSNAME="Linux" prefix="/usr"
+AUTOTOOL_STYLE:=	autogen
+XAKE_FLAGS+=		V=1
+CONFIGURE_ARGS+=	--with-libpcap-include='$(STAGING_TARGET_DIR)/usr/include'
 
 aircrack-ng-install:
 	$(INSTALL_DIR) $(IDIR_AIRCRACK_NG)/usr/bin
