@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gdb
-PKG_VERSION:=		12.1
+PKG_VERSION:=		13.1
 PKG_RELEASE:=		1
-PKG_HASH:=		0e1793bf8f2b54d53f46dea84ccfd446f48f81b297b28c4f7fc017b818d69fed
+PKG_HASH:=		115ad5c18d69a6be2ab15882d365dda2a2211c14f480b3502c6eba576e2e95a0
 PKG_DESCR:=		program debugger
 PKG_SECTION:=		app/debug
 PKG_SITES:=		${MASTER_SITE_GNU:=gdb/}
@@ -27,6 +27,7 @@ WRKBUILD=		$(WRKDIR)/$(PKG_NAME)-obj
 CONFIGURE_ENV+=		host_configargs='--with-libgmp-prefix="${STAGING_TARGET_DIR}/usr"'
 # --enable-static is required to build libbfd.a
 CONFIGURE_ARGS+=	--enable-static \
+			--disable-shared \
 			--without-uiout \
 			--disable-tui \
 			--disable-gdbtk \
