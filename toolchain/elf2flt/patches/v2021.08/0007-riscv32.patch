@@ -1,6 +1,6 @@
 diff -Nur elf2flt-v2021.08.orig/elf2flt.c elf2flt-v2021.08/elf2flt.c
---- elf2flt-v2021.08.orig/elf2flt.c	2023-01-09 11:08:28.637676113 +0100
-+++ elf2flt-v2021.08/elf2flt.c	2023-01-09 11:16:05.447182514 +0100
+--- elf2flt-v2021.08.orig/elf2flt.c	2023-02-26 11:31:48.758810872 +0100
++++ elf2flt-v2021.08/elf2flt.c	2023-02-26 11:32:05.714465277 +0100
 @@ -81,7 +81,7 @@
  #include <elf/v850.h>
  #elif defined(TARGET_xtensa)
@@ -19,18 +19,8 @@ diff -Nur elf2flt-v2021.08.orig/elf2flt.c elf2flt-v2021.08/elf2flt.c
  #else
  #error "Don't know how to support your CPU architecture??"
  #endif
-@@ -351,7 +353,8 @@
- {
-   if ((s->flags & (SEC_DATA | SEC_READONLY | SEC_RELOC)) ==
-       (SEC_DATA | SEC_READONLY | SEC_RELOC)) {
--#if defined(TARGET_m68k) || defined(TARGET_riscv64) || defined(TARGET_xtensa)
-+#if defined(TARGET_m68k) || defined(TARGET_riscv64) || \
-+	  defined(TARGET_xtensa) || defined(TARGET_riscv32)
-     if (!strcmp(".eh_frame", s->name))
-       return false;
- #endif
-@@ -838,12 +841,21 @@
- 					goto good_32bit_resolved_reloc;
+@@ -849,12 +851,21 @@
+ 					break;
  				default:
  					goto bad_resolved_reloc;
 -#elif defined(TARGET_riscv64)
@@ -53,8 +43,8 @@ diff -Nur elf2flt-v2021.08.orig/elf2flt.c elf2flt-v2021.08/elf2flt.c
  				case R_RISCV_32:
  				case R_RISCV_64:
 diff -Nur elf2flt-v2021.08.orig/ld-elf2flt.c elf2flt-v2021.08/ld-elf2flt.c
---- elf2flt-v2021.08.orig/ld-elf2flt.c	2023-01-09 11:08:16.441289072 +0100
-+++ elf2flt-v2021.08/ld-elf2flt.c	2023-01-09 11:16:43.236237537 +0100
+--- elf2flt-v2021.08.orig/ld-elf2flt.c	2023-02-26 11:31:21.047376888 +0100
++++ elf2flt-v2021.08/ld-elf2flt.c	2023-02-26 11:32:05.714465277 +0100
 @@ -327,7 +327,7 @@
  	/* riscv adds a global pointer symbol to the linker file with the
  	   "RISCV_GP:" prefix. Remove the prefix for riscv64 architecture and
