@@ -1,0 +1,11 @@
+diff -Nur elf2flt-v2021.08.orig/elf2flt.c elf2flt-v2021.08/elf2flt.c
+--- elf2flt-v2021.08.orig/elf2flt.c	2023-02-26 11:32:05.714465277 +0100
++++ elf2flt-v2021.08/elf2flt.c	2023-02-26 15:04:52.726514896 +0100
+@@ -852,6 +852,7 @@
+ 				default:
+ 					goto bad_resolved_reloc;
+ #elif defined(TARGET_riscv64) || defined(TARGET_riscv32)
++				case R_RISCV_NONE:
+ 				case R_RISCV_32_PCREL:
+ 				case R_RISCV_ADD8:
+ 				case R_RISCV_ADD16:
