@@ -50,5 +50,6 @@ uclibc-ng-test-install:
 	echo '00:11:22:33:44:55 teeth' > ${IDIR_UCLIBC_NG_TEST}/etc/ethers
 	${INSTALL_DIR} ${IDIR_UCLIBC_NG_TEST}/usr/lib
 	${CP} $(WRKINST)/usr/lib/* ${IDIR_UCLIBC_NG_TEST}/usr/lib/
+	-find $(IDIR_UCLIBC_NG_TEST) -name \*.gdb -delete
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
