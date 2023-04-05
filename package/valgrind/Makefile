@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		valgrind
-PKG_VERSION:=		3.13.0
+PKG_VERSION:=		3.20.0
 PKG_RELEASE:=		1
-PKG_HASH:=		d76680ef03f00cd5e970bbdcd4e57fb1f6df7d2e2c071635ef2be74790190c3b
+PKG_HASH:=		8536c031dbe078d342f121fa881a9ecd205cb5a78e639005ad570011bdb9f3c6
 PKG_DESCR:=		memory management debugging tool
 PKG_SECTION:=		app/debug
 PKG_URL:=		http://valgrind.org/
@@ -20,7 +20,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,VALGRIND,valgrind,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-AUTOTOOL_STYLE:=	autoreconf
 ifeq ($(ADK_TARGET_LIB_MUSL),y)
 TARGET_CPPFLAGS+=	-D__MUSL__
 endif
@@ -31,9 +30,13 @@ CONFIGURE_ENV+=		ac_cv_file__proc_self_fd=yes \
 valgrind-install:
 	$(INSTALL_DIR) $(IDIR_VALGRIND)/usr/bin
 	$(INSTALL_DIR) $(IDIR_VALGRIND)/usr/lib/valgrind
+	$(INSTALL_DIR) $(IDIR_VALGRIND)/usr/libexec/valgrind
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/valgrind $(IDIR_VALGRIND)/usr/bin/
+	$(INSTALL_BIN) $(WRKBUILD)/memcheck/memcheck-*-linux \
+		$(IDIR_VALGRIND)/usr/libexec/valgrind
+	$(CP) $(WRKINST)/usr/libexec/valgrind/default.supp \
+		$(IDIR_VALGRIND)/usr/libexec/valgrind
 	$(CP) $(WRKINST)/usr/lib/valgrind/* \
 		$(IDIR_VALGRIND)/usr/lib/valgrind
-	touch $(IDIR_VALGRIND)/usr/lib/valgrind/default.supp
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
