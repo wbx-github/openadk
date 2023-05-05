@@ -34,7 +34,7 @@ endif
 else
 ifeq ($(ADK_TARGET_ARCH_AVR32),)
 ifeq ($(ADK_TARGET_BINFMT_FLAT),)
-	${CP} ${STAGING_TARGET_DIR}/usr/lib/libgcc*.so* ${IDIR_LIBGCC}/$(ADK_TARGET_LIBC_PATH)
+	-${CP} ${STAGING_TARGET_DIR}/usr/lib/libgcc*.so* ${IDIR_LIBGCC}/$(ADK_TARGET_LIBC_PATH)
 endif
 endif
 endif
