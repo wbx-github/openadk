@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libffi
-PKG_VERSION:=		3.4.2
+PKG_VERSION:=		3.4.4
 PKG_RELEASE:=		1
-PKG_HASH:=		540fb721619a6aba3bdeef7d940d8e9e0e6d2c193595bc243241b77ff9e93620
+PKG_HASH:=		d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676
 PKG_DESCR:=		foreign function interface library
 PKG_SECTION:=		libs/misc
 HOST_BUILDDEP:=		libtool-host
@@ -22,7 +22,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,LIBFFI,libffi,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBFFI,libffi,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-AUTOTOOL_STYLE:=	autoreconf
 HOST_STYLE:=		auto
 HOST_CONFIGURE_ARGS+=	--disable-builddir --with-pic --disable-symvers
 CONFIGURE_ARGS+=	--disable-builddir --with-pic --disable-symvers
