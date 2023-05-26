@@ -1,9 +1,0 @@
-	fix for the completely empty DESTDIR
---- ca-certificates-20090814.orig/sbin/Makefile	2007-02-02 07:23:19.000000000 +0100
-+++ ca-certificates-20090814/sbin/Makefile	2009-08-22 20:37:17.581921717 +0200
-@@ -8,4 +8,5 @@ all:
- clean:
- 
- install:
-+	mkdir -p $(DESTDIR)/usr/sbin
- 	install -m755 update-ca-certificates $(DESTDIR)/usr/sbin/
