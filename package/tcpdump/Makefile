@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		tcpdump
-PKG_VERSION:=		4.9.3
+PKG_VERSION:=		4.99.4
 PKG_RELEASE:=		1
-PKG_HASH:=		2cd47cb3d460b6ff75f4a9940f594317ad456cfbf2bd2c8e5151e16559db6410
+PKG_HASH:=		0232231bb2f29d6bf2426e70a08a7e0c63a0d59a9b44863b7f5e2357a6e49fea
 PKG_DESCR:=		tool for network monitoring and data acquisition
 PKG_SECTION:=		net/debug
 PKG_DEPENDS:=		libpcap
@@ -39,7 +39,7 @@ XAKE_FLAGS+=		CCOPT="${TARGET_CFLAGS}" \
 			INCLS="-I. -I${STAGING_TARGET_DIR}/usr/include"
 
 tcpdump-install:
-	${INSTALL_DIR} ${IDIR_TCPDUMP}/usr/sbin
-	${INSTALL_BIN} ${WRKINST}/usr/sbin/tcpdump ${IDIR_TCPDUMP}/usr/sbin
+	${INSTALL_DIR} ${IDIR_TCPDUMP}/usr/bin
+	${INSTALL_BIN} ${WRKINST}/usr/bin/tcpdump ${IDIR_TCPDUMP}/usr/bin
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
