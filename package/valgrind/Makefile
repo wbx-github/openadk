@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		valgrind
-PKG_VERSION:=		3.20.0
+PKG_VERSION:=		3.21.0
 PKG_RELEASE:=		1
-PKG_HASH:=		8536c031dbe078d342f121fa881a9ecd205cb5a78e639005ad570011bdb9f3c6
+PKG_HASH:=		10ce1618bb3e33fad16eb79552b0a3e1211762448a0d7fce11c8a6243b9ac971
 PKG_DESCR:=		memory management debugging tool
 PKG_SECTION:=		app/debug
 PKG_URL:=		http://valgrind.org/
@@ -27,6 +27,10 @@ CONFIGURE_ENV+=		ac_cv_file__proc_self_fd=yes \
 			ac_cv_file__proc_self_exe=yes \
 			ac_cv_file__proc_self_maps=yes
 
+ifeq ($(ADK_TARGET_ARCH_ARM),y)
+CONFIGURE_ARGS+=	--host=$(patsubst arm-%,armv7-%,$(GNU_TARGET_NAME))
+endif
+
 valgrind-install:
 	$(INSTALL_DIR) $(IDIR_VALGRIND)/usr/bin
 	$(INSTALL_DIR) $(IDIR_VALGRIND)/usr/lib/valgrind
@@ -35,6 +39,8 @@ valgrind-install:
 	$(INSTALL_BIN) $(WRKBUILD)/memcheck/memcheck-*-linux \
 		$(IDIR_VALGRIND)/usr/libexec/valgrind
 	$(CP) $(WRKINST)/usr/libexec/valgrind/default.supp \
+		$(IDIR_VALGRIND)/usr/libexec/valgrind
+	$(CP) $(WRKINST)/usr/libexec/valgrind/*.so \
 		$(IDIR_VALGRIND)/usr/libexec/valgrind
 	$(CP) $(WRKINST)/usr/lib/valgrind/* \
 		$(IDIR_VALGRIND)/usr/lib/valgrind
