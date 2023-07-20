@@ -5,7 +5,7 @@ PKG_NAME:=		glibc
 ifeq ($(ADK_LIBC_VERSION),git)
 PKG_VERSION:=		2.37.90
 PKG_GLIBCVER:=		2.37.9000
-PKG_SITES:=		git://sourceware.org/git/glibc.git
+PKG_SITES:=		https://sourceware.org/git/glibc.git
 PKG_RELEASE:=		1
 endif
 ifeq ($(ADK_TARGET_LIB_GLIBC_2_37),y)
