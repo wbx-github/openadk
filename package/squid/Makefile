@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		squid
-PKG_VERSION:=		5.2
+PKG_VERSION:=		6.1
 PKG_RELEASE:=		1
-PKG_HASH:=		ea921f055c6cc4b3c6542d995f5a7c5980f2f91adaaa10fe8260d0f1527aaf80
+PKG_HASH:=		6b029096cf531fc7bf83a305efeb0fdb2628cd42a4d20a61e0ab22e85a39c4e7
 PKG_DESCR:=		web and cache proxy
 PKG_SECTION:=		net/proxy
 PKG_DEPENDS:=		libltdl
 PKG_BUILDDEP:=		libtool
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.squid-cache.org/
-PKG_SITES:=		http://www.squid-cache.org/Versions/v5/
+PKG_SITES:=		http://www.squid-cache.org/Versions/v6/
 
 PKG_SUBPKGS:=		SQUID SQUID_MOD_BASIC_AUTH_GETPWNAM SQUID_MOD_BASIC_AUTH_NCSA
 PKG_SUBPKGS+=		SQUID_MOD_BASIC_AUTH_SMB SQUID_MOD_DIGEST_AUTH_FILE
@@ -112,34 +112,17 @@ $(eval $(call PKG_mod_template,SQUID_MOD_NTLM_AUTH_FAKE,ntlm_fake_auth))
 TARGET_LDFLAGS+=	-lpthread
 HOST_CXXFLAGS+=		-static-libstdc++
 
-CONFIGURE_ENV+=		ac_cv_sizeof_void_p=4 \
-			ac_cv_sizeof_short=2 \
-			ac_cv_sizeof_int=4 \
-			ac_cv_sizeof_long=4 \
-			ac_cv_sizeof_long_long=8 \
-			ac_cv_sizeof___int64=0 \
-			ac_cv_sizeof_int16_t=2 \
-			ac_cv_sizeof_uint16_t=2 \
-			ac_cv_sizeof_u_int16_t=2 \
-			ac_cv_sizeof_int32_t=4 \
-			ac_cv_sizeof_uint32_t=4 \
-			ac_cv_sizeof_u_int32_t=4 \
-			ac_cv_sizeof_int64_t=8 \
-			ac_cv_sizeof_uint64_t=8 \
-			ac_cv_sizeof_u_int64_t=8 \
-			ac_cv_func_setresuid=no \
-			ac_cv_func_va_copy=no \
-			ac_cv_func___va_copy=no \
+CONFIGURE_ENV+=		ac_cv_func_setresuid=yes \
+			ac_cv_func_va_copy=yes \
+			ac_cv_func___va_copy=yes \
 			ac_cv_epoll_works=yes \
-			ac_cv_lib_nsl_main=no \
 			ac_cv_func_strnstr=no \
-			squid_cv_pf_inet6=yes \
-			squid_cv_gnu_atomics=yes \
 			ac_cv_have_squid=yes
 XAKE_FLAGS+=		MKDIR_P="mkdir -p"
 CONFIGURE_ARGS+=	--datadir=/usr/share/squid \
 			--libexecdir=/usr/lib/squid \
 			--sysconfdir=/etc/squid \
+			--disable-arch-native \
 			--with-gnu-ld \
 			--enable-x-accelerator-vary \
 			--with-pthreads \
@@ -179,8 +162,6 @@ squid-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 		${IDIR_SQUID}/etc/squid/
 	${INSTALL_DATA} ./files/squid.conf ${IDIR_SQUID}/etc/squid/
 	${INSTALL_DIR} ${IDIR_SQUID}/usr/share/squid/errors
-	${CP} ${WRKINST}/usr/share/squid/errors/en \
-		${IDIR_SQUID}/usr/share/squid/errors
 	${CP} ${WRKINST}/usr/share/squid/errors/templates \
 		${IDIR_SQUID}/usr/share/squid/errors
 	${CP} ${WRKINST}/usr/share/squid/icons ${IDIR_SQUID}/usr/share/squid/
