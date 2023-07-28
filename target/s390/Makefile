@@ -5,11 +5,11 @@ include $(ADK_TOPDIR)/rules.mk
 include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
-KERNEL:=$(LINUX_DIR)/arch/s390/boot/compressed/vmlinux
+KERNEL:=$(LINUX_DIR)/arch/s390/boot/bzImage
 
-QEMU_ARGS:=-monitor null -M s390-ccw-virtio-2.4
+QEMU_ARGS:=-monitor null -M s390-ccw-virtio
 QEMU_ARGS+=${ADK_QEMU_ARGS}
-QEMU_ARGS+=-net nic,model=virtio -net user
+QEMU_ARGS+=-net nic,model=virtio -net user -serial mon:stdio
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)

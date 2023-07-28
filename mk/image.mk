@@ -167,6 +167,7 @@ ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
 		echo "nod /dev/ram 0655 0 0 b 1 1"; \
 		echo "nod /dev/ttyS0 0660 0 0 c 4 64"; \
 		echo "nod /dev/ttyS1 0660 0 0 c 4 65"; \
+		echo "nod /dev/ttysclp0 0660 0 0 c 4 65"; \
 		echo "nod /dev/ttyB0 0660 0 0 c 11 0"; \
 		echo "nod /dev/ttyB1 0660 0 0 c 11 1"; \
 		echo "nod /dev/ttyAMA0 0660 0 0 c 204 64"; \
