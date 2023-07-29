@@ -1,0 +1,12 @@
+diff -Nur linux-6.1.41.orig/arch/nios2/configs/10m50_defconfig linux-6.1.41/arch/nios2/configs/10m50_defconfig
+--- linux-6.1.41.orig/arch/nios2/configs/10m50_defconfig        2023-07-24 18:55:35.000000000 +0200
++++ linux-6.1.41/arch/nios2/configs/10m50_defconfig     2023-07-29 13:12:27.796785539 +0200
+@@ -20,6 +20,8 @@
+ CONFIG_NIOS2_DCACHE_SIZE=0x8000
+ CONFIG_NIOS2_ICACHE_SIZE=0x8000
+ # CONFIG_NIOS2_CMDLINE_IGNORE_DTB is not set
++CONFIG_NIOS2_DTB_SOURCE_BOOL=y
++CONFIG_NIOS2_DTB_SOURCE="10m50_devboard.dts"
+ CONFIG_NET=y
+ CONFIG_PACKET=y
+ CONFIG_UNIX=y
