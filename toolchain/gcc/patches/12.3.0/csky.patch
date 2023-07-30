@@ -1,0 +1,12 @@
+diff -Nur gcc-11.2.0.orig/libgcc/config/csky/linux-atomic.c gcc-11.2.0/libgcc/config/csky/linux-atomic.c
+--- gcc-11.2.0.orig/libgcc/config/csky/linux-atomic.c	2021-07-28 08:55:08.760307899 +0200
++++ gcc-11.2.0/libgcc/config/csky/linux-atomic.c	2021-12-14 14:19:23.685729233 +0100
+@@ -24,7 +24,7 @@
+    <http://www.gnu.org/licenses/>.	 */
+ 
+ /* Kernel helper for compare-and-exchange.  */
+-inline int
++int
+ __kernel_cmpxchg (int oldval, int newval, volatile int *ptr)
+ {
+   register int _a0 asm ("a0") = oldval;
