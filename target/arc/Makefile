@@ -12,6 +12,7 @@ KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 endif
 
 QEMU_ARGS:=-monitor none -serial stdio
+QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 QEMU_ARGS+=${ADK_QEMU_ARGS}
 
 ifeq ($(ADK_TARGET_CPU_ARC_ARC700),y)
