@@ -8,18 +8,23 @@ include $(ADK_TOPDIR)/mk/buildhlp.mk
 
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_GIT),y)
 BINUTILS_VERSION:=	git
+BFDLIB:=		.libs/libbfd.a
 endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_41),y)
 BINUTILS_VERSION:=	2.41
+BFDLIB:=		.libs/libbfd.a
 endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_40),y)
 BINUTILS_VERSION:=	2.40
+BFDLIB:=		libbfd.a
 endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_39),y)
 BINUTILS_VERSION:=	2.39
+BFDLIB:=		libbfd.a
 endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_28),y)
 BINUTILS_VERSION:=	2.28
+BFDLIB:=		libbfd.a
 endif
 
 $(WRKBUILD)/.configured:
@@ -30,7 +35,7 @@ $(WRKBUILD)/.configured:
 		--target=$(GNU_TARGET_NAME) \
 		--with-bfd-include-dir=$(TOOLCHAIN_BUILD_DIR)/w-binutils-$(BINUTILS_VERSION)-1/binutils-$(BINUTILS_VERSION)/bfd \
 		--with-binutils-include-dir=$(TOOLCHAIN_BUILD_DIR)/w-binutils-$(BINUTILS_VERSION)-1/binutils-$(BINUTILS_VERSION)/include \
-		--with-libbfd=$(TOOLCHAIN_BUILD_DIR)/w-binutils-$(BINUTILS_VERSION)-1/binutils-$(BINUTILS_VERSION)/bfd/libbfd.a \
+		--with-libbfd=$(TOOLCHAIN_BUILD_DIR)/w-binutils-$(BINUTILS_VERSION)-1/binutils-$(BINUTILS_VERSION)/bfd/$(BFDLIB) \
 		--with-libiberty=$(TOOLCHAIN_BUILD_DIR)/w-binutils-$(BINUTILS_VERSION)-1/binutils-$(BINUTILS_VERSION)/libiberty/libiberty.a )
 	touch $@
 
