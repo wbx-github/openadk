@@ -46,7 +46,7 @@ do-install:
 ifneq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 	${INSTALL_DIR} ${IDIR_GLIBC}/$(ADK_TARGET_LIBC_PATH)
 	$(CP) $(STAGING_TARGET_DIR)/lib/ld*.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH)
-	for file in libc libpthread librt libcrypt libdl libm libanl libnsl libresolv libutil libnss_dns libnss_files; do \
+	for file in libc libpthread librt libdl libm libanl libnsl libresolv libutil libnss_dns libnss_files; do \
 		$(CP) $(STAGING_TARGET_DIR)/lib/$$file.so* $(IDIR_GLIBC)/$(ADK_TARGET_LIBC_PATH); \
 	done
 else
