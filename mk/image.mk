@@ -165,6 +165,7 @@ ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
 		done; \
 		echo "nod /dev/null 0666 0 0 c 1 3"; \
 		echo "nod /dev/zero 0666 0 0 c 1 5"; \
+		echo "nod /dev/kmsg 0644 0 0 c 1 11"; \
 		echo "nod /dev/ram 0655 0 0 b 1 1"; \
 		echo "nod /dev/mem 0665 0 0 c 1 1"; \
 		echo "nod /dev/random 0666 0 0 c 1 8"; \
