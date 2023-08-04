@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		util-linux
-PKG_VERSION:=		2.36
-PKG_RELEASE:=		2
-PKG_HASH:=		9e4b1c67eb13b9b67feb32ae1dc0d50e08ce9e5d82e1cccd0ee771ad2fa9e0b1
+PKG_VERSION:=		2.39
+PKG_RELEASE:=		1
+PKG_HASH:=		32b30a336cda903182ed61feb3e9b908b762a5e66fe14e43efb88d37162075cb
 PKG_DESCR:=		basic utilities
 PKG_SECTION:=		base/apps
 PKG_BUILDDEP:=		ncurses
