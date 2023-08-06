@@ -63,6 +63,7 @@ GCC_CONFOPTS:=		--prefix=$(TOOLCHAIN_DIR)/usr \
 			--disable-libquadmath \
 			--disable-libquadmath-support \
 			--disable-decimal-float \
+			--disable-gcov \
 			--disable-libstdcxx-pch \
 			--disable-ppl-version-check \
 			--disable-cloog-version-check \
