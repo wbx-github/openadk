@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mpg123
-PKG_VERSION:=		1.3.1
+PKG_VERSION:=		1.31.3
 PKG_RELEASE:=		2
-PKG_HASH:=		36ffe1ff2246da8606c35f5199f439d969da20eadeb2c4ef4278c7aca8f88a5d
+PKG_HASH:=		1ca77d3a69a5ff845b7a0536f783fee554e1041139a6b978f6afe14f5814ad1a
 PKG_DESCR:=		mp3 console player
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		alsa-lib
