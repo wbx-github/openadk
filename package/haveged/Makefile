@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		haveged
-PKG_VERSION:=		1.9.1
+PKG_VERSION:=		1.9.18
 PKG_RELEASE:=		1
-PKG_HASH:=		9c2363ed9542a6784ff08e247182137e71f2ddb79e8e6c1ac4ad50d21ced3715
+PKG_HASH:=		b835fa02b52ee7d06276e028571cadcb14d08f5e5a4b5767adf81451f70561c7
 PKG_DESCR:=		entropy gathering daemon
 PKG_SECTION:=		sys/misc
-PKG_SITES:=		http://www.issihosts.com/haveged/
+PKG_SITES:=	 	https://github.com/jirka-h/haveged/archive/refs/tags/
 
 PKG_ARCH_DEPENDS:=	!arm !mips
 
-DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
+DISTFILES:=             v$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -23,7 +23,7 @@ CONFIGURE_ARGS+=	--enable-clock_gettime=yes
 
 haveged-install:
 	$(INSTALL_DIR) $(IDIR_HAVEGED)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/libhaveg*.so* \
+	-$(CP) $(WRKINST)/usr/lib/libhaveg*.so* \
 		$(IDIR_HAVEGED)/usr/lib
 	$(INSTALL_DIR) $(IDIR_HAVEGED)/usr/sbin
 	$(INSTALL_BIN) $(WRKINST)/usr/sbin/haveged \
