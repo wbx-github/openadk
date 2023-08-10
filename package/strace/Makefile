@@ -12,7 +12,7 @@ PKG_SECTION:=		app/debug
 PKG_URL:=		https://strace.io
 PKG_SITES:=		https://strace.io/files/$(PKG_VERSION)/
 
-PKG_ARCH_DEPENDS:=	!h8300 !nds32
+PKG_ARCH_DEPENDS:=	!h8300 !nds32 !cris
 
 include ${ADK_TOPDIR}/mk/package.mk
 
