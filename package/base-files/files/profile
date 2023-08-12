@@ -1,6 +1,7 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 export TERM=linux
 export EDITOR=/bin/vi
+export M4=/usr/bin/m4
 if [[ $(id -u) = 0 ]]; then
 	export PS1='`whoami`@`hostname`:`pwd` # '
 else
