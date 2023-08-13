@@ -1,0 +1,20 @@
+--- openssl-3.0.10.orig/Configurations/unix-Makefile.tmpl	2023-08-01 15:47:24.000000000 +0200
++++ openssl-3.0.10/Configurations/unix-Makefile.tmpl	2023-08-12 19:44:43.932070216 +0200
+@@ -523,7 +523,7 @@ build_all_generated: $(GENERATED_MANDATO
+ 	@echo "         then make will fail..."
+ 	@ : {- output_on() if $disabled{makedepend}; "" -}
+ 
+-all: build_sw build_docs
++all: build_sw
+ 
+ test: tests
+ {- dependmagic('tests'); -}: build_programs_nodep build_modules_nodep link-utils run_tests
+@@ -546,7 +546,7 @@ list-tests:
+ 	@echo "Tests are not supported with your chosen Configure options"
+ 	@ : {- output_on() if !$disabled{tests}; "" -}
+ 
+-install: install_sw install_ssldirs install_docs {- $disabled{fips} ? "" : "install_fips" -}
++install: install_sw install_ssldirs {- $disabled{fips} ? "" : "install_fips" -}
+ 
+ uninstall: uninstall_docs uninstall_sw {- $disabled{fips} ? "" : "uninstall_fips" -}
+ 
