@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		curl
-PKG_VERSION:=		8.1.1
+PKG_VERSION:=		8.2.1
 PKG_RELEASE:=		1
-PKG_HASH:=		08a948e061929645597c1ef7194e07b308b22084ff03fa7400b465e6c05149e5
+PKG_HASH:=		dd322f6bd0a20e6cebdfd388f69e98c3d183bed792cf4713c8a7ef498cba4894
 PKG_DESCR:=		client-side url transfer tool
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		libcurl
@@ -25,10 +25,13 @@ PKGSS_LIBCURL:=		zlib
 PKG_FLAVOURS_CURL:=	WITH_IPV6
 PKGFD_WITH_IPV6:=	enable ipv6 support
 
-PKG_CHOICES_CURL:=	WITH_LIBRESSL WITH_GNUTLS WITH_WOLFSSL WITHOUT_SSL
+PKG_CHOICES_CURL:=	WITH_LIBRESSL WITH_OPENSSL WITH_GNUTLS WITH_WOLFSSL WITHOUT_SSL
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCB_WITH_LIBRESSL:=	libressl
+PKGCD_WITH_OPENSSL:=	use libopenssl for crypto
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
+PKGCB_WITH_OPENSSL:=	openssl
 PKGCD_WITH_GNUTLS:=	use gnutls for crypto
 PKGCS_WITH_GNUTLS:=	libgnutls ca-certificates
 PKGCB_WITH_GNUTLS:=	gnutls
@@ -48,35 +51,36 @@ HOST_CONFIGURE_ARGS+=	--without-ssl
 
 ifeq (${ADK_PACKAGE_CURL_WITH_LIBRESSL},y)
 CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
-			--without-gnutls \
-			--without-axtls
+			--without-gnutls
+endif
+ifeq (${ADK_PACKAGE_CURL_WITH_OPENSSL},y)
+CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
+			--without-gnutls
 endif
 ifeq (${ADK_PACKAGE_CURL_WITH_GNUTLS},y)
 CONFIGURE_ARGS+=	--with-gnutls="${STAGING_TARGET_DIR}/usr" \
-			--without-openssl \
-			--without-axtls
+			--without-openssl
 endif
 ifeq (${ADK_PACKAGE_CURL_WITH_WOLFSSL},y)
 CONFIGURE_ARGS+=	--with-cyassl="${STAGING_TARGET_DIR}/usr" \
 			--without-openssl \
-			--without-gnutls \
-			--without-axtls
+			--without-gnutls
 endif
 ifeq (${ADK_PACKAGE_CURL_WITHOUT_SSL},y)
 CONFIGURE_ARGS+=	--without-ssl \
-			--without-gnutls \
-			--without-axtls
+			--without-gnutls
 endif
 
-CONFIGURE_ENV+=		curl_typeof_curl_socklen_t=socklen_t
+CONFIGURE_ENV+=		curl_typeof_curl_socklen_t=socklen_t \
+			LDFLAGS='$(TARGET_LDFLAGS) -latomic'
 CONFIGURE_ARGS+=	--enable-cookies \
 			--enable-crypto-auth \
-			--enable-nonblocking \
 			--enable-file \
 			--enable-ftp \
 			--enable-http \
 			--enable-proxy \
 			--disable-curldebug \
+			--disable-ntlm \
 			--disable-ntlm-wb \
 			--disable-symbol-hiding \
 			--disable-ares \
@@ -92,7 +96,6 @@ CONFIGURE_ARGS+=	--enable-cookies \
 			--disable-verbose \
 			--without-libssh2 \
 			--without-librtmp \
-			--without-libidn \
 			--with-ca-path="/etc/ssl/certs" \
 			--with-random="/dev/urandom" \
 			--without-ca-bundle
