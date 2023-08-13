@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		200ebe147f6cb3f101fd0cdf9e02442af7ddca298dffd9f456878e7ccac676e8
 PKG_DESCR:=		secure shell implementation
 PKG_SECTION:=		net/security
-PKG_BUILDDEP:=		zlib libressl
-PKG_DEPENDS:=		zlib libressl
+PKG_BUILDDEP:=		zlib
+PKG_DEPENDS:=		zlib
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.openssh.com/
 PKG_SITES:=		http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
@@ -31,10 +31,22 @@ PKGSN_OPENSSH_SFTP_CLIENT:=	openssh
 PKGSD_OPENSSH_SFTP_SERVER:=	sftp server
 PKGSN_OPENSSH_SFTP_SERVER:=	openssh
 
-PKG_FLAVOURS_OPENSSH:=	WITH_KRB5
+PKG_FLAVOURS_OPENSSH:=	WITH_KRB5 WITH_LIBXCRYPT
 PKGFD_WITH_KRB5:=	enable kerberos 5 support
 PKGFS_WITH_KRB5:=	libkrb5 libcom-err
 PKGFB_WITH_KRB5:=	krb5
+PKGFD_WITH_LIBXCRYPT:=	enable libxcrypt support
+PKGFS_WITH_LIBXCRYPT:=	libxcrypt
+PKGFB_WITH_LIBXCRYPT:=	libxcrypt
+
+PKG_CHOICES_OPENSSH:=	WITH_LIBRESSL WITH_OPENSSL
+PKGCD_WITH_LIBRESSL:=	with libressl
+PKGCS_WITH_LIBRESSL:=	libressl
+PKGCB_WITH_LIBRESSL:=	libressl
+PKGCD_WITH_OPENSSL:=	with openssl
+PKGCS_WITH_OPENSSL:=	libopenssl
+PKGCB_WITH_OPENSSL:=	openssl
+
 
 include ${ADK_TOPDIR}/mk/package.mk
 
@@ -62,12 +74,14 @@ CONFIGURE_ARGS+=	--without-pie
 endif
 
 CONFIGURE_ENV+=		LD='${TARGET_CC}' \
+			LDFLAGS='$(TARGET_LDFLAGS) -latomic' \
 			ac_cv_func_setlogin=no \
 			ac_cv_have_decl_PR_SET_NO_NEW_PRIVS=no \
 			ac_cv_lib_nsl_yp_match=no
 CONFIGURE_ARGS+=	--disable-strip \
 			--disable-etc-default-login \
 			--disable-lastlog \
+			--without-hardening \
 			--with-sandbox=no \
 			--disable-utmp \
 			--disable-utmpx \
