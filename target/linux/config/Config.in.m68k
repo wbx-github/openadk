@@ -1,0 +1,14 @@
+# This file is part of the OpenADK project. OpenADK is copyrighted
+# material, please see the LICENCE file in the top-level directory.
+
+config ADK_LINUX_KERNEL_M68020
+	bool
+	default y if ADK_TARGET_CPU_M68K_68020
+
+config ADK_LINUX_KERNEL_M68040
+	bool
+	default y if ADK_TARGET_CPU_M68K_68040
+
+config ADK_LINUX_KERNEL_M68KFPU_EMU
+	bool
+	default y if ADK_TARGET_CPU_M68K_68040

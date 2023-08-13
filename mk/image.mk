@@ -171,7 +171,6 @@ ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
 		echo "nod /dev/random 0666 0 0 c 1 8"; \
 		echo "nod /dev/urandom 0666 0 0 c 1 9"; \
 		echo "nod /dev/ttyS0 0660 0 0 c 4 64"; \
-		echo "nod /dev/ttyS1 0660 0 0 c 4 65"; \
 		echo "nod /dev/ttysclp0 0660 0 0 c 4 65"; \
 		echo "nod /dev/ttyB0 0660 0 0 c 11 0"; \
 		echo "nod /dev/ttyB1 0660 0 0 c 11 1"; \
@@ -184,6 +183,7 @@ ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
 		echo "nod /dev/ttyBF1 0660 0 0 c 204 65"; \
 		echo "nod /dev/ttyUL0 0660 0 0 c 204 187"; \
 		echo "nod /dev/ttyUL1 0660 0 0 c 204 188"; \
+		echo "nod /dev/ttyGF0 0660 0 0 c 254 0"; \
 		echo "slink /init /sbin/init 755 0 0"; \
 	) >>$@
 

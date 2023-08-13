@@ -8,6 +8,12 @@ include $(ADK_TOPDIR)/mk/image.mk
 KERNEL:=$(LINUX_DIR)/vmlinux
 
 QEMU_ARGS:=${ADK_QEMU_ARGS}
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_M68K_VIRT),y)
+QEMU_ARGS+=-M virt -netdev user,id=eth0 -device virtio-net-device,netdev=eth0
+ifeq ($(ADK_TARGET_FS),archive)
+QEMU_ARGS+=-append "rootwait root=/dev/vda1 ro" -drive file=qemu-m68k.img,format=raw,id=hd0 -device virtio-blk-device,drive=hd0
+endif
+endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_M68K_Q800),y)
 QEMU_ARGS+=-M q800
 endif
@@ -24,7 +30,11 @@ ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Use following command to create a QEMU Image:"
 	@echo "./scripts/create.sh qemu-${ADK_TARGET_CPU_ARCH}.img $(FW_DIR)/$(ROOTFSUSERTARBALL)"
 	@echo "Start qemu with following options:"
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_M68K_VIRT),y)
+	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+else
 	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) qemu-${ADK_TARGET_CPU_ARCH}.img'
+endif
 endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)

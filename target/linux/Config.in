@@ -21,6 +21,7 @@ source target/linux/config/Config.in.crypto
 source target/linux/config/Config.in.misc
 source target/linux/config/Config.in.arc
 source target/linux/config/Config.in.arm
+source target/linux/config/Config.in.m68k
 source target/linux/config/Config.in.mips
 source target/linux/config/Config.in.xtensa
 source target/linux/config/Config.in.pm
