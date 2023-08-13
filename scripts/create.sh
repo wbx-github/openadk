@@ -2,7 +2,7 @@
 #-
 # Copyright © 2010, 2011, 2012
 #	Thorsten Glaser <tg@mirbsd.org>
-# Copyright © 2010-2014
+# Copyright © 2010-2023
 #	Waldemar Brodkorb <wbx@openadk.org>
 #
 # Provided that these terms and disclaimer and all copyright notices
@@ -56,7 +56,7 @@ Syntax: $me [-c cfgfssize] [+g] [-i imagesize] [-p panictime]
 Explanation/Defaults:
 	-c: minimum 0, maximum 5, default 1 (MiB)
 	-g: enable installing GNU GRUB 2
-	-i: total image, default 512 (MiB; max. approx. 2 TiB)
+	-i: total image, default 2048 (MiB; max. approx. 2 TiB)
 	-p: default 10 (seconds; 0 disables; max. 300)
 	-s: default 115200 (bps, others: 9600 19200 38400 57600)
 	-t: enable serial console (+t disables it, default)
@@ -67,7 +67,7 @@ EOF
 
 cfgfs=1
 usegrub=0
-tgtmib=512
+tgtmib=2048
 panicreboot=10
 speed=115200
 serial=0
@@ -275,7 +275,7 @@ fi
 print "Creating ext2fs filesystem image..."
 cd "$T"
 f=0
-genext2fs -U -N 32768 -b $((partfssz)) -d src fsimg || f=1
+genext2fs -U -N 65536 -b $((partfssz)) -d src fsimg || f=1
 if (( !f )); then
 	# use bc(1): this may be over the shell’s 32-bit arithmetics
 	wantsz=$($bc <<<"$((partfssz))*1024")
