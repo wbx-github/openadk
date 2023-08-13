@@ -24,7 +24,7 @@ $(eval $(call HOST_template,GREP,grep,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,GREP,grep,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 grep-install:
-	$(INSTALL_DIR) $(IDIR_GREP)/usr/bin
+	$(INSTALL_DIR) $(IDIR_GREP)/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/{e,f,}grep \
 		$(IDIR_GREP)/bin
 
