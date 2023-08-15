@@ -13,6 +13,8 @@ PKG_URL:=		http://www.libressl.org
 PKG_SITES:=		http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/
 PKG_OPTS:=		dev
 
+PKG_ARCH_DEPENDS:=	!m68k !xtensa
+
 DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 PKG_SUBPKGS:=		LIBRESSL LIBRESSL_UTIL
