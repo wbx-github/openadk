@@ -8,6 +8,7 @@ config ADK_APPLIANCE_DEVELOPMENT
 	select ADK_PACKAGE_BISON
 	select ADK_PACKAGE_FLEX
 	select ADK_PACKAGE_PKGCONF
+	select ADK_PACKAGE_PATCH
 	select ADK_PACKAGE_AUTOCONF
 	select ADK_PACKAGE_AUTOMAKE
 	select ADK_PACKAGE_LIBTOOL
@@ -15,9 +16,10 @@ config ADK_APPLIANCE_DEVELOPMENT
 	select ADK_PACKAGE_MUSL_DEV if ADK_TARGET_LIB_MUSL
 	select ADK_PACKAGE_UCLIBC_NG_DEV if ADK_TARGET_LIB_UCLIBC_NG
 	select ADK_PACKAGE_GIT
+	select ADK_PACKAGE_M4
 	select ADK_PACKAGE_OPENSSH
 	select ADK_PACKAGE_OPENSSH_CLIENT
-	select ADK_PACKAGE_WGET
+	select ADK_PACKAGE_CURL
 	help
 	  If you want to develop software on your target, choose this
 	  appliance, so gcc, binutils and co will be selected.
