@@ -9,7 +9,7 @@ KERNEL:=$(LINUX_DIR)/vmlinux
 
 QEMU_ARGS:=${ADK_QEMU_ARGS}
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_M68K_VIRT),y)
-QEMU_ARGS+=-M virt -netdev user,id=eth0 -device virtio-net-device,netdev=eth0
+QEMU_ARGS+=-M virt -m 512M -netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 ifeq ($(ADK_TARGET_FS),archive)
 QEMU_ARGS+=-append "rootwait root=/dev/vda1 ro" -drive file=qemu-m68k.img,format=raw,id=hd0 -device virtio-blk-device,drive=hd0
 endif
