@@ -17,6 +17,7 @@ start)
 	fi
 	echo "Starting test script ..."
 	if [ -x /run.sh ];then
+		mount -o remount,rw /
 		/run.sh
 		quit
 	else
