@@ -23,6 +23,9 @@ $(eval $(call PKG_template,GLIBC,glibc,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPEN
 $(eval $(call PKG_template,GLIBC_DEV,glibc-dev,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 $(eval $(call PKG_template,GLIBC_GCONV,glibc-gconv,$(PKG_VERSION)-${PKG_RELEASE},${PKGSS_GLIBC_GCONV},${PKGSD_GLIBC_GCONV},${PKG_SECTION},${PKG_OPTS}))
 
+GLIBC_CONFOPTS:=	--build=$(GNU_HOST_NAME) \
+			--host=$(GNU_TARGET_NAME)
+
 GLIBC_ENV:=             PATH='${TARGET_PATH}' \
                         BUILD_CC='${CC_FOR_BUILD}' \
                         CFLAGS="$(TARGET_CFLAGS)" \
@@ -31,6 +34,7 @@ GLIBC_ENV:=             PATH='${TARGET_PATH}' \
                         CXX="${TARGET_CXX}" \
                         AR="${TARGET_AR}" \
                         RANLIB="${TARGET_RANLIB}" \
+                        ARCH="${ADK_TARGET_KARCH}" \
                         libc_cv_forced_unwind=yes \
 			libc_cv_cc_with_libunwind=yes \
                         libc_cv_c_cleanup=yes \
