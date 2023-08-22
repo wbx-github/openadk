@@ -7,6 +7,10 @@ include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/arch/riscv/boot/Image
 QEMU_ARGS:=-M virt -m 512 -nographic
+ifeq ($(ADK_TARGET_WITH_MMU),)
+QEMU_ARGS+=-bios none -cpu rv64,mmu=off
+endif
+
 ifeq ($(ADK_TARGET_QEMU_WITH_VIRTIO),y)
 QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 endif
