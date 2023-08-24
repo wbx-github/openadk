@@ -114,7 +114,7 @@ diff -Nur gcc-4.5.4.orig/libgcc/config.host gcc-4.5.4/libgcc/config.host
          tmake_file="lm32/t-lm32 lm32/t-elf t-softfp"
  	;;
 -lm32-*-uclinux*)
-+lm32-*-linux*)
++lm32-*-*linux*)
          extra_parts="crtbegin.o crtend.o crtbeginS.o crtendS.o crtbeginT.o"
 -        tmake_file="lm32/t-lm32 lm32/t-uclinux t-softfp"
 +        tmake_file="lm32/t-lm32 t-softfp"
