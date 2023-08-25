@@ -181,7 +181,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO
 	default "https://github.com/beagleboard/linux.git" if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK
 	default "https://git.phytec.de/git/linux-ti.git" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "https://github.com/kalray/linux_coolidge.git" if ADK_TARGET_ARCH_KVX
-	default "https://github.com/shenki/linux-lm32.git" if ADK_TARGET_ARCH_LM32
+	default "https://github.com/m-labs/linux-milkymist.git" if ADK_TARGET_ARCH_LM32
 	default "https://github.com/radxa/kernel.git" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
 	help
@@ -207,7 +207,7 @@ config ADK_TARGET_LINUX_KERNEL_GIT
 	string "git version"
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	default "b02c139d3608c8ae87f5398a3a29854f6df7a041" if ADK_TARGET_ARCH_KVX
-	default "b6a72d383cf0d4c9c448c1f4e5e8d496ea5c1fd8" if ADK_TARGET_ARCH_LM32
+	default "6a2f2e4198eaff63ee75f6085ce9f966c47b4441" if ADK_TARGET_ARCH_LM32
 	default "dc419608fb4e13bf1e33e6add31860730dd953fa" if ADK_TARGET_BOARD_BCM28XX
 	default "f8d3b2a0fa5054aaed0f14cd457db9d8922bb167" if ADK_TARGET_SYSTEM_ADSP_BF537
 	default "e7c8afc1dda7b7c18596d90ad6a17ae886650b72" if ADK_TARGET_SYSTEM_KINETIS_K70
@@ -228,12 +228,13 @@ config ADK_TARGET_LINUX_KERNEL_GIT_VER
 	default "4.4.52" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "2.6.33" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "3.14.79" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
-	default "4.8.0" if ADK_TARGET_SYSTEM_QEMU_LM32
+	default "3.6.0" if ADK_TARGET_SYSTEM_QEMU_LM32
 	default "5.8.12" if ADK_TARGET_ARCH_KVX
 
 config ADK_TARGET_LINUX_KERNEL_GIT_TYPE
 	string
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
+	default "branch" if ADK_TARGET_LINUX_ARCH_LM32
 	default "branch" if ADK_TARGET_LINUX_ARCH_LOONGARCH 
 	default "branch" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "branch" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
