@@ -27,7 +27,7 @@ targethelp:
 	@echo 'The kernel+initramfs file is: $(FW_DIR)/${TARGET_KERNEL}'
 ifeq ($(ADK_TARGET_SIM),y)
 	@echo "Run the simulator via:"
-	@echo '$(TARGET_CROSS)run --env operating --model bf512 $(FW_DIR)/$(TARGET_KERNEL)'
+	@echo '$(TARGET_CROSS)run --environment operating --model bf512 $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)
