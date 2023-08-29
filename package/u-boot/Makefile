@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2022.10
+PKG_VERSION:=		2023.01
 PKG_RELEASE:=		1
-PKG_HASH:=		50b4482a505bc281ba8470c399a3c26e145e29b23500bc35c50debd7fa46bdf8
+PKG_HASH:=		69423bad380f89a0916636e89e6dcbd2e4512d584308d922d1039d1e4331950f
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host
@@ -125,7 +125,7 @@ u-boot-install:
 	$(INSTALL_DIR) $(IDIR_U_BOOT)/usr/bin
 	$(INSTALL_BIN) $(WRKBUILD)/tools/env/fw_printenv \
 		$(IDIR_U_BOOT)/usr/bin
-	cd $(IDIR_U_BOOT)/usr/bin && ln -s fw_printenv fw_setenv
+	cd $(IDIR_U_BOOT)/usr/bin && ln -fs fw_printenv fw_setenv
 ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS),y)
 	$(CP) $(WRKBUILD)/idbloader.img $(FW_DIR)
 endif
