@@ -17,7 +17,6 @@ fi
 -c "reset init" \
 -c "flash probe 0" \
 -c "flash info 0" \
--c "flash write_image erase ${OUTPUT_DIR}/u-boot-spl.bin 0x08000000" \
--c "flash write_image erase ${OUTPUT_DIR}/u-boot-dtb.bin 0x08008000" \
+-c "flash write_image erase ${OUTPUT_DIR}/u-boot-dtb.bin 0x08000000" \
 -c "reset run" \
 -c "shutdown"
