@@ -1,0 +1,24 @@
+diff -Nur binutils-2.41.orig/bfd/config.bfd binutils-2.41/bfd/config.bfd
+--- binutils-2.41.orig/bfd/config.bfd	2023-07-03 01:00:00.000000000 +0200
++++ binutils-2.41/bfd/config.bfd	2023-09-07 17:03:12.853045008 +0200
+@@ -803,7 +803,7 @@
+     ;;
+ 
+   lm32-*-*linux*)
+-    targ_defvec=lm32_elf32_fdpic_vec
++    targ_defvec=lm32_elf32_vec
+     targ_selvecs=lm32_elf32_vec
+     ;;
+ 
+diff -Nur binutils-2.41.orig/ld/configure.tgt binutils-2.41/ld/configure.tgt
+--- binutils-2.41.orig/ld/configure.tgt	2023-07-03 01:00:00.000000000 +0200
++++ binutils-2.41/ld/configure.tgt	2023-09-07 17:03:44.364298973 +0200
+@@ -468,7 +468,7 @@
+ 			targ_extra_emuls="elf32iq10"
+ 			targ_extra_ofiles=ldelfgen.o
+ 			;;
+-lm32-*-*linux*)		targ_emul=elf32lm32fd
++lm32-*-*linux*)		targ_emul=elf32lm32
+ 			;;
+ lm32-*-*)		targ_emul=elf32lm32
+ 			targ_extra_emuls="elf32lm32fd"

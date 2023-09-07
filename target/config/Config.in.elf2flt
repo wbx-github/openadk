@@ -8,7 +8,6 @@ depends on ADK_TARGET_BINFMT_FLAT
 
 config ADK_TOOLCHAIN_ELF2FLT_GIT
 	bool "git"
-	depends on !ADK_TARGET_ARCH_LM32
 	depends on !ADK_TARGET_ARCH_SH
 
 config ADK_TOOLCHAIN_ELF2FLT_2021_08
@@ -21,9 +20,5 @@ config ADK_TOOLCHAIN_ELF2FLT_OLD
 	bool "old version"
 	depends on ADK_TARGET_ARCH_BFIN || \
 		ADK_TARGET_ARCH_SH
-
-config ADK_TOOLCHAIN_ELF2FLT_LM32
-	bool "lm32"
-	depends on ADK_TARGET_ARCH_LM32
 
 endchoice
