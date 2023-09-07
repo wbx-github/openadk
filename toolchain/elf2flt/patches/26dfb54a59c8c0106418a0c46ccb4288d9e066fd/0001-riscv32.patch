@@ -1,0 +1,42 @@
+diff -Nur elf2flt-v2023.04.orig/elf2flt.c elf2flt-v2023.04/elf2flt.c
+--- elf2flt-v2023.04.orig/elf2flt.c	2023-09-04 11:29:05.952417209 +0200
++++ elf2flt-v2023.04/elf2flt.c	2023-09-04 11:30:05.371065966 +0200
+@@ -81,7 +81,7 @@
+ #include <elf/v850.h>
+ #elif defined(TARGET_xtensa)
+ #include <elf/xtensa.h>
+-#elif defined(TARGET_riscv64)
++#elif defined(TARGET_riscv64) || defined(TARGET_riscv32)
+ #include <elf/riscv.h>
+ #endif
+ 
+@@ -127,6 +127,8 @@
+ #define ARCH	"xtensa"
+ #elif defined(TARGET_riscv64)
+ #define ARCH	"riscv64"
++#elif defined(TARGET_riscv32)
++#define ARCH	"riscv32"
+ #else
+ #error "Don't know how to support your CPU architecture??"
+ #endif
+@@ -822,7 +824,7 @@
+ 					goto good_32bit_resolved_reloc_update_text;
+ 				default:
+ 					goto bad_resolved_reloc;
+-#elif defined(TARGET_riscv64)
++#elif defined(TARGET_riscv64) || defined(TARGET_riscv32)
+ 				case R_RISCV_NONE:
+ 				case R_RISCV_32_PCREL:
+ 				case R_RISCV_ADD8:
+diff -Nur elf2flt-v2023.04.orig/ld-elf2flt.c elf2flt-v2023.04/ld-elf2flt.c
+--- elf2flt-v2023.04.orig/ld-elf2flt.c	2023-09-04 11:28:59.072573514 +0200
++++ elf2flt-v2023.04/ld-elf2flt.c	2023-09-04 11:29:32.507813592 +0200
+@@ -327,7 +327,7 @@
+ 	/* riscv adds a global pointer symbol to the linker file with the
+ 	   "RISCV_GP:" prefix. Remove the prefix for riscv64 architecture and
+ 	   the entire line for other architectures. */
+-	if (streq(TARGET_CPU, "riscv64"))
++	if (streq(TARGET_CPU, "riscv64") || streq(TARGET_CPU, "riscv32"))
+ 		append_sed(&sed, "^RISCV_GP:", "");
+ 	else
+ 		append_sed(&sed, "^RISCV_GP:", NULL);

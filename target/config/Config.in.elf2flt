@@ -3,12 +3,11 @@
 
 choice
 prompt "elf2flt version"
-default ADK_TOOLCHAIN_ELF2FLT_2023_04
+default ADK_TOOLCHAIN_ELF2FLT_GIT
 depends on ADK_TARGET_BINFMT_FLAT
 
-config ADK_TOOLCHAIN_ELF2FLT_2023_04
-	bool "2023-04"
-	depends on !ADK_TARGET_ARCH_BFIN
+config ADK_TOOLCHAIN_ELF2FLT_GIT
+	bool "git"
 	depends on !ADK_TARGET_ARCH_LM32
 	depends on !ADK_TARGET_ARCH_SH
 
