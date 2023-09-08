@@ -1,0 +1,52 @@
+diff -Nur elf2flt-26dfb54a59c8c0106418a0c46ccb4288d9e066fd.orig/elf2flt.c elf2flt-26dfb54a59c8c0106418a0c46ccb4288d9e066fd/elf2flt.c
+--- elf2flt-26dfb54a59c8c0106418a0c46ccb4288d9e066fd.orig/elf2flt.c	2023-09-08 08:49:00.529082893 +0200
++++ elf2flt-26dfb54a59c8c0106418a0c46ccb4288d9e066fd/elf2flt.c	2023-09-08 08:51:08.117679134 +0200
+@@ -75,7 +75,7 @@
+ #define FLAT_NIOS2_R_HIADJ_LO	2
+ #define FLAT_NIOS2_R_CALL26		4
+ #include <elf/nios2.h>
+-#elif defined(TARGET_sh)
++#elif defined(TARGET_sh2eb)
+ #include <elf/sh.h>
+ #elif defined(TARGET_sparc)
+ #include <elf/sparc.h>
+@@ -111,7 +111,7 @@
+ #define	ARCH	"sparc"
+ #elif defined(TARGET_v850)
+ #define	ARCH	"v850"
+-#elif defined(TARGET_sh)
++#elif defined(TARGET_sh2eb)
+ #define	ARCH	"sh"
+ #elif defined(TARGET_h8300)
+ #define	ARCH	"h8300"
+@@ -795,6 +795,12 @@
+ 
+ 				    flat_reloc_count++;
+ 				    break;
++#elif defined (TARGET_sh2eb)
++				case R_SH_DIR32:
++				    goto good_32bit_resolved_reloc;
++				case R_SH_REL32:
++				    relocation_needed = 0;
++				    continue;
+ #elif defined (TARGET_h8300)
+ 				case R_H8_DIR32:
+ 				case R_H8_DIR32A16:
+@@ -1328,7 +1334,7 @@
+ #endif /* TARGET_sparc */
+ 
+ 
+-#ifdef TARGET_sh
++#ifdef TARGET_sh2eb
+ 				case R_SH_DIR32:
+ 					relocation_needed = 1;
+ 					sym_vma = elf2flt_bfd_section_vma(sym_section);
+@@ -1339,7 +1345,7 @@
+ 					sym_addr += sym_vma + q->addend;
+ 					sym_addr -= q->address;
+ 					break;
+-#endif /* TARGET_sh */
++#endif /* TARGET_sh2eb */
+ 
+ #ifdef TARGET_e1
+ #define  htoe1l(x)              htonl(x)
