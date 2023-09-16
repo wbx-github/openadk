@@ -1,0 +1,14 @@
+diff -Nur gcc-6.2.0.orig/libgcc/config.host gcc-6.2.0/libgcc/config.host
+--- gcc-6.2.0.orig/libgcc/config.host	2016-05-17 08:15:52.000000000 +0200
++++ gcc-6.2.0/libgcc/config.host	2016-10-15 14:42:53.971919904 +0200
+@@ -962,6 +962,10 @@
+ 		;;
+ 	esac
+ 	;;
++nios2-*-linux-uclibc*)
++	tmake_file="$tmake_file nios2/t-nios2 nios2/t-linux t-libgcc-pic t-slibgcc-libgcc t-softfp-sfdf t-softfp"
++	md_unwind_header=nios2/linux-unwind.h
++	;;
+ nios2-*-linux*)
+ 	tmake_file="$tmake_file nios2/t-nios2 nios2/t-linux t-libgcc-pic t-slibgcc-libgcc"
+ 	md_unwind_header=nios2/linux-unwind.h
