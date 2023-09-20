@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gnutls
-PKG_VERSION:=		3.6.16
+PKG_VERSION:=		3.8.1
 PKG_RELEASE:=		1
-PKG_HASH:=		1b79b381ac283d8b054368b335c408fedcb9b7144e0c07f531e3537d4328f3b3
+PKG_HASH:=		ba8b9e15ae20aba88f44661978f5b5863494316fe7e722ede9d069fe6294829c
 PKG_DESCR:=		transport layer security library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgcrypt libtasn1 zlib libnettle libgmp libunistring
 PKG_BUILDDEP:=		libgcrypt liblzo libtasn1
 PKG_BUILDDEP+=		zlib ncurses libnettle libunistring
 PKG_URL:=		http://www.gnutls.org/
-PKG_SITES:=		https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/
+PKG_SITES:=		https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/
 PKG_LIBNAME:=		libgnutls
 PKG_OPTS:=		dev
 
@@ -41,7 +41,6 @@ CONFIGURE_ARGS+=	--disable-rpath \
 			--disable-doc \
 			--disable-tests \
 			--disable-seccomp-tests \
-			--with-libunistring-prefix='$(STAGING_TARGET_DIR)/usr' \
 			--without-libz-prefix \
 			--without-p11-kit
 CONFIGURE_ENV+=		ac_cv_prog_AR='$(TARGET_CROSS)ar'
@@ -52,7 +51,7 @@ libgnutls-install:
 
 gnutls-utils-install:
 	$(INSTALL_DIR) $(IDIR_GNUTLS_UTILS)/usr/bin
-	$(CP) $(WRKINST)/usr/bin/{{cert,srp,psk}tool,gnutls-{cli,serv}} \
+	$(CP) $(WRKINST)/usr/bin/{{cert,psk}tool,gnutls-{cli,serv}} \
 	    $(IDIR_GNUTLS_UTILS)/usr/bin
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
