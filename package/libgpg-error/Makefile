@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libgpg-error
-PKG_VERSION:=		1.42
+PKG_VERSION:=		1.47
 PKG_RELEASE:=		1
-PKG_HASH:=		fc07e70f6c615f8c4f590a8e37a9b8dd2e2ca1e9408f8e60459c67452b925e23
+PKG_HASH:=		9e3c670966b96ecc746c28c2c419541e3bcb787d1a73930f5e5f5e1bcbbb9bdb
 PKG_DESCR:=		helper library for common error codes and descriptions
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.gnupg.org/
@@ -59,6 +59,12 @@ endif
 ifeq ($(ADK_TARGET_ARCH_X86_64),y)
 LIBGPG_PREFIX:=		x86_64-pc-linux-gnu
 endif
+ifeq ($(ADK_TARGET_ARCH_XTENSA),y)
+LIBGPG_PREFIX:=		xtensa-unknown-linux-gnu
+endif
+
+CONFIGURE_ARGS+=	--disable-tests \
+			--disable-languages
 
 post-extract:
 	cd $(WRKSRC)/src/syscfg && ( \
