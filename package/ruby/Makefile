@@ -25,6 +25,9 @@ $(eval $(call PKG_template,RUBY,ruby,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS
 # uClibc setpgrp does not take arguments
 CONFIGURE_ENV+=         ac_cv_func_setpgrp_void=yes \
 			stack_protector=no \
+			ac_cv_func_finite=yes \
+			ac_cv_func_isinf=yes \
+			ac_cv_func_isnan=yes \
 			rb_cv_binary_elf=yes
 CONFIGURE_ARGS+=	--disable-install-doc \
 			--with-out-ext=fiddle \
