@@ -1,6 +1,6 @@
---- u-boot-2022.10.orig/tools/Makefile	2022-10-03 21:25:32.000000000 +0200
-+++ u-boot-2022.10/tools/Makefile	2023-01-26 10:01:05.399923828 +0100
-@@ -174,9 +174,9 @@ endif
+--- u-boot-2023.07.02.orig/tools/Makefile	2023-07-11 17:20:44.000000000 +0200
++++ u-boot-2023.07.02/tools/Makefile	2023-09-29 15:53:47.464079598 +0200
+@@ -172,9 +172,9 @@ endif
  # MXSImage needs LibSSL
  ifneq ($(CONFIG_MX23)$(CONFIG_MX28)$(CONFIG_ARMADA_38X)$(CONFIG_TOOLS_LIBCRYPTO),)
  HOSTCFLAGS_kwbimage.o += \

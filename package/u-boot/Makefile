@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2023.01
+PKG_VERSION:=		2023.07.02
 PKG_RELEASE:=		1
-PKG_HASH:=		69423bad380f89a0916636e89e6dcbd2e4512d584308d922d1039d1e4331950f
+PKG_HASH:=		6b6a48581c14abb0f95bd87c1af4d740922406d7b801002a9f94727fdde021d5
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host
@@ -94,6 +94,10 @@ CONFIG_STYLE:=		manual
 BUILD_STYLE:=		manual
 INSTALL_STYLE:=		manual
 
+ifeq ($(ADK_TARGET_BINFMT_FDPIC),y)
+EXTRA_CFLAGS:=		-mno-fdpic
+endif
+
 host-build:
 	(cd $(WRKBUILD) && env $(HOST_MAKE_ENV) $(MAKE) -f $(MAKE_FILE) \
 		$(HOST_MAKE_FLAGS) sandbox_defconfig )
@@ -110,6 +114,7 @@ do-configure:
 do-build:
 	(cd $(WRKBUILD) && env \
 		KBUILD_VERBOSE=1 \
+		KCFLAGS='$(EXTRA_CFLAGS)' \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
 		$(MAKE))
