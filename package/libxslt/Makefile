@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libxslt
-PKG_VERSION:=		1.1.37
+PKG_VERSION:=		1.1.38
 PKG_RELEASE:=		1
-PKG_HASH:=		3a4b27dc8027ccd6146725950336f1ec520928f320f144eb5fa7990ae6123ab4
+PKG_HASH:=		1f32450425819a09acaff2ab7a5a7f8a2ec7956e505d7beeb45e843d0e1ecab1
 PKG_DESCR:=		xslt library
 PKG_SECTION:=		libs/data
 PKG_DEPENDS:=		libxml2
@@ -28,7 +28,7 @@ $(eval $(call HOST_template,LIBXSLT,libxslt,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBXSLT,libxslt,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 $(eval $(call PKG_template,XSLTPROC,xsltproc,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_XSLTPROC},${PKGSC_XSLTPROC}))
 
-AUTOTOOL_STYLE:=	autoreconf
+#AUTOTOOL_STYLE:=	autoreconf
 HOST_LDFLAGS+=		-lxml2
 HOST_CONFIGURE_ARGS+=	--without-python \
 			--without-crypto \
