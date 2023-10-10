@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		taglib
-PKG_VERSION:=		1.9.1
+PKG_VERSION:=		1.13.1
 PKG_RELEASE:=		1
-PKG_HASH:=		72d371cd1419a87ae200447a53bff2be219283071e80fd12337928cc967dc71a
+PKG_HASH:=		c8da2b10f1bfec2cd7dbfcd33f4a2338db0765d851a50583d410bacf055cfd0b
 PKG_DESCR:=		audio meta-data library
 PKG_SECTION:=		libs/audio
 PKG_DEPENDS:=		zlib
@@ -31,7 +31,7 @@ do-configure:
 
 taglib-install:
 	$(INSTALL_DIR) $(IDIR_TAGLIB)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/libtag*.so* \
+	-$(CP) $(WRKINST)/usr/lib/libtag*.so* \
 		$(IDIR_TAGLIB)/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
