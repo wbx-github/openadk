@@ -4,38 +4,39 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kodi
-PKG_VERSION:=		19.5
+PKG_VERSION:=		20.2
 PKG_RELEASE:=		1
-PKG_HASH:=		56e0074f27f08496b2a21af5704a15378a2f0979ae3e9fa9a50a2630d0313d19
+PKG_HASH:=		4e81abf81172812bc8891f69a7a80a2b846298cecaae7b5009725e28a3040c23
 PKG_DESCR:=		software media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		python3 libsquish libressl libxz libfmt rapidjson
-PKG_DEPENDS+=		libass libmpeg2 libmad libmodplug libcurl
+PKG_DEPENDS+=		libass libmpeg2 libmad libmodplug libcurl libxshmfence
 PKG_DEPENDS+=		libflac libbz2 libtiff libnettle librtmp liblzo
 PKG_DEPENDS+=		yajl tinyxml libsqlite libpcrecpp libncurses libpng
 PKG_DEPENDS+=		libpcre libcdio libfreetype libsamplerate libuuid
 PKG_DEPENDS+=		taglib libjasper libmp3lame libgpg-error giflib
-PKG_DEPENDS+=		glib libdcadec libffmpeg libxvidcore libiconv
+PKG_DEPENDS+=		glib libdcadec libffmpeg libxvidcore libiconv harfbuzz
 PKG_DEPENDS+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
+PKG_DEPENDS+=		xkeyboard-config
 PKG_BUILDDEP:=		python3 libass ffmpeg rtmpdump libiconv
 PKG_BUILDDEP+=		libmpeg2 libmad libjpeg-turbo fmt rapidjson
 PKG_BUILDDEP+=		curl flac bzip2 libtiff yajl cmake-host
 PKG_BUILDDEP+=		tinyxml sqlite pcre libcdio freetype libpng
-PKG_BUILDDEP+=		libsamplerate taglib libjasper giflib
-PKG_BUILDDEP+=		glib libmodplug libgpg-error xvidcore
+PKG_BUILDDEP+=		libsamplerate taglib libjasper giflib xkeyboard-config
+PKG_BUILDDEP+=		glib libmodplug libgpg-error xvidcore libxshmfence
 PKG_BUILDDEP+=		swig-host liblzo-host libpng-host libjpeg-turbo-host
 PKG_BUILDDEP+=		zip-host unzip-host giflib-host libsquish libdcadec
-PKG_BUILDDEP+=		libcrossguid libressl xz bzip2 liblzo
+PKG_BUILDDEP+=		libcrossguid libressl xz bzip2 liblzo harfbuzz
 PKG_BUILDDEP+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
 PKG_NEEDS:=		threads c++ data iconv
 PKG_URL:=		http://kodi.tv/
 PKG_SITES:=		https://github.com/xbmc/xbmc/archive/
 
-DISTFILES:=		$(PKG_VERSION)-Matrix.tar.gz
-WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Matrix
+DISTFILES:=		$(PKG_VERSION)-Nexus.tar.gz
+WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Nexus
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
-PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 rockpi4-plus
+PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 raspberry-pi4-64 rockpi4-plus
 
 PKG_FLAVOURS_KODI:=	WITH_ALSA WITH_CEC WITH_PULSEAUDIO WITH_SMB
 PKG_FLAVOURS_KODI+=	WITH_MICROHTTPD WITH_SSH WITH_AVAHI
@@ -73,6 +74,7 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DENABLE_DVDCSS=ON \
 			-DENABLE_INTERNAL_CROSSGUID=OFF \
 			-DENABLE_INTERNAL_FFMPEG=OFF \
+			-DENABLE_INTERNAL_RapidJSON=OFF \
 			-DWITH_FFMPEG=$(STAGING_TARGET_DIR)/usr \
 			-DKODI_DEPENDSBUILD=OFF \
 			-DENABLE_OPENSSL=ON \
@@ -95,27 +97,24 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DDEPENDS_PATH=$(STAGING_HOST_DIR) \
 			-DWITH_TEXTUREPACKER=$(STAGING_HOST_DIR)/usr/bin/TexturePacker \
 			-DCMAKE_EXE_LINKER_FLAGS=-latomic \
-			-DLIBDVDCSS_URL=$(DL_DIR)/libdvdcss-1.4.2-Leia-Beta-5.tar.gz \
-			-DLIBDVDNAV_URL=$(DL_DIR)/libdvdnav-6.0.0-Leia-Alpha-3.tar.gz \
-			-DLIBDVDREAD_URL=$(DL_DIR)/libdvdread-6.0.0-Leia-Alpha-3.tar.gz
+			-DLIBDVDCSS_URL=$(DL_DIR)/libdvdcss-1.4.3-Next-Nexus-Alpha2-2.tar.gz \
+			-DLIBDVDNAV_URL=$(DL_DIR)/libdvdnav-6.1.1-Next-Nexus-Alpha2-2.tar.gz \
+			-DLIBDVDREAD_URL=$(DL_DIR)/libdvdread-6.1.3-Next-Nexus-Alpha2-2.tar.gz
 			
 ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
-CMAKE_FLAGS+=		-DCORE_PLATFORM_NAME=gbm \
-			-DAPP_RENDER_SYSTEM=gles \
-			-DWITH_ARCH=aarch64 \
+CMAKE_FLAGS+=		-DWITH_ARCH=aarch64 \
 			-DWITH_CPU=aarch64 \
-			-DENABLE_NEON=ON \
-			-DENABLE_OPENGL=OFF \
-			-DENABLE_X11=OFF \
-			-DENABLE_OPENGLES=ON
+			-DENABLE_NEON=OFF
+endif
+ifeq ($(ADK_TARGET_ARCH_ARM),y)
+			-DWITH_ARCH=arm \
+			-DWITH_CPU=arm \
+			-DENABLE_NEON=ON
 endif
 
 ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 CMAKE_FLAGS+=		-DCORE_PLATFORM_NAME=gbm \
 			-DAPP_RENDER_SYSTEM=gles \
-			-DWITH_ARCH=arm \
-			-DWITH_CPU=arm \
-			-DENABLE_NEON=ON \
 			-DENABLE_OPENGL=OFF \
 			-DENABLE_X11=OFF \
 			-DENABLE_OPENGLES=ON
@@ -160,6 +159,10 @@ endif
 XAKE_FLAGS+=		VERBOSE=1
 TARGET_LDFLAGS+=	-latomic
 
+KODI_LIBDVDCSS_VERSION 	= 1.4.3-Next-Nexus-Alpha2-2
+KODI_LIBDVDNAV_VERSION 	= 6.1.1-Next-Nexus-Alpha2-2
+KODI_LIBDVDREAD_VERSION = 6.1.3-Next-Nexus-Alpha2-2
+
 pre-configure:
 	(cd $(WRKSRC)/tools/depends/native/JsonSchemaBuilder && PATH='$(HOST_PATH)' cmake .)
 	PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/JsonSchemaBuilder
@@ -172,9 +175,9 @@ pre-configure:
 	PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/TexturePacker
 	cp $(WRKSRC)/tools/depends/native/TexturePacker/TexturePacker \
 		$(STAGING_HOST_DIR)/usr/bin
-	(cd $(DL_DIR) && wget -O libdvdcss-1.4.2-Leia-Beta-5.tar.gz https://github.com/xbmc/libdvdcss/archive/refs/tags/1.4.2-Leia-Beta-5.tar.gz)
-	(cd $(DL_DIR) && wget -O libdvdnav-6.0.0-Leia-Alpha-3.tar.gz https://github.com/xbmc/libdvdnav/archive/refs/tags/6.0.0-Leia-Alpha-3.tar.gz)
-	(cd $(DL_DIR) && wget -O libdvdread-6.0.0-Leia-Alpha-3.tar.gz https://github.com/xbmc/libdvdread/archive/refs/tags/6.0.0-Leia-Alpha-3.tar.gz)
+	(cd $(DL_DIR) && wget -O libdvdcss-$(KODI_LIBDVDCSS_VERSION).tar.gz https://github.com/xbmc/libdvdcss/archive/refs/tags/$(KODI_LIBDVDCSS_VERSION).tar.gz)
+	(cd $(DL_DIR) && wget -O libdvdnav-$(KODI_LIBDVDNAV_VERSION).tar.gz https://github.com/xbmc/libdvdnav/archive/refs/tags/$(KODI_LIBDVDNAV_VERSION).tar.gz)
+	(cd $(DL_DIR) && wget -O libdvdread-$(KODI_LIBDVDREAD_VERSION).tar.gz https://github.com/xbmc/libdvdread/archive/refs/tags/$(KODI_LIBDVDREAD_VERSION).tar.gz)
 
 kodi-install:
 	$(INSTALL_DIR) $(STAGING_TARGET_DIR)/usr/share/kodi

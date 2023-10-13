@@ -15,10 +15,10 @@ start)
 	if [ ! -d /data/kodi ]; then
 		mkdir /data/kodi
 	fi
-	cd / && /usr/lib/kodi/kodi-rbpi &
+	cd / && /usr/lib/kodi/kodi-gbm &
 	;;
 stop)
-	kill $(pgrep -f /usr/lib/kodi/kodi-rbpi)
+	kill $(pgrep -f /usr/lib/kodi/kodi-gbm)
 	;;
 restart)
 	sh $0 stop
