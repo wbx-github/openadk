@@ -105,7 +105,6 @@ ifneq ($(KERNEL_MODULES_USED),)
 		modules_install $(MAKE_TRACE)
 	$(CMD_TRACE) " done"
 	$(END_TRACE)
-ifeq ($(ADK_RUNTIME_DEV_UDEV),)
 	$(START_TRACE) "target/$(ADK_TARGET_ARCH)-kernel-modules-create-packages.. "
 	rm -f ${PACKAGE_DIR}/kmod-*
 	PATH='${HOST_PATH}' ${BASH} ${SCRIPT_DIR}/make-module-ipkgs.sh \
@@ -116,7 +115,6 @@ ifeq ($(ADK_RUNTIME_DEV_UDEV),)
 		"${PACKAGE_DIR}"
 	$(CMD_TRACE) " done"
 	$(END_TRACE)
-endif
 	$(START_TRACE) "target/${ADK_TARGET_ARCH}-kernel-modules-install-packages.. "
 	-for pkg in $(PACKAGE_DIR)/kmod-*; do \
 		[[ -e "$$pkg" ]] && $(PKG_INSTALL) $$pkg; \
