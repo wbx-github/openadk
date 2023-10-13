@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		bcm28xx-vc
-PKG_VERSION:=		14b90ff9d9f031391a299e6e006965d02bfd1bb1
+PKG_VERSION:=		44a3953fd13d5f0b9b0cd120b904aa7db370244e
 PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_DESCR:=		videocore tools and libraries
