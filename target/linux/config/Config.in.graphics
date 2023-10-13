@@ -163,11 +163,11 @@ config ADK_LINUX_KERNEL_FB_SM501
 config ADK_LINUX_KERNEL_DRM
 	bool
 
-config ADK_LINUX_KERNEL_DRM_VC4
-	bool
-
 config ADK_LINUX_KERNEL_DRM_I915
 	bool
+
+config ADK_LINUX_KERNEL_DRM_V3D
+	tristate
 
 config ADK_LINUX_KERNEL_DRM_KMS_HELPER
 	bool
@@ -246,6 +246,26 @@ config ADK_LINUX_KERNEL_DRM_ETNAVIV
  	default n
  	help
 	  Framebuffer support for Cubox-i/Hummingboard (Vivante)
+
+config ADK_LINUX_KERNEL_DRM_VC4
+	tristate "DRM support for VC4 GPU (Raspberry PI4)"
+	select ADK_LINUX_KERNEL_DRM
+	select ADK_LINUX_KERNEL_DRM_V3D
+	select ADK_LINUX_KERNEL_SND
+	select ADK_LINUX_KERNEL_SND_SOC
+	select ADK_LINUX_KERNEL_PM
+	select ADK_LINUX_KERNEL_COMMON_CLK
+	select ADK_LINUX_KERNEL_FB
+	select ADK_LINUX_KERNEL_FRAMEBUFFER_CONSOLE
+	select ADK_LINUX_KERNEL_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY
+	depends on ADK_TARGET_SYSTEM_RASPBERRY_PI4 || \
+		ADK_TARGET_SYSTEM_RASPBERRY_PI4_64
+	default m if ADK_TARGET_SYSTEM_RASPBERRY_PI4 || \
+		ADK_TARGET_SYSTEM_RASPBERRY_PI4_64
+ 	default n
+ 	help
+	  DRM support for VC4 GPU (Raspberry PI4)
+
 	
 config ADK_LINUX_KERNEL_FB_PXA
 	bool "Framebuffer support for PXA boards (Sharp Zaurus)"
