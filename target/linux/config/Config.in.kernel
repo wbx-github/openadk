@@ -5,6 +5,10 @@ config ADK_LINUX_KERNEL_EXPERIMENTAL
 	bool
 	default y
 
+config ADK_LINUX_KERNEL_MODULE_COMPRESS_NONE
+	bool
+	default y
+
 config ADK_LINUX_KERNEL_STAGING
 	bool
 
