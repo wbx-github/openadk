@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		alsa-utils
-PKG_VERSION:=		1.1.4
+PKG_VERSION:=		1.2.10
 PKG_RELEASE:=		1
-PKG_HASH:=		a7831044de92c5bf33bf3365a3f36e49397f4191e934df460ae1ca15138c9d9d
+PKG_HASH:=		104b62ec7f02a7ce16ca779f4815616df1cc21933503783a9107b5944f83063a
 PKG_DESCR:=		mixer/player/record utilities
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		alsa-lib
