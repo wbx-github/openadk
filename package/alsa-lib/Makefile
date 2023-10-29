@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		alsa-lib
-PKG_VERSION:=		1.1.4
+PKG_VERSION:=		1.2.10
 PKG_RELEASE:=		1
-PKG_HASH:=		82f50a09487079755d93e4c9384912196995bade6280bce9bfdcabf094bfb515
+PKG_HASH:=		c86a45a846331b1b0aa6e6be100be2a7aef92efd405cf6bac7eef8174baa920e
 PKG_DESCR:=		sound library
 PKG_SECTION:=		libs/audio
 PKG_URL:=		http://www.alsa-project.org/
@@ -28,7 +28,8 @@ endif
 HOST_STYLE:=		auto
 HOST_CONFIGURE_ARGS+=	--disable-python
 CONFIGURE_ARGS+=	--disable-python \
-			--without-versioned
+			--without-versioned \
+			--disable-topology
 
 alsa-lib-install:
 	${INSTALL_DIR} ${IDIR_ALSA_LIB}/usr/lib 
