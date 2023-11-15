@@ -1,0 +1,18 @@
+diff -Nur linux-b6bfece0d9ddf21e1526fead81340ef02f98f6ad.orig/arch/arm/configs/bcm2711_defconfig linux-b6bfece0d9ddf21e1526fead81340ef02f98f6ad/arch/arm/configs/bcm2711_defconfig
+--- linux-b6bfece0d9ddf21e1526fead81340ef02f98f6ad.orig/arch/arm/configs/bcm2711_defconfig	2023-10-18 16:11:33.000000000 +0200
++++ linux-b6bfece0d9ddf21e1526fead81340ef02f98f6ad/arch/arm/configs/bcm2711_defconfig	2023-10-21 10:11:00.896240933 +0200
+@@ -1,5 +1,3 @@
+-CONFIG_LOCALVERSION="-v7l"
+-# CONFIG_LOCALVERSION_AUTO is not set
+ CONFIG_SYSVIPC=y
+ CONFIG_POSIX_MQUEUE=y
+ CONFIG_GENERIC_IRQ_DEBUGFS=y
+@@ -62,7 +60,7 @@
+ CONFIG_MODULE_UNLOAD=y
+ CONFIG_MODVERSIONS=y
+ CONFIG_MODULE_SRCVERSION_ALL=y
+-CONFIG_MODULE_COMPRESS_XZ=y
++CONFIG_MODULE_COMPRESS_NONE=y
+ CONFIG_BLK_DEV_THROTTLING=y
+ CONFIG_PARTITION_ADVANCED=y
+ CONFIG_MAC_PARTITION=y
