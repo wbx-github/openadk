@@ -626,7 +626,11 @@ case $target {
 	mkdir "$B/"overlays
 	for x in "$fwdir"/overlays/*.dtbo; do
 		y=$(basename ${x} .dtbo)
-		[[ -e "$x" ]] && cp "$fwdir"/overlays/${y}.dtbo "$B/"overlays/${y}.dtb
+		[[ -e "$x" ]] && cp "$fwdir"/overlays/${y}.dtbo "$B/"overlays/${y}.dtbo
+	done
+	for x in "$fwdir"/overlays/*.dtb; do
+		y=$(basename ${x} .dtb)
+		[[ -e "$x" ]] && cp "$fwdir"/overlays/${y}.dtb "$B/"overlays/${y}.dtb
 	done
 	umount_fs "$B"
 	;;

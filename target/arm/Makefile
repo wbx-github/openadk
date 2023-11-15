@@ -207,6 +207,10 @@ ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm/boot/dts/overlays/*.dtbo $(FW_DIR)/overlays; \
 		break; \
 	done
+	for x in $(LINUX_DIR)/arch/arm/boot/dts/overlays/*.dtb; do \
+		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm/boot/dts/overlays/*.dtb $(FW_DIR)/overlays; \
+		break; \
+	done
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 	${KERNEL_MAKE} sun7i-a20-bananapro.dtb $(MAKE_TRACE)
