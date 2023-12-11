@@ -66,11 +66,19 @@ ifeq ($(ADK_TARGET_QEMU),y)
 	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
+ifeq ($(ADK_TARGET_FS),nfsroot)
+targethelp:
+	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
+	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSUSERTARBALL)"
+endif
 ifeq ($(ADK_TARGET_FS),genimage)
 targethelp:
 	@echo "The disk image is: $(FW_DIR)/sdcard.img"
 	@echo "Use following command to install it on SD card:"
 	@echo 'sudo dd if=$(FW_DIR)/sdcard.img of=/dev/sdX bs=2048k'
+endif
+ifeq ($(ADK_TARGET_FS),nfsroot)
+imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 
 kernel-strip:

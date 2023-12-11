@@ -9,7 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		eb1383a5ac4b6210d7c7302b9d6fab052abdf51c5d2c9b55f1f779997ba68c6c
 PKG_DESCR:=		keyboard config
 PKG_SECTION:=		x11/misc
-PKG_BUILDDEP:=		util-macros-host xkbcomp
+PKG_BUILDDEP:=		util-macros-host xkbcomp meson-host
 PKG_SITES:=		http://www.x.org/releases/individual/data/xkeyboard-config/
 
 include $(ADK_TOPDIR)/mk/package.mk
