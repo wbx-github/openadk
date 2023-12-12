@@ -82,6 +82,7 @@ ifeq ($(ADK_TARGET_HARD_FLOAT_DP),y)
 endif
 ifeq ($(ADK_TARGET_BINFMT_FDPIC),y)
 	$(SED) 's/.*\(UCLIBC_FORMAT_FDPIC_ELF\).*/\1=y/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(UCLIBC_FORMAT_ELF\).*/# \1 is not set/' ${WRKBUILD}/.config
 	$(SED) 's/.*\(UCLIBC_FORMAT_FLAT\).*/# \1 is not set/' ${WRKBUILD}/.config
 	$(SED) 's/.*\(UCLIBC_FORMAT_FLAT_SEP_DATA\).*/# \1 is not set/' ${WRKBUILD}/.config
 	$(SED) 's/.*\(UCLIBC_FORMAT_SHARED_FLAT\).*/# \1 is not set/' ${WRKBUILD}/.config
