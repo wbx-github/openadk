@@ -2,14 +2,8 @@
 # material, please see the LICENCE file in the top-level directory.
 
 PKG_NAME:=		elf2flt
-ifeq ($(ADK_TOOLCHAIN_ELF2FLT_GIT),y)
-PKG_VERSION:=		26dfb54a59c8c0106418a0c46ccb4288d9e066fd
-PKG_GIT:=		hash
-PKG_RELEASE:=		1
-PKG_SITES:=		https://github.com/uclinux-dev/elf2flt.git
-endif
-ifeq ($(ADK_TOOLCHAIN_ELF2FLT_2021_08),y)
-PKG_VERSION:=		v2021.08
+ifeq ($(ADK_TOOLCHAIN_ELF2FLT_2023_09),y)
+PKG_VERSION:=		v2023.09
 PKG_GIT:=		tag
 PKG_RELEASE:=		1
 PKG_SITES:=		https://github.com/uclinux-dev/elf2flt.git
