@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libjansson
-PKG_VERSION:=		2.5
+PKG_VERSION:=		2.14
 PKG_RELEASE:=		1
-PKG_HASH:=		dd8bbfb38ad5031ce88e066b14d3b7e9c7113243daa7f4cde1994b7fc90bb1b1
+PKG_HASH:=		fba956f27c6ae56ce6dfd52fbf9d20254aad42821f74fa52f83957625294afb9
 PKG_DESCR:=		json library
 PKG_SECTION:=		libs/data
 PKG_URL:=		http://www.digip.org/jansson/
-PKG_SITES:=		http://www.digip.org/jansson/releases/
+PKG_SITES:=		https://github.com/akheron/jansson/releases/download/v$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
-DISTFILES:=             jansson-${PKG_VERSION}.tar.gz
+DISTFILES:=             jansson-${PKG_VERSION}.tar.bz2
 WRKDIST=		${WRKDIR}/jansson-${PKG_VERSION}
 
 include $(ADK_TOPDIR)/mk/package.mk
