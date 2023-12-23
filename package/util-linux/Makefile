@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		util-linux
-PKG_VERSION:=		2.39
+PKG_VERSION:=		2.39.3
 PKG_RELEASE:=		1
-PKG_HASH:=		32b30a336cda903182ed61feb3e9b908b762a5e66fe14e43efb88d37162075cb
+PKG_HASH:=		7b6605e48d1a49f43cc4b4cfc59f313d0dd5402fa40b96810bd572e167dfed0f
 PKG_DESCR:=		basic utilities
 PKG_SECTION:=		base/apps
 PKG_BUILDDEP:=		ncurses
 PKG_NEEDS:=		threads
-PKG_SITES:=		http://www.kernel.org/pub/linux/utils/util-linux/v$(PKG_VERSION)/
+PKG_SITES:=		http://www.kernel.org/pub/linux/utils/util-linux/v2.39/
 PKG_OPTS:=		dev
 
 PKG_SUBPKGS:=		FDISK AGETTY SFDISK SWAP_UTILS LOSETUP MCOOKIE MOUNT
