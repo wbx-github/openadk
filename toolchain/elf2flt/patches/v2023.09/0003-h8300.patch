@@ -1,0 +1,20 @@
+diff -Nur elf2flt-v2023.09.orig/flthdr.c elf2flt-v2023.09/flthdr.c
+--- elf2flt-v2023.09.orig/flthdr.c	2023-12-23 03:20:20.000000000 +0100
++++ elf2flt-v2023.09/flthdr.c	2023-12-23 17:11:22.699413170 +0100
+@@ -164,8 +164,16 @@
+ 				r = ntohl(relocs[i]);
+ 				raddr = flat_get_relocate_addr(r);
+ 				printf("    %u\t0x%08lx (0x%08"PRIx32")\t", i, r, raddr);
++#if defined(TARGET_h8300)
++				raddr &= ~0x00000001;
++#endif
+ 				fseek_stream(&ifp, sizeof(old_hdr) + raddr, SEEK_SET);
+ 				fread_stream(&addr, sizeof(addr), 1, &ifp);
++#if defined(TARGET_h8300)
++				addr = ntohl(addr);
++				if (r & 1)
++					addr &= 0x00ffffff;
++#endif
+ 				printf("%"PRIx32"\n", addr);
+ 			}
+ 
