@@ -11,7 +11,7 @@ autostart)
 	exec sh $0 start
 	;;
 start)
-	for dir in run log spool lib; do
+	for dir in run log spool lib keys; do
 		[ -d /var/$dir/asterisk ] || mkdir -p /var/$dir/asterisk
 	done
 	/usr/sbin/asterisk

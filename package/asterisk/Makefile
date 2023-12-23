@@ -4,24 +4,26 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		asterisk
-PKG_VERSION:=		1.8.28.2
-PKG_RELEASE:=		2
-PKG_HASH:=		7b3d84a3403fce590377808eaa4b08b6320666ca0e37eba0ad578b66211b13c8
+PKG_VERSION:=		20.5.1
+PKG_RELEASE:=		1
+PKG_HASH:=		7d128f2a164e36fae4875058120ff026e7cd73f7701429fee4fa293f4fba4336
 PKG_DESCR:=		open source pbx
 PKG_SECTION:=		net/voip
-PKG_DEPENDS:=		libncurses libcurl libressl
-PKG_BUILDDEP:=		ncurses zlib curl popt libressl
+PKG_DEPENDS:=		libncurses libcurl libressl libedit libuuid libjansson
+PKG_DEPENDS+=		libxml2 libsqlite
+PKG_BUILDDEP:=		ncurses zlib curl popt libressl libedit util-linux libjansson
+PKG_BUILDDEP+=		libxml2 sqlite
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.asterisk.org/
 PKG_SITES:=		http://downloads.asterisk.org/pub/telephony/asterisk/releases/
-PKG_NOPARALLEL:=	1
+#PKG_NOPARALLEL:=	1
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 PKG_LIBC_DEPENDS:=	uclibc-ng glibc
 
 PKG_SUBPKGS:=		ASTERISK ASTERISK_VOICEMAIL ASTERISK_SOUNDS
-PKG_SUBPKGS+=		ASTERISK_CHAN_SKINNY ASTERISK_CHAN_IAX2 ASTERISK_CODEC_SPEEX ASTERISK_CODEC_GSM
+PKG_SUBPKGS+=		ASTERISK_CHAN_IAX2 ASTERISK_CODEC_SPEEX ASTERISK_CODEC_GSM
 PKG_SUBPKGS+=		ASTERISK_PBX_DUNDI ASTERISK_RES_AGI
 PKGSD_ASTERISK_VOICEMAIL:=	voicemail support
 PKGSN_ASTERISK_VOICEMAIL:=	asterisk
@@ -31,10 +33,6 @@ PKGSD_ASTERISK_PBX_DUNDI:=	PBX dundi support
 PKGSN_ASTERISK_PBX_DUNDI:=	asterisk
 PKGSD_ASTERISK_RES_AGI:=	res agi support
 PKGSN_ASTERISK_RES_AGI:=	asterisk
-PKGSD_ASTERISK_CHAN_MGCP:=	Media Gateway Control Protocol implementation
-PKGSN_ASTERISK_CHAN_MGCP:=	asterisk
-PKGSD_ASTERISK_CHAN_SKINNY:=	skinny client control protocol implementation
-PKGSN_ASTERISK_CHAN_SKINNY:=	asterisk
 PKGSD_ASTERISK_CHAN_IAX2:=	support for the Inter Asterisk Protocol
 PKGSN_ASTERISK_CHAN_IAX2:=	asterisk
 PKGSD_ASTERISK_CODEC_SPEEX:=	speex/PCM16 Codec translator
@@ -49,8 +47,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,ASTERISK,${PKG_NAME},${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,ASTERISK_VOICEMAIL,asterisk-voicemail,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_ASTERISK_VOICEMAIL},${PKG_SECTION}))
 $(eval $(call PKG_template,ASTERISK_SOUNDS,asterisk-sounds,$(PKG_VERSION)-${PKG_RELEASE},${PKGSS_ASTERISK_SOUNDS},${PKGSD_ASTERISK_SOUNDS},${PKG_SECTION}))
-#$(eval $(call PKG_template,ASTERISK_CHAN_MGCP,asterisk-chan-mgcp,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_ASTERISK_CHAN_MGCP},${PKG_SECTION}))
-$(eval $(call PKG_template,ASTERISK_CHAN_SKINNY,asterisk-chan-skinny,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_ASTERISK_CHAN_SKINNY},${PKG_SECTION}))
 $(eval $(call PKG_template,ASTERISK_CHAN_IAX2,asterisk-chan-iax2,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_ASTERISK_CHAN_IAX2},${PKG_SECTION}))
 $(eval $(call PKG_template,ASTERISK_CODEC_SPEEX,asterisk-codec-speex,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_ASTERISK_CODEC_SPEEX},${PKG_SECTION}))
 $(eval $(call PKG_template,ASTERISK_CODEC_GSM,asterisk-codec-gsm,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_ASTERISK_CODEC_GSM},${PKG_SECTION}))
@@ -59,11 +55,12 @@ $(eval $(call PKG_template,ASTERISK_RES_AGI,asterisk-res-agi,$(PKG_VERSION)-${PK
 
 CONFIGURE_ARGS=		--with-z=${STAGING_TARGET_DIR}/usr \
 			--with-ncurses=${STAGING_TARGET_DIR}/usr \
+			--with-libedit=${STAGING_TARGET_DIR}/usr \
+			--with-jansson=${STAGING_TARGET_DIR}/usr \
 			--with-ssl=${STAGING_TARGET_DIR}/usr \
 			--disable-xmldoc \
 			--without-tonezone \
 			--without-asound \
-			--without-curses \
 			--without-gtk2 \
 			--without-h323 \
 			--without-iksemel \
@@ -80,7 +77,6 @@ CONFIGURE_ARGS=		--with-z=${STAGING_TARGET_DIR}/usr \
 			--without-tds \
 			--without-termcap \
 			--without-tinfo \
-			--without-vpb \
 			--without-misdn \
 			--without-isdnnet \
 			--without-suppserv \
@@ -123,10 +119,10 @@ pre-configure:
 pre-build:
 	$(MAKE) -C $(WRKBUILD)/menuselect
 
-post-build:
-	cd ${WRKBUILD}/sounds ; \
-	tar xzf asterisk-core-sounds-en-gsm-1.4.25.tar.gz ; \
-	rm asterisk-core-sounds-en-gsm-1.4.25.tar.gz
+#post-build:
+#	cd ${WRKBUILD}/sounds ; \
+#	tar xzf asterisk-core-sounds-en-gsm-1.4.25.tar.gz ; \
+#	rm asterisk-core-sounds-en-gsm-1.4.25.tar.gz
 
 do-install:
 	$(CP) $(WRKINST)/* $(IDIR_ASTERISK)
@@ -189,38 +185,19 @@ asterisk-sounds-install:
 asterisk-voicemail-install:
 	${INSTALL_DIR} $(IDIR_ASTERISK_VOICEMAIL)/etc/asterisk
 	${INSTALL_DIR} $(IDIR_ASTERISK_VOICEMAIL)/usr/lib/asterisk/modules
-	${INSTALL_DATA} $(WRKBUILD)/configs/voicemail.conf.sample \
+	${INSTALL_DATA} $(WRKBUILD)/configs/samples/voicemail.conf.sample \
 		$(IDIR_ASTERISK_VOICEMAIL)/etc/asterisk/voicemail.conf
 	${CP} $(WRKBUILD)/apps/*voicemail.so \
 		$(IDIR_ASTERISK_VOICEMAIL)/usr/lib/asterisk/modules/
 	${INSTALL_BIN} $(WRKBUILD)/res/res_adsi.so \
 		$(IDIR_ASTERISK_VOICEMAIL)/usr/lib/asterisk/modules/
-	${INSTALL_DIR} $(IDIR_ASTERISK_VOICEMAIL)/usr/lib/asterisk/sounds
-	$(CP) $(WRKBUILD)/sounds/vm-*.gsm \
-		$(IDIR_ASTERISK_VOICEMAIL)/usr/lib/asterisk/sounds/
-
-asterisk-chan-mgcp-install:
-	${INSTALL_DIR} $(IDIR_ASTERISK_CHAN_MGCP)/etc/asterisk
-	${INSTALL_DATA} $(WRKBUILD)/configs/mgcp.conf.sample \
-		$(IDIR_ASTERISK_CHAN_MGCP)/etc/asterisk/mgcp.conf
-	${INSTALL_DIR} $(IDIR_ASTERISK_CHAN_MGCP)/usr/lib/asterisk/modules
-	${INSTALL_BIN} $(WRKBUILD)/channels/chan_mgcp.so \
-		$(IDIR_ASTERISK_CHAN_MGCP)/usr/lib/asterisk/modules/
-
-asterisk-chan-skinny-install:
-	${INSTALL_DIR} $(IDIR_ASTERISK_CHAN_SKINNY)/etc/asterisk
-	${INSTALL_DATA} $(WRKBUILD)/configs/skinny.conf.sample \
-		$(IDIR_ASTERISK_CHAN_SKINNY)/etc/asterisk/skinny.conf
-	${INSTALL_DIR} $(IDIR_ASTERISK_CHAN_SKINNY)/usr/lib/asterisk/modules
-	${INSTALL_BIN} $(WRKBUILD)/channels/chan_skinny.so \
-		$(IDIR_ASTERISK_CHAN_SKINNY)/usr/lib/asterisk/modules/
 
 asterisk-chan-iax2-install:
 	${INSTALL_DIR} $(IDIR_ASTERISK_CHAN_IAX2)/etc/asterisk
 	${INSTALL_DIR} $(IDIR_ASTERISK_CHAN_IAX2)/usr/lib/asterisk/modules
-	${INSTALL_DATA} $(WRKBUILD)/configs/iax.conf.sample \
+	${INSTALL_DATA} $(WRKBUILD)/configs/samples/iax.conf.sample \
 		$(IDIR_ASTERISK_CHAN_IAX2)/etc/asterisk/iax.conf
-	${INSTALL_DATA} $(WRKBUILD)/configs/iaxprov.conf.sample \
+	${INSTALL_DATA} $(WRKBUILD)/configs/samples/iaxprov.conf.sample \
 		$(IDIR_ASTERISK_CHAN_IAX2)/etc/asterisk/iaxprov.conf
 	${INSTALL_BIN} $(WRKBUILD)/channels/chan_iax2.so \
 		$(IDIR_ASTERISK_CHAN_IAX2)/usr/lib/asterisk/modules/
@@ -237,7 +214,7 @@ asterisk-codec-gsm-install:
 
 asterisk-pbx-dundi-install:
 	${INSTALL_DIR} $(IDIR_ASTERISK_PBX_DUNDI)/etc/asterisk
-	${INSTALL_DATA} $(WRKBUILD)/configs/dundi.conf.sample \
+	${INSTALL_DATA} $(WRKBUILD)/configs/samples/dundi.conf.sample \
 		$(IDIR_ASTERISK_PBX_DUNDI)/etc/asterisk/dundi.conf
 	${INSTALL_DIR} $(IDIR_ASTERISK_PBX_DUNDI)/usr/lib/asterisk/modules
 	${INSTALL_BIN} $(WRKBUILD)/pbx/pbx_dundi.so \
@@ -252,7 +229,7 @@ asterisk-res-agi-install:
 asterisk-meetme-install:
 	${INSTALL_DIR} ${IDIR_ASTERISK_MEETME}/etc/asterisk/
 	${INSTALL_DIR} ${IDIR_ASTERISK_MEETME}/usr/lib/asterisk/modules
-	${INSTALL_DATA} ${WRKBUILD}/configs/meetme.conf.sample \
+	${INSTALL_DATA} ${WRKBUILD}/configs/samples/meetme.conf.sample \
 		${IDIR_ASTERISK_MEETME}/etc/asterisk/meetme.conf
 	${INSTALL_BIN} ${WRKBUILD}/apps/app_meetme.so \
 		${IDIR_ASTERISK_MEETME}/usr/lib/asterisk/modules
