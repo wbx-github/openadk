@@ -1,0 +1,11 @@
+--- ca-certificates.orig/mozilla/Makefile	2022-01-11 14:34:24.000000000 +0100
++++ ca-certificates/mozilla/Makefile	2023-09-22 10:25:22.731768501 +0200
+@@ -3,7 +3,7 @@
+ #
+ 
+ all:
+-	python3 certdata2pem.py
++	/bin/python3 certdata2pem.py
+ 
+ clean:
+ 	-rm -f *.crt
