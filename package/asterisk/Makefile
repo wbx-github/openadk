@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		asterisk
-PKG_VERSION:=		20.5.1
+PKG_VERSION:=		20.5.2
 PKG_RELEASE:=		1
-PKG_HASH:=		7d128f2a164e36fae4875058120ff026e7cd73f7701429fee4fa293f4fba4336
+PKG_HASH:=		8f68e1789dfb8aa04b0eba87ea1d599a62e088ddd20926afc997f36b455e1859
 PKG_DESCR:=		open source pbx
 PKG_SECTION:=		net/voip
 PKG_DEPENDS:=		libncurses libcurl libressl libedit libuuid libjansson
@@ -65,7 +65,6 @@ CONFIGURE_ARGS=		--with-z=${STAGING_TARGET_DIR}/usr \
 			--without-h323 \
 			--without-iksemel \
 			--without-imap \
-			--without-nbs \
 			--without-netsnmp \
 			--without-newt \
 			--without-openais \
@@ -75,11 +74,6 @@ CONFIGURE_ARGS=		--with-z=${STAGING_TARGET_DIR}/usr \
 			--without-pri \
 			--without-pwlib \
 			--without-tds \
-			--without-termcap \
-			--without-tinfo \
-			--without-misdn \
-			--without-isdnnet \
-			--without-suppserv \
 			--without-postgres
 
 ifneq (${ADK_PACKAGE_ASTERISK_CODEC_GSM},)
