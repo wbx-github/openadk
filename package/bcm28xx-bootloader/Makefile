@@ -5,14 +5,14 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		bcm28xx-bootloader
 # not cloned, local src directory used
-PKG_VERSION:=		827fdd073638fa7b7292d1148fe0af7465111eae
+PKG_VERSION:=		1e403e23baab5673f0494a200f57cd01287d5b1a
 PKG_RELEASE:=		1
 PKG_DESCR:=		bootloader for bcm28xx
 PKG_SECTION:=		base/boot
 PKG_URL:=		https://github.com/raspberrypi/firmware
 PKG_SITES:=		https://github.com/raspberrypi/firmware.git
 
-PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi0 raspberry-pi2 raspberry-pi3 raspberry-pi3-64 raspberry-pi4 raspberry-pi4-64
+PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi0 raspberry-pi2 raspberry-pi3 raspberry-pi3-64 raspberry-pi4 raspberry-pi4-64 raspberry-pi5
 
 PKG_CHOICES_BCM28XX_BOOTLOADER:=	DEFAULT EXTRA CUTDOWN
 PKGCD_DEFAULT:=		default bootloader
