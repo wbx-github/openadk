@@ -7,6 +7,9 @@ depends on ADK_TARGET_WITH_USB \
 	|| ADK_TARGET_SYSTEM_QEMU_X86 \
 	|| ADK_TARGET_GENERIC
 
+config ADK_LINUX_KERNEL_USB_PCI
+	bool
+
 config ADK_LINUX_KERNEL_USB_SUPPORT
 	bool
 
@@ -54,7 +57,7 @@ config ADK_LINUX_KERNEL_USB_OHCI_HCD_PCI
 config ADK_LINUX_KERNEL_USB_EHCI_HCD_PCI
 	bool
 
-config ADK_LINUX_KERNEL_USB_XHCI_HCD_PCI
+config ADK_LINUX_KERNEL_USB_XHCI_PCI
 	bool
 
 config ADK_LINUX_KERNEL_USB_LIBUSUAL
@@ -81,6 +84,7 @@ config ADK_LINUX_KERNEL_USB
 	default y if ADK_TARGET_SYSTEM_KINETIS_K70
 	default y if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 	default y if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI5
 	default n
 	help
 	  Universal Serial Bus (USB) is a specification for a serial bus
@@ -116,9 +120,11 @@ menu "USB controller support"
 config ADK_LINUX_KERNEL_USB_XHCI_HCD
 	tristate "Support for USB xHCI HCD (USB 3.0)"
 	depends on ADK_LINUX_KERNEL_USB
-	select ADK_LINUX_KERNEL_USB_XHCI_HCD_PLATFORM if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
-	select ADK_LINUX_KERNEL_USB_XHCI_HCD_PCI if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	select ADK_LINUX_KERNEL_USB_PCI
+	select ADK_LINUX_KERNEL_USB_XHCI_PLATFORM
+	select ADK_LINUX_KERNEL_USB_XHCI_PCI
 	default y if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI5
 	default n
 	help
           The eXtensible Host Controller Interface (xHCI) is standard for USB 3.0
@@ -147,6 +153,7 @@ config ADK_LINUX_KERNEL_USB_EHCI_HCD
 	default y if ADK_TARGET_SYSTEM_KINETIS_K70
 	default y if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 	default y if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
+	default y if ADK_TARGET_SYSTEM_RASPBERRY_PI5
 	default n
 	help
 	  The Enhanced Host Controller Interface (EHCI) is standard for USB 2.0
