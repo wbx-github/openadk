@@ -1,0 +1,13 @@
+--- nfs-utils-2.6.4.orig/tools/rpcgen/Makefile.am	2023-11-17 18:32:39.000000000 +0100
++++ nfs-utils-2.6.4/tools/rpcgen/Makefile.am	2024-01-04 13:27:43.388279004 +0100
+@@ -1,5 +1,10 @@
+ CLEANFILES = *~
+ 
++CC=$(CC_FOR_BUILD)
++CFLAGS=$(CFLAGS_FOR_BUILD)
++CPPFLAGS=$(CPPFLAGS_FOR_BUILD)
++LDFLAGS=$(LDFLAGS_FOR_BUILD)
++
+ bin_PROGRAMS = rpcgen
+ man_MANS = rpcgen.1
+ 

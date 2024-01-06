@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		nfs-utils
-PKG_VERSION:=		2.5.2
+PKG_VERSION:=		2.6.4
 PKG_RELEASE:=		1
-PKG_HASH:=		e5ec4f0f29455b0ae03a65ddb1e436bc8e542fd9dc91f3edeb39a15b057d7ddb
+PKG_HASH:=		c0ae376ac056011ed0954deba2362d7d8193c653b500b68a543aec512cd2ecfa
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		keyutils libtirpc rpcbind

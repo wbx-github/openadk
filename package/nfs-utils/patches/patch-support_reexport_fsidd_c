@@ -1,0 +1,10 @@
+--- nfs-utils-2.6.4.orig/support/reexport/fsidd.c	2023-11-17 18:32:39.000000000 +0100
++++ nfs-utils-2.6.4/support/reexport/fsidd.c	2024-01-04 13:47:58.231661971 +0100
+@@ -6,6 +6,7 @@
+ #ifdef HAVE_DLFCN_H
+ #include <dlfcn.h>
+ #endif
++#include <unistd.h>
+ #include <event2/event.h>
+ 
+ #include "conffile.h"

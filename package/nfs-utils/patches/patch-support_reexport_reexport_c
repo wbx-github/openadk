@@ -1,0 +1,10 @@
+--- nfs-utils-2.6.4.orig/support/reexport/reexport.c	2023-11-17 18:32:39.000000000 +0100
++++ nfs-utils-2.6.4/support/reexport/reexport.c	2024-01-04 13:47:43.771377090 +0100
+@@ -5,6 +5,7 @@
+ #ifdef HAVE_DLFCN_H
+ #include <dlfcn.h>
+ #endif
++#include <unistd.h>
+ #include <sys/types.h>
+ #include <sys/vfs.h>
+ #include <errno.h>
