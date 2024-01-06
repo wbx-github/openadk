@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gpgme
-PKG_VERSION:=		1.9.0
+PKG_VERSION:=		1.23.2
 PKG_RELEASE:=		1
-PKG_HASH:=		1b29fedb8bfad775e70eafac5b0590621683b2d9869db994568e6401f4034ceb
+PKG_HASH:=		9499e8b1f33cccb6815527a1bc16049d35a6198a6c5fae0185f2bd561bce5224
 PKG_DESCR:=		easy access to gnupg for applications
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgpg-error libassuan
