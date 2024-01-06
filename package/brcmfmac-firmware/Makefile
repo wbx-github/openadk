@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		brcmfmac-firmware
 PKG_VERSION:=		1.0
-PKG_RELEASE:=		4
+PKG_RELEASE:=		5
 PKG_DESCR:=		firmware for broadcom wireless cards
 PKG_SECTION:=		sys/firmware
 
