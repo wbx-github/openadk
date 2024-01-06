@@ -1,11 +1,12 @@
---- cifs-utils-6.3.orig/Makefile.am	2014-01-09 17:19:53.000000000 +0100
-+++ cifs-utils-6.3/Makefile.am	2014-05-06 13:53:28.814703381 +0200
-@@ -4,7 +4,7 @@ ACLOCAL_AMFLAGS = -I aclocal
- root_sbindir = $(ROOTSBINDIR)
- root_sbin_PROGRAMS = mount.cifs
- mount_cifs_SOURCES = mount.cifs.c mtab.c resolve_host.c util.c
--mount_cifs_LDADD = $(LIBCAP) $(CAPNG_LDADD) $(RT_LDADD)
-+mount_cifs_LDADD = $(LIBCAP) $(CAPNG_LDADD) $(RT_LDADD) $(LIBOBJS)
+--- cifs-utils-7.0.orig/Makefile.am	2022-08-11 22:40:15.000000000 +0200
++++ cifs-utils-7.0/Makefile.am	2024-01-04 12:50:47.888452316 +0100
+@@ -117,9 +117,6 @@ endif
  
- man_MANS = mount.cifs.8
- include_HEADERS = cifsidmap.h
+ SUBDIRS = contrib
+ 
+-install-exec-hook: install-sbinPROGRAMS
+-	(cd $(DESTDIR)$(ROOTSBINDIR) && ln -sf mount.cifs mount.smb3)
+-
+ install-data-hook:
+ if CONFIG_MAN
+ 	( cd $(DESTDIR)$(man8dir) && ln -sf mount.cifs.8 mount.smb3.8)

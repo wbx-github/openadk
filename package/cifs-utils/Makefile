@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		cifs-utils
-PKG_VERSION:=		6.7
+PKG_VERSION:=		7.0
 PKG_RELEASE:=		1
-PKG_HASH:=		b2f21612474ab012e75accd167aab607a0614ff67efb56ea0f36789fa785cfab
+PKG_HASH:=		0defaab85bd3ea46ffc45ab41fb0d0ad54d05ae2cfaa7e503de86d4f12bc8161
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
 PKG_KDEPENDS:=		cifs
@@ -20,6 +20,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,CIFS_UTILS,cifs-utils,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 AUTOTOOL_STYLE:=	autoreconf
+CONFIGURE_ENV+=		ac_cv_func_malloc_0_nonnull=yes
 CONFIGURE_ARGS+=	--disable-cifsupcall \
 			--disable-cifsidmap \
 			--disable-cifsacl \
