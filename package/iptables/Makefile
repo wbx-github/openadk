@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		iptables
-PKG_VERSION:=		1.8.5
+PKG_VERSION:=		1.8.10
 PKG_RELEASE:=		1
-PKG_HASH:=		d457d74512e63aa3f50336e0597d4023c0e3c6845594d38532efb6ebcb294309
+PKG_HASH:=		5cc255c189356e317d070755ce9371eb63a1b783c34498fb8c30264f3cc59c9c
 PKG_DESCR:=		netfilter firewalling software
 PKG_SECTION:=		net/firewall
 PKG_DEPENDS:=		libnetfilter_conntrack libmnl libnfnetlink
@@ -16,8 +16,6 @@ PKG_BUILDDEP:=		libnetfilter_conntrack pkgconf-host
 PKG_URL:=		http://www.netfilter.org/
 PKG_SITES:=		http://www.netfilter.org/projects/iptables/files/
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
 include ${ADK_TOPDIR}/mk/package.mk
 
@@ -31,6 +29,7 @@ iptables-install:
 	${INSTALL_DIR} ${IDIR_IPTABLES}/{usr/lib,etc/xtables,usr/sbin}
 	${INSTALL_DATA} ./files/firewall.conf ${IDIR_IPTABLES}/etc
 	${INSTALL_DATA} ./files/connlabel.conf ${IDIR_IPTABLES}/etc/xtables
+	${CP} ${WRKINST}/usr/sbin/xtables-legacy-multi ${IDIR_IPTABLES}/usr/sbin
 	${CP} ${WRKINST}/usr/sbin/iptables ${IDIR_IPTABLES}/usr/sbin
 	${CP} ${WRKINST}/usr/sbin/ip6tables ${IDIR_IPTABLES}/usr/sbin
 	${CP} ${WRKINST}/usr/sbin/iptables-{save,restore} \
