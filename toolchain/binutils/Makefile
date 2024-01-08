@@ -28,6 +28,10 @@ else
 CONFOPTS+=		--disable-gold
 endif
 
+ifeq ($(ADK_TARGET_ARCH_ARC),y)
+CONFOPTS+=		--enable-lto --enable-plugins
+endif
+
 ifeq ($(ADK_TARGET_ARCH_X86_64)$(ADK_TARGET_CPU_CF),)
 CONFOPTS+=		--disable-multilib
 else

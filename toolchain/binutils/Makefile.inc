@@ -51,6 +51,13 @@ PKG_RELEASE:=		1
 PKG_SITES:=		https://github.com/kalray/gdb-binutils.git
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
 endif
+ifeq ($(ADK_TOOLCHAIN_BINUTILS_ARC),y)
+PKG_VERSION:=		arc-2023.09
+PKG_GIT:=		tag
+PKG_RELEASE:=		1
+PKG_SITES:=		https://github.com/foss-for-synopsys-dwc-arc-processors/binutils-gdb.git
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
+endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_AVR32),y)
 PKG_VERSION:=		2.20.1
 PKG_RELEASE:=		1

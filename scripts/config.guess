@@ -937,7 +937,7 @@ EOF
 	if test "$?" = 0 ; then LIBC=gnulibc1 ; fi
 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
 	exit ;;
-    arc:Linux:*:* | arceb:Linux:*:*)
+    arc:Linux:*:* | arceb:Linux:*:* | arc32:Linux:*:* | arc64:Linux:*:*)
 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
 	exit ;;
     arm*:Linux:*:*)

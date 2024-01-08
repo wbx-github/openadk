@@ -46,8 +46,12 @@ config ADK_TARGET_KERNEL_XIPIMAGE
 config ADK_TARGET_KERNEL_SIMPLEIMAGE
 	bool
 
+config ADK_TARGET_KERNEL_LOADER
+	bool
+
 config ADK_TARGET_KERNEL
 	string
+	default "loader" if ADK_TARGET_KERNEL_LOADER
 	default "uImage" if ADK_TARGET_KERNEL_UIMAGE
 	default "uImage.bin" if ADK_TARGET_KERNEL_UIMAGEBIN
 	default "zImage" if ADK_TARGET_KERNEL_ZIMAGE
