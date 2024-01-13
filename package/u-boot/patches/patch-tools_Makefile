@@ -1,14 +1,11 @@
---- u-boot-2023.07.02.orig/tools/Makefile	2023-07-11 17:20:44.000000000 +0200
-+++ u-boot-2023.07.02/tools/Makefile	2023-09-29 15:53:47.464079598 +0200
-@@ -172,9 +172,9 @@ endif
- # MXSImage needs LibSSL
- ifneq ($(CONFIG_MX23)$(CONFIG_MX28)$(CONFIG_ARMADA_38X)$(CONFIG_TOOLS_LIBCRYPTO),)
- HOSTCFLAGS_kwbimage.o += \
--	$(shell pkg-config --cflags libssl libcrypto 2> /dev/null || echo "")
-+	$(shell echo "-lssl -lcrypto")
- HOSTLDLIBS_mkimage += \
--	$(shell pkg-config --libs libssl libcrypto 2> /dev/null || echo "-lssl -lcrypto")
-+	$(shell echo "-lssl -lcrypto")
+--- u-boot-2024.01.orig/tools/Makefile	2024-01-08 16:37:48.000000000 +0100
++++ u-boot-2024.01/tools/Makefile	2024-01-17 17:56:21.004096375 +0100
+@@ -250,7 +250,7 @@ HOSTLDLIBS_mkeficapsule += \
+ 	$(shell pkg-config --libs gnutls 2> /dev/null || echo "-lgnutls")
+ HOSTLDLIBS_mkeficapsule += \
+ 	$(shell pkg-config --libs uuid 2> /dev/null || echo "-luuid")
+-hostprogs-$(CONFIG_TOOLS_MKEFICAPSULE) += mkeficapsule
++#hostprogs-$(CONFIG_TOOLS_MKEFICAPSULE) += mkeficapsule
  
- # OS X deprecate openssl in favour of CommonCrypto, supress deprecation
- # warnings on those systems
+ mkfwumdata-objs := mkfwumdata.o generated/lib/crc32.o
+ HOSTLDLIBS_mkfwumdata += -luuid

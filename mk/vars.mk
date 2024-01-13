@@ -212,10 +212,12 @@ TARGET_LDFLAGS+=	-Wl,--secure-plt
 endif
 endif
 
+ifneq ($(ADK_TARGET_BINFMT_ELF)$(ADK_TARGET_WITH_MMU),y)
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY)$(ADK_TARGET_USE_STATIC_AND_SHARED_LIBS),y)
 TARGET_CFLAGS+=		-static
 TARGET_CXXFLAGS+=	-static
 TARGET_LDFLAGS+=	-static
+endif
 endif
 
 ifneq ($(ADK_TARGET_USE_SSP),)
@@ -287,8 +289,8 @@ endif
 
 # workaround gcc bug for m68k/coldfire
 ifeq ($(ADK_TARGET_CPU_CF),y)
-TARGET_CFLAGS+=		-fno-dwarf2-cfi-asm
-TARGET_CXXFLAGS+=	-fno-dwarf2-cfi-asm
+TARGET_CFLAGS+=		-fno-dwarf2-cfi-asm -mxgot
+TARGET_CXXFLAGS+=	-fno-dwarf2-cfi-asm -mxgot
 endif
 
 ifeq ($(ADK_TARGET_ARCH_ARM),y)

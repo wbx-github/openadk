@@ -371,7 +371,7 @@ config BUSYBOX_STATIC
 
 config BUSYBOX_PIE
 	bool "Build position independent executable"
-	default n
+	default y if !ADK_TARGET_WITH_MMU && ADK_TARGET_BINFMT_ELF
 	depends on !BUSYBOX_STATIC
 	help
 	Hardened code option. PIE binaries are loaded at a different
@@ -382,7 +382,7 @@ config BUSYBOX_PIE
 
 config BUSYBOX_NOMMU
 	bool "Force NOMMU build"
-	default n
+	default y if !ADK_TARGET_WITH_MMU
 	help
 	Busybox tries to detect whether architecture it is being
 	built against supports MMU or not. If this detection fails,

@@ -165,16 +165,22 @@ ifeq ($(ADK_TARGET_ARCH_METAG),y)
 GCC_CONFOPTS+=		--with-cpu=2.1 --enable-meta-default --disable-symvers
 endif
 
-ifeq ($(ADK_TARGET_CPU_CF),y)
-GCC_CONFOPTS+=		--with-arch=cf --disable-multilib
-endif
-
 ifeq ($(ADK_TARGET_ARCH_NDS32),y)
 GCC_CONFOPTS+=		--with-arch=v3
 endif
 
 ifeq ($(ADK_TARGET_ARCH_M68K)$(ADK_TARGET_ARCH_X86_64)$(ADK_TARGET_ARCH_X86),)
 GCC_FINAL_CONFOPTS+=	--disable-biarch --disable-multilib
+endif
+
+ifeq ($(ADK_TARGET_CPU_CF),y)
+GCC_CONFOPTS+=		--with-arch=cf
+GCC_INITIAL_CONFOPTS+=	--enable-multilib
+ifeq ($(ADK_TARGET_BINFMT_ELF)$(ADK_TARGET_WITH_MMU),y)
+GCC_FINAL_CONFOPTS+=	--disable-multilib --disable-threads --disable-libatomic
+endif
+else
+GCC_INITIAL_CONFOPTS+=	--disable-multilib
 endif
 
 ifeq ($(ADK_TARGET_ARCH_SH),y)
@@ -309,6 +315,10 @@ ifeq ($(ADK_TARGET_CPU_SH_SH4A),y)
 	(cd ${STAGING_TARGET_DIR}/ && ln -sf . m4a)
 endif
 endif
+	# Need to get gcc to generate _all_ the multilib variants
+	# (so both MMU and non-mmu M68k and ColdFire).
+	$(SED) 's/M68K_MLIB_CPU +=/#M68K_MLIB_CPU +=/' $(WRKBUILD)/gcc/config/m68k/t-m68k
+	$(SED) 's/&& (FLAGS ~ "FL_MMU")//' $(WRKBUILD)/gcc/config/m68k/t-linux
 	$(SED) '/k prot/agcc_cv_libc_provides_ssp=yes' $(WRKBUILD)/gcc/configure
 	cd $(GCC_BUILD_DIR_INITIAL); \
 		PATH='$(TARGET_PATH)' \
@@ -317,13 +327,13 @@ endif
 		CFLAGS="-O0 -g0 -fomit-frame-pointer" \
 		CXXFLAGS="-O0 -g0 -fomit-frame-pointer" \
 		$(WRKBUILD)/configure \
+			${GCC_INITIAL_CONFOPTS} \
 			${GCC_CONFOPTS} \
 			${GCC_TLS_CONFOPTS} \
 			--enable-languages=c \
 			--with-newlib \
 			--disable-shared \
 			--disable-threads \
-			--disable-multilib \
 			--without-headers
 	touch $@
 

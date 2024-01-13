@@ -11,7 +11,7 @@ config ADK_TARGET_USE_SHARED_LIBS_ONLY
 
 config ADK_TARGET_USE_STATIC_LIBS_ONLY
 	bool "Create static libraries only and link statically"
-	select BUSYBOX_STATIC
+	select BUSYBOX_STATIC if !ADK_TARGET_BINFMT_ELF
 	help
 	  Useful for debugging of dynamic linker problems. Be aware of the fact, that uClibc and glibc
 	  still requires libgcc_so.so.1 for pthread_cancel. Glibc also requires libnss_*.so libraries

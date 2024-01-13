@@ -50,8 +50,13 @@ UCLIBC_MAKEOPTS+=	-j${ADK_MAKE_JOBS}
 endif
 
 $(WRKBUILD)/.configured: $(WRKBUILD)/.prepared
+ifeq ($(ADK_TARGET_WITH_MMU),y)
 	PATH='$(HOST_PATH)' sed -e 's^KERNEL_HEADERS.*$$KERNEL_HEADERS=\"${STAGING_TARGET_DIR}/usr/include\"' \
 	    $(ADK_TOPDIR)/target/$(ADK_TARGET_ARCH)/uclibc-ng.config >${WRKBUILD}/.config
+else
+	PATH='$(HOST_PATH)' sed -e 's^KERNEL_HEADERS.*$$KERNEL_HEADERS=\"${STAGING_TARGET_DIR}/usr/include\"' \
+	    $(ADK_TOPDIR)/target/$(ADK_TARGET_ARCH)/uclibc-ng-nommu.config >${WRKBUILD}/.config
+endif
 	$(SED) 's^.*\(CROSS_COMPILER_PREFIX\).*^\1=\"$(TARGET_CROSS)\"^' ${WRKBUILD}/.config
 ifeq ($(ADK_TARGET_ENDIAN),little)
 	$(SED) 's/.*\(ARCH_LITTLE_ENDIAN\).*/\1=y/' ${WRKBUILD}/.config
@@ -79,6 +84,13 @@ endif
 ifeq ($(ADK_TARGET_HARD_FLOAT_DP),y)
 	$(SED) 's/.*\(UCLIBC_HAS_FPU\).*/\1=y/' ${WRKBUILD}/.config
 	$(SED) 's/.*\(UCLIBC_HAS_SOFT_FLOAT\).*/# \1 is not set/' ${WRKBUILD}/.config
+endif
+ifeq ($(ADK_TARGET_BINFMT_ELF),y)
+	$(SED) 's/.*\(UCLIBC_FORMAT_ELF\).*/\1=y/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(UCLIBC_FORMAT_FDPIC_ELF\).*/# \1 is not set/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(UCLIBC_FORMAT_FLAT\).*/# \1 is not set/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(UCLIBC_FORMAT_FLAT_SEP_DATA\).*/# \1 is not set/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(UCLIBC_FORMAT_SHARED_FLAT\).*/# \1 is not set/' ${WRKBUILD}/.config
 endif
 ifeq ($(ADK_TARGET_BINFMT_FDPIC),y)
 	$(SED) 's/.*\(UCLIBC_FORMAT_FDPIC_ELF\).*/\1=y/' ${WRKBUILD}/.config
@@ -376,6 +388,8 @@ $(WRKBUILD)/.installed: $(WRKBUILD)/.compiled
 		UCLIBC_EXTRA_LDFLAGS="$(TARGET_LDFLAGS)" \
 		VERBOSE=1 \
 		install_runtime install_dev
+	ln -f ${STAGING_TARGET_DIR}/usr/lib/crt1.o \
+		${STAGING_TARGET_DIR}/usr/lib/Scrt1.o
 ifeq ($(ADK_TARGET_LIBC_UTILS),y)
 	PATH='$(HOST_PATH)' $(MAKE) -C $(WRKBUILD) \
 		ARCH="$(ADK_TARGET_ARCH)" \
