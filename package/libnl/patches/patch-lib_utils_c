@@ -1,5 +1,5 @@
---- libnl-libnl3_2_29.orig/lib/utils.c	2016-12-30 15:57:01.000000000 +0100
-+++ libnl-libnl3_2_29/lib/utils.c	2017-04-26 20:09:18.137933191 +0200
+--- libnl-libnl3_2_29.orig/lib/utils.c	Fri Dec 30 15:57:01 2016
++++ libnl-libnl3_2_29/lib/utils.c	Sat Jan 13 09:58:56 2024
 @@ -30,7 +30,9 @@
  #include <netlink/utils.h>
  #include <linux/socket.h>
@@ -10,7 +10,7 @@
  
  /**
   * Global variable indicating the desired level of debugging output.
-@@ -123,9 +125,10 @@ int __nl_read_num_str_file(const char *p
+@@ -123,9 +125,10 @@ int __nl_read_num_str_file(const char *path, int (*cb)
  
  const char *nl_strerror_l(int err)
  {

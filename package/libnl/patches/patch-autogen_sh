@@ -1,0 +1,7 @@
+--- libnl-libnl3_2_29.orig/autogen.sh	Fri Dec 30 15:57:01 2016
++++ libnl-libnl3_2_29/autogen.sh	Sat Jan 13 10:02:41 2024
+@@ -12,4 +12,3 @@ cd "$BASEDIR" || die "Could not change into base direc
+ autoreconf -fi || die "Error during autoreconf"
+ rm -Rf autom4te.cache;
+ 
+-doc/autogen.sh || die "Error during doc/autogen.sh"

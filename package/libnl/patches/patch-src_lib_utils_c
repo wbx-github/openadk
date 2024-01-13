@@ -1,6 +1,6 @@
---- libnl-libnl3_2_29.orig/src/lib/utils.c	2016-12-30 15:57:01.000000000 +0100
-+++ libnl-libnl3_2_29/src/lib/utils.c	2017-04-26 20:09:18.149933980 +0200
-@@ -81,6 +81,7 @@ void nl_cli_fatal(int err, const char *f
+--- libnl-libnl3_2_29.orig/src/lib/utils.c	Fri Dec 30 15:57:01 2016
++++ libnl-libnl3_2_29/src/lib/utils.c	Sat Jan 13 09:58:56 2024
+@@ -81,6 +81,7 @@ void nl_cli_fatal(int err, const char *fmt, ...)
  		fprintf(stderr, "\n");
  	} else {
  		char *buf;
@@ -8,7 +8,7 @@
  		locale_t loc = newlocale(LC_MESSAGES_MASK, "", (locale_t)0);
  		if (loc == (locale_t)0) {
  			if (errno == ENOENT)
-@@ -91,9 +92,14 @@ void nl_cli_fatal(int err, const char *f
+@@ -91,9 +92,14 @@ void nl_cli_fatal(int err, const char *fmt, ...)
  		}
  		if (loc != (locale_t)0)
  			buf = strerror_l(err, loc);
