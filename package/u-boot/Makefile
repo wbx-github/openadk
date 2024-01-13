@@ -10,7 +10,7 @@ PKG_HASH:=		e00e6c6f014e046101739d08d06f328811cebcf5ae101348f409cbbd55ce6900
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host
-PKG_BUILDDEP:=		python3-host swig-host u-boot-host
+PKG_BUILDDEP:=		python3-host python-setuptools-host swig-host u-boot-host
 PKG_URL:=		http://www.denx.de/wiki/U-Boot	
 PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
