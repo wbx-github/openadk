@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		python3
-PKG_VERSION:=		3.9.7
+PKG_VERSION:=		3.12.1
 PKG_RELEASE:=		1
-PKG_HASH:=		f8145616e68c00041d1a6399b76387390388f8359581abc24432bb969b5e3c57
+PKG_HASH:=		8dfb8f426fcd226657f9e2bd5f1e96e53264965176fa17d32658e873591aeb21
 PKG_DESCR:=		python3 scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libffi zlib
@@ -59,9 +59,9 @@ define PKG_mod_template
 INSTALL_MODS_$${ADK_PACKAGE_${1}}+=    ${2}-install
 
 ${2}-install:
-	${INSTALL_DIR} $$(IDIR_$(1))/usr/lib/python3.9/lib-dynload
+	${INSTALL_DIR} $$(IDIR_$(1))/usr/lib/python3.12/lib-dynload
 	for m in ${2}; do \
-		${INSTALL_DATA} $(WRKINST)/usr/lib/python3.9/lib-dynload/$$$${m}*.so $$(IDIR_$(1))/usr/lib/python3.9/lib-dynload ;\
+		${INSTALL_DATA} $(WRKINST)/usr/lib/python3.12/lib-dynload/$$$${m}*.so $$(IDIR_$(1))/usr/lib/python3.12/lib-dynload ;\
 	done
 endef
 
@@ -92,6 +92,7 @@ FAKE_FLAGS+=		ENSUREPIP=no
 CONFIGURE_ARGS:=	--with-system-ffi \
 			--with-system-expat \
 			--disable-ipv6 \
+			--with-build-python \
 			--without-cxx-main
 
 CONFIGURE_ENV+=		ac_cv_have_long_long_format=yes \
@@ -102,15 +103,15 @@ HOST_CONFIGURE_ARGS+=	--without-cxx-main
 
 python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
-	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.9
-	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.9
+	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.12
+	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.12
 	${INSTALL_BIN} ${WRKINST}/usr/bin/python3 ${IDIR_PYTHON3}/usr/bin
 	${CP} ${WRKINST}/usr/lib/libpython*.so* ${IDIR_PYTHON3}/usr/lib
-	${CP} ${WRKINST}/usr/lib/python3.9/* ${IDIR_PYTHON3}/usr/lib/python3.9
-	${CP} ${WRKINST}/usr/include/python3.9/pyconfig.h \
-		 ${IDIR_PYTHON3}/usr/include/python3.9
+	${CP} ${WRKINST}/usr/lib/python3.12/* ${IDIR_PYTHON3}/usr/lib/python3.12
+	${CP} ${WRKINST}/usr/include/python3.12/pyconfig.h \
+		 ${IDIR_PYTHON3}/usr/include/python3.12
 	@-for i in zlib _bz2 _curses _ssl _gdbm _sqlite pyexpat readline; do \
-		rm ${IDIR_PYTHON3}/usr/lib/python3.9/lib-dynload/$${i}*so; \
+		rm ${IDIR_PYTHON3}/usr/lib/python3.12/lib-dynload/$${i}*so; \
 	done
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
