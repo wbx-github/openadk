@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		dtc
-PKG_VERSION:=		1.6.1
+PKG_VERSION:=		1.7.0
 PKG_RELEASE:=		1
-PKG_HASH:=		6401c9a0f577a270df4632bf0f3e5454ccc7a5ca3caefa67a3e1c29c9c6b8c60
+PKG_HASH:=		70d9c156ec86d63de0f7bdae50540ffa492b25ec1d69491c7520845c860b9a62
 PKG_DESCR:=		compiler for dts files
 PKG_SECTION:=		sys/misc
-HOST_BUILDDEP:=		m4-host flex-host bison-host python3-host swig-host
+HOST_BUILDDEP:=		m4-host flex-host bison-host
 PKG_URL:=		http://www.devicetree.org/Device_Tree_Compiler
 PKG_SITES:=		https://github.com/dgibson/dtc/archive/refs/tags/
 
@@ -23,6 +23,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,DTC,dtc,$(PKG_VERSION)-$(PKG_RELEASE)))
 
 HOST_STYLE:=		manual
+HOST_MAKE_FLAGS+=	NO_PYTHON=1
 
 host-build:
 	(cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -f ${MAKE_FILE} \
