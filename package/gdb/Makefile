@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gdb
-PKG_VERSION:=		13.2
+PKG_VERSION:=		14.1
 PKG_RELEASE:=		1
-PKG_HASH:=		fd5bebb7be1833abdb6e023c2f498a354498281df9d05523d8915babeb893f0a
+PKG_HASH:=		d66df51276143451fcbff464cc8723d68f1e9df45a6a2d5635a54e71643edb80
 PKG_DESCR:=		program debugger
 PKG_SECTION:=		app/debug
 PKG_SITES:=		${MASTER_SITE_GNU:=gdb/}
-PKG_DEPENDS:=		libncurses libreadline zlib libexpat libthread-db libgmp
-PKG_BUILDDEP:=		ncurses readline expat zlib gmp
+PKG_DEPENDS:=		libncurses libreadline zlib libexpat libthread-db libgmp mpfr
+PKG_BUILDDEP:=		ncurses readline expat zlib gmp mpfr
 PKG_NEEDS:=		c++
 
 PKG_ARCH_DEPENDS:=	!cris !avr32 !microblaze
@@ -47,6 +47,7 @@ CONFIGURE_ARGS+=	--enable-static \
 			--with-curses \
 			--with-libexpat-prefix="${STAGING_TARGET_DIR}/usr" \
 			--with-gmp="${STAGING_TARGET_DIR}/usr" \
+			--with-mpfr="${STAGING_TARGET_DIR}/usr" \
 			--enable-gdbmi
 
 gdb-install:
