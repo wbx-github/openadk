@@ -1,0 +1,11 @@
+--- zstd-1.5.5.orig/programs/Makefile	2023-04-04 22:13:52.000000000 +0200
++++ zstd-1.5.5/programs/Makefile	2024-01-17 18:13:11.620566871 +0100
+@@ -380,7 +380,7 @@ DESTDIR     ?=
+ # directory variables : GNU conventions prefer lowercase
+ # see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
+ # support both lower and uppercase (BSD), use uppercase in script
+-prefix      ?= /usr/local
++prefix      ?= /usr
+ PREFIX      ?= $(prefix)
+ exec_prefix ?= $(PREFIX)
+ bindir      ?= $(exec_prefix)/bin

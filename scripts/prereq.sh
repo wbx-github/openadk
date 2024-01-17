@@ -651,6 +651,11 @@ if ! which lzma >/dev/null 2>&1; then
   host_build_lzma=1
 fi
 
+host_build_zstd=0
+if ! which zstd >/dev/null 2>&1; then
+  host_build_zstd=1
+fi
+
 host_build_lz4=0
 if ! which lz4c >/dev/null 2>&1; then
   host_build_lz4=1
@@ -740,6 +745,9 @@ if [ $host_build_genext2fs -eq 1 ]; then
 fi
 if [ $host_build_lzma -eq 1 ]; then
   printf "\t%s\n" "select ADK_HOST_BUILD_LZMA if ADK_HOST_NEED_LZMA" >> $topdir/target/config/Config.in.prereq
+fi
+if [ $host_build_zstd -eq 1 ]; then
+  printf "\t%s\n" "select ADK_HOST_BUILD_ZSTD if ADK_HOST_NEED_ZSTD" >> $topdir/target/config/Config.in.prereq
 fi
 if [ $host_build_lz4 -eq 1 ]; then
   printf "\t%s\n" "select ADK_HOST_BUILD_LZ4 if ADK_HOST_NEED_LZ4" >> $topdir/target/config/Config.in.prereq

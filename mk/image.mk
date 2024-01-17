@@ -255,6 +255,16 @@ ifeq ($(ADK_LINUX_KERNEL_COMP_XZ),y)
 		echo "CONFIG_XZ_DEC_TEST=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_XZ_DEC_MICROLZMA=n" >> ${LINUX_DIR}/.config
 endif
+ifeq ($(ADK_LINUX_KERNEL_COMP_ZSTD),y)
+		echo "CONFIG_RD_XZ=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_BZIP2=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_GZIP=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_LZO=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_LZ4=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_LZMA=n" >> ${LINUX_DIR}/.config
+		echo "CONFIG_RD_ZSTD=y" >> ${LINUX_DIR}/.config
+		echo "CONFIG_INITRAMFS_COMPRESSION_ZSTD=y" >> ${LINUX_DIR}/.config
+endif
 ifeq ($(ADK_LINUX_KERNEL_COMP_LZ4),y)
 		echo "CONFIG_RD_XZ=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_BZIP2=n" >> ${LINUX_DIR}/.config
