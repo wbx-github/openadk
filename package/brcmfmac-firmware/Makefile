@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		brcmfmac-firmware
 PKG_VERSION:=		1.0
-PKG_RELEASE:=		5
+PKG_RELEASE:=		6
 PKG_DESCR:=		firmware for broadcom wireless cards
 PKG_SECTION:=		sys/firmware
 
@@ -21,6 +21,8 @@ INSTALL_STYLE:=         manual
 
 do-install:
 	${INSTALL_DIR} ${IDIR_BRCMFMAC_FIRMWARE}/lib/firmware/brcm
-	${CP} ${WRKBUILD}/* ${IDIR_BRCMFMAC_FIRMWARE}/lib/firmware/brcm
+	${CP} ${WRKBUILD}/brcm/* ${IDIR_BRCMFMAC_FIRMWARE}/lib/firmware/brcm
+	${INSTALL_DIR} ${IDIR_BRCMFMAC_FIRMWARE}/lib/firmware/cypress
+	${CP} ${WRKBUILD}/cypress/* ${IDIR_BRCMFMAC_FIRMWARE}/lib/firmware/cypress
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
