@@ -218,6 +218,10 @@ TARGET_CFLAGS+=		-static
 TARGET_CXXFLAGS+=	-static
 TARGET_LDFLAGS+=	-static
 endif
+else
+TARGET_CFLAGS+=		-fpie
+TARGET_CXXFLAGS+=	-fpie
+TARGET_LDFLAGS+=	-fpie -pie
 endif
 
 ifneq ($(ADK_TARGET_USE_SSP),)
