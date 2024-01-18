@@ -57,7 +57,8 @@ source "target/config/Config.in.elf2flt"
 
 config ADK_TARGET_BINFMT
 	string
-	depends on ADK_TARGET_ARCH_BFIN
+	depends on !ADK_TARGET_WITH_MMU
+	default "elf" if ADK_TARGET_BINFMT_ELF
 	default "flat" if ADK_TARGET_BINFMT_FLAT
 	default "fdpic" if ADK_TARGET_BINFMT_FDPIC
 
