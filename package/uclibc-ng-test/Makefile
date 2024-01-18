@@ -20,6 +20,7 @@ $(eval $(call PKG_template,UCLIBC_NG_TEST,uclibc-ng-test,$(PKG_VERSION)-${PKG_RE
 
 CONFIG_STYLE:=          manual
 
+XAKE_FLAGS+=		V=1
 ifeq ($(ADK_TARGET_LIB_GLIBC),y)
 XAKE_FLAGS+=		NO_CRYPT=1
 endif
