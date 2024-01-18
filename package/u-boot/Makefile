@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2023.10
+PKG_VERSION:=		2024.01
 PKG_RELEASE:=		1
-PKG_HASH:=		e00e6c6f014e046101739d08d06f328811cebcf5ae101348f409cbbd55ce6900
+PKG_HASH:=		b99611f1ed237bf3541bdc8434b68c96a6e05967061f992443cb30aabebef5b3
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
-HOST_BUILDDEP:=		libressl-host dtc-host
+HOST_BUILDDEP:=		libressl-host dtc-host swig-host python3-host python-setuptools-host
 PKG_BUILDDEP:=		python3-host python-setuptools-host swig-host u-boot-host
 PKG_URL:=		http://www.denx.de/wiki/U-Boot	
 PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
