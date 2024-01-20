@@ -11,10 +11,10 @@ autostart)
 	exec sh $0 start
 	;;
 start)
-	/usr/bin/rpcbind
+	/usr/sbin/rpcbind
 	;;
 stop)
-	kill $(pgrep -f /usr/bin/rpcbind)
+	kill $(pgrep -f /usr/sbin/rpcbind)
 	;;
 restart)
 	sh $0 stop

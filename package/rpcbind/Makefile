@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		rpcbind
-PKG_VERSION:=		0.2.4
-PKG_RELEASE:=		2
-PKG_HASH:=		074a9a530dc7c11e0d905aa59bcb0847c009313f02e98d3d798aa9568f414c66
+PKG_VERSION:=		1.2.6
+PKG_RELEASE:=		1
+PKG_HASH:=		5613746489cae5ae23a443bb85c05a11741a5f12c8f55d2bb5e83b9defeee8de
 PKG_DESCR:=		converts rpc program numbers into universal addresses
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libtirpc
@@ -27,8 +27,9 @@ CONFIGURE_ARGS+=	--disable-libwrap \
 
 rpcbind-install:
 	$(INSTALL_DIR) $(IDIR_RPCBIND)/usr/bin
-	$(INSTALL_BIN) $(WRKINST)/usr/bin/rpcbind \
-		$(IDIR_RPCBIND)/usr/bin
+	$(INSTALL_DIR) $(IDIR_RPCBIND)/usr/sbin
+	$(INSTALL_BIN) $(WRKINST)/usr/sbin/rpcbind \
+		$(IDIR_RPCBIND)/usr/sbin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/rpcinfo \
 		$(IDIR_RPCBIND)/usr/bin
 
