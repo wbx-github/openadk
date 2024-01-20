@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		dnsmasq
-PKG_VERSION:=		2.87
+PKG_VERSION:=		2.89
 PKG_RELEASE:=		1
-PKG_HASH:=		0228c0364a7f2356fd7e7f1549937cbf3099a78d3b2eb1ba5bb0c31e2b89de7a
+PKG_HASH:=		02bd230346cf0b9d5909f5e151df168b2707103785eb616b56685855adebb609
 PKG_DESCR:=		lightweight dns, dhcp and tftp server
 PKG_SECTION:=		net/dns
 PKG_KDEPENDS:=		inotify-user
