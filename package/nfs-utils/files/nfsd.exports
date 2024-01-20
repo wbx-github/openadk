@@ -1,6 +1,6 @@
 # on embedded devices with MTD you can _only_ export usb disks or sticks
 # for nfsv3
-#/media *(ro,no_root_squash,insecure,no_subtree_check,crossmnt)
+#/media *(ro,fsid=0,no_root_squash,insecure,no_subtree_check,crossmnt)
 # for nfsv4, do mount --bind /srv/music /nfs4/music and
 # set nfs_server_version 4 in /etc/rc.conf
 #/nfs4		hostname(rw,sync,fsid=0,crossmnt,no_subtree_check)

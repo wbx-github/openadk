@@ -838,7 +838,7 @@ int main() {
 				if (result == 1) {
 					val = strtok_r(hvalue, " ", &saveptr);
 					while (val != NULL) { 
-						fprintf(cfg, "\tselect ADK_KERNEL_%s\n", toupperstr(val));
+						fprintf(cfg, "\tselect ADK_LINUX_KERNEL_%s\n", toupperstr(val));
 						val = strtok_r(NULL, " ", &saveptr);
 					}
 				}

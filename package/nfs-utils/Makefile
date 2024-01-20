@@ -9,8 +9,9 @@ PKG_RELEASE:=		1
 PKG_HASH:=		c0ae376ac056011ed0954deba2362d7d8193c653b500b68a543aec512cd2ecfa
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
-PKG_DEPENDS:=		keyutils libtirpc rpcbind
-PKG_BUILDDEP:=		keyutils libtirpc
+PKG_DEPENDS:=		keyutils libtirpc rpcbind libmount libuuid libevent sqlite
+PKG_DEPENDS+=		libncurses libblkid
+PKG_BUILDDEP:=		keyutils libtirpc util-linux libevent sqlite ncurses
 PKG_KDEPENDS:=		nfs-fs
 PKG_NEEDS:=		threads
 PKG_URL:=		http://sourceforge.net/projects/nfs
@@ -58,8 +59,7 @@ CONFIGURE_ARGS+=	--without-tcp-wrappers \
 			--with-rpcgen=internal \
 			--disable-caps \
 			--enable-tirpc \
-			--with-tirpcinclude=${STAGING_TARGET_DIR}/usr/include/tirpc \
-			--disable-uuid
+			--with-tirpcinclude=${STAGING_TARGET_DIR}/usr/include/tirpc
 
 nfs-utils-client-install:
 	${INSTALL_DIR} ${IDIR_NFS_UTILS_CLIENT}/sbin
