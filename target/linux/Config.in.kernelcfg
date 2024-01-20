@@ -59,6 +59,7 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "rockpi4_defconfig" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS && ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	default "vexpress_defconfig" if ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9
 	default "spitz_defconfig" if ADK_TARGET_SYSTEM_QEMU_ARM_TERRIER
+	default "spitz_defconfig" if ADK_TARGET_SYSTEM_QEMU_ARM_SPITZ
 	default "haps_hs5x_defconfig" if ADK_TARGET_CPU_ARC_ARC32
 	default "haps_arc64_defconfig" if ADK_TARGET_CPU_ARC_ARC64
 	default "m5208evb_defconfig" if ADK_TARGET_SYSTEM_QEMU_M68K_MCF5208
