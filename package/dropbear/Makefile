@@ -76,9 +76,9 @@ do-install:
 		$(IDIR_DBCONVERT)/usr/bin/dropbearconvert
 	# ssh pubkey
 	test -z $(ADK_RUNTIME_SSH_PUBKEY) || ( \
-		$(INSTALL_DIR) $(IDIR_DROPBEAR)/root; \
+		$(INSTALL_DIR) $(IDIR_DROPBEAR)/root/.ssh; \
 		echo $(ADK_RUNTIME_SSH_PUBKEY) \
-		>$(IDIR_DROPBEAR)/root/.authorized_keys; \
+		>$(IDIR_DROPBEAR)/root/.ssh/authorized_keys; \
         )
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
