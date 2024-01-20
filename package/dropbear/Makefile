@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		dropbear
-PKG_VERSION:=		2020.81
-PKG_RELEASE:=		4
-PKG_HASH:=		48235d10b37775dbda59341ac0c4b239b82ad6318c31568b985730c788aac53b
+PKG_VERSION:=		2022.83
+PKG_RELEASE:=		1
+PKG_HASH:=		bc5a121ffbc94b5171ad5ebe01be42746d50aa797c9549a4639894a16749443b
 PKG_DESCR:=		ssh server/client designed for embedded systems
 PKG_SECTION:=		net/security
 PKG_URL:=		http://matt.ucc.asn.au/dropbear/
@@ -39,6 +39,7 @@ CONFIGURE_ARGS+=	--disable-pam \
 			--disable-wtmpx \
 			--disable-loginfunc \
 			--disable-pututxline \
+			--disable-harden \
 			--disable-zlib
 ifeq (${ADK_PACKAGE_DROPBEAR_WITH_UTMP},)
 CONFIGURE_ARGS+=	--disable-utmp --disable-pututline
@@ -75,9 +76,9 @@ do-install:
 		$(IDIR_DBCONVERT)/usr/bin/dropbearconvert
 	# ssh pubkey
 	test -z $(ADK_RUNTIME_SSH_PUBKEY) || ( \
-		$(INSTALL_DIR) $(IDIR_DROPBEAR)/etc/dropbear; \
+		$(INSTALL_DIR) $(IDIR_DROPBEAR)/root; \
 		echo $(ADK_RUNTIME_SSH_PUBKEY) \
-		>$(IDIR_DROPBEAR)/etc/dropbear/authorized_keys; \
+		>$(IDIR_DROPBEAR)/root/.authorized_keys; \
         )
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

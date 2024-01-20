@@ -24,14 +24,6 @@ start)
 		test $rv = 0 || exit 1
 		test -f /etc/dropbear/dropbear_rsa_host_key || exit 1
 	fi
-	if test ! -f /etc/dropbear/dropbear_dss_host_key; then
-		# take it easy here, since above already catched the worst cases
-		if test -x /usr/bin/dropbearkey; then
-			echo "dropbear: generating SSH private key (DSS)"
-			/usr/bin/dropbearkey -f /etc/dropbear/dropbear_dss_host_key -t dss
-			echo "dropbear: key generation exited with code $?"
-		fi
-	fi
 	if test ! -f /etc/dropbear/dropbear_ecdsa_host_key; then
 		# take it easy here, since above already catched the worst cases
 		if test -x /usr/bin/dropbearkey; then

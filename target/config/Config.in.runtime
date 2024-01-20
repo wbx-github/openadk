@@ -117,7 +117,7 @@ config ADK_RUNTIME_PASSWORD
 	help
 	  Predefine the root password enabled in the built image.
 	  Use ./host_*/usr/bin/mkcrypt to generate the hash.
-	  Default password is linux123
+	  Default password is: linux123
 
 config ADK_RUNTIME_ADDUSER
 	bool "add an user"
