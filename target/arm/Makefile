@@ -175,18 +175,33 @@ ifeq ($(ADK_TARGET_FS),squashfs)
 	dd conv=notrunc if=$(BUILD_DIR)/root.squashfs of=$(FW_DIR)/$(ROOTFSSQUASHFS)
 endif
 
+ifeq ($(ADK_TARGET_LINUX_KERNEL_VERSION_6_6),y)
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VERSATILEPB),y)
+VENDOR:=arm/
+endif
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_REALVIEW_EB_MPCORE),y)
+VENDOR:=arm/
+endif
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9),y)
+VENDOR:=arm/
+endif
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_XILINX_ZYNQ),y)
+VENDOR:=xilinx/
+endif
+endif
+
 dtb-install:
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_XILINX_ZYNQ),y)
 	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9),y)
-	${KERNEL_MAKE} vexpress-v2p-ca9.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} $(VENDOR)vexpress-v2p-ca9.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_REALVIEW_EB_MPCORE),y)
-	${KERNEL_MAKE} arm-realview-eb-11mp-ctrevb.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} $(VENDOR)arm-realview-eb-11mp-ctrevb.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VERSATILEPB),y)
-	${KERNEL_MAKE} versatile-pb.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} $(VENDOR)versatile-pb.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_PHYTEC_WEGA),y)
 	${KERNEL_MAKE} am335x-wega-rdk.dtb $(MAKE_TRACE)
@@ -237,8 +252,8 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
 	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 endif
-	for x in $(LINUX_DIR)/arch/arm/boot/dts/*.dtb; do \
-		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm/boot/dts/*.dtb $(FW_DIR); \
+	for x in $(LINUX_DIR)/arch/arm/boot/dts/$(VENDOR)*.dtb; do \
+		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm/boot/dts/$(VENDOR)*.dtb $(FW_DIR); \
 		break; \
 	done
 
