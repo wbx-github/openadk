@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		8dfb8f426fcd226657f9e2bd5f1e96e53264965176fa17d32658e873591aeb21
 PKG_DESCR:=		python3 scripting language
 PKG_SECTION:=		dev/lang
-PKG_DEPENDS:=		libffi zlib
-PKG_BUILDDEP:=		python3-host libffi zlib
+PKG_DEPENDS:=		libffi zlib libexpat
+PKG_BUILDDEP:=		python3-host libffi zlib expat
 HOST_BUILDDEP:=		libffi-host libressl-host zlib-host bzip2-host ncurses-host sqlite-host
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.python.org/
@@ -18,10 +18,8 @@ PKG_SITES:=		http://legacy.python.org/ftp/python/${PKG_VERSION}/
 
 PKG_HOST_DEPENDS:=	!netbsd !openbsd !cygwin
 
-PKG_FLAVOURS_PYTHON3:=	MOD_ZLIB MOD_BZ2 MOD_EXPAT MOD_SQLITE MOD_GDBM
-PKG_FLAVOURS_PYTHON3+=	MOD_NCURSES MOD_SSL 
-# disabled
-#MOD_READLINE
+PKG_FLAVOURS_PYTHON3:=	MOD_ZLIB MOD_BZ2 MOD_SQLITE MOD_GDBM
+PKG_FLAVOURS_PYTHON3+=	MOD_NCURSES MOD_SSL MOD_READLINE
 			
 PKGFD_MOD_ZLIB:=	zlib support
 PKGFB_MOD_ZLIB:=	zlib
@@ -29,9 +27,6 @@ PKGFS_MOD_ZLIB:=	zlib
 PKGFD_MOD_BZ2:=		bzip2 support
 PKGFB_MOD_BZ2:=		bzip2
 PKGFS_MOD_BZ2:=		libbz2
-PKGFD_MOD_EXPAT:=	xml support
-PKGFB_MOD_EXPAT:=	expat
-PKGFS_MOD_EXPAT:=	libexpat
 PKGFD_MOD_SQLITE:=	sqlite support
 PKGFB_MOD_SQLITE:=	sqlite
 PKGFS_MOD_SQLITE:=	libsqlite
@@ -71,35 +66,29 @@ $(eval $(call PKG_template,PYTHON3,python3,${PKG_VERSION}-${PKG_RELEASE},${PKG_D
 
 $(eval $(call PKG_template,PYTHON3_MOD_ZLIB,python3-mod-zlib,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_ZLIB},${PKGFD_MOD_ZLIB},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_BZ2,python3-mod-bz2,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_BZ2},${PKGFD_MOD_BZ2},${PKG_SECTION}))
-$(eval $(call PKG_template,PYTHON3_MOD_EXPAT,python3-mod-expat,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_EXPAT},${PKGFD_MOD_EXPAT},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_SQLITE,python3-mod-sqlite,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_SQLITE},${PKGFD_MOD_SQLITE},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_GDBM,python3-mod-gdbm,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_GDBM},${PKGFD_MOD_GDBM},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_NCURSES,python3-mod-ncurses,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_NCURSES},${PKGFD_MOD_NCURSES},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_SSL,python3-mod-ssl,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_SSL},${PKGFD_MOD_SSL},${PKG_SECTION}))
-#$(eval $(call PKG_template,PYTHON3_MOD_READLINE,python3-mod-readline,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_READLINE},${PKGFD_MOD_READLINE},${PKG_SECTION}))
+$(eval $(call PKG_template,PYTHON3_MOD_READLINE,python3-mod-readline,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_READLINE},${PKGFD_MOD_READLINE},${PKG_SECTION}))
 
 $(eval $(call PKG_mod_template,PYTHON3_MOD_ZLIB,zlib))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_BZ2,_bz2))
-$(eval $(call PKG_mod_template,PYTHON3_MOD_EXPAT,pyexpat))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_SQLITE,_sqlite))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_GDBM,_gdbm))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_NCURSES,_curses))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_SSL,_ssl))
-#$(eval $(call PKG_mod_template,PYTHON3_MOD_READLINE,readline))
+$(eval $(call PKG_mod_template,PYTHON3_MOD_READLINE,readline))
 
 MAKE_ENV+=		HOSTPGEN=$(STAGING_HOST_DIR)/usr/bin/pgen3
 FAKE_FLAGS+=		ENSUREPIP=no
-CONFIGURE_ARGS:=	--with-system-ffi \
-			--with-system-expat \
+CONFIGURE_ARGS:=	--with-system-expat \
 			--disable-ipv6 \
-			--with-build-python \
-			--without-cxx-main
+			--with-build-python
 
 CONFIGURE_ENV+=		ac_cv_have_long_long_format=yes \
 			ac_cv_file__dev_ptmx=yes \
 			ac_cv_file__dev_ptc=no
-
-HOST_CONFIGURE_ARGS+=	--without-cxx-main
 
 python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
