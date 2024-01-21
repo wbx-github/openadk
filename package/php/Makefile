@@ -4,13 +4,11 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		php
-PKG_VERSION:=		8.2.1
+PKG_VERSION:=		8.3.2
 PKG_RELEASE:=		1
-PKG_HASH:=		650d3bd7a056cabf07f6a0f6f1dd8ba45cd369574bbeaa36de7d1ece212c17af
+PKG_HASH:=		4ffa3e44afc9c590e28dc0d2d31fc61f0139f8b335f11880a121b9f9b9f0634e
 PKG_DESCR:=		php language interpreter
 PKG_SECTION:=		dev/lang
-PKG_BUILDDEP:=		libpng
-PKG_DEPENDS:=		libpng
 PKG_NEEDS:=		threads
 PHP_URL:=		http://www.php.net/
 PKG_SITES:=		http://de2.php.net/distributions/
@@ -187,9 +185,9 @@ else
 PKG_CONFIGURE_OPTS+=	--disable-xml
 endif
 ifneq ($(ADK_PACKAGE_PHP_MOD_SIMPLEXML),)
-PKG_CONFIGURE_OPTS+=	--enable-simplexml=shared --enable-libxml
+PKG_CONFIGURE_OPTS+=	--enable-simplexml=shared
 else
-PKG_CONFIGURE_OPTS+=	--disable-simplexml --disable-libxml
+PKG_CONFIGURE_OPTS+=	--disable-simplexml
 endif
 ifneq ($(ADK_PACKAGE_PHP_MOD_ZLIB),)
 PKG_CONFIGURE_OPTS+=	--with-zlib=shared,"$(STAGING_TARGET_DIR)/usr"
