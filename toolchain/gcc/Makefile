@@ -315,10 +315,12 @@ ifeq ($(ADK_TARGET_CPU_SH_SH4A),y)
 	(cd ${STAGING_TARGET_DIR}/ && ln -sf . m4a)
 endif
 endif
+ifeq ($(ADK_TARGET_ARCH_M68K),y)
 	# Need to get gcc to generate _all_ the multilib variants
 	# (so both MMU and non-mmu M68k and ColdFire).
 	$(SED) 's/M68K_MLIB_CPU +=/#M68K_MLIB_CPU +=/' $(WRKBUILD)/gcc/config/m68k/t-m68k
 	$(SED) 's/&& (FLAGS ~ "FL_MMU")//' $(WRKBUILD)/gcc/config/m68k/t-linux
+endif
 	$(SED) '/k prot/agcc_cv_libc_provides_ssp=yes' $(WRKBUILD)/gcc/configure
 	cd $(GCC_BUILD_DIR_INITIAL); \
 		PATH='$(TARGET_PATH)' \
