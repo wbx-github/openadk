@@ -1,12 +1,13 @@
---- xcb-proto-1.14.orig/xcb-proto.pc.in	2020-02-22 21:16:54.000000000 +0100
-+++ xcb-proto-1.14/xcb-proto.pc.in	2023-01-04 18:28:01.354784124 +0100
-@@ -3,8 +3,8 @@ exec_prefix=@exec_prefix@
+--- xcb-proto-1.16.0.orig/xcb-proto.pc.in	2023-08-16 22:10:21.000000000 +0200
++++ xcb-proto-1.16.0/xcb-proto.pc.in	2024-01-21 13:00:16.488006595 +0100
+@@ -2,9 +2,9 @@ prefix=@prefix@
+ exec_prefix=@exec_prefix@
  datarootdir=@datarootdir@
  datadir=@datadir@
- libdir=@libdir@
 -xcbincludedir=${pc_sysrootdir}@xcbincludedir@
--pythondir=${pc_sysrootdir}@pythondir@
 +xcbincludedir=@xcbincludedir@
+ PYTHON_PREFIX=@PYTHON_PREFIX@
+-pythondir=${pc_sysrootdir}@pythondir@
 +pythondir=@pythondir@
  
  Name: XCB Proto

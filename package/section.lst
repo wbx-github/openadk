@@ -19,6 +19,7 @@ app/chat	Chat
 app/crypto	Cryptography
 app/debug	Debugging and Analyzing
 app/editor	Editor and Pager
+app/games	Games
 app/p2p		P2P
 net/acct	IP Accounting
 net/dns		DNS and DHCP

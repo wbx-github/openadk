@@ -26,6 +26,7 @@ source package/Config.in.auto.app.chat
 source package/Config.in.auto.app.crypto
 source package/Config.in.auto.app.debug
 source package/Config.in.auto.app.editor
+source package/Config.in.auto.app.games
 source package/Config.in.auto.app.p2p
 endmenu
 

@@ -4,16 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xcb-proto
-PKG_VERSION:=		1.14.1
+PKG_VERSION:=		1.16.0
 PKG_RELEASE:=		1
-PKG_HASH:=		85cd21e9d9fbc341d0dbf11eace98d55d7db89fda724b0e598855fcddf0944fd
+PKG_HASH:=		a75a1848ad2a89a82d841a51be56ce988ff3c63a8d6bf4383ae3219d8d915119
 PKG_DESCR:=		xml-xcb protocol descriptions
 PKG_SECTION:=		dev/header
 HOST_BUILDDEP:=		python3-host
-PKG_SITES:=		http://xcb.freedesktop.org/dist/
+PKG_SITES:=		https://xorg.freedesktop.org/archive/individual/proto/
 PKG_OPTS:=		dev devonly
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
