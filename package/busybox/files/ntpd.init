@@ -1,6 +1,6 @@
 #!/bin/sh
 #PKG busybox
-#INIT 60
+#INIT 45
 . /etc/rc.conf
 
 case $1 in
