@@ -16,14 +16,14 @@ start)
 	if [ -x /usr/bin/php-cgi ];then
 		/usr/bin/php-cgi -b /var/run/php5.sock &
 	else
-		/usr/bin/php-fpm -D
+		/usr/bin/php -D
 	fi
 	;;
 stop)
 	if [ -x /usr/bin/php-cgi ];then
 		pkill php-cgi
 	else
-		pkill php-fpm
+		pkill php
 	fi
 	;;
 restart)
