@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ruby
-PKG_VERSION:=		3.1.2
+PKG_VERSION:=		3.3.0
 PKG_RELEASE:=		1
-PKG_HASH:=		ca10d017f8a1b6d247556622c841fc56b90c03b1803f87198da1e4fd3ec3bf2a
+PKG_HASH:=		676b65a36e637e90f982b57b059189b3276b9045034dcd186a7e9078847b975b
 PKG_DESCR:=		scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libressl zlib
@@ -14,7 +14,7 @@ PKG_BUILDDEP:=		ruby-host libressl zlib
 HOST_BUILDDEP:=		libressl-host
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.ruby-lang.org/
-PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/3.1/
+PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/3.3/
 
 include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
@@ -39,6 +39,7 @@ ALL_TARGET:=		main
 INSTALL_TARGET:=	install-nodoc
 
 HOST_CONFIGURE_ARGS+=	--disable-install-doc \
+			--disable-yjit \
 			--disable-shared \
 			--with-out-ext=curses,readline,openssl \
 			--disable-rubygems
