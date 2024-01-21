@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libressl
 PKG_VERSION:=		3.8.2
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		6d4b8d5bbb25a1f8336639e56ec5088052d43a95256697a85c4ce91323c25954
 PKG_DESCR:=		ssl/tls library
 PKG_SECTION:=		libs/crypto
@@ -40,13 +40,13 @@ CONFIGURE_ARGS+=	--disable-hardening
 endif
 
 libressl-install:
+	${INSTALL_DIR} ${IDIR_LIBRESSL}/etc/ssl
+	${CP} ${WRKINST}/etc/ssl/openssl.cnf ${IDIR_LIBRESSL}/etc/ssl
 	$(INSTALL_DIR) $(IDIR_LIBRESSL)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/lib{crypto,ssl,tls}.so* \
 		$(IDIR_LIBRESSL)/usr/lib
 
 libressl-util-install:
-	${INSTALL_DIR} ${IDIR_LIBRESSL_UTIL}/etc/ssl
-	${CP} ${WRKINST}/etc/ssl/openssl.cnf ${IDIR_LIBRESSL_UTIL}/etc/ssl
 	${INSTALL_DIR} ${IDIR_LIBRESSL_UTIL}/usr/bin
 	${CP} ${WRKINST}/usr/bin/openssl ${IDIR_LIBRESSL_UTIL}/usr/bin
 
