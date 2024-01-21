@@ -4,14 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		dosfstools
-PKG_VERSION:=		4.1
+PKG_VERSION:=		4.2
 PKG_RELEASE:=		1
-PKG_HASH:=		e6b2aca70ccc3fe3687365009dd94a2e18e82b688ed4e260e04b7412471cc173
+PKG_HASH:=		64926eebf90092dca21b14259a5301b7b98e7b1943e8a201c7d726084809b527
 PKG_DESCR:=		utilities to create and check fat filesystems
 PKG_SECTION:=		sys/fs
-PKG_NEEDS:=		iconv
 PKG_URL:=		http://www.daniel-baumann.ch/software/dosfstools/
-PKG_SITES:=		https://github.com/dosfstools/dosfstools/releases/download/v$(PKG_VERSION)/
+PKG_SITES:=		https://github.com/dosfstools/dosfstools/releases/download/v4.2/
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_CFLINE_DOSFSTOOLS:=	select BUSYBOX_FSCK
 
