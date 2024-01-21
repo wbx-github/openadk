@@ -1,3 +1,6 @@
 #!/bin/sh
 . $IPKG_INSTROOT/etc/functions.sh
+gid=$(get_next_gid)
+add_user nginx $(get_next_uid) $gid /srv/www
+add_group nginx $gid
 add_rcconf nginx NO
