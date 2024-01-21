@@ -126,6 +126,18 @@ ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI3_64)$(ADK_TARGET_SYSTEM_RASPBERRY_PI4_64)
 	printf "enable_uart=1\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 endif
+ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI5),y)
+	printf "dtparam=fan_temp0=0\n" >> \
+		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+	printf "dtparam=fan_temp0_speed=64\n" >> \
+		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+	printf "dtparam=fan_temp1_speed=64\n" >> \
+		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+	printf "dtparam=fan_temp2_speed=64\n" >> \
+		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+	printf "dtparam=fan_temp3_speed=64\n" >> \
+		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+endif
 ifneq ($(ADK_RUNTIME_MPEG2_KEY),)
 	printf "decode_MPG2=$(ADK_RUNTIME_MPEG2_KEY)\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
