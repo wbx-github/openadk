@@ -11,6 +11,8 @@ PKG_DESCR:=		simple directmedia layer 2
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.libsdl.org/
 PKG_SITES:=		https://github.com/libsdl-org/SDL/archive/refs/tags/
+PKG_BUILDDEP:=		mesa libdrm alsa-lib
+PKG_DEPENDS:=		mesa libdrm alsa-lib
 PKG_LIBNAME:=		libsdl2
 PKG_OPTS:=		dev
 
