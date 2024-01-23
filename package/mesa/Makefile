@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mesa
-PKG_VERSION:=		22.3.2
+PKG_VERSION:=		23.3.3
 PKG_RELEASE:=		1
-PKG_HASH:=		c15df758a8795f53e57f2a228eb4593c22b16dffd9b38f83901f76cd9533140b
+PKG_HASH:=		518307c0057fa3cee8b58df78be431d4df5aafa7edc60d09278b2d7a0a80f3b4
 PKG_DESCR:=		3d graphics library
 PKG_SECTION:=		libs/video
 PKG_DEPENDS:=		libxdamage libxfixes libdrm libxxf86vm libexpat
