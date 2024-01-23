@@ -27,8 +27,11 @@ endif
 ifeq ($(ADK_TARGET_CPU_X86_I586),y)
 CONFIGURE_ARGS+=	--with-cpu=i586
 endif
-ifeq ($(ADK_TARGET_CPU_WITH_NEON),y)
+ifeq ($(ADK_TARGET_ARCH_ARM)$(ADK_TARGET_CPU_WITH_NEON),y)
 CONFIGURE_ARGS+=	--with-cpu=neon
+endif
+ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
+CONFIGURE_ARGS+=	--with-cpu=aarch64
 endif
 
 CONFIGURE_ARGS+=	--with-default-audio=alsa --disable-shared
