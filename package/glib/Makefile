@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		glib
-PKG_VERSION:=		2.75.2
+PKG_VERSION:=		2.78.4
 PKG_RELEASE:=		1
-PKG_EXTRAVER:=		2.75
-PKG_HASH:=		360d6fb75202c0eb0d07f0ab812b19b526f1c05ccc0a8ed7e5d2c988616d343a
+PKG_EXTRAVER:=		2.78
+PKG_HASH:=		24b8e0672dca120cc32d394bccb85844e732e04fe75d18bb0573b2dbc7548f63
 PKG_DESCR:=		low-level core library that forms the basis of gtk+
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		pcre2 zlib libffi
