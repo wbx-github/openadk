@@ -219,6 +219,7 @@ config ADK_LINUX_KERNEL_SND_BCM2835
 	tristate "BCM28XX onboard soundcard"
 	select ADK_LINUX_KERNEL_SND
 	select ADK_LINUX_KERNEL_SND_ARM
+	select ADK_LINUX_KERNEL_STAGING
 	depends on ADK_TARGET_BOARD_BCM28XX
 	default m if ADK_TARGET_HARDWARE_NONE
 	default n

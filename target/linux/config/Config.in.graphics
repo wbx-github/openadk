@@ -248,7 +248,7 @@ config ADK_LINUX_KERNEL_DRM_ETNAVIV
 	  Framebuffer support for Cubox-i/Hummingboard (Vivante)
 
 config ADK_LINUX_KERNEL_DRM_VC4
-	tristate "DRM support for VC4 GPU (Raspberry PI4)"
+	tristate "DRM support for VC4 GPU (Raspberry PI4/PI5)"
 	select ADK_LINUX_KERNEL_DRM
 	select ADK_LINUX_KERNEL_DRM_V3D
 	select ADK_LINUX_KERNEL_SND
@@ -259,12 +259,14 @@ config ADK_LINUX_KERNEL_DRM_VC4
 	select ADK_LINUX_KERNEL_FRAMEBUFFER_CONSOLE
 	select ADK_LINUX_KERNEL_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY
 	depends on ADK_TARGET_SYSTEM_RASPBERRY_PI4 || \
+		ADK_TARGET_SYSTEM_RASPBERRY_PI5 || \
 		ADK_TARGET_SYSTEM_RASPBERRY_PI4_64
 	default m if ADK_TARGET_SYSTEM_RASPBERRY_PI4 || \
+		ADK_TARGET_SYSTEM_RASPBERRY_PI5 || \
 		ADK_TARGET_SYSTEM_RASPBERRY_PI4_64
  	default n
  	help
-	  DRM support for VC4 GPU (Raspberry PI4)
+	  DRM support for VC4 GPU (Raspberry PI4/PI5)
 
 	
 config ADK_LINUX_KERNEL_FB_PXA
