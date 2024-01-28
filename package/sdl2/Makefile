@@ -11,8 +11,8 @@ PKG_DESCR:=		simple directmedia layer 2
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.libsdl.org/
 PKG_SITES:=		https://github.com/libsdl-org/SDL/archive/refs/tags/
-PKG_BUILDDEP:=		mesa libdrm alsa-lib
-PKG_DEPENDS:=		mesa libdrm alsa-lib
+PKG_BUILDDEP:=		mesa libdrm alsa-lib DirectFB
+PKG_DEPENDS:=		mesa libdrm alsa-lib directfb
 PKG_LIBNAME:=		libsdl2
 PKG_OPTS:=		dev
 
@@ -22,6 +22,8 @@ WRKDIST=		${WRKDIR}/SDL-release-$(PKG_VERSION)
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBSDL2,libsdl2,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
+
+CONFIGURE_ARGS+=	--enable-video-directfb
 
 libsdl2-install:
 	$(INSTALL_DIR) $(IDIR_LIBSDL2)/usr/lib
