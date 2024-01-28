@@ -27,6 +27,10 @@ HOST_STYLE:=		cmake
 CONFIG_STYLE:=		cmake
 CMAKE_FLAGS+=		-DBUILD_SHARED_LIBS=ON
 
+pcre2-hostinstall:
+	cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -j${ADK_MAKE_JOBS} -f ${MAKE_FILE} \
+		${HOST_FAKE_FLAGS} ${HOST_INSTALL_TARGET}
+
 pcre2-install:
 	$(INSTALL_DIR) $(IDIR_PCRE2)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libpcre2*.so* \
