@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kodi
-PKG_VERSION:=		20.2
+PKG_VERSION:=		20.3
 PKG_RELEASE:=		1
-PKG_HASH:=		4e81abf81172812bc8891f69a7a80a2b846298cecaae7b5009725e28a3040c23
+PKG_HASH:=		1dbf1d9f4d5eeeb6aa2593813703343a8a377e88a00c68226354e4d67467f64d
 PKG_DESCR:=		software media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		python3 libsquish libressl libxz libfmt rapidjson
@@ -36,7 +36,7 @@ DISTFILES:=		$(PKG_VERSION)-Nexus.tar.gz
 WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Nexus
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
-PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 raspberry-pi4-64 rockpi4-plus
+PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 raspberry-pi4-64 rockpi4-plus raspberry-pi5
 
 PKG_FLAVOURS_KODI:=	WITH_ALSA WITH_CEC WITH_PULSEAUDIO WITH_SMB
 PKG_FLAVOURS_KODI+=	WITH_MICROHTTPD WITH_SSH WITH_AVAHI
@@ -76,6 +76,10 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DENABLE_INTERNAL_FFMPEG=OFF \
 			-DENABLE_INTERNAL_RapidJSON=OFF \
 			-DWITH_FFMPEG=$(STAGING_TARGET_DIR)/usr \
+			-DPYTHON_EXECUTABLE=$(STAGING_HOST_DIR)/usr/bin/python3 \
+			-DPYTHON_INCLUDE_DIRS=$(STAGING_HOST_DIR)/usr/include/python3.11 \
+			-DPYTHON_PATH=$(STAGING_DIR)/usr/lib/python3.11 \
+			-DPYTHON_VER=3.11 \
 			-DKODI_DEPENDSBUILD=OFF \
 			-DENABLE_OPENSSL=ON \
 			-DENABLE_MYSQLCLIENT=OFF \
