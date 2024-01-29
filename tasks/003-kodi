@@ -18,8 +18,8 @@ config ADK_APPLIANCE_KODI
 	select ADK_PACKAGE_PYTHON3
 	select ADK_PACKAGE_PYTHON3_MOD_ZLIB # required for YouTube Addon
 	select ADK_PACKAGE_PYTHON3_MOD_SSL # required for YouTube Addon
-	select ADK_PACKAGE_CURL
-	select ADK_PACKAGE_CURL_WITH_LIBRESSL
+	select ADK_PACKAGE_LIBCURL
+	select ADK_PACKAGE_LIBCURL_WITH_LIBRESSL
 	select ADK_PACKAGE_DROPBEAR if ADK_TARGET_LIB_UCLIBC_NG
 	select ADK_PACKAGE_OPENSSH if ADK_TARGET_LIB_GLIBC
 	select ADK_PACKAGE_OPENSSH_SERVER if ADK_TARGET_LIB_GLIBC
@@ -51,7 +51,6 @@ config ADK_APPLIANCE_KODI
 	select ADK_TARGET_USB_MOUSE
 	select ADK_LINUX_KERNEL_NTFS_FS
 	select ADK_RUNTIME_HOSTNAME kodibox
-	select ADK_PACKAGE_BCM28XX_BOOTLOADER_EXTRA if ADK_TARGET_BOARD_BCM28XX
 	select ADK_LINUX_KERNEL_PREEMPT__LL if !ADK_APPLIANCE_CONVOLUTION # for better performance and no sound problems
 	help
 	  Create a small kodi multimedia appliance. Please enable additional features
