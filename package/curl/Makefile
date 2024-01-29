@@ -4,12 +4,11 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		curl
-PKG_VERSION:=		8.2.1
+PKG_VERSION:=		8.5.0
 PKG_RELEASE:=		1
-PKG_HASH:=		dd322f6bd0a20e6cebdfd388f69e98c3d183bed792cf4713c8a7ef498cba4894
+PKG_HASH:=		42ab8db9e20d8290a3b633e7fbb3cec15db34df65fd1015ef8ac1e4723750eeb
 PKG_DESCR:=		client-side url transfer tool
 PKG_SECTION:=		net/http
-PKG_DEPENDS:=		libcurl
 PKG_BUILDDEP:=		zlib
 PKG_NEEDS:=		threads
 PKG_URL:=		https://curl.se/
@@ -17,15 +16,15 @@ PKG_SITES:=		https://curl.se/download/
 PKG_LIBNAME:=		libcurl
 PKG_OPTS:=		dev
 
-PKG_SUBPKGS:=		CURL LIBCURL
+PKG_SUBPKGS:=		LIBCURL CURL
 PKGSD_LIBCURL:=		client-side url transfer library
 PKGSC_LIBCURL:=		libs/net
 PKGSS_LIBCURL:=		zlib
 
-PKG_FLAVOURS_CURL:=	WITH_IPV6
+PKG_FLAVOURS_LIBCURL:=	WITH_IPV6
 PKGFD_WITH_IPV6:=	enable ipv6 support
 
-PKG_CHOICES_CURL:=	WITH_LIBRESSL WITH_OPENSSL WITH_GNUTLS WITH_WOLFSSL WITHOUT_SSL
+PKG_CHOICES_LIBCURL:=	WITH_LIBRESSL WITH_OPENSSL WITH_GNUTLS WITH_WOLFSSL WITHOUT_SSL
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCB_WITH_LIBRESSL:=	libressl
@@ -44,29 +43,29 @@ include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call HOST_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE}))
-$(eval $(call PKG_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,LIBCURL,libcurl,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_LIBCURL},${PKGSD_LIBCURL},${PKGSC_LIBCURL},${PKG_OPTS}))
+$(eval $(call PKG_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 HOST_CONFIGURE_ARGS+=	--without-ssl
 
-ifeq (${ADK_PACKAGE_CURL_WITH_LIBRESSL},y)
+ifeq (${ADK_PACKAGE_LIBCURL_WITH_LIBRESSL},y)
 CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
 			--without-gnutls
 endif
-ifeq (${ADK_PACKAGE_CURL_WITH_OPENSSL},y)
+ifeq (${ADK_PACKAGE_LIBCURL_WITH_OPENSSL},y)
 CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
 			--without-gnutls
 endif
-ifeq (${ADK_PACKAGE_CURL_WITH_GNUTLS},y)
+ifeq (${ADK_PACKAGE_LIBCURL_WITH_GNUTLS},y)
 CONFIGURE_ARGS+=	--with-gnutls="${STAGING_TARGET_DIR}/usr" \
 			--without-openssl
 endif
-ifeq (${ADK_PACKAGE_CURL_WITH_WOLFSSL},y)
+ifeq (${ADK_PACKAGE_LIBCURL_WITH_WOLFSSL},y)
 CONFIGURE_ARGS+=	--with-cyassl="${STAGING_TARGET_DIR}/usr" \
 			--without-openssl \
 			--without-gnutls
 endif
-ifeq (${ADK_PACKAGE_CURL_WITHOUT_SSL},y)
+ifeq (${ADK_PACKAGE_LIBCURL_WITHOUT_SSL},y)
 CONFIGURE_ARGS+=	--without-ssl \
 			--without-gnutls
 endif
@@ -100,7 +99,7 @@ CONFIGURE_ARGS+=	--enable-cookies \
 			--with-random="/dev/urandom" \
 			--without-ca-bundle
 
-ifneq (${ADK_PACKAGE_CURL_WITH_IPV6},)
+ifneq (${ADK_PACKAGE_LIBCURL_WITH_IPV6},)
 CONFIGURE_ARGS+=	--enable-ipv6
 else
 CONFIGURE_ARGS+=	--disable-ipv6
