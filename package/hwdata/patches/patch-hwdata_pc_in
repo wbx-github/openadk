@@ -1,0 +1,10 @@
+--- hwdata-0.378.orig/hwdata.pc.in	2024-01-05 12:35:26.000000000 +0100
++++ hwdata-0.378/hwdata.pc.in	2024-01-30 09:39:29.731448151 +0100
+@@ -1,6 +1,6 @@
+ prefix=@prefix@
+ datadir=@datadir@
+-pkgdatadir=${pc_sysrootdir}@pkgdatadir@
++pkgdatadir=@pkgdatadir@
+ 
+ Name: @NAME@
+ Description: Hardware identification and configuration data
