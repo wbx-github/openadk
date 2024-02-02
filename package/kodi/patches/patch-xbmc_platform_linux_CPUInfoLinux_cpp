@@ -1,6 +1,6 @@
---- xbmc-19.3-Matrix.orig/xbmc/platform/linux/CPUInfoLinux.cpp	2021-10-24 12:09:58.000000000 +0200
-+++ xbmc-19.3-Matrix/xbmc/platform/linux/CPUInfoLinux.cpp	2022-02-26 13:55:19.357313177 +0100
-@@ -18,10 +18,7 @@
+--- xbmc-21.0b2-Omega.orig/xbmc/platform/linux/CPUInfoLinux.cpp	2023-12-09 22:24:46.000000000 +0100
++++ xbmc-21.0b2-Omega/xbmc/platform/linux/CPUInfoLinux.cpp	2024-01-30 15:52:43.704683194 +0100
+@@ -19,10 +19,7 @@
  #include <sstream>
  #include <vector>
  
@@ -12,9 +12,9 @@
  #include <cpuid.h>
  #endif
  
-@@ -252,16 +249,6 @@ CCPUInfoLinux::CCPUInfoLinux()
-   }
- #endif
+@@ -279,16 +276,6 @@ CCPUInfoLinux::CCPUInfoLinux()
+ 
+   m_cpuModel = m_cpuModel.substr(0, m_cpuModel.find(char(0))); // remove extra null terminations
  
 -#if defined(HAS_NEON) && defined(__arm__)
 -  if (getauxval(AT_HWCAP) & HWCAP_NEON)
