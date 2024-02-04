@@ -20,6 +20,9 @@ PKG_SUBPKGS:=		LIBCURL CURL
 PKGSD_LIBCURL:=		client-side url transfer library
 PKGSC_LIBCURL:=		libs/net
 PKGSS_LIBCURL:=		zlib
+PKGSD_CURL:=		client-side url transfer utiity
+PKGSC_CURL:=		net/http
+PKGSS_CURL:=		zlib
 
 PKG_FLAVOURS_LIBCURL:=	WITH_IPV6
 PKGFD_WITH_IPV6:=	enable ipv6 support
