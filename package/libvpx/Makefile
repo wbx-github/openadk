@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libvpx
-PKG_VERSION:=		1.12.0
+PKG_VERSION:=		1.14.0
 PKG_RELEASE:=		1
-PKG_HASH:=		f1acc15d0fd0cb431f4bf6eac32d5e932e40ea1186fe78e074254d6d003957bb
+PKG_HASH:=		5f21d2db27071c8a46f1725928a10227ae45c5cd1cad3727e4aafbe476e321fa
 PKG_DESCR:=		vp8/vp9 codec library
 PKG_SECTION:=		libs/video
 PKG_BUILDDEP:=		yasm-host
