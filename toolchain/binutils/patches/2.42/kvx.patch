@@ -1,0 +1,29 @@
+From 234938d8b7df2f069c6cbbaff47eb2ba338ec532 Mon Sep 17 00:00:00 2001
+From: Paul Iannetta <piannetta@kalrayinc.com>
+Date: Mon, 4 Sep 2023 15:31:53 +0200
+Subject: [PATCH] kvx: gas: fix the detection of negative powers of 2
+
+gas/ChangeLog:
+
+2023-09-04  Paul Iannetta  <piannetta@kalrayinc.com>
+
+	* config/kvx-parse.c (get_token_class): Use the signed value.
+
+---
+ gas/config/kvx-parse.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gas/config/kvx-parse.c b/gas/config/kvx-parse.c
+index bb51c861625..0bd6b75ef30 100644
+--- a/gas/config/kvx-parse.c
++++ b/gas/config/kvx-parse.c
+@@ -525,7 +525,7 @@ get_token_class (struct token_s *token, struct token_classes *classes, int insn_
+ 	   : strtoull (tok + (tok[0] == '-') + (tok[0] == '+'), NULL, 0));
+       int64_t val = uval;
+       int64_t pval = val < 0 ? -uval : uval;
+-      int neg_power2_p = val < 0 && !(uval & (uval - 1));
++      int neg_power2_p = val < 0 && !(pval & (pval - 1));
+       unsigned len = pval ? 8 * sizeof (pval) - __builtin_clzll (pval) : 0;
+       while (class[cur].class_id != -1
+ 	     && ((unsigned) (class[cur].sz < 0
+

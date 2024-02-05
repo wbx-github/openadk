@@ -10,6 +10,10 @@ ifeq ($(ADK_TOOLCHAIN_BINUTILS_GIT),y)
 BINUTILS_VERSION:=	git
 BFDLIB:=		.libs/libbfd.a
 endif
+ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_42),y)
+BINUTILS_VERSION:=	2.42
+BFDLIB:=		.libs/libbfd.a
+endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_41),y)
 BINUTILS_VERSION:=	2.41
 BFDLIB:=		.libs/libbfd.a
