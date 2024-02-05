@@ -1,0 +1,11 @@
+--- asterisk-20.6.0.orig/res/stasis/control.c	2024-01-25 17:19:33.000000000 +0100
++++ asterisk-20.6.0/res/stasis/control.c	2024-02-05 15:20:24.824145190 +0100
+@@ -25,6 +25,8 @@
+ 
+ #include "asterisk.h"
+ 
++#include <signal.h>
++
+ #include "asterisk/stasis_channels.h"
+ #include "asterisk/stasis_app.h"
+ 
