@@ -4,11 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ltp
-PKG_VERSION:=		20230929
+PKG_VERSION:=		20240129
 PKG_RELEASE:=		1
 PKG_DESCR:=		linux test project
-PKG_HASH:=		eb161ff8f1966a1f3428fd4561eb20ebb9f83b7519e35cc12fc66bcfa7983b6b
-PKG_DEPENDS:=		bash mke2fs mkfs
+PKG_HASH:=		c302f6b2ca09cbb7835f549777bdb9233fe31f7086d7ad8e65472a0804e3e025
+PKG_DEPENDS:=		bash mke2fs mkfs shadow libtirpc
+PKG_BUILDDEP+=		libtirpc
+PKG_KDEPENDS:=		coredump bsd-process-acct ikconfig-proc
+PKG_KDEPENDS+=		user-ns net-ns time-ns bpf-syscall blk-dev-loop watch-queue
 PKG_NEEDS:=		threads
 PKG_SECTION:=		base/tests
 PKG_URL:=		http://linux-test-project.github.io
@@ -33,14 +36,6 @@ CONFIGURE_ARGS+=	--with-open-posix-testsuite \
 
 pre-configure:
 	PATH="$(HOST_PATH)" $(MAKE) -C $(WRKBUILD) autotools
-
-# bessel float and mallopt not implemented in uClibc-ng
-pre-build:
-	-rm ${WRKBUILD}/testcases/misc/math/float/float_bessel.c
-	-rm -rf ${WRKBUILD}/testcases/misc/math/float/bessel
-	-rm -rf ${WRKBUILD}/testcases/network/{rpc,nfs*} 
-	-rm -rf ${WRKBUILD}/testcases/kernel/syscalls/profil
-	-rm -rf ${WRKBUILD}/testcases/kernel/syscalls/mallopt
 
 ltp-install:
 	$(INSTALL_DIR) $(IDIR_LTP)/opt/ltp/tmp

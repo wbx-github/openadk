@@ -263,6 +263,54 @@ config ADK_LINUX_KERNEL_CC_OPTIMIZE_FOR_SIZE
 		   !ADK_TARGET_ARCH_KVX
 	default y
 
+config ADK_LINUX_KERNEL_IKCONFIG
+	tristate
+
+config ADK_LINUX_KERNEL_IKCONFIG_PROC
+	bool "Enable access to .config through /proc/config.gz"
+	select ADK_LINUX_KERNEL_IKCONFIG
+	default n
+
+config ADK_LINUX_KERNEL_BSD_PROCESS_ACCT
+	bool "BSD Process Accounting"
+	default n
+
+config ADK_LINUX_KERNEL_NAMESPACES
+	bool
+	default n
+
+config ADK_LINUX_KERNEL_GENERIC_VDSO_TIME_NS
+	bool
+	default n
+
+config ADK_LINUX_KERNEL_USER_NS
+	bool "User namespace"
+	select ADK_LINUX_KERNEL_NAMESPACES
+	default n
+
+config ADK_LINUX_KERNEL_NET_NS
+	bool "Network namespace"
+	select ADK_LINUX_KERNEL_NAMESPACES
+	default n
+
+config ADK_LINUX_KERNEL_TIME_NS
+	bool "Network namespace"
+	select ADK_LINUX_KERNEL_NAMESPACES
+	select ADK_LINUX_KERNEL_GENERIC_VDSO_TIME_NS
+	default n
+
+config ADK_LINUX_KERNEL_BPF
+	bool
+	default n
+
+config ADK_LINUX_KERNEL_BPF_SYSCALL
+	bool "Enable bpf() syscall"
+	select ADK_LINUX_KERNEL_BPF
+	default n
+
+config ADK_LINUX_KERNEL_WATCH_QUEUE
+	bool "General notification queue"
+	default n
 
 choice
 prompt "Page size"

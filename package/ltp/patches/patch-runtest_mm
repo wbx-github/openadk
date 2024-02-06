@@ -1,8 +1,0 @@
---- ltp-full-20220121.orig/runtest/mm	2022-01-21 20:33:16.000000000 +0100
-+++ ltp-full-20220121/runtest/mm	2022-02-23 14:13:22.672798426 +0100
-@@ -101,4 +101,4 @@ overcommit_memory06 overcommit_memory -R
- 
- max_map_count max_map_count -i 10
- 
--min_free_kbytes min_free_kbytes
-+#min_free_kbytes min_free_kbytes
