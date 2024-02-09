@@ -1,0 +1,11 @@
+--- libtirpc-1.3.4.orig/src/clnt_fd_locks.h	2023-10-07 09:54:42.000000000 +0200
++++ libtirpc-1.3.4/src/clnt_fd_locks.h	2024-02-08 16:25:34.795598116 +0100
+@@ -30,7 +30,7 @@
+ #ifndef _CLNT_FD_LOCKS_H
+ #define _CLNT_FD_LOCKS_H
+ 
+-#include <sys/queue.h>
++#include "queue.h"
+ #include <errno.h>
+ #include <reentrant.h>
+ #include <rpc/xdr.h>
