@@ -221,7 +221,13 @@ case $ostype {
 	;;
 (Linux)
 	basedev=$tgt
-	partitionsep=""
+
+	if [[ "$tgt" == *"nvme0n1"* ]] || [[ "$tgt" == *"mmcblk"* ]]; then
+	  partitionsep="p"
+	else
+	  partitionsep=""
+	fi
+
 	if [[ $basedev = /dev/loop* ]]; then
 		(( quiet )) || print "${tgt} is a loop device"
 		partitionsep=p
