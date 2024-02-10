@@ -13,8 +13,6 @@ PKG_URL:=		http://www.videolan.org/developers/x264.html
 PKG_SITES:=		http://git.videolan.org/git/x264.git
 PKG_OPTS:=		dev
 
-PKG_BUILDDEP_IBM_X40:=	yasm-host
-
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBX264,libx264,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
