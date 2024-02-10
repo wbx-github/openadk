@@ -172,8 +172,8 @@ config ADK_TARGET_LIB_MUSL_GIT
 	bool "git"
 	depends on ADK_TARGET_LIB_MUSL && ADK_EXPERIMENTAL
 
-config ADK_TARGET_LIB_NEWLIB_4_1_0
-	bool "4.1.0"
+config ADK_TARGET_LIB_NEWLIB_4_4_0
+	bool "4.4.0"
 	depends on ADK_TARGET_LIB_NEWLIB \
 		&& !ADK_TARGET_ARCH_XTENSA
 
@@ -206,7 +206,7 @@ config ADK_LIBC_VERSION
 	default "1.0.45" if ADK_TARGET_LIB_UCLIBC_NG_1_0_45
 	default "1.2.4" if ADK_TARGET_LIB_MUSL_1_2_4
 	default "2.38" if ADK_TARGET_LIB_GLIBC_2_38
-	default "4.1.0" if ADK_TARGET_LIB_NEWLIB_4_1_0
+	default "4.4.0" if ADK_TARGET_LIB_NEWLIB_4_4_0
 	default "git" if ADK_TARGET_LIB_UCLIBC_NG_GIT || \
 		         ADK_TARGET_LIB_MUSL_GIT || \
 		         ADK_TARGET_LIB_GLIBC_GIT || \
