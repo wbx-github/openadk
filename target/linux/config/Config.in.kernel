@@ -312,6 +312,10 @@ config ADK_LINUX_KERNEL_WATCH_QUEUE
 	bool "General notification queue"
 	default n
 
+config ADK_LINUX_KERNEL_CGROUPS
+	bool "Control group support"
+	default n
+
 choice
 prompt "Page size"
 depends on ADK_TARGET_ARCH_MIPS64
