@@ -121,6 +121,8 @@ ifneq ($(KERNEL_MODULES_USED),)
 	done
 	$(CMD_TRACE) " done"
 	$(END_TRACE)
+	$(CP) $(LINUX_BUILD_DIR)/modules/lib/modules/$(KERNEL_VERSION)/modules.{order,builtin} \
+		$(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/
 endif
 
 clean:
