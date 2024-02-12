@@ -53,7 +53,7 @@ ifneq ($(filter manual,${CONFIG_STYLE}),)
 else ifneq ($(filter meson,${CONFIG_STYLE}),)
 	@$(CMD_TRACE) "configuring meson.. "
 	(cd ${WRKSRC} && $(MESON_ENV) \
-		meson --prefix /usr --libdir lib \
+		meson setup --prefix /usr --libdir lib \
 		 --cross-file $(STAGING_HOST_DIR)/etc/meson/cross-compilation.conf \
 		 --build.pkg-config-path $(STAGING_HOST_DIR)/usr/lib/pkgconfig \
 		 --buildtype release $(MESON_FLAGS) \

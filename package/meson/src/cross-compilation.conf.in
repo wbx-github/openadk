@@ -8,13 +8,15 @@ c = '@TARGET_CROSS@gcc'
 cpp = '@TARGET_CROSS@g++'                                                    
 ar = '@TARGET_CROSS@ar'                                                      
 strip = '@TARGET_CROSS@strip'                                                
-pkgconfig = '@STAGING_HOST_DIR@/usr/bin/pkg-config'
+pkg-config = '@STAGING_HOST_DIR@/usr/bin/pkg-config'
 
-[properties]                                                                 
+[built-in options]
 c_args = [@TARGET_CFLAGS@]                                                   
 c_link_args = [@TARGET_LDFLAGS@]                                             
 cpp_args = [@TARGET_CXXFLAGS@]                                               
 cpp_link_args = [@TARGET_LDFLAGS@]                                           
+
+[properties]                                                                 
 needs_exe_wrapper = true
                                                                              
 [host_machine]                                                               
