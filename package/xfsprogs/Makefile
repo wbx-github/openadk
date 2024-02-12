@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		xfsprogs
-PKG_VERSION:=		5.13.0
+PKG_VERSION:=		6.6.0
 PKG_RELEASE:=		1
-PKG_HASH:=		4e142d4babe086adf9016d8c606c805829da08e46389a4433f40346204f90cdb
+PKG_HASH:=		50ca2f4676df8fab4cb4c3ef3dd512d5551e6844d40a65a31d5b8e03593d22df
 PKG_DESCR:=		utilities for xfs filesystems
 PKG_SECTION:=		sys/fs
-PKG_DEPENDS:=		libuuid libblkid libncurses libinih
-PKG_BUILDDEP:=		e2fsprogs ncurses libinih
+PKG_DEPENDS:=		libuuid libblkid libncurses libinih liburcu
+PKG_BUILDDEP:=		e2fsprogs ncurses libinih liburcu
 PKG_NEEDS:=		threads
 PKG_URL:=		http://oss.sgi.com/projects/xfs
 PKG_SITES:=		https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/
