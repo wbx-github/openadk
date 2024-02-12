@@ -1,27 +1,23 @@
---- mdadm-4.0.orig/Makefile	2017-01-09 22:46:34.000000000 +0100
-+++ mdadm-4.0/Makefile	2017-06-02 01:53:13.425906734 +0200
-@@ -42,8 +42,8 @@ KLIBC=/home/src/klibc/klibc-0.77
- KLIBC_GCC = gcc -nostdinc -iwithprefix include -I$(KLIBC)/klibc/include -I$(KLIBC)/linux/include -I$(KLIBC)/klibc/arch/i386/include -I$(KLIBC)/klibc/include/bits32
- 
- CC ?= $(CROSS_COMPILE)gcc
--CXFLAGS ?= -ggdb
--CWFLAGS = -Wall -Werror -Wstrict-prototypes -Wextra -Wno-unused-parameter
-+CXFLAGS ?=
-+CWFLAGS = -Wall -Wstrict-prototypes -Wextra -Wno-unused-parameter
- ifdef WARN_UNUSED
- CWFLAGS += -Wp,-D_FORTIFY_SOURCE=2 -O3
- endif
-@@ -269,9 +269,10 @@ $(MON_OBJS) : $(INCL) mdmon.h
+--- mdadm-4.2.orig/Makefile	2021-12-30 20:43:35.000000000 +0100
++++ mdadm-4.2/Makefile	2024-02-11 17:01:11.419915988 +0100
+@@ -250,7 +250,7 @@ $(MON_OBJS) : $(INCL) mdmon.h
  sha1.o : sha1.c sha1.h md5.h
  	$(CC) $(CFLAGS) -DHAVE_STDINT_H -o sha1.o -c sha1.c
  
--install : mdadm mdmon install-man install-udev
+-install : install-bin install-man install-udev
++install : install-bin install-udev
+ 
+ install-static : mdadm.static install-man
+ 	$(INSTALL) -D $(STRIP) -m 755 mdadm.static $(DESTDIR)$(BINDIR)/mdadm
+@@ -301,8 +301,9 @@ install-systemd: systemd/mdmon@.service
+ 	if [ -f /etc/SuSE-release -o -n "$(SUSE)" ] ;then $(INSTALL) -D -m 755 systemd/SUSE-mdadm_env.sh $(DESTDIR)$(LIB_DIR)/mdadm_env.sh ;fi
+ 
+ install-bin: mdadm mdmon
 -	$(INSTALL) -D $(STRIP) -m 755 mdadm $(DESTDIR)$(BINDIR)/mdadm
 -	$(INSTALL) -D $(STRIP) -m 755 mdmon $(DESTDIR)$(BINDIR)/mdmon
-+install : mdadm mdmon install-udev
 +	mkdir -p $(DESTDIR)$(BINDIR)
 +	$(INSTALL) -m 755 mdadm $(DESTDIR)$(BINDIR)/mdadm
 +	$(INSTALL) -m 755 mdmon $(DESTDIR)$(BINDIR)/mdmon
  
- install-static : mdadm.static install-man
- 	$(INSTALL) -D $(STRIP) -m 755 mdadm.static $(DESTDIR)$(BINDIR)/mdadm
+ uninstall:
+ 	rm -f $(DESTDIR)$(MAN8DIR)/mdadm.8 $(DESTDIR)$(MAN8DIR)/mdmon.8 $(DESTDIR)$(MAN4DIR)/md.4 $(DESTDIR)$(MAN5DIR)/mdadm.conf.5 $(DESTDIR)$(BINDIR)/mdadm
