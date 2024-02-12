@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		e2fsprogs
-PKG_VERSION:=		1.44.2
+PKG_VERSION:=		1.47.0
 PKG_RELEASE:=		1
-PKG_HASH:=		8324cf0b6e81805a741d94087b00e99f7e16144f1ee5a413709a1fa6948b126c
+PKG_HASH:=		144af53f2bbd921cef6f8bea88bb9faddca865da3fbc657cc9b4d2001097d5db
 PKG_DESCR:=		ext2/3/4 filesystem utilities
 PKG_SECTION:=		sys/fs
 PKG_BUILDDEP:=		util-linux
@@ -14,23 +14,17 @@ PKG_NEEDS:=		threads
 PKG_URL:=		http://e2fsprogs.sourceforge.net/
 PKG_SITES:=		https://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v$(PKG_VERSION)/
 PKG_OPTS:=		dev
-PKG_NOPARALLEL:=	1
 
 PKG_CFLINE_E2FSPROGS:=	select BUSYBOX_FSCK
 
 PKG_SUBPKGS:=		LIBE2FS LIBCOM_ERR LIBSS
 PKG_SUBPKGS+=		RESIZE2FS TUNE2FS E2FSCK MKE2FS
-PKG_SUBPKGS+=		E2FSCK_STATIC TUNE2FS_STATIC
 PKGSD_LIBE2FS:=		e2fsprogs library
 PKGSC_LIBE2FS:=		libs/misc
 PKGSD_LIBCOM_ERR:=	common error library
 PKGSC_LIBCOM_ERR:=	libs/misc
 PKGSD_LIBSS:=		subsystem command parsing library
 PKGSC_LIBSS:=		libs/misc
-PKGSD_E2FSCK_STATIC:=	static build of e2fsck
-PKGSC_E2FSCK_STATIC:=	sys/fs
-PKGSD_TUNE2FS_STATIC:=	static build of tune2fs
-PKGSC_TUNE2FS_STATIC:=	sys/fs
 PKGSD_RESIZE2FS:=	ext2/3/4 resize utility
 PKGSC_RESIZE2FS:=	sys/fs
 PKGSS_RESIZE2FS:=	libe2fs libcom-err libblkid
@@ -55,8 +49,6 @@ $(eval $(call PKG_template,TUNE2FS,tune2fs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS
 $(eval $(call PKG_template,RESIZE2FS,resize2fs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_RESIZE2FS),$(PKGSD_RESIZE2FS),$(PKGSC_RESIZE2FS)))
 $(eval $(call PKG_template,MKE2FS,mke2fs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_MKE2FS),$(PKGSD_MKE2FS),$(PKGSC_MKE2FS)))
 $(eval $(call PKG_template,E2FSCK,e2fsck,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_E2FSCK),$(PKGSD_E2FSCK),$(PKGSC_E2FSCK)))
-$(eval $(call PKG_template,E2FSCK_STATIC,e2fsck-static,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_E2FSCK_STATIC},${PKGSC_E2FSCK_STATIC}))
-$(eval $(call PKG_template,TUNE2FS_STATIC,tune2fs-static,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_E2FSCK_STATIC},${PKGSC_E2FSCK_STATIC}))
 
 HOST_CONFIGURE_ARGS+=	--disable-rpath \
 			--disable-nls \
@@ -129,18 +121,6 @@ libss-install:
 	$(INSTALL_DIR) $(IDIR_LIBSS)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libss.so* \
 		$(IDIR_LIBSS)/usr/lib
-
-e2fsck-static-install:
-	${MAKE} -C ${WRKBUILD}/e2fsck e2fsck.static
-	${INSTALL_DIR} ${IDIR_E2FSCK_STATIC}/usr/sbin
-	${INSTALL_BIN} ${WRKBUILD}/e2fsck/e2fsck.static \
-			${IDIR_E2FSCK_STATIC}/usr/sbin/e2fsck
-
-tune2fs-static-install:
-	${MAKE} -C ${WRKBUILD}/misc tune2fs.static
-	${INSTALL_DIR} ${IDIR_TUNE2FS_STATIC}/usr/sbin
-	${INSTALL_BIN} ${WRKBUILD}/misc/tune2fs.static \
-		${IDIR_TUNE2FS_STATIC}/usr/sbin/tune2fs
 
 include $(ADK_TOPDIR)/mk/host-bottom.mk
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
