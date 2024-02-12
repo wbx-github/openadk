@@ -96,6 +96,25 @@ config ADK_LINUX_KERNEL_EXT4_FS
 	help
 	  Ext4 filesystem.
 
+config ADK_LINUX_KERNEL_BTRFS_FS
+	tristate "Btrfs filesystem support"
+	select ADK_LINUX_KERNEL_BLOCK
+	help
+	  Btrfs is a general purpose copy-on-write filesystem with extents,
+	  writable snapshotting, support for multiple devices and many more
+	  features focused on fault tolerance, repair and easy administration.
+
+	  The filesystem disk format is no longer unstable, and it's not
+	  expected to change unless there are strong reasons to do so. If there
+	  is a format change, file systems with a unchanged format will
+	  continue to be mountable and usable by newer kernels.
+
+	  For more information, please see the web pages at
+	  http://btrfs.wiki.kernel.org.
+
+	  To compile this file system support as a module, choose M here. The
+	  module will be called btrfs.
+
 config ADK_LINUX_KERNEL_HFSPLUS_FS
 	tristate "HFS+ filesystem support"
 	select ADK_LINUX_KERNEL_BLOCK
