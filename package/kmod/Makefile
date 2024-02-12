@@ -4,13 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kmod
-PKG_VERSION:=		24
+PKG_VERSION:=		31
 PKG_RELEASE:=		1
-PKG_HASH:=		610b8d1df172acc39a4fdf1eaa47a57b04873c82f32152e7a62e29b6ff9cb397
+PKG_HASH:=		f5a6949043cc72c001b728d8c218609c5a15f3c33d75614b78c79418fcf00d80
 PKG_DESCR:=		kernel module utils
 PKG_SECTION:=		sys/utils
 PKG_DEPENDS:=		libkmod
-PKG_URL:=		http://profusion.mobi/index.php
 PKG_SITES:=		https://www.kernel.org/pub/linux/utils/kernel/kmod/
 PKG_LIBNAME:=		libkmod
 PKG_OPTS:=		dev
