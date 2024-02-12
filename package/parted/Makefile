@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		parted
-PKG_VERSION:=		3.3
-PKG_RELEASE:=		5
-PKG_HASH:=		57e2b4bd87018625c515421d4524f6e3b55175b472302056391c5f7eccb83d44
+PKG_VERSION:=		3.6
+PKG_RELEASE:=		1
+PKG_HASH:=		3b43dbe33cca0f9a18601ebab56b7852b128ec1a3df3a9b30ccde5e73359e612
 PKG_DESCR:=		partition table editor
 PKG_SECTION:=		sys/fs
 PKG_DEPENDS:=		libblkid libuuid libncurses
