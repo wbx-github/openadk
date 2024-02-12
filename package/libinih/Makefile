@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libinih
-PKG_VERSION:=		r53
+PKG_VERSION:=		r58
 PKG_RELEASE:=		1
-PKG_HASH:=		01b0366fdfdf6363efc070c2f856f1afa33e7a6546548bada5456ad94a516241
+PKG_HASH:=		e79216260d5dffe809bda840be48ab0eec7737b2bb9f02d2275c1b46344ea7b7
 PKG_DESCR:=		ini parser library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		meson-host
