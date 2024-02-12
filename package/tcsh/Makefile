@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		tcsh
-PKG_VERSION:=		6.19.00
+PKG_VERSION:=		6.24.10
 PKG_RELEASE:=		1
-PKG_HASH:=		12e271e0b89e4259d9d6e8d525322e77340e7244cfbd199a591e5f8146285c49
+PKG_HASH:=		13475c0fbeb74139d33ed793bf00ffbbb2ac2dc9fb1d44467a410760aba36664
 PKG_DESCR:=		alternative csh
 PKG_SECTION:=		base/shells
 PKG_DEPENDS:=		libncurses

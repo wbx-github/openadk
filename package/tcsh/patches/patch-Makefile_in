@@ -1,11 +1,11 @@
---- tcsh-6.19.00.orig/Makefile.in	2014-07-25 00:52:13.000000000 +0200
-+++ tcsh-6.19.00/Makefile.in	2015-11-07 23:08:07.000000000 +0100
-@@ -449,7 +449,7 @@ pure:$(P) ${OBJS}
+--- tcsh-6.24.10.orig/Makefile.in	2023-04-14 13:52:38.000000000 +0200
++++ tcsh-6.24.10/Makefile.in	2024-02-11 09:31:36.700281877 +0100
+@@ -506,7 +506,7 @@ pure:$(P) ${OBJS}
+ #	emxbind tcsh
  
- gethost:  gethost.c sh.err.h tc.const.h sh.h
+ gethost.${SUF}: gethost.c sh.err.h tc.const.h sh.h
+-	${CC_FOR_GETHOST} ${CF} ${CPPFLAGS} ${CFLAGS} $(srcdir)/gethost.c
++	${CC_FOR_GETHOST} ${CF} $(srcdir)/gethost.c
+ 
+ gethost:  gethost.${SUF}
  	rm -f gethost
--	${CC_FOR_GETHOST} -o gethost ${CPPFLAGS} ${CFLAGS} $(srcdir)/gethost.c
-+	${CC_FOR_GETHOST} -o gethost $(srcdir)/gethost.c
- 
- tc.defs.c:	gethost host.defs
- 	@rm -f $@.tmp
