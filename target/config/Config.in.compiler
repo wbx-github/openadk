@@ -34,12 +34,14 @@ config ADK_TOOLCHAIN_GCC_GIT
 config ADK_TOOLCHAIN_GCC_13
 	bool "13.2.0"
 	depends on !ADK_TARGET_ARCH_AVR32
+	depends on !ADK_TARGET_ARCH_CRIS
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_SPARC
 
 config ADK_TOOLCHAIN_GCC_12
 	bool "12.3.0"
 	depends on !ADK_TARGET_ARCH_AVR32
+	depends on !ADK_TARGET_ARCH_CRIS
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_LOONGARCH
 	depends on !ADK_TARGET_ARCH_SPARC
@@ -47,6 +49,7 @@ config ADK_TOOLCHAIN_GCC_12
 config ADK_TOOLCHAIN_GCC_11
 	bool "11.4.0"
 	depends on !ADK_TARGET_ARCH_AVR32
+	depends on !ADK_TARGET_ARCH_CRIS
 	depends on !ADK_TARGET_ARCH_C6X
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_LOONGARCH
