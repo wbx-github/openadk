@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xz
-PKG_VERSION:=		5.2.7
+PKG_VERSION:=		5.4.6
 PKG_RELEASE:=		1
-PKG_HASH:=		06327c2ddc81e126a6d9a78b0be5014b976a2c0832f492dcfc4755d7facf6d33
+PKG_HASH:=		aeba3e03bf8140ddedf62a0a367158340520f6b384f75ca6045ccc6c0d43fd5c
 PKG_DESCR:=		compression utility
 PKG_SECTION:=		app/archive
 PKG_DEPENDS:=		libxz
 PKG_URL:=		http://tukaani.org/xz/
-PKG_SITES:=		http://tukaani.org/xz/
+PKG_SITES:=		https://github.com/tukaani-project/xz/releases/download/v$(PKG_VERSION)/
 PKG_LIBNAME:=		libxz
 PKG_OPTS:=		dev
 
