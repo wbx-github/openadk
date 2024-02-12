@@ -1,9 +1,9 @@
---- lzip-1.17.orig/configure	2015-07-09 18:58:33.000000000 +0200
-+++ lzip-1.17/configure	2016-09-24 13:07:38.493476268 +0200
-@@ -20,10 +20,10 @@ bindir='$(exec_prefix)/bin'
- datarootdir='$(prefix)/share'
- infodir='$(datarootdir)/info'
- mandir='$(datarootdir)/man'
+--- lzip-1.24.orig/configure	2024-01-26 14:01:44.000000000 +0100
++++ lzip-1.24/configure	2024-02-12 07:10:37.674941547 +0100
+@@ -23,10 +23,10 @@ mandir='$(datarootdir)/man'
+ build=no
+ check=no
+ installdir=
 -CXX=g++
 -CPPFLAGS=
 -CXXFLAGS='-Wall -W -O2'
@@ -12,6 +12,6 @@
 +CPPFLAGS?=
 +CXXFLAGS?='-Wall -W -O2'
 +LDFLAGS?=
+ MAKEINFO=makeinfo
  
  # checking whether we are using GNU C++.
- ${CXX} --version > /dev/null 2>&1

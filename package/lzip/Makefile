@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		lzip
-PKG_VERSION:=		1.21
+PKG_VERSION:=		1.24
 PKG_RELEASE:=		1
-PKG_HASH:=		e48b5039d3164d670791f9c5dbaa832bf2df080cb1fbb4f33aa7b3300b670d8b
+PKG_HASH:=		d42659229b10e066eeb6e81eb673cdd893b672e512d26719c2d95975556ca56c
 PKG_DESCR:=		compression utility
 PKG_SECTION:=		app/archive
 PKG_NEEDS:=		c++
