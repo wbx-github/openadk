@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libmpdclient
-PKG_VERSION:=		2.20
+PKG_VERSION:=		2.22
 PKG_RELEASE:=		1
-PKG_HASH:=		18793f68e939c3301e34d8fcadea1f7daa24143941263cecadb80126194e277d
+PKG_HASH:=		eac15b82b5ba5ed0648af580221eb74657394f7fe768e966d9e9ebb27435429f
 PKG_DESCR:=		library for interfacing music player daemon
 PKG_SECTION:=		libs/audio
 PKG_BUILDDEP:=		meson-host
