@@ -4,23 +4,18 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		logrotate
-PKG_VERSION:=		3.8.9
+PKG_VERSION:=		3.21.0
 PKG_RELEASE:=		1
-PKG_HASH:=		700ed7ce9072a1cca324779a74797dfaefdae37ac50a817134b947c4ded1dfa7
+PKG_HASH:=		8fa12015e3b8415c121fc9c0ca53aa872f7b0702f543afda7e32b6c4900f6516
 PKG_DESCR:=		logfile rotation utility
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		libpopt
 PKG_BUILDDEP:=		popt
-PKG_SITES:=		https://fedorahosted.org/releases/l/o/logrotate/
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_SITES:=		https://github.com/logrotate/logrotate/releases/download/$(PKG_VERSION)/
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,LOGROTATE,logrotate,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
-
-CONFIG_STYLE:=		manual
-TARGET_CFLAGS+=		-DVERSION=\"$(PKG_VERSION)\"
 
 logrotate-install:
 	${INSTALL_DIR} ${IDIR_LOGROTATE}/usr/sbin
