@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		python3
-PKG_VERSION:=		3.11.7
+PKG_VERSION:=		3.11.8
 PKG_RELEASE:=		1
-PKG_HASH:=		18e1aa7e66ff3a58423d59ed22815a6954e53342122c45df20c96877c062b9b7
+PKG_HASH:=		9e06008c8901924395bc1da303eac567a729ae012baa182ab39269f650383bb3
 PKG_DESCR:=		python scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libffi zlib libexpat
@@ -86,7 +86,8 @@ CONFIGURE_ARGS:=	--with-system-expat \
 
 CONFIGURE_ENV+=		ac_cv_have_long_long_format=yes \
 			ac_cv_file__dev_ptmx=yes \
-			ac_cv_file__dev_ptc=no
+			ac_cv_file__dev_ptc=no \
+			ac_cv_header_libintl_h=no
 
 python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
