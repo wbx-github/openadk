@@ -4,15 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		sane-backends
-PKG_VERSION:=		1.0.22
-PKG_RELEASE:=		3
-PKG_HASH:=		9f84a16800497f0b79a278531bb1a0f438de6ce8cf509fefc65a252e29f90c54
+PKG_VERSION:=		1.2.1
+PKG_RELEASE:=		1
+PKG_HASH:=		f832395efcb90bb5ea8acd367a820c393dda7e0dd578b16f48928b8f5bdd0524
 PKG_DESCR:=		scanner access now easy
 PKG_SECTION:=		sys/misc
 PKG_BUILDDEP:=		libusb libusb-compat
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.sane-project.org/
-PKG_SITES:=		ftp://ftp2.sane-project.org/pub/sane/${PKG_NAME}-${PKG_VERSION}/
+PKG_SITES:=		https://gitlab.com/sane-project/backends/uploads/110fc43336d0fb5e514f1fdc7360dd87/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -226,7 +226,9 @@ $(eval $(call PKG_mod_template,SANE_BACKEND_UMAX_PP,umax_pp))
 $(eval $(call PKG_mod_template,SANE_BACKEND_UMAX,umax))
 
 TARGET_CFLAGS+=		-D_GNU_SOURCE
-CONFIGURE_ENV+=		ac_cv_func_ioperm=no have_libv4l1=no
+CONFIGURE_ENV+=		ac_cv_func_ioperm=no \
+			have_libv4l1=no \
+			ac_cv_func_mmap_fixed_mapped=yes
 CONFIGURE_ARGS+=	--disable-translations \
 			--without-gphoto2 \
 			--enable-libusb
