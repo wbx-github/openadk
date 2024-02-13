@@ -4,12 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		syslog-ng
-PKG_VERSION:=		3.14.1
+PKG_VERSION:=		4.6.0
 PKG_RELEASE:=		1
-PKG_HASH:=		235b1ac46fe4f3b06b3e945d000276f07deb8243be05d63c04aff06ab6123b64
+PKG_HASH:=		a5f8b089887767b5e87f523562fc3c6d5ef4dd320fc9b1f44953cb2d6bd50026
 PKG_DESCR:=		powerful syslog daemon
 PKG_SECTION:=		sys/misc
-PKG_BUILDDEP:=		cmake-host glib ivykis libressl json-c libnet flex
+PKG_BUILDDEP:=		cmake-host glib ivykis libressl json-c libnet 
+PKG_BUILDDEP+=		pcre flex
 PKG_DEPENDS:=		glib ivykis libressl json-c libnet
 PKG_URL:=		http://www.balabit.com/
 PKG_SITES:=		https://github.com/balabit/syslog-ng/archive/
@@ -26,7 +27,11 @@ CMAKE_FLAGS+=		-DSYSLOG_NG_ENABLE_SYSTEMD=OFF \
 			-DSYSLOG_NG_ENABLE_TCP_WRAPPER=OFF \
 			-DENABLE_CURL=OFF \
 			-DENABLE_JAVA=OFF \
-			-DENABLE_JAVA_MODULES=OFF
+			-DENABLE_PYTHON=OFF \
+			-DENABLE_JAVA_MODULES=OFF \
+			-DBUILD_TESTING=OFF \
+			-DENABLE_AFSNMP=OFF \
+			-DENABLE_EXAMPLE_MODULES=OFF
 
 syslog-ng-install:
 	${INSTALL_DIR} ${IDIR_SYSLOG_NG}/usr/sbin \
