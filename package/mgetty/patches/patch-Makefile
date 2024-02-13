@@ -1,86 +1,39 @@
---- mgetty-1.1.36.orig/Makefile	2007-06-15 13:15:56.000000000 +0200
-+++ mgetty-1.1.36/Makefile	2011-02-28 21:22:07.000000000 +0100
-@@ -4,7 +4,7 @@
- #
- # this is the C compiler to use (on SunOS, the standard "cc" does not
+--- mgetty-1.2.1.orig/Makefile	2018-09-11 12:38:58.000000000 +0200
++++ mgetty-1.2.1/Makefile	2024-02-13 16:33:13.023498839 +0100
+@@ -6,7 +6,7 @@
  # grok my code, so please use gcc there. On ISC 4.0, use "icc".).
--CC=gcc
-+CC?=gcc
- #CC=cc
  #
- #### C Compiler Flags ####
-@@ -102,7 +102,7 @@ CC=gcc
+ # if you are cross-compiling, this is the C compiler for the target platform
+-CC=cc
++CC?=cc
+ #CC=gcc
+ #
+ # if you are cross-compiling, *this* needs to be the C compiler that 
+@@ -109,7 +109,7 @@ HOSTCC=$(CC)
  #	    USTAT	  - ustat(), no statfs etc.
  #
  #CFLAGS=-Wall -O2 -pipe -DSECUREWARE -DUSE_POLL
--CFLAGS=-O2 -Wall -pipe
-+CFLAGS?=-O2 -Wall -pipe
+-CFLAGS=-Wall -O2 -pipe
++CFLAGS?=-Wall -O2 -pipe
  #CFLAGS=-O -DSVR4
  #CFLAGS=-O -DSVR4 -DSVR42
  #CFLAGS=-O -DUSE_POLL
-@@ -143,7 +143,7 @@ CFLAGS=-O2 -Wall -pipe
+@@ -150,7 +150,7 @@ CFLAGS=-Wall -O2 -pipe
  # 	"utmp.o: unresolved symbol _login"
  # For Linux, add "-lutil" if the linker complains about "updwtmp".
  #
 -LDFLAGS=
 +LDFLAGS?=
- LIBS=
+ #LIBS=
  #LIBS=-lprot -lsocket				# SCO Unix
  #LIBS=-lsocket
-@@ -164,7 +164,9 @@ LIBS=
+@@ -171,7 +171,8 @@ LIBS=-lutil					# FreeBSD or Linux/GNU l
  #
  # if your systems doesn't have one, use the shell script that I provide
  # in "inst.sh" (taken from X11R5). Needed on IRIX5.2
 -INSTALL=install -c -o bin -g bin
 +STRIP=
 +INSTALL=install -c -o root -g root
-+#INSTALL=install -c -o bin -g bin
  #INSTALL=install -c -o root -g wheel		# NeXT/BSD
  #INSTALL=/usr/ucb/install -c -o bin -g bin	# AIX, Solaris 2.x
  #INSTALL=installbsd -c -o bin -g bin		# OSF/1, AIX 4.1, 4.2
-@@ -216,7 +218,7 @@ FAX_SPOOL_OUT=$(FAX_SPOOL)/outgoing
- # (it's possible to run faxrunq(d) as root, but the FAX_OUT_USER 
- #  MUST NOT BE root or any other privileged account).
- #
--FAX_OUT_USER=fax
-+FAX_OUT_USER=root
- #
- #
- # Where section 1 manual pages should be placed
-@@ -421,7 +423,12 @@ sedscript: mksed
- 	./mksed >sedscript
- 	chmod +x sedscript
- 
--mksed: mksed.c policy.h Makefile 
-+REALGCC:=/usr/bin/gcc
-+mksed: mksed.c policy.h Makefile
-+	( echo $(CC_FOR_BUILD); $(MAKE) "CC=$(CC_FOR_BUILD)" "CFLAGS=$(CFLAGS_FOR_BUILD)" mksed-wrong;\
-+	);
-+
-+mksed-wrong: mksed.c policy.h Makefile 
- 	$(CC) $(CFLAGS) -DBINDIR=\"$(BINDIR)\" -DSBINDIR=\"$(SBINDIR)\" \
- 		-DLIBDIR=\"$(LIBDIR)\" \
- 		-DCONFDIR=\"$(CONFDIR)\" \
-@@ -586,8 +593,10 @@ install.bin: mgetty sendfax newslock \
- 	-test -d $(SBINDIR) || ( ./mkidirs $(SBINDIR) ; chmod 755 $(SBINDIR) )
- 	-mv -f $(SBINDIR)/mgetty $(SBINDIR)/mgetty.old
- 	-mv -f $(SBINDIR)/sendfax $(SBINDIR)/sendfax.old
--	$(INSTALL) -s -m 700 mgetty $(SBINDIR)
--	$(INSTALL) -s -m 755 sendfax $(SBINDIR)
-+	$(INSTALL) -m 700 mgetty $(SBINDIR)
-+	$(STRIP) $(SBINDIR)/mgetty
-+	$(INSTALL) -m 755 sendfax $(SBINDIR)
-+	$(STRIP) $(SBINDIR)/sendfax
- #
- # data files + directories
- #
-@@ -649,7 +658,8 @@ install.bin: mgetty sendfax newslock \
- 	if [ ! -z "$(INSTALL_MECHO)" ] ; then \
- 	    cd compat ; \
- 	    $(CC) $(CFLAGS) -o mg.echo mg.echo.c && \
--	    $(INSTALL) -s -m 755 mg.echo $(BINDIR) ; \
-+	    $(INSTALL) -m 755 mg.echo $(BINDIR) && \
-+	    $(STRIP) $(BINDIR)/mg.echo ; \
- 	fi
- 
- #
