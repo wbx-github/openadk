@@ -13,6 +13,8 @@ PKG_SITES:=		http://kernel.ubuntu.com/~cking/tarballs/stress-ng/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
+PKG_CFLINE_STRESS_NG:=	depends on ADK_BROKEN
+
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,STRESS_NG,stress-ng,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
