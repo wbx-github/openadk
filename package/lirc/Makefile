@@ -4,11 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		lirc
-PKG_VERSION:=		0.9.4
+PKG_VERSION:=		0.10.2
 PKG_RELEASE:=		1
-PKG_HASH:=		dd18a6751674fd61e4a96eebc3b9e5c883389d6230811943513443522dfc5dd0
+PKG_HASH:=		3d44ec8274881cf262f160805641f0827ffcc20ade0d85e7e6f3b90e0d3d222a
 PKG_DESCR:=		decode and send infra-red signals
 PKG_SECTION:=		sys/hw
+PKG_BUILDDEP:=		libxml2-host libxslt-host
 PKG_URL:=		http://www.lirc.org/
 PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=lirc/}
 
