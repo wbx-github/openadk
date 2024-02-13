@@ -312,8 +312,28 @@ config ADK_LINUX_KERNEL_WATCH_QUEUE
 	bool "General notification queue"
 	default n
 
+config ADK_LINUX_KERNEL_MEMCG
+	bool
+	default n
+
+config ADK_LINUX_KERNEL_BLK_CGROUP
+	bool
+	default n
+
+config ADK_LINUX_KERNEL_CGROUP_SCHED
+	bool
+	default n
+
+config ADK_LINUX_KERNEL_CGROUP_PIDS
+	bool
+	default n
+
 config ADK_LINUX_KERNEL_CGROUPS
 	bool "Control group support"
+	select ADK_LINUX_KERNEL_MEMCG
+	select ADK_LINUX_KERNEL_BLK_CGROUP
+	select ADK_LINUX_KERNEL_CGROUP_SCHED
+	select ADK_LINUX_KERNEL_CGROUP_PIDS
 	default n
 
 choice
