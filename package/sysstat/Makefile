@@ -4,16 +4,20 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		sysstat
-PKG_VERSION:=		11.4.4
+PKG_VERSION:=		12.7.5
 PKG_RELEASE:=		1
-PKG_HASH:=		6585f08e24347d2d6462aee6ef97e80fe4cc869605193184500df0f80fa61cc8
+PKG_HASH:=		a4d30e37c0c894214b941b51184723e19d492118c946cfdeac74b6d1f0068016
 PKG_DESCR:=		system monitoring and performance analysis
 PKG_SECTION:=		sys/utils
-PKG_SITES:=		http://pagesperso-orange.fr/sebastien.godard/
+PKG_SITES:=		https://github.com/sysstat/sysstat/archive/refs/tags/
+
+DISTFILES:=		v$(PKG_VERSION).tar.gz
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,SYSSTAT,sysstat,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
+
+CONFIGURE_ENV+=		sa_lib_dir=/usr/lib/sa
 
 sysstat-install:
 	${INSTALL_DIR} ${IDIR_SYSSTAT}/usr/lib/sa
