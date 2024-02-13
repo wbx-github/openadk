@@ -4,18 +4,17 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		fuse
-PKG_VERSION:=		3.16.2
+PKG_VERSION:=		2.9.9
 PKG_RELEASE:=		1
-PKG_HASH:=		1bc306be1a1f4f6c8965fbdd79c9ccca021fdc4b277d501483a711cbd7dbcd6c
+PKG_HASH:=		d0e69d5d608cc22ff4843791ad097f554dd32540ddc9bed7638cc6fea7c1b4b5
 PKG_DESCR:=		filesystem in userspace utility
 PKG_SECTION:=		sys/fs
 PKG_DEPENDS:=		libfuse
-PKG_SITES:=		https://github.com/libfuse/libfuse/archive/refs/tags/
+PKG_SITES:=		https://github.com/libfuse/libfuse/releases/download/fuse-$(PKG_VERSION)/
 PKG_LIBNAME:=		libfuse
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
-WRKDIST=		$(WRKDIR)/libfuse-$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_SUBPKGS:=		FUSE_UTILS LIBFUSE
 PKGSD_LIBFUSE:=		filesystem in userspace library
@@ -26,22 +25,23 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call PKG_template,FUSE_UTILS,fuse-utils,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,LIBFUSE,libfuse,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_LIBFUSE},${PKGSC_LIBFUSE},${PKG_OPTS}))
 
-WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
-
-CONFIG_STYLE:=		meson
-BUILD_STYLE:=		meson
-INSTALL_STYLE:=		meson
-
-MESON_FLAGS+=		-Dinitscriptdir="" \
-			-Dudevrulesdir=""
+CONFIGURE_ARGS+=	--enable-lib \
+			--enable-util \
+			--with-libiconv-prefix="${STAGING_TARGET_DIR}/usr" \
+			--disable-example \
+			--disable-auto-modprobe \
+			--disable-mtab \
+			--disable-kernel-module
 
 fuse-utils-install:
 	${INSTALL_DIR} ${IDIR_FUSE_UTILS}/usr/bin
-	${CP} ${WRKINST}/usr/bin/fusermount3 ${IDIR_FUSE_UTILS}/usr/bin
+	${CP} ${WRKINST}/usr/bin/fusermount ${IDIR_FUSE_UTILS}/usr/bin
 
 libfuse-install:
 	${INSTALL_DIR} ${IDIR_LIBFUSE}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libfuse3.so* \
+	${CP} ${WRKINST}/usr/lib/libfuse.so* \
+		${IDIR_LIBFUSE}/usr/lib
+	${CP} ${WRKINST}/usr/lib/libulockmgr.so* \
 		${IDIR_LIBFUSE}/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
