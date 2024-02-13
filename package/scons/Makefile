@@ -28,7 +28,7 @@ HOST_STYLE:=		manual
 
 scons-hostinstall:
 	(cd $(WRKBUILD); PATH='$(HOST_PATH)' python setup.py install \
-		--prefix=$(STAGING_HOST_DIR)/usr --install-lib=$(STAGING_HOST_DIR)/lib/scons-$(PKG_VERSION))
+		--prefix=$(STAGING_HOST_DIR)/usr --install-lib=$(STAGING_HOST_DIR)/usr/lib/scons-$(PKG_VERSION))
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
