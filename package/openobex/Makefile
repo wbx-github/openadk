@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		openobex
-PKG_VERSION:=		1.7.1
+PKG_VERSION:=		1.7.2
 PKG_RELEASE:=		1
-PKG_HASH:=		3b264665d90901ea4ff720332ffb9b6d1d8f67187463d3a3279caddc7205ea57
+PKG_HASH:=		158860aaea52f0fce0c8e4b64550daaae06df2689e05834697b7e8c7d73dd4fc
 PKG_DESCR:=		implementation of the obex protocol
 PKG_SECTION:=		sys/misc
 PKG_BUILDDEP:=		eudev bluez
