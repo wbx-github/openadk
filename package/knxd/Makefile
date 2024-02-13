@@ -3,17 +3,20 @@
 
 include $(ADK_TOPDIR)/rules.mk
 
-# always use tab spaces as separator, no spaces
 PKG_NAME:=		knxd
-PKG_VERSION:=		v0.14
+PKG_VERSION:=		0.14.61
 PKG_RELEASE:=		1
-PKG_GIT:=		branch
-PKG_DESCR:=		KNX daemon
+PKG_HASH:=		b5284c89a55a2c53e0ff769ec4f736fc1ad4b55afdd2a18b9258fa95f708d798
+PKG_DESCR:=		knx daemon
 PKG_SECTION:=		sys/hw
 PKG_DEPENDS:=		libev
 PKG_BUILDDEP:=		libev cmake-host
 PKG_URL:=		https://github.com/knxd/knxd
-PKG_SITES:=		https://github.com/knxd/knxd.git
+PKG_SITES:=		https://github.com/knxd/knxd/archive/refs/tags/
+
+PKG_CFLINE_KNXD:=	depends on ADK_BROKEN
+
+DISTFILES:=		$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
