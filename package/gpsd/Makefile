@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gpsd
-PKG_VERSION:=		3.24
+PKG_VERSION:=		3.25
 PKG_RELEASE:=		1
-PKG_HASH:=		00ee13f615655284874a661be13553abe66128e6deb5cd648af9bc0cb345fe5c
+PKG_HASH:=		b368b6a305e3f7a6382d23a0cbfc1d78923060b6b7f54cf7987a73c7b4a9afc2
 PKG_DESCR:=		interface daemon for gps receivers
 PKG_SECTION:=		sys/hw
 PKG_BUILDDEP:=		scons-host ncurses
