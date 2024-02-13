@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		serdisplib
-PKG_VERSION:=		1.97.8
+PKG_VERSION:=		2.02
 PKG_RELEASE:=		1
-PKG_HASH:=		b64738f2fd6a28f6d659945282a4a95eeaaabb0a5867f8a87b8cceb01ce1d029
+PKG_HASH:=		447b74007dc157b0378044245649850b26432b9185b6540ff681fcb0765c4d8b
 PKG_DESCR:=		display drivers (serial, parallel, usb)
 PKG_SECTION:=		sys/serial
 PKG_DEPENDS:=		libusb-compat
@@ -22,7 +22,6 @@ $(eval $(call PKG_template,SERDISPLIB,serdisplib,${PKG_VERSION}-${PKG_RELEASE},$
 
 INSTALL_STYLE:=		manual
 
-CONFIGURE_ENV+=		PACKAGE_VERSION_MAJOR=1 PACKAGE_VERSION_MINOR=97
 CONFIGURE_ARGS+=	--enable-libusb
 TARGET_CFLAGS+=		${TARGET_CPPFLAGS}
 
