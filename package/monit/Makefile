@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		monit
-PKG_VERSION:=		5.23.0
+PKG_VERSION:=		5.33.0
 PKG_RELEASE:=		1
-PKG_HASH:=		dd39fe3a379c02402ba9c44c201b3ba925ebdc8f04225918820607b6c5d56713
+PKG_HASH:=		1ace889c0183473a9d70160df6533bb6e1338dc1354f5928507803e1e2a863b5
 PKG_DESCR:=		utility for system services monitoring
 PKG_SECTION:=		sys/misc
-PKG_DEPENDS:=		libressl
-PKG_BUILDDEP:=		libressl
+PKG_DEPENDS:=		libressl zlib
+PKG_BUILDDEP:=		libressl zlib
 PKG_NEEDS:=		threads
 PKG_URL:=		http://mmonit.com/monit/
 PKG_SITES:=		https://mmonit.com/monit/dist/
