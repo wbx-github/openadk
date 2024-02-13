@@ -1,0 +1,11 @@
+--- gpm-1.20.7.orig/src/headers/daemon.h	2012-10-26 23:21:38.000000000 +0200
++++ gpm-1.20.7/src/headers/daemon.h	2024-02-12 15:22:13.446541463 +0100
+@@ -180,7 +180,7 @@ extern struct mouse_features  mouse_tabl
+ extern Gpm_Type         mice[];
+ extern Gpm_Type         *repeated_type;
+ 
+-time_t                  last_selection_time;
++extern time_t           last_selection_time;
+ 
+ 
+ 
