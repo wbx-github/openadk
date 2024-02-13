@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		owfs
-PKG_VERSION:=		3.1p0
+PKG_VERSION:=		3.2p4
 PKG_RELEASE:=		1
-PKG_HASH:=		62fca1b3e908cd4515c9eb499bf2b05020bbbea4a5b73611ddc6f205adec7a54
+PKG_HASH:=		af0a5035f3f3df876ca15aea13486bfed6b3ef5409dee016db0be67755c35fcc
 PKG_DESCR:=		software to access 1-wire devices
 PKG_SECTION:=		sys/hw
 PKG_BUILDDEP:=		fuse
 PKG_URL:=		http://owfs.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=owfs/}
+PKG_SITES:=		https://github.com/owfs/owfs/releases/download/v$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
