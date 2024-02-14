@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		rrdtool
-PKG_VERSION:=		1.6.0
+PKG_VERSION:=		1.8.0
 PKG_RELEASE:=		1
-PKG_HASH:=		cd948e89cd2d8825fab4a6fb0323f810948d934af7d92c9ee8b5e9e1350e52d7
+PKG_HASH:=		bd37614137d7a8dc523359648eb2a81631a34fd91a82ed5581916a52c08433f4
 PKG_DESCR:=		round robin database management library
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libart libfreetype libpng zlib
@@ -14,7 +14,7 @@ PKG_DEPENDS+=		glib cairo pango
 PKG_BUILDDEP:=		libxml2 cgilib freetype libart libpng
 PKG_BUILDDEP+=		glib cairo pango
 PKG_URL:=		http://oss.oetiker.ch/
-PKG_SITES:=		http://oss.oetiker.ch/rrdtool/pub/
+PKG_SITES:=		https://github.com/oetiker/rrdtool-1.x/releases/download/v$(PKG_VERSION)/
 PKG_LIBNAME:=		librrd
 PKG_OPTS:=		dev
 
