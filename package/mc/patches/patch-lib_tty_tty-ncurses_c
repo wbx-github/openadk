@@ -1,0 +1,42 @@
+--- mc-4.8.31.orig/lib/tty/tty-ncurses.c	2024-01-20 20:34:38.000000000 +0100
++++ mc-4.8.31/lib/tty/tty-ncurses.c	2024-02-14 11:53:54.151821148 +0100
+@@ -561,39 +561,11 @@ tty_fill_region (int y, int x, int rows,
+ void
+ tty_colorize_area (int y, int x, int rows, int cols, int color)
+ {
+-#ifdef ENABLE_SHADOWS
+-    cchar_t *ctext;
+-    wchar_t wch[10];            /* TODO not sure if the length is correct */
+-    attr_t attrs;
+-    short color_pair;
+-
+-    if (!use_colors || !tty_clip (&y, &x, &rows, &cols))
+-        return;
+-
+-    tty_setcolor (color);
+-    ctext = g_malloc (sizeof (cchar_t) * (cols + 1));
+-
+-    for (int row = 0; row < rows; row++)
+-    {
+-        mvin_wchnstr (y + row, x, ctext, cols);
+-
+-        for (int col = 0; col < cols; col++)
+-        {
+-            getcchar (&ctext[col], wch, &attrs, &color_pair, NULL);
+-            setcchar (&ctext[col], wch, attrs, color, NULL);
+-        }
+-
+-        mvadd_wchnstr (y + row, x, ctext, cols);
+-    }
+-
+-    g_free (ctext);
+-#else
+     (void) y;
+     (void) x;
+     (void) rows;
+     (void) cols;
+     (void) color;
+-#endif /* ENABLE_SHADOWS */
+ }
+ 
+ /* --------------------------------------------------------------------------------------------- */

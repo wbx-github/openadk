@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		mc
-PKG_VERSION:=		4.8.23
+PKG_VERSION:=		4.8.31
 PKG_RELEASE:=		1
-PKG_HASH:=		dd7f7ce74183307b0df25b5c3e60ad3293fd3d3d27d2f37dd7a10efce13dff1c
+PKG_HASH:=		24191cf8667675b8e31fc4a9d18a0a65bdc0598c2c5c4ea092494cd13ab4ab1a
 PKG_DESCR:=		norton commander clone
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		glib libncurses libssh2
@@ -19,11 +19,9 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,MC,mc,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfo
+TARGET_LDFLAGS+=	-ltinfo -lncurses
 CONFIGURE_ARGS+=	--enable-charset \
-			--disable-extcharset \
 			--disable-background \
-			--disable-gcc-warnings \
 			--disable-glibtest \
 			--disable-netcode \
 			--without-libiconv-prefix \
@@ -37,7 +35,7 @@ CONFIGURE_ARGS+=	--enable-charset \
 			--without-ext2undel \
 			--with-subshell \
 			--with-screen=ncurses \
-			--with-edit
+			--disable-silent-rules
 CONFIGURE_ENV+=		mc_cv_have_zipinfo=yes \
 			am_cv_func_iconv=no
 
@@ -48,7 +46,7 @@ mc-install:
 	${CP} ${WRKINST}/usr/share/mc/* ${IDIR_MC}/usr/share/mc
 	${INSTALL_BIN} ${WRKINST}/usr/bin/mc ${IDIR_MC}/usr/bin/
 	cd ${IDIR_MC}/usr/bin && ln -fs mc mcedit && ln -fs mc mcview
-	cd ${WRKINST}/etc/mc && ${CP} mcedit.menu mc.ext sfs.ini \
+	cd ${WRKINST}/etc/mc && ${CP} mcedit.menu sfs.ini \
 	    mc.menu ${IDIR_MC}/etc/mc/
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
