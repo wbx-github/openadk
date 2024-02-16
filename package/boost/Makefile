@@ -4,10 +4,10 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		boost
-PKG_VERSION:=		1.77.0
-PKG_EXTRAVER:=		1_77
+PKG_VERSION:=		1.84.0
+PKG_EXTRAVER:=		1_84
 PKG_RELEASE:=		1
-PKG_HASH:=		5347464af5b14ac54bb945dc68f1dd7c56f0dad7262816b956138fc53bcc0131
+PKG_HASH:=		a5800f405508f5df8114558ca9855d2640a2de8f0445f051fa1c7c3383045724
 PKG_DESCR:=		portable c++ library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		python3-host
@@ -19,9 +19,10 @@ PKG_OPTS:=		dev
 DISTFILES:=		boost_$(PKG_EXTRAVER)_0.tar.gz
 WRKDIST=		${WRKDIR}/${PKG_NAME}_$(PKG_EXTRAVER)_0
 
-PKG_FLAVOURS_BOOST:=	DATE_TIME GRAPH GRAPH_PARALLEL IOSTREAMS LOG MATH PROGRAM_OPTIONS PYTHON REGEX SERIALIZATION TEST WAVE
+PKG_FLAVOURS_BOOST:=	DATE_TIME JSON GRAPH GRAPH_PARALLEL IOSTREAMS LOG MATH PROGRAM_OPTIONS PYTHON REGEX SERIALIZATION TEST WAVE
 
 PKGFD_DATE_TIME:=	with date-time
+PKGFD_JSON:=		with json
 PKGFD_PYTHON:=		with python
 PKGFB_PYTHON:=		python3
 PKGFS_PYTHON:=		python3
@@ -64,6 +65,9 @@ endif
 ifeq (${ADK_PACKAGE_BOOST_DATE_TIME},)
 CONFIGURE_ARGS+=	--without-date_time
 endif
+ifeq (${ADK_PACKAGE_BOOST_JSON},)
+CONFIGURE_ARGS+=	--without-json
+endif
 ifeq (${ADK_PACKAGE_BOOST_PYTHON},)
 CONFIGURE_ARGS+=	--without-python
 endif
@@ -92,6 +96,9 @@ ifeq (${ADK_PACKAGE_BOOST_WAVE},)
 CONFIGURE_ARGS+=	--without-wave
 endif
 
+ifeq ($(ADK_TARGET_ARCH),aarch64)
+BOOST_ARCH:=	architecture=arm
+endif
 ifeq ($(ADK_TARGET_ARCH),arm)
 BOOST_ARCH:=	architecture=arm
 endif
@@ -117,6 +124,9 @@ endif
 ifeq ($(ADK_TARGET_ARCH),arm)
 BOOST_ABI:=	abi=aapcs
 endif
+ifeq ($(ADK_TARGET_ARCH),aarch64)
+BOOST_ABI:=	abi=aapcs
+endif
 ifeq ($(ADK_TARGET_ARCH),mips)
 BOOST_ABI:=	abi=o32
 endif
@@ -124,7 +134,7 @@ endif
 # some variables for build
 GPP_PATH:=	${TOOLCHAIN_DIR}/usr/bin/${GNU_TARGET_NAME}-g++
 GPP_VERSION:=	"`${GPP_PATH} -v 2>&1 | tail -1 | awk '{print $$3}'`"
-BJAM_PATH:=	"`find ${WRKBUILD} -type f -name "bjam$(EXEEXT)"`"
+BJAM_PATH:=	"`find ${WRKBUILD} -type f -name "b2$(EXEEXT)"`"
 PYTHON_PATH:=	${STAGING_HOST_DIR}/usr/bin/python
 PYTHON_INCLUDE:="`find ${STAGING_TARGET_DIR}/usr/include/ -maxdepth 1 -type d -name "python*" | head -1`"
 PYTHON_LIB:=	"`find ${STAGING_TARGET_DIR}/usr/lib/ -maxdepth 1 -type d -name "python*" | head -1`"
