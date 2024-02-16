@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libao
-PKG_VERSION:=		1.1.0
+PKG_VERSION:=		1.2.0
 PKG_RELEASE:=		1
-PKG_HASH:=		29de5bb9b1726ba890455ef7e562d877df87811febb0d99ee69164b88c171bd4
+PKG_HASH:=		03ad231ad1f9d64b52474392d63c31197b0bc7bd416e58b1c10a329a5ed89caf
 PKG_DESCR:=		cross platform audio library
 PKG_SECTION:=		libs/audio
 PKG_DEPENDS:=		alsa-lib
