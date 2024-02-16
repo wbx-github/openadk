@@ -1,0 +1,31 @@
+#!/bin/sh
+#PKG mympd 
+#INIT 90
+
+. /etc/rc.conf
+
+case $1 in
+autostop) ;;
+autostart)
+	test x"${mympd:-NO}" = x"NO" && exit 0
+	test x"$mympd" = x"DAEMON" && test -x /bin/mksh && exec mksh -T- $0 start
+	exec sh $0 start
+	;;
+start)
+	mkdir -p /var/cache/mympd 2>/dev/null
+	mkdir -p /etc/mympd 2>/dev/null
+	mympd -w /etc/mympd -s &
+	;;
+stop)
+	kill $(pgrep -f mympd)
+	;;
+restart)
+	sh $0 stop
+	sh $0 start
+	;;
+*)
+	echo "Usage: $0 {start | stop | restart}"
+	exit 1
+	;;
+esac
+exit $?

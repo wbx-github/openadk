@@ -1,0 +1,21 @@
+--- myMPD-14.0.2.orig/src/main.c	2024-02-11 12:00:47.000000000 +0100
++++ myMPD-14.0.2/src/main.c	2024-02-13 05:31:53.330851831 +0100
+@@ -492,12 +492,12 @@ int main(int argc, char **argv) {
+     }
+ 
+     //set output buffers
+-    if (setvbuf(stdout, NULL, _IOLBF, 0) != 0 ||
+-        setvbuf(stderr, NULL, _IOLBF, 0) != 0)
+-    {
+-        MYMPD_LOG_EMERG(NULL, "Could not set stdout and stderr buffer");
+-        goto cleanup;
+-    }
++    //if (setvbuf(stdout, NULL, _IOLBF, 0) != 0 ||
++      //  setvbuf(stderr, NULL, _IOLBF, 0) != 0)
++    //{
++      //  MYMPD_LOG_EMERG(NULL, "Could not set stdout and stderr buffer");
++      //  goto cleanup;
++   // }
+ 
+     //init webserver
+     mgr = malloc_assert(sizeof(struct mg_mgr));
