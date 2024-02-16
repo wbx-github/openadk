@@ -17,6 +17,15 @@ PKG_SITES:=		http://www.ffmpeg.org/releases/
 PKG_LIBNAME:=		libffmpeg
 PKG_OPTS:=		dev
 
+PKG_CHOICES_FFMPEG:=	WITH_LIBRESSL WITH_OPENSSL
+PKGCD_WITH_LIBRESSL:=	use libressl for crypto
+PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
+PKGCB_WITH_LIBRESSL:=	libressl
+PKGCD_WITH_OPENSSL:=	use libopenssl for crypto
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
+PKGCB_WITH_OPENSSL:=	openssl
+
+
 PKG_SUBPKGS:=		LIBFFMPEG FFPROBE FFMPEG
 PKGSD_FFMPEG:=		video converter
 PKGSC_FFMPEG:=		mm/video
