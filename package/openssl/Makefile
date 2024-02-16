@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		openssl
-PKG_VERSION:=		3.0.10
+PKG_VERSION:=		3.0.13
 PKG_RELEASE:=		1
-PKG_HASH:=		1761d4f5b13a1028b9b6f3d4b8e17feb0cedc9370f6afe61d7193d2cdce83323
+PKG_HASH:=		88525753f79d3bec27d2fa7c66aa0b92b3aa9498dafd93d7cfa4b3780cdae313
 PKG_DESCR:=		ssl/tls library
 PKG_SECTION:=		libs/crypto
 PKG_URL:=		https://www.openssl.org
@@ -35,7 +35,7 @@ ifeq ($(ADK_TARGET_USE_STATIC_LIBS),y)
 OPENSSL_OPTIONS:=	no-shared zlib no-dso
 else
 OPENSSL_OPTIONS:=	shared zlib-dynamic
-TARGET_CFLAGS+=		-ldl -shared
+#TARGET_CFLAGS+=		-ldl -shared
 endif
 
 OPENSSL_OPTIONS+=	threads no-err no-tests no-fuzz-libfuzzer no-fuzz-afl 
@@ -60,6 +60,9 @@ endif
 CONFIG:=		linux-generic32
 ifeq ($(ADK_TARGET_ARCH_X86_64),y)
 CONFIG:=		linux-x86_64
+endif
+ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
+CONFIG:=		linux-aarch64
 endif
 
 ifneq (,$(filter CYGWIN%,${OS_FOR_BUILD}))
@@ -86,15 +89,17 @@ do-configure:
 	(cd $(WRKBUILD); \
 		PATH='$(TARGET_PATH)' \
 		CROSS_COMPILE='' \
+		CFLAGS="$(TARGET_CFLAGS)" \
 		./Configure $(CONFIG) \
 			--prefix=/usr \
 			--openssldir=/etc/ssl \
 			-I$(STAGING_TARGET_DIR)/usr/include \
 			-L$(STAGING_TARGET_DIR)/usr/lib \
 			-DOPENSSL_SMALL_FOOTPRINT \
+			-DOPENSSL_NO_ASYNC \
 			$(OPENSSL_OPTIONS) \
 		);
-	$(SED) "s:-O[0-9]:$(TARGET_CFLAGS) -fPIC:" $(WRKBUILD)/Makefile
+	#$(SED) "s:-O[0-9]:$(TARGET_CFLAGS) -fPIC:" $(WRKBUILD)/Makefile
 
 libopenssl-install:
 	${INSTALL_DIR} ${IDIR_LIBOPENSSL}/usr/lib
