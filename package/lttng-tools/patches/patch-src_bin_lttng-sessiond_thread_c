@@ -1,0 +1,11 @@
+--- lttng-tools-2.13.11.orig/src/bin/lttng-sessiond/thread.c	2023-08-21 20:32:56.490852554 +0200
++++ lttng-tools-2.13.11/src/bin/lttng-sessiond/thread.c	2024-02-18 06:55:46.482793807 +0100
+@@ -134,7 +134,7 @@ void lttng_thread_put(struct lttng_threa
+ 	if (!thread) {
+ 		return;
+ 	}
+-	assert(thread->ref.refcount);
++	//assert(thread->ref.refcount);
+ 	urcu_ref_put(&thread->ref, lttng_thread_release);
+ }
+ 

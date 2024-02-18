@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		lttng-tools
-PKG_VERSION:=		2.9.5
+PKG_VERSION:=		2.13.11
 PKG_RELEASE:=		1
-PKG_HASH:=		77839eb6fc6c652125f08acfd9369701c2516eb05cc2084160e7efc7a3fb731c
+PKG_HASH:=		ac5baeef9fa690936b1ca01ecd1742da762c2c08511ff1b4e923938d94d0f979
 PKG_DESCR:=		open source tracing framework
 PKG_SECTION:=		app/debug
 PKG_BUILDDEP:=		popt libxml2 util-linux userspace-rcu ncurses
@@ -20,7 +20,10 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LTTNG_TOOLS,lttng-tools,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-CONFIGURE_ARGS+=	--without-lttng-ust
+AUTOTOOL_STYLE:=	autoreconf
+CONFIGURE_ARGS+=	--without-lttng-ust \
+			--disable-tests \
+			--disable-silent-rules
 
 lttng-tools-install:
 	$(INSTALL_DIR) $(IDIR_LTTNG_TOOLS)/usr/bin

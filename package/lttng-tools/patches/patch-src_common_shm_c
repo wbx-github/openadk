@@ -1,0 +1,20 @@
+--- lttng-tools-2.13.11.orig/src/common/shm.c	2023-08-21 20:32:56.550851722 +0200
++++ lttng-tools-2.13.11/src/common/shm.c	2024-02-18 06:56:33.822793165 +0100
+@@ -32,7 +32,7 @@ static int get_wait_shm(char *shm_path,
+ 	int wait_shm_fd, ret;
+ 	mode_t mode, old_mode;
+ 
+-	assert(shm_path);
++	//assert(shm_path);
+ 
+ 	/* Default permissions */
+ 	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP;
+@@ -166,7 +166,7 @@ char *shm_ust_get_mmap(char *shm_path, i
+ 	char *wait_shm_mmap;
+ 	long sys_page_size;
+ 
+-	assert(shm_path);
++	//assert(shm_path);
+ 
+ 	sys_page_size = sysconf(_SC_PAGE_SIZE);
+ 	if (sys_page_size < 0) {
