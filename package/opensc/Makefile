@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		opensc
-PKG_VERSION:=		0.22.0
+PKG_VERSION:=		0.24.0
 PKG_RELEASE:=		1
-PKG_HASH:=		8d4e5347195ebea332be585df61dcc470331c26969e4b0447c851fb0844c7186
+PKG_HASH:=		24d03c69287291da32a30c4c38a304ad827f56cb85d83619e1f5403ab6480ef8
 PKG_DESCR:=		utilities to access smart cards
 PKG_SECTION:=		app/crypto
 PKG_BUILDDEP:=		openct pcsc-lite readline libressl
@@ -32,6 +32,8 @@ $(eval $(call PKG_template,LIBOPENSC,libopensc,${PKG_VERSION}-${PKG_RELEASE},${P
 CONFIGURE_ARGS+=	--disable-man \
 			--disable-iconv \
 			--disable-pcsc \
+			--disable-silent-rules \
+			--disable-strict \
 			--enable-openct
 
 opensc-install:
