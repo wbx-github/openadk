@@ -4,26 +4,29 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		weechat
-PKG_VERSION:=		1.1.1
+PKG_VERSION:=		4.2.1
 PKG_RELEASE:=		1
-PKG_HASH:=		a32f7e57d5e834195bacaffa874419b4a9d17cd42883c80d7ecb9fadbf601349
+PKG_HASH:=		253ddf086f6c845031a2dd294b1552851d6b04cc08a2f9da4aedfb3e2f91bdcd
 PKG_DESCR:=		lightweight irc client
 PKG_SECTION:=		app/chat
-PKG_DEPENDS:=		libncurses zlib libcurl libgcrypt
-PKG_BUILDDEP:=		cmake-host ncurses zlib curl libgcrypt
+PKG_DEPENDS:=		libncurses zlib libcurl libgcrypt libgnutls
+PKG_BUILDDEP:=		cmake-host ncurses zlib curl libgcrypt gnutls
 PKG_URL:=		http://www.weechat.org/
-PKG_SITES:=		http://www.weechat.org/files/src/
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_SITES:=		https://weechat.org/files/src/
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,WEECHAT,weechat,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 CONFIG_STYLE:=          cmake
-CMAKE_FLAGS+=		-DENABLE_GNUTLS=OFF \
-			-DENABLE_PERL=OFF \
+CMAKE_FLAGS+=		-DENABLE_PERL=OFF \
 			-DENABLE_PYTHON=OFF \
+			-DENABLE_LUA=OFF \
+			-DENABLE_RUBY=OFF \
+			-DENABLE_PHP=OFF \
+			-DENABLE_TCL=OFF \
+			-DENABLE_GUILE=OFF \
+			-DENABLE_SPELL=OFF \
 			-DENABLE_NLS=OFF \
 			-DGCRYPT_LDFLAGS="-L$(STAGING_TARGET_DIR)/usr/lib -ltinfo -lgcrypt" \
 			-DGCRYPT_CFLAGS="-I$(STAGING_TARGET_DIR)/usr/include" \
