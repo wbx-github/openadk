@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		cryptodev-linux
-PKG_VERSION:=		a705360197260d28535746ae98c461ba2cfb7a9e
+PKG_VERSION:=		5e7121e45ff283d30097da381fd7e97c4bb61364
 PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_DESCR:=		device that allows access to kernel cryptographic drivers
