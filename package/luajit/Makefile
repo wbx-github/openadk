@@ -4,17 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		luajit
-PKG_VERSION:=		2.0.4
+PKG_VERSION:=		0d313b243194a0b8d2399d8b549ca5a0ff234db5
+PKG_GIT:=		hash
 PKG_RELEASE:=		1
-PKG_HASH:=		620fa4eb12375021bef6e4f237cbd2dd5d49e56beb414bee052c746beef1807d
 PKG_DESCR:=		just in time compiler for lua
 PKG_SECTION:=		dev/lang
 PKG_URL:=		http://luajit.org/download/
-PKG_SITES:=		http://luajit.org/download/
-
-DISTFILES:=             LuaJIT-$(PKG_VERSION).tar.gz
-
-WRKDIST=		$(WRKDIR)/LuaJIT-$(PKG_VERSION)
+PKG_SITES:=		https://luajit.org/git/luajit.git
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -30,7 +26,7 @@ XAKE_FLAGS+=		STATIC_CC="$(TARGET_CC)" \
 			LDFLAGS='' \
 			TARGET_CFLAGS='$(TARGET_CFLAGS) -fPIC' \
 			TARGET_LDFLAGS='$(TARGET_LDFLAGS)' \
-			HOST_CC='$(HOST_CC) -m32' \
+			HOST_CC='$(HOST_CC)' \
 			HOST_CFLAGS='$(HOST_CFLAGS)' \
 			HOST_LDFLAGS='$(HOST_LDFLAGS)' \
 			Q=''
