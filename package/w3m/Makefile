@@ -14,6 +14,8 @@ PKG_BUILDDEP:=		libgc-host libgc ncurses
 PKG_URL:=		http://w3m.sourceforge.net/
 PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=w3m/}
 
+PKG_NOPARALLEL:=	1
+
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
