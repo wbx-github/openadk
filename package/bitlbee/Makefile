@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		bitlbee
-PKG_VERSION:=		3.5.1
+PKG_VERSION:=		3.6
 PKG_RELEASE:=		1
-PKG_HASH:=		9636d7fd89ebb3756c13a9a3387736ca6d56ccf66ec0580d512f07b21db0fa69
+PKG_HASH:=		9f15de46f29b46bf1e39fc50bdf4515e71b17f551f3955094c5da792d962107e
 PKG_DESCR:=		irc gateway to im chat networks
 PKG_SECTION:=		app/chat
 PKG_DEPENDS:=		glib libressl
@@ -35,6 +35,7 @@ CONFIGURE_ARGS:=	--target=${GNU_TARGET_NAME} \
 			--ipv6=1 \
 			--ssl=openssl
 INSTALL_TARGET=		install-etc install-bin
+XAKE_ENV+=		VERBOSE=1
 
 post-configure:
 	@echo 'CFLAGS+="-I${STAGING_TARGET_DIR}/usr/include/iconv"' >> \

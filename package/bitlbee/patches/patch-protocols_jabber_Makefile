@@ -1,5 +1,5 @@
---- bitlbee-3.5.1.orig/protocols/jabber/Makefile	2017-01-30 21:45:59.000000000 +0100
-+++ bitlbee-3.5.1/protocols/jabber/Makefile	2017-05-20 12:15:26.360306005 +0200
+--- bitlbee-3.6.orig/protocols/jabber/Makefile	2019-02-07 20:53:38.000000000 +0100
++++ bitlbee-3.6/protocols/jabber/Makefile	2024-02-14 17:50:47.363530697 +0100
 @@ -14,7 +14,7 @@ endif
  # [SH] Program variables
  objects = conference.o io.o iq.o jabber.o jabber_util.o message.o presence.o s5bytestream.o sasl.o si.o hipchat.o
@@ -13,7 +13,7 @@
  
  jabber_mod.o: $(objects)
  	@echo '*' Linking jabber_mod.o
--	@$(LD) $(LFLAGS) $(objects) -o jabber_mod.o
-+	@$(CC) $(LFLAGS) $(objects) -o jabber_mod.o
+-	$(VERBOSE) $(LD) $(LFLAGS) $(objects) -o jabber_mod.o
++	$(VERBOSE) $(CC) $(LFLAGS) $(objects) -o jabber_mod.o
  
  -include .depend/*.d

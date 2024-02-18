@@ -1,5 +1,5 @@
---- bitlbee-3.5.1.orig/protocols/Makefile	2017-01-30 21:45:59.000000000 +0100
-+++ bitlbee-3.5.1/protocols/Makefile	2017-05-20 12:17:34.748567834 +0200
+--- bitlbee-3.6.orig/protocols/Makefile	2019-02-07 20:53:38.000000000 +0100
++++ bitlbee-3.6/protocols/Makefile	2024-02-14 17:50:36.259530848 +0100
 @@ -24,7 +24,7 @@ subdirobjs = $(PROTOOBJS)
  
  # Expansion of variables
@@ -13,8 +13,8 @@
  
  protocols.o: $(objects) $(subdirs)
  	@echo '*' Linking protocols.o
--	@$(LD) $(LFLAGS) $(objects) $(subdirobjs) -o protocols.o
-+	@$(CC) $(LFLAGS) $(objects) $(subdirobjs) -o protocols.o
+-	$(VERBOSE) $(LD) $(LFLAGS) $(objects) $(subdirobjs) -o protocols.o
++	$(VERBOSE) $(CC) $(LFLAGS) $(objects) $(subdirobjs) -o protocols.o
  
  $(objects): ../Makefile.settings Makefile
  

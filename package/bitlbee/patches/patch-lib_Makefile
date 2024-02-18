@@ -1,8 +1,8 @@
---- bitlbee-3.5.1.orig/lib/Makefile	2017-01-30 21:45:59.000000000 +0100
-+++ bitlbee-3.5.1/lib/Makefile	2017-05-20 12:20:09.898551807 +0200
+--- bitlbee-3.6.orig/lib/Makefile	2019-02-07 20:53:38.000000000 +0100
++++ bitlbee-3.6/lib/Makefile	2024-02-14 17:50:24.243531011 +0100
 @@ -14,7 +14,7 @@ endif
  # [SH] Program variables
- objects = arc.o base64.o $(EVENT_HANDLER) ftutil.o http_client.o ini.o json.o json_util.o md5.o misc.o oauth.o oauth2.o proxy.o sha1.o $(SSL_CLIENT) url.o xmltree.o ns_parse.o
+ objects = arc.o base64.o canohost.o $(EVENT_HANDLER) ftutil.o http_client.o ini.o json.o json_util.o md5.o misc.o oauth.o oauth2.o proxy.o sha1.o $(SSL_CLIENT) url.o xmltree.o ns_parse.o
  
 -LFLAGS += -r
 +LFLAGS += -Wl,-r -nostdlib
@@ -13,8 +13,8 @@
  
  lib.o: $(objects) $(subdirs)
  	@echo '*' Linking lib.o
--	@$(LD) $(LFLAGS) $(objects) -o lib.o
-+	@$(CC) $(LFLAGS) $(objects) -o lib.o
+-	$(VERBOSE) $(LD) $(LFLAGS) $(objects) -o lib.o
++	$(VERBOSE) $(CC) $(LFLAGS) $(objects) -o lib.o
  
  $(objects): ../Makefile.settings Makefile
  
