@@ -4,19 +4,19 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		lynx
-PKG_VERSION:=		2.8.8
-PKG_RELEASE:=		3
-PKG_HASH:=		234c9dc77d4c4594ad6216d7df4d49eae3019a3880e602f39721b35b97fbc408
+PKG_VERSION:=		2.9.0
+PKG_RELEASE:=		1
+PKG_HASH:=		746c926e28d50571a42d2477f9c50784b27fc8cba4c7db7f3e6c9e00dde89070
 PKG_DESCR:=		text browser
 PKG_SECTION:=		app/browser
 PKG_DEPENDS:=		libncurses zlib libressl
 PKG_BUILDDEP:=		ncurses zlib libressl
-PKG_URL:=		http://lynx.isc.org/
-PKG_SITES:=		http://lynx.isc.org/${PKG_NAME}${PKG_VERSION}/
+PKG_URL:=		https://lynx.invisible-island.net/
+PKG_SITES:=		https://invisible-island.net/archives/lynx/tarballs/
 PKG_NOPARALLEL:=	1
 
 DISTFILES:=		${PKG_NAME}${PKG_VERSION}.tar.gz
-WRKDIST=		${WRKDIR}/lynx2-8-8
+WRKDIST=		${WRKDIR}/$(PKG_NAME)$(PKG_VERSION)
 
 include ${ADK_TOPDIR}/mk/package.mk
 
@@ -24,6 +24,7 @@ $(eval $(call PKG_template,LYNX,lynx,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS
 
 TARGET_CPPFLAGS+=	-I${STAGING_TARGET_DIR}/include/openssl
 TARGET_CPPFLAGS+=	-DUSE_OPENSSL_INCL -DUSE_X509_SUPPORT
+HOST_CFLAGS+=		-DUSE_OPENSSL_INCL -DUSE_X509_SUPPORT
 
 CONFIGURE_ENV+=		ac_cv_path_TELNET=telnet \
 			ac_cv_path_TN3270=tn3270 \
