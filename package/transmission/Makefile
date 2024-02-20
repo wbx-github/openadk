@@ -4,24 +4,22 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		transmission
-PKG_VERSION:=		2.92
+PKG_VERSION:=		4.0.5
 PKG_RELEASE:=		1
-PKG_HASH:=		3a8d045c306ad9acb7bf81126939b9594553a388482efa0ec1bfb67b22acd35f
+PKG_HASH:=		fd68ff114a479200043c30c7e69dba4c1932f7af36ca4c5b5d2edcb5866e6357
 PKG_DESCR:=		torrent client
 PKG_SECTION:=		app/p2p
 PKG_DEPENDS:=		libressl libevent libcurl
-PKG_BUILDDEP:=		libressl libevent curl
+PKG_BUILDDEP:=		cmake-host libressl libevent curl
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.transmissionbt.com
-PKG_SITES:=		http://download.transmissionbt.com/files/
+PKG_SITES:=		https://github.com/transmission/transmission/releases/download/$(PKG_VERSION)/
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,TRANSMISSION,transmission,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-TARGET_LDFLAGS+=	-liconv
-
-CONFIGURE_ARGS+=	--without-gtk
+CONFIG_STYLE:=		cmake
 
 transmission-install:
 	$(INSTALL_DIR) $(IDIR_TRANSMISSION)/usr/share
