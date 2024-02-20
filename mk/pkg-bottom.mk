@@ -116,6 +116,7 @@ else ifeq ($(strip ${CONFIG_STYLE}),)
 	    --disable-dependency-tracking \
 	    --disable-libtool-lock \
 	    --disable-nls \
+	    --disable-silent-rules \
 	    ${CONFIGURE_LIB} \
 	    ${CONFIGURE_ARGS} $(MAKE_TRACE)
 else
