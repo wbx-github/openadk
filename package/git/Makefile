@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		git
-PKG_VERSION:=		2.41.0
+PKG_VERSION:=		2.43.2
 PKG_RELEASE:=		1
-PKG_HASH:=		e748bafd424cfe80b212cbc6f1bbccc3a47d4862fb1eb7988877750478568040
+PKG_HASH:=		f612c1abc63557d50ad3849863fc9109670139fc9901e574460ec76e0511adb9
 PKG_DESCR:=		fast version control system
 PKG_SECTION:=		dev/scm
 PKG_BUILDDEP:=		curl expat
