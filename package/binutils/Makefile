@@ -36,6 +36,7 @@ else
 CONFIGURE_ARGS+=	--enable-multilib
 endif
 CONFIGURE_ARGS+=	--disable-werror \
+			--disable-gprofng \
 			--disable-gdb \
 			--disable-sim \
 			--disable-install-libiberty \
