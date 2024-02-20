@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pmacct
-PKG_VERSION:=		0.12.5
+PKG_VERSION:=		1.7.8
 PKG_RELEASE:=		1
-PKG_HASH:=		5252d7df24e9baefcc5a36ed66e9cac5ae505c9d502c8cffb96e6808acbb2fe8
+PKG_HASH:=		4df50a3c6c7bdace3345bbf3bd4f6fa7a6722ec1fb45dfd266ad956b327da98a
 PKG_DESCR:=		ip accounting tools
 PKG_SECTION:=		net/acct
-PKG_DEPENDS:=		libpcap
-PKG_BUILDDEP:=		libpcap
+PKG_DEPENDS:=		libpcap libcdada
+PKG_BUILDDEP:=		libpcap libcdada
 PKG_URL:=		http://www.pmacct.net/
 PKG_SITES:=		http://www.pmacct.net/
 
@@ -26,7 +26,8 @@ $(eval $(call PKG_template,SFACCTD,sfacctd,$(PKG_VERSION)-${PKG_RELEASE},${PKG_D
 $(eval $(call PKG_template,PMACCT_CLIENT,pmacct-client,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 CONFIGURE_ARGS+=	--with-pcap-includes="$(STAGING_TARGET_DIR)/usr/include" \
-			--with-pcap-libs="$(STAGING_TARGET_DIR)/usr/lib"
+			--with-pcap-libs="$(STAGING_TARGET_DIR)/usr/lib" \
+			--without-external-deps
 
 sfacctd-install:
 	${INSTALL_DIR} $(IDIR_SFACCTD)/usr/sbin
