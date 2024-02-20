@@ -76,7 +76,6 @@ endif
 CONFIGURE_ENV+=		curl_typeof_curl_socklen_t=socklen_t \
 			LDFLAGS='$(TARGET_LDFLAGS) -latomic'
 CONFIGURE_ARGS+=	--enable-cookies \
-			--enable-crypto-auth \
 			--enable-file \
 			--enable-ftp \
 			--enable-http \
