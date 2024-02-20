@@ -15,6 +15,8 @@ PKG_NEEDS:=		c++
 PKG_URL:=		https://rakshasa.github.io/rtorrent/
 PKG_SITES:=		http://rtorrent.net/downloads/
 
+PKG_CFLINE_RTORRENT:=	depends on ADK_BROKEN
+
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include ${ADK_TOPDIR}/mk/package.mk
