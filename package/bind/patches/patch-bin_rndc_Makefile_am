@@ -1,0 +1,18 @@
+--- bind-9.18.24.orig/bin/rndc/Makefile.am	2024-02-11 11:42:55.296980787 +0100
++++ bind-9.18.24/bin/rndc/Makefile.am	2024-02-20 08:02:25.039885442 +0100
+@@ -2,6 +2,7 @@ include $(top_srcdir)/Makefile.top
+ 
+ AM_CPPFLAGS +=			\
+ 	$(LIBISC_CFLAGS)	\
++	$(LIBNS_CFLAGS)		\
+ 	$(LIBDNS_CFLAGS)	\
+ 	$(LIBISCCFG_CFLAGS)	\
+ 	$(LIBISCCC_CFLAGS)	\
+@@ -20,6 +21,7 @@ rndc_SOURCES =	\
+ 
+ rndc_LDADD =			\
+ 	$(LIBISC_LIBS)		\
++	$(LIBNS_LIBS)		\
+ 	$(LIBDNS_LIBS)		\
+ 	$(LIBISCCC_LIBS)	\
+ 	$(LIBISCCFG_LIBS)	\

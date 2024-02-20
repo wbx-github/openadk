@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		bind
-PKG_VERSION:=		9.16.22
+PKG_VERSION:=		9.18.24
 PKG_RELEASE:=		1
-PKG_HASH:=		65e7b2af6479db346e2fc99bcfb6ec3240066468e09dbec575ebc7c57d994061
+PKG_HASH:=		709d73023c9115ddad3bab65b6c8c79a590196d0d114f5d0ca2533dbd52ddf66
 PKG_DESCR:=		dns server
 PKG_SECTION:=		net/dns
 PKG_DEPENDS:=		libxml2 libressl libuv libressl-util
@@ -42,9 +42,6 @@ PKGSD_BIND_DIG:=	dig utility
 PKGSC_BIND_DIG:=	net/dns
 PKGSS_BIND_DIG:=	libbind libxml2
 
-PKG_FLAVOURS_LIBBIND:=	WITH_IPV6
-PKGFD_WITH_IPV6:=	enable IPv6 support
-
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,BIND_SERVER,bind-server,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
@@ -58,23 +55,10 @@ $(eval $(call PKG_template,LIBBIND,libbind,${PKG_VERSION}-${PKG_RELEASE},,${PKGS
 
 AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ENV+=		BUILD_CC="${HOST_CC}" BUILD_CFLAGS='${HOST_CFLAGS}' BUILD_LDFLAGS='${HOST_LDFLAGS}'
-CONFIGURE_ARGS+=	--with-randomdev=/dev/urandom \
-			--with-export-libdir=/usr/lib \
-			--enable-exportlib \
-			--with-ecdsa=no \
-			--with-gost=no \
-			--with-gssapi=no \
+CONFIGURE_ARGS+=	--with-gssapi=no \
 			--with-openssl=${STAGING_TARGET_DIR}/usr \
-			--without-python \
 			--disable-linux-caps \
-			--enable-epoll \
-			--with-libtool
-
-ifneq (${ADK_PACKAGE_LIBBIND_WITH_IPV6},)
-CONFIGURE_ARGS+=	--enable-ipv6
-else
-CONFIGURE_ARGS+=	--disable-ipv6
-endif
+			--disable-doh
 
 bind-server-install:
 	${INSTALL_DIR} ${IDIR_BIND_SERVER}/usr/sbin ${IDIR_BIND_SERVER}/etc
@@ -92,18 +76,18 @@ bind-rndc-install:
 		${IDIR_BIND_RNDC}/usr/sbin
 
 bind-check-install:
-	${INSTALL_DIR} ${IDIR_BIND_CHECK}/usr/sbin
-	${INSTALL_BIN} ${WRKINST}/usr/sbin/named-checkconf \
-		${IDIR_BIND_CHECK}/usr/sbin/
-	${INSTALL_BIN} ${WRKINST}/usr/sbin/named-checkzone \
-		${IDIR_BIND_CHECK}/usr/sbin/
+	${INSTALL_DIR} ${IDIR_BIND_CHECK}/usr/bin
+	${INSTALL_BIN} ${WRKINST}/usr/bin/named-checkconf \
+		${IDIR_BIND_CHECK}/usr/bin/
+	${INSTALL_BIN} ${WRKINST}/usr/bin/named-checkzone \
+		${IDIR_BIND_CHECK}/usr/bin/
 
 bind-dnssec-install:
-	${INSTALL_DIR} ${IDIR_BIND_DNSSEC}/usr/sbin
-	${INSTALL_BIN} ${WRKINST}/usr/sbin/dnssec-keygen \
-		${IDIR_BIND_DNSSEC}/usr/sbin
-	${INSTALL_BIN} ${WRKINST}/usr/sbin/dnssec-signzone \
-		${IDIR_BIND_DNSSEC}/usr/sbin
+	${INSTALL_DIR} ${IDIR_BIND_DNSSEC}/usr/bin
+	${INSTALL_BIN} ${WRKINST}/usr/bin/dnssec-keygen \
+		${IDIR_BIND_DNSSEC}/usr/bin
+	${INSTALL_BIN} ${WRKINST}/usr/bin/dnssec-signzone \
+		${IDIR_BIND_DNSSEC}/usr/bin
 
 bind-host-install:
 	${INSTALL_DIR} ${IDIR_BIND_HOST}/usr/bin
