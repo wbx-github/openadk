@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		curl
-PKG_VERSION:=		8.5.0
+PKG_VERSION:=		8.6.0
 PKG_RELEASE:=		1
-PKG_HASH:=		42ab8db9e20d8290a3b633e7fbb3cec15db34df65fd1015ef8ac1e4723750eeb
+PKG_HASH:=		3ccd55d91af9516539df80625f818c734dc6f2ecf9bada33c76765e99121db15
 PKG_DESCR:=		client-side url transfer tool
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		zlib
@@ -22,7 +22,7 @@ PKGSC_LIBCURL:=		libs/net
 PKGSS_LIBCURL:=		zlib
 PKGSD_CURL:=		client-side url transfer utiity
 PKGSC_CURL:=		net/http
-PKGSS_CURL:=		zlib
+PKGSS_CURL:=		zlib libcurl
 
 PKG_FLAVOURS_LIBCURL:=	WITH_IPV6
 PKGFD_WITH_IPV6:=	enable ipv6 support
@@ -96,6 +96,7 @@ CONFIGURE_ARGS+=	--enable-cookies \
 			--disable-telnet \
 			--disable-verbose \
 			--without-libssh2 \
+			--without-libpsl \
 			--without-librtmp \
 			--with-ca-path="/etc/ssl/certs" \
 			--with-random="/dev/urandom" \
