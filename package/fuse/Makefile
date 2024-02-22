@@ -29,7 +29,6 @@ CONFIGURE_ARGS+=	--enable-lib \
 			--enable-util \
 			--with-libiconv-prefix="${STAGING_TARGET_DIR}/usr" \
 			--disable-example \
-			--disable-auto-modprobe \
 			--disable-mtab \
 			--disable-kernel-module
 
