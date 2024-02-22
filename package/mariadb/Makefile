@@ -4,20 +4,22 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		mariadb
-PKG_VERSION:=		10.6.4
+PKG_VERSION:=		10.11.7
 PKG_RELEASE:=		1
-PKG_HASH:=		75bf9b147a95d38160d01a73b098d50a1960563b46d16a235971fff64d99643c
+PKG_HASH:=		5239a245ed90517e96396605cd01ccd8f73cd7442d1b3076b6ffe258110e5157
 PKG_DESCR:=		sql client library
 PKG_SECTION:=		libs/db
-PKG_DEPENDS:=		libncurses zlib libevent libpcre boost libfmt
+PKG_DEPENDS:=		libncurses zlib libevent libpcre boost libfmt libkrb5
 PKG_BUILDDEP:=		cmake-host mariadb-host ncurses zlib readline libevent
-PKG_BUILDDEP+=		boost fmt gnutls pcre2
+PKG_BUILDDEP+=		boost fmt gnutls pcre2 krb5
 HOST_BUILDDEP:=		cmake-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.mariadb.org/
 PKG_SITES=		https://downloads.mariadb.org/interstitial/mariadb-$(PKG_VERSION)/source/
 PKG_LIBNAME:=		libmariadbclient
 PKG_OPTS:=		dev
+
+PKG_CFLINE_MARIADB:=	select ADK_PACKAGE_BOOST_DATE_TIME
 
 # atomic ops not implemented
 PKG_ARCH_DEPENDS:=	!mips
