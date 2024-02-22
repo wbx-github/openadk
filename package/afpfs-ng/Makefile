@@ -11,7 +11,6 @@ PKG_DESCR:=		client for apple filing protocol
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		libgcrypt
 PKG_BUILDDEP:=		fuse libgcrypt readline
-PKG_URL:=		https://sites.google.com/site/alexthepuffin/home
 PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=afpfs-ng/}
 PKG_LIBNAME:=		libafpclient
 PKG_OPTS:=		dev
@@ -29,6 +28,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,AFPFS_NG,afpfs-ng,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,LIBAFPCLIENT,libafpclient,$(PKG_VERSION)-${PKG_RELEASE},${PKGSS_LIBAFPCLIENT},${PKGSD_LIBAFPCLIENT},${PKGSC_LIBAFPCLIENT},$(PKG_OPTS)))
 
+TARGET_CFLAGS+=		-fcommon
 AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--enable-gcrypt
 CONFIGURE_ENV+=		ac_cv_func_malloc_0_nonnull=yes
