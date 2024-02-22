@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		davfs2
-PKG_VERSION:=		1.5.2
+PKG_VERSION:=		1.7.0
 PKG_RELEASE:=		1
-PKG_HASH:=		be34a19ab57a6ea77ecb82083e9e4c1882e12b2de64257de567ad5ee7a17b358
+PKG_HASH:=		251db75a27380cca1330b1b971700c5e5dcc0c90e5a47622285f0140edfe3a2f
 PKG_DESCR:=		webdav filesystem
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		fuse-utils neon
@@ -14,7 +14,7 @@ PKG_BUILDDEP:=		neon fuse
 PKG_URL:=		http://savannah.nongnu.org/projects/davfs2/
 PKG_SITES:=		http://download.savannah.gnu.org/releases/davfs2/
 
-PKG_LIBC_DEPENDS:=	uclibc-ng glibc
+PKG_LIBC_DEPENDS:=	glibc
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -22,7 +22,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,DAVFS2,davfs2,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-AUTOTOOLS_STYLE:=	autoreconf
+AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--with-neon
 CONFIGURE_ENV+=		ac_cv_func_malloc_0_nonnull=yes
 
