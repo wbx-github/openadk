@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		neon
-PKG_VERSION:=		0.32.1
+PKG_VERSION:=		0.33.0
 PKG_RELEASE:=		1
-PKG_HASH:=		05c54bc115030c89e463a4fb28d3a3f8215879528ba5ca70d676d3d21bf3af52
+PKG_HASH:=		659a5cc9cea05e6e7864094f1e13a77abbbdbab452f04d751a8c16a9447cf4b8
 PKG_DESCR:=		http and webdav library
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libxml2 zlib libressl
