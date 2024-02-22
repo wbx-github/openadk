@@ -37,7 +37,12 @@ Checking value of NSIG: "65"
 Checking value of _NSIG: "65"
 Checking value of SIGRTMAX: "64"
 Checking value of SIGRTMIN: "34"
-Checking whether the WRFILE -keytab is supported: OK
-Checking errno of iconv for illegal multibyte sequence: OK
-Checking value of GNUTLS_CIPHER_AES_128_CFB8: "29"
-Checking value of GNUTLS_MAC_AES_CMAC_128: "203"
+Checking errno of iconv for illegal multibyte sequence: "0"
+checking for clnt_create(): OK
+Checking for a 64-bit host to support lmdb: NO
+Checking value of GNUTLS_CIPHER_AES_128_CFB8: 29
+Checking value of GNUTLS_MAC_AES_CMAC_128: 203
+Checking whether fcntl supports flags to send direct I/O availability signals: OK
+Checking for gnutls fips mode support: NO
+Checking for readlink breakage: NO
+Checking whether the WRFILE -keytab is supported: NO

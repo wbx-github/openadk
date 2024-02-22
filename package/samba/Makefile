@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		samba
-PKG_VERSION:=		4.13.2
-PKG_RELEASE:=		2
-PKG_HASH:=		276464396a05d88b775bda01ac2eb1e5a636ccf7010b0fd28efc3d85583af2b4
+PKG_VERSION:=		4.19.4
+PKG_RELEASE:=		1
+PKG_HASH:=		4026d93b866db198c8ca1685b0f5d52793f65c6e63cb364163af661fdff0968c
 PKG_DESCR:=		file and print server
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		libuuid libpopt libgnutls libtirpc
@@ -33,6 +33,7 @@ CONFIGURE_ARGS+=	--enable-fhs \
 			--cross-answers=$(WRKSRC)/cache.txt \
 			--hostcc=gcc \
 			--with-system-mitkrb5 \
+			--without-libunwind \
 			--without-pie \
 			--without-gettext \
 			--without-relro \
