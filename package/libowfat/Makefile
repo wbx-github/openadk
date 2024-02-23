@@ -4,13 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libowfat
-PKG_VERSION:=		0.30
+PKG_VERSION:=		0.33
 PKG_RELEASE:=		1
-PKG_HASH:=		db4a3a853cfbb9e83b27f565b580f6fdc519475b162edc1a656043e1c126e993
+PKG_HASH:=		311ec8b3f4b72bb442e323fb013a98f956fa745547f2bc9456287b20d027cd7d
 PKG_DESCR:=		owfat library
 PKG_SECTION:=		libs/misc
-PKG_URL:=		http://www.fefe.de/libowfat
-PKG_SITES:=		http://www.fefe.de/libowfat/
+PKG_URL:=		https://www.fefe.de/libowfat
+PKG_SITES:=		https://www.fefe.de/libowfat/
+
+PKG_NOPARALLEL:=        1
 
 include ${ADK_TOPDIR}/mk/package.mk
 
@@ -18,9 +20,8 @@ CONFIG_STYLE:=		manual
 
 TARGET_CFLAGS+=		${TARGET_CPPFLAGS}
 MAKE_FILE=		GNUmakefile
-MAKE_FLAGS+=		DIET= CC='${TARGET_CC}' CROSS=${TARGET_CROSS} \
+MAKE_FLAGS+=		DIET= CROSS=${TARGET_CROSS} \
 			LDFLAGS='${TARGET_LDFLAGS}'
-FAKE_FLAGS+=		prefix='${WRKINST}/usr' \
-			INCLUDEDIR='${WRKINST}/usr/include/owfat'
+FAKE_FLAGS+=		prefix='/usr'
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

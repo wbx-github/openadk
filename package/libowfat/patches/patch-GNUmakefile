@@ -1,11 +1,25 @@
---- libowfat-0.30.orig/GNUmakefile	2015-04-10 22:54:57.000000000 +0200
-+++ libowfat-0.30/GNUmakefile	2015-06-05 16:06:19.000000000 +0200
-@@ -18,7 +18,7 @@ all: ent $(LIBS) libowfat.a libsocket t
+--- libowfat-0.33.orig/GNUmakefile	2021-04-24 12:47:51.000000000 +0200
++++ libowfat-0.33/GNUmakefile	2024-02-23 05:07:36.527866006 +0100
+@@ -23,9 +23,9 @@ picx32 piex32:
+ 
  CROSS=
  #CROSS=i686-mingw-
- CC=$(CROSS)gcc
--CFLAGS=-pipe -W -Wall -Wextra -O2 -fomit-frame-pointer
-+CFLAGS?=
- #CFLAGS=-pipe -Os -march=pentiumpro -mcpu=pentiumpro -fomit-frame-pointer -fschedule-insns2 -Wall
+-CC?=gcc
+-AR?=ar
+-RANLIB?=ranlib
++CC=gcc
++AR=ar
++RANLIB=ranlib
+ CCC=$(CROSS)$(CC)
+ WERROR=
+ WARN=-W -Wall -Wextra $(WERROR)
+@@ -41,7 +41,8 @@ OPT_PLUS=-O3 $(NATIVE)
  
- ent: ent.c haveuint128.h
+ DEFINE=-D_REENTRANT
+ 
+-CFLAGS=-pipe $(WARN) $(DEFINE) $(OPT_REG)
++CFLAGS?=
++CFLAGS+=-pipe $(WARN) $(DEFINE) $(OPT_REG)
+ CFLAGS_OPT=-pipe $(WARN) $(DEFINE) $(OPT_PLUS)
+ 
+ #CFLAGS=-pipe -Os -march=pentiumpro -mcpu=pentiumpro -fomit-frame-pointer -fschedule-insns2 -Wall
