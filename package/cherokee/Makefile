@@ -4,20 +4,24 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		cherokee
-PKG_VERSION:=		1.2.101
+PKG_VERSION:=		1.2.103
 PKG_RELEASE:=		1
-PKG_HASH:=		ca465ab3772479fc843b38ffc45113bf24d8bfae9185cdd5176b099d5a17feb8
+PKG_HASH:=		7ec379bf7e9d6fdf952d91fadc43eb6ee5295119aea7d8dabbf89f2799a53ae6
 PKG_DESCR:=		small and fast webserver
 PKG_SECTION:=		net/http
 PKG_URL:=		http://www.cherokee-project.com
-PKG_SITES:=		http://mirror.aarnet.edu.au/pub/cherokee/1.2/1.2.101/
+PKG_SITES:=		https://github.com/cherokee/webserver/archive/
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_CFLINE_CHEROKEE:=	depends on ADK_BROKEN
+
+DISTFILES:=		v${PKG_VERSION}.zip
+WRKDIST=		${WRKDIR}/webserver-${PKG_VERSION}
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,CHEROKEE,cherokee,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+AUTOTOOL_STYLE:=	autogen
 CONFIGURE_ENV+=		ac_cv_func_malloc_0_nonnull=yes \
 			ac_cv_func_realloc_0_nonnull=yes
 CONFIGURE_ARGS+=	--enable-static-module=all \
