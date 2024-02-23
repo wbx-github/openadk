@@ -304,14 +304,6 @@ if ! which git >/dev/null 2>&1; then
 fi
 printf "found\n"
 
-printf " --->  checking if pkg-config is installed.. "
-if ! which pkg-config >/dev/null 2>&1; then
-  printf "not found\n"
-  out=1
-else
-  printf "found\n"
-fi
-
 printf " --->  checking if ncurses is installed.. "
 check_lxdialog=${topdir}/adk/config/lxdialog/check-lxdialog.sh
 CURSES_CFLAGS=$(/bin/sh ${check_lxdialog} -ccflags | tr '\n' ' ')
