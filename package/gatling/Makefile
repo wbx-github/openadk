@@ -4,16 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gatling
-PKG_VERSION:=		0.11
+PKG_VERSION:=		0.16
 PKG_RELEASE:=		1
-PKG_HASH:=		9e1cb18612905b63755b0f463e6c5268789b3ab47db364bebe1ad077583e7571
+PKG_HASH:=		5f96438ee201d7f1f6c2e0849ff273b196bdc7493f29a719ce8ed08c8be6365b
 PKG_DESCR:=		small non-forking webserver
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		libowfat
-PKG_URL:=		http://www.fefe.de/gatling/
-PKG_SITES:=		http://dl.fefe.de/
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
+PKG_NEEDS:=		iconv
+PKG_URL:=		https://www.fefe.de/gatling/
+PKG_SITES:=		https://www.fefe.de/gatling/
 
 include ${ADK_TOPDIR}/mk/package.mk
 
@@ -24,7 +23,6 @@ INSTALL_STYLE:=		manual
 
 MAKE_FILE:=		GNUmakefile
 ALL_TARGET:=		gatling
-TARGET_CPPFLAGS+=	-I${STAGING_TARGET_DIR}/usr/include/owfat
 XAKE_FLAGS+=		CC='${TARGET_CC}' \
 			CFLAGS='${TARGET_CPPFLAGS} ${TARGET_CFLAGS}' \
 			ZLIB=0 DIET= prefix='${WRKINST}/usr'
