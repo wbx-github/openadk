@@ -49,7 +49,8 @@ $(eval $(call HOST_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBCURL,libcurl,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_LIBCURL},${PKGSD_LIBCURL},${PKGSC_LIBCURL},${PKG_OPTS}))
 $(eval $(call PKG_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-HOST_CONFIGURE_ARGS+=	--without-ssl
+HOST_CONFIGURE_ARGS+=	--without-ssl \
+			--without-libpsl
 
 ifeq (${ADK_PACKAGE_LIBCURL_WITH_LIBRESSL},y)
 CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
