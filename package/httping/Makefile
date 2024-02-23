@@ -4,23 +4,24 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		httping
-PKG_VERSION:=		2.4
+PKG_VERSION:=		3.5
 PKG_RELEASE:=		1
-PKG_HASH:=		dab59f02b08bfbbc978c005bb16d2db6fe21e1fc841fde96af3d497ddfc82084
+PKG_HASH:=		8c081daae31cad586bce7742bd721c2a741d7ce0687fb3a12cafd389b90bf79c
 PKG_DESCR:=		like ping but for http-requests
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		libressl
-PKG_BUILDDEP:=		libressl
-PKG_SITES:=		http://www.vanheusden.com/httping/
+PKG_BUILDDEP:=		cmake-host libressl
+PKG_NEEDS:=		intl
+PKG_SITES:=		https://github.com/folkertvanheusden/HTTPing/archive/refs/tags/
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tgz
+DISTFILES:=		v${PKG_VERSION}.tar.gz
+WRKDIST=		${WRKDIR}/HTTPing-${PKG_VERSION}
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,HTTPING,httping,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-CONFIG_STYLE:=		manual
-TARGET_CFLAGS+=		-D_GNU_SOURCE
+CONFIG_STYLE:=		cmake
 
 httping-install:
 	${INSTALL_DIR} ${IDIR_HTTPING}/usr/bin
