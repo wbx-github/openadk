@@ -1,0 +1,35 @@
+--- mbedtls-3.5.2.orig/Makefile	2024-01-24 10:49:11.000000000 +0100
++++ mbedtls-3.5.2/Makefile	2024-02-22 19:10:23.460591189 +0100
+@@ -79,22 +79,22 @@ $(VISUALC_FILES):
+ 
+ ifndef WINDOWS
+ install: no_test
+-	mkdir -p $(DESTDIR)/include/mbedtls
+-	cp -rp include/mbedtls $(DESTDIR)/include
+-	mkdir -p $(DESTDIR)/include/psa
+-	cp -rp include/psa $(DESTDIR)/include
++	mkdir -p $(DESTDIR)/usr/include/mbedtls
++	cp -rp include/mbedtls $(DESTDIR)/usr/include
++	mkdir -p $(DESTDIR)/usr/include/psa
++	cp -rp include/psa $(DESTDIR)/usr/include
+ 
+-	mkdir -p $(DESTDIR)/lib
+-	cp -RP library/libmbedtls.*    $(DESTDIR)/lib
+-	cp -RP library/libmbedx509.*   $(DESTDIR)/lib
+-	cp -RP library/libmbedcrypto.* $(DESTDIR)/lib
++	mkdir -p $(DESTDIR)/usr/lib
++	cp -RP library/libmbedtls.*    $(DESTDIR)/usr/lib
++	cp -RP library/libmbedx509.*   $(DESTDIR)/usr/lib
++	cp -RP library/libmbedcrypto.* $(DESTDIR)/usr/lib
+ 
+-	mkdir -p $(DESTDIR)/bin
++	mkdir -p $(DESTDIR)/usr/bin
+ 	for p in programs/*/* ; do              \
+ 	    if [ -x $$p ] && [ ! -d $$p ] ;     \
+ 	    then                                \
+ 	        f=$(PREFIX)`basename $$p` ;     \
+-	        cp $$p $(DESTDIR)/bin/$$f ;     \
++	        cp $$p $(DESTDIR)/usr/bin/$$f ;     \
+ 	    fi                                  \
+ 	done
+ 
