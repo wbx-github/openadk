@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		lftp
-PKG_VERSION:=		4.7.7
+PKG_VERSION:=		4.9.2
 PKG_RELEASE:=		1
-PKG_HASH:=		4483df04502660dcc65a11cf09d530e31bea99483d69328c1c5cbaa41d6619b4
+PKG_HASH:=		c517c4f4f9c39bd415d7313088a2b1e313b2d386867fe40b7692b83a20f0670d
 PKG_DESCR:=		ftp and http client
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		libncurses libexpat
