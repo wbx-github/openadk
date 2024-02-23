@@ -1,5 +1,5 @@
---- mongrel2-v1.11.0.orig/tools/m2sh/Makefile	2015-12-31 10:25:18.000000000 +0100
-+++ mongrel2-v1.11.0/tools/m2sh/Makefile	2016-04-25 20:14:36.744476585 +0200
+--- mongrel2-v1.13.0.orig/tools/m2sh/Makefile	2021-12-25 01:03:28.000000000 +0100
++++ mongrel2-v1.13.0/tools/m2sh/Makefile	2024-02-22 19:03:20.332596928 +0100
 @@ -1,7 +1,8 @@
 -CFLAGS=-DNDEBUG -DNO_LINENOS -pthread -g -I../../src -Isrc -Wall $(OPTFLAGS)
 +CFLAGS?=
@@ -11,17 +11,17 @@
  SOURCES=$(wildcard src/*.c src/**/*.c)
  OBJECTS=$(patsubst %.c,%.o,${SOURCES})
  TEST_SRC=$(wildcard tests/*.c)
-@@ -9,7 +10,7 @@ TESTS=$(patsubst %.c,%,${TEST_SRC})
- LIB_SRC=$(filter-out src/m2sh.c,${SOURCES})
- LIB_OBJ=$(filter-out src/m2sh.o,${OBJECTS})
+@@ -12,7 +13,7 @@ RAGEL_OBJECTS=src/lexer.o src/cli.o
+ 
+ $(RAGEL_OBJECTS): CFLAGS += -Wno-unused-const-variable -Wimplicit-fallthrough=0 -Wno-unused-parameter
  
 -all: ../lemon/lemon tests build/m2sh
 +all: ../lemon/lemon build/m2sh
  
  dev: CFLAGS=-g -Wall -Wextra -Isrc -I../../src $(OPTFLAGS)
  dev: all
-@@ -27,7 +28,7 @@ build/m2sh: ../lemon/lemon ../../build/l
- 	$(CC) $(CFLAGS) -o build/m2sh ${OBJECTS} ../../build/libm2.a $(LIBS)
+@@ -32,7 +33,7 @@ build/m2sh: ../lemon/lemon ../../build/l
+ 	$(CC) $(CFLAGS) -o build/m2sh ${OBJECTS} ../../build/libm2.a $(LDFLAGS) $(LIBS)
  
  ../lemon/lemon: ../lemon/lemon.c
 -	$(CC) -O2 ../lemon/lemon.c -o ../lemon/lemon

@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mongrel2
-PKG_VERSION:=		1.11.0
+PKG_VERSION:=		1.13.0
 PKG_RELEASE:=		1
-PKG_HASH:=		917f2ce07c0908cae63ac03f3039815839355d46568581902377ba7e41257bed
+PKG_HASH:=		b6f1f50c9f65b605342d8792b1cc8a1c151105339030313b9825b6a68d400c10
 PKG_DESCR:=		application, language, and network architecture agnostic web server
 PKG_SECTION:=		net/http
-PKG_BUILDDEP:=		zeromq sqlite
-PKG_DEPENDS:=		zeromq libsqlite
+PKG_BUILDDEP:=		zeromq sqlite-host sqlite mbedtls
+PKG_DEPENDS:=		zeromq libsqlite mbedtls
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://mongrel2.org
 PKG_SITES:=		https://github.com/mongrel2/mongrel2/releases/download/v$(PKG_VERSION)/

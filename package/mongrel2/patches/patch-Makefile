@@ -1,30 +1,20 @@
---- mongrel2-v1.11.0.orig/Makefile	2015-12-31 10:25:17.000000000 +0100
-+++ mongrel2-v1.11.0/Makefile	2016-04-25 20:21:46.996240089 +0200
-@@ -1,6 +1,7 @@
--CFLAGS=-g -O2 -Wall -Wextra -Isrc -Isrc/mbedtls/include -pthread -rdynamic -DNDEBUG $(OPTFLAGS) -D_FILE_OFFSET_BITS=64
-+CFLAGS?=
-+CFLAGS+=-Wall -Wextra -Isrc -Isrc/mbedtls/include -pthread -rdynamic -DNDEBUG $(OPTFLAGS) -D_FILE_OFFSET_BITS=64
- LIBS=-lzmq -ldl -lsqlite3 $(OPTLIBS)
+--- mongrel2-v1.13.0.orig/Makefile	2021-12-25 01:03:28.000000000 +0100
++++ mongrel2-v1.13.0/Makefile	2024-02-22 19:19:16.724583955 +0100
+@@ -2,7 +2,7 @@ CFLAGS?=-g -O2
+ CFLAGS += -Wall -Wextra -Wno-implicit-fallthrough -Wno-unused-const-variable -I./src -DNDEBUG -D_FILE_OFFSET_BITS=64 -pthread
+ CFLAGS += ${OPTFLAGS}
+ LIBS+=-lzmq -ldl -lsqlite3 -lmbedtls -lmbedx509 -lmbedcrypto
 -PREFIX?=/usr/local
 +PREFIX?=/usr
  
  get_objs = $(addsuffix .o,$(basename $(wildcard $(1))))
  
-@@ -29,7 +30,7 @@ ifdef $($(shell									\
- 	fi ))
- endif
+@@ -18,7 +18,7 @@ TEST_SRC=$(wildcard tests/*_tests.c)
+ TESTS=$(patsubst %.c,%,${TEST_SRC})
+ MAKEOPTS=OPTFLAGS="${CFLAGS} ${NOEXTCFLAGS} ${OPTFLAGS}" LDFLAGS="${LDFLAGS}" LIBS="${LIBS}" DESTDIR="${DESTDIR}" PREFIX="${PREFIX}"
  
--all: builddirs bin/mongrel2 tests m2sh procer
-+all: builddirs bin/mongrel2 m2sh procer
+-all: bin/mongrel2 tests m2sh procer
++all: bin/mongrel2 m2sh procer
  
- dev: CFLAGS=-g -Wall -Isrc -Wall -Wextra $(OPTFLAGS) -D_FILE_OFFSET_BITS=64
- dev: all
-@@ -160,8 +161,6 @@ install: all
- 	    || ( install -d $(DESTDIR)/$(PREFIX)/bin/ \
- 	        && install bin/mongrel2 $(DESTDIR)/$(PREFIX)/bin/ )
- 	${MAKE} ${MAKEOPTS} -C tools/m2sh install
--	${MAKE} ${MAKEOPTS} -C tools/config_modules install
--	${MAKE} ${MAKEOPTS} -C tools/filters install
- 	${MAKE} ${MAKEOPTS} -C tools/procer install
- 
- examples/python/mongrel2/sql/config.sql: src/config/config.sql src/config/mimetypes.sql
+ ${OBJECTS_NOEXT}: CFLAGS += ${NOEXTCFLAGS}
+ ${OBJECTS}: | builddirs
