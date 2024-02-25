@@ -12,7 +12,7 @@ MOP_PATH="-DMOP_FILE_PATH=\\\"/tftpboot/mop\\\""
 # AOUT_SUPPORT="-DNOAOUT"
 AOUT_SUPPORT=""
 
-CFLAGS="-g ${AOUT_SUPPORT} ${MOP_PATH} ${DEFAULT_HOSTNAME} ${REAL_HOSTNAME}"
+CFLAGS="-fcommon ${AOUT_SUPPORT} ${MOP_PATH} ${DEFAULT_HOSTNAME} ${REAL_HOSTNAME}"
 
 #make file to build linux-mopd
 SUBDIRS=common mopd mopchk mopprobe moptrace
