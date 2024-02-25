@@ -1,0 +1,11 @@
+--- libESMTP-1.1.0.orig/ntlm/meson.build	2021-06-04 18:18:50.000000000 +0200
++++ libESMTP-1.1.0/ntlm/meson.build	2024-02-24 14:03:10.243479603 +0100
+@@ -5,7 +5,7 @@ sasl_ntlm_sources = [
+   'ntlmstruct.c',
+ ]
+ 
+-ntlm_deps = [ ssldep, ]
++ntlm_deps = [ ntlmdep, ]
+ 
+ sasl_ntlm = shared_module('ntlm', sasl_ntlm_sources,
+ 			  name_prefix : 'sasl-',

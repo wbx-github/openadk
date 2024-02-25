@@ -1,0 +1,7 @@
+--- libESMTP-1.1.0.orig/meson_options.txt	2021-06-04 18:18:50.000000000 +0200
++++ libESMTP-1.1.0/meson_options.txt	2024-02-24 13:55:42.283485679 +0100
+@@ -5,3 +5,4 @@ option('lwres', type : 'feature', value
+ option('bdat', type : 'boolean', value : 'true', description : 'enable SMTP BDAT extension')
+ option('etrn', type : 'boolean', value : 'true', description : 'enable SMTP ETRN extension')
+ option('xusr', type : 'boolean', value : 'true', description : 'enable sendmail XUSR extension')
++option('ntlm', type : 'feature', value : 'disabled', description : 'build with support for NTLM authentication')
