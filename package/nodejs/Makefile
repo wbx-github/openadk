@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nodejs
-PKG_VERSION:=		18.12.1
+PKG_VERSION:=		20.11.1
 PKG_RELEASE:=		1
-PKG_HASH:=		ba8174dda00d5b90943f37c6a180a1d37c861d91e04a4cb38dc1c0c74981c186
+PKG_HASH:=		4af1ba6ea848cc05908b8a62b02fb27684dd52b2a7988ee82b0cfa72deb90b94
 PKG_DESCR:=		asynchronous event driven framework
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		zlib
@@ -34,9 +34,6 @@ host-configure:
                 PYTHON=$(STAGING_HOST_DIR)/usr/bin/python3 \
                 $(STAGING_HOST_DIR)/usr/bin/python3 ./configure \
 			--prefix=/usr \
-			--without-snapshot \
-			--without-dtrace \
-			--without-etw \
 			--without-intl \
 			--shared-zlib \
 		)
@@ -48,7 +45,9 @@ host-build:
 nodejs-hostinstall:
 	cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -f ${MAKE_FILE} \
 		${HOST_FAKE_FLAGS} DESTDIR='${STAGING_HOST_DIR}' ${HOST_INSTALL_TARGET} $(MAKE_TRACE)
-#	$(INSTALL_BIN) ${WRKBUILD}/out/Release/mkpeephole ${STAGING_HOST_DIR}/usr/bin
+	$(INSTALL_BIN) ${WRKBUILD}/out/Release/node_js2c ${STAGING_HOST_DIR}/usr/bin
+	$(INSTALL_BIN) ${WRKBUILD}/out/Release/bytecode_builtins_list_generator ${STAGING_HOST_DIR}/usr/bin
+	$(INSTALL_BIN) ${WRKBUILD}/out/Release/torque ${STAGING_HOST_DIR}/usr/bin
 
 do-configure:
 		(cd $(WRKSRC); \
@@ -56,9 +55,6 @@ do-configure:
                 $(STAGING_HOST_DIR)/usr/bin/python3 ./configure \
 			--prefix=/usr \
 			--cross-compiling \
-                	--without-snapshot \
-                	--without-dtrace \
-                	--without-etw \
 			--without-intl \
                 	--shared-zlib \
 		)
