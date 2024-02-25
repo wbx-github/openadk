@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mosquitto
-PKG_VERSION:=		1.4.9
+PKG_VERSION:=		2.0.18
 PKG_RELEASE:=		1
-PKG_HASH:=		1df3ae07de40b80a74cd37a7b026895c544cdd3b42c9e0719ae91623aa98c58b
+PKG_HASH:=		d665fe7d0032881b1371a47f34169ee4edab67903b2cd2b4c083822823f4448a
 PKG_DESCR:=		mqtt broker
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		c-ares libressl
@@ -33,7 +33,7 @@ mosquitto-install:
 		$(IDIR_MOSQUITTO)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/sbin/mosquitto* \
 		$(IDIR_MOSQUITTO)/usr/sbin
-	$(INSTALL_DATA) $(WRKINST)/etc/mosquitto/* \
+	$(INSTALL_DATA) $(WRKINST)/usr/etc/mosquitto/* \
 		$(IDIR_MOSQUITTO)/etc/mosquitto
 	$(CP) $(WRKINST)/usr/lib/*.so* \
 		$(IDIR_MOSQUITTO)/usr/lib
