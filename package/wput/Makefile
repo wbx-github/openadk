@@ -17,6 +17,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,WPUT,wput,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+TARGET_CFLAGS+=		-fcommon
 CONFIGURE_ARGS+=	--disable-g-switch \
 			--without-ssl
 
