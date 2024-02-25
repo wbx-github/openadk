@@ -4,15 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		udp-broadcast-relay
-PKG_VERSION:=		0.3
+PKG_VERSION:=		9a0f13b4b5938bfe0af0d0d4e99dfc127c068e28
 PKG_RELEASE:=		1
-PKG_HASH:=		86acb9a359cad1961bdd4be9ae425222c19fd70fc31c730bd2b96629eaba2177
+PKG_GIT:=		hash
 PKG_DESCR:=		listens for packets on a specified udp broadcast port
 PKG_SECTION:=		net/misc
 PKG_URL:=		http://www.joachim-breitner.de/udp-broadcast-relay/
-PKG_SITES:=		http://www.joachim-breitner.de/udp-broadcast-relay/files/
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_SITES:=		https://github.com/nomeata/udp-broadcast-relay.git
 
 include ${ADK_TOPDIR}/mk/package.mk
 
