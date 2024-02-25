@@ -17,6 +17,8 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,VILISTEXTUM,vilistextum,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+TARGET_CFLAGS+=		-fcommon
+
 vilistextum-install:
 	${INSTALL_DIR} ${IDIR_VILISTEXTUM}/usr/bin
 	${INSTALL_BIN} ${WRKINST}/usr/bin/vilistextum \
