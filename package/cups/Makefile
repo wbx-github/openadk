@@ -4,20 +4,19 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		cups
-PKG_VERSION:=		1.7.1
-PKG_RELEASE:=		4
-PKG_HASH:=		f52bec893d9daf92b6029be79c07e6c516b4c85ffae3e6e01885cc85e9081681
+PKG_VERSION:=		2.3.6
+PKG_RELEASE:=		1
+PKG_HASH:=		3a96912fc88f62c5d8ac9b251bf0652f1cbe7e69cde16919103aea39f31a1a84
 PKG_DESCR:=		common unix printing system
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		zlib
-PKG_BUILDDEP:=		cups-host zlib
-PKG_NEEDS:=		threads c++
+PKG_BUILDDEP:=		zlib
+PKG_NEEDS:=		threads c++ iconv
 PKG_URL:=		http://www.cups.org/
-PKG_SITES:=		http://www.cups.org/software/${PKG_VERSION}/
+PKG_SITES:=		https://github.com/apple/cups/archive/refs/tags/
 PKG_OPTS:=		dev
-PKG_NOPARALLEL:=	1
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}-source.tar.bz2
+DISTFILES:=		v${PKG_VERSION}.tar.gz
 
 include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
@@ -25,35 +24,25 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,CUPS,cups,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,CUPS,cups,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-ifeq ($(ADK_PACKAGE_LIBICONV),y)
-TARGET_LDFLAGS+=	-liconv
-endif
-
 ifneq ($(ADK_HOST_LINUX),y)
 HOST_LINUX_ONLY:=	1
 endif
 
-HOST_LDFLAGS+=		-liconv
 HOST_CONFIGURE_ARGS+=	--disable-tcp-wrappers \
 			--disable-webif \
 			--disable-gssapi \
 			--disable-avahi \
 			--disable-pam \
 			--disable-dbus \
-			--without-java \
-			--without-perl \
-			--without-python \
-			--without-php \
 			--disable-gnutls \
-			--disable-openssl \
 			--disable-cdsassl \
 			--disable-dbus \
 			--disable-ssl \
+			--disable-systemd \
 			--with-components=core \
 			--with-rcdir=$(STAGING_HOST_DIR)/etc
 CONFIGURE_ENV+=		ac_cv_func_sigset=no \
 			OPTIM='-fPIC -std=c89' LSB_BUILD=y
-
 CONFIGURE_ARGS+=	--with-cups-user=cups \
 			--with-cups-group=cups \
 			--libdir=/usr/lib \
@@ -75,8 +64,6 @@ CONFIGURE_ARGS+=	--with-cups-user=cups \
 			--disable-ssl \
 			--with-components=core \
 			--with-rcdir=$(STAGING_TARGET_DIR)/etc
-
-FAKE_FLAGS+=		DSTROOT="${WRKINST}" STRIP="/bin/true"
 
 cups-install:
 	${INSTALL_DIR} ${IDIR_CUPS}/usr/lib
