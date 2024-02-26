@@ -1,0 +1,11 @@
+--- iptraf-ng-v1.2.1.orig/Makefile	2024-02-25 17:52:43.000000000 +0100
++++ iptraf-ng-v1.2.1/Makefile	2024-02-25 17:54:46.973660535 +0100
+@@ -25,7 +25,7 @@ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS) $(IPT
+ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
+ 
+-prefix = $(HOME)
++prefix = /usr
+ sbindir_relative = sbin
+ sbindir = $(prefix)/$(sbindir_relative)
+ mandir = $(prefix)/share/man

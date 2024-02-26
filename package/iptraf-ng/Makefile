@@ -26,7 +26,7 @@ XAKE_FLAGS+=		PLATFORM="-DPLATFORM=\\\"Linux/${ARCH}\\\"" \
 			WORKDIR="/var/lib/iptraf-ng" V=1
 
 iptraf-ng-install:
-	${INSTALL_DIR} ${IDIR_IPTRAF_NG}/usr/bin
-	${INSTALL_BIN} ${WRKINST}/sbin/iptraf-ng ${IDIR_IPTRAF_NG}/usr/bin
+	${INSTALL_DIR} ${IDIR_IPTRAF_NG}/usr/sbin
+	${INSTALL_BIN} ${WRKINST}/usr/sbin/iptraf-ng ${IDIR_IPTRAF_NG}/usr/sbin
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
