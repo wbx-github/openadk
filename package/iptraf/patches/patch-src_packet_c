@@ -1,14 +1,38 @@
 --- iptraf-3.0.1.orig/src/packet.c	2007-09-25 11:21:18.000000000 +0200
-+++ iptraf-3.0.1/src/packet.c	2013-03-04 11:42:52.000000000 +0100
-@@ -36,7 +36,6 @@ details.
++++ iptraf-3.0.1/src/packet.c	2024-02-25 18:13:41.165645150 +0100
+@@ -36,8 +36,6 @@ details.
  #include <linux/if_ether.h>
  #include <linux/netdevice.h>
  #include <linux/if_fddi.h>
 -#include <linux/if_tr.h>
- #include <linux/isdn.h>
+-#include <linux/isdn.h>
  #include <linux/sockios.h>
  #include <msgboxes.h>
-@@ -136,9 +135,6 @@ unsigned short getlinktype(unsigned shor
+ #include "deskman.h"
+@@ -107,21 +105,7 @@ unsigned short getlinktype(unsigned shor
+             result = LINK_ETHERNET;
+         else if (strncmp(ifname, "tap", 3) == 0)
+             result = LINK_ETHERNET;
+-        else if ((strncmp(ifname, "isdn", 4) == 0) && (isdn_fd != -1)) {
+-            isdnent = isdn_table_lookup(isdnlist, ifname, isdn_fd);
+-
+-            switch (isdnent->encap) {
+-            case ISDN_NET_ENCAP_RAWIP:
+-                result = LINK_ISDN_RAWIP;
+-                break;
+-            case ISDN_NET_ENCAP_CISCOHDLC:
+-                result = LINK_ISDN_CISCOHDLC;
+-                break;
+-            default:
+-                result = LINK_INVALID;
+-                break;
+-            }
+-        } else if (accept_unsupported_interfaces)
++        else if (accept_unsupported_interfaces)
+             result = LINK_ETHERNET;
+         break;
+     case ARPHRD_LOOPBACK:
+@@ -136,9 +120,6 @@ unsigned short getlinktype(unsigned shor
      case ARPHRD_PPP:
          result = LINK_PPP;
          break;
@@ -18,7 +42,7 @@
      case ARPHRD_IEEE802:
      case ARPHRD_IEEE802_TR:
          result = LINK_TR;
-@@ -194,36 +190,6 @@ void adjustpacket(char *tpacket, unsigne
+@@ -194,36 +175,6 @@ void adjustpacket(char *tpacket, unsigne
          *packet = tpacket + 4;
          *readlen -= 4;
          break;
@@ -55,3 +79,9 @@
      case LINK_IPIP:
          *packet = tpacket;
          break;
+@@ -463,5 +414,4 @@ void pkt_cleanup(void)
+     close(isdnfd);
+     isdnfd = -1;
+     destroyfraglist();
+-    destroy_isdn_table(&isdntable);
+ }

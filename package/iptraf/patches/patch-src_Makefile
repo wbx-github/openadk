@@ -1,6 +1,6 @@
 $Id$
 --- iptraf-3.0.1.orig/src/Makefile	2005-09-13 11:11:17.000000000 +0200
-+++ iptraf-3.0.1/src/Makefile	2014-06-25 16:51:56.160654472 +0200
++++ iptraf-3.0.1/src/Makefile	2024-02-25 18:13:10.945645560 +0100
 @@ -17,8 +17,9 @@ VERSION 	= -DVERSION=\"$(VERNUMBER)\"
  #
  BINDIR		= ../../iptraf-$(VERNUMBER).bin.$(ARCH)
@@ -34,16 +34,17 @@ $Id$
  
  # You can uncomment this one to disable the backspace key in input fields.
  # This means you must use the Del key or Ctrl+H combination to erase the
-@@ -98,7 +101,7 @@ LOCKDIR		= /var/run/iptraf
+@@ -98,41 +101,39 @@ LOCKDIR		= /var/run/iptraf
  # Object file names
  
  OBJS = iptraf.o itrafmon.o packet.o tcptable.o othptab.o ifstats.o deskman.o \
 -ipcsum.o hostmon.o fltedit.o tr.o cidr.o \
 +ipcsum.o hostmon.o fltedit.o cidr.o \
  fltselect.o ipfilter.o fltmgr.o ipfrag.o serv.o servname.o instances.o \
- timer.o revname.o pktsize.o landesc.o isdntab.o options.o promisc.o ifaces.o \
+-timer.o revname.o pktsize.o landesc.o isdntab.o options.o promisc.o ifaces.o \
++timer.o revname.o pktsize.o landesc.o options.o promisc.o ifaces.o \
  error.o log.o mode.o getpath.o bar.o parseproto.o
-@@ -106,33 +109,31 @@ error.o log.o mode.o getpath.o bar.o par
+ 
  BINS = iptraf rvnamed rawtime
  
  all: $(BINS)
