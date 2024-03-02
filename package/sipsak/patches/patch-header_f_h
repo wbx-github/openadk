@@ -1,9 +1,0 @@
---- sipsak-0.9.6.orig/header_f.h	2006-01-28 22:11:50.000000000 +0100
-+++ sipsak-0.9.6/header_f.h	2016-09-23 18:49:14.964003070 +0200
-@@ -61,5 +61,5 @@ void new_transaction(char *message);
- 
- void print_message_line(char *message);
- 
--inline char* get_body(char *mes);
-+char* get_body(char *mes);
- #endif

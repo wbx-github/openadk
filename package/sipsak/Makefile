@@ -4,15 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		sipsak
-PKG_VERSION:=		0.9.6
-PKG_RELEASE:=		2
-PKG_HASH:=		5064c56d482a080b6a4aea71821b78c21b59d44f6d1aa14c27429441917911a9
+PKG_VERSION:=		0.9.8.1
+PKG_RELEASE:=		1
+PKG_HASH:=		c6faa022cd8c002165875d4aac83b7a2b59194f0491802924117fc6ac980c778
 PKG_DESCR:=		sip stress and diagnostics utility
 PKG_SECTION:=		net/voip
-PKG_URL:=		http://sourceforge.net/projects/sipsak.berlios/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=sipsak.berlios/}
+PKG_SITES:=		https://github.com/nils-ohlmeier/sipsak/releases/download/$(PKG_VERSION)/
 
-DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION)-1.tar.gz
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_CHOICES_SIPSAK:=	WITH_LIBRESSL WITHOUT_SSL
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
@@ -24,6 +23,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,SIPSAK,sipsak,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ENV+=		ac_cv_func_malloc_0_nonnull=yes
 CONFIGURE_ARGS+=	--disable-gnutls
 

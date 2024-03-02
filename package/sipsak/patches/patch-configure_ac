@@ -1,0 +1,10 @@
+--- sipsak-0.9.8.1.orig/configure.ac	2021-01-08 06:31:40.000000000 +0100
++++ sipsak-0.9.8.1/configure.ac	2024-02-29 01:40:07.115755921 +0100
+@@ -14,7 +14,6 @@ AC_PROG_CC
+ if test "x$GCC" = "xyes"; then
+   CFLAGS="$CFLAGS -Wall"
+ fi
+-SIPSAK_GCC_STACK_PROTECT_CC
+ CHECK_PROG_DISTCC
+ 
+ AC_PROG_INSTALL
