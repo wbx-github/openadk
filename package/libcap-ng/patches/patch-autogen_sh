@@ -1,0 +1,9 @@
+--- libcap-ng-0.8.4.orig/autogen.sh	2023-12-20 16:18:45.000000000 +0100
++++ libcap-ng-0.8.4/autogen.sh	2024-02-27 12:33:16.298580133 +0100
+@@ -1,5 +1,5 @@
+ #! /bin/sh
+ set -x -e
+ # --no-recursive is available only in recent autoconf versions
+-touch NEWS
++touch NEWS README
+ autoreconf -fv --install
