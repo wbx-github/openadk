@@ -1,0 +1,22 @@
+--- freeswitch-1.10.11.orig/libs/srtp/crypto/hash/hmac_ossl.c	2023-12-22 19:08:31.000000000 +0100
++++ freeswitch-1.10.11/libs/srtp/crypto/hash/hmac_ossl.c	2024-02-29 00:19:04.687821875 +0100
+@@ -80,7 +80,8 @@ static srtp_err_status_t srtp_hmac_alloc
+ 
+ /* OpenSSL 1.1.0 made HMAC_CTX an opaque structure, which must be allocated
+    using HMAC_CTX_new.  But this function doesn't exist in OpenSSL 1.0.x. */
+-#if OPENSSL_VERSION_NUMBER < 0x10100000L || LIBRESSL_VERSION_NUMBER
++#if OPENSSL_VERSION_NUMBER < 0x10100000L || \
++	(defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x30500000L)
+     {
+         /* allocate memory for auth and HMAC_CTX structures */
+         uint8_t *pointer;
+@@ -126,7 +127,8 @@ static srtp_err_status_t srtp_hmac_deall
+ 
+     hmac_ctx = (HMAC_CTX *)a->state;
+ 
+-#if OPENSSL_VERSION_NUMBER < 0x10100000L || LIBRESSL_VERSION_NUMBER
++#if OPENSSL_VERSION_NUMBER < 0x10100000L || \
++	(defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x30500000L)
+     HMAC_CTX_cleanup(hmac_ctx);
+ 
+     /* zeroize entire state*/
