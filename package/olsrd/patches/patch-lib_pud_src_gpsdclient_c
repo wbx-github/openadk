@@ -1,0 +1,98 @@
+--- olsrd-0.9.8.orig/lib/pud/src/gpsdclient.c	2019-08-11 10:09:47.000000000 +0200
++++ olsrd-0.9.8/lib/pud/src/gpsdclient.c	2024-02-29 11:26:48.195242832 +0100
+@@ -79,6 +79,23 @@ static void gpsdError(const char *s) {
+   syslog(LOG_ERR, "gpsd error: %s", s);
+ }
+ 
++#if GPSD_API_MAJOR_VERSION >= 9
++static double time_as_double(struct timespec *ts) {
++ return (ts->tv_sec + ts->tv_nsec * 1e-9);
++}
++
++static bool is_online(struct gps_data_t *gpsdata) {
++  return !!gpsdata->online.tv_sec;
++}
++#else
++
++#define time_as_double(x) *(x)
++
++static bool is_online(struct gps_data_t *gpsdata) {
++  return !!gpsdata->online;
++}
++#endif
++
+ /* standard parsing of a GPS data source spec */
+ void gpsdParseSourceSpec(char *arg, GpsDaemon *gpsDaemon) {
+   if (!arg //
+@@ -298,8 +315,8 @@ void nmeaInfoFromGpsd(struct gps_data_t
+             8, //
+             dev->parity, //
+             dev->stopbits, //
+-            dev->cycle, //
+-            dev->mincycle);
++            time_as_double(&dev->cycle), //
++            time_as_double(&dev->mincycle));
+ 
+         connectionTracking->devSeen[i] = true;
+         connectionTracking->dev[i] = *dev;
+@@ -353,11 +370,6 @@ void nmeaInfoFromGpsd(struct gps_data_t
+           );
+ 
+   gpsdata->set &= ~STATUS_SET; /* always valid */
+-  if (gpsdata->status == STATUS_NO_FIX) {
+-    nmeaInfoClear(info);
+-    nmeaTimeSet(&info->utc, &info->present, NULL);
+-    return;
+-  }
+ 
+   if (!gpsdata->set) {
+     return;
+@@ -367,11 +379,18 @@ void nmeaInfoFromGpsd(struct gps_data_t
+   nmeaInfoSetPresent(&info->present, NMEALIB_PRESENT_SMASK);
+ 
+   /* date & time */
++#if GPSD_API_MAJOR_VERSION >= 9
++  if (gpsdata->fix.time.tv_sec > 0) {
++    struct tm *time = gmtime(&gpsdata->fix.time.tv_sec);
++    unsigned int hsec = (unsigned int) (gpsdata->fix.time.tv_nsec / 10000000);
++#else
+   if (!isNaN(gpsdata->fix.time)) {
+     double seconds;
+     double fraction = modf(fabs(gpsdata->fix.time), &seconds);
+     long sec = lrint(seconds);
+     struct tm *time = gmtime(&sec);
++    unsigned int hsec = (unsigned int) lrint(fraction * 100);
++#endif
+     if (time) {
+       info->utc.year = (unsigned int) time->tm_year + 1900;
+       info->utc.mon = (unsigned int) time->tm_mon + 1;
+@@ -379,7 +398,7 @@ void nmeaInfoFromGpsd(struct gps_data_t
+       info->utc.hour = (unsigned int) time->tm_hour;
+       info->utc.min = (unsigned int) time->tm_min;
+       info->utc.sec = (unsigned int) time->tm_sec;
+-      info->utc.hsec = (unsigned int) lrint(fraction * 100);
++      info->utc.hsec = hsec;
+ 
+       nmeaInfoSetPresent(&info->present, NMEALIB_PRESENT_UTCDATE | NMEALIB_PRESENT_UTCTIME);
+     }
+@@ -387,7 +406,7 @@ void nmeaInfoFromGpsd(struct gps_data_t
+   gpsdata->set &= ~TIME_SET;
+ 
+   /* sig & fix */
+-  if (!gpsdata->online) {
++  if (!is_online(gpsdata)) {
+     gpsdata->fix.mode = MODE_NO_FIX;
+   }
+ 
+@@ -454,7 +473,11 @@ void nmeaInfoFromGpsd(struct gps_data_t
+   if ((gpsdata->fix.mode >= MODE_3D) //
+       && !isNaN(gpsdata->fix.altitude)) {
+     info->elevation = gpsdata->fix.altitude;
++#if GPSD_API_MAJOR_VERSION >= 9
++    info->height = gpsdata->fix.geoid_sep;
++#else
+     info->height = gpsdata->separation;
++#endif
+     nmeaInfoSetPresent(&info->present, NMEALIB_PRESENT_ELV | NMEALIB_PRESENT_HEIGHT);
+   }
+   gpsdata->set &= ~ALTITUDE_SET;

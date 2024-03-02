@@ -4,16 +4,17 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		olsrd
-PKG_VERSION:=		0.9.0.3
+PKG_VERSION:=		0.9.8
 PKG_RELEASE:=		1
-PKG_HASH:=		59d37570c58ec25636a71d5a7cf4460448be693f01d768ae369a7f66e58077fb
+PKG_HASH:=		ee9e524224e5d5304dcf61f1dc5485c569da09d382934ff85b233be3e24821a3
 PKG_DESCR:=		optimized link state routing protocol daemon
 PKG_SECTION:=		net/wifi
-PKG_URL:=		http://www.olsr.org/
-PKG_SITES:=		http://www.olsr.org/releases/0.9/
+PKG_BUILDDEP:=		gpsd
+PKG_DEPENDS:=		gpsd
+PKG_SITES:=		https://github.com/OLSR/olsrd/archive/refs/tags/
 PKG_NOPARALLEL:=	1
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+DISTFILES:=		v${PKG_VERSION}.tar.gz
 
 PKG_SUBPKGS:=		OLSRD OLSRD_MOD_DYN_GW OLSRD_MOD_HTTPINFO
 PKG_SUBPKGS+=		OLSRD_MOD_NAMESERVICE OLSRD_MOD_TAS
@@ -53,7 +54,7 @@ CONFIG_STYLE:=          manual
 TARGET_CFLAGS+=		-fPIC -D_GNU_SOURCE
 ALL_TARGET+=		libs
 INSTALL_TARGET+=	install_libs
-MAKE_ENV+=		OS="linux" DEBUG=0 STRIP="true" OFLAGS="${TARGET_CFLAGS}" prefix="/usr"
+MAKE_ENV+=		OS="linux" DEBUG=0 STRIP="true" VERBOSE=1 OFLAGS="${TARGET_CFLAGS}" prefix="/usr"
 
 post-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_OLSRD}/usr/sbin ${IDIR_OLSRD}/etc/olsrd

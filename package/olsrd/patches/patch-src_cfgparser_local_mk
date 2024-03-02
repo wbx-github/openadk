@@ -1,0 +1,17 @@
+--- olsrd-0.9.8.orig/src/cfgparser/local.mk	2019-08-11 10:09:47.000000000 +0200
++++ olsrd-0.9.8/src/cfgparser/local.mk	2024-02-29 09:47:24.131323729 +0100
+@@ -74,12 +74,8 @@ $(C)oparse.c: $(C)oparse.y $(C)olsrd_con
+ ifeq ($(VERBOSE),0)
+ 	@echo "[BISON] $@"
+ endif
+-	$(MAKECMDPREFIX)$(BISON) -d -o "$@-tmp" "$<"
+-	$(MAKECMDPREFIX)sed	-e 's/register //' \
+-		-e '/^#line/s/$(call quote,$@-tmp)/$(call quote,$@)/' \
+-		< "$@-tmp" >"$@"
+-	$(MAKECMDPREFIX)mv "$(subst .c,.h,$@-tmp)" "$(subst .c,.h,$@)"
+-	$(MAKECMDPREFIX)$(RM) "$@-tmp" "$(subst .c,.h,$@-tmp)"
++	$(MAKECMDPREFIX)$(BISON) -d -o "$@" "$<"
++	$(MAKECMDPREFIX)sed -e 's/register //' "$@" > "$@.o" && mv "$@.o" "$@"
+ 
+ $(C)oparse.o: CFLAGS := $(filter-out -Wunreachable-code,$(CFLAGS))
+ 

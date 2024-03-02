@@ -1,0 +1,11 @@
+--- olsrd-0.9.8.orig/lib/pud/Makefile	2019-08-11 10:09:47.000000000 +0200
++++ olsrd-0.9.8/lib/pud/Makefile	2024-02-29 11:26:30.299243074 +0100
+@@ -108,7 +108,7 @@ endif
+ 
+ default_target: nmealib library $(PLUGIN_FULLNAME)
+ 
+-$(PLUGIN_FULLNAME): $(OBJS) version-script.txt
++$(PLUGIN_FULLNAME): $(OBJS) version-script.txt nmealib
+ ifeq ($(PUD_NMEALIB_STATICALLY_LINKED),)
+ ifeq ($(VERBOSE),0)
+ 	@echo "[LD] $@ (nmealib dynamically linked)"

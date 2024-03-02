@@ -1,0 +1,16 @@
+--- olsrd-0.9.8.orig/lib/pud/src/gpsdclient.h	2019-08-11 10:09:47.000000000 +0200
++++ olsrd-0.9.8/lib/pud/src/gpsdclient.h	2024-02-29 11:24:18.019244869 +0100
+@@ -60,13 +60,6 @@ struct GpsdConnectionState {
+     struct devconfig_t dev[MAXUSERDEVS];
+ };
+ 
+-/* describe a data source */
+-struct fixsource_t {
+-    char spec[PATH_MAX]; /* working space, will be modified */
+-    char *server; /* pointer into spec field */
+-    char *port; /* pointer into spec field */
+-    char *device; /* pointer into spec field */
+-};
+ 
+ /**
+  * The gpsd daemon spec
