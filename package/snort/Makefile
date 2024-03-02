@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		snort
-PKG_VERSION:=		2.9.14.1
+PKG_VERSION:=		2.9.20
 PKG_RELEASE:=		1
-PKG_HASH:=		2472989da3aace000d1ea5931ece68f8e5cc0c511e272d65182113a2481e822d
+PKG_HASH:=		29400e13f53b1831e0b8b10ec1224a1cbaa6dc1533a5322a20dd80bb84b4981c
 PKG_DESCR:=		flexible network intrusion detection system
 PKG_SECTION:=		net/security
 PKG_DEPENDS:=		libnet libpcap libpcre libtirpc daq
