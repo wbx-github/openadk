@@ -35,11 +35,10 @@ ifeq ($(ADK_TARGET_USE_STATIC_LIBS),y)
 OPENSSL_OPTIONS:=	no-shared zlib no-dso
 else
 OPENSSL_OPTIONS:=	shared zlib-dynamic
-#TARGET_CFLAGS+=		-ldl -shared
 endif
 
 OPENSSL_OPTIONS+=	threads no-err no-tests no-fuzz-libfuzzer no-fuzz-afl 
-OPENSSL_OPTIONS+=	no-rc5 no-rc2 no-rc4 no-md2 no-idea no-des
+OPENSSL_OPTIONS+=	no-rc5 no-rc2 no-rc4 no-md2 no-idea
 
 HOST_STYLE:=		manual
 CONFIG_STYLE:=		manual
