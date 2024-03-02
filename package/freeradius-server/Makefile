@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		freeradius-server
-PKG_VERSION:=		3.0.21
+PKG_VERSION:=		3.2.3
 PKG_RELEASE:=		1
-PKG_HASH:=		2bf914d471d4409fd72e708e308fa32ca8d01d698c518497a1d4b867d50132ae
+PKG_HASH:=		4bde047122e588c63fe2d599a73f7ab9a863806f9e716e88a3d77080b482c577
 PKG_DESCR:=		flexible radius server
 PKG_SECTION:=		net/radius
 PKG_DEPENDS:=		libltdl libpcre libtalloc libressl libatomic
 PKG_BUILDDEP:=		libtool pcre talloc libressl
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.freeradius.org/
-PKG_SITES:=		ftp://ftp.freeradius.org/pub/radius/
+PKG_SITES:=		https://github.com/FreeRADIUS/freeradius-server/releases/download/release_3_2_3/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -71,7 +71,7 @@ endif
 
 ifneq (${ADK_PACKAGE_FREERADIUS_MOD_SQL_MYSQL},)
 PKG_CONFIGURE_LIBS+=	-lz
-PKG_CONFIGURE_OPTS+=	--with-mysql-include-dir="${STAGING_TARGET_DIR}/usr/include" \
+PKG_CONFIGURE_OPTS+=	--with-mysql-include-dir="${STAGING_TARGET_DIR}/usr/include/mysql" \
 			--with-mysql-lib-dir="${STAGING_TARGET_DIR}/usr/lib/mysql" \
 			--without-threads \
 			--with-rlm_sql
@@ -134,14 +134,14 @@ $(eval $(call PKG_mod_template,FREERADIUS_MOD_SQL,rlm_sql,))
 $(eval $(call PKG_mod_template,FREERADIUS_MOD_SQL_MYSQL,rlm_sql_mysql,))
 $(eval $(call PKG_mod_template,FREERADIUS_MOD_SQL_PGSQL,rlm_sql_postgresql,))
 
-AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	${PKG_CONFIGURE_OPTS} \
 			--libdir=/usr/lib/freeradius \
 			--libexecdir=/usr/lib/freeradius \
 			--disable-openssl-version-check \
 			--with-execinfo-include-dir=/dev/null \
-			--with-openssl-includes=${STAGING_TARGET_DIR}/usr/include \
-			--with-openssl-libraries=${STAGING_TARGET_DIR}/usr/lib \
+			--with-threads=yes \
+			--with-openssl-include-dir=${STAGING_TARGET_DIR}/usr/include \
+			--with-openssl-lib-dir=${STAGING_TARGET_DIR}/usr/lib \
 			--with-system-libltld \
 			--enable-strict-dependencies \
 			--with-raddbdir=/etc/freeradius \
@@ -157,15 +157,17 @@ CONFIGURE_ARGS+=	${PKG_CONFIGURE_OPTS} \
 			--without-rlm_eap_sim \
 			--without-rlm_example \
 			--without-rlm_ippool \
+			--without-rlm_json \
 			--without-rlm_krb5 \
 			--without-rlm_otp \
 			--without-rlm_smsotp \
 			--without-rlm_pam \
 			--without-rlm_perl \
-			--without-rlm_python \
+			--without-rlm_python3 \
 			--without-rlm_radutmp \
 			--without-rlm_rest \
 			--without-rlm_ruby \
+			--without-rlm_python \
 			--without-rlm_smb \
 			--without-rlm_sqlcounter \
 			--without-rlm_sql_db2 \
@@ -176,7 +178,9 @@ CONFIGURE_ARGS+=	${PKG_CONFIGURE_OPTS} \
 			--without-rlm_sql_unixodbc \
 			--without-rlm_sql_log \
 			--without-rlm_redis \
+			--without-rlm_cache_redis \
 			--without-rlm_rediswho \
+			--without-rlm_unbound \
 			--without-rlm_unix \
 			--without-rlm_eap_ikev2 \
 			--without-rlm_eap_tnc \
@@ -187,9 +191,10 @@ CONFIGURE_ARGS+=	${PKG_CONFIGURE_OPTS} \
 CONFIGURE_ENV+=		ax_cv_cc_builtin_choose_expr=yes \
 			ax_cv_cc_builtin_types_compatible_p=yes \
 			ax_cv_cc_builtin_bswap64=yes \
-			ax_cv_cc_bounded_attribute=yes
-FAKE_FLAGS+=		R="${WRKINST}" \
-			INSTALLSTRIP=""
+			ax_cv_cc_bounded_attribute=yes \
+FAKE_FLAGS+=		INSTALLSTRIP=""
+MAKE_ENV+=		VERBOSE=1 \
+			R="$(WRKINST)"
 
 freeradius-server-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	-${INSTALL_DIR} ${IDIR_FREERADIUS_SERVER}/etc/freeradius

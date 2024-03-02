@@ -1,10 +1,6 @@
-	fix for:
-	| src/lib/log.c:37:31: error: 'fr_strerror_buffer' undeclared (first use in this function)
-	found in https://github.com/Optware/Optware-ng/commit/6ece960830b3291bc4ad5780cdb49b0a377aab2e
-
---- freeradius-server-3.0.21.orig/src/include/threads.h	2020-03-24 15:55:09.000000000 +0100
-+++ freeradius-server-3.0.21/src/include/threads.h	2021-02-16 03:54:58.449715370 +0100
-@@ -89,7 +89,7 @@ static _t __fr_thread_local_init_##_n(pt
+--- freeradius-server-3.2.3.orig/src/include/threads.h	2023-05-26 15:56:52.000000000 +0200
++++ freeradius-server-3.2.3/src/include/threads.h	2024-02-27 04:03:53.806994686 +0100
+@@ -92,7 +92,7 @@ static _t __fr_thread_local_init_##_n(pt
  #  define fr_thread_local_get(_n) _n
  #elif defined(HAVE_PTHREAD_H)
  #  include <pthread.h>
@@ -13,7 +9,7 @@
  static pthread_key_t __fr_thread_local_key_##_n;\
  static pthread_once_t __fr_thread_local_once_##_n = PTHREAD_ONCE_INIT;\
  static pthread_destructor_t __fr_thread_local_destructor_##_n = NULL;\
-@@ -100,17 +100,17 @@ static void __fr_thread_local_destroy_##
+@@ -103,17 +103,17 @@ static void __fr_thread_local_destroy_##
  static void __fr_thread_local_key_init_##_n(void)\
  {\
  	(void) pthread_key_create(&__fr_thread_local_key_##_n, __fr_thread_local_destroy_##_n);\
@@ -27,10 +23,11 @@
 +	(void) pthread_setspecific(__fr_thread_local_key_##_n, &(_n));\
  	return _n;\
  }
- #  define fr_thread_local_init(_n, _f)			__fr_thread_local_init_##_n(_f)
+-#  define fr_thread_local_init(_n, _f)			__fr_thread_local_init_##_n(_f)
 -#  define fr_thread_local_set(_n, _v)			__fr_thread_local_set_##_n(_v)
 -#  define fr_thread_local_get(_n)			__fr_thread_local_get_##_n()
-+#  define fr_thread_local_set(_n, _v)			((int)!((_n = _v) || 1))
-+#  define fr_thread_local_get(_n)			_n
++#  define fr_thread_local_init(_n, _f)	__fr_thread_local_init_##_n(_f)
++#  define fr_thread_local_set(_n, _v) ((int)!((_n = _v) || 1))
++#  define fr_thread_local_get(_n) _n
  #endif
  #endif

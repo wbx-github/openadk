@@ -1,11 +1,13 @@
---- freeradius-server-3.0.13.orig/scripts/libtool.mk	2017-03-06 14:58:04.000000000 +0100
-+++ freeradius-server-3.0.13/scripts/libtool.mk	2017-03-30 05:46:58.583531343 +0200
-@@ -44,7 +44,7 @@ ifeq "${LIBTOOL}" "JLIBTOOL"
+--- freeradius-server-3.2.3.orig/scripts/libtool.mk	2023-05-26 15:56:52.000000000 +0200
++++ freeradius-server-3.2.3/scripts/libtool.mk	2024-02-27 03:44:17.243010645 +0100
+@@ -48,8 +48,8 @@ ifeq "${LIBTOOL}" "JLIBTOOL"
+     # binary!
      ${JLIBTOOL}: ${top_makedir}/jlibtool.c
  	$(Q)mkdir -p $(dir $@)
- 	$(Q)echo CC jlibtool.c
--	$(Q)${CC} $< -o $@
-+	$(Q)${CC_FOR_BUILD} $< -o $@
+-	$(Q)echo CC jlibtool.c
+-	$(Q)${CC} $< -o $@ ${JLIBTOOL_DEFS}
++	$(Q)echo CC_FOR_BUILD jlibtool.c
++	${CC_FOR_BUILD} $< -o $@ ${JLIBTOOL_DEFS}
  
      clean: jlibtool_clean
  
