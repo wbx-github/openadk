@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		siproxd
-PKG_VERSION:=		0.8.1
+PKG_VERSION:=		0.8.3
 PKG_RELEASE:=		1
-PKG_HASH:=		df2df04faf5bdb4980cbdfd5516a47898fc47ca1ebc2c628aa48305b20a09dad
+PKG_HASH:=		9a6d7a6bb6fff162775b1e1fb7018de9c69642cbf8626185dc6ffceeeba07736
 PKG_DESCR:=		session initiation protocol proxy
 PKG_SECTION:=		net/voip
 PKG_DEPENDS:=		libosip2
