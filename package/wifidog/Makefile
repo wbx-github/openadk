@@ -19,6 +19,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,WIFIDOG,wifidog,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+TARGET_CFLAGS+=		-fcommon
 CONFIGURE_ENV+=		ac_cv_func_memcmp_working=yes \
 			ac_cv_lib_nsl_main=no \
 			ac_cv_func_setvbuf_reversed=no
