@@ -10,6 +10,8 @@ PKG_HASH:=		3bd7828aa5af4b13b99c191e8b1e884ebfa9ad371b0ce264605d347f135d2568
 PKG_DESCR:=		extensible mechanism for serializing structured data
 PKG_SECTION:=		libs/misc
 PKG_URL:=		https://developers.google.com/protocol-buffers/
+PKG_BUILDDEP:=		protobuf-host
+PKG_NEEDS:=		c++
 PKG_SITES:=		https://github.com/google/protobuf/archive/
 PKG_OPTS:=		dev
 
