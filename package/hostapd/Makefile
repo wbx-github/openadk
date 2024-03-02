@@ -4,15 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		hostapd
-PKG_VERSION:=		2.5
+PKG_VERSION:=		2.10
 PKG_RELEASE:=		1
-PKG_HASH:=		8e272d954dc0d7026c264b79b15389ec2b2c555b32970de39f506b9f463ec74a
+PKG_HASH:=		206e7c799b678572c2e3d12030238784bc4a9f82323b0156b4c9466f1498915d
 PKG_DESCR:=		wireless authenticator
 PKG_SECTION:=		net/wifi
 PKG_DEPENDS:=		libnl
 PKG_BUILDDEP:=		libnl
-PKG_URL:=		http://hostap.epitest.fi/
-PKG_SITES:=		http://hostap.epitest.fi/releases/
+PKG_SITES:=		http://w1.fi/releases/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
