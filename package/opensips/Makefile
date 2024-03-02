@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		opensips
-PKG_VERSION:=		2.2.3
+PKG_VERSION:=		3.4.4
 PKG_RELEASE:=		1
-PKG_HASH:=		ccf540f7aae4335a8319b83f6cb87b562e665991fe1c2adc4e8eb4d4f3042dd7
+PKG_HASH:=		eab3608a464884fc40f33cc639a5b124dc838799bd4a9701b7a8af49fb937fc7
 PKG_DESCR:=		high-performance, configurable, free sip server
 PKG_SECTION:=		net/voip
 PKG_DEPENDS:=		libressl
@@ -21,8 +21,8 @@ PKG_SUBPKGS+=		OPENSIPS_MOD_AUTH_DB OPENSIPS_MOD_AVPOPS OPENSIPS_MOD_DISPATCHER
 PKG_SUBPKGS+=		OPENSIPS_MOD_DIVERSION OPENSIPS_MOD_FLATSTORE OPENSIPS_MOD_GFLAGS
 PKG_SUBPKGS+=		OPENSIPS_MOD_GROUP OPENSIPS_MOD_MEDIAPROXY OPENSIPS_MOD_MSILO
 PKG_SUBPKGS+=		OPENSIPS_MOD_NATHELPER OPENSIPS_MOD_OPTIONS
-PKG_SUBPKGS+=		OPENSIPS_MOD_PERMISSIONS OPENSIPS_MOD_PIKE OPENSIPS_MOD_SMS
-PKG_SUBPKGS+=		OPENSIPS_MOD_UAC OPENSIPS_MOD_UAC_REDIRECT OPENSIPS_MOD_URI
+PKG_SUBPKGS+=		OPENSIPS_MOD_PERMISSIONS OPENSIPS_MOD_PIKE
+PKG_SUBPKGS+=		OPENSIPS_MOD_UAC OPENSIPS_MOD_UAC_REDIRECT
 
 PKGSD_OPENSIPS_MOD_ACCOUNTING:=		accounting support
 PKGSN_OPENSIPS_MOD_ACCOUNTING:=		opensips
@@ -54,14 +54,10 @@ PKGSD_OPENSIPS_MOD_PERMISSIONS:=	permissions support
 PKGSN_OPENSIPS_MOD_PERMISSIONS:=	opensips
 PKGSD_OPENSIPS_MOD_PIKE:=		pike support
 PKGSN_OPENSIPS_MOD_PIKE:=		opensips
-PKGSD_OPENSIPS_MOD_SMS:=		sms support
-PKGSN_OPENSIPS_MOD_SMS:=		opensips
 PKGSD_OPENSIPS_MOD_UAC:=		uac support
 PKGSN_OPENSIPS_MOD_UAC:=		opensips
 PKGSD_OPENSIPS_MOD_UAC_REDIRECT:=	uac redirect support
 PKGSN_OPENSIPS_MOD_UAC_REDIRECT:=	opensips
-PKGSD_OPENSIPS_MOD_URI:=		uri support
-PKGSN_OPENSIPS_MOD_URI:=		opensips
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -92,10 +88,8 @@ $(eval $(call PKG_template,OPENSIPS_MOD_NATHELPER,opensips-mod-nathelper,$(PKG_V
 $(eval $(call PKG_template,OPENSIPS_MOD_OPTIONS,opensips-mod-options,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_PERMISSIONS,opensips-mod-permissions,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_PIKE,opensips-mod-pike,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
-$(eval $(call PKG_template,OPENSIPS_MOD_SMS,opensips-mod-sms,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_UAC,opensips-mod-uac,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_UAC_REDIRECT,opensips-mod-uac-redirect,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
-$(eval $(call PKG_template,OPENSIPS_MOD_URI,opensips-mod-uri,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_ACCOUNTING,acc))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_AUTH,auth))
@@ -112,11 +106,9 @@ $(eval $(call PKG_mod_template,OPENSIPS_MOD_NATHELPER,nathelper))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_OPTIONS,options))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_PERMISSIONS,permissions))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_PIKE,pike))
-$(eval $(call PKG_mod_template,OPENSIPS_MOD_SMS,sms))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_SPEEDIAL,speeddial))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_UAC,uac))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_UAC_REDIRECT,uac_redirect))
-$(eval $(call PKG_mod_template,OPENSIPS_MOD_URI,uri))
 
 # Select here the modules for the main package
 OPENSIPS_MODULES:=	sl tm rr maxfwd usrloc registrar db_text textops exec mi_fifo signaling
@@ -131,7 +123,6 @@ INSTALL_STYLE:=		manual
 do-build:
 	PATH='$(HOST_PATH)' $(MAKE) -C $(WRKBUILD) \
 		prefix=/ \
-		extra_defs="-DUSE_PTHREAD_MUTEX" \
 		TLS=1 \
 		FREERADIUS=0 \
 		NICER=0 \
