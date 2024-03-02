@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		talloc
-PKG_VERSION:=		2.3.4
+PKG_VERSION:=		2.4.2
 PKG_RELEASE:=		1
-PKG_HASH:=		179f9ebe265e67e4ab2c26cad2b7de4b6a77c6c212f966903382869f06be6505
+PKG_HASH:=		85ecf9e465e20f98f9950a52e9a411e14320bc555fa257d87697b7e7a9b1d8a6
 PKG_DESCR:=		memory allocation library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		python3-host python3
@@ -23,6 +23,7 @@ $(eval $(call PKG_template,LIBTALLOC,libtalloc,$(PKG_VERSION)-$(PKG_RELEASE),$(P
 
 CONFIG_STYLE:=		minimal
 CONFIGURE_ARGS+=	--prefix=/usr \
+			--disable-python \
 			--cross-compile \
 			--cross-answers=$(WRKSRC)/cache.txt \
 			--hostcc=gcc
