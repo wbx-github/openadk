@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		quagga
-PKG_VERSION:=		1.2.0
+PKG_VERSION:=		1.2.4
 PKG_RELEASE:=		1
-PKG_HASH:=		1043644d37975d9f920b76c593368cbe36ca43e27eb57cff316ee80ccb31dce3
+PKG_HASH:=		e364c082c3309910e1eb7b068bf39ee298e2f2f3f31a6431a5c115193bd653d3
 PKG_DESCR:=		routing software package
 PKG_SECTION:=		net/route
 PKG_BUILDDEP:=		readline ncurses c-ares
 PKG_DEPENDS:=		c-ares
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.quagga.net/
-PKG_SITES:=		http://download.savannah.gnu.org/releases/quagga/
+PKG_SITES:=		https://github.com/Quagga/quagga/releases/download/$(PKG_NAME)-$(PKG_VERSION)/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
@@ -44,6 +44,7 @@ $(eval $(call PKG_template,QUAGGA_RIPNGD,quagga-ripngd,$(PKG_VERSION)-$(PKG_RELE
 $(eval $(call PKG_template,QUAGGA_RIPD,quagga-ripd,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_QUAGGA_RIPD),$(PKG_SECTION)))
 $(eval $(call PKG_template,QUAGGA_VTYSH,quagga-vtysh,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_QUAGGA_VTYSH),$(PKG_SECTION)))
 
+TARGET_CFLAGS+=		-fcommon
 CONFIGURE_ENV+=		quagga_cv_ipforward_method="proc"
 CONFIGURE_ARGS+=	--localstatedir=/var/run/quagga \
 			--sysconfdir=/etc/quagga \
