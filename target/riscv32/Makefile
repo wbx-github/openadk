@@ -7,7 +7,7 @@ include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/arch/riscv/boot/Image
 QEMU_ARGS:=-M virt -m 512 -nographic
-ifeq ($(ADK_TARGET_LIB_UCLIBC_NG),y)
+ifeq ($(ADK_TARGET_WITH_MMU),)
 QEMU_ARGS+=-bios none
 endif
 ifeq ($(ADK_TARGET_QEMU_WITH_VIRTIO),y)
