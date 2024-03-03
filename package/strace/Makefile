@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		strace
 PKG_VERSION:=		6.7
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		2090201e1a3ff32846f4fe421c1163b15f440bb38e31355d09f82d3949922af7
 PKG_DESCR:=		system call trace program
 PKG_SECTION:=		app/debug
@@ -33,6 +33,7 @@ ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 TARGET_LDFLAGS+=	-pthread
 endif
 
+AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--enable-mpers=check
 INSTALL_STYLE:=		manual
 
