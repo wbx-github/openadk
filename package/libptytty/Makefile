@@ -18,9 +18,11 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBPTYTTY,libptytty,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
+TARGET_CFLAGS+=		-lstdc++
 CONFIG_STYLE:=		cmake
 CMAKE_FLAGS+=		-DTTY_GID_SUPPORT_EXITCODE=0 \
 			-DTTY_GID_SUPPORT_EXITCODE__TRYRUN_OUTPUT=0
+XAKE_FLAGS+=		VERBOSE=1
 
 libptytty-install:
 	$(INSTALL_DIR) $(IDIR_LIBPTYTTY)/usr/lib

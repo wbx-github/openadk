@@ -1,0 +1,13 @@
+--- libptytty-2.0.orig/CMakeLists.txt	2021-08-04 16:07:44.000000000 +0200
++++ libptytty-2.0/CMakeLists.txt	2024-03-03 19:23:33.085544136 +0100
+@@ -323,10 +323,6 @@ configure_file(
+   libptytty.pc.in
+   libptytty.pc)
+ 
+-add_executable(c-sample eg/c-sample.c)
+-target_include_directories(c-sample PRIVATE src)
+-target_link_libraries(c-sample ptytty)
+-
+ add_custom_command(
+   OUTPUT ${CMAKE_SOURCE_DIR}/doc/libptytty.3
+   DEPENDS ${CMAKE_SOURCE_DIR}/doc/libptytty.3.pod
