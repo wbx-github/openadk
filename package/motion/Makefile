@@ -4,22 +4,24 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		motion
-# actually a svn version from 25.06.2014 checkout
-PKG_VERSION:=		4.0
-PKG_RELEASE:=		2
-PKG_HASH:=		ff2931b0af037da126fed3e496430944132528132e71473aae478ff2e7f78e0d
+PKG_VERSION:=		4.6.0
+PKG_RELEASE:=		1
+PKG_HASH:=		9268df31a5ebeaf8daca4747cdcd01c86e223625b6f971e9bcec98edf35ec06f
 PKG_DESCR:=		webcam motion sensing and logging
 PKG_SECTION:=		mm/video
-PKG_DEPENDS:=		libjpeg-turbo libsdl
-PKG_BUILDDEP:=		libjpeg-turbo sdl
+PKG_DEPENDS:=		libjpeg-turbo libmicrohttpd
+PKG_BUILDDEP:=		libjpeg-turbo libmicrohttpd
 PKG_NEEDS:=		threads
-PKG_URL:=		http://www.lavrsen.dk/twiki/bin/view/Motion/WebHome
-PKG_SITES:=		http://distfiles.openadk.org/
+PKG_SITES:=		https://github.com/Motion-Project/motion/archive/refs/tags/
+
+DISTFILES:=		release-$(PKG_VERSION).tar.gz
+WRKDIST=		${WRKDIR}/${PKG_NAME}-release-${PKG_VERSION}
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,MOTION,motion,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--without-ffmpeg \
 			--without-jpeg-mmx \
 			--without-optimizecpu \
