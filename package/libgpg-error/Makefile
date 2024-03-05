@@ -57,7 +57,7 @@ ifeq ($(ADK_TARGET_ARCH_X86),y)
 LIBGPG_PREFIX:=		i686-unknown-linux-gnu
 endif
 ifeq ($(ADK_TARGET_ARCH_X86_64),y)
-LIBGPG_PREFIX:=		x86_64-pc-linux-gnu
+LIBGPG_PREFIX:=		x86_64-unknown-linux-gnu
 endif
 ifeq ($(ADK_TARGET_ARCH_XTENSA),y)
 LIBGPG_PREFIX:=		xtensa-unknown-linux-gnu
