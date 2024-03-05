@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		p5-yaml-xs
-PKG_VERSION:=		0.41
+PKG_VERSION:=		0.89
 PKG_RELEASE:=		1
-PKG_HASH:=		9a654427a3a63de434c6d03b18bba144cc7ba0f0e61a7100c6d08d77a90145ce
+PKG_HASH:=		155ab83675345c50add03311acf9dd915955707f909a2abd8b17d7792859b2ec
 PKG_DESCR:=		yaml serialization using xs and libyaml
 PKG_SECTION:=		dev/perl
 PKG_DEPENDS:=		perl
 PKG_BUILDDEP:=		perl-host perl
-PKG_SITES:=		http://cpan.metacpan.org/authors/id/I/IN/INGY/
+PKG_SITES:=		https://cpan.metacpan.org/authors/id/T/TI/TINITA/
 
 DISTFILES:=             YAML-LibYAML-${PKG_VERSION}.tar.gz
 WRKDIST=		${WRKDIR}/YAML-LibYAML-${PKG_VERSION}
