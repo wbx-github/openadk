@@ -1,0 +1,11 @@
+--- tvheadend-a9c6db8acbd85297238771b8b4430435b7994928.orig/configure	2024-03-03 05:21:25.000000000 +0100
++++ tvheadend-a9c6db8acbd85297238771b8b4430435b7994928/configure	2024-03-03 05:35:58.519873994 +0100
+@@ -63,7 +63,7 @@ OPTIONS=(
+   "pcre2:auto"
+   "uriparser:auto"
+   "ccache:auto"
+-  "tvhcsa:auto"
++  "tvhcsa:no"
+   "bundle:no"
+   "pngquant:no"
+   "kqueue:no"

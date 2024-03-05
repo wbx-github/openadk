@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		tvheadend
-PKG_VERSION:=		f46a6c2dc93460d7c2909ebbec42a3ac2557ccb2
+PKG_VERSION:=		a9c6db8acbd85297238771b8b4430435b7994928
 PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_DESCR:=		tv streaming server
@@ -23,7 +23,12 @@ XAKE_FLAGS+=		LDLIBS=-liconv
 endif
 
 CONFIGURE_ARGS+=	--disable-bundle \
-			--disable-ffmpeg_static
+			--disable-ffmpeg_static \
+			--disable-execinfo \
+			--disable-libvpx \
+			--disable-libx264 \
+			--disable-libx265 \
+			--nowerror
 
 tvheadend-install:
 	$(INSTALL_DIR) $(IDIR_TVHEADEND)/usr/bin

@@ -1,0 +1,22 @@
+--- tvheadend-a9c6db8acbd85297238771b8b4430435b7994928.orig/configure	2024-03-03 05:21:25.000000000 +0100
++++ tvheadend-a9c6db8acbd85297238771b8b4430435b7994928/configure	2024-03-03 05:37:39.643872622 +0100
+@@ -28,8 +28,8 @@ OPTIONS=(
+   "satip_server:yes"
+   "satip_client:yes"
+   "hdhomerun_client:no"
+-  "hdhomerun_server:yes"
+-  "hdhomerun_static:yes"
++  "hdhomerun_server:no"
++  "hdhomerun_static:no"
+   "iptv:yes"
+   "tsfile:yes"
+   "dvbscan:yes"
+@@ -63,7 +63,7 @@ OPTIONS=(
+   "pcre2:auto"
+   "uriparser:auto"
+   "ccache:auto"
+-  "tvhcsa:auto"
++  "tvhcsa:no"
+   "bundle:no"
+   "pngquant:no"
+   "kqueue:no"
