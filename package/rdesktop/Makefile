@@ -4,25 +4,25 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		rdesktop
-PKG_VERSION:=		1.8.1
+PKG_VERSION:=		1.9.0
 PKG_RELEASE:=		1
-PKG_HASH:=		76cc834b89c34d8332f3cb3889483b2ae4d4e8118eeb45a8967c77dd18228246
+PKG_HASH:=		d547c2e6f3e4c818a7e69a0f39adb39fac303633e0c25aa804bb588507ffc230
 PKG_DESCR:=		client for windows terminal services
 PKG_SECTION:=		x11/apps
-PKG_DEPENDS:=		libsamplerate alsa-lib libao libressl
-PKG_BUILDDEP:=		libsamplerate alsa-lib libao libressl
+PKG_DEPENDS:=		libsamplerate alsa-lib libao libgnutls
+PKG_BUILDDEP:=		libsamplerate alsa-lib libao gnutls
 PKG_URL:=		http://www.rdesktop.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=rdesktop/}
+PKG_SITES:=		https://github.com/rdesktop/rdesktop/archive/refs/tags/
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+DISTFILES:=		v${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,RDESKTOP,rdesktop,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 TARGET_CFLAGS+=		-D_GNU_SOURCE -D_POSIX_SOURCE
-CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
-			--disable-smartcard \
+AUTOTOOL_STYLE:=	bootstrap
+CONFIGURE_ARGS+=	--disable-smartcard \
 			--disable-credssp
 
 rdesktop-install:
