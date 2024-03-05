@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		p5-anyevent
-PKG_VERSION:=		7.11
+PKG_VERSION:=		7.17
 PKG_RELEASE:=		1
-PKG_HASH:=		8bf1b59860d04daeec4f6f56e3b86b581dfabacbc3ba0442e493e267b4b9f522
+PKG_HASH:=		50beea689c098fe4aaeb83806c40b9fe7f946d5769acf99f849f099091a4b985
 PKG_DESCR:=		anyevent
 PKG_SECTION:=		dev/perl
 PKG_DEPENDS:=		perl 
