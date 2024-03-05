@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		logitechmediaserver
-PKG_VERSION:=		7.9.1
-PKG_EXTRAVER:=		1519287262-noCPAN
+PKG_VERSION:=		8.4.1
+PKG_EXTRAVER:=		1708787582-noCPAN
 PKG_RELEASE:=		1
-PKG_HASH:=		c57cb0158bed9804d30283890df186964ae6ad8fe72e21857b08b6592c00fd5f
+PKG_HASH:=		b521bb7e03ee24003e718298cf54c7aac29e59a2da37d55a3380904397341802
 PKG_DESCR:=		popular media server
 PKG_SECTION:=		mm/audio
 PKG_NEEDS:=		data
@@ -19,7 +19,7 @@ PKG_DEPENDS+=		p5-dbd-sqlite p5-tie-refhash p5-template-toolkit
 PKG_DEPENDS+=		p5-class-xsaccessor p5-io-interface p5-anyevent
 PKG_BUILDDEP:=		perl
 PKG_URL:=		http://wiki.slimdevices.com/index.php/Logitech_Media_Server
-PKG_SITES:=		http://downloads.slimdevices.com/nightly/7.9/sc/a141d03b6489a3a1c65eebc34213e809d1c95df4/
+PKG_SITES:=		https://downloads.slimdevices.com/nightly/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}-${PKG_EXTRAVER}.tgz
 WRKDIST=		${WRKDIR}/${PKG_NAME}-${PKG_VERSION}-${PKG_EXTRAVER}
