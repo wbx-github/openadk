@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		p5-xml-parser
-PKG_VERSION:=		2.41
+PKG_VERSION:=		2.47
 PKG_RELEASE:=		1
-PKG_HASH:=		b48197cd2265a26c5f016489f11a7b450d8833cb8b3d6a46ee15975740894de9
+PKG_HASH:=		ad4aae643ec784f489b956abe952432871a622d4e2b5c619e8855accbfc4d1d8
 PKG_DESCR:=		xml parser
 PKG_SECTION:=		dev/perl
 PKG_DEPENDS:=		perl libexpat
