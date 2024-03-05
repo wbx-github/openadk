@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		icecast
-PKG_VERSION:=		2.3.3
+PKG_VERSION:=		2.4.4
 PKG_RELEASE:=		1
-PKG_HASH:=		1b1d06f5f83c9a983cd28cc78aa90e4038f933511b3d20d7fd2cfc116645c36d
+PKG_HASH:=		49b5979f9f614140b6a38046154203ee28218d8fc549888596a683ad604e4d44
 PKG_DESCR:=		streaming media server
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		libcurl libvorbis libxml2 libxslt
@@ -23,6 +23,7 @@ $(eval $(call PKG_template,ICECAST,icecast,${PKG_VERSION}-${PKG_RELEASE},${PKG_D
 
 AUTOTOOL_STYLE:=	autoreconf
 TARGET_CPPFLAGS+=	-I${STAGING_TARGET_DIR}/usr/include/libxml2
+TARGET_LDFLAGS+=	-lxml2
 CONFIGURE_ARGS+=	--disable-yp \
 			--with-curl="yes" \
 			--with-curl-config="${STAGING_TARGET_DIR}/usr/bin/curl-config" \
