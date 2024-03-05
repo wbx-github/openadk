@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ImageMagick
-PKG_VERSION:=		7.0.5
-PKG_EXTRAVER:=		10
+PKG_VERSION:=		7.1.1
+PKG_EXTRAVER:=		29
 PKG_RELEASE:=		1
-PKG_HASH:=		0058fcde533986334458a5c99600b1b9633182dd9562cbad4ba618c5ccf2a28f
+PKG_HASH:=		f140465fbeb0b4724cba4394bc6f6fb32715731c1c62572d586f4f1c8b9b0685
 PKG_DESCR:=		image processing and converting utility
 PKG_SECTION:=		mm/image
 PKG_BUILDDEP:=		libpng libjpeg-turbo libtiff fontconfig
