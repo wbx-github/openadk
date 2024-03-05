@@ -4,18 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xawtv
-PKG_VERSION:=		3.103
+PKG_VERSION:=		47a81c3ca7ac9b4f0989cccb7961dc4bff52364a
 PKG_RELEASE:=		1
-PKG_HASH:=		2cf3a91b5d59a094bd86e101684a65c0e3d09225c11a787e060fa01bfbc8dd52
+PKG_GIT:=		hash
 PKG_DESCR:=		video & webcam application
 PKG_BUILDDEP:=		libXinerama v4l-utils
 PKG_DEPENDS:=		libxinerama libv4l
 PKG_SECTION:=		x11/apps
-PKG_SITES:=		http://linuxtv.org/downloads/xawtv/
+PKG_SITES:=		http://git.linuxtv.org/xawtv3.git
 
 PKG_ARCH_DEPENDS:=	x86 x86_64
-
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
 include $(ADK_TOPDIR)/mk/package.mk
 
