@@ -4,19 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		v4l-utils
-PKG_VERSION:=		1.10.1
+PKG_VERSION:=		1.26.1
 PKG_RELEASE:=		1
-PKG_HASH:=		6147ccc29fe7dd3c5c3994d613c4f2a099bac8b44694a96e5cf4d7caca8336c0
+PKG_HASH:=		4a71608c0ef7df2931176989e6d32b445c0bdc1030a2376d929c8ca6e550ec4e
 PKG_DESCR:=		video4linux utilities
 PKG_SECTION:=		mm/video
 PKG_BUILDDEP:=		libjpeg-turbo
-PKG_SITES:=		http://linuxtv.org/downloads/v4l-utils/
+PKG_SITES:=		https://www.linuxtv.org/downloads/v4l-utils/
+PKG_NEEDS:=		intl
 PKG_LIBNAME:=		libv4l
 PKG_OPTS:=		dev
 
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
-
-PKG_LIBC_DEPENDS:=	glibc
 PKG_SUBPKGS:=		V4L_UTILS LIBV4L
 PKGSC_LIBV4L:=		libs/video
 PKGSD_LIBV4L:=		Video4Linux2 libraries
@@ -26,8 +24,14 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,V4L_UTILS,v4l-utils,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,LIBV4L,libv4l,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_LIBV4L},${PKGSC_LIBV4L},${PKG_OPTS}))
 
-CONFIGURE_ARGS+=	--disable-qv4l2
 TARGET_CPPFLAGS+=	-DLINUX_I2C_DEV_H
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+MESON_FLAGS+=		-Dgconv=disabled
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
 
 v4l-utils-install:
 	$(INSTALL_DIR) $(IDIR_V4L_UTILS)/usr/bin
