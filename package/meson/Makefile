@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		meson
-PKG_VERSION:=		1.3.1
+PKG_VERSION:=		1.3.2
 PKG_RELEASE:=		1
-PKG_HASH:=		274c121edb859602eb4589d31d8791e980748bb19950fc6f611a21d76dc22cc6
+PKG_HASH:=		683082fb3c5cddf203b21d29bdf4c227e2f7964da5324a15e1a5f7db94322b4b
 PKG_DESCR:=		build utility
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		python3-host ninja-host
