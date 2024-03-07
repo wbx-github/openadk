@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		wayland
-PKG_VERSION:=		1.21.0
+PKG_VERSION:=		1.22.0
 PKG_RELEASE:=		1
-PKG_HASH:=		6dc64d7fc16837a693a51cfdb2e568db538bfdc9f457d4656285bb9594ef11ac
+PKG_HASH:=		1540af1ea698a471c2d8e9d288332c7e0fd360c8f1d12936ebb7e7cbc2425842
 PKG_DESCR:=		wayland
 PKG_SECTION:=		x11/libs
-PKG_BUILDDEP:=		wayland-host meson-host
-HOST_BUILDDEP:=		expat-host libxml2-host libffi-host
+PKG_BUILDDEP:=		wayland-host
+HOST_BUILDDEP:=		meson-host expat-host libxml2-host libffi-host
 PKG_SITES:=		https://gitlab.freedesktop.org/wayland/wayland/-/releases/$(PKG_VERSION)/downloads/
 PKG_OPTS:=		dev
 
