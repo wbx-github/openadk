@@ -29,7 +29,7 @@ INSTALL_STYLE:=         manual
 MUSL_LD_SO:=		"`echo 'void main(void) {}' |${TARGET_CC} ${TARGET_CFLAGS} -x c -o \
 			$(BUILD_DIR)/.musl.tmp - >/dev/null 2>&1 ;\
 			${TARGET_COMPILER_PREFIX}readelf -l $(BUILD_DIR)/.musl.tmp 2>/dev/null \
-			| grep 'program interpreter: /lib/ld-musl' | sed -e 's|.*lib/||'|sed -e 's|]||' ;\
+			| grep 'program interpreter: /lib.*/ld-musl' | sed -e 's|.*lib.*/||'|sed -e 's|]||' ;\
 			rm $(BUILD_DIR)/.musl.tmp`"
 
 # do nothing, musl is already build in toolchain directory
