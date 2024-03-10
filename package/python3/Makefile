@@ -89,6 +89,12 @@ CONFIGURE_ENV+=		ac_cv_have_long_long_format=yes \
 			ac_cv_file__dev_ptc=no \
 			ac_cv_header_libintl_h=no
 
+ifeq ($(ADK_TARGET_BIG_ENDIAN),y)
+CONFIGURE_ENV+=		ax_cv_c_float_words_bigendian=yes
+else
+CONFIGURE_ENV+=		ax_cv_c_float_words_bigendian=no
+endif
+
 python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.11
