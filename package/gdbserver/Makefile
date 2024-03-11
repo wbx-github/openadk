@@ -32,6 +32,7 @@ $(eval $(call PKG_template,GDBSERVER,gdbserver,${PKG_VERSION}-${PKG_RELEASE},${P
 
 CONFIGURE_ARGS+=	--enable-static \
 			--disable-gdb \
+			--disable-sim \
 			--without-curses \
 			--without-system-zlib
 
