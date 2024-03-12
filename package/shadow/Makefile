@@ -4,17 +4,19 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		shadow
-PKG_VERSION:=		4.13
+PKG_VERSION:=		4.14.3
 PKG_RELEASE:=		1
-PKG_HASH:=		9afe245d79a2e7caac5f1ed62519b17416b057ec89df316df1c3935502f9dd2c
+PKG_HASH:=		6969279236fe3152768573a38c9f83cb9ca109851a5a990aec1fc672ac2cfcd2
 PKG_DESCR:=		utilities to deal with user accounts
 PKG_BUILDDEP_GLIBC:=	libxcrypt
 PKG_SECTION:=		sys/utils
-PKG_SITES:=		https://github.com/shadow-maint/shadow/releases/download/4.13/
+PKG_SITES:=		https://github.com/shadow-maint/shadow/releases/download/$(PKG_VERSION)/
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,SHADOW,shadow,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
+
+CONFIGURE_ARGS+=	--without-libbsd
 
 shadow-install:
 	$(INSTALL_DIR) $(IDIR_SHADOW)/usr/bin
