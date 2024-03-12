@@ -4,11 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libbsd
-PKG_VERSION:=		0.10.0
+PKG_VERSION:=		0.11.7
 PKG_RELEASE:=		1
-PKG_HASH:=		34b8adc726883d0e85b3118fa13605e179a62b31ba51f676136ecb2d0bc1a887
+PKG_HASH:=		9baa186059ebbf25c06308e9f991fda31f7183c0f24931826d83aa6abd8a0261
 PKG_DESCR:=		bsd helper functions
 PKG_SECTION:=		libs/misc
+PKG_BUILDDEP:=		libmd
+PKG_DEPENDS:=		libmd
 PKG_URL:=		https://libbsd.freedesktop.org/
 PKG_SITES:=		https://libbsd.freedesktop.org/releases/
 PKG_OPTS:=		dev
