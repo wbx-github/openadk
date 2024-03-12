@@ -36,11 +36,6 @@ CONFIGURE_ARGS+=	--enable-static \
 			--without-curses \
 			--without-system-zlib
 
-ifneq ($(ADK_TARGET_BINFMT_FLAT)$(ADK_TARGET_USE_STATIC_LIBS_ONLY)$(ADK_TARGET_USE_STATIC_AND_SHARED_LIBS),)
-TARGET_LDFLAGS+=	-static-libstdc++
-CONFIGURE_ARGS+=	--disable-build-with-cxx --with-libthread-db=$(STAGING_TARGET_DIR)/usr/lib/libthread_db.a --disable-source-highlight
-endif
-
 gdbserver-install:
 	${INSTALL_DIR} ${IDIR_GDBSERVER}/usr/bin
 	${INSTALL_BIN} ${WRKINST}/usr/bin/gdbserver ${IDIR_GDBSERVER}/usr/bin/
