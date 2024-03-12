@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pkgconf
 PKG_VERSION:=		1.1.0
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		5f1ef65d73a880fa5e7012102a17f7b32010e5e46139aed85851a541ba828a63
 PKG_DESCR:=		smart pkg-config replacement
 PKG_SECTION:=		dev/tools
@@ -29,6 +29,9 @@ endif
 	(cd $(STAGING_HOST_DIR)/usr/bin && ln -sf pkg-config $(GNU_TARGET_NAME)-pkg-config)
 
 pkgconf-install:
+	$(INSTALL_DIR) $(IDIR_PKGCONF)/usr/lib
+	$(CP) $(WRKINST)/usr/lib/libpkgconf*so* \
+		$(IDIR_PKGCONF)/usr/lib
 	$(INSTALL_DIR) $(IDIR_PKGCONF)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/pkgconf \
 		$(IDIR_PKGCONF)/usr/bin
