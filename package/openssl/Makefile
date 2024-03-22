@@ -89,6 +89,7 @@ do-configure:
 		PATH='$(TARGET_PATH)' \
 		CROSS_COMPILE='' \
 		CFLAGS="$(TARGET_CFLAGS)" \
+		LDFLAGS="$(TARGET_LDFLAGS) -latomic" \
 		./Configure $(CONFIG) \
 			--prefix=/usr \
 			--openssldir=/etc/ssl \
