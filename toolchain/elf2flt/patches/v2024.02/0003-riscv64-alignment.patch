@@ -1,0 +1,12 @@
+diff -Nur elf2flt-v2024.02.orig/elf2flt.ld.in elf2flt-v2024.02/elf2flt.ld.in
+--- elf2flt-v2024.02.orig/elf2flt.ld.in	2024-03-22 04:51:08.000000000 +0100
++++ elf2flt-v2024.02/elf2flt.ld.in	2024-03-22 13:08:31.793773247 +0100
+@@ -139,7 +139,7 @@
+ 		@SYMBOL_PREFIX@_ssro_size = @SYMBOL_PREFIX@_essro - @SYMBOL_PREFIX@_ssro;
+ 		PROVIDE(@SYMBOL_PREFIX@_SDA2_BASE_ = @SYMBOL_PREFIX@_ssro + (@SYMBOL_PREFIX@_ssro_size / 2));
+ 
+-		. = ALIGN(4) ;
++		. = ALIGN(8) ;
+ TOR:		@SYMBOL_PREFIX@__CTOR_LIST__ = .;
+ TOR:		LONG((@SYMBOL_PREFIX@__CTOR_END__ - @SYMBOL_PREFIX@__CTOR_LIST__) / 4 - 2)
+ SINGLE_LINK:	/* gcc uses crtbegin.o to find the start of
