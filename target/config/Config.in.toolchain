@@ -5,6 +5,7 @@ config ADK_TARGET_CFLAGS_OPT
 	string
 	default "-Os -pipe" if ADK_TARGET_CFLAGS_OPT_OS
 	default "-Og -pipe" if ADK_TARGET_CFLAGS_OPT_OG
+	default "-O1 -pipe" if ADK_TARGET_CFLAGS_OPT_O1
 	default "-O2 -pipe" if ADK_TARGET_CFLAGS_OPT_O2
 	default "-O3 -pipe" if ADK_TARGET_CFLAGS_OPT_O3
 	default "-O0 -pipe" if ADK_TARGET_CFLAGS_OPT_O0
