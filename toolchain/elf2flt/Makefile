@@ -32,7 +32,7 @@ BFDLIB:=		libbfd.a
 endif
 
 $(WRKBUILD)/.configured:
-	(cd $(WRKBUILD); autoreconf -vif;)
+	(cd $(WRKBUILD); PATH='${HOST_PATH}' autoreconf -vif;)
 	(cd $(WRKBUILD); \
 	CPPFLAGS="-idirafter $(ADK_TOPDIR)/adk/include" \
 	./configure --prefix=$(STAGING_HOST_DIR)/usr \
