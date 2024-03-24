@@ -1,0 +1,19 @@
+diff -Nur linux-6.1.79.orig/fs/binfmt_flat.c linux-6.1.79/fs/binfmt_flat.c
+--- linux-6.1.79.orig/fs/binfmt_flat.c	2024-02-23 09:12:53.000000000 +0100
++++ linux-6.1.79/fs/binfmt_flat.c	2024-03-23 22:35:54.496759006 +0100
+@@ -879,6 +879,7 @@
+ 	if (res < 0)
+ 		return res;
+ 
++#ifndef CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET
+ 	/* Update data segment pointers for all libraries */
+ 	for (i = 0; i < MAX_SHARED_LIBS; i++) {
+ 		if (!libinfo.lib_list[i].loaded)
+@@ -893,6 +894,7 @@
+ 				return -EFAULT;
+ 		}
+ 	}
++#endif
+ 
+ 	set_binfmt(&flat_format);
+ 
