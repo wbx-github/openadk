@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		perl
-PKG_VERSION:=		5.38.0
+PKG_VERSION:=		5.38.2
 PKG_RELEASE:=		1
-PKG_HASH:=		eca551caec3bc549a4e590c0015003790bdd1a604ffe19cc78ee631d51f7072e
+PKG_HASH:=		d91115e90b896520e83d4de6b52f8254ef2b70a8d545ffab33200ea9f1cf29e8
 PKG_DESCR:=		perl interpreter
 PKG_SECTION:=		dev/lang
 PKG_NEEDS:=		threads
@@ -14,7 +14,7 @@ PKG_URL:=		http://www.perl.org/
 PKG_SITES:=		http://www.cpan.org/src/
 PKG_NOPARALLEL:=	1
 
-PC_VERSION:=		1.5
+PC_VERSION:=		1.5.2
 PC_SITE:=		https://github.com/arsv/perl-cross/releases/download/$(PC_VERSION)
 
 include ${ADK_TOPDIR}/mk/host.mk
@@ -55,6 +55,7 @@ pre-configure:
 		cd $(DL_DIR); wget $(PC_SITE)/perl-cross-$(PC_VERSION).tar.gz; \
 	fi)
 	(cd $(WRKSRC); tar --strip-components=1 -xf $(DL_DIR)/perl-cross-$(PC_VERSION).tar.gz)
+	$(CP) $(SCRIPT_DIR)/config.* $(WRKSRC)/cnf
 
 perl-install:
 	${INSTALL_DIR} ${IDIR_PERL}/usr/bin
