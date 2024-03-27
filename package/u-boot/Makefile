@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2024.01
+PKG_VERSION:=		2024.04-rc5
 PKG_RELEASE:=		1
-PKG_HASH:=		b99611f1ed237bf3541bdc8434b68c96a6e05967061f992443cb30aabebef5b3
+PKG_HASH:=		8531d00dc0dcb5c154b63e5744bb6f5091a7f351a5add9a20943635bcf3e7da1
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host swig-host python3-host python-setuptools-host
@@ -113,6 +113,8 @@ do-configure:
 
 do-build:
 	(cd $(WRKBUILD) && env \
+		PKG_CONFIG="$(STAGING_HOST_DIR)/usr/bin/pkg-config" \
+		PKG_CONFIG_LIBDIR="$(STAGING_HOST_DIR)/lib/pkgconfig:$(STAGING_HOST_DIR)/share/pkgconfig" \
 		KBUILD_VERBOSE=1 \
 		KCFLAGS='$(EXTRA_CFLAGS)' \
 		PATH='$(HOST_PATH)' \
