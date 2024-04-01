@@ -55,6 +55,12 @@ ifeq ($(ADK_TARGET_SYSTEM_SIPEED_MAIX_BIT),y)
 	@echo 'sudo python3 scripts/kflash.py -p /dev/ttyUSB0 -b 1500000 -t $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
+ifeq ($(ADK_TARGET_FS),genimage)
+targethelp:
+	@echo "The disk image is: $(FW_DIR)/sdcard.img"
+	@echo "Use following command to install it on SD card:"
+	@echo 'sudo dd if=$(FW_DIR)/sdcard.img of=/dev/sdX bs=2048k'
+endif
 ifeq ($(ADK_TARGET_FS),nfsroot)
 targethelp:
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
@@ -66,6 +72,13 @@ kernel-strip:
 
 kernel-install: kernel-strip
 	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
+
+dtb-install:
+	${KERNEL_MAKE} dtbs
+	for x in $(LINUX_DIR)/arch/riscv/boot/dts/*/*.dtb; do \
+		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/riscv/boot/dts/*/*.dtb $(FW_DIR); \
+		break; \
+	done
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)
@@ -79,6 +92,9 @@ imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
 imageinstall: createinitramfs targethelp
+endif
+ifeq ($(ADK_TARGET_FS),genimage)
+imageinstall: dtb-install $(FW_DIR)/$(GENIMAGE) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)
 imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp

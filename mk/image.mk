@@ -342,8 +342,12 @@ ${FW_DIR}/${GENIMAGE}: ${TARGET_DIR} kernel-package
 	@mkdir -p ${FW_DIR}/temp
 	@$(CP) $(KERNEL) $(FW_DIR)/kernel
 	@dd if=/dev/zero of=${FW_DIR}/cfgfs.img bs=16384 count=1024 $(MAKE_TRACE)
-	@mkdir -p ${FW_DIR}/extlinux
-	@$(CP) $(EXTLINUX) $(FW_DIR)/extlinux
+	mkdir -p ${FW_DIR}/extlinux
+	$(CP) $(EXTLINUX) $(FW_DIR)/extlinux
+	mkdir -p $(TARGET_DIR)/boot/extlinux
+	$(CP) $(EXTLINUX) $(TARGET_DIR)/boot/extlinux
+	$(CP) $(FW_DIR)/kernel $(TARGET_DIR)/boot
+	-$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR)/boot
 ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
 	echo '#!/bin/sh' > $(ADK_TOPDIR)/scripts/fakeroot.sh
 	echo "chown -R 0:0 $(TARGET_DIR)" >> $(ADK_TOPDIR)/scripts/fakeroot.sh

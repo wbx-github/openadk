@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2024.04-rc5
+PKG_VERSION:=		2024.01
 PKG_RELEASE:=		1
-PKG_HASH:=		8531d00dc0dcb5c154b63e5744bb6f5091a7f351a5add9a20943635bcf3e7da1
+PKG_HASH:=		b99611f1ed237bf3541bdc8434b68c96a6e05967061f992443cb30aabebef5b3
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		libressl-host dtc-host swig-host python3-host python-setuptools-host
@@ -16,7 +16,7 @@ PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
-PKG_SYSTEM_DEPENDS:=	banana-p2-zero beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g
+PKG_SYSTEM_DEPENDS:=	banana-p2-zero beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g starfive-visionfive2
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -86,6 +86,10 @@ ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
 CONFIG:=		stm32f746-disco_defconfig
 UBOOT:=			u-boot-dtb.bin
 endif
+ifeq ($(ADK_TARGET_SYSTEM_STARFIVE_VISIONFIVE2),y)
+CONFIG:=		starfive_visionfive2_defconfig
+UBOOT:=			u-boot.itb
+endif
 
 HOST_MAKE_FLAGS+=	HOSTCFLAGS="$(HOST_CPPFLAGS) $(HOST_CFLAGS)" \
 			HOSTLDFLAGS="$(HOST_LDFLAGS) -ldl"
@@ -119,6 +123,7 @@ do-build:
 		KCFLAGS='$(EXTRA_CFLAGS)' \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
+		OPENSBI="$(FW_DIR)/fw_dynamic.bin" \
 		$(MAKE))
 	(cd $(WRKBUILD) && env \
 		PATH='$(HOST_PATH)' \
@@ -165,6 +170,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK),y)
 	$(CP) ./files/uEnv.txt.bbb $(FW_DIR)/uEnv.txt
 	$(INSTALL_BIN) $(WRKBUILD)/MLO $(FW_DIR)
+endif
+ifeq ($(ADK_TARGET_SYSTEM_STARFIVE_VISIONFIVE2),y)
+	$(CP) $(WRKBUILD)/spl/u-boot-spl.bin.normal.out $(FW_DIR)
 endif
 
 include $(ADK_TOPDIR)/mk/host-bottom.mk
