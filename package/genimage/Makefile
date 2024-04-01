@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		genimage
-PKG_VERSION:=		16
+PKG_VERSION:=		17
 PKG_RELEASE:=		1
-PKG_HASH:=		869f9662d3b778c69b1d1fe70df658e1c9e90aeda26abb753f6fe55e8b0c6e73
+PKG_HASH:=		a8756e3567a0d4d82c36b08ccc1e088250b9006d5670c6b2b014185e6ec60671
 PKG_DESCR:=		image creation utility
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		confuse-host
