@@ -2,7 +2,7 @@
 #-
 # Copyright © 2010, 2011, 2012
 #	Thorsten Glaser <tg@mirbsd.org>
-# Copyright © 2010-2023
+# Copyright © 2010-2024
 #	Waldemar Brodkorb <wbx@openadk.org>
 #
 # Provided that these terms and disclaimer and all copyright notices
@@ -238,7 +238,7 @@ print -n "$ostr" | \
 
 print Extracting installation archive...
 mkdir "$T/src"
-xz -dc "$src" | (cd "$T/src"; tar -xpf -)
+gunzip -dc "$src" | (cd "$T/src"; tar -xpf -)
 cd "$T/src"
 rnddev=/dev/urandom
 [[ -c /dev/arandom ]] && rnddev=/dev/arandom
