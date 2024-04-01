@@ -137,10 +137,6 @@ config ADK_HOST_BUILD_TAR
 	bool
 	default n
 
-config ADK_HOST_BUILD_XZ
-	bool
-	default n
-
 # optional, but can be provided by host
 config ADK_HOST_BUILD_DOSFSTOOLS
 	bool
@@ -290,7 +286,6 @@ config ADK_HOST_NEED_SQUASHFS
 
 config ADK_HOST_BUILD_SQUASHFS
 	bool
-	select ADK_HOST_BUILD_XZ
 	default y if ADK_HOST_NEED_SQUASHFS
 	default n
 
@@ -322,7 +317,6 @@ config ADK_COMPRESSION_TOOL
 	string
 	default "gzip -n9" if ADK_LINUX_KERNEL_INITRAMFS_COMPRESSION_GZIP
 	default "bzip2" if ADK_LINUX_KERNEL_INITRAMFS_COMPRESSION_BZIP2
-	default "xz -v --check=crc32 --lzma2=dict=1MiB" if ADK_LINUX_KERNEL_INITRAMFS_COMPRESSION_XZ
 	default "zstd" if ADK_LINUX_KERNEL_INITRAMFS_COMPRESSION_ZSTD
 	default "lz4c -l" if ADK_LINUX_KERNEL_INITRAMFS_COMPRESSION_LZ4
 	default "lzma -9" if ADK_LINUX_KERNEL_INITRAMFS_COMPRESSION_LZMA

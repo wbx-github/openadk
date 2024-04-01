@@ -333,7 +333,6 @@ HOST_STATIC_LDFLAGS:=  -Wl,-static
 endif
 
 SED:=			PATH='${HOST_PATH}' sed -i -e
-XZ:=			PATH='${HOST_PATH}' xz
 CPIO:=			PATH='${HOST_PATH}' cpio
 LINUX_DIR:=		$(BUILD_DIR)/$(ADK_TARGET_OS)
 KERNEL_MODULE_FLAGS:=	ARCH=${ADK_TARGET_KARCH} \
@@ -417,7 +416,7 @@ PKG_INSTALL:=		PATH='${HOST_PATH}' \
 PKG_STATE_DIR:=		$(TARGET_DIR)/usr/lib/opkg
 endif
 
-ifeq ($(ADK_TARGET_PACKAGE_TXZ),y)
+ifeq ($(ADK_TARGET_PACKAGE_TGZ),y)
 PKG_BUILD:=		${BASH} ${SCRIPT_DIR}/tarpkg build
 PKG_INSTALL:=		PKG_INSTROOT='$(TARGET_DIR)' \
 			PATH='${HOST_PATH}' ${BASH} ${SCRIPT_DIR}/tarpkg install

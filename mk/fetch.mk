@@ -92,7 +92,7 @@ $(1):
 			(cd $${PKG_NAME}-$${PKG_VERSION}; git submodule update --init --recursive) $(DL_TRACE); \
 		fi; \
 		rm -rf $${PKG_NAME}-$${PKG_VERSION}/.git; \
-		PATH='$(HOST_PATH)' tar cJf $${PKG_NAME}-$${PKG_VERSION}.tar.xz $${PKG_NAME}-$${PKG_VERSION}; \
+		PATH='$(HOST_PATH)' tar czf $${PKG_NAME}-$${PKG_VERSION}.tar.gz $${PKG_NAME}-$${PKG_VERSION}; \
 		touch $$$${filename}.nohash; \
 		rm -rf $${PKG_NAME}-$${PKG_VERSION}; \
 		: check the size here; \

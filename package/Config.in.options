@@ -2,14 +2,14 @@ config ADK_PACKAGE_SUFFIX
 	string
 	default "ipk" if ADK_TARGET_PACKAGE_IPKG
 	default "ipk" if ADK_TARGET_PACKAGE_OPKG
-	default "tar.xz" if ADK_TARGET_PACKAGE_TXZ
+	default "tar.gz" if ADK_TARGET_PACKAGE_TGZ
 
 choice
 prompt "Package format"
-default ADK_TARGET_PACKAGE_TXZ
+default ADK_TARGET_PACKAGE_TGZ
 
-config ADK_TARGET_PACKAGE_TXZ
-	bool "xz compressed tar archive"
+config ADK_TARGET_PACKAGE_TGZ
+	bool "gzip compressed tar archive"
 	help
 	  Create compressed tar archives of packages.
 	  Pre- and post install scripts will be executed in the target

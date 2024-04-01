@@ -16,14 +16,14 @@ if [ "$1" = "build" ];then
 		chmod +x ${2}/usr/lib/pkg/${pkgname}.$file )
 	done
 	rm -rf $2/CONTROL 
-	(cd $2 && tar -cf - .|xz -c > $3/${pkgname}_${version}_${arch}.tar.xz)
+	(cd $2 && tar -cf - .|gzip -c > $3/${pkgname}_${version}_${arch}.tar.gz)
 elif [ "$1" = "install" ];then
 	pkg=$(echo $(basename $2)|sed -e "s#_.*##")
 	if [ -x ${PKG_INSTROOT}/usr/lib/pkg/${pkg}.preinst ]; then
    	  IPKG_INSTROOT="$PKG_INSTROOT" ${PKG_INSTROOT}/usr/lib/pkg/${pkg}.preinst
 	  rm ${PKG_INSTROOT}/usr/lib/pkg/${pkg}.preinst
 	fi
-	xz -d -c $2|tar -xpf - -C ${PKG_INSTROOT}
+	gzip -d -c $2|tar -xpf - -C ${PKG_INSTROOT}
 	if [ -x ${PKG_INSTROOT}/usr/lib/pkg/${pkg}.postinst ]; then
    	  IPKG_INSTROOT="$PKG_INSTROOT" ${PKG_INSTROOT}/usr/lib/pkg/${pkg}.postinst
 	  rm ${PKG_INSTROOT}/usr/lib/pkg/${pkg}.postinst

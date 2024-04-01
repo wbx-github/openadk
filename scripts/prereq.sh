@@ -618,15 +618,6 @@ else
   host_build_cpio=1
 fi
 
-printf " --->  checking if xz is installed.. "
-host_build_xz=0
-if ! which xz >/dev/null 2>&1; then
-  printf "not found\n"
-  host_build_xz=1
-else
-  printf "found\n"
-fi
-
 # optional
 host_build_cdrtools=0
 if ! which mkisofs >/dev/null 2>&1; then
@@ -724,9 +715,6 @@ if [ $host_build_coreutils -eq 1 ]; then
 fi
 if [ $host_build_cpio -eq 1 ]; then
   printf "\t%s\n" "select ADK_HOST_BUILD_CPIO" >> $topdir/target/config/Config.in.prereq
-fi
-if [ $host_build_xz -eq 1 ]; then
-  printf "\t%s\n" "select ADK_HOST_BUILD_XZ" >> $topdir/target/config/Config.in.prereq
 fi
 # optional
 if [ $host_build_cdrtools -eq 1 ]; then

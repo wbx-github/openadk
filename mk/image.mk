@@ -122,8 +122,8 @@ INITRAMFS=		${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}-${ADK_TARGET_FS}
 ROOTFSSQUASHFS=		${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}-${ADK_TARGET_FS}.img
 ROOTFSJFFS2=		${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}-jffs2.img
 ROOTFSUBIFS=		${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}-ubifs.img
-ROOTFSTARBALL=		${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}-${ADK_TARGET_FS}+kernel.tar.xz
-ROOTFSUSERTARBALL=	${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}-${ADK_TARGET_FS}.tar.xz
+ROOTFSTARBALL=		${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}-${ADK_TARGET_FS}+kernel.tar.gz
+ROOTFSUSERTARBALL=	${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}-${ADK_TARGET_FS}.tar.gz
 ROOTFSISO=		${ADK_TARGET_SYSTEM}-${ADK_TARGET_LIBC}.iso
 
 kernel-package: kernel-strip
@@ -145,14 +145,14 @@ endif
 
 ${FW_DIR}/${ROOTFSTARBALL}: ${TARGET_DIR}/.adk kernel-package
 	cd ${TARGET_DIR}; find . | sed -n '/^\.\//s///p' | sort | \
-		$(CPIO) --quiet -o -Hustar --owner=0:0 | $(XZ) -c >$@
+		$(CPIO) --quiet -o -Hustar --owner=0:0 | gzip -c >$@
 ifeq ($(ADK_TARGET_QEMU),y)
 	@cp $(KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
 endif
 
 ${FW_DIR}/${ROOTFSUSERTARBALL}: ${TARGET_DIR}/.adk
 	cd ${TARGET_DIR}; find . | grep -v ./boot/ | sed -n '/^\.\//s///p' | sort | \
-		$(CPIO) --quiet -o -Hustar --owner=0:0 | $(XZ) -c >$@
+		$(CPIO) --quiet -o -Hustar --owner=0:0 | gzip -c >$@
 
 ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
 	PATH='${HOST_PATH}' $(BASH) ${SCRIPT_DIR}/gen_initramfs_list.sh -u squash -g squash \
@@ -193,7 +193,7 @@ ${FW_DIR}/${INITRAMFS}: ${STAGING_TARGET_DIR}/${INITRAMFS}_list
 
 ${BUILD_DIR}/root.squashfs: ${TARGET_DIR}/.adk
 	${STAGING_HOST_DIR}/usr/bin/mksquashfs ${TARGET_DIR} \
-		${BUILD_DIR}/root.squashfs -comp xz \
+		${BUILD_DIR}/root.squashfs -comp gzip \
 		-nopad -noappend -root-owned $(MAKE_TRACE)
 
 ${FW_DIR}/${ROOTFSJFFS2}: ${TARGET_DIR}
@@ -237,24 +237,6 @@ createinitramfs: ${STAGING_TARGET_DIR}/${INITRAMFS}_list
 		echo 'CONFIG_INITRAMFS_IS_LARGE=n'; \
 		echo 'CONFIG_INITRAMFS_PRESERVE_MTIME=n'; \
 	) >> ${LINUX_DIR}/.config
-ifeq ($(ADK_LINUX_KERNEL_COMP_XZ),y)
-		echo "CONFIG_RD_BZIP2=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_RD_GZIP=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_RD_LZMA=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_RD_LZ4=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_RD_LZO=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_RD_XZ=y" >> ${LINUX_DIR}/.config
-		echo "CONFIG_RD_ZSTD=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_INITRAMFS_COMPRESSION_XZ=y" >> ${LINUX_DIR}/.config
-		echo "CONFIG_XZ_DEC_X86=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_XZ_DEC_POWERPC=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_XZ_DEC_IA64=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_XZ_DEC_ARM=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_XZ_DEC_ARMTHUMB=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_XZ_DEC_SPARC=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_XZ_DEC_TEST=n" >> ${LINUX_DIR}/.config
-		echo "CONFIG_XZ_DEC_MICROLZMA=n" >> ${LINUX_DIR}/.config
-endif
 ifeq ($(ADK_LINUX_KERNEL_COMP_ZSTD),y)
 		echo "CONFIG_RD_XZ=n" >> ${LINUX_DIR}/.config
 		echo "CONFIG_RD_BZIP2=n" >> ${LINUX_DIR}/.config
@@ -407,10 +389,10 @@ endif
 ifeq ($(ADK_TARGET_DUAL_BOOT),y)
 	(cd ${TARGET_DIR}; find . | sed -n '/^\.\//s///p' | sort | \
 		PATH='${HOST_PATH}' $(CPIO) -o --quiet -Hustar --owner=0:0 | \
-		${XZ} -c > ${FW_DIR}/openadk.tar.xz)
-	(cd ${FW_DIR}; PATH='${HOST_PATH}' sha256sum openadk.tar.xz \
+		${GZIP} -c > ${FW_DIR}/openadk.tar.gz)
+	(cd ${FW_DIR}; PATH='${HOST_PATH}' sha256sum openadk.tar.gz \
 		| cut -d\  -f1 > sha256.txt)
-	(cd ${FW_DIR}; PATH='${HOST_PATH}' tar -cf ${ADK_TARGET_SYSTEM}-update.tar openadk.tar.xz sha256.txt)
+	(cd ${FW_DIR}; PATH='${HOST_PATH}' tar -cf ${ADK_TARGET_SYSTEM}-update.tar openadk.tar.gzip sha256.txt)
 	@rm -rf ${FW_DIR}/temp
 endif
 ifeq ($(ADK_PACKAGE_GRUB_EFI_X86)$(ADK_PACKAGE_GRUB_EFI_X86_64),y)
