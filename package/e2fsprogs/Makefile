@@ -54,7 +54,8 @@ HOST_CONFIGURE_ARGS+=	--disable-rpath \
 			--disable-nls \
 			--disable-uuidd \
 			--disable-defrag \
-			--disable-debugfs
+			--disable-debugfs \
+			--with-crond-dir="$(STAGING_HOST_DIR)/etc"
 
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 CONFIGURE_ARGS+=	--disable-elf-shlibs
