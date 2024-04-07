@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		tor
-PKG_VERSION:=		0.4.6.8
+PKG_VERSION:=		0.4.8.10
 PKG_RELEASE:=		1
-PKG_HASH:=		15ce1a37b4cc175b07761e00acdcfa2c08f0d23d6c3ab9c97c464bd38cc5476a
+PKG_HASH:=		e628b4fab70edb4727715b23cf2931375a9f7685ac08f2c59ea498a178463a86
 PKG_DESCR:=		anonymous internet communication system
 PKG_SECTION:=		net/proxy
-PKG_DEPENDS:=		libevent zlib libressl xz
-PKG_BUILDDEP:=		libevent zlib libressl xz
+PKG_DEPENDS:=		libevent zlib libressl
+PKG_BUILDDEP:=		libevent zlib libressl
 PKG_NEEDS:=		threads
 PKG_URL:=		https://www.torproject.org/
 PKG_SITES:=		https://www.torproject.org/dist/
@@ -21,7 +21,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,TOR,tor,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-AUTOTOOL_STYLE:=	autoreconf
 # -DNDEBUG not supported
 TARGET_CPPFLAGS:=
 CONFIGURE_ENV+=		ac_cv_libevent_normal=yes \
