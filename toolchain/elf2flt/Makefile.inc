@@ -14,3 +14,4 @@ PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_SITES:=		https://github.com/uclinux-dev/elf2flt.git
 endif
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
