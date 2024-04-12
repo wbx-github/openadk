@@ -14,6 +14,8 @@ PKG_SITES:=		https://git.uclibc-ng.org/git/uclibc-ng-test.git
 
 PKG_NOPARALLEL:=	1
 
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
+
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,UCLIBC_NG_TEST,uclibc-ng-test,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
