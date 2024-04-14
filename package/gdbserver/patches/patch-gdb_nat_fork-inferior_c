@@ -1,0 +1,10 @@
+--- gdb-14.2.orig/gdb/nat/fork-inferior.c	2024-03-03 06:55:00.000000000 +0100
++++ gdb-14.2/gdb/nat/fork-inferior.c	2024-03-22 17:02:35.981582750 +0100
+@@ -27,6 +27,7 @@
+ #include "gdbsupport/pathstuff.h"
+ #include "gdbsupport/signals-state-save-restore.h"
+ #include "gdbsupport/gdb_tilde_expand.h"
++#include "linux-ptrace.h"
+ #include <vector>
+ 
+ extern char **environ;
