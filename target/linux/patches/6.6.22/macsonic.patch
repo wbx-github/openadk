@@ -1,0 +1,11 @@
+diff -Nur linux-6.6.22.orig/drivers/net/ethernet/natsemi/Kconfig linux-6.6.22/drivers/net/ethernet/natsemi/Kconfig
+--- linux-6.6.22.orig/drivers/net/ethernet/natsemi/Kconfig	2024-03-15 19:25:07.000000000 +0100
++++ linux-6.6.22/drivers/net/ethernet/natsemi/Kconfig	2024-04-16 10:16:50.352443898 +0200
+@@ -19,6 +19,7 @@
+ config MACSONIC
+ 	tristate "Macintosh SONIC based ethernet (onboard, NuBus, LC, CS)"
+ 	depends on MAC
++	select BITREVERSE
+ 	help
+ 	  Support for NatSemi SONIC based Ethernet devices.  This includes
+ 	  the onboard Ethernet in many Quadras as well as some LC-PDS,

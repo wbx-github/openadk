@@ -1,0 +1,12 @@
+diff -Nur linux-6.6.22.orig/arch/parisc/Makefile linux-6.6.22/arch/parisc/Makefile
+--- linux-6.6.22.orig/arch/parisc/Makefile	2024-03-15 19:25:07.000000000 +0100
++++ linux-6.6.22/arch/parisc/Makefile	2024-04-16 03:57:37.515308996 +0200
+@@ -41,7 +41,7 @@
+ 
+ # Set default 32 bits cross compilers for vdso
+ CC_ARCHES_32 = hppa hppa2.0 hppa1.1
+-CC_SUFFIXES  = linux linux-gnu unknown-linux-gnu suse-linux
++CC_SUFFIXES  = linux linux-gnu unknown-linux-gnu suse-linux openadk-linux-uclibc
+ CROSS32_COMPILE := $(call cc-cross-prefix, \
+ 	$(foreach a,$(CC_ARCHES_32), \
+ 	$(foreach s,$(CC_SUFFIXES),$(a)-$(s)-)))
