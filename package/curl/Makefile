@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		curl
-PKG_VERSION:=		8.6.0
+PKG_VERSION:=		8.7.1
 PKG_RELEASE:=		1
-PKG_HASH:=		3ccd55d91af9516539df80625f818c734dc6f2ecf9bada33c76765e99121db15
+PKG_HASH:=		6fea2aac6a4610fbd0400afb0bcddbe7258a64c63f1f68e5855ebc0c659710cd
 PKG_DESCR:=		client-side url transfer tool
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		zlib
@@ -54,24 +54,28 @@ HOST_CONFIGURE_ARGS+=	--without-ssl \
 
 ifeq (${ADK_PACKAGE_LIBCURL_WITH_LIBRESSL},y)
 CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
-			--without-gnutls
+			--without-gnutls \
+			--without-wolfssl
 endif
 ifeq (${ADK_PACKAGE_LIBCURL_WITH_OPENSSL},y)
 CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
-			--without-gnutls
+			--without-gnutls \
+			--without-wolfssl
 endif
 ifeq (${ADK_PACKAGE_LIBCURL_WITH_GNUTLS},y)
 CONFIGURE_ARGS+=	--with-gnutls="${STAGING_TARGET_DIR}/usr" \
-			--without-openssl
+			--without-openssl \
+			--without-wolfssl
 endif
 ifeq (${ADK_PACKAGE_LIBCURL_WITH_WOLFSSL},y)
-CONFIGURE_ARGS+=	--with-cyassl="${STAGING_TARGET_DIR}/usr" \
+CONFIGURE_ARGS+=	--with-wolfssl="${STAGING_TARGET_DIR}/usr" \
 			--without-openssl \
 			--without-gnutls
 endif
 ifeq (${ADK_PACKAGE_LIBCURL_WITHOUT_SSL},y)
 CONFIGURE_ARGS+=	--without-ssl \
-			--without-gnutls
+			--without-gnutls \
+			--without-wolfssl
 endif
 
 CONFIGURE_ENV+=		curl_typeof_curl_socklen_t=socklen_t \
