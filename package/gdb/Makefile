@@ -20,7 +20,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,GDB,gdb,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-XAKE_FLAGS+=		MAKEINFO=true
+XAKE_FLAGS+=		MAKEINFO=true V=1
 
 WRKBUILD=		$(WRKDIR)/$(PKG_NAME)-obj
 
