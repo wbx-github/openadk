@@ -311,6 +311,12 @@ TARGET_CXXFLAGS+=	-marm
 endif
 endif
 
+ifeq ($(ADK_TARGET_BINFMT_FDPIC),y)
+TARGET_CFLAGS+=		-mfdpic
+TARGET_CXXFLAGS+=	-mfdpic
+TARGET_LDFLAGS+=	-mfdpic
+endif
+
 # host compiler and linker flags
 HOST_CPPFLAGS:=		-I$(STAGING_HOST_DIR)/usr/include
 ifeq ($(OS_FOR_BUILD),Darwin)

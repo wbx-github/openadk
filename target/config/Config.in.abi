@@ -3,6 +3,18 @@
 
 choice
 prompt "ABI"
+depends on ADK_TARGET_ARCH_XTENSA && ADK_TARGET_CPU_XTENSA_DC233C
+
+config ADK_TARGET_ABI_WINDOWED
+	bool "Windowed ABI"
+
+config ADK_TARGET_ABI_CALL0
+	bool "Call0 ABI"
+
+endchoice
+
+choice
+prompt "ABI"
 depends on ADK_TARGET_ARCH_MIPS64
 
 config ADK_TARGET_ABI_N32
@@ -62,6 +74,8 @@ config ADK_TARGET_ABI
 	default "x32" if ADK_TARGET_ABI_X32
 	default "eabihf" if ADK_TARGET_ARCH_ARM && ADK_TARGET_HARD_FLOAT
 	default "eabi" if ADK_TARGET_ARCH_ARM
+	default "windowed" if ADK_TARGET_ABI_WINDOWED
+	default "call0" if ADK_TARGET_ABI_CALL0
 
 config ADK_TARGET_ABI_RISCV
 	depends on ADK_TARGET_ARCH_RISCV32 || ADK_TARGET_ARCH_RISCV64

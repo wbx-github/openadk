@@ -65,6 +65,13 @@ PKG_HASH:=		71d37c96451333c5c0b84b170169fdcb138bbb27397dc06281905d9717c8ed64
 PKG_SITES:=		${MASTER_SITE_GNU:=binutils/}
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 endif
+ifeq ($(ADK_TOOLCHAIN_BINUTILS_XTENSA),y)
+PKG_VERSION:=		xtensa-fdpic-abi-spec-1.1
+PKG_GIT:=		tag
+PKG_RELEASE:=		1
+PKG_SITES:=		https://github.com/jcmvbkbc/binutils-gdb-xtensa.git
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_GIT),y)
 PKG_VERSION:=		git
 PKG_RELEASE:=		1

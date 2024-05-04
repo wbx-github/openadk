@@ -5,24 +5,21 @@ include $(ADK_TOPDIR)/rules.mk
 include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
-ifeq ($(ADK_TARGET_CPU_XTENSA_DE212),y)
-KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/Image.elf
-else
-KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/uImage
-endif
-
 QEMU_ARGS:=${ADK_QEMU_ARGS}
 ifeq ($(ADK_TARGET_CPU_XTENSA_DC233C),y)
-QEMU_ARGS+=-M kc705
+QEMU_ARGS+=-M lx60
 QEMU_ARGS+=-cpu dc233c
+KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/Image.elf
 endif
 ifeq ($(ADK_TARGET_CPU_XTENSA_DC232B),y)
 QEMU_ARGS+=-M kc705
 QEMU_ARGS+=-cpu dc232b
+KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/uImage
 endif
 ifeq ($(ADK_TARGET_CPU_XTENSA_DE212),y)
 QEMU_ARGS+=-M kc705-nommu
 QEMU_ARGS+=-cpu de212 -m 256
+KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/Image.elf
 endif
 
 # target helper text

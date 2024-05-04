@@ -21,8 +21,13 @@ ifeq ($(ADK_KERNEL_ROOT_NFS),y)
 endif
 endif
 ifeq ($(ADK_TARGET_ARCH_XTENSA),y)
+ifeq ($(ADK_TARGET_ABI),)
 	tar xf $(ADK_TOPDIR)/target/xtensa/overlay/xtensa_$(ADK_TARGET_CPU_TYPE).tar \
 		--strip-components=1 -C $(WRKSRC) linux
+else
+	tar xf $(ADK_TOPDIR)/target/xtensa/overlay/xtensa_$(ADK_TARGET_CPU_TYPE)_$(ADK_TARGET_ABI).tar \
+		--strip-components=1 -C $(WRKSRC) linux
+endif
 endif
 ifneq ($(ADK_DISABLE_KERNEL_PATCHES),y)
 	$(TRACE) kernel-patch
