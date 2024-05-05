@@ -589,7 +589,7 @@ case $target {
 
 (( quiet )) || print Extracting installation archive...
 mount_fs "$rootpart" "$R" ext4
-xz -dc "$src" | (cd "$R"; tar -xpf -)
+gzip -dc "$src" | (cd "$R"; tar -xpf -)
 
 if (( datafssz )); then
 	mkdir -m0755 "$R"/data
