@@ -188,6 +188,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_XILINX_ZYNQ),y)
 VENDOR:=xilinx/
 endif
+ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
+VENDOR:=st/
+endif
 endif
 
 dtb-install:
@@ -250,7 +253,7 @@ ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F769),y)
 	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
-	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
+	${KERNEL_MAKE} $(VENDOR)stm32f746-disco.dtb $(MAKE_TRACE)
 endif
 	for x in $(LINUX_DIR)/arch/arm/boot/dts/$(VENDOR)*.dtb; do \
 		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm/boot/dts/$(VENDOR)*.dtb $(FW_DIR); \
