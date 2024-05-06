@@ -24,6 +24,7 @@ GLIBC_CONFOPTS:=	--build=$(GNU_HOST_NAME) \
 			--disable-nls \
 			--disable-werror \
 			--disable-nscd \
+			--disable-default-pie \
 			--enable-shared
 
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
