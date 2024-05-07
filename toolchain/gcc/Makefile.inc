@@ -98,12 +98,12 @@ PKG_RELEASE:=		1
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 endif
 ifeq ($(ADK_TOOLCHAIN_GCC_XTENSA),y)
-PKG_VERSION:=		xtensa-fdpic-abi-spec-1.1
+PKG_VERSION:=		xtensa-fdpic-abi-spec-1.2
 PKG_GIT:=		tag
 PKG_SITES:=		https://github.com/jcmvbkbc/gcc-xtensa.git
 PKG_RELEASE:=		1
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
-LIBSTDCXXVER:=		29
+LIBSTDCXXVER:=		30
 endif
 ifeq ($(ADK_TOOLCHAIN_GCC_GIT),y)
 PKG_VERSION:=		git
