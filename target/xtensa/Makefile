@@ -8,7 +8,7 @@ include $(ADK_TOPDIR)/mk/image.mk
 QEMU_ARGS:=${ADK_QEMU_ARGS}
 ifeq ($(ADK_TARGET_CPU_XTENSA_DC233C),y)
 QEMU_ARGS+=-M lx60
-QEMU_ARGS+=-cpu dc233c
+QEMU_ARGS+=-cpu dc233c -m 128
 KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/Image.elf
 endif
 ifeq ($(ADK_TARGET_CPU_XTENSA_DC232B),y)
