@@ -1,0 +1,16 @@
+--- dropbear-2024.85.orig/src/svr-main.c	2024-04-25 16:30:00.000000000 +0200
++++ dropbear-2024.85/src/svr-main.c	2024-05-07 14:35:09.650486568 +0200
+@@ -305,8 +305,13 @@ static void main_noinetd(int argc, char
+ #if DEBUG_NOFORK
+ 			fork_ret = 0;
+ #else
++#if DROPBEAR_VFORK
++                        fork_ret = vfork();
++#else
++
+ 			fork_ret = fork();
+ #endif
++#endif
+ 			if (fork_ret < 0) {
+ 				dropbear_log(LOG_WARNING, "Error forking: %s", strerror(errno));
+ 				goto out;
