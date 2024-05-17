@@ -47,6 +47,9 @@ endif
 ifeq ($(ADK_TARGET_ARCH_KVX),y)
 XAKE_FLAGS+=		NO_TLS=1
 endif
+ifeq ($(ADK_TARGET_ARCH_NDS32),y)
+XAKE_FLAGS+=		NO_TLS=1
+endif
 
 uclibc-ng-test-install:
 	${INSTALL_DIR} ${IDIR_UCLIBC_NG_TEST}/etc
