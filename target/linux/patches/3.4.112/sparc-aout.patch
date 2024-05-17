@@ -1,0 +1,24 @@
+diff -Nur linux-3.4.103.orig/arch/sparc/boot/Makefile linux-3.4.103/arch/sparc/boot/Makefile
+--- linux-3.4.103.orig/arch/sparc/boot/Makefile	2014-08-13 20:07:43.000000000 -0500
++++ linux-3.4.103/arch/sparc/boot/Makefile	2015-02-16 00:26:16.934618259 -0600
+@@ -74,9 +74,6 @@
+ 	$(call if_changed,gzip)
+ 	@echo '  kernel: $@ is ready'
+ 
+-$(obj)/vmlinux.aout: vmlinux FORCE
+-	$(call if_changed,elftoaout)
+-	@echo '  kernel: $@ is ready'
+ else
+ 
+ # The following lines make a readable image for U-Boot.
+@@ -107,6 +104,10 @@
+ 
+ endif
+ 
++$(obj)/vmlinux.aout: $(obj)/image FORCE
++	$(call if_changed,elftoaout)
++	@echo '  kernel: $@ is ready'
++
+ $(obj)/tftpboot.img: $(obj)/image $(obj)/piggyback System.map $(ROOT_IMG) FORCE
+ 	$(call if_changed,elftoaout)
+ 	$(call if_changed,piggy)

@@ -14,7 +14,7 @@ PKG_DEPENDS:=		libncurses libreadline zlib libexpat libthread-db libgmp mpfr
 PKG_BUILDDEP:=		ncurses readline expat zlib gmp mpfr
 PKG_NEEDS:=		c++
 
-PKG_ARCH_DEPENDS:=	!cris !avr32 !microblaze
+PKG_ARCH_DEPENDS:=	!cris !avr32 !microblaze !nds32
 
 include ${ADK_TOPDIR}/mk/package.mk
 

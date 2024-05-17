@@ -1,0 +1,32 @@
+diff -Nur linux-2.6.37.orig//drivers/usb/core/Kconfig linux-2.6.37/drivers/usb/core/Kconfig
+--- linux-2.6.37.orig//drivers/usb/core/Kconfig	2011-01-05 01:50:19.000000000 +0100
++++ linux-2.6.37/drivers/usb/core/Kconfig	2011-04-12 19:04:23.000000000 +0200
+@@ -59,7 +59,7 @@
+ config USB_DEVICE_CLASS
+ 	bool "USB device class-devices (DEPRECATED)"
+ 	depends on USB
+-	default y
++	default n
+ 	---help---
+ 	  Userspace access to USB devices is granted by device-nodes exported
+ 	  directly from the usbdev in sysfs. Old versions of the driver
+diff -Nur linux-2.6.37.orig//drivers/usb/host/Kconfig linux-2.6.37/drivers/usb/host/Kconfig
+--- linux-2.6.37.orig//drivers/usb/host/Kconfig	2011-01-05 01:50:19.000000000 +0100
++++ linux-2.6.37/drivers/usb/host/Kconfig	2011-04-12 19:04:48.000000000 +0200
+@@ -62,6 +62,7 @@
+ config USB_EHCI_ROOT_HUB_TT
+ 	bool "Root Hub Transaction Translators"
+ 	depends on USB_EHCI_HCD
++	default n
+ 	---help---
+ 	  Some EHCI chips have vendor-specific extensions to integrate
+ 	  transaction translators, so that no OHCI or UHCI companion
+@@ -74,7 +75,7 @@
+ config USB_EHCI_TT_NEWSCHED
+ 	bool "Improved Transaction Translator scheduling"
+ 	depends on USB_EHCI_HCD
+-	default y
++	default n
+ 	---help---
+ 	  This changes the periodic scheduling code to fill more of the low
+ 	  and full speed bandwidth available from the Transaction Translator

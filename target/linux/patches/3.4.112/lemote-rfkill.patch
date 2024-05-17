@@ -1,0 +1,21 @@
+diff -Nur linux-3.3.orig/drivers/net/wireless/rtl818x/rtl8187/rfkill.c linux-3.3/drivers/net/wireless/rtl818x/rtl8187/rfkill.c
+--- linux-3.3.orig/drivers/net/wireless/rtl818x/rtl8187/rfkill.c	2012-03-19 00:15:34.000000000 +0100
++++ linux-3.3/drivers/net/wireless/rtl818x/rtl8187/rfkill.c	2012-03-27 23:29:46.000000000 +0200
+@@ -22,6 +22,9 @@
+ 
+ static bool rtl8187_is_radio_enabled(struct rtl8187_priv *priv)
+ {
++#ifdef CONFIG_LEMOTE_MACH2F
++	return 1;
++#else
+ 	u8 gpio;
+ 
+ 	gpio = rtl818x_ioread8(priv, &priv->map->GPIO0);
+@@ -29,6 +32,7 @@
+ 	gpio = rtl818x_ioread8(priv, &priv->map->GPIO1);
+ 
+ 	return gpio & priv->rfkill_mask;
++#endif
+ }
+ 
+ void rtl8187_rfkill_init(struct ieee80211_hw *hw)

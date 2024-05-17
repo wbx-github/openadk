@@ -1,0 +1,11 @@
+diff -Nur linux-2.6.39-rc7.orig/arch/sparc/boot/btfixupprep.c linux-2.6.39-rc7/arch/sparc/boot/btfixupprep.c
+--- linux-2.6.39-rc7.orig/arch/sparc/boot/btfixupprep.c	2011-05-10 04:33:54.000000000 +0200
++++ linux-2.6.39-rc7/arch/sparc/boot/btfixupprep.c	2011-05-21 13:34:40.000000000 +0200
+@@ -25,7 +25,6 @@
+ #include <errno.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+-#include <malloc.h>
+ 
+ #define MAXSYMS 1024
+ 

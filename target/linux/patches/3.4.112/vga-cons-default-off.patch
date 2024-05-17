@@ -1,0 +1,12 @@
+diff -Nur linux-2.6.37.orig//drivers/video/console/Kconfig linux-2.6.37/drivers/video/console/Kconfig
+--- linux-2.6.37.orig//drivers/video/console/Kconfig	2011-01-05 01:50:19.000000000 +0100
++++ linux-2.6.37/drivers/video/console/Kconfig	2011-04-12 16:29:34.000000000 +0200
+@@ -7,7 +7,7 @@
+ config VGA_CONSOLE
+ 	bool "VGA text console" if EMBEDDED || !X86
+ 	depends on !4xx && !8xx && !SPARC && !M68K && !PARISC && !FRV && !SUPERH && !BLACKFIN && !AVR32 && !MN10300 && (!ARM || ARCH_FOOTBRIDGE || ARCH_INTEGRATOR || ARCH_NETWINDER)
+-	default y
++	default n
+ 	help
+ 	  Saying Y here will allow you to use Linux in text mode through a
+ 	  display that complies with the generic VGA standard. Virtually

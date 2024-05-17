@@ -259,6 +259,10 @@ ifneq ($(ADK_TARGET_ABI_RISCV),)
 GCC_CONFOPTS+=		--with-abi=${ADK_TARGET_ABI_RISCV}
 endif
 
+ifeq ($(ADK_TOOLCHAIN_GCC_NDS32),y)
+EXTRA_CXXFLAGS:=	--std=c++03
+endif
+
 ifeq (${ADK_MAKE_PARALLEL},y)
 GCC_MAKEOPTS+=		-j${ADK_MAKE_JOBS}
 endif
@@ -332,7 +336,7 @@ endif
 		CC='$(HOST_CC)' \
 		CXX='$(HOST_CXX)' \
 		CFLAGS="-O0 -g0 -fomit-frame-pointer" \
-		CXXFLAGS="-O0 -g0 -fomit-frame-pointer" \
+		CXXFLAGS="-O0 -g0 -fomit-frame-pointer $(EXTRA_CXXFLAGS)" \
 		$(WRKBUILD)/configure \
 			${GCC_INITIAL_CONFOPTS} \
 			${GCC_CONFOPTS} \
@@ -373,7 +377,7 @@ $(WRKBUILD)/.compiled:
 	cd $(GCC_BUILD_DIR_FINAL); \
 		PATH='$(TARGET_PATH)' \
 		CC='$(HOST_CC)' \
-		CXX='$(HOST_CXX)' \
+		CXX='$(HOST_CXX) $(EXTRA_CXXFLAGS)' \
 		CFLAGS_FOR_TARGET='$(TARGET_CFLAGS)' \
 		CXXFLAGS_FOR_TARGET='$(TARGET_CXXFLAGS)' \
 		$(WRKBUILD)/configure \

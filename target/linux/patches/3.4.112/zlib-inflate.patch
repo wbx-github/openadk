@@ -1,0 +1,12 @@
+diff -Nur linux-2.6.37.orig/lib/Kconfig linux-2.6.37/lib/Kconfig
+--- linux-2.6.37.orig/lib/Kconfig	2011-01-05 01:50:19.000000000 +0100
++++ linux-2.6.37/lib/Kconfig	2011-03-01 20:10:29.833370667 +0100
+@@ -95,7 +95,7 @@
+ # compression support is select'ed if needed
+ #
+ config ZLIB_INFLATE
+-	tristate
++	boolean
+ 
+ config ZLIB_DEFLATE
+ 	tristate

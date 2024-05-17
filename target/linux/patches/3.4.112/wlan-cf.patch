@@ -1,0 +1,11 @@
+diff -Nur linux-2.6.39.orig/drivers/net/wireless/hostap/hostap_cs.c linux-2.6.39/drivers/net/wireless/hostap/hostap_cs.c
+--- linux-2.6.39.orig/drivers/net/wireless/hostap/hostap_cs.c	2011-05-19 06:06:34.000000000 +0200
++++ linux-2.6.39/drivers/net/wireless/hostap/hostap_cs.c	2011-09-12 02:46:26.987984145 +0200
+@@ -623,6 +623,7 @@
+ static struct pcmcia_device_id hostap_cs_ids[] = {
+ 	PCMCIA_DEVICE_MANF_CARD(0x000b, 0x7100),
+ 	PCMCIA_DEVICE_MANF_CARD(0x000b, 0x7300),
++	PCMCIA_DEVICE_MANF_CARD(0x0004, 0x2003),
+ 	PCMCIA_DEVICE_MANF_CARD(0x0101, 0x0777),
+ 	PCMCIA_DEVICE_MANF_CARD(0x0126, 0x8000),
+ 	PCMCIA_DEVICE_MANF_CARD(0x0138, 0x0002),

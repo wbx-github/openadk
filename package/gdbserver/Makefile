@@ -15,7 +15,7 @@ PKG_DEPENDS:=		libthread-db libgmp
 PKG_BUILDDEP:=		gmp
 
 PKG_LIBC_DEPENDS:=	!musl
-PKG_ARCH_DEPENDS:=	!microblaze
+PKG_ARCH_DEPENDS:=	!microblaze !nds32
 
 ifeq ($(ADK_TOOLCHAIN_GDB_6_7_1),y)
 DISTFILES:=		gdb-6.7.1-avr32-2.1.5.tar.bz2

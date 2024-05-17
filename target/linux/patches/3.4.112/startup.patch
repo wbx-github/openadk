@@ -1,0 +1,34 @@
+diff -Nur linux-3.4.82.orig/init/initramfs.c linux-3.4.82/init/initramfs.c
+--- linux-3.4.82.orig/init/initramfs.c	2014-02-22 19:33:35.000000000 +0100
++++ linux-3.4.82/init/initramfs.c	2014-03-15 18:46:22.674928245 +0100
+@@ -606,6 +606,9 @@
+ 		free_initrd();
+ #endif
+ 	}
++#ifdef CONFIG_DEVTMPFS_MOUNT
++	devtmpfs_mount("dev");
++#endif
+ 	return 0;
+ }
+ rootfs_initcall(populate_rootfs);
+diff -Nur linux-3.4.82.orig/init/main.c linux-3.4.82/init/main.c
+--- linux-3.4.82.orig/init/main.c	2014-02-22 19:33:35.000000000 +0100
++++ linux-3.4.82/init/main.c	2014-03-15 18:46:22.674928245 +0100
+@@ -873,6 +873,8 @@
+ 	if (sys_open((const char __user *) "/dev/console", O_RDWR, 0) < 0)
+ 		printk(KERN_WARNING "Warning: unable to open an initial console.\n");
+ 
++	printk(KERN_WARNING "Starting Linux (built with OpenADK).\n");
++
+ 	(void) sys_dup(0);
+ 	(void) sys_dup(0);
+ 	/*
+@@ -881,7 +883,7 @@
+ 	 */
+ 
+ 	if (!ramdisk_execute_command)
+-		ramdisk_execute_command = "/init";
++		ramdisk_execute_command = "/sbin/init";
+ 
+ 	if (sys_access((const char __user *) ramdisk_execute_command, 0) != 0) {
+ 		ramdisk_execute_command = NULL;

@@ -1,0 +1,18 @@
+diff -Nur linux-2.6.32.orig/arch/mips/include/asm/sgidefs.h linux-2.6.32/arch/mips/include/asm/sgidefs.h
+--- linux-2.6.32.orig/arch/mips/include/asm/sgidefs.h	2009-12-03 04:51:21.000000000 +0100
++++ linux-2.6.32/arch/mips/include/asm/sgidefs.h	2010-02-14 11:49:21.000000000 +0100
+@@ -11,14 +11,6 @@
+ #define __ASM_SGIDEFS_H
+
+ /*
+- * Using a Linux compiler for building Linux seems logic but not to
+- * everybody.
+- */
+-#ifndef __linux__
+-#error Use a Linux compiler or give up.
+-#endif
+-
+-/*
+  * Definitions for the ISA levels
+  *
+  * With the introduction of MIPS32 / MIPS64 instruction sets definitions

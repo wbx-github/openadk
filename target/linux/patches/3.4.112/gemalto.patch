@@ -1,0 +1,11 @@
+diff -Nur linux-2.6.36.orig/drivers/tty/serial/8250/serial_cs.c linux-2.6.36/drivers/serial/8250/serial_cs.c
+--- linux-2.6.36.orig/drivers/tty/serial/8250/serial_cs.c	2010-10-20 22:30:22.000000000 +0200
++++ linux-2.6.36/drivers/tty/serial/8250/serial_cs.c	2010-12-13 23:03:40.000000000 +0100
+@@ -794,6 +794,7 @@
+ 	PCMCIA_DEVICE_MANF_CARD(0x0137, 0x0025),
+ 	PCMCIA_DEVICE_MANF_CARD(0x0137, 0x0045),
+ 	PCMCIA_DEVICE_MANF_CARD(0x0137, 0x0052),
++	PCMCIA_DEVICE_MANF_CARD(0x0157, 0x0100), /* Gemalto SCR */
+ 	PCMCIA_DEVICE_MANF_CARD(0x016c, 0x0006), /* Psion 56K+Fax */
+ 	PCMCIA_DEVICE_MANF_CARD(0x0200, 0x0001), /* MultiMobile */
+ 	PCMCIA_DEVICE_PROD_ID134("ADV", "TECH", "COMpad-32/85", 0x67459937, 0x916d02ba, 0x8fbe92ae),

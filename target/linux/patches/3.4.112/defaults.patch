@@ -1,0 +1,22 @@
+diff -Nur linux-3.0.4.orig/fs/Kconfig linux-3.0.4/fs/Kconfig
+--- linux-3.0.4.orig/fs/Kconfig	2011-08-29 22:56:30.000000000 +0200
++++ linux-3.0.4/fs/Kconfig	2011-10-15 22:08:44.000000000 +0200
+@@ -47,7 +47,7 @@
+ 	def_bool n
+ 
+ config EXPORTFS
+-	tristate
++	def_bool y
+ 
+ config FILE_LOCKING
+ 	bool "Enable POSIX file locking API" if EXPERT
+diff -Nur linux-3.0.4.orig/fs/notify/Kconfig linux-3.0.4/fs/notify/Kconfig
+--- linux-3.0.4.orig/fs/notify/Kconfig	2011-08-29 22:56:30.000000000 +0200
++++ linux-3.0.4/fs/notify/Kconfig	2011-10-15 22:02:00.000000000 +0200
+@@ -1,5 +1,5 @@
+ config FSNOTIFY
+-	def_bool n
++	def_bool y
+ 
+ source "fs/notify/dnotify/Kconfig"
+ source "fs/notify/inotify/Kconfig"
