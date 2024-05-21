@@ -21,6 +21,9 @@ QEMU_ARGS+=-M kc705-nommu
 QEMU_ARGS+=-cpu de212 -m 256
 KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/Image.elf
 endif
+ifeq ($(ADK_TARGET_CPU_XTENSA_KC705_BE),y)
+KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/uImage
+endif
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
