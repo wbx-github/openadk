@@ -872,7 +872,7 @@ config BUSYBOX_SSL_CLIENT
 	This tool pipes data to/from a socket, TLS-encrypting it.
 config BUSYBOX_TC
 	bool "tc (8.3 kb)"
-	default y
+	default n
 	help
 	Show / manipulate traffic control settings
 

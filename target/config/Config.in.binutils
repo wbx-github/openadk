@@ -60,7 +60,7 @@ config ADK_TOOLCHAIN_BINUTILS_KVX
 	depends on ADK_TARGET_ARCH_KVX
 
 config ADK_TOOLCHAIN_BINUTILS_XTENSA
-	bool "xtensa-fdpic-abi-spec-1.2"
+	bool "xtensa-fdpic-abi-spec-1.3"
 	depends on ADK_TARGET_ARCH_XTENSA
 
 endchoice
