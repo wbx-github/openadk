@@ -7,7 +7,6 @@ config ADK_TARGET_CMDLINE
 	default "geodewdt.nowayout=1" if ADK_TARGET_MODEL_PCENGINES_ALIX1C
 	default "kinetis_platform=k70-som" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "metag_da.console_poll=1" if ADK_TARGET_SYSTEM_QEMU_METAG
-	default "earlycon=uart8250,mmio32,0x9d050020,115200n8 memmap=256M@0x60000000" if ADK_TARGET_CPU_XTENSA_DE212
 	default "earlyprintk=uart8250-32bit,0x99600000" if ADK_TARGET_SYSTEM_ANDES_AG101P
 	default "earlycon noiotrap" if ADK_TARGET_SYSTEM_NUMATO_MIMASV2
 	default ""
