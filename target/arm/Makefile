@@ -175,7 +175,7 @@ ifeq ($(ADK_TARGET_FS),squashfs)
 	dd conv=notrunc if=$(BUILD_DIR)/root.squashfs of=$(FW_DIR)/$(ROOTFSSQUASHFS)
 endif
 
-ifeq ($(ADK_TARGET_LINUX_KERNEL_VERSION_6_6),y)
+ifeq ($(ADK_TARGET_LINUX_KERNEL_VERSION_6_6)$(ADK_TARGET_LINUX_KERNEL_VERSION_6_9),y)
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VERSATILEPB),y)
 VENDOR:=arm/
 endif
@@ -190,6 +190,9 @@ VENDOR:=xilinx/
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
 VENDOR:=st/
+endif
+ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_IMX6),y)
+VENDOR:=nxp/imx/
 endif
 endif
 
@@ -240,8 +243,8 @@ ifeq ($(ADK_TARGET_SYSTEM_BANANA_P2_ZERO),y)
 	${KERNEL_MAKE} sun8i-h2-plus-bananapi-m2-zero.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_IMX6),y)
-	${KERNEL_MAKE} imx6q-cubox-i.dtb imx6dl-cubox-i.dtb \
-		imx6dl-hummingboard.dtb imx6q-hummingboard.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} $(VENDOR)imx6q-cubox-i.dtb $(VENDOR)imx6dl-cubox-i.dtb \
+		$(VENDOR)imx6dl-hummingboard.dtb $(VENDOR)imx6q-hummingboard.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG),y)
 	${KERNEL_MAKE} armada-388-clearfog.dtb $(MAKE_TRACE)
