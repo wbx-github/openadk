@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		opkg
-PKG_VERSION:=		0.6.2
+PKG_VERSION:=		0.6.3
 PKG_RELEASE:=		1
-PKG_HASH:=		ac73a90a2549cd04948e563d915912c78e1b8ba0f43af75c5a53fcca474adbd5
+PKG_HASH:=		f3938e359646b406c40d5d442a1467c7e72357f91ab822e442697529641e06de
 PKG_DESCR:=		embedded package manager
-PKG_DEPENDS:=		libcurl libarchive gpgme libressl xz
-PKG_BUILDDEP:=		curl libarchive gpgme xz libressl
+PKG_DEPENDS:=		libcurl libarchive gpgme libressl bzip2
+PKG_BUILDDEP:=		curl libarchive gpgme bzip2 libressl
 HOST_BUILDDEP:=		libarchive-host curl-host cpio-host
 PKG_NEEDS:=		threads
 PKG_SECTION:=		sys/misc
@@ -28,10 +28,10 @@ HOST_CONFIGURE_ARGS+=	--disable-openssl \
 			--disable-gpg \
 			--disable-xz \
 			--disable-ssl-curl
-CONFIGURE_ARGS+=	--disable-bzip2 \
+CONFIGURE_ARGS+=	--enable-bzip2 \
 			--enable-ssl-curl \
 			--enable-openssl \
-			--enable-xz \
+			--disable-xz \
 			--enable-gpg
 
 opkg-install:
