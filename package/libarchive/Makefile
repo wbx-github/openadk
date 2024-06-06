@@ -9,7 +9,6 @@ PKG_RELEASE:=		1
 PKG_HASH:=		ba7eb1781c9fbbae178c4c6bad1c6eb08edab9a1496c64833d1715d022b30e2e
 PKG_DESCR:=		multiformat archive and compression library
 PKG_SECTION:=		libs/comp
-PKG_BUILDDEP:=		xz
 PKG_URL:=		http://www.libarchive.org/
 PKG_SITES:=		http://www.libarchive.org/downloads/
 PKG_OPTS:=		dev
