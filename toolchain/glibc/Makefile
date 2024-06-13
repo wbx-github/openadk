@@ -19,9 +19,7 @@ TARGET_CXXFLAGS:=	$(filter-out -ffast-math,$(TARGET_CXXFLAGS))
 GLIBC_CONFOPTS:=	--build=$(GNU_HOST_NAME) \
 			--host=$(GNU_TARGET_NAME) \
 			--with-headers=$(STAGING_TARGET_DIR)/usr/include \
-			--enable-stackguard-randomization \
 			--disable-sanity-checks \
-			--disable-nls \
 			--disable-werror \
 			--disable-nscd \
 			--disable-default-pie \
