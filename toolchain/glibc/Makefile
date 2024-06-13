@@ -22,8 +22,13 @@ GLIBC_CONFOPTS:=	--build=$(GNU_HOST_NAME) \
 			--disable-sanity-checks \
 			--disable-werror \
 			--disable-nscd \
-			--disable-default-pie \
 			--enable-shared
+
+ifeq ($(ADK_TARGET_LINUX_ARCH_SPARC64),y)
+GLIBC_CONFOPTS+=	--disable-default-pie
+else
+GLIBC_CONFOPTS+=	--enable-default-pie
+endif
 
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 GLIBC_CONFOPTS+=	--enable-static-nss
