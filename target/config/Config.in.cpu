@@ -114,6 +114,14 @@ config ADK_TARGET_CPU_ARC_ARC64
 	depends on ADK_TARGET_ARCH_ARC
 
 # arm
+config ADK_TARGET_CPU_ARM_ARM920T
+        bool "arm920t"
+	select ADK_TARGET_SUPPORTS_THREADS
+	select ADK_TARGET_SUPPORTS_NPTL
+	select ADK_TARGET_SUPPORTS_LT
+	select ADK_TARGET_CPU_WITH_THUMB
+	depends on ADK_TARGET_ARCH_ARM
+
 config ADK_TARGET_CPU_ARM_ARM1176JZF_S
         bool "arm1176jzf-s"
 	select ADK_TARGET_SUPPORTS_THREADS
@@ -1998,6 +2006,7 @@ config ADK_TARGET_GCC_CPU
 	default "arc700" if ADK_TARGET_CPU_ARC_ARC700
 	default "archs" if ADK_TARGET_CPU_ARC_ARCHS
 	default "hs5x" if ADK_TARGET_CPU_ARC_ARC32
+	default "arm920t" if ADK_TARGET_CPU_ARM_ARM920T
 	default "arm1176jzf-s" if ADK_TARGET_CPU_ARM_ARM1176JZF_S
 	default "arm926ej-s" if ADK_TARGET_CPU_ARM_ARM926EJ_S
 	default "cortex-a5" if ADK_TARGET_CPU_ARM_CORTEX_A5
@@ -2233,6 +2242,7 @@ config ADK_TARGET_CPU_TYPE
 	default "cortex_m3" if ADK_TARGET_CPU_ARM_CORTEX_M3
 	default "cortex_m4" if ADK_TARGET_CPU_ARM_CORTEX_M4
 	default "cortex_m7" if ADK_TARGET_CPU_ARM_CORTEX_M7
+	default "arm920t" if ADK_TARGET_CPU_ARM_ARM920T
 	default "arm1176jzf_s" if ADK_TARGET_CPU_ARM_ARM1176JZF_S
 	default "arm926ej_s" if ADK_TARGET_CPU_ARM_ARM926EJ_S
 	default "mpcore" if ADK_TARGET_CPU_ARM_ARM11MPCORE
