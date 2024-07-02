@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		openssh
-PKG_VERSION:=		9.7p1
+PKG_VERSION:=		9.8p1
 PKG_RELEASE:=		1
-PKG_HASH:=		490426f766d82a2763fcacd8d83ea3d70798750c7bd2aff2e57dc5660f773ffd
+PKG_HASH:=		dd8bd002a379b5d499dfb050dd1fa9af8029e80461f4bb6c523c49973f5a39f3
 PKG_DESCR:=		secure shell implementation
 PKG_SECTION:=		net/security
 PKG_BUILDDEP:=		zlib
@@ -102,11 +102,14 @@ openssh-server-install:
 	${INSTALL_DIR} ${IDIR_OPENSSH_SERVER}/etc/ssh
 	${INSTALL_DIR} ${IDIR_OPENSSH_SERVER}/usr/bin
 	${INSTALL_DIR} ${IDIR_OPENSSH_SERVER}/usr/sbin
+	${INSTALL_DIR} ${IDIR_OPENSSH_SERVER}/usr/libexec
 	${CP} ./files/sshd_config ${IDIR_OPENSSH_SERVER}/etc/ssh
 	${INSTALL_BIN} ${WRKINST}/usr/bin/ssh-keygen \
 		${IDIR_OPENSSH_SERVER}/usr/bin
 	${INSTALL_BIN} ${WRKINST}/usr/sbin/sshd \
 	 	${IDIR_OPENSSH_SERVER}/usr/sbin
+	${INSTALL_BIN} ${WRKINST}/usr/libexec/sshd-session \
+		${IDIR_OPENSSH_SERVER}/usr/libexec
 	# ssh pubkey
 	test -z $(ADK_RUNTIME_SSH_PUBKEY) || ( \
 		mkdir -p $(IDIR_OPENSSH_SERVER)/etc/ssh; \
