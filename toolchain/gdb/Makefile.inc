@@ -2,6 +2,13 @@
 # material, please see the LICENCE file in the top-level directory.
 
 PKG_NAME:=		gdb
+ifeq ($(ADK_TOOLCHAIN_GDB_15_1),y)
+PKG_VERSION:=		15.1
+PKG_RELEASE:=		1
+PKG_HASH:=		8b61b0c2bdd9d9c83b113c9167866bdb474651d291fedcaa5eb7cde49bd47036
+PKG_SITES:=		${MASTER_SITE_GNU:=gdb/}
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+endif
 ifeq ($(ADK_TOOLCHAIN_GDB_14_2),y)
 PKG_VERSION:=		14.2
 PKG_RELEASE:=		1
@@ -13,13 +20,6 @@ ifeq ($(ADK_TOOLCHAIN_GDB_13_2),y)
 PKG_VERSION:=		13.2
 PKG_RELEASE:=		1
 PKG_HASH:=		7ead13d9e19fa0c57bb19104e1a5f67eefa9fc79f2e6360de491e8fddeda1e30
-PKG_SITES:=		${MASTER_SITE_GNU:=gdb/}
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
-endif
-ifeq ($(ADK_TOOLCHAIN_GDB_12_1),y)
-PKG_VERSION:=		12.1
-PKG_RELEASE:=		1
-PKG_HASH:=		87296a3a9727356b56712c793704082d5df0ff36a34ca9ec9734fc9a8bdfdaab
 PKG_SITES:=		${MASTER_SITE_GNU:=gdb/}
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 endif
