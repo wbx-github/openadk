@@ -113,7 +113,7 @@ u-boot-hostinstall:
 		$(STAGING_HOST_DIR)/usr/bin
 
 do-configure:
-	(cd $(WRKBUILD) && $(MAKE) $(CONFIG))
+	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' $(MAKE) $(CONFIG))
 
 do-build:
 	(cd $(WRKBUILD) && env \

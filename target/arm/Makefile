@@ -85,6 +85,11 @@ ifeq ($(ADK_TARGET_SYSTEM_PHYTEC_IMX6),y)
 	@echo "sudo ./scripts/install.sh phytec-imx6 /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
 	@echo
 endif
+ifeq ($(ADK_TARGET_SYSTEM_BEAGEBONE_BLACK),y)
+	@echo "Use following command to install it on SD card:"
+	@echo "sudo ./scripts/install.sh beaglebone-black /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
+	@echo
+endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 	@echo "Use following command to install it on SD card:"
 	@echo "sudo ./scripts/install.sh banana-pro /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
@@ -175,7 +180,7 @@ ifeq ($(ADK_TARGET_FS),squashfs)
 	dd conv=notrunc if=$(BUILD_DIR)/root.squashfs of=$(FW_DIR)/$(ROOTFSSQUASHFS)
 endif
 
-ifeq ($(ADK_TARGET_LINUX_KERNEL_VERSION_6_6)$(ADK_TARGET_LINUX_KERNEL_VERSION_6_9),y)
+ifeq ($(ADK_TARGET_LINUX_KERNEL_VERSION_6_6)$(ADK_TARGET_LINUX_KERNEL_VERSION_6_9)$(ADK_TARGET_LINUX_KERNEL_VERSION_GIT),y)
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VERSATILEPB),y)
 VENDOR:=arm/
 endif
@@ -193,6 +198,9 @@ VENDOR:=st/
 endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_IMX6),y)
 VENDOR:=nxp/imx/
+endif
+ifeq ($(ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK),y)
+VENDOR:=ti/omap/
 endif
 endif
 
@@ -218,8 +226,8 @@ ifeq ($(ADK_TARGET_SYSTEM_PHYTEC_IMX6),y)
 	cp $(LINUX_DIR)/arch/arm/boot/dts/imx6q-phytec-pbab01.dtb ${TARGET_DIR}/boot
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK),y)
-	${KERNEL_MAKE} am335x-boneblack.dtb $(MAKE_TRACE)
-	cp $(LINUX_DIR)/arch/arm/boot/dts/am335x-boneblack.dtb ${TARGET_DIR}/boot
+	${KERNEL_MAKE} $(VENDOR)am335x-boneblack.dtb $(MAKE_TRACE)
+	cp $(LINUX_DIR)/arch/arm/boot/dts/$(VENDOR)am335x-boneblack.dtb ${TARGET_DIR}/boot
 endif
 ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 	${KERNEL_MAKE} dtbs $(MAKE_TRACE)
