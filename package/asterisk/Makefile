@@ -4,19 +4,18 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		asterisk
-PKG_VERSION:=		20.7.0
+PKG_VERSION:=		20.9.1
 PKG_RELEASE:=		1
-PKG_HASH:=		3d47889d2c4501974a8adaaba49738e6268a836dc177c7887a93a8ecf1d38b26
+PKG_HASH:=		548cdb1e1d854bc466af5178a5ee1b51b6e52d07359a0b286bc9147a64c1adb1
 PKG_DESCR:=		open source pbx
 PKG_SECTION:=		net/voip
-PKG_DEPENDS:=		libncurses libcurl libressl libedit libuuid libjansson
+PKG_DEPENDS:=		libncurses libcurl libopenssl libedit libuuid libjansson
 PKG_DEPENDS+=		libxml2 libsqlite libxslt
-PKG_BUILDDEP:=		ncurses zlib curl popt libressl libedit util-linux libjansson
+PKG_BUILDDEP:=		ncurses zlib curl popt openssl libedit util-linux libjansson
 PKG_BUILDDEP+=		libxml2 sqlite libxslt
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.asterisk.org/
 PKG_SITES:=		http://downloads.asterisk.org/pub/telephony/asterisk/releases/
-#PKG_NOPARALLEL:=	1
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
