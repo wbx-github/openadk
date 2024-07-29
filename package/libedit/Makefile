@@ -8,6 +8,7 @@ PKG_VERSION:=		20230828-3.1
 PKG_RELEASE:=		1
 PKG_HASH:=		4ee8182b6e569290e7d1f44f0f78dac8716b35f656b76528f699c69c98814dad
 PKG_DESCR:=		editline library
+PKG_BUILDDEP:=		ncurses
 PKG_SECTION:=		libs/misc
 PKG_SITES:=		https://www.thrysoee.dk/editline/
 PKG_OPTS:=		dev
