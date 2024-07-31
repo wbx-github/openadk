@@ -43,7 +43,8 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "haps_hs_defconfig" if ADK_TARGET_CPU_ARC_ARCHS && ADK_TARGET_SYSTEM_SYNOPSYS_NSIM
 	default "10m50_defconfig" if ADK_TARGET_SYSTEM_QEMU_NIOS2
 	default "ag101p_defconfig" if ADK_TARGET_SYSTEM_ANDES_AG101P
-	default "bb.org_defconfig" if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK
+	default "bb.org_defconfig" if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK && ADK_TARGET_LINUX_KERNEL_VERSION_GIT
+	default "omap2plus_defconfig" if ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK && !ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	default "am335x_phytec_defconfig" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "j2_defconfig" if ADK_TARGET_SYSTEM_NUMATO_MIMASV2
 	default "sunxi_defconfig" if ADK_TARGET_SYSTEM_ORANGE_PI0
