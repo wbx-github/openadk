@@ -563,7 +563,7 @@ case $target {
 	dd if="$fwdir/u-boot-sunxi-with-spl.bin" of="$tgt" bs=1024 seek=8 > /dev/null 2>&1
 	;;
 (solidrun-clearfog)
-	dd if="$fwdir/u-boot-spl.kwb" of="$tgt" bs=512 seek=1 > /dev/null 2>&1
+	dd if="$fwdir/u-boot-with-spl.kwb" of="$tgt" bs=512 seek=1 > /dev/null 2>&1
 	;;
 (solidrun-imx6|phytec-imx6)
 	dd if="$fwdir/SPL" of="$tgt" bs=1024 seek=1 > /dev/null 2>&1

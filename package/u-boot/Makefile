@@ -27,7 +27,7 @@ $(eval $(call PKG_template,U_BOOT,u-boot,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEP
 UBOOT:=			u-boot.bin
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG),y)
 CONFIG:=		clearfog_defconfig
-UBOOT:=			u-boot-spl.kwb
+UBOOT:=			u-boot-with-spl.kwb
 endif
 ifeq ($(ADK_TARGET_SYSTEM_PHYTEC_IMX6),y)
 CONFIG:=		pcm058_defconfig

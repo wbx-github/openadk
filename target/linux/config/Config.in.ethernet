@@ -451,6 +451,16 @@ config ADK_LINUX_KERNEL_MACB
 	  also supports the Cadence GEM (Gigabit Ethernet MAC found
 	  in some ARM SoC devices).
 
+config ADK_LINUX_KERNEL_MVNETA
+	tristate "Marvell Ethernet driver for Solidrun Clearfog"
+	select ADK_LINUX_KERNEL_NETDEV_1000
+	select ADK_LINUX_KERNEL_NET_VENDOR_MARVELL
+	depends on ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
+	default y if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
+	default n
+	help
+	  Marvell Ethernet driver
+
 config ADK_LINUX_KERNEL_TI_DAVINCI_MDIO
 	tristate "BeagleBone Back Davinci"
 	select ADK_LINUX_KERNEL_NET_VENDOR_TI
