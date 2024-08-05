@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		openldap
-PKG_VERSION:=		2.6.0
+PKG_VERSION:=		2.6.8
 PKG_RELEASE:=		1
-PKG_HASH:=		b71c580eac573e9aba15d95f33dd4dd08f2ed4f0d7fc09e08ad4be7ed1e41a4f
+PKG_HASH:=		48969323e94e3be3b03c6a132942dcba7ef8d545f2ad35401709019f696c3c4e
 PKG_DESCR:=		ldap client libraries
 PKG_SECTION:=		libs/misc
-PKG_DEPENDS:=		libsasl2 libdb libuuid libncurses libressl
-PKG_BUILDDEP:=		cyrus-sasl db util-linux libressl
+PKG_DEPENDS:=		libsasl2 libuuid libncurses libressl
+PKG_BUILDDEP:=		cyrus-sasl util-linux libressl
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.openldap.org/
 PKG_SITES:=		https://openldap.org/software/download/OpenLDAP/openldap-release/
@@ -39,7 +39,7 @@ $(eval $(call PKG_template,OPENLDAP_SLAPD,openldap-slapd,${PKG_VERSION}-${PKG_RE
 CONFIGURE_ENV+=		ac_cv_func_memcmp_working=yes
 CONFIGURE_ARGS+= 	--enable-slapd \
 			--libexecdir=/usr/sbin \
-			--enable-bdb \
+			--disable-bdb \
 			--disable-hdb \
 			--disable-relay \
 			--enable-dynamic \
