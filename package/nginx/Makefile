@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nginx
-PKG_VERSION:=		1.25.3
+PKG_VERSION:=		1.26.1
 PKG_RELEASE:=		1
-PKG_HASH:=		64c5b975ca287939e828303fa857d22f142b251f17808dfe41733512d9cded86
+PKG_HASH:=		f9187468ff2eb159260bfd53867c25ff8e334726237acf227b9e870e53d3e36b
 PKG_DESCR:=		powerful http reverse proxy and webserver
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		pcre zlib
@@ -58,7 +58,7 @@ ALL_TARGET:=
 
 nginx-install:
 	$(INSTALL_DIR) $(IDIR_NGINX)/usr/sbin $(IDIR_NGINX)/etc/nginx
-	$(INSTALL_BIN) $(WRKINST)/usr/sbin/nginx \
+	$(INSTALL_BIN) $(WRKBUILD)/objs/nginx \
 		$(IDIR_NGINX)/usr/sbin
 	for f in nginx.conf mime.types fastcgi_params koi-utf koi-win win-utf; do \
 		cp ./files/$${f} \
