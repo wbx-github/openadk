@@ -205,6 +205,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK),y)
 VENDOR:=ti/omap/
 endif
+ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
+VENDOR:=allwinner/
+endif
 endif
 
 dtb-install:
@@ -245,7 +248,7 @@ ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 	done
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
-	${KERNEL_MAKE} sun7i-a20-bananapro.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} $(VENDOR)sun7i-a20-bananapro.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
 	${KERNEL_MAKE} sun8i-h2-plus-orangepi-zero.dtb $(MAKE_TRACE)
