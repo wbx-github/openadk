@@ -1,19 +1,23 @@
-diff -Nur linux-6.6.22.orig/fs/binfmt_flat.c linux-6.6.22/fs/binfmt_flat.c
---- linux-6.6.22.orig/fs/binfmt_flat.c	2024-03-15 19:25:07.000000000 +0100
-+++ linux-6.6.22/fs/binfmt_flat.c	2024-04-17 15:41:29.292461687 +0200
-@@ -879,6 +879,7 @@
- 	if (res < 0)
+diff -Nur linux-6.6.43.orig/fs/binfmt_flat.c linux-6.6.43/fs/binfmt_flat.c
+--- linux-6.6.43.orig/fs/binfmt_flat.c	2024-07-27 11:34:11.000000000 +0200
++++ linux-6.6.43/fs/binfmt_flat.c	2024-08-09 09:34:47.857536277 +0200
+@@ -72,8 +72,10 @@
+ 
+ #ifdef CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET
+ #define DATA_START_OFFSET_WORDS		(0)
++#define MAX_SHARED_LIBS_UPDATE		(0)
+ #else
+ #define DATA_START_OFFSET_WORDS		(MAX_SHARED_LIBS)
++#define MAX_SHARED_LIBS_UPDATE		(MAX_SHARED_LIBS)
+ #endif
+ 
+ struct lib_info {
+@@ -880,7 +882,7 @@
  		return res;
  
-+#ifndef CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET
  	/* Update data segment pointers for all libraries */
- 	for (i = 0; i < MAX_SHARED_LIBS; i++) {
+-	for (i = 0; i < MAX_SHARED_LIBS; i++) {
++	for (i = 0; i < MAX_SHARED_LIBS_UPDATE; i++) {
  		if (!libinfo.lib_list[i].loaded)
-@@ -893,6 +894,7 @@
- 				return -EFAULT;
- 		}
- 	}
-+#endif
- 
- 	set_binfmt(&flat_format);
- 
+ 			continue;
+ 		for (j = 0; j < MAX_SHARED_LIBS; j++) {
