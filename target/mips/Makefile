@@ -9,6 +9,9 @@ KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 ifeq ($(ADK_TARGET_KERNEL_UIMAGE),y)
 KERNEL:=$(LINUX_DIR)/arch/mips/boot/uImage
 endif
+ifeq ($(ADK_TARGET_KERNEL_UIMAGEGZ),y)
+KERNEL:=$(LINUX_DIR)/arch/mips/boot/uImage.gz
+endif
 
 OSTRIP:=-R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id
 
@@ -76,12 +79,12 @@ targethelp:
 endif
 ifeq ($(ADK_TARGET_FS),genimage)
 targethelp:
-	@echo "The disk image is: $(FW_DIR)/disk.img"
+	@echo "The disk image is: $(FW_DIR)/sdcard.img"
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} $(FW_DIR)/disk.img'
 else
 	@echo "Use following command to install it on SD card:"
-	@echo 'sudo dd if=$(FW_DIR)/disk.img of=/dev/sdX bs=2048k'
+	@echo 'sudo dd if=$(FW_DIR)/sdcard.img of=/dev/sdX bs=2048k'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),ubifs)
@@ -90,13 +93,9 @@ targethelp:
 	@echo 'The UBI image is: ${FW_DIR}/${ROOTFSUBIFS}'
 endif
 
-# image creation and kernel install
+# dummy
 kernel-strip:
-ifeq ($(ADK_TARGET_KERNEL_UIMAGE),)
-	$(TARGET_CROSS)objcopy $(OSTRIP) -S $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
-else
 	@cp $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
-endif
 
 kernel-install: kernel-strip
 	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/${TARGET_KERNEL}

@@ -143,6 +143,7 @@ ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS),y)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_IMGTEC_CI20),y)
 	$(CP) $(WRKBUILD)/spl/u-boot-spl.bin $(FW_DIR)
+	cat ./files/uboot-env.txt.ci20 | PATH='$(HOST_PATH)' mkenvimage -s "32768" -o $(FW_DIR)/uboot-env.bin -
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 	$(INSTALL_BIN) ./files/boot.script.bpi $(FW_DIR)
