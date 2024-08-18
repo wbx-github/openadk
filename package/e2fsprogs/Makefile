@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		e2fsprogs
-PKG_VERSION:=		1.47.0
+PKG_VERSION:=		1.47.1
 PKG_RELEASE:=		1
-PKG_HASH:=		144af53f2bbd921cef6f8bea88bb9faddca865da3fbc657cc9b4d2001097d5db
+PKG_HASH:=		5a33dc047fd47284bca4bb10c13cfe7896377ae3d01cb81a05d406025d99e0d1
 PKG_DESCR:=		ext2/3/4 filesystem utilities
 PKG_SECTION:=		sys/fs
 PKG_BUILDDEP:=		util-linux
@@ -66,7 +66,7 @@ endif
 CONFIGURE_ARGS+=	--disable-rpath \
 			--disable-uuidd \
 			--disable-testio-debug \
-			--disable-defrag \
+			--enable-defrag \
 			--disable-libblkid \
 			--disable-libuuid \
 			--disable-debugfs
