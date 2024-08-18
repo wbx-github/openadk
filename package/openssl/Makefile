@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		openssl
-PKG_VERSION:=		3.0.14
+PKG_VERSION:=		3.3.1
 PKG_RELEASE:=		1
-PKG_HASH:=		eeca035d4dd4e84fc25846d952da6297484afa0650a6f84c682e39df3a4123ca
+PKG_HASH:=		777cd596284c883375a2a7a11bf5d2786fc5413255efab20c50d6ffe6d020b7e
 PKG_DESCR:=		ssl/tls library
 PKG_SECTION:=		libs/crypto
 PKG_URL:=		https://www.openssl.org
@@ -62,6 +62,7 @@ CONFIG:=		linux-x86_64
 endif
 ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
 CONFIG:=		linux-aarch64
+OPENSSL_OPTIONS+=	no-asm
 endif
 
 ifneq (,$(filter CYGWIN%,${OS_FOR_BUILD}))
