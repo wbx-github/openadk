@@ -6,12 +6,12 @@ include $(ADK_TOPDIR)/rules.mk
 install: ${STAGING_HOST_DIR}/usr/bin/depmaker ${STAGING_HOST_DIR}/usr/bin/pkgrebuild ${STAGING_HOST_DIR}/usr/bin/dkgetsz
 
 ${STAGING_HOST_DIR}/usr/bin/depmaker: depmaker.c
-	${CC_FOR_BUILD} ${FLAGS_FOR_BUILD} -o $@ depmaker.c
+	${CC_FOR_BUILD} ${FLAGS_FOR_BUILD} -w -o $@ depmaker.c
 
 ${STAGING_HOST_DIR}/usr/bin/pkgrebuild: pkgrebuild.c strmap.c
-	${CC_FOR_BUILD} ${FLAGS_FOR_BUILD} -o $@ pkgrebuild.c strmap.c
+	${CC_FOR_BUILD} ${FLAGS_FOR_BUILD} -w -o $@ pkgrebuild.c strmap.c
 
 ${STAGING_HOST_DIR}/usr/bin/dkgetsz: dkgetsz.c
-	${CC_FOR_BUILD} ${FLAGS_FOR_BUILD} -o $@ dkgetsz.c
+	${CC_FOR_BUILD} ${FLAGS_FOR_BUILD} -w -o $@ dkgetsz.c
 
 include $(ADK_TOPDIR)/mk/tools.mk

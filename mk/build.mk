@@ -632,13 +632,13 @@ distclean cleandir:
 endif # ! ifeq ($(strip $(ADK_HAVE_DOT_CONFIG)),y)
 
 $(ADK_TOPDIR)/adk/tools/pkgmaker: $(ADK_TOPDIR)/adk/tools/pkgmaker.c $(ADK_TOPDIR)/adk/tools/sortfile.c $(ADK_TOPDIR)/adk/tools/strmap.c
-	@$(HOST_CC) $(HOST_CFLAGS) -o $@ adk/tools/pkgmaker.c adk/tools/sortfile.c adk/tools/strmap.c
+	@$(HOST_CC) $(HOST_CFLAGS) -w -o $@ adk/tools/pkgmaker.c adk/tools/sortfile.c adk/tools/strmap.c
 
 $(ADK_TOPDIR)/adk/tools/pkgrebuild: $(ADK_TOPDIR)/adk/tools/pkgrebuild.c $(ADK_TOPDIR)/adk/tools/strmap.c
-	@$(HOST_CC) $(HOST_CFLAGS) -o $@ adk/tools/pkgrebuild.c adk/tools/strmap.c
+	@$(HOST_CC) $(HOST_CFLAGS) -w -o $@ adk/tools/pkgrebuild.c adk/tools/strmap.c
 
 $(ADK_TOPDIR)/adk/tools/depmaker: $(ADK_TOPDIR)/adk/tools/depmaker.c
-	@$(HOST_CC) $(HOST_CFLAGS) -o $@ $(ADK_TOPDIR)/adk/tools/depmaker.c
+	@$(HOST_CC) $(HOST_CFLAGS) -w -o $@ $(ADK_TOPDIR)/adk/tools/depmaker.c
 
 menu .menu: $(wildcard package/*/Makefile) $(wildcard target/*/systems) $(wildcard target/*/systems/*) $(ADK_TOPDIR)/adk/tools/pkgmaker $(ADK_TOPDIR)/adk/tools/pkgrebuild $(wildcard tasks/*)
 	@printf " --->  generating menu structure.. "
