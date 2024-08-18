@@ -18,7 +18,7 @@ PKG_OPTS:=		dev
 PKG_CFLINE_E2FSPROGS:=	select BUSYBOX_FSCK
 
 PKG_SUBPKGS:=		LIBE2FS LIBCOM_ERR LIBSS
-PKG_SUBPKGS+=		RESIZE2FS TUNE2FS E2FSCK MKE2FS
+PKG_SUBPKGS+=		RESIZE2FS TUNE2FS E2FSCK MKE2FS E4DEFRAG
 PKGSD_LIBE2FS:=		e2fsprogs library
 PKGSC_LIBE2FS:=		libs/misc
 PKGSD_LIBCOM_ERR:=	common error library
@@ -34,6 +34,9 @@ PKGSS_TUNE2FS:=		libe2fs libcom-err libblkid libuuid
 PKGSD_E2FSCK:=		ext2/3/4 filesystem check utility
 PKGSC_E2FSCK:=		sys/fs
 PKGSS_E2FSCK:=		libe2fs libcom-err libblkid libuuid
+PKGSD_E4DEFRAG:=	ext4 filesystem defragmentation utility
+PKGSC_E4DEFRAG:=	sys/fs
+PKGSS_E4DEFRAG:=	libe2fs libcom-err libblkid libuuid
 PKGSD_MKE2FS:=		ext2/3/4 filesystem creation utility
 PKGSC_MKE2FS:=		sys/fs
 PKGSS_MKE2FS:=		libe2fs libcom-err libblkid libuuid libncurses
@@ -49,6 +52,7 @@ $(eval $(call PKG_template,TUNE2FS,tune2fs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS
 $(eval $(call PKG_template,RESIZE2FS,resize2fs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_RESIZE2FS),$(PKGSD_RESIZE2FS),$(PKGSC_RESIZE2FS)))
 $(eval $(call PKG_template,MKE2FS,mke2fs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_MKE2FS),$(PKGSD_MKE2FS),$(PKGSC_MKE2FS)))
 $(eval $(call PKG_template,E2FSCK,e2fsck,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_E2FSCK),$(PKGSD_E2FSCK),$(PKGSC_E2FSCK)))
+$(eval $(call PKG_template,E4DEFRAG,e4defrag,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_E4DEFRAG),$(PKGSD_E4DEFRAG),$(PKGSC_E4DEFRAG)))
 
 HOST_CONFIGURE_ARGS+=	--disable-rpath \
 			--disable-nls \
@@ -90,6 +94,10 @@ libe2fs-install:
 	$(INSTALL_DIR) $(IDIR_LIBE2FS)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/lib{e2p,ext2fs}.so.* \
 		$(IDIR_LIBE2FS)/usr/lib
+
+e4defrag-install:
+	$(INSTALL_DIR) $(IDIR_E4DEFRAG)/usr/sbin
+	$(INSTALL_BIN) $(WRKINST)/usr/sbin/e4defrag $(IDIR_E4DEFRAG)/usr/sbin
 
 e2fsck-install:
 	$(INSTALL_DIR) $(IDIR_E2FSCK)/usr/sbin
