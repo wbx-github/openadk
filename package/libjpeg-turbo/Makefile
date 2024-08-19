@@ -4,19 +4,18 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libjpeg-turbo
-PKG_VERSION:=		1.5.2
+PKG_VERSION:=		3.0.3
 PKG_RELEASE:=		1
-PKG_HASH:=		9098943b270388727ae61de82adec73cf9f0dbb240b3bc8b172595ebf405b528
+PKG_HASH:=		a649205a90e39a548863a3614a9576a3fb4465f8e8e66d54999f127957c25b21
 PKG_DESCR:=		jpeg image library
 PKG_SECTION:=		libs/image
 PKG_BUILDDEP:=		yasm-host
 HOST_BUILDDEP:=		yasm-host
-PKG_URL:=		http://libjpeg-turbo.virtualgl.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=libjpeg-turbo/}
+PKG_URL:=		http://libjpeg-turbo.org/
+PKG_SITES:=		https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/
 PKG_OPTS:=		dev
-PKG_NOPARALLEL:=	1
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+DISTFILES:=		${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -24,15 +23,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,LIBJPEG_TURBO,libjpeg-turbo,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBJPEG_TURBO,libjpeg-turbo,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-TARGET_CFLAGS+=		-fPIC
-
-ifeq ($(ADK_x32),y)
-CONFIGURE_ARGS+=	--without-simd
-endif
-
-CONFIGURE_ENV+=		ac_cv_prog_NASM=yasm
-CONFIGURE_ARGS+=	--with-pic
-HOST_CONFIGURE_ARGS+=	--without-simd
+CONFIG_STYLE:=		cmake
 
 libjpeg-turbo-install:
 	$(INSTALL_DIR) $(IDIR_LIBJPEG_TURBO)/usr/lib
