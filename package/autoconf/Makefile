@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		autoconf
-PKG_VERSION:=		2.69
+PKG_VERSION:=		2.72
 PKG_RELEASE:=		1
-PKG_HASH:=		64ebcec9f8ac5b2487125a86a7760d2591ac9e1d3dbd59489633f9de62a57684
+PKG_HASH:=		ba885c1319578d6c94d46e9b0dceb4014caafe2490e437a0dbca3f270a223f5a
 PKG_DESCR:=		automatically configure software source code packages
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		m4-host
