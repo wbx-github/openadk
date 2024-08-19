@@ -11,13 +11,13 @@ PKG_DESCR:=		python scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libffi zlib libexpat
 PKG_BUILDDEP:=		python3-host libffi zlib expat
-HOST_BUILDDEP:=		libffi-host libressl-host zlib-host bzip2-host ncurses-host sqlite-host
+HOST_BUILDDEP:=		libffi-host openssl-host zlib-host bzip2-host ncurses-host sqlite-host
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.python.org/
 PKG_SITES:=		http://legacy.python.org/ftp/python/${PKG_VERSION}/
 
 PKG_FLAVOURS_PYTHON3:=	MOD_ZLIB MOD_BZ2 MOD_SQLITE MOD_GDBM
-PKG_FLAVOURS_PYTHON3+=	MOD_NCURSES MOD_LIBRESSL MOD_OPENSSL MOD_READLINE
+PKG_FLAVOURS_PYTHON3+=	MOD_NCURSES MOD_OPENSSL MOD_READLINE
 			
 PKGFD_MOD_ZLIB:=	zlib support
 PKGFB_MOD_ZLIB:=	zlib
@@ -37,9 +37,6 @@ PKGFS_MOD_NCURSES:=	libncurses
 PKGFD_MOD_READLINE:=	readline support
 PKGFB_MOD_READLINE:=	readline
 PKGFS_MOD_READLINE:=	libreadline
-PKGFD_MOD_LIBRESSL:=	libressl support
-PKGFB_MOD_LIBRESSL:=	libressl
-PKGFS_MOD_LIBRESSL:=	libressl
 PKGFD_MOD_OPENSSL:=	openssl support
 PKGFB_MOD_OPENSSL:=	openssl
 PKGFS_MOD_OPENSSL:=	libopenssl
@@ -70,7 +67,6 @@ $(eval $(call PKG_template,PYTHON3_MOD_BZ2,python3-mod-bz2,$(PKG_VERSION)-${PKG_
 $(eval $(call PKG_template,PYTHON3_MOD_SQLITE,python3-mod-sqlite,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_SQLITE},${PKGFD_MOD_SQLITE},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_GDBM,python3-mod-gdbm,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_GDBM},${PKGFD_MOD_GDBM},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_NCURSES,python3-mod-ncurses,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_NCURSES},${PKGFD_MOD_NCURSES},${PKG_SECTION}))
-$(eval $(call PKG_template,PYTHON3_MOD_LIBRESSL,python3-mod-libressl,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_LIBRESSL},${PKGFD_MOD_LIBRESSL},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_OPENSSL,python3-mod-openssl,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_OPENSSL},${PKGFD_MOD_OPENSSL},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_READLINE,python3-mod-readline,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_READLINE},${PKGFD_MOD_READLINE},${PKG_SECTION}))
 
@@ -79,7 +75,6 @@ $(eval $(call PKG_mod_template,PYTHON3_MOD_BZ2,_bz2))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_SQLITE,_sqlite))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_GDBM,_gdbm))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_NCURSES,_curses))
-$(eval $(call PKG_mod_template,PYTHON3_MOD_LIBRESSL,_ssl))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_OPENSSL,_ssl))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_READLINE,readline))
 
