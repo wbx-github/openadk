@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		fontconfig
-PKG_VERSION:=		2.13.1
+PKG_VERSION:=		2.15.0
 PKG_RELEASE:=		1
-PKG_HASH:=		9f0d852b39d75fc655f9f53850eb32555394f36104a044bb2b2fc9e66dbbfa7f
+PKG_HASH:=		f5f359d6332861bd497570848fcb42520964a9e83d5e3abe397b6b6db9bcaaf4
 PKG_DESCR:=		library for configuring and customizing font access
 PKG_SECTION:=		libs/fonts
 PKG_DEPENDS:=		libxml2
@@ -24,7 +24,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,FONTCONFIG,fontconfig,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,FONTCONFIG,fontconfig,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-AUTOTOOL_STYLE:=	autoreconf
 HOST_STYLE:=		auto
 CONFIGURE_ARGS+=	--with-arch=${ADK_TARGET_ARCH} \
 			--enable-libxml2 \
