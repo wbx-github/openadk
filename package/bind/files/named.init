@@ -12,7 +12,7 @@ autostop) ;;
 		;;
 	start)
 		if [ -f /etc/bind/named.conf ]; then
-			/usr/sbin/named -c /etc/bind/named.conf
+			/usr/sbin/named -c /etc/bind/named.conf &
 		fi
 		;;
 	stop)

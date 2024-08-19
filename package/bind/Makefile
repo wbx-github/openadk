@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		bind
-PKG_VERSION:=		9.18.24
+PKG_VERSION:=		9.18.28
 PKG_RELEASE:=		1
-PKG_HASH:=		709d73023c9115ddad3bab65b6c8c79a590196d0d114f5d0ca2533dbd52ddf66
+PKG_HASH:=		e7cce9a165f7b619eefc4832f0a8dc16b005d29e3890aed6008c506ea286a5e7
 PKG_DESCR:=		dns server
 PKG_SECTION:=		net/dns
-PKG_DEPENDS:=		libxml2 libressl libuv libressl-util
-PKG_BUILDDEP:=		libxml2 libressl libuv
+PKG_DEPENDS:=		libxml2 libopenssl libuv openssl-util
+PKG_BUILDDEP:=		libxml2 openssl libuv
 PKG_NEEDS:=		c++
 PKG_URL:=		https://www.isc.org/software/bind/
-PKG_SITES:=		ftp://ftp.isc.org/isc/bind9/${PKG_VERSION}/
+PKG_SITES:=		https://ftp.isc.org/isc/bind9/${PKG_VERSION}/
 PKG_LIBNAME:=		libbind
 PKG_OPTS:=		dev
 
