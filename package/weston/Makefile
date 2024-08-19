@@ -4,33 +4,32 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		weston
-PKG_VERSION:=		11.0.0
+PKG_VERSION:=		13.0.3
 PKG_RELEASE:=		1
-PKG_HASH:=		5816a9e7bd67d03f268553a7af2f0c3430b409f7606244dada65188478f90800
+PKG_HASH:=		e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 PKG_DESCR:=		wayland compositor
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		wayland libxkbcommon libinput libpng libjpeg-turbo libseat
-PKG_DEPENDS+=		libwebp pam libxcursor libudev xkeyboard-config cairo libffi
-PKG_BUILDDEP:=		wayland libxkbcommon libinput libpng libjpeg-turbo
-PKG_BUILDDEP+=		libwebp pam libXcursor eudev cairo libseat libffi
-PKG_SITES:=		https://github.com/wayland-project/weston/archive/refs/tags/
+PKG_DEPENDS+=		libwebp pam libxcursor libudev xkeyboard-config cairo libffi libdrm
+PKG_BUILDDEP:=		wayland wayland-protocols libxkbcommon libinput libpng libjpeg-turbo
+PKG_BUILDDEP+=		libwebp pam libXcursor eudev cairo libseat libffi libdrm libdisplay-info mesa
+PKG_SITES:=		https://gitlab.freedesktop.org/wayland/weston/-/releases/$(PKG_VERSION)/downloads/
 
 PKG_CFLINE_WESTON:=	select ADK_PACKAGE_CAIRO_WITH_PNG@
-
-DISTFILES:=             $(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,WESTON,weston,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-MESON_FLAGS+=		-Dlauncher-logind=false \
-			-Dlauncher-libseat=true \
-			-Dsystemd=false \
+MESON_FLAGS+=		-Dsystemd=false \
 			-Dbackend-drm-screencast-vaapi=false \
 			-Dbackend-rdp=false \
 			-Dcolor-management-lcms=false \
 			-Dremoting=false \
 			-Dpipewire=false \
+			-Dbackend-pipewire=false \
+			-Dxwayland=false \
+			-Dtest-junit-xml=false \
 			-Ddemo-clients=false 
 
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
@@ -49,7 +48,7 @@ weston-install:
 	$(INSTALL_DIR) $(IDIR_WESTON)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/weston \
 		$(IDIR_WESTON)/usr/lib/
-	$(CP) $(WRKINST)/usr/lib/libweston-11 \
+	$(CP) $(WRKINST)/usr/lib/libweston-13 \
 		$(IDIR_WESTON)/usr/lib/
 	$(CP) $(WRKINST)/usr/lib/libweston*so* \
 		$(IDIR_WESTON)/usr/lib/
