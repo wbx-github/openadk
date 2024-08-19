@@ -4,14 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libseat
-PKG_VERSION:=		0.7.0
+PKG_VERSION:=		0.8.0
 PKG_RELEASE:=		1
-PKG_HASH:=		ea6ccbaf86949dba4eda64761b11aa8d05b61fc60f569b0fc05f2c4d06baeb87
+PKG_HASH:=		a562a44ee33ccb20954a1c1ec9a90ecb2db7a07ad6b18d0ac904328efbcf65a0
 PKG_DESCR:=		seat library
 PKG_SECTION:=		libs/misc
-PKG_URL:=		https://git.sr.ht/~kennylevinsen/seatd
-PKG_SITES:=		https://git.sr.ht/~kennylevinsen/seatd
+PKG_URL:=		https://git.sr.ht/~kennylevinsen/seatd/
+PKG_SITES:=		https://git.sr.ht/~kennylevinsen/seatd/archive/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_VERSION).tar.gz
+WRKDIST=		${WRKDIR}/seatd-${PKG_VERSION}
 
 include $(ADK_TOPDIR)/mk/package.mk
 
