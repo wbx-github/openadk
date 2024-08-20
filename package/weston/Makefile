@@ -6,12 +6,12 @@ include $(ADK_TOPDIR)/rules.mk
 PKG_NAME:=		weston
 PKG_VERSION:=		13.0.3
 PKG_RELEASE:=		1
-PKG_HASH:=		e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+PKG_HASH:=		27f68d96e3b97d98daadef13a202356524924fa381418fa6716b9136ef099093
 PKG_DESCR:=		wayland compositor
 PKG_SECTION:=		x11/drivers
-PKG_DEPENDS:=		wayland libxkbcommon libinput libpng libjpeg-turbo libseat
-PKG_DEPENDS+=		libwebp pam libxcursor libudev xkeyboard-config cairo libffi libdrm
-PKG_BUILDDEP:=		wayland wayland-protocols libxkbcommon libinput libpng libjpeg-turbo
+PKG_DEPENDS:=		wayland libxkbcommon libinput libpng libjpeg-turbo libseat mesa libexpat
+PKG_DEPENDS+=		libwebp pam libxcursor libudev xkeyboard-config cairo libffi libdrm seatd
+PKG_BUILDDEP:=		wayland wayland-protocols libxkbcommon libinput libpng libjpeg-turbo expat
 PKG_BUILDDEP+=		libwebp pam libXcursor eudev cairo libseat libffi libdrm libdisplay-info mesa
 PKG_SITES:=		https://gitlab.freedesktop.org/wayland/weston/-/releases/$(PKG_VERSION)/downloads/
 
@@ -50,7 +50,7 @@ weston-install:
 		$(IDIR_WESTON)/usr/lib/
 	$(CP) $(WRKINST)/usr/lib/libweston-13 \
 		$(IDIR_WESTON)/usr/lib/
-	$(CP) $(WRKINST)/usr/lib/libweston*so* \
+	$(CP) $(WRKINST)/usr/lib/*so* \
 		$(IDIR_WESTON)/usr/lib/
 	$(INSTALL_DIR) $(IDIR_WESTON)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/weston \
