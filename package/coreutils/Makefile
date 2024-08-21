@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		coreutils
-PKG_VERSION:=		9.4
+PKG_VERSION:=		9.5
 PKG_RELEASE:=		1
-PKG_HASH:=		ea613a4cf44612326e917201bbbcdfbd301de21ffc3b59b6e5c07e040b275e52
+PKG_HASH:=		cd328edeac92f6a665de9f323c93b712af1858bc2e0d88f3f7100469470a1b8a
 PKG_DESCR:=		file, shell and text utilities
 PKG_SECTION:=		base/apps
 PKG_NEEDS:=		threads
