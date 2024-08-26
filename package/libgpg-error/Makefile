@@ -10,7 +10,7 @@ PKG_HASH:=		9e3c670966b96ecc746c28c2c419541e3bcb787d1a73930f5e5f5e1bcbbb9bdb
 PKG_DESCR:=		helper library for common error codes and descriptions
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.gnupg.org/
-PKG_SITES:=		ftp://ftp.gnupg.org/gcrypt/libgpg-error/
+PKG_SITES:=		https://www.gnupg.org/ftp/gcrypt/libgpg-error/
 PKG_OPTS:=		dev
 PKG_NOPARALLEL:=	1
 
