@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		perl
-PKG_VERSION:=		5.38.2
+PKG_VERSION:=		5.40.0
 PKG_RELEASE:=		1
-PKG_HASH:=		d91115e90b896520e83d4de6b52f8254ef2b70a8d545ffab33200ea9f1cf29e8
+PKG_HASH:=		d5325300ad267624cb0b7d512cfdfcd74fa7fe00c455c5b51a6bd53e5e199ef9
 PKG_DESCR:=		perl interpreter
 PKG_SECTION:=		dev/lang
 PKG_NEEDS:=		threads
@@ -14,7 +14,7 @@ PKG_URL:=		http://www.perl.org/
 PKG_SITES:=		http://www.cpan.org/src/
 PKG_NOPARALLEL:=	1
 
-PC_VERSION:=		1.5.2
+PC_VERSION:=		1.5.3
 PC_SITE:=		https://github.com/arsv/perl-cross/releases/download/$(PC_VERSION)
 
 include ${ADK_TOPDIR}/mk/host.mk
@@ -36,7 +36,9 @@ CONFIGURE_ARGS:=	--target=$(GNU_TARGET_NAME) \
 			-Dmyuname="$(ADK_VENDOR)" \
 			-Dosname=linux \
 			-Dosvers=4.0 \
-			-Dperladmin=root
+			-Dperladmin=root \
+			-Ud_strlcat \
+			-Ud_strlcpy
 
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 CONFIGURE_ARGS+=	--all-static --no-dynaloader
