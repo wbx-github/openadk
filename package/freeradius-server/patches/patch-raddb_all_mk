@@ -1,0 +1,23 @@
+--- freeradius-server-3.2.6.orig/raddb/all.mk	2024-08-24 15:06:25.000000000 +0200
++++ freeradius-server-3.2.6/raddb/all.mk	2024-08-26 16:30:35.470666078 +0200
+@@ -125,20 +125,6 @@ $(R)$(raddbdir)/users: $(R)$(modconfdir)
+ 	@[ -e $@ ] || echo LN-S $(patsubst $(R)$(raddbdir)/%,raddb/%,$@)
+ 	@[ -e $@ ] || ln -s $(patsubst $(R)$(raddbdir)/%,./%,$<) $@
+ 
+-ifneq "$(LOCAL_CERT_PRODUCTS)" ""
+-$(LOCAL_CERT_PRODUCTS):
+-	@echo BOOTSTRAP raddb/certs/
+-	@$(MAKE) -C $(R)$(raddbdir)/certs/
+-
+-# Bootstrap is special
+-$(R)$(raddbdir)/certs/bootstrap: | raddb/certs/bootstrap $(LOCAL_CERT_PRODUCTS)
+-	@echo INSTALL $(patsubst $(R)$(raddbdir)/%,raddb/%,$@)
+-	@$(INSTALL) -m 750 $(patsubst $(R)$(raddbdir)/%,raddb/%,$@) $@
+-else
+-$(R)$(raddbdir)/certs/bootstrap:
+-	@echo INSTALL $(patsubst $(R)$(raddbdir)/%,raddb/%,$@)
+-	@$(INSTALL) -m 750 $(patsubst $(R)$(raddbdir)/%,raddb/%,$@) $@
+-endif
+ 
+ #  List directories before the file targets.
+ #  It's not clear why GNU Make doesn't deal well with this.

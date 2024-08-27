@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		freeradius-server
-PKG_VERSION:=		3.2.3
+PKG_VERSION:=		3.2.6
 PKG_RELEASE:=		1
-PKG_HASH:=		4bde047122e588c63fe2d599a73f7ab9a863806f9e716e88a3d77080b482c577
+PKG_HASH:=		dfed5a53596470e8c977fa2d4d154622ad673a0717d56dd085fb5000eda32f0d
 PKG_DESCR:=		flexible radius server
 PKG_SECTION:=		net/radius
-PKG_DEPENDS:=		libltdl libpcre libtalloc libressl libatomic
-PKG_BUILDDEP:=		libtool pcre talloc libressl
+PKG_DEPENDS:=		libltdl libpcre libtalloc libopenssl libatomic libreadline
+PKG_BUILDDEP:=		libtool pcre talloc openssl readline
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.freeradius.org/
-PKG_SITES:=		https://github.com/FreeRADIUS/freeradius-server/releases/download/release_3_2_3/
+PKG_SITES:=		https://github.com/FreeRADIUS/freeradius-server/releases/download/release_3_2_6/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
