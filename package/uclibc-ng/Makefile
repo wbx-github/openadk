@@ -54,6 +54,11 @@ uclibc-ng-dev-install:
 	-${CP} ${STAGING_TARGET_DIR}/usr/lib/libc.so ${IDIR_UCLIBC_NG_DEV}/usr/lib
 	-${CP} ${STAGING_TARGET_DIR}/usr/lib/uclibc_nonshared.a ${IDIR_UCLIBC_NG_DEV}/usr/lib
 	-${CP} ${STAGING_TARGET_DIR}/usr/lib/libpthread_nonshared.a ${IDIR_UCLIBC_NG_DEV}/usr/lib
+	-${CP} ${STAGING_TARGET_DIR}/usr/lib/libm.a ${IDIR_UCLIBC_NG_DEV}/usr/lib
+	-${CP} ${STAGING_TARGET_DIR}/usr/lib/libdl.a ${IDIR_UCLIBC_NG_DEV}/usr/lib
+	-${CP} ${STAGING_TARGET_DIR}/usr/lib/librt.a ${IDIR_UCLIBC_NG_DEV}/usr/lib
+	-${CP} ${STAGING_TARGET_DIR}/usr/lib/libutil.a ${IDIR_UCLIBC_NG_DEV}/usr/lib
+	-${CP} ${STAGING_TARGET_DIR}/usr/lib/libpthread.a ${IDIR_UCLIBC_NG_DEV}/usr/lib
 	${CP} ${STAGING_TARGET_DIR}/usr/lib/crt*.o ${IDIR_UCLIBC_NG_DEV}/usr/lib
 	${KERNEL_MAKE} INSTALL_HDR_PATH=$(IDIR_UCLIBC_NG_DEV)/usr headers_install
 	$(MAKE) -C $(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/${PKG_NAME}-${PKG_VERSION} \
