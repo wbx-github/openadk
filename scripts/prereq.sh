@@ -304,6 +304,15 @@ if ! which git >/dev/null 2>&1; then
 fi
 printf "found\n"
 
+printf " --->  checking if xz is installed.. "
+if ! which xz >/dev/null 2>&1; then
+  echo You must install xz to continue.
+  echo
+  out=1
+  printf "not found\n"
+fi
+printf "found\n"
+
 printf " --->  checking if ncurses is installed.. "
 check_lxdialog=${topdir}/adk/config/lxdialog/check-lxdialog.sh
 CURSES_CFLAGS=$(/bin/sh ${check_lxdialog} -ccflags | tr '\n' ' ')
