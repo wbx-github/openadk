@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		openssl
-PKG_VERSION:=		3.3.1
+PKG_VERSION:=		3.3.2
 PKG_RELEASE:=		1
-PKG_HASH:=		777cd596284c883375a2a7a11bf5d2786fc5413255efab20c50d6ffe6d020b7e
+PKG_HASH:=		2e8a40b01979afe8be0bbfb3de5dc1c6709fedb46d6c89c10da114ab5fc3d281
 PKG_DESCR:=		ssl/tls library
 PKG_SECTION:=		libs/crypto
-PKG_URL:=		https://www.openssl.org
+PKG_URL:=		https://openssl-library.org/
 PKG_DEPENDS:=		zlib
 PKG_BUILDDEP:=		zlib
-PKG_SITES:=		https://www.openssl.org/source/
+PKG_SITES:=		https://github.com/openssl/openssl/releases/download/openssl-$(PKG_VERSION)/
 PKG_LIBNAME:=		libopenssl
 PKG_OPTS:=		dev
 
