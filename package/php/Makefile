@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		php
-PKG_VERSION:=		8.3.2
+PKG_VERSION:=		8.3.11
 PKG_RELEASE:=		1
-PKG_HASH:=		4ffa3e44afc9c590e28dc0d2d31fc61f0139f8b335f11880a121b9f9b9f0634e
+PKG_HASH:=		b862b098a08ab9bf4b36ed12c7d0d9f65353656b36fb0e3c5344093aceb35802
 PKG_DESCR:=		php language interpreter
 PKG_SECTION:=		dev/lang
 PKG_NEEDS:=		threads
@@ -34,6 +34,8 @@ PKGFB_MOD_CURL:=	curl
 PKGFS_MOD_CURL:=	libcurl
 PKGFD_MOD_FTP:=		ftp support
 PKGFD_MOD_GD:=		gd support
+PKGFB_MOD_GD:=		libpng
+PKGFS_MOD_GD:=		libpng
 PKGFD_MOD_GMP:=		gmp support
 PKGFB_MOD_GMP:=		gmp
 PKGFS_MOD_GMP:=		libgmp
