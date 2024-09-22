@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		bind
-PKG_VERSION:=		9.18.28
+PKG_VERSION:=		9.18.30
 PKG_RELEASE:=		1
-PKG_HASH:=		e7cce9a165f7b619eefc4832f0a8dc16b005d29e3890aed6008c506ea286a5e7
+PKG_HASH:=		9f6817640970267317e5aa143ecf70531040f2155636b1a63ea45379aa09034a
 PKG_DESCR:=		dns server
 PKG_SECTION:=		net/dns
 PKG_DEPENDS:=		libxml2 libopenssl libuv openssl-util
