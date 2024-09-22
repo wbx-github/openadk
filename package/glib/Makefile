@@ -10,8 +10,8 @@ PKG_EXTRAVER:=		2.78
 PKG_HASH:=		24b8e0672dca120cc32d394bccb85844e732e04fe75d18bb0573b2dbc7548f63
 PKG_DESCR:=		low-level core library that forms the basis of gtk+
 PKG_SECTION:=		libs/misc
-PKG_DEPENDS:=		pcre2 zlib libffi
-PKG_BUILDDEP:=		glib-host util-linux libffi zlib dbus pcre2
+PKG_DEPENDS:=		pcre2 zlib libffi libiconv
+PKG_BUILDDEP:=		glib-host util-linux libffi zlib dbus pcre2 libiconv
 HOST_BUILDDEP:=		pkgconf-host libiconv-host libffi-host python3-host gettext-host util-linux-host
 HOST_BUILDDEP+=		pcre2-host meson-host
 PKG_NEEDS:=		threads intl iconv
@@ -28,29 +28,23 @@ $(eval $(call PKG_template,GLIB,glib,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS
 HOSTWRKBUILD=           $(WRKSRC)
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
-HOST_CONFIG_STYLE:=	manual
-HOST_STYLE:=		manual
+HOST_STYLE:=		meson
+HOST_INSTALL_STYLE:=	meson
+
 CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
+HOST_MESON_FLAGS:=	--default-library static -Dtests=false -Dxattr=false -Doss_fuzz=disabled
 MESON_FLAGS:=		-Dtests=false -Dxattr=false -Doss_fuzz=disabled
 
-host-configure:
-	(cd $(HOSTWRKBUILD) && PATH='$(HOST_PATH)' meson setup --prefix $(STAGING_HOST_DIR)/usr _build)
-
-host-build:
-	(cd $(HOSTWRKBUILD) && PATH='$(HOST_PATH)' meson compile -C _build)
-
-glib-hostinstall:
-	(cd $(HOSTWRKBUILD) && PATH='$(HOST_PATH)' meson install -C _build)
-
-do-configure:
-	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson setup --prefix /usr \
-		--libdir lib --cross-file $(STAGING_HOST_DIR)/etc/meson/cross-compilation.conf -Dtests=false _build)
-
-do-build:
-	(cd $(WRKBUILD) && PATH='$(HOST_PATH)' meson compile -C _build)
+hostpost-install:
+	$(CP) $(HOSTWRKBUILD)/../glib-obj/meson-private/glib-2.0.pc \
+		$(STAGING_HOST_DIR)/usr/lib/pkgconfig
+	$(INSTALL_BIN) $(HOSTWRKBUILD)/../glib-obj/gobject/glib-mkenums \
+		$(STAGING_HOST_DIR)/usr/bin
+	$(INSTALL_BIN) $(HOSTWRKBUILD)/../glib-obj/gobject/glib-genmarshal \
+		$(STAGING_HOST_DIR)/usr/bin
 
 glib-install:
 	$(INSTALL_DIR) $(IDIR_GLIB)/usr/lib

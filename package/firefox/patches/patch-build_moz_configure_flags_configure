@@ -1,0 +1,13 @@
+--- firefox-129.0.2.orig/build/moz.configure/flags.configure	2024-08-19 21:21:42.000000000 +0200
++++ firefox-129.0.2/build/moz.configure/flags.configure	2024-09-08 06:27:20.661198142 +0200
+@@ -72,10 +72,6 @@ def link_libstdcxx_statically(
+             )
+ 
+ 
+-@depends(when=link_libstdcxx_statically)
+-def check_libstdcxx_linkage():
+-    die("Firefox does not support linking statically with libstdc++")
+-
+ 
+ check_and_add_flag(
+     "-mieee",

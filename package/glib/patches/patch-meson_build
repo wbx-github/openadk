@@ -1,6 +1,6 @@
---- glib-2.75.2.orig/meson.build	2023-01-06 13:49:52.000000000 +0100
-+++ glib-2.75.2/meson.build	2023-01-22 14:18:11.633406695 +0100
-@@ -513,6 +513,7 @@ if cc.get_id() == 'gcc' or cc.get_id() =
+--- glib-2.78.4.orig/meson.build	2024-01-21 20:48:20.000000000 +0100
++++ glib-2.78.4/meson.build	2024-08-30 10:20:24.877632538 +0200
+@@ -527,6 +527,7 @@ if cc.get_id() == 'gcc' or cc.get_id() =
      '-Werror=missing-include-dirs',
      '-Werror=pointer-arith',
      '-Werror=unused-result',

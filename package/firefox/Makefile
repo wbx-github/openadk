@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		firefox
-PKG_VERSION:=		108.0.1
+PKG_VERSION:=		129.0.2
 PKG_RELEASE:=		1
-PKG_HASH:=		9821ac130dad01383e03276bf6cc92d41329d351da1fa7fa238168f8890611ea
+PKG_HASH:=		35a1da121af474833d013ecbc1f77aa55bb35678fe06d438842d320dfab3f344
 PKG_DESCR:=		www browser
 PKG_SECTION:=		app/browser
 PKG_DEPENDS:=		pango libfreetype fontconfig libxcomposite libxcursor
@@ -41,7 +41,9 @@ CONFIGURE_ARGS+=	--prefix=/usr \
 			--disable-audio-backends \
 			--without-wasm-sandboxed-libraries \
 			--disable-profiling \
-			--with-clang-path=/usr/bin/clang-13
+			--disable-crashreporter \
+			--with-clang-path=/usr/bin/clang-18 \
+			--with-libclang-path=/usr/lib/llvm-18/lib
 
 firefox-install:
 	$(INSTALL_DIR) $(IDIR_FIREFOX)/usr/bin

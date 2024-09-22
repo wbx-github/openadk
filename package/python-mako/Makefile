@@ -9,7 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		d60a3903dc3bb01a18ad6a89cdbe2e4eadc69c0bc8ef1e3773ba53d44c3f7a34
 PKG_DESCR:=		fast, expressive, extensible templating engine
 PKG_SECTION:=		dev/tools
-PKG_BUILDDEP:=		python3-host
+HOST_BUILDDEP:=		python3-host python-markupsafe-host
 PKG_SITES:=		https://files.pythonhosted.org/packages/05/5f/2ba6e026d33a0e6ddc1dddf9958677f76f5f80c236bd65309d280b166d3e/
 
 DISTFILES:=             Mako-$(PKG_VERSION).tar.gz

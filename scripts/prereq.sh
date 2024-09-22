@@ -923,7 +923,7 @@ else
   fi
 
   if [ -n "$NEED_CLANG" ]; then
-    if ! which clang-13 >/dev/null 2>&1; then
+    if ! which clang-18 >/dev/null 2>&1; then
       printf "You need clang-13 to build $NEED_CLANG \n"
       out=1
     fi

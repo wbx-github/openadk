@@ -61,8 +61,9 @@ ifeq (${HOST_CONFIG_STYLE},cmake)
 endif
 ifeq (${HOST_CONFIG_STYLE},meson)
 	@$(CMD_TRACE) "configuring meson.. "
-	cd ${WRKSRC}; PATH='${HOST_PATH}' \
-		meson --prefix $(STAGING_HOST_DIR)/usr \
+	cd ${WRKSRC}; env PATH='${HOST_PATH}' CPPFLAGS='$(HOST_CPPFLAGS)' \
+		LDFLAGS='$(HOST_LDFLAGS)' CFLAGS='$(HOST_CFLAGS)' \
+		meson setup --prefix $(STAGING_HOST_DIR)/usr \
 		 --pkg-config-path $(STAGING_HOST_DIR)/usr/lib/pkgconfig \
 		 --buildtype release $(HOST_MESON_FLAGS) \
 		$(WRKSRC) $(WRKBUILD) $(MAKE_TRACE)
@@ -108,6 +109,10 @@ endif
 ifeq (${HOST_INSTALL_STYLE},auto)
 	cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -f ${MAKE_FILE} \
 	    DESTDIR='${STAGING_HOST_DIR}' ${HOST_FAKE_FLAGS} ${HOST_INSTALL_TARGET} $(MAKE_TRACE)
+endif
+ifeq (${HOST_INSTALL_STYLE},meson)
+	DESTDIR='' PATH='$(HOST_PATH)' \
+		ninja -C $(WRKBUILD) install $(MAKE_TRACE)
 endif
 ifeq (${HOST_INSTALL_STYLE},manual)
 	env ${HOST_MAKE_ENV} ${MAKE} host-install $(MAKE_TRACE)

@@ -23,13 +23,10 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,PCRE2,pcre2,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,PCRE2,pcre2,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
-HOST_STYLE:=		cmake
+HOST_CONFIG_STYLE:=	cmake
+HOST_CMAKE_FLAGS+=	-DBUILD_SHARED_LIBS=ON
 CONFIG_STYLE:=		cmake
 CMAKE_FLAGS+=		-DBUILD_SHARED_LIBS=ON
-
-pcre2-hostinstall:
-	cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -j${ADK_MAKE_JOBS} -f ${MAKE_FILE} \
-		${HOST_FAKE_FLAGS} ${HOST_INSTALL_TARGET}
 
 pcre2-install:
 	$(INSTALL_DIR) $(IDIR_PCRE2)/usr/lib

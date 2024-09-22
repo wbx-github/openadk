@@ -1,0 +1,10 @@
+--- firefox-129.0.2.orig/servo/ports/geckolib/cbindgen.toml	2024-08-19 21:21:52.000000000 +0200
++++ firefox-129.0.2/servo/ports/geckolib/cbindgen.toml	2024-09-08 06:18:31.275680774 +0200
+@@ -360,7 +360,6 @@ renaming_overrides_prefixing = true
+ "Keyframe" = "Keyframe"
+ "nsChangeHint" = "nsChangeHint"
+ "ServoElementSnapshotTable" = "ServoElementSnapshotTable"
+-"Keyframe" = "Keyframe"
+ "ComputedKeyframeValues" = "ComputedKeyframeValues"
+ "OriginFlags" = "OriginFlags"
+ "ServoTraversalFlags" = "ServoTraversalFlags"
