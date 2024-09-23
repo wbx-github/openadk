@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		openssh
-PKG_VERSION:=		9.8p1
+PKG_VERSION:=		9.9p1
 PKG_RELEASE:=		1
-PKG_HASH:=		dd8bd002a379b5d499dfb050dd1fa9af8029e80461f4bb6c523c49973f5a39f3
+PKG_HASH:=		b343fbcdbff87f15b1986e6e15d6d4fc9a7d36066be6b7fb507087ba8f966c02
 PKG_DESCR:=		secure shell implementation
 PKG_SECTION:=		net/security
 PKG_BUILDDEP:=		zlib
@@ -37,13 +37,13 @@ PKGFD_WITH_KRB5:=	enable kerberos 5 support
 PKGFS_WITH_KRB5:=	libkrb5 libcom-err
 PKGFB_WITH_KRB5:=	krb5
 
-PKG_CHOICES_OPENSSH:=	WITH_LIBRESSL WITH_OPENSSL
-PKGCD_WITH_LIBRESSL:=	with libressl
-PKGCS_WITH_LIBRESSL:=	libressl
-PKGCB_WITH_LIBRESSL:=	libressl
+PKG_CHOICES_OPENSSH:=	WITH_OPENSSL WITH_LIBRESSL
 PKGCD_WITH_OPENSSL:=	with openssl
 PKGCS_WITH_OPENSSL:=	libopenssl
 PKGCB_WITH_OPENSSL:=	openssl
+PKGCD_WITH_LIBRESSL:=	with libressl
+PKGCS_WITH_LIBRESSL:=	libressl
+PKGCB_WITH_LIBRESSL:=	libressl
 
 
 include ${ADK_TOPDIR}/mk/package.mk
