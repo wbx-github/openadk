@@ -9,9 +9,9 @@ PKG_RELEASE:=		1
 PKG_HASH:=		4e7d9d3f6ed10878c58c5fb724a67dacf4b6aac7340b13e488fb2dc41346f2bb
 PKG_DESCR:=		utility that provides fast incremental file transfer
 PKG_SECTION:=		net/misc
-PKG_DEPENDS:=		libpopt libressl
-PKG_BUILDDEP:=		popt libressl
-HOST_BUILDDEP:=		libressl-host
+PKG_DEPENDS:=		libpopt libopenssl
+PKG_BUILDDEP:=		popt openssl
+HOST_BUILDDEP:=		openssl-host
 PKG_URL:=		http://rsync.samba.org/
 PKG_SITES:=		http://rsync.samba.org/ftp/rsync/
 
