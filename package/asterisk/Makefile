@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		asterisk
-PKG_VERSION:=		20.9.2
+PKG_VERSION:=		20.9.3
 PKG_RELEASE:=		1
-PKG_HASH:=		acc85a66f3b2a0e2784f4c551b8b0241a2393c47ff353543ae63b5dcf434b1ca
+PKG_HASH:=		3d3d3c558f0ca9c3209a6aa7c561c2b85a1ab1b4099d4995f33c917b4cff9ee4
 PKG_DESCR:=		open source pbx
 PKG_SECTION:=		net/voip
 PKG_DEPENDS:=		libncurses libcurl libopenssl libedit libuuid libjansson
@@ -53,7 +53,6 @@ $(eval $(call PKG_template,ASTERISK_PBX_DUNDI,asterisk-pbx-dundi,$(PKG_VERSION)-
 $(eval $(call PKG_template,ASTERISK_RES_AGI,asterisk-res-agi,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_ASTERISK_RES_AGI},${PKG_SECTION}))
 
 CONFIGURE_ARGS=		--with-z=${STAGING_TARGET_DIR}/usr \
-			--with-ncurses=${STAGING_TARGET_DIR}/usr \
 			--with-libedit=${STAGING_TARGET_DIR}/usr \
 			--with-jansson=${STAGING_TARGET_DIR}/usr \
 			--with-ssl=${STAGING_TARGET_DIR}/usr \
@@ -61,17 +60,14 @@ CONFIGURE_ARGS=		--with-z=${STAGING_TARGET_DIR}/usr \
 			--without-tonezone \
 			--without-asound \
 			--without-gtk2 \
-			--without-h323 \
 			--without-iksemel \
 			--without-imap \
 			--without-netsnmp \
 			--without-newt \
-			--without-openais \
 			--without-osptk \
-			--without-oss \
 			--without-popt \
+			--without-portaudio \
 			--without-pri \
-			--without-pwlib \
 			--without-tds \
 			--without-postgres
 
@@ -97,9 +93,9 @@ endif
 
 INSTALL_STYLE:=		manual
 
-TARGET_CFLAGS+=		-fgnu89-inline
 TARGET_LDFLAGS+=	-lm -ltinfo -ldl -lpthread
-MAKE_ENV=		ASTCFLAGS="${TARGET_CPPFLAGS} -DHAVE_STRTOQ" \
+MAKE_ENV:=		PATH="$(HOST_PATH)" \
+			ASTCFLAGS="${TARGET_CPPFLAGS} -DHAVE_STRTOQ" \
 			ASTLDFLAGS="${TARGET_LDFLAGS} -z muldefs"
 MAKE_FLAGS+=		DESTDIR="$(WRKINST)" \
 			OPTIMIZE="${TARGET_CFLAGS}" \
@@ -107,10 +103,10 @@ MAKE_FLAGS+=		DESTDIR="$(WRKINST)" \
 ALL_TARGET:=		all install samples
 
 pre-configure:
-	cd "$(WRKBUILD)/menuselect"; ./configure
+	cd "$(WRKBUILD)/menuselect"; PATH="$(HOST_PATH)" ./configure
 
 pre-build:
-	$(MAKE) -C $(WRKBUILD)/menuselect
+	PATH="$(HOST_PATH)" $(MAKE) -C $(WRKBUILD)/menuselect
 
 #post-build:
 #	cd ${WRKBUILD}/sounds ; \
