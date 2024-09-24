@@ -1,0 +1,10 @@
+--- iproute2-6.11.0.orig/bridge/mst.c	2024-09-15 21:42:26.000000000 +0200
++++ iproute2-6.11.0/bridge/mst.c	2024-09-24 09:58:39.165522637 +0200
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <netinet/in.h>
+ #include <linux/if_bridge.h>
+ #include <net/if.h>
+ 

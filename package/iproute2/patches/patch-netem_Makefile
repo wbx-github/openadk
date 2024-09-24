@@ -1,6 +1,6 @@
---- iproute2-4.10.0.orig/netem/Makefile	2017-02-20 17:47:52.000000000 +0100
-+++ iproute2-4.10.0/netem/Makefile	2017-04-23 20:23:07.404790192 +0200
-@@ -1,14 +1,12 @@
+--- iproute2-6.11.0.orig/netem/Makefile	2024-09-15 21:42:26.000000000 +0200
++++ iproute2-6.11.0/netem/Makefile	2024-09-24 09:43:33.530449869 +0200
+@@ -4,14 +4,12 @@ include ../config.mk
  DISTGEN = maketable normal pareto paretonormal
  DISTDATA = normal.dist pareto.dist paretonormal.dist experimental.dist
  
@@ -16,7 +16,7 @@
  
  %.dist: %
  	./$* > $@
-@@ -17,7 +15,7 @@ experimental.dist: maketable experimenta
+@@ -20,7 +18,7 @@ experimental.dist: maketable experimenta
  	./maketable experimental.dat > experimental.dist
  
  stats: stats.c

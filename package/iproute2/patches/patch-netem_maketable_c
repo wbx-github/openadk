@@ -1,6 +1,6 @@
---- iproute2-2.6.29-1.orig/netem/maketable.c	2009-03-24 23:40:54.000000000 +0100
-+++ iproute2-2.6.29-1/netem/maketable.c	2009-12-11 16:32:33.000000000 +0100
-@@ -10,7 +10,7 @@
+--- iproute2-6.11.0.orig/netem/maketable.c	2024-09-15 21:42:26.000000000 +0200
++++ iproute2-6.11.0/netem/maketable.c	2024-09-24 09:43:33.538449682 +0200
+@@ -11,7 +11,7 @@
  #include <stdio.h>
  #include <stdlib.h>
  #include <math.h>

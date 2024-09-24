@@ -1,6 +1,6 @@
---- iproute2-3.12.0.orig/netem/normal.c	2013-11-23 02:10:33.000000000 +0100
-+++ iproute2-3.12.0/netem/normal.c	2014-02-09 11:40:30.000000000 +0100
-@@ -8,9 +8,7 @@
+--- iproute2-6.11.0.orig/netem/normal.c	2024-09-15 21:42:26.000000000 +0200
++++ iproute2-6.11.0/netem/normal.c	2024-09-24 09:43:33.542449589 +0200
+@@ -9,9 +9,7 @@
  #include <string.h>
  #include <limits.h>
  

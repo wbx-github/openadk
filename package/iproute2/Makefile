@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		iproute2
-PKG_VERSION:=		5.8.0
+PKG_VERSION:=		6.11.0
 PKG_RELEASE:=		1
-PKG_HASH:=		cfcd1f890290f8c8afcc91d9444ad929b9252c16f9ab3f286c50dd3c59dc646e
+PKG_HASH:=		1f795398a04aeaacd06a8f6ace2cfd913c33fa5953ca99daae83bb5c534611c3
 PKG_DESCR:=		routing control utility
 PKG_SECTION:=		net/route
 PKG_BUILDDEP:=		iptables libnl linux-atm
@@ -15,6 +15,7 @@ PKG_URL:=		http://www.linuxfoundation.org/en/Net:Iproute2
 PKG_SITES:=		http://www.kernel.org/pub/linux/utils/net/iproute2/
 
 PKG_SUBPKGS:=		IP TC TC_ATM TC_IPT IFSTAT LNSTAT ROUTEL RTMON SS
+PKGSS_IP:=		libmnl
 PKGSD_TC:=		traffic control utility
 PKGSB_TC:=		iptables
 PKGSD_TC_ATM:=		traffic control atm support library
@@ -43,12 +44,11 @@ $(eval $(call PKG_template,SS,ss,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_SS},${PK
 
 CONFIG_STYLE:=		minimal
 TARGET_CFLAGS+=		-D_GNU_SOURCE
-XAKE_FLAGS+=		CCOPTS="${TARGET_CFLAGS}" MFLAGS="CC=\"${TARGET_CC}\""
+XAKE_FLAGS+=		CCOPTS="${TARGET_CFLAGS}" MFLAGS="CC=\"${TARGET_CC}\"" V=1
 CONFIGURE_ENV+=		CC="${TARGET_CC}" IPTC="${TARGET_CFLAGS}" IPTL="${TARGET_LDFLAGS}"
 
 ip-install:
-	${INSTALL_DIR} ${IDIR_IP}/{etc/iproute2,bin}
-	${INSTALL_DATA} ${WRKINST}/etc/iproute2/* ${IDIR_IP}/etc/iproute2/
+	${INSTALL_DIR} ${IDIR_IP}/bin
 	${INSTALL_BIN} ${WRKINST}/sbin/ip ${IDIR_IP}/bin/ip
 
 tc-install:

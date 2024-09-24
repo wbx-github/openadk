@@ -1,6 +1,6 @@
---- iproute2-3.12.0.orig/tc/tc_core.h	2013-11-23 02:10:33.000000000 +0100
-+++ iproute2-3.12.0/tc/tc_core.h	2014-02-08 20:19:59.000000000 +0100
-@@ -1,7 +1,7 @@
+--- iproute2-6.11.0.orig/tc/tc_core.h	2024-09-15 21:42:26.000000000 +0200
++++ iproute2-6.11.0/tc/tc_core.h	2024-09-24 09:43:33.562449121 +0200
+@@ -2,7 +2,7 @@
  #ifndef _TC_CORE_H_
  #define _TC_CORE_H_ 1
  
@@ -8,4 +8,4 @@
 +#include <sys/types.h>
  #include <linux/pkt_sched.h>
  
- #define TIME_UNITS_PER_SEC	1000000
+ enum link_layer {
