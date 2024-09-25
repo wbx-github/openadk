@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		nfs-utils
-PKG_VERSION:=		2.6.4
+PKG_VERSION:=		2.7.1
 PKG_RELEASE:=		1
-PKG_HASH:=		c0ae376ac056011ed0954deba2362d7d8193c653b500b68a543aec512cd2ecfa
+PKG_HASH:=		d23bab70a7570d8140de8195c16aa3f46e01b61ef3be51ae14fcbf6363017f14
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		keyutils libtirpc rpcbind libmount libuuid libevent sqlite
-PKG_DEPENDS+=		libncurses libblkid
-PKG_BUILDDEP:=		keyutils libtirpc util-linux libevent sqlite ncurses
+PKG_DEPENDS+=		libncurses libblkid libxml2
+PKG_BUILDDEP:=		keyutils libtirpc util-linux libevent sqlite ncurses libxml2
 PKG_KDEPENDS:=		nfs-fs
 PKG_NEEDS:=		threads
 PKG_URL:=		http://sourceforge.net/projects/nfs
