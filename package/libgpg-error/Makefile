@@ -44,6 +44,9 @@ endif
 ifeq ($(ADK_TARGET_ARCH_PPC64),y)
 LIBGPG_PREFIX:=		powerpc64-unknown-linux-gnu
 endif
+ifeq ($(ADK_TARGET_ARCH_RISCV64),y)
+LIBGPG_PREFIX:=		riscv64-unknown-linux-gnu
+endif
 ifeq ($(ADK_TARGET_ARCH_SH),y)
 LIBGPG_PREFIX:=		sh4-unknown-linux-gnu
 endif
