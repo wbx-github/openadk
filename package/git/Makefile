@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		git
-PKG_VERSION:=		2.45.1
+PKG_VERSION:=		2.47.0
 PKG_RELEASE:=		1
-PKG_HASH:=		e64d340a8e627ae22cfb8bcc651cca0b497cf1e9fdf523735544ff4a732f12bf
+PKG_HASH:=		1ce114da88704271b43e027c51e04d9399f8c88e9ef7542dae7aebae7d87bc4e
 PKG_DESCR:=		fast version control system
 PKG_SECTION:=		dev/scm
 PKG_BUILDDEP:=		zlib curl expat
@@ -15,13 +15,13 @@ PKG_NEEDS:=		threads
 PKG_URL:=		http://git-scm.com/
 PKG_SITES:=		https://www.kernel.org/pub/software/scm/git/
 
-PKG_CHOICES_GIT:=	WITH_LIBRESSL WITH_OPENSSL
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl
+PKG_CHOICES_GIT:=	WITH_OPENSSL WITH_LIBRESSL
 PKGCD_WITH_OPENSSL:=	use openssl for crypto
 PKGCB_WITH_OPENSSL:=	openssl
 PKGCS_WITH_OPENSSL:=	libopenssl
+PKGCD_WITH_LIBRESSL:=	use libressl for crypto
+PKGCB_WITH_LIBRESSL:=	libressl
+PKGCS_WITH_LIBRESSL:=	libressl
 
 include $(ADK_TOPDIR)/mk/package.mk
 
