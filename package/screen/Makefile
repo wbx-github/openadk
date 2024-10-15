@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		screen
-PKG_VERSION:=		4.9.0
+PKG_VERSION:=		5.0.0
 PKG_RELEASE:=		1
-PKG_HASH:=		f9335281bb4d1538ed078df78a20c2f39d3af9a4e91c57d084271e0289c730f4
+PKG_HASH:=		f04a39d00a0e5c7c86a55338808903082ad5df4d73df1a2fd3425976aed94971
 PKG_DESCR:=		window manager for the terminal session
 PKG_SECTION:=		sys/utils
 PKG_DEPENDS:=		libncurses libelf
@@ -21,19 +21,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,SCREEN,screen,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-AUTOTOOL_STYLE:=	autoreconf
-TARGET_LDFLAGS+=	-ltinfo
-CONFIGURE_ENV+=		$(foreach flag,rename fchmod fchown strerror lstat _exit utimes vsnprintf getcwd setlocale strftime,ac_cv_func_${flag}=yes)
-CONFIGURE_ARGS+=	--with-sys-screenrc=/etc/screenrc
-
-pre-build:
-	echo '#undef UTMPOK' >> ${WRKBUILD}/config.h
-	echo '#undef LOGINDEFAULT' >> ${WRKBUILD}/config.h
-	echo '#define LOGINDEFAULT 0' >> ${WRKBUILD}/config.h
-	echo '#undef GETUTENT' >> ${WRKBUILD}/config.h
-	echo '#undef UTHOST' >> ${WRKBUILD}/config.h
-	echo '#undef BUGGYGETLOGIN' >> ${WRKBUILD}/config.h
-	mv ${WRKBUILD}/sched.h ${WRKBUILD}/my_sched.h
+CONFIGURE_ARGS+=	--disable-pam
 
 screen-install:
 	${INSTALL_DIR} ${IDIR_SCREEN}/usr/bin
