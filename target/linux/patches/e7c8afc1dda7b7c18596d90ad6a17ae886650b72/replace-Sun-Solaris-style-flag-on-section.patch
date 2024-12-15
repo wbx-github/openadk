@@ -1,0 +1,21 @@
+diff -Nur linux-e7c8afc1dda7b7c18596d90ad6a17ae886650b72.orig/arch/arm/mm/proc-v7m.S linux-e7c8afc1dda7b7c18596d90ad6a17ae886650b72/arch/arm/mm/proc-v7m.S
+--- linux-e7c8afc1dda7b7c18596d90ad6a17ae886650b72.orig/arch/arm/mm/proc-v7m.S	2024-12-14 11:24:59.000000000 +0100
++++ linux-e7c8afc1dda7b7c18596d90ad6a17ae886650b72/arch/arm/mm/proc-v7m.S	2024-12-14 11:55:19.258693647 +0100
+@@ -78,7 +78,7 @@
+ 	.ascii	"ARMv7-M Processor"
+ 	.align
+ 
+-	.section ".text.init", #alloc, #execinstr
++	.section ".text.init", "ax"
+ 
+ /*
+  *	__v7m_setup
+@@ -191,7 +191,7 @@
+ 	.size	cpu_elf_name, . - cpu_elf_name
+ 	.align
+ 
+-	.section ".proc.info.init", #alloc, #execinstr
++	.section ".proc.info.init", "ax"
+ 
+ 	/*
+ 	 * Match any ARMv7-M processor core.
