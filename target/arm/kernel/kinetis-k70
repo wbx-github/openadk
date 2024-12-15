@@ -19,3 +19,4 @@ CONFIG_GPIOLIB=y
 CONFIG_SLAB=y
 CONFIG_SERIAL_KINETIS=y
 CONFIG_SERIAL_KINETIS_CONSOLE=y
+CONFIG_CMDLINE=console=ttyS2,115200 rw root=/dev/nfs ip=dhcp kinetis_platform=k70-som"
