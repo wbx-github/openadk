@@ -1,0 +1,10 @@
+diff -Nur uClibc-ng-1.0.50.orig/libc/sysdeps/linux/common/clock_adjtime.c uClibc-ng-1.0.50/libc/sysdeps/linux/common/clock_adjtime.c
+--- uClibc-ng-1.0.50.orig/libc/sysdeps/linux/common/clock_adjtime.c	2024-08-13 04:08:05.000000000 +0200
++++ uClibc-ng-1.0.50/libc/sysdeps/linux/common/clock_adjtime.c	2024-12-14 11:28:37.188207576 +0100
+@@ -15,5 +15,5 @@
+ #elif defined(__NR_clock_adjtime)
+ _syscall2(int, clock_adjtime, clockid_t, clock_id, struct timex*, ntx)
+ #else
+-#error "clock_adjtime syscall is not defined!"
++#warning "clock_adjtime syscall is not defined!"
+ #endif
