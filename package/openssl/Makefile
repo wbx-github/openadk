@@ -38,7 +38,7 @@ OPENSSL_OPTIONS:=	shared zlib-dynamic
 endif
 
 OPENSSL_OPTIONS+=	threads no-err no-tests no-fuzz-libfuzzer no-fuzz-afl 
-OPENSSL_OPTIONS+=	no-rc5 no-rc2 no-rc4 no-md2 no-idea
+OPENSSL_OPTIONS+=	no-rc5 no-rc2 no-rc4 no-md2 no-idea no-docs
 
 HOST_STYLE:=		manual
 CONFIG_STYLE:=		manual
