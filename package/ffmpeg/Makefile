@@ -5,19 +5,19 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ffmpeg
 PKG_VERSION:=		6.1.1
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		5e3133939a61ef64ac9b47ffd29a5ea6e337a4023ef0ad972094b4da844e3a20
 PKG_DESCR:=		record, convert and stream audio & video
 PKG_SECTION:=		libs/video
 PKG_NEEDS:=		threads
-PKG_DEPENDS:=		libncurses libressl
-PKG_BUILDDEP:=		ncurses libressl
+PKG_DEPENDS:=		libncurses
+PKG_BUILDDEP:=		ncurses
 PKG_URL:=		http://www.ffmpeg.org/
 PKG_SITES:=		http://www.ffmpeg.org/releases/
 PKG_LIBNAME:=		libffmpeg
 PKG_OPTS:=		dev
 
-PKG_CHOICES_FFMPEG:=	WITH_LIBRESSL WITH_OPENSSL
+PKG_CHOICES_LIBFFMPEG:=	WITH_LIBRESSL WITH_OPENSSL
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCB_WITH_LIBRESSL:=	libressl
