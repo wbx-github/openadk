@@ -27,6 +27,7 @@ endif
 HOST_STYLE:=		auto
 HOST_CONFIG_STYLE:=	manual
 HOST_CONFIGURE_ENV+=	uname=Linux
+HOST_FAKE_FLAGS+=	DESTDIR=/
 
 CONFIG_STYLE:=		manual
 CONFIGURE_ENV+=		uname=Linux
@@ -45,7 +46,7 @@ host-configure:
 		CPPFLAGS="-I$(STAGING_HOST_DIR)/usr/include" \
 		LDFLAGS="-L$(STAGING_HOST_DIR)/usr/lib" \
 		./configure \
-		--prefix=/usr \
+		--prefix=$(STAGING_HOST_DIR)/usr \
 		--shared \
 	);
 
