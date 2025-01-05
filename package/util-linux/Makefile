@@ -109,6 +109,11 @@ CONFIGURE_ARGS+=	--exec-prefix=/usr \
 			--enable-libuuid \
 			--enable-libblkid \
 			--enable-libmount
+ifneq (${ADK_PACKAGE_LSFD},)
+CONFIGURE_ARGS+=	--enable-lsfd
+else
+CONFIGURE_ARGS+=	--disable-lsfd
+endif
 
 TARGET_CFLAGS+=		-fPIC
 FAKE_FLAGS+=		INSTALLSUID="install -m 4755"
