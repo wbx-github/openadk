@@ -22,7 +22,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,LIBXML2,libxml2,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,LIBXML2,libxml2,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
-HOST_STYLE:=		auto
 HOST_CONFIGURE_ARGS+=	--without-python \
 			--with-threads \
 			--without-iconv \
