@@ -28,3 +28,4 @@ source target/linux/config/Config.in.pm
 source target/linux/config/Config.in.kvm
 source target/linux/config/Config.in.virtio
 source target/linux/config/Config.in.debug
+source target/linux/config/Config.in.compat

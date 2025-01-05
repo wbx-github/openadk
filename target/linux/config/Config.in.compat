@@ -1,0 +1,13 @@
+config ADK_LINUX_KERNEL_COMPAT_32BIT_TIME
+	bool
+	default n if ADK_TARGET_ARCH_AARCH64
+	default n if ADK_TARGET_ARCH_ALPHA
+	default n if ADK_TARGET_ARCH_IA64
+	default n if ADK_TARGET_ARCH_LOONGARCH
+	default n if ADK_TARGET_ARCH_MIPS64
+	default n if ADK_TARGET_ARCH_PPC64
+	default n if ADK_TARGET_ARCH_RISCV64
+	default n if ADK_TARGET_ARCH_S390
+	default n if ADK_TARGET_ARCH_SPARC64
+	default n if ADK_TARGET_ARCH_X86_64
+	default y
