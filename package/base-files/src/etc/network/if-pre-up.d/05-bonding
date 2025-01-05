@@ -1,0 +1,37 @@
+#!/bin/sh
+
+INTERFACES=""
+BONDOPTS=""
+for var in $(env | grep '^IF_BOND_'); do
+	val="${var#*=}"
+	opt="${var%%=*}"
+	if [ "$opt" == "IF_BOND_PORTS" ]; then
+		case "$val" in
+		none)
+			INTERFACES=""
+			;;
+		*)
+			INTERFACES="$val"
+			;;
+		esac
+		continue
+	fi
+	opt="$(tr '[A-Z]' '[a-z]' <<< ${opt#IF_BOND_})"
+	BONDOPTS+=" $opt"
+	[ -n "$val" ] && BONDOPTS+=" $val"
+done
+
+[ -n "$INTERFACES" ] || exit 0
+
+ip link add $IFACE type bond ${BONDOPTS} || exit 1
+for IF in $INTERFACES; do
+	if ! grep -q $IF /proc/net/dev; then
+		echo "Error: interface '$IF' does not exist!"
+		ip link del $IFACE
+		exit 1
+	fi
+	ip link set $IF master $IFACE
+	ip link set $IF up
+done
+
+exit 0

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+case "$IF_BOND_PORTS" in
+"")
+	exit 0
+	;;
+none)
+	INTERFACES=""
+	;;
+*)
+	INTERFACES="$IF_BOND_PORTS"
+	;;
+esac
+
+for IF in $INTERFACES; do
+	ip link set $IF nomaster
+	ip link set $IF down
+done
+ip link del $IFACE
+exit 0

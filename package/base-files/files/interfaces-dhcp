@@ -22,6 +22,15 @@ iface eth0 inet dhcp
 #  bridge-ports eth0 eth1
 ##
 
+## LACP configuration
+#auto lacp0
+#iface lacp0 inet dhcp
+#  bond-ports eth0 eth1
+#  bond-mode 802.3ad
+#  bond-miimon 100
+#  bond-lacp-rate slow
+#  bond-xmit-hash-policy layer2+3
+
 ## pppoe configuration
 #auto ppp0
 #iface ppp0 inet ppp
@@ -55,4 +64,4 @@ iface eth0 inet dhcp
 #  wireless-passphrase xxxxxxxx
 ##
 
-# for more special cases see: http://www.openadk.org/doku.php?id=network
+# for more special cases see: https://docs.openadk.org/html/manual.html#network-configuration
