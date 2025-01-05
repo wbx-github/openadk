@@ -5,7 +5,7 @@
  
  all:
 -	python3 certdata2pem.py
-+	/bin/python3 certdata2pem.py
++	/usr/bin/python3 certdata2pem.py
  
  clean:
  	-rm -f *.crt
