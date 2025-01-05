@@ -22,7 +22,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call HOST_template,PYTHON3_JINJA2,python3-jinja2,${PKG_VERSION}-${PKG_RELEASE}))
 
-include $(ADK_TOPDIR)/mk/python.mk
+include $(ADK_TOPDIR)/mk/python3.mk
 
 HOST_STYLE:=		manual
 
