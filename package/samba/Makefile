@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		samba
 PKG_VERSION:=		4.19.4
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		4026d93b866db198c8ca1685b0f5d52793f65c6e63cb364163af661fdff0968c
 PKG_DESCR:=		file and print server
 PKG_SECTION:=		net/fs
@@ -68,8 +68,11 @@ pre-configure:
 	echo 'Checking uname machine type: "$(ADK_TARGET_ARCH)"' >>$(WRKSRC)/cache.txt
 ifneq ($(ADK_LINUX_64),)
 	echo 'Checking for a 64-bit host to support lmdb: OK' >>$(WRKSRC)/cache.txt
+	echo 'Checking for large file support without additional flags: OK' >>$(WRKSRC)/cache.txt
 else
 	echo 'Checking for a 64-bit host to support lmdb: NO' >>$(WRKSRC)/cache.txt
+	echo 'Checking for large file support without additional flags: NO' >>$(WRKSRC)/cache.txt
+	echo 'Checking for -D_FILE_OFFSET_BITS=64: OK' >>$(WRKSRC)/cache.txt
 endif
 
 samba-install:

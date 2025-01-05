@@ -2,8 +2,6 @@ Checking simple C program: OK
 rpath library support: OK
 -Wl,--version-script support: OK
 Checking getconf LFS_CFLAGS: NO
-Checking for large file support without additional flags: OK
-Checking for -D_LARGE_FILES: OK
 Checking correct behavior of strtoll: NO
 Checking for working strptime: OK
 Checking for C99 vsnprintf: OK
