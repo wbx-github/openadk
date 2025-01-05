@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# A custom apccontrol for use in embedded systems: just make sure there's no
+# data in-flight and wait for the blackout to shut us down.
+
+# these filesystems are not relevant
+IGNORE_FS="tmpfs proc sysfs devtmpfs devpts nfsd"
+
+get_rw_mounts() {
+	local excl='\((ro,\|type \('
+	local sep=""
+	for fs in $IGNORE_FS; do
+		excl+="${sep}$fs"
+		sep='\|'
+	done
+	excl+='\)\)'
+	mount | grep -v "$excl" | while read dev on mnt opts; do
+		echo "$mnt"
+	done
+}
+
+log() {
+	logger -s -t "$(basename $0)" -p daemon.crit "$*"
+}
+__mount() { # (ro/rw, txt, mnt)
+	local opt=$1
+	local txt=$2
+	local mnt="$3"
+
+	mount -o remount,$opt "$mnt"
+	rc=$?
+	case $rc in
+	0) log "remounted $mnt $txt"
+	*) log "failed to remount $mnt $txt: rc=$rc"
+	esac
+	return $rc
+}
+mount_ro() {
+	__mount ro read-only "$1"
+}
+mount_rw() {
+	__mount rw read-write "$1"
+}
+
+romounts="/tmp/apcupsd.romounts"
+
+case "$1" in
+	emergency|failing)
+		log "UPS error condition happening"
+		;& # fall through
+	doshutdown)
+		log "bracing for upcoming blackout"
+
+		rm -f "$romounts"
+		sync
+		get_rw_mounts | while read mnt; do
+			mount_ro "$mnt" && echo "$mnt" >>"$romounts"
+		done
+		;;
+	mainsback)
+		log "returning to routine after near blackout"
+
+		touch "$romounts"
+		while read mnt; do
+			mount_rw "$mnt"
+		done <"$romounts"
+		rm "$romounts"
+		;;
+	*)
+		log "Called for $1"
+		;;
+esac
+
+exit 0
