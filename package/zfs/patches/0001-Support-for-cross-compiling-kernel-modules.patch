@@ -1,0 +1,53 @@
+From 1d566bf169297faba7afbe59df151ac479b234d5 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Fri, 3 Jan 2025 16:30:24 +0100
+Subject: [PATCH] Support for cross-compiling kernel modules
+
+In order to correctly cross-compile, one has to pass ARCH and
+CROSS_COMPILE make flags to kernel module build calls. Facilitate this
+in the same way as for custom CC flag by recognizing KERNEL_-prefixed
+configure environment variables of same name.
+
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+---
+ config/kernel.m4   | 5 +++++
+ module/Makefile.in | 2 ++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/config/kernel.m4 b/config/kernel.m4
+index 173c78a2a561a..c0a8355945dce 100644
+--- a/config/kernel.m4
++++ b/config/kernel.m4
+@@ -663,11 +663,16 @@ AC_DEFUN([ZFS_LINUX_COMPILE], [
+ 		building kernel modules])
+ 	AC_ARG_VAR([KERNEL_LLVM], [Binary option to
+ 		build kernel modules with LLVM/CLANG toolchain])
++	AC_ARG_VAR([KERNEL_CROSS_COMPILE], [Cross compile prefix
++		for kernel module builds])
++	AC_ARG_VAR([KERNEL_ARCH], [Architecture to build kernel modules for])
+ 	AC_TRY_COMMAND([
+ 	    KBUILD_MODPOST_NOFINAL="$5" KBUILD_MODPOST_WARN="$6"
+ 	    make modules -k -j$TEST_JOBS ${KERNEL_CC:+CC=$KERNEL_CC}
+ 	    ${KERNEL_LD:+LD=$KERNEL_LD} ${KERNEL_LLVM:+LLVM=$KERNEL_LLVM}
+ 	    CONFIG_MODULES=y CFLAGS_MODULE=-DCONFIG_MODULES
++	    ${KERNEL_CROSS_COMPILE:+CROSS_COMPILE=$KERNEL_CROSS_COMPILE}
++	    ${KERNEL_ARCH:+ARCH=$KERNEL_ARCH}
+ 	    -C $LINUX_OBJ $ARCH_UM M=$PWD/$1 >$1/build.log 2>&1])
+ 	AS_IF([AC_TRY_COMMAND([$2])], [$3], [$4])
+ ])
+diff --git a/module/Makefile.in b/module/Makefile.in
+index b6338430e8125..b6e3c8e88ccac 100644
+--- a/module/Makefile.in
++++ b/module/Makefile.in
+@@ -54,6 +54,8 @@ FMAKE = env -u MAKEFLAGS make $(FMAKEFLAGS)
+ 	list='$(SUBDIR_TARGETS)'; for td in $$list; do $(MAKE) -C $$td; done
+ 	$(MAKE) -C @LINUX_OBJ@ $(if @KERNEL_CC@,CC=@KERNEL_CC@) \
+ 		$(if @KERNEL_LD@,LD=@KERNEL_LD@) $(if @KERNEL_LLVM@,LLVM=@KERNEL_LLVM@) \
++		$(if @KERNEL_CROSS_COMPILE@,CROSS_COMPILE=@KERNEL_CROSS_COMPILE@) \
++		$(if @KERNEL_ARCH@,ARCH=@KERNEL_ARCH@) \
+ 		M="$$PWD" @KERNEL_MAKE@ CONFIG_ZFS=m modules
+ 
+ modules-FreeBSD:
+-- 
+2.43.0
+
