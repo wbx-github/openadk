@@ -1,0 +1,36 @@
+#!/bin/sh
+#PKG minidlna
+#INIT 60
+. /etc/rc.conf
+
+pidfile=$(echo "$minidlna_flags" | sed -n 's/.*-P \([^ ]\+\).*/\1/p')
+[ "$pidfile" ] || pidfile="/var/run/minidlna/minidlna.pid"
+
+case $1 in
+autostop) ;;
+autostart)
+	test x"${minidlna:-NO}" = x"NO" && exit 0
+	test x"$minidlna" = x"DAEMON" && test -x /bin/mksh && exec mksh -T- $0 start
+	exec sh $0 start
+	;;
+start)
+	/usr/sbin/minidlnad $minidlna_flags
+	;;
+stop)
+	if [ -f "$pidfile" ]; then
+		kill $(<$pidfile)
+		rm $pidfile
+	else
+		kill $(pgrep -f /usr/sbin/minidlnad)
+	fi
+	;;
+restart)
+	sh $0 stop
+	sleep 1
+	sh $0 start
+	;;
+*)
+	echo "usage: $0 (start | stop | restart)"
+	exit 1
+esac
+exit $?

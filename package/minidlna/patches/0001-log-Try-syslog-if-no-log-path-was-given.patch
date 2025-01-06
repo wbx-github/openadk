@@ -1,0 +1,104 @@
+From 989841a0c4e83b0ac1b9d276be3797bcfa83bcb1 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Sun, 27 Nov 2022 23:45:41 +0100
+Subject: [PATCH] log: Try syslog if no log path was given
+
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+---
+ log.c      | 44 ++++++++++++++++++++++++++++++++++++++++++--
+ minidlna.c |  2 --
+ 2 files changed, 42 insertions(+), 4 deletions(-)
+
+diff --git a/log.c b/log.c
+index a989904a24d93..840a8c02e678b 100644
+--- a/log.c
++++ b/log.c
+@@ -23,6 +23,7 @@
+ #include <stdio.h>
+ #include <stdarg.h>
+ #include <string.h>
++#include <syslog.h>
+ #include <time.h>
+ 
+ #include "upnpglobalvars.h"
+@@ -147,6 +148,40 @@ log_init(const char *debug)
+ 	return 0;
+ }
+ 
++static int
++syslog_err(int level, enum _log_facility facility,
++	   char *fname, int lineno, char *fmt, va_list *ap)
++{
++	char myfmt[1024];
++	int level_to_syslog[E_MAXDEBUG + 1] = {
++		/* [E_OFF]	= 0, */
++		[E_FATAL]	= LOG_CRIT,
++		[E_ERROR]	= LOG_ERR,
++		[E_WARN]	= LOG_WARNING,
++		[E_INFO]	= LOG_NOTICE,
++		[E_DEBUG]	= LOG_INFO,
++		[E_MAXDEBUG]	= LOG_DEBUG,
++	};
++
++	if (level == E_OFF)
++		return 0;
++
++	if (level > E_MAXDEBUG)
++		return -1;
++
++	if (level)
++		snprintf(myfmt, 1024, "%s:%d: %s: %s", fname, lineno, level_name[level], fmt);
++	else
++		snprintf(myfmt, 1024, "%s:%d: %s", fname, lineno, fmt);
++
++	vsyslog(level_to_syslog[level], myfmt, *ap);
++
++	if (level == E_FATAL)
++		exit(-1);
++
++	return 0;
++}
++
+ void
+ log_err(int level, enum _log_facility facility, char *fname, int lineno, char *fmt, ...)
+ {
+@@ -155,8 +190,14 @@ log_err(int level, enum _log_facility facility, char *fname, int lineno, char *f
+ 	if (level && level>log_level[facility] && level>E_FATAL)
+ 		return;
+ 
+-	if (!log_fp)
++	va_start(ap, fmt);
++	if (!log_fp) {
++		if (!syslog_err(level, facility, fname, lineno, fmt, &ap)) {
++			va_end(ap);
++			return;
++		}
+ 		log_fp = stdout;
++	}
+ 
+ 	// timestamp
+ 	if (!GETFLAG(SYSTEMD_MASK))
+@@ -176,7 +217,6 @@ log_err(int level, enum _log_facility facility, char *fname, int lineno, char *f
+ 		fprintf(log_fp, "%s:%d: ", fname, lineno);
+ 
+ 	// user log
+-	va_start(ap, fmt);
+ 	if (vfprintf(log_fp, fmt, ap) == -1)
+ 	{
+ 		va_end(ap);
+diff --git a/minidlna.c b/minidlna.c
+index 999adee977353..db29d603d1e28 100644
+--- a/minidlna.c
++++ b/minidlna.c
+@@ -817,8 +817,6 @@ init(int argc, char **argv)
+ 				optionsfile);
+ 		}
+ 	}
+-	if (!log_path[0])
+-		strncpyt(log_path, DEFAULT_LOG_PATH, sizeof(log_path));
+ 	if (!db_path[0])
+ 		strncpyt(db_path, DEFAULT_DB_PATH, sizeof(db_path));
+ 
+-- 
+2.38.1
+
