@@ -8,9 +8,9 @@ $Id: update-patches 24 2008-08-31 14:56:13Z wbx $
 -typedef ssize_t (*trace_parser_t) (const void *restrict data, size_t len,
 -                                   int *restrict ttl,
 -                                   unsigned *restrict n, uint16_t port);
-+typedef ssize_t (*trace_parser_t) (const data, size_t len,
-+                                   int ttl,
-+                                   unsigned n, uint16_t port);
++typedef ssize_t (*trace_parser_t) (const void *data, size_t len,
++                                   int *ttl,
++                                   unsigned *n, uint16_t port);
  
  typedef struct tracetype
  {
