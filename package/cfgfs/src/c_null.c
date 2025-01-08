@@ -34,10 +34,10 @@ __RCSID("$MirOS: contrib/hosted/fwcf/c_null.c,v 1.5 2006/09/23 23:46:35 tg Exp $
 static void c_null_load(void) __attribute__((constructor));
 static int c_init(void);
 static int c_compress(char **, char *, size_t)
-    __attribute__((bounded (string, 2, 3)));
+    __attribute__((access (read_only, 2, 3)));
 static int c_decompress(char *, size_t, char *, size_t)
-    __attribute__((bounded (string, 1, 2)))
-    __attribute__((bounded (string, 3, 4)));
+    __attribute__((access (read_write, 1, 2)))
+    __attribute__((access (read_only, 3, 4)));
 
 static fwcf_compressor c_null = {
 	c_init,			/* init */

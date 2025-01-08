@@ -18,12 +18,12 @@ typedef int (*fwcf_compress_init_func)(void);
 /* in: *dst (malloc'd), src, size of source (max. INT_MAX) */
 /* returns size of destination on success, -1 on failure */
 typedef int (*fwcf_compress_work_func)(char **, char *, size_t)
-    __attribute__((bounded (string, 2, 3)));
+    __attribute__((access (read_only, 2, 3)));
 /* in: dst, max size of dst, src, size of source (max. INT_MAX) */
 /* returns size of destination on success, -1 on failure */
 typedef int (*fwcf_compress_rev_func)(char *, size_t, char *, size_t)
-    __attribute__((bounded (string, 1, 2)))
-    __attribute__((bounded (string, 3, 4)));
+    __attribute__((access (read_write, 1, 2)))
+    __attribute__((access (read_only, 3, 4)));
 
 typedef struct FWCF_COMPRESSOR {
 	fwcf_compress_init_func init;
