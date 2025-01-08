@@ -21,6 +21,7 @@
  * the possibility of such damage or existence of a defect.
  */
 
+#define _GNU_SOURCE
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <fcntl.h>
