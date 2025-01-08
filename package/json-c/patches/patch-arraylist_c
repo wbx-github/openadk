@@ -1,0 +1,17 @@
+	Fix for gcc-14
+
+	Upstream did not just fix this, but delay (the implicit) memset() in
+	commit 4a546e7b2f471 ("In arraylist, use malloc instead of calloc,
+	avoid clearing with memeset until we really need to, and micro-optimize
+	array_list_add().") which is not suitable for a backport.
+--- json-c-0.13.orig/arraylist.c	2017-11-30 05:41:30.000000000 +0100
++++ json-c-0.13/arraylist.c	2025-01-08 02:21:28.914179381 +0100
+@@ -46,7 +46,7 @@ array_list_new(array_list_free_fn *free_
+   arr->size = ARRAY_LIST_DEFAULT_SIZE;
+   arr->length = 0;
+   arr->free_fn = free_fn;
+-  if(!(arr->array = (void**)calloc(sizeof(void*), arr->size))) {
++  if(!(arr->array = (void**)calloc(arr->size, sizeof(void*)))) {
+     free(arr);
+     return NULL;
+   }

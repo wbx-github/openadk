@@ -1,0 +1,17 @@
+	Fix for gcc-14
+
+	Upstream did not just fix this, but delay (the implicit) memset() in
+	commit 4a546e7b2f471 ("In arraylist, use malloc instead of calloc,
+	avoid clearing with memeset until we really need to, and micro-optimize
+	array_list_add().") which is not suitable for a backport.
+--- json-c-0.13.orig/json_object.c	2017-12-05 05:44:03.000000000 +0100
++++ json-c-0.13/json_object.c	2025-01-08 02:21:42.515180709 +0100
+@@ -218,7 +218,7 @@ static struct json_object* json_object_n
+ {
+ 	struct json_object *jso;
+ 
+-	jso = (struct json_object*)calloc(sizeof(struct json_object), 1);
++	jso = (struct json_object*)calloc(1, sizeof(struct json_object));
+ 	if (!jso)
+ 		return NULL;
+ 	jso->o_type = o_type;
