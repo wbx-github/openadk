@@ -24,7 +24,7 @@ $(eval $(call PKG_template,APCUPSD,apcupsd,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_D
 
 CONFIGURE_ARGS+=	--prefix="${WRKINST}" --sbindir="/usr/sbin" --enable-usb
 CONFIGURE_ENV+=		ac_cv_path_WALL=/usr/bin/wall
-XAKE_FLAGS:=		VERBOSE=1 STRIP=""
+XAKE_FLAGS:=		VERBOSE=1 STRIP="" LD="$(TARGET_CXX)"
 
 # XXX: custom init script?
 apcupsd-install:
