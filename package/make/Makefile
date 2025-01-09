@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		dd16fb1d67bfab79a72f5e8390735c49e3e8e70b4945a15ab1f81ddb78658fb3
 PKG_DESCR:=		c/c++ code buildtool
 PKG_SECTION:=		dev/tools
-PKG_DEPENDS:=		libelf
-PKG_BUILDDEP:=		libelf
+PKG_DEPENDS:=		elfutils
+PKG_BUILDDEP:=		elfutils
 PKG_URL:=		http://www.gnu.org/software/make
 PKG_SITES:=		${MASTER_SITE_GNU:=make/}
 

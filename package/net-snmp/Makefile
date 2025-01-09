@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		b2fc3500840ebe532734c4786b0da4ef0a5f67e51ef4c86b3345d697e4976adf
 PKG_DESCR:=		snmp agent
 PKG_SECTION:=		net/misc
-PKG_DEPENDS:=		libnetsnmp libelf libnl
-PKG_BUILDDEP:=		libelf libnl
+PKG_DEPENDS:=		libnetsnmp elfutils libnl
+PKG_BUILDDEP:=		elfutils libnl
 PKG_URL:=		http://www.net-snmp.org/
 PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=net-snmp/)
 PKG_NOPARALLEL:=	1
@@ -21,9 +21,9 @@ DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_SUBPKGS:=		SNMPD SNMP_UTILS LIBNETSNMP
 PKGSD_SNMP_UTILS:=	snmp utilities
-PKGSS_SNMP_UTILS:=	libnetsnmp libelf
+PKGSS_SNMP_UTILS:=	libnetsnmp elfutils
 PKGSD_LIBNETSNMP:=	snmp library
-PKGSS_LIBNETSNMP:=	libelf
+PKGSS_LIBNETSNMP:=	elfutils
 PKGSC_LIBNETSNMP:=	libs/net
 
 PKG_FLAVOURS_SNMPD:=	WITH_IPV6

@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		elfutils
-PKG_VERSION:=		0.161
+PKG_VERSION:=		0.189
 PKG_RELEASE:=		1
-PKG_HASH:=		570c91a1783fa5386aaa2dfdd08dda1de777c2b63bf3b9c1437d635ffdd7a070
+PKG_HASH:=		39bd8f1a338e2b7cd4abc3ff11a0eddc6e690f69578a57478d8179b4148708c8
 PKG_DESCR:=		libraries/utilities to handle elf objects (drop in replacement for libelf)
 PKG_SECTION:=		base/libs
-PKG_URL:=		https://fedorahosted.org/elfutils/
-PKG_SITES:=		https://fedorahosted.org/releases/e/l/elfutils/$(PKG_VERSION)/
+PKG_NEEDS:=		intl
+PKG_SITES:=		https://sourceware.org/elfutils/ftp/$(PKG_VERSION)/
 
 # require argp()
-PKG_LIBC_DEPENDS:=	glibc
+PKG_LIBC_DEPENDS:=	glibc uclibc-ng
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
@@ -24,14 +24,16 @@ $(eval $(call PKG_template,ELFUTILS,elfutils,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG
 # not only because we pass -DNDEBUG, this package won't build with -Werror
 TARGET_CFLAGS+=		-Wno-error
 
+AUTOTOOL_STYLE:=	autoreconf
+CONFIGURE_ARGS+=	--disable-symbol-versioning \
+			--disable-debuginfod \
+			--disable-libdebuginfod \
+			--disable-demangler \
+			--disable-progs
+
 elfutils-install:
 	$(INSTALL_DIR) $(IDIR_ELFUTILS)/usr/lib/elfutils
 	$(CP) $(WRKINST)/usr/lib/lib{asm,dw,elf}*.so* \
 		$(IDIR_ELFUTILS)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/elfutils/libebl*.so \
-		$(IDIR_ELFUTILS)/usr/lib/elfutils
-	$(INSTALL_DIR) $(IDIR_ELFUTILS)/usr/bin
-	$(INSTALL_BIN) $(WRKINST)/usr/bin/* \
-		$(IDIR_ELFUTILS)/usr/bin
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk

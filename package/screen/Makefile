@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		f04a39d00a0e5c7c86a55338808903082ad5df4d73df1a2fd3425976aed94971
 PKG_DESCR:=		window manager for the terminal session
 PKG_SECTION:=		sys/utils
-PKG_DEPENDS:=		libncurses libelf
-PKG_BUILDDEP:=		ncurses libelf
+PKG_DEPENDS:=		libncurses elfutils
+PKG_BUILDDEP:=		ncurses elfutils
 PKG_NEEDS:=		mmu
 PKG_URL:=		http://www.gnu.org/software/screen/
 PKG_SITES:=		${MASTER_SITE_GNU:=screen/}

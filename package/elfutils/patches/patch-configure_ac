@@ -1,0 +1,24 @@
+--- elfutils-0.189.orig/configure.ac	2023-03-03 16:42:26.000000000 +0100
++++ elfutils-0.189/configure.ac	2025-01-08 20:12:14.302360288 +0100
+@@ -422,6 +422,12 @@ AS_HELP_STRING([--enable-tests-rpath],[b
+ 	       [tests_use_rpath=$enableval], [tests_use_rpath=no])
+ AM_CONDITIONAL(TESTS_RPATH, test "$tests_use_rpath" = yes)
+ 
++AC_ARG_ENABLE([progs],
++	AS_HELP_STRING([--enable-progs], [enable progs]),
++	enable_progs=$enableval,
++	enable_progs=yes)
++AM_CONDITIONAL(ENABLE_PROGS, test "$enable_progs" = yes)
++
+ dnl zlib is mandatory.
+ save_LIBS="$LIBS"
+ LIBS=
+@@ -659,7 +665,7 @@ saved_LIBS="$LIBS"
+ AC_SEARCH_LIBS([_obstack_free], [obstack])
+ LIBS="$saved_LIBS"
+ case "$ac_cv_search__obstack_free" in
+-        no) AC_MSG_FAILURE([failed to find _obstack_free]) ;;
++        no) obstack_LIBS= ;;
+         -l*) obstack_LIBS="$ac_cv_search__obstack_free" ;;
+         *) obstack_LIBS= ;;
+ esac

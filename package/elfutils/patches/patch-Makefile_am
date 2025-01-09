@@ -1,0 +1,16 @@
+--- elfutils-0.189.orig/Makefile.am	2023-03-03 16:42:26.000000000 +0100
++++ elfutils-0.189/Makefile.am	2025-01-08 20:12:14.302360288 +0100
+@@ -26,8 +26,12 @@ AM_MAKEFLAGS = --no-print-directory
+ 
+ pkginclude_HEADERS = version.h
+ 
++if ENABLE_PROGS
++PROGS_SUBDIR = src
++endif
++
+ SUBDIRS = config lib libelf libcpu backends libebl libdwelf libdwfl libdw \
+-	  libasm debuginfod src po doc tests
++	  libasm debuginfod $(PROGS_SUBDIR) po doc tests
+ 
+ EXTRA_DIST = elfutils.spec GPG-KEY NOTES CONTRIBUTING \
+ 	     COPYING COPYING-GPLV2 COPYING-LGPLV3
