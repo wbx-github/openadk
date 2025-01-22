@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		rsync
-PKG_VERSION:=		3.2.7
+PKG_VERSION:=		3.4.1
 PKG_RELEASE:=		1
-PKG_HASH:=		4e7d9d3f6ed10878c58c5fb724a67dacf4b6aac7340b13e488fb2dc41346f2bb
+PKG_HASH:=		2924bcb3a1ed8b551fc101f740b9f0fe0a202b115027647cf69850d65fd88c52
 PKG_DESCR:=		utility that provides fast incremental file transfer
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libpopt libopenssl
@@ -28,7 +28,6 @@ HOST_CONFIGURE_ARGS:=	--disable-xxhash \
 			--disable-lz4
 CONFIGURE_ARGS:=	--disable-xxhash \
 			--disable-zstd \
-			--disable-simd \
 			--disable-lz4
 
 rsync-install:
