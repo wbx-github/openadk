@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libuv
-PKG_VERSION:=		1.42.0
+PKG_VERSION:=		1.50.0
 PKG_RELEASE:=		1
-PKG_HASH:=		371e5419708f6aaeb8656671f89400b92a9bba6443369af1bb70bcd6e4b3c764
+PKG_HASH:=		b1ec56444ee3f1e10c8bd3eed16ba47016ed0b94fe42137435aaf2e0bd574579
 PKG_DESCR:=		multi-platform support library
 PKG_SECTION:=		libs/misc
 PKG_URL:=		https://github.com/libuv/libuv/
