@@ -11,6 +11,9 @@ autostop) ;;
 		exec sh $0 start
 		;;
 	start)
+		if [ ! -f /etc/rndc.key ]; then
+			rndc-confgen -a 2>/dev/null
+		fi
 		if [ -f /etc/bind/named.conf ]; then
 			/usr/sbin/named -c /etc/bind/named.conf &
 		fi
