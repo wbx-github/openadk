@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gdb
-PKG_VERSION:=		15.1
+PKG_VERSION:=		16.1
 PKG_RELEASE:=		1
-PKG_HASH:=		38254eacd4572134bca9c5a5aa4d4ca564cbbd30c369d881f733fb6b903354f2
+PKG_HASH:=		c2cc5ccca029b7a7c3879ce8a96528fdfd056b4d884f2b0511e8f7bc723355c6
 PKG_DESCR:=		program debugger
 PKG_SECTION:=		app/debug
 PKG_SITES:=		${MASTER_SITE_GNU:=gdb/}
