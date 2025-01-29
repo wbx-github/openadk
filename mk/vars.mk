@@ -335,7 +335,7 @@ PATCHP0=		PATH='${HOST_PATH}' patch -p0
 ifeq ($(ADK_STATIC_TOOLCHAIN),y)
 HOST_STATIC_CFLAGS:=   -static -Wl,-static
 HOST_STATIC_CXXFLAGS:= -static -Wl,-static
-HOST_STATIC_LDFLAGS:=  -Wl,-static
+HOST_STATIC_LDFLAGS:=  -Wl,-static -all-static
 endif
 
 SED:=			PATH='${HOST_PATH}' sed -i -e

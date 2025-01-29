@@ -75,7 +75,7 @@ endif
 	touch $@
 
 $(WRKBUILD)/.compiled: $(WRKBUILD)/.configured
-	PATH='$(HOST_PATH)' $(MAKE) ${BINUTILS_MAKEOPTS} MAKEINFO=true -C $(WRKBUILD) all
+	PATH='$(HOST_PATH)' V=1 $(MAKE) ${BINUTILS_MAKEOPTS} LDFLAGS='$(HOST_STATIC_LDFLAGS)' MAKEINFO=true -C $(WRKBUILD) all
 	touch $@
 
 $(WRKBUILD)/.installed: $(WRKBUILD)/.compiled
