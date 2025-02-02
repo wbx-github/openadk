@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ltp
-PKG_VERSION:=		20240930
+PKG_VERSION:=		20250130
 PKG_RELEASE:=		1
 PKG_DESCR:=		linux test project
-PKG_HASH:=		3e9e806405aa602e2d21d221d885fd4914ff2da23eb8bba3d0f0f468bdf60238
+PKG_HASH:=		02e4ec326be54c3fd92968229a468c02c665d168a8a673edc38a891f7395ae10
 PKG_DEPENDS:=		bash mke2fs mkfs shadow libtirpc libaio
 PKG_DEPENDS+=		kmod dosfstools
 PKG_BUILDDEP+=		libtirpc libaio
