@@ -4,16 +4,19 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		squid
-PKG_VERSION:=		6.10
+PKG_VERSION:=		6.13
 PKG_RELEASE:=		1
-PKG_HASH:=		0b07b187e723f04770dd25beb89aec12030a158696aa8892d87c8b26853408a7
+PKG_HASH:=		9b33de09d733b5933f6c2b54ebe0be51a9fa4751f183f3aead90b3c5d930aa72
 PKG_DESCR:=		web and cache proxy
 PKG_SECTION:=		net/proxy
-PKG_DEPENDS:=		libltdl
+PKG_DEPENDS:=		libltdl libxcrypt
 PKG_BUILDDEP:=		libtool
+PKG_BUILDDEP_GLIBC:=	libxcrypt
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.squid-cache.org/
-PKG_SITES:=		http://www.squid-cache.org/Versions/v6/
+PKG_SITES:=		https://github.com/squid-cache/squid/releases/download/SQUID_6_13/
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_SUBPKGS:=		SQUID SQUID_MOD_BASIC_AUTH_GETPWNAM SQUID_MOD_BASIC_AUTH_NCSA
 PKG_SUBPKGS+=		SQUID_MOD_BASIC_AUTH_SMB SQUID_MOD_DIGEST_AUTH_FILE
@@ -110,7 +113,7 @@ $(eval $(call PKG_mod_template,SQUID_MOD_EXTERNAL_ACL_UNIX_GROUP,ext_unix_group_
 $(eval $(call PKG_mod_template,SQUID_MOD_NTLM_AUTH_FAKE,ntlm_fake_auth))
 
 TARGET_LDFLAGS+=	-lpthread
-HOST_CXXFLAGS+=		-static-libstdc++
+HOST_CXXFLAGS+=		-std=c++17 -static-libstdc++
 
 CONFIGURE_ENV+=		ac_cv_func_setresuid=yes \
 			ac_cv_func_va_copy=yes \
