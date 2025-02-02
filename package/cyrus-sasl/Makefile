@@ -4,26 +4,28 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		cyrus-sasl
-PKG_VERSION:=		2.1.26
-PKG_RELEASE:=		2
-PKG_HASH:=		8fbc5136512b59bb793657f36fadda6359cae3b08f01fd16b3d406f1345b7bc3
+PKG_VERSION:=		2.1.28
+PKG_RELEASE:=		1
+PKG_HASH:=		3e38933a30b9ce183a5488b4f6a5937a702549cde0d3287903d80968ad4ec341
 PKG_DESCR:=		general purpose authentication library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libopenssl
 PKG_BUILDDEP:=		openssl
 PKG_URL:=		http://cyrusimap.org/
-PKG_SITES:=		ftp://ftp.cyrusimap.org/cyrus-sasl/
+PKG_SITES:=		https://github.com/cyrusimap/cyrus-sasl/archive/refs/tags/
 PKG_LIBNAME:=		libsasl2
 PKG_OPTS:=		dev
 
 PKG_NOPARALLEL:=	1
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+WRKDIST=                ${WRKDIR}/$(PKG_NAME)-$(PKG_NAME)-${PKG_VERSION}
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,LIBSASL2,libsasl2,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+AUTOTOOL_STYLE:=	autogen
 CONFIGURE_ARGS+=	--enable-plain \
 			--enable-login \
 			--disable-anon \
