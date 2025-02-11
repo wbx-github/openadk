@@ -18,16 +18,6 @@ else
 CONFOPTS+=		--disable-lto --disable-plugins
 endif
 
-ifeq ($(ADK_TOOLCHAIN_WITH_GOLD),y)
-ifeq ($(ADK_TARGET_USE_GOLD),y)
-CONFOPTS+=		--enable-gold=default
-else
-CONFOPTS+=		--enable-gold
-endif
-else
-CONFOPTS+=		--disable-gold
-endif
-
 ifeq ($(ADK_TARGET_ARCH_ARC),y)
 CONFOPTS+=		--enable-lto --enable-plugins
 endif
@@ -84,14 +74,9 @@ ifeq ($(ADK_TARGET_ARCH_KVX)$(ADK_TARGET_ARCH_H8300)$(ADK_TARGET_ARCH_NDS32)$(AD
 	$(INSTALL_DIR) $(STAGING_TARGET_DIR)/usr/lib/ldscripts
 	$(CP) $(WRKBUILD)/ld/ldscripts/* $(STAGING_TARGET_DIR)/usr/lib/ldscripts/
 endif
-ifeq ($(ADK_TARGET_USE_GOLD),y)
-	(cd $(TOOLCHAIN_DIR)/usr/bin && \
-		ln -sf $(GNU_TARGET_NAME)-ld.gold $(GNU_TARGET_NAME)-ld)
-else
 ifeq (ADK_TOOLCHAIN_BINUTILS_AVR32),)
 	(cd $(TOOLCHAIN_DIR)/usr/bin && \
 		ln -sf $(GNU_TARGET_NAME)-ld.bfd $(GNU_TARGET_NAME)-ld)
-endif
 endif
 	touch $@
 

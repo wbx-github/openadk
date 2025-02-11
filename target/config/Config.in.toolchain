@@ -85,14 +85,6 @@ config ADK_TARGET_USE_LD_BIND_NOW
 config ADK_TARGET_USE_LD_GC
 	bool "Use LD garbage collection for all packages"
 
-config ADK_TOOLCHAIN_WITH_GOLD
-	bool "Enable building of GOLD linker"
-
-config ADK_TARGET_USE_GOLD
-	bool "Use GOLD as default linker"
-	depends on ADK_TOOLCHAIN_WITH_GOLD
-	depends on ADK_TARGET_LIB_GLIBC # can not be build with GOLD (glibc 2.24 checked)
-
 config ADK_TARGET_USE_GNU_HASHSTYLE
 	bool "Use GNU hashstyle for all packages"
 	depends on !ADK_TARGET_ARCH_MIPS
