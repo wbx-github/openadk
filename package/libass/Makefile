@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		f0da0bbfba476c16ae3e1cfd862256d30915911f7abaa1b16ce62ee653192784
 PKG_DESCR:=		portable subtitle renderer
 PKG_SECTION:=		libs/video
-PKG_DEPENDS:=		fribidi fontconfig
-PKG_BUILDDEP:=		fribidi fontconfig
+PKG_DEPENDS:=		fribidi fontconfig harfbuzz
+PKG_BUILDDEP:=		fribidi fontconfig harfbuzz
 PKG_SITES:=		https://github.com/libass/libass/releases/download/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
