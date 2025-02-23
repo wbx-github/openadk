@@ -4,12 +4,12 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gdbserver
-PKG_VERSION:=		15.1
+PKG_VERSION:=		16.2
 PKG_RELEASE:=		1
-PKG_HASH:=		38254eacd4572134bca9c5a5aa4d4ca564cbbd30c369d881f733fb6b903354f2
+PKG_HASH:=		4002cb7f23f45c37c790536a13a720942ce4be0402d929c9085e92f10d480119
 PKG_DESCR:=		remote program debugger utility
 PKG_SECTION:=		app/debug
-PKG_NEEDS:=		c++
+PKG_NEEDS:=		c++ iconv
 PKG_SITES:=		${MASTER_SITE_GNU:=gdb/}
 PKG_DEPENDS:=		libthread-db libgmp
 PKG_BUILDDEP:=		gmp
