@@ -12,8 +12,8 @@ MASTER_SITE_MIRBSD?=	\
 
 ifeq ($(ADK_TARGET_KERNEL_NO_MIRROR),)
 MASTER_SITE_KERNEL?=	\
+	https://www.kernel.org/pub/linux/ \
 	http://www.kernel.org/pub/linux/ \
-	ftp://www.kernel.org/pub/linux/ \
 
 else
 MASTER_SITE_KERNEL?=	\
@@ -22,23 +22,8 @@ MASTER_SITE_KERNEL?=	\
 endif
 
 MASTER_SITE_GNU?=	\
+	https://ftp.gnu.org/gnu/ \
 	http://ftp.gnu.org/gnu/ \
-	ftp://ftp.gnu.org/gnu/ \
-	ftp://ftp.funet.fi/pub/gnu/prep/ \
-	ftp://mirrors.usc.edu/pub/gnu/ \
-	ftp://ftp.cs.tu-berlin.de/pub/gnu/ \
-	ftp://aeneas.mit.edu/pub/gnu/ \
-	ftp://mirrors.dotsrc.org/gnu/ \
-	ftp://ftp.wustl.edu/pub/gnu/ \
-	ftp://ftp.kddilabs.jp/GNU/ \
-	ftp://ftp.mirror.ac.uk/sites/ftp.gnu.org/gnu/ \
-	ftp://sunsite.org.uk/package/gnu/ \
-	ftp://ftp.informatik.hu-berlin.de/pub/gnu/ \
-	ftp://ftp.rediris.es/mirror/gnu/gnu/ \
-	ftp://ftp.cs.univ-paris8.fr/mirrors/ftp.gnu.org/ \
-	ftp://ftp.chg.ru/pub/gnu/ \
-	ftp://ftp.uvsq.fr/pub/gnu/ \
-  	ftp://ftp.sunet.se/pub/gnu/ \
 
 MASTER_SITE_SOURCEFORGE?=	\
 	http://jaist.dl.sourceforge.net/sourceforge/ \
@@ -50,19 +35,10 @@ MASTER_SITE_SOURCEFORGE?=	\
 	http://easynews.dl.sourceforge.net/sourceforge/ \
 
 MASTER_SITE_MYSQL?=		\
-	ftp://ftp.fu-berlin.de/unix/databases/mysql/ \
 	http://sunsite.informatik.rwth-aachen.de/mysql/ \
+	ftp://ftp.fu-berlin.de/unix/databases/mysql/ \
 	http://mysql.easynet.be/ \
 
 MASTER_SITE_GNOME?=	\
 	https://download.gnome.org/sources/ \
-	ftp://ftp.gnome.org/pub/GNOME/sources/ \
-	ftp://ftp.linux.org.uk/mirrors/ftp.gnome.org/sources/ \
-	ftp://ftp.acc.umu.se/pub/GNOME/sources/	\
-	ftp://ftp.rpmfind.net/linux/gnome.org/sources/ \
-	ftp://ftp.unina.it/pub/linux/GNOME/sources/ \
-	ftp://ftp.belnet.be/mirror/ftp.gnome.org/sources/ \
-	ftp://ftp.dit.upm.es/linux/gnome/sources/ \
-	ftp://ftp.dataplus.se/pub/linux/gnome/sources/ \
-	ftp://ftp.cse.buffalo.edu/pub/Gnome/sources/ \
 
