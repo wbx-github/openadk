@@ -5,7 +5,11 @@ include $(ADK_TOPDIR)/rules.mk
 include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
+ifeq ($(ADK_TARGET_KERNEL_IMAGE_GZ),y)
+KERNEL:=$(LINUX_DIR)/arch/blackfin/boot/vmlinux.bin.gz
+else
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
+endif
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
