@@ -1,0 +1,9 @@
+config ADK_TARGET_SYSTEM_ARCTURUS_UC5328
+	bool "Arcturus uC5328"
+	select ADK_TARGET_CPU_CF_5328
+	select ADK_TARGET_WITH_NETDEVICE
+	select ADK_TARGET_PACKAGE_TXZ
+	help
+	  Arcturus uC5328
+	  https://www.arcturusnetworks.com/products
+
