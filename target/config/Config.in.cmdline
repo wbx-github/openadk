@@ -3,6 +3,7 @@
 
 config ADK_TARGET_CMDLINE
 	string "Kernel commandline"
+	depends on !ADK_TARGET_NO_KERNEL
 	default "fbcon=rotate:1" if ADK_TARGET_SYSTEM_SHARP_ZAURUS
 	default "geodewdt.nowayout=1" if ADK_TARGET_MODEL_PCENGINES_ALIX1C
 	default "kinetis_platform=k70-som" if ADK_TARGET_SYSTEM_KINETIS_K70
