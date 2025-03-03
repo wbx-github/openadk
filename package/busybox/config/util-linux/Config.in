@@ -660,7 +660,7 @@ config BUSYBOX_NOLOGIN_DEPENDENCIES
 	disable this option.
 config BUSYBOX_NSENTER
 	bool "nsenter (6.5 kb)"
-	default y
+	default n
 	help
 	Run program with namespaces of other processes.
 config BUSYBOX_PIVOT_ROOT

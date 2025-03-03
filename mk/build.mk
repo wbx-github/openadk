@@ -179,7 +179,11 @@ ifeq ($(ADK_TARGET_OS_BAREMETAL),y)
 	$(MAKE) -f mk/build.mk package/hostcompile toolchain/final
 endif
 ifeq ($(ADK_TARGET_OS_LINUX),y)
+ifeq ($(ADK_TARGET_NO_KERNEL),y)
+	$(MAKE) -f mk/build.mk package/hostcompile toolchain/final package_clean package/compile root_clean package/install package_index
+else
 	$(MAKE) -f mk/build.mk package/hostcompile toolchain/final target/config-prepare target/compile package_clean package/compile root_clean package/install target/install package_index
+endif
 endif
 endif
 

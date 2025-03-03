@@ -719,12 +719,12 @@ config BUSYBOX_SUM
 	checksum and count the blocks in a file
 config BUSYBOX_SYNC
 	bool "sync (3.8 kb)"
-	default y
+	default n
 	help
 	sync is used to flush filesystem buffers.
 config BUSYBOX_FEATURE_SYNC_FANCY
 	bool "Enable -d and -f flags (requires syncfs(2) in libc)"
-	default y
+	default n
 	depends on BUSYBOX_SYNC
 	help
 	sync -d FILE... executes fdatasync() on each FILE.
