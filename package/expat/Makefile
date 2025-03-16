@@ -4,14 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		expat
-PKG_VERSION:=		2.6.2
+PKG_VERSION:=		2.7.0
 PKG_RELEASE:=		1
-PKG_HASH:=		ee14b4c5d8908b1bec37ad937607eab183d4d9806a08adee472c3c3121d27364
+PKG_HASH:=		25df13dd2819e85fb27a1ce0431772b7047d72af81ae78dc26b4c6e0805f48d1
 PKG_DESCR:=		xml parsing library
 PKG_SECTION:=		libs/data
 PKG_NEEDS:=		c++
-PKG_URL:=		http://expat.sourceforge.net
-PKG_SITES:=		https://github.com/libexpat/libexpat/releases/download/R_2_6_2/
+PKG_SITES:=		https://github.com/libexpat/libexpat/releases/download/R_2_7_0/
 PKG_LIBNAME:=		libexpat
 PKG_OPTS:=		dev
 
