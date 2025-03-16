@@ -31,6 +31,8 @@ $(WRKBUILD)/.configured:
 		--target=$(GNU_TARGET_NAME) \
 		--with-gmp='${STAGING_HOST_DIR}/usr' \
 		--with-mpfr='${STAGING_HOST_DIR}/usr' \
+		--with-expat \
+		--with-libexpat-prefix='${STAGING_HOST_DIR}/usr' \
 		--disable-dependency-tracking \
 		--without-uiout \
 		--enable-gdbmi \
