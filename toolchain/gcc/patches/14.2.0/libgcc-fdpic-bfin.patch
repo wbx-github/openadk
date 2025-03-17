@@ -1,0 +1,12 @@
+diff -Nur gcc-14.2.0.orig/libgcc/unwind-pe.h gcc-14.2.0/libgcc/unwind-pe.h
+--- gcc-14.2.0.orig/libgcc/unwind-pe.h	2024-08-01 10:17:17.000000000 +0200
++++ gcc-14.2.0/libgcc/unwind-pe.h	2025-03-10 10:40:25.191585648 +0100
+@@ -264,7 +264,7 @@
+ 
+       if (result != 0)
+ 	{
+-#if __FDPIC__
++#if defined(__FDPIC__) && !defined(__BFIN_FDPIC__)
+ 	  /* FDPIC relative addresses imply taking the GOT address
+ 	     into account.  */
+ 	  if ((encoding & DW_EH_PE_pcrel) && (encoding & DW_EH_PE_indirect))
