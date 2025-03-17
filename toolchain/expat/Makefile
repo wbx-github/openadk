@@ -16,6 +16,7 @@ $(WRKBUILD)/.configured:
 		--prefix=$(STAGING_HOST_DIR)/usr \
 		--enable-static \
 		--disable-shared \
+		--without-docbook \
 	);
 	touch $@
 
