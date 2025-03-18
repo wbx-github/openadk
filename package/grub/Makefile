@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		grub
-PKG_VERSION:=		2.06
+PKG_VERSION:=		2.12
 PKG_RELEASE:=		1
-PKG_HASH:=		b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1
+PKG_HASH:=		f3c97391f7c4eaa677a78e090c7e97e6dc47b16f655f04683ebd37bef7fe0faa
 PKG_DESCR:=		multiboot boot loader
 PKG_SECTION:=		base/boot
 PKG_BUILDDEP:=		bison-host grub-host
@@ -93,7 +93,11 @@ endif
 ifeq ($(ADK_TARGET_DUAL_BOOT),y)
 GRUB_CFG=		grub-dual.cfg
 else
+ifeq ($(ADK_TARGET_QEMU_WITH_GRAPHIC),y)
+GRUB_CFG=		grub-pc-vga.cfg
+else
 GRUB_CFG=		grub.cfg
+endif
 endif
 
 HOST_CONFIGURE_ARGS+=	--enable-efiemu=no \
