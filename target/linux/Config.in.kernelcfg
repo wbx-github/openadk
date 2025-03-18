@@ -68,6 +68,7 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "m5208evb_defconfig" if ADK_TARGET_SYSTEM_QEMU_M68K_MCF5208
 	default "default_defconfig" if ADK_TARGET_ARCH_KVX
 	default "ci20_defconfig" if ADK_TARGET_SYSTEM_IMGTEC_CI20
+	default "lemote2f_defconfig" if ADK_TARGET_SYSTEM_LEMOTE_FULOONG
 	default ""
 
 config ADK_TARGET_LINUX_KERNEL_CUSTOMCONFIG_PATH
