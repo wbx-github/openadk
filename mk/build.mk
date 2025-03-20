@@ -101,6 +101,12 @@ POSTCONFIG=		-@\
 				rebuild=1;\
 			fi; \
 		done; \
+		for i in ADK_TARGET_DUAL_BOOT ADK_TARGET_QEMU_WITH_GRAPHIC;do \
+			if [ "$$(grep ^$$i .config|md5sum)" != "$$(grep ^$$i .config.old|md5sum)" ];then \
+				touch .rebuild.grub;\
+				rebuild=1;\
+			fi; \
+		done; \
 		for i in ADK_TARGET_GPU_MEM ADK_LINUX_KERNEL_SND_BCM2708;do \
 			if [ "$$(grep ^$$i .config|md5sum)" != "$$(grep ^$$i .config.old|md5sum)" ];then \
 				touch .rebuild.bcm28xx-bootloader;\

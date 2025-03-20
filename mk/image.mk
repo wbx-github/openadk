@@ -347,7 +347,7 @@ ${FW_DIR}/${GENIMAGE}: ${TARGET_DIR} kernel-package
 	mkdir -p $(TARGET_DIR)/boot/extlinux
 	$(CP) $(EXTLINUX) $(TARGET_DIR)/boot/extlinux
 	$(CP) $(FW_DIR)/kernel $(TARGET_DIR)/boot
-	-$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR)/boot
+	-$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR)/boot 2>/dev/null
 ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
 	echo '#!/bin/sh' > $(ADK_TOPDIR)/scripts/fakeroot.sh
 	echo "chown -R 0:0 $(TARGET_DIR)" >> $(ADK_TOPDIR)/scripts/fakeroot.sh
@@ -359,7 +359,7 @@ ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
 endif
 ifeq ($(ADK_TARGET_DUAL_BOOT),y)
 	$(CP) $(FW_DIR)/kernel $(TARGET_DIR)
-	-$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR)
+	-$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR) 2>/dev/null
 	mkdir $(TARGET_DIR)/extlinux
 	$(CP) $(EXTLINUX) $(TARGET_DIR)/extlinux
 	$(SED) "s#root=.*#root=/dev/$(ADK_TARGET_ROOTDEV)p1#" $(TARGET_DIR)/extlinux/extlinux.conf
@@ -393,10 +393,10 @@ endif
 ifeq ($(ADK_TARGET_DUAL_BOOT),y)
 	(cd ${TARGET_DIR}; find . | sed -n '/^\.\//s///p' | sort | \
 		PATH='${HOST_PATH}' $(CPIO) -o --quiet -Hustar --owner=0:0 | \
-		${GZIP} -c > ${FW_DIR}/openadk.tar.gz)
+		gzip -c > ${FW_DIR}/openadk.tar.gz)
 	(cd ${FW_DIR}; PATH='${HOST_PATH}' sha256sum openadk.tar.gz \
 		| cut -d\  -f1 > sha256.txt)
-	(cd ${FW_DIR}; PATH='${HOST_PATH}' tar -cf ${ADK_TARGET_SYSTEM}-update.tar openadk.tar.gzip sha256.txt)
+	(cd ${FW_DIR}; PATH='${HOST_PATH}' tar -cf ${ADK_TARGET_SYSTEM}-update.tar openadk.tar.gz sha256.txt)
 	@rm -rf ${FW_DIR}/temp
 endif
 ifeq ($(ADK_PACKAGE_GRUB_EFI_X86)$(ADK_PACKAGE_GRUB_EFI_X86_64),y)

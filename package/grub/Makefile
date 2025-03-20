@@ -66,6 +66,11 @@ GRUB_PREFIX=		(hd0,msdos1)/boot/grub
 GRUB_TARGET=		i386
 GRUB_PLATFORM=		pc
 GRUB_MODULES=		boot linux ext2 fat part_msdos part_gpt normal biosdisk
+ifeq ($(ADK_TARGET_QEMU_WITH_GRAPHIC),y)
+GRUB_CFG=		grub-pc-vga.cfg
+else
+GRUB_CFG=		grub-pc-serial.cfg
+endif
 endif
 
 ifeq ($(ADK_PACKAGE_GRUB_EFI_X86),y)
@@ -77,6 +82,11 @@ GRUB_PREFIX=		/EFI/BOOT
 GRUB_TARGET=		i386
 GRUB_PLATFORM=		efi
 GRUB_MODULES=		boot linux ext2 fat part_msdos part_gpt normal efi_gop
+ifeq ($(ADK_TARGET_DUAL_BOOT),y)
+GRUB_CFG=		grub-efi-serial-dual.cfg
+else
+GRUB_CFG=		grub-efi-serial.cfg
+endif
 endif
 
 ifeq ($(ADK_PACKAGE_GRUB_EFI_X86_64),y)
@@ -88,15 +98,10 @@ GRUB_PREFIX=		/EFI/BOOT
 GRUB_TARGET=		x86_64
 GRUB_PLATFORM=		efi
 GRUB_MODULES=		boot linux ext2 fat part_msdos part_gpt normal efi_gop
-endif
-
 ifeq ($(ADK_TARGET_DUAL_BOOT),y)
-GRUB_CFG=		grub-dual.cfg
+GRUB_CFG=		grub-efi-dual-serial.cfg
 else
-ifeq ($(ADK_TARGET_QEMU_WITH_GRAPHIC),y)
-GRUB_CFG=		grub-pc-vga.cfg
-else
-GRUB_CFG=		grub.cfg
+GRUB_CFG=		grub-efi-serial.cfg
 endif
 endif
 
