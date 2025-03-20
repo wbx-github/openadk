@@ -136,6 +136,13 @@ config BUSYBOX_FEATURE_FIND_EXEC_PLUS
 	Without this option, -exec + is a synonym for -exec ;
 	(IOW: it works correctly, but without expected speedup)
 
+config BUSYBOX_FEATURE_FIND_EXEC_OK
+	bool "Enable -ok: execute confirmed commands"
+	default y
+	depends on BUSYBOX_FEATURE_FIND_EXEC
+	help
+	Support the 'find -ok' option which prompts before executing.
+
 config BUSYBOX_FEATURE_FIND_USER
 	bool "Enable -user: username/uid matching"
 	default y

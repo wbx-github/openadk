@@ -582,6 +582,12 @@ config BUSYBOX_IPLINK
 	help
 	Short form of "ip link"
 
+config BUSYBOX_FEATURE_IP_LINK_CAN
+	bool "ip link set type can"
+	default y
+	help
+	Configure CAN devices with "ip".
+
 config BUSYBOX_IPROUTE
 	bool "iproute (15 kb)"
 	default y

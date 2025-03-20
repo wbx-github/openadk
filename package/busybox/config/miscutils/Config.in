@@ -380,6 +380,11 @@ config BUSYBOX_FLASHCP
 	help
 	The flashcp binary, inspired by mtd-utils as of git head 5eceb74f7.
 	This utility is used to copy images into a MTD device.
+config BUSYBOX_GETFATTR
+	bool "getfattr (12.3 kb)"
+	default y
+	help
+	Get extended attributes on files
 config BUSYBOX_HDPARM
 	bool "hdparm (25 kb)"
 	default y
