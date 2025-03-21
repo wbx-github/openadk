@@ -10,7 +10,13 @@ KERNEL:=$(LINUX_DIR)/arch/x86/boot/bzImage
 QEMU_ARCH:=i386
 QEMU_ARGS:=-M pc
 QEMU_ARGS+=${ADK_QEMU_ARGS}
+
+ifeq ($(ADK_TARGET_QEMU_WITH_VIRTIO),y)
+QEMU_ARGS+=-net nic,model=virtio -net user
+QEMU_ARGS+=-drive file=qemu-${ADK_TARGET_CPU_ARCH}.img,if=virtio
+else
 QEMU_ARGS+=-net user -net nic,model=e1000
+endif
 
 ifeq ($(ADK_PACKAGE_GRUB_EFI_X86),y)
 QEMU_ARGS+=-L . -bios bios-x86.bin
@@ -40,7 +46,11 @@ ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "$(CREATE) qemu-${ADK_TARGET_CPU_ARCH}.img $(FW_DIR)/$(ROOTFSTARBALL)"
 	@echo "Start qemu with following options:"
 ifeq ($(ADK_TARGET_QEMU_WITH_BOOTLOADER),y)
+ifeq ($(ADK_TARGET_QEMU_WITH_VIRTIO),y)
+	@echo 'qemu-system-${QEMU_ARCH} ${QEMU_ARGS}'
+else
 	@echo 'qemu-system-${QEMU_ARCH} ${QEMU_ARGS} qemu-${ADK_TARGET_CPU_ARCH}.img'
+endif
 else
 	@echo 'qemu-system-${QEMU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) qemu-${ADK_TARGET_CPU_ARCH}.img'
 endif
