@@ -2,7 +2,7 @@
 #-
 # Copyright © 2010, 2011, 2012
 #	Thorsten Glaser <tg@mirbsd.org>
-# Copyright © 2010-2024
+# Copyright © 2010-2025
 #	Waldemar Brodkorb <wbx@openadk.org>
 #
 # Provided that these terms and disclaimer and all copyright notices
@@ -152,7 +152,7 @@ else
 fi
 
 if (( usegrub )); then
-	tar -xOJf "$src" boot/grub/core.img >"$T/core.img"
+	tar -xOzf "$src" boot/grub/core.img >"$T/core.img"
 	integer coreimgsz=$($statcmd "$T/core.img")
 	if (( coreimgsz < 1024 )); then
 		print -u2 core.img is probably too small: $coreimgsz
