@@ -11,6 +11,8 @@ PKG_DESCR:=		ARM Trusted Firmware
 PKG_SECTION:=		base/boot
 PKG_SITES:=		https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git
 
+PKG_ARCH_DEPENDS:=	arm
+
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,ARM_TRUSTED_FIRMWARE,arm-trusted-firmware,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))

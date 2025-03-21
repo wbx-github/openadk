@@ -13,6 +13,8 @@ PKG_BUILDDEP:=		e2fsprogs
 PKG_URL:=		http://yaboot.ozlabs.org/
 PKG_SITES:=		http://yaboot.ozlabs.org/releases/
 
+PKG_ARCH_DEPENDS:=	ppc
+
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
