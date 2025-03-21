@@ -13,12 +13,15 @@ PKG_URL:=		http://www.gnu.org/software/libunistring/
 PKG_SITES:=		${MASTER_SITE_GNU:=libunistring/}
 PKG_OPTS:=		dev
 
+include $(ADK_TOPDIR)/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
 
+$(eval $(call HOST_template,LIBUNISTRING,libunistring,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBUNISTRING,libunistring,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 libunistring-install:
 	${INSTALL_DIR} ${IDIR_LIBUNISTRING}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libunistring.so* ${IDIR_LIBUNISTRING}/usr/lib
 
+include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

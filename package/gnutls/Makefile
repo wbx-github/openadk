@@ -12,6 +12,7 @@ PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgcrypt libtasn1 zlib libnettle libgmp libunistring
 PKG_BUILDDEP:=		libgcrypt liblzo libtasn1
 PKG_BUILDDEP+=		zlib ncurses libnettle libunistring
+HOST_BUILDDEP:=		libnettle-host libtasn1-host libunistring-host
 PKG_URL:=		http://www.gnutls.org/
 PKG_SITES:=		https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/
 PKG_LIBNAME:=		libgnutls
@@ -27,8 +28,10 @@ PKG_FLAVOURS_LIBGNUTLS:=WITH_CRYPTODEV
 PKGFD_WITH_CRYPTODEV:=	enable support for cryptodev-linux
 PKGFB_WITH_CRYPTODEV:=	cryptodev-linux
 
+include ${ADK_TOPDIR}/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
 
+$(eval $(call HOST_template,LIBGNUTLS,libgnutls,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBGNUTLS,libgnutls,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKGSC_LIBGNUTLS),$(PKG_OPTS)))
 $(eval $(call PKG_template,GNUTLS_UTILS,gnutls-utils,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_GNUTLS_UTILS),$(PKGSD_GNUTLS_UTILS),$(PKGSC_GNUTLS_UTILS)))
 
@@ -37,6 +40,10 @@ CONFIGURE_ARGS+= 	--enable-cryptodev
 endif
 
 TARGET_LDFLAGS+=	-pthread
+HOST_CONFIGURE_ARGS+=	--without-p11-kit \
+			--disable-seccomp-tests \
+			--disable-tests \
+			--disable-doc
 CONFIGURE_ARGS+=	--disable-rpath \
 			--disable-doc \
 			--disable-tests \
@@ -54,4 +61,5 @@ gnutls-utils-install:
 	$(CP) $(WRKINST)/usr/bin/{{cert,psk}tool,gnutls-{cli,serv}} \
 	    $(IDIR_GNUTLS_UTILS)/usr/bin
 
+include ${ADK_TOPDIR}/mk/host-bottom.mk
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk

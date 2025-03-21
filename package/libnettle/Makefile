@@ -18,8 +18,10 @@ PKG_OPTS:=		dev
 DISTFILES:=             nettle-${PKG_VERSION}.tar.gz
 WRKDIST=		${WRKDIR}/nettle-${PKG_VERSION}
 
+include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
 
+$(eval $(call HOST_template,LIBNETTLE,libnettle,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBNETTLE,libnettle,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 CONFIGURE_ARGS+=	--disable-documentation
@@ -31,4 +33,5 @@ libnettle-install:
 	$(CP) $(WRKINST)/usr/lib/libhogweed.so* \
 		$(IDIR_LIBNETTLE)/usr/lib
 
+include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
