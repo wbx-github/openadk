@@ -294,7 +294,7 @@ config ADK_LINUX_KERNEL_NET_NS
 	default n
 
 config ADK_LINUX_KERNEL_TIME_NS
-	bool "Network namespace"
+	bool "Time namespace"
 	select ADK_LINUX_KERNEL_NAMESPACES
 	select ADK_LINUX_KERNEL_GENERIC_VDSO_TIME_NS
 	default n
