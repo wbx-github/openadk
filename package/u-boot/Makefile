@@ -91,6 +91,8 @@ CONFIG:=		starfive_visionfive2_defconfig
 UBOOT:=			u-boot.itb
 endif
 
+MAKE_FLAGS+=		HOSTCFLAGS="-I$(STAGING_HOST_DIR)/usr/include" \
+			HOSTLDFLAGS="$(HOST_LDFLAGS)"
 HOST_MAKE_FLAGS+=	HOSTCFLAGS="$(HOST_CPPFLAGS) $(HOST_CFLAGS)" \
 			HOSTLDFLAGS="$(HOST_LDFLAGS) -ldl"
 HOST_STYLE:=		manual
@@ -104,9 +106,9 @@ endif
 
 host-build:
 	(cd $(WRKBUILD) && env $(HOST_MAKE_ENV) $(MAKE) -f $(MAKE_FILE) \
-		$(HOST_MAKE_FLAGS) sandbox_defconfig )
+		$(HOST_MAKE_FLAGS) tools-only_defconfig )
 	(cd $(WRKBUILD) && env $(HOST_MAKE_ENV) $(MAKE) -f $(MAKE_FILE) \
-		$(HOST_MAKE_FLAGS) tools $(MAKE_TRACE) )
+		$(HOST_MAKE_FLAGS) tools-only $(MAKE_TRACE) )
 
 u-boot-hostinstall:
 	$(INSTALL_BIN) $(WRKBUILD)/tools/mk{,env}image \
