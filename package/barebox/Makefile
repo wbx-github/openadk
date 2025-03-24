@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		barebox
-PKG_VERSION:=		2019.09.0
+PKG_VERSION:=		2025.03.0
 PKG_RELEASE:=		1
-PKG_HASH:=		beab6bdba2466bece57d23834daf4f0d530a594efc11ca0ddb69372981e6e159
+PKG_HASH:=		0bf7118004e445bdd57feeef89ee9064982acc221e8a046c4a7994d3da6da2ec
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 PKG_BUILDDEP:=		lzop-host
@@ -33,7 +33,11 @@ CONFIG:=		efi_defconfig
 BAREBOX_ARCH:=		x86
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_MIPS),y)
+ifeq ($(ADK_TARGET_LITTLE_ENDIAN),y)
+CONFIG:=		qemu-maltael_defconfig
+else
 CONFIG:=		qemu-malta_defconfig
+endif
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9),y)
 CONFIG:=		vexpress_ca9_defconfig
