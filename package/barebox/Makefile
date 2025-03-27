@@ -13,6 +13,8 @@ PKG_BUILDDEP:=		lzop-host
 PKG_URL:=		http://www.barebox.org
 PKG_SITES:=		http://www.barebox.org/download/
 
+PKG_ARCH_DEPENDS:=	aarch64 arm mips or1k ppc riscv32 riscv64 x86_64
+
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
 include $(ADK_TOPDIR)/mk/package.mk
@@ -25,18 +27,18 @@ BUILD_STYLE:=		manual
 INSTALL_STYLE:=		manual
 
 BAREBOX_ARCH:=		$(ADK_TARGET_ARCH)
-ifeq ($(ADK_TARGET_ARCH_X86),y)
-CONFIG:=		efi_defconfig
-endif
 ifeq ($(ADK_TARGET_ARCH_X86_64),y)
 CONFIG:=		efi_defconfig
 BAREBOX_ARCH:=		x86
+BAREBOX:=		barebox.efi
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_MIPS),y)
 ifeq ($(ADK_TARGET_LITTLE_ENDIAN),y)
 CONFIG:=		qemu-maltael_defconfig
+BAREBOX:=		images/barebox-qemu-malta.img.swapped
 else
 CONFIG:=		qemu-malta_defconfig
+BAREBOX:=		images/barebox-qemu-malta.img
 endif
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9),y)
@@ -57,6 +59,6 @@ do-build:
 		$(MAKE))
 
 barebox-install:
-	$(CP) $(WRKBUILD)/barebox.bin $(FW_DIR)
+	$(CP) $(WRKBUILD)/$(BAREBOX) $(FW_DIR)
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
