@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		irssi
-PKG_VERSION:=		1.4.4
+PKG_VERSION:=		1.4.5
 PKG_RELEASE:=		1
-PKG_HASH:=		fefe9ec8c7b1475449945c934a2360ab12693454892be47a6d288c63eb107ead
+PKG_HASH:=		72a951cb0ad622785a8962801f005a3a412736c7e7e3ce152f176287c52fe062
 PKG_DESCR:=		irc text client
 PKG_SECTION:=		app/chat
 PKG_DEPENDS:=		glib libncurses
@@ -14,7 +14,10 @@ PKG_BUILDDEP:=		glib ncurses
 PKG_URL:=		http://www.irssi.org/
 PKG_SITES:=		https://github.com/irssi/irssi/releases/download/$(PKG_VERSION)/
 
-PKG_CHOICES_IRSSI:=	WITH_LIBRESSL WITHOUT_SSL
+PKG_CHOICES_IRSSI:=	WITH_OPENSSL WITH_LIBRESSL WITHOUT_SSL
+PKGCD_WITH_OPENSSL:=	use openssl for crypto
+PKGCB_WITH_OPENSSL:=	openssl
+PKGCS_WITH_OPENSSL:=	openssl
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCB_WITH_LIBRESSL:=	libressl
 PKGCS_WITH_LIBRESSL:=	libressl
