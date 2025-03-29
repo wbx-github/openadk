@@ -4,25 +4,25 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		wolfssl
-PKG_VERSION:=		5.7.0
+PKG_VERSION:=		5.7.6
 PKG_RELEASE:=		1
-PKG_HASH:=		2de93e8af588ee856fe67a6d7fce23fc1b226b74d710b0e3946bc8061f6aa18f
+PKG_HASH:=		52b1e439e30d1ed8162a16308a8525a862183b67aa30373b11166ecbab000d63
 PKG_DESCR:=		portable embedded ssl library
 PKG_SECTION:=		libs/crypto
+PKG_BUILDDEP:=		cmake-host
 PKG_URL:=		http://www.wolfssl.com
 PKG_SITES:=		https://github.com/wolfSSL/wolfssl/archive/refs/tags/
 PKG_OPTS:=		dev
 
 DISTFILES:=		v$(PKG_VERSION)-stable.tar.gz
 WRKDIST=		${WRKDIR}/${PKG_NAME}-${PKG_VERSION}-stable
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,WOLFSSL,wolfssl,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
-AUTOTOOL_STYLE:=	autogen
-CONFIGURE_ARGS+=	--disable-examples
-CONFIGURE_ENV+=		C_EXTRA_FLAGS='$(TARGET_CFLAGS)'
+CONFIG_STYLE:=		cmake
 
 wolfssl-install:
 	$(INSTALL_DIR) $(IDIR_WOLFSSL)/usr/lib
