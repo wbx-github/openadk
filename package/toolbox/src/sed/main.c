@@ -53,6 +53,7 @@
 
 #include "defs.h"
 #include "extern.h"
+#include "fgetln.h"
 
 __RCSID("$MirOS: src/usr.bin/sed/main.c,v 1.3 2017/11/20 01:23:57 tg Exp $");
 
