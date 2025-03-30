@@ -54,6 +54,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_SIPEED_MAIX_BIT),y)
 	@echo 'sudo python3 scripts/kflash.py -p /dev/ttyUSB0 -b 1500000 -t $(FW_DIR)/$(TARGET_KERNEL)'
 endif
+ifeq ($(ADK_TARGET_SYSTEM_SIPEED_MAIXDUINO),y)
+	@echo 'sudo python3 scripts/kflash.py -p /dev/ttyUSB0 -b 1500000 -t $(FW_DIR)/$(TARGET_KERNEL)'
+endif
 endif
 ifeq ($(ADK_TARGET_FS),genimage)
 targethelp:
