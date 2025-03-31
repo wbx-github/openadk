@@ -1,0 +1,29 @@
+--- quickjs-2024-01-13.orig/Makefile	2024-01-13 11:20:39.000000000 +0100
++++ quickjs-2024-01-13/Makefile	2025-03-31 22:09:50.810771963 +0200
+@@ -28,7 +28,7 @@ endif
+ # Windows cross compilation from Linux
+ #CONFIG_WIN32=y
+ # use link time optimization (smaller and faster executables but slower build)
+-CONFIG_LTO=y
++#CONFIG_LTO=y
+ # consider warnings as errors (for development)
+ #CONFIG_WERROR=y
+ # force 32 bit build for some utilities
+@@ -37,7 +37,7 @@ CONFIG_LTO=y
+ #CONFIG_COSMO=y
+ 
+ # installation directory
+-PREFIX?=/usr/local
++PREFIX?=/usr
+ 
+ # use the gprof profiler
+ #CONFIG_PROFILE=y
+@@ -217,7 +217,7 @@ ifneq ($(CROSS_PREFIX),)
+ 
+ $(QJSC): $(OBJDIR)/qjsc.host.o \
+     $(patsubst %.o, %.host.o, $(QJS_LIB_OBJS))
+-	$(HOST_CC) $(LDFLAGS) -o $@ $^ $(HOST_LIBS)
++	$(HOST_CC) $(HOST_CFLAGS) $(HOST_LDFLAGS) -o $@ $^ $(HOST_LIBS)
+ 
+ endif #CROSS_PREFIX
+ 
