@@ -4,22 +4,31 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libnotify
-PKG_VERSION:=		0.4.5
-PKG_RELEASE:=		3
-PKG_HASH:=		0799db8ea1500b65a477421a8c930cc8c8b0bbc0596e55ea1601e2542f3fb0d9
+PKG_VERSION:=		0.8.6
+PKG_RELEASE:=		1
+PKG_HASH:=		c5540aaefb60e1d63b1c587c05f2284ebe72ece7d0c0e5e4a778cfd5844b6b58
 PKG_DESCR:=		notify library
 PKG_SECTION:=		libs/misc
-PKG_BUILDDEP:=		libgtk2 dbus-glib
+PKG_BUILDDEP:=		libgtk3 dbus-glib
 PKG_NEEDS:=		c++
-PKG_URL:=		http://www.galago-project.org/
-PKG_SITES:=		http://www.galago-project.org/files/releases/source/libnotify/
+PKG_SITES:=		https://download.gnome.org/sources/libnotify/0.8/
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBNOTIFY,libnotify,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
+
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+MESON_FLAGS+=		-Dtests=false \
+			-Dman=false \
+			-Dgtk_doc=false \
+			-Ddocbook_docs=disabled \
+			-Dintrospection=disabled
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
 
 libnotify-install:
 	$(INSTALL_DIR) $(IDIR_LIBNOTIFY)/usr/lib
