@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pixman
-PKG_VERSION:=		0.34.0
+PKG_VERSION:=		0.44.2
 PKG_RELEASE:=		1
-PKG_HASH:=		21b6b249b51c6800dc9553b65106e1e37d0e25df942c90531d4c3997aa20a88e
+PKG_HASH:=		6349061ce1a338ab6952b92194d1b0377472244208d47ff25bef86fc71973466
 PKG_DESCR:=		pixel manipulation library
 PKG_SECTION:=		x11/libs
-PKG_BUILDDEP:=		libpng
-HOST_BUILDDEP:=		libpng-host
+PKG_BUILDDEP:=		libpng meson-host
+HOST_BUILDDEP:=		libpng-host meson-host 
 PKG_SITES:=		http://www.cairographics.org/releases/
 PKG_OPTS:=		dev
 
@@ -22,9 +22,15 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,PIXMAN,pixman,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,PIXMAN,pixman,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-HOST_STYLE:=		auto
-CONFIGURE_ARGS+=	--disable-gtk \
-			--disable-arm-iwmmxt
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+MESON_FLAGS+=		-Dtests=disabled \
+			-Ddemos=disabled
+
+HOST_STYLE:=		meson
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
 
 pixman-install:
 	${INSTALL_DIR} ${IDIR_PIXMAN}/usr/lib
