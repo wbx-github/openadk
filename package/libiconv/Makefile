@@ -21,8 +21,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,LIBICONV,libiconv,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,LIBICONV,libiconv,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
-HOST_CONFIGURE_ARGS+=	--enable-static
-
 libiconv-install:
 	$(INSTALL_DIR) $(IDIR_LIBICONV)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libiconv.so* $(IDIR_LIBICONV)/usr/lib/
