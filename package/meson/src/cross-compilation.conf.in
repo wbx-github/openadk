@@ -9,6 +9,9 @@ cpp = '@TARGET_CROSS@g++'
 ar = '@TARGET_CROSS@ar'                                                      
 strip = '@TARGET_CROSS@strip'                                                
 pkg-config = '@STAGING_HOST_DIR@/usr/bin/pkg-config'
+glib-compile-resources = '@STAGING_HOST_DIR@/usr/bin/glib-compile-resources'
+glib-compile-schemas = '@STAGING_HOST_DIR@/usr/bin/glib-compile-schemas'
+gdbus-codegen = '@STAGING_HOST_DIR@/usr/bin/gdbus-codegen'
 
 [built-in options]
 c_args = [@TARGET_CFLAGS@]                                                   
