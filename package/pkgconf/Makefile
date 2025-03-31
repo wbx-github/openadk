@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pkgconf
-PKG_VERSION:=		1.1.0
-PKG_RELEASE:=		2
-PKG_HASH:=		5f1ef65d73a880fa5e7012102a17f7b32010e5e46139aed85851a541ba828a63
+PKG_VERSION:=		2.3.0
+PKG_RELEASE:=		1
+PKG_HASH:=		3a9080ac51d03615e7c1910a0a2a8df08424892b5f13b0628a204d3fcce0ea8b
 PKG_DESCR:=		smart pkg-config replacement
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		sed-host
