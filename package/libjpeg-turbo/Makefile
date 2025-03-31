@@ -23,6 +23,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,LIBJPEG_TURBO,libjpeg-turbo,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBJPEG_TURBO,libjpeg-turbo,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+HOST_CONFIG_STYLE:=	cmake
 CONFIG_STYLE:=		cmake
 
 libjpeg-turbo-install:
