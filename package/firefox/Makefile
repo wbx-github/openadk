@@ -10,9 +10,9 @@ PKG_HASH:=		35a1da121af474833d013ecbc1f77aa55bb35678fe06d438842d320dfab3f344
 PKG_DESCR:=		www browser
 PKG_SECTION:=		app/browser
 PKG_DEPENDS:=		pango libfreetype fontconfig libxcomposite libxcursor
-PKG_DEPENDS+=		libgtk3 dbus-glib alsa-lib libatk harfbuzz
+PKG_DEPENDS+=		libgtk3 dbus-glib alsa-lib harfbuzz
 PKG_BUILDDEP:=		python3-host nodejs-host pango freetype fontconfig libXcomposite
-PKG_BUILDDEP+=		libXcursor libgtk3 dbus-glib alsa-lib atk harfbuzz
+PKG_BUILDDEP+=		libXcursor libgtk3 dbus-glib alsa-lib harfbuzz
 PKG_SITES:=		https://ftp.mozilla.org/pub/firefox/releases/$(PKG_VERSION)/source/
 
 PKG_ARCH_DEPENDS:=	aarch64
