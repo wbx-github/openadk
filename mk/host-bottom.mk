@@ -66,6 +66,7 @@ ifeq (${HOST_CONFIG_STYLE},meson)
 		meson setup --prefix $(STAGING_HOST_DIR)/usr \
 		 --pkg-config-path $(STAGING_HOST_DIR)/usr/lib/pkgconfig \
 		 --buildtype release $(HOST_MESON_FLAGS) \
+		 --wrap-mode=nodownload \
 		$(WRKSRC) $(WRKBUILD) $(MAKE_TRACE)
 endif
 ifeq (${HOST_CONFIG_STYLE},perl)
@@ -87,7 +88,7 @@ host-build:
 ${_HOST_BUILD_COOKIE}: ${_HOST_CONFIGURE_COOKIE}
 	@$(CMD_TRACE) "compiling.. "
 ifneq ($(filter meson,${HOST_STYLE}),)
-	PATH='$(HOST_PATH)' ninja -v -C $(WRKBUILD) $(MAKE_TRACE)
+	PATH='$(HOST_PATH)' LD_LIBRARY_PATH='$(STAGING_HOST_DIR)/usr/lib' ninja -v -C $(WRKBUILD) $(MAKE_TRACE)
 else ifneq (${HOST_STYLE},manual)
 	cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -j${ADK_MAKE_JOBS} -f ${MAKE_FILE} \
 	    ${HOST_MAKE_FLAGS} ${HOST_ALL_TARGET} $(MAKE_TRACE)
