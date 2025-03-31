@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mesa
-PKG_VERSION:=		23.3.3
+PKG_VERSION:=		25.0.2
 PKG_RELEASE:=		1
-PKG_HASH:=		518307c0057fa3cee8b58df78be431d4df5aafa7edc60d09278b2d7a0a80f3b4
+PKG_HASH:=		adf904d083b308df95898600ffed435f4b5c600d95fb6ec6d4c45638627fdc97
 PKG_DESCR:=		3d graphics library
 PKG_SECTION:=		libs/video
 PKG_DEPENDS:=		libxdamage libxfixes libdrm libxxf86vm libexpat
@@ -14,10 +14,10 @@ PKG_DEPENDS+=		libxml2
 PKG_BUILDDEP:=		python3 libxml2 libXdamage libXfixes libXrandr
 PKG_BUILDDEP+=		libXxf86vm libdrm dri2proto glproto expat libXext
 PKG_BUILDDEP+=		eudev dri3proto presentproto xcb-proto libxcb
-PKG_BUILDDEP+=		libxshmfence python-mako-host
+PKG_BUILDDEP+=		libxshmfence python-mako-host python3-yaml-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.mesa3d.org/
-PKG_SITES:=		ftp://ftp.freedesktop.org/pub/mesa/
+PKG_SITES:=		https://archive.mesa3d.org/
 PKG_LIBNAME:=		mesa
 PKG_OPTS:=		dev
 
@@ -33,7 +33,7 @@ BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
 MESON_FLAGS+=		-Dllvm=disabled \
-			-Dgallium-drivers=swrast,panfrost,vc4,v3d \
+			-Dgallium-drivers=panfrost,vc4,v3d \
 			-Dvulkan-drivers= \
 			-Dgbm=enabled \
 			-Dplatforms=x11
@@ -44,9 +44,9 @@ mesa-install:
 		$(IDIR_MESA)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libGL*.so* \
 		$(IDIR_MESA)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/libglapi.so* \
-		$(IDIR_MESA)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libgbm.so* \
+		$(IDIR_MESA)/usr/lib
+	$(CP) $(WRKINST)/usr/lib/libgallium*.so* \
 		$(IDIR_MESA)/usr/lib
 	${CP} $(WRKINST)/usr/lib/dri/*.so \
 		${IDIR_MESA}/usr/lib/dri/
