@@ -140,7 +140,7 @@ ${_BUILD_COOKIE}: ${_CONFIGURE_COOKIE}
 	@env ${MAKE_ENV} ${MAKE} pre-build $(MAKE_TRACE)
 	@$(CMD_TRACE) "compiling.. "
 ifneq ($(filter meson,${BUILD_STYLE}),)
-	PATH='$(HOST_PATH)' ninja -v -C $(WRKBUILD) $(MAKE_TRACE)
+	PATH='$(HOST_PATH)' LD_LIBRARY_PATH='$(STAGING_HOST_DIR)/usr/lib' ninja -v -C $(WRKBUILD) $(MAKE_TRACE)
 else ifneq ($(filter manual,${BUILD_STYLE}),)
 	env ${MAKE_ENV} ${MAKE} ${MAKE_FLAGS} do-build $(MAKE_TRACE)
 else ifeq ($(strip ${BUILD_STYLE}),)
