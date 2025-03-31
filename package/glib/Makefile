@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		glib
-PKG_VERSION:=		2.78.4
+PKG_VERSION:=		2.84.0
 PKG_RELEASE:=		1
-PKG_EXTRAVER:=		2.78
-PKG_HASH:=		24b8e0672dca120cc32d394bccb85844e732e04fe75d18bb0573b2dbc7548f63
+PKG_EXTRAVER:=		2.84
+PKG_HASH:=		f8823600cb85425e2815cfad82ea20fdaa538482ab74e7293d58b3f64a5aff6a
 PKG_DESCR:=		low-level core library that forms the basis of gtk+
 PKG_SECTION:=		libs/misc
-PKG_DEPENDS:=		pcre2 zlib libffi libiconv
-PKG_BUILDDEP:=		glib-host util-linux libffi zlib dbus pcre2 libiconv
-HOST_BUILDDEP:=		pkgconf-host libiconv-host libffi-host python3-host gettext-host util-linux-host
-HOST_BUILDDEP+=		pcre2-host meson-host zlib-host
+PKG_DEPENDS:=		pcre2 zlib libffi
+PKG_BUILDDEP:=		glib-host util-linux libffi zlib dbus pcre2
+HOST_BUILDDEP:=		pkgconf-host libffi-host python3-host gettext-host util-linux-host
+HOST_BUILDDEP+=		pcre2-host meson-host zlib-host libiconv-host
 PKG_NEEDS:=		threads intl iconv
 PKG_URL:=		http://www.gtk.org/
 PKG_SITES:=		http://ftp.gnome.org/pub/GNOME/sources/glib/$(PKG_EXTRAVER)/
@@ -35,11 +35,14 @@ CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
-HOST_MESON_FLAGS:=	--default-library static -Dtests=false -Dxattr=false -Doss_fuzz=disabled
-MESON_FLAGS:=		-Dtests=false -Dxattr=false -Doss_fuzz=disabled
+HOST_MESON_FLAGS:=	-Dintrospection=disabled -Dnls=disabled -Dtests=false -Dxattr=false \
+		       	-Doss_fuzz=disabled \
+			-Dsysprof=disabled \
+			--default-library=static
+MESON_FLAGS:=		-Dintrospection=disabled -Dtests=false -Dxattr=false -Doss_fuzz=disabled -Dsysprof=disabled
 
 hostpost-install:
-	$(CP) $(HOSTWRKBUILD)/../glib-obj/meson-private/glib-2.0.pc \
+	$(CP) $(HOSTWRKBUILD)/../glib-obj/meson-private/*.pc \
 		$(STAGING_HOST_DIR)/usr/lib/pkgconfig
 	$(INSTALL_BIN) $(HOSTWRKBUILD)/../glib-obj/gobject/glib-mkenums \
 		$(STAGING_HOST_DIR)/usr/bin

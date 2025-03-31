@@ -1,6 +1,6 @@
---- glib-2.75.2.orig/glib/gnulib/meson.build	2023-01-06 13:49:52.000000000 +0100
-+++ glib-2.75.2/glib/gnulib/meson.build	2023-01-22 14:08:55.068305964 +0100
-@@ -312,9 +312,6 @@ endif
+--- glib-2.84.0.orig/glib/gnulib/meson.build	2025-03-06 14:09:13.000000000 +0100
++++ glib-2.84.0/glib/gnulib/meson.build	2025-03-30 06:00:21.051043526 +0200
+@@ -315,9 +315,6 @@ endif
  if not gl_cv_func_frexp_works and gl_cv_func_frexp_broken_beyond_repair
    error ('frexp() is missing or broken beyond repair, and we have nothing to replace it with')
  endif
