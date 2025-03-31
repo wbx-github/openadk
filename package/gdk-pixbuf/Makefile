@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gdk-pixbuf
-PKG_VERSION:=		2.34.0
-PKG_EXTRAVER:=		2.34
+PKG_VERSION:=		2.42.12
+PKG_EXTRAVER:=		2.42
 PKG_RELEASE:=		1
-PKG_HASH:=		d55e5b383ee219bd0e23bf6ed4427d56a7db5379729a6e3e0a0e0eba9a8d8879
+PKG_HASH:=		b9505b3445b9a7e48ced34760c3bcb73e966df3ac94c95a148cb669ab748e3c7
 PKG_DESCR:=		image loading and pixel buffer manipulation library
 PKG_SECTION:=		libs/image
-PKG_BUILDDEP:=		libjpeg-turbo libtiff glib libpng
-HOST_BUILDDEP:=		libiconv-host glib-host libffi-host
+PKG_BUILDDEP:=		libjpeg-turbo libtiff glib libpng gdk-pixbuf-host
+HOST_BUILDDEP:=		glib-host libffi-host libpng-host libjpeg-turbo-host
 PKG_NEEDS:=		c++
 PKG_SITES:=		$(MASTER_SITE_GNOME:=gdk-pixbuf/$(PKG_EXTRAVER)/)
 PKG_OPTS:=		dev
@@ -22,13 +22,26 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,GDK_PIXBUF,gdk-pixbuf,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,GDK_PIXBUF,gdk-pixbuf,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
-HOST_STYLE:=		auto
-HOST_LDFLAGS+=		-lz -ldl -lresolv -liconv -lmount -lffi
-HOST_CONFIGURE_ARGS+=	--disable-glibtest \
-			--without-libjpeg \
-			--without-libpng \
-			--without-libtiff
-CONFIGURE_ENV+=		gio_can_sniff=no
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+HOST_LDFLAGS+=		-lpng -ljpeg
+HOST_STYLE:=		meson
+HOST_INSTALL_STYLE:=	meson
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
+
+HOST_MESON_FLAGS:=	-Dgio_sniffing=false \
+			-Dtests=false \
+			-Dinstalled_tests=false \
+			-Dintrospection=disabled \
+			-Dman=false \
+			--default-library=static
+MESON_FLAGS:=		-Dgio_sniffing=false \
+			-Dtests=false \
+			-Dinstalled_tests=false \
+			-Dman=false
 
 gdk-pixbuf-install:
 	$(INSTALL_DIR) $(IDIR_GDK_PIXBUF)/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/
