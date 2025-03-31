@@ -1,0 +1,13 @@
+--- unifdef-2.12.orig/Makefile	2020-02-14 17:58:51.000000000 +0100
++++ unifdef-2.12/Makefile	2025-03-30 19:25:30.876075366 +0200
+@@ -25,10 +25,6 @@ install: unifdef unifdefall.sh unifdef.1
+ 	install -m 755 -d  ${bindest}
+ 	install -m 755 unifdef  ${bindest}/
+ 	install -m 755 unifdefall.sh  ${bindest}/unifdefall
+-	: manual
+-	install -m 755 -d  ${man1dest}
+-	install -m 644 unifdef.1  ${man1dest}/
+-	ln -s unifdef.1  ${man1dest}/unifdefall.1
+ 
+ clean:
+ 	rm -f unifdef version.h
