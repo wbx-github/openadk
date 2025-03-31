@@ -1,0 +1,22 @@
+--- enchant-2.8.2.orig/src/Makefile.in	2024-08-14 11:33:20.000000000 +0200
++++ enchant-2.8.2/src/Makefile.in	2025-04-01 05:16:13.945853550 +0200
+@@ -472,8 +472,8 @@ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ AM_CPPFLAGS = -I$(top_srcdir) $(ISYSTEM)$(top_builddir)/libgnu $(ISYSTEM)$(top_srcdir)/libgnu -I$(top_srcdir)/lib $(GLIB_CFLAGS) $(WARN_CFLAGS) -DG_LOG_DOMAIN='"libenchant"'
+-dist_man_MANS = enchant-@ENCHANT_MAJOR_VERSION@.1 enchant-lsmod-@ENCHANT_MAJOR_VERSION@.1
+-nodist_doc_DATA = enchant-@ENCHANT_MAJOR_VERSION@.html enchant-lsmod-@ENCHANT_MAJOR_VERSION@.html
++dist_man_MANS = 
++nodist_doc_DATA = 
+ edit = sed \
+ 	-e 's|@PKGDATADIR[@]|$(pkgdatadir)|g' \
+ 	-e 's|@SYSCONFDIR[@]|$(sysconfdir)|g'
+@@ -727,7 +727,7 @@ distdir-am: $(DISTFILES)
+ 	done
+ check-am: all-am
+ check: check-am
+-all-am: Makefile $(PROGRAMS) $(MANS) $(DATA)
++all-am: Makefile $(PROGRAMS) $(DATA)
+ installdirs:
+ 	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(docdir)"; do \
+ 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \

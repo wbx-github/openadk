@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		enchant
-PKG_VERSION:=		1.6.0
+PKG_VERSION:=		2.8.2
 PKG_RELEASE:=		1
-PKG_HASH:=		2fac9e7be7e9424b2c5570d8affe568db39f7572c10ed48d4e13cddf03f7097f
+PKG_HASH:=		8f19535adb5577b83b00e02f330fe9b9eb40dd21f19e2899636fc4d3a7696375
 PKG_DESCR:=		spelling library
 PKG_SECTION:=		libs/misc
-PKG_SITES:=		http://www.abisource.com/downloads/enchant/1.6.0/
+PKG_SITES:=		https://github.com/rrthomas/enchant/releases/download/v$(PKG_VERSION)/
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
