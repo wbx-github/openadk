@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		webkitgtk
-PKG_VERSION:=		2.34.6
+PKG_VERSION:=		2.48.0
 PKG_RELEASE:=		1
-PKG_HASH:=		6bc8fd034aad0432a2459ce4fc7ee25ad65a4924c618bf8d93b52b0c1a84c1f6
+PKG_HASH:=		94904a55cf12d44a4e36ceadafff02d46da73d76be9b4769f34cbfdf0eebf88e
 PKG_DESCR:=		web browser engine
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		glib icu4c zlib libwebp libgtk3 libsoup
@@ -15,7 +15,7 @@ PKG_DEPENDS+=		gstreamer libnotify libwebp gst-plugins-base
 PKG_BUILDDEP:=		glib icu4c zlib libwebp libgtk3 cmake-host
 PKG_BUILDDEP+=		libsoup libsecret libXt harfbuzz libnotify
 PKG_BUILDDEP+=		gstreamer cairo enchant libwebp gst-plugins-base
-PKG_BUILDDEP+=		gnutls libgcrypt ruby-host
+PKG_BUILDDEP+=		gnutls libgcrypt ruby-host unifdef-host
 PKG_URL:=		http://www.webkitgtk.org/
 PKG_SITES:=		http://webkitgtk.org/releases/
 PKG_OPTS:=		dev
@@ -26,7 +26,7 @@ $(eval $(call PKG_template,WEBKITGTK,webkitgtk,$(PKG_VERSION)-$(PKG_RELEASE),$(P
 
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 XAKE_FLAGS+=		VERBOSE=1
-TARGET_CXXFLAGS+=	-D__STDC_LIMIT_MACROS -D__STDC_FORMAT_MACROS
+#TARGET_CXXFLAGS+=	-D__STDC_LIMIT_MACROS -D__STDC_FORMAT_MACROS
 
 CONFIG_STYLE:=		cmake
 CMAKE_FLAGS+= 		-DPORT=GTK \
@@ -36,17 +36,25 @@ CMAKE_FLAGS+= 		-DPORT=GTK \
 			-DENABLE_API_TESTS=OFF \
 			-DENABLE_GTKDOC=OFF \
 			-DENABLE_GEOLOCATION=OFF \
+			-DENABLE_SPEECH_SYNTHESIS=OFF \
+			-DENABLE_JOURNALD_LOG=OFF \
 			-DENABLE_MINIBROWSER=ON \
 			-DUSE_SYSTEM_MALLOC=ON \
 			-DUSE_LIBNOTIFY=OFF \
+			-DUSE_JPEGXL=OFF \
+			-DUSE_AVIF=OFF \
+			-DUSE_LIBBACKTRACE=OFF \
+			-DUSE_GSTREAMER_TRANSCODER=OFF \
 			-DENABLE_JIT=OFF \
 			-DUSE_LIBHYPHEN=OFF \
 			-DUSE_SOUP2=ON \
+			-DUSE_GTK4=OFF \
 			-DUSE_WPE_RENDERER=OFF \
 			-DENABLE_GAMEPAD=OFF \
 			-DUSE_OPENJPEG=OFF \
 			-DUSE_WOFF2=OFF \
 			-DUSE_SYSTEMD=OFF \
+			-DUSE_SYSTEM_SYSPROF_CAPTURE=NO \
 			-DUSE_LCMS=OFF \
 			-DENABLE_BUBBLEWRAP_SANDBOX=OFF \
 			-DENABLE_INTROSPECTION=OFF
