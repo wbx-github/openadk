@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xcb-proto
-PKG_VERSION:=		1.16.0
+PKG_VERSION:=		1.17.0
 PKG_RELEASE:=		1
-PKG_HASH:=		a75a1848ad2a89a82d841a51be56ce988ff3c63a8d6bf4383ae3219d8d915119
+PKG_HASH:=		2c1bacd2110f4799f74de6ebb714b94cf6f80fb112316b1219480fd22562148c
 PKG_DESCR:=		xml-xcb protocol descriptions
 PKG_SECTION:=		dev/header
 HOST_BUILDDEP:=		python3-host
