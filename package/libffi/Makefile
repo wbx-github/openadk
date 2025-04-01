@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libffi
-PKG_VERSION:=		3.4.6
+PKG_VERSION:=		3.4.7
 PKG_RELEASE:=		1
-PKG_HASH:=		b0dea9df23c863a7a50e825440f3ebffabd65df1497108e5d437747843895a4e
+PKG_HASH:=		138607dee268bdecf374adf9144c00e839e38541f75f24a1fcf18b78fda48b2d
 PKG_DESCR:=		foreign function interface library
 PKG_SECTION:=		libs/misc
 HOST_BUILDDEP:=		libtool-host
