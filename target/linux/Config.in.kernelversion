@@ -38,9 +38,7 @@ config ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	depends on !ADK_TARGET_ARCH_IA64
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_NDS32
-	select ADK_HOST_NEED_LZOP if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	select ADK_HOST_NEED_LZ4 if ADK_TARGET_SYSTEM_PHYTEC_WEGA && ADK_TARGET_LINUX_KERNEL_VERSION_GIT
-	select ADK_TARGET_LINUX_KERNEL_IMAGE if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 
 config ADK_TARGET_LINUX_KERNEL_VERSION_6_13
 	bool "6.13.6"
@@ -226,7 +224,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO
 	default "https://github.com/raspberrypi/linux.git" if ADK_TARGET_BOARD_BCM28XX
 	default "git://git.code.sf.net/p/adi-linux/code" if ADK_TARGET_SYSTEM_ADSP_BF537
 	default "https://github.com/EmcraftSystems/linux-emcraft.git" if ADK_TARGET_SYSTEM_KINETIS_K70
-	default "https://github.com/SolidRun/linux-fslc.git" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	default "https://github.com/SolidRun/linux-armada38x.git" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 	default "https://git.phytec.de/git/linux-ti.git" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "https://github.com/kalray/linux_coolidge.git" if ADK_TARGET_ARCH_KVX
@@ -247,7 +244,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO_NAME
 	default "emcraft" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "phytec" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "clearfog" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
-	default "fslc" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	default "radxa" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "linus"
 
@@ -261,7 +257,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT
 	default "f8d3b2a0fa5054aaed0f14cd457db9d8922bb167" if ADK_TARGET_SYSTEM_ADSP_BF537
 	default "e7c8afc1dda7b7c18596d90ad6a17ae886650b72" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "902739f3353150ac9eb69ad995098f3079d862a3" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
-	default "c85fbc86c61a8c8fd45ab1fe3d1bdd2df12f7962" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	default "stable-4.4-rockpi4" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "v4.4.52-phy" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 
@@ -273,7 +268,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_VER
 	default "5.10.110" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "4.4.52" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "2.6.33" if ADK_TARGET_SYSTEM_KINETIS_K70
-	default "3.14.79" if ADK_TARGET_SYSTEM_SOLIDRUN_IMX6
 	default "3.6.0" if ADK_TARGET_SYSTEM_QEMU_LM32
 	default "5.8.12" if ADK_TARGET_ARCH_KVX
 
