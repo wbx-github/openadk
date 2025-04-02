@@ -228,7 +228,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO
 	default "https://git.phytec.de/git/linux-ti.git" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "https://github.com/kalray/linux_coolidge.git" if ADK_TARGET_ARCH_KVX
 	default "https://github.com/m-labs/linux-milkymist.git" if ADK_TARGET_ARCH_LM32
-	default "https://github.com/radxa/kernel.git" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
 	help
 	  GIT repository to use.
@@ -244,7 +243,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO_NAME
 	default "emcraft" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "phytec" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "clearfog" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
-	default "radxa" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "linus"
 
 config ADK_TARGET_LINUX_KERNEL_GIT
@@ -257,7 +255,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT
 	default "f8d3b2a0fa5054aaed0f14cd457db9d8922bb167" if ADK_TARGET_SYSTEM_ADSP_BF537
 	default "e7c8afc1dda7b7c18596d90ad6a17ae886650b72" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "902739f3353150ac9eb69ad995098f3079d862a3" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
-	default "stable-4.4-rockpi4" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "v4.4.52-phy" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 
 config ADK_TARGET_LINUX_KERNEL_GIT_VER
@@ -265,7 +262,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_VER
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	default "6.12.21" if ADK_TARGET_BOARD_BCM28XX
 	default "5.16" if ADK_TARGET_CPU_ARC_ARC32 || ADK_TARGET_CPU_ARC_ARC64
-	default "5.10.110" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "4.4.52" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "2.6.33" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "3.6.0" if ADK_TARGET_SYSTEM_QEMU_LM32
@@ -276,7 +272,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_TYPE
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
 	default "branch" if ADK_TARGET_LINUX_ARCH_LM32
 	default "branch" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
-	default "branch" if ADK_TARGET_SYSTEM_ROCKPI4_PLUS
 	default "hash"
 
 config ADK_TARGET_LINUX_KERNEL_NO_MIRROR
