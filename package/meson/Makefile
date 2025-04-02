@@ -9,7 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		a6ca46e2a11a0278bb6492ecd4e0520ff441b164ebfdef1e012b11beb848d26e
 PKG_DESCR:=		build utility
 PKG_SECTION:=		dev/tools
-HOST_BUILDDEP:=		python3-host ninja-host
+HOST_BUILDDEP:=		python3-host python3-setuptools-host ninja-host
 PKG_URL:=		http://www.mesonbuild.com/
 PKG_SITES:=		https://github.com/mesonbuild/meson/archive/
 

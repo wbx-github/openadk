@@ -3,14 +3,14 @@
 
 include $(ADK_TOPDIR)/rules.mk
 
-PKG_NAME:=		python-setuptools
-PKG_VERSION:=		69.0.3
+PKG_NAME:=		python3-setuptools
+PKG_VERSION:=		78.1.0
 PKG_RELEASE:=		1
-PKG_HASH:=		be1af57fc409f93647f2e8e4573a142ed38724b8cdd389706a867bb4efcf1e78
-PKG_DESCR:=		python setuptools
+PKG_HASH:=		18fd474d4a82a5f83dac888df697af65afa82dec7323d09c3e37d1f14288da54
+PKG_DESCR:=		python installer
 PKG_SECTION:=		dev/tools
 PKG_BUILDDEP:=		python3-host
-PKG_SITES:=		https://files.pythonhosted.org/packages/fc/c9/b146ca195403e0182a374e0ea4dbc69136bad3cd55bc293df496d625d0f7/
+PKG_SITES:=		https://files.pythonhosted.org/packages/a9/5a/0db4da3bc908df06e5efae42b44e75c81dd52716e10192ff36d0c1c8e379/
 
 DISTFILES:=             setuptools-$(PKG_VERSION).tar.gz
 
@@ -19,13 +19,13 @@ WRKDIST=		$(WRKDIR)/setuptools-$(PKG_VERSION)
 include ${ADK_TOPDIR}/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
 
-$(eval $(call HOST_template,PYTHON_SETUPTOOLS,python-setuptools,${PKG_VERSION}-${PKG_RELEASE}))
+$(eval $(call HOST_template,PYTHON3_SETUPTOOLS,python3-setuptools,${PKG_VERSION}-${PKG_RELEASE}))
 
 include $(ADK_TOPDIR)/mk/python3.mk
 
 HOST_STYLE:=		manual
 
-python-setuptools-hostinstall:
+python3-setuptools-hostinstall:
 	(cd $(WRKBUILD); PATH='$(HOST_PATH)' python3 ./setup.py install \
 		--prefix=$(STAGING_HOST_DIR)/usr)
 
