@@ -5,7 +5,6 @@ choice
 prompt "Linux Kernel version" if !ADK_TARGET_CHOOSE_ARCH
 depends on ADK_TARGET_OS_LINUX
 default ADK_TARGET_LINUX_KERNEL_VERSION_GIT if ADK_TARGET_BOARD_BCM28XX
-default ADK_TARGET_LINUX_KERNEL_VERSION_GIT if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 default ADK_TARGET_LINUX_KERNEL_VERSION_GIT if ADK_TARGET_SYSTEM_KINETIS_K70
 default ADK_TARGET_LINUX_KERNEL_VERSION_GIT if ADK_TARGET_SYSTEM_ADSP_BF537
 default ADK_TARGET_LINUX_KERNEL_VERSION_GIT if ADK_TARGET_SYSTEM_PHYTEC_WEGA
@@ -224,7 +223,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO
 	default "https://github.com/raspberrypi/linux.git" if ADK_TARGET_BOARD_BCM28XX
 	default "git://git.code.sf.net/p/adi-linux/code" if ADK_TARGET_SYSTEM_ADSP_BF537
 	default "https://github.com/EmcraftSystems/linux-emcraft.git" if ADK_TARGET_SYSTEM_KINETIS_K70
-	default "https://github.com/SolidRun/linux-armada38x.git" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 	default "https://git.phytec.de/git/linux-ti.git" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "https://github.com/kalray/linux_coolidge.git" if ADK_TARGET_ARCH_KVX
 	default "https://github.com/m-labs/linux-milkymist.git" if ADK_TARGET_ARCH_LM32
@@ -242,7 +240,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_REPO_NAME
 	default "ad" if ADK_TARGET_SYSTEM_ADSP_BF537
 	default "emcraft" if ADK_TARGET_SYSTEM_KINETIS_K70
 	default "phytec" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
-	default "clearfog" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 	default "linus"
 
 config ADK_TARGET_LINUX_KERNEL_GIT
@@ -254,7 +251,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT
 	default "dd03775ac7638ec56fb6aec35e7932755f282f60" if ADK_TARGET_BOARD_BCM28XX
 	default "f8d3b2a0fa5054aaed0f14cd457db9d8922bb167" if ADK_TARGET_SYSTEM_ADSP_BF537
 	default "e7c8afc1dda7b7c18596d90ad6a17ae886650b72" if ADK_TARGET_SYSTEM_KINETIS_K70
-	default "902739f3353150ac9eb69ad995098f3079d862a3" if ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG
 	default "v4.4.52-phy" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 
 config ADK_TARGET_LINUX_KERNEL_GIT_VER
