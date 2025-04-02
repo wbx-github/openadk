@@ -489,8 +489,24 @@ config ADK_LINUX_KERNEL_MMC_BCM2835_MMC
 	default y if ADK_TARGET_BOARD_BCM28XX
 	default n
 
+config ADK_LINUX_KERNEL_MMC_DW
+	bool "SD card support for Synopsys HSDK board"
+	select ADK_LINUX_KERNEL_BLOCK
+	select ADK_LINUX_KERNEL_LBDAF
+	select ADK_LINUX_KERNEL_SCSI
+	select ADK_LINUX_KERNEL_MMC
+	select ADK_LINUX_KERNEL_MMC_SPI
+	select ADK_LINUX_KERNEL_MMC_BLOCK
+	select ADK_LINUX_KERNEL_BLK_DEV
+	select ADK_LINUX_KERNEL_BLK_DEV_SD
+	select ADK_LINUX_KERNEL_MMC_SDHCI
+	select ADK_LINUX_KERNEL_MMC_SDHCI_PLTFM
+	depends on ADK_TARGET_SYSTEM_SYNOPSYS_HSDK
+	default y if ADK_TARGET_SYSTEM_SYNOPSYS_HSDK
+	default n
+
 config ADK_LINUX_KERNEL_MMC_MVSDIO
-	bool "SD card support for Soidrun Clearfog"
+	bool "SD card support for Solidrun Clearfog"
 	select ADK_LINUX_KERNEL_BLOCK
 	select ADK_LINUX_KERNEL_LBDAF
 	select ADK_LINUX_KERNEL_SCSI
