@@ -23,12 +23,6 @@ QEMU_ARGS:=${ADK_QEMU_ARGS}
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_XILINX_ZYNQ),y)
 QEMU_ARGS+=-M xilinx-zynq-a9 -dtb $(FW_DIR)/zynq-zc702.dtb -serial null -serial mon:stdio
 endif
-ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_SPITZ),y)
-QEMU_ARGS+=-M spitz
-endif
-ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_TERRIER),y)
-QEMU_ARGS+=-M terrier
-endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_REALVIEW_EB_MPCORE),y)
 QEMU_ARGS+=-M realview-eb-mpcore -net user -net nic -dtb $(FW_DIR)/arm-realview-eb-11mp-ctrevb.dtb
 endif
@@ -50,7 +44,7 @@ ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
 	@echo "#################################################"
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSTARBALL)"
-ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9)$(ADK_TARGET_SYSTEM_QEMU_ARM_VERSATILEPB)$(ADK_TARGET_SYSTEM_QEMU_ARM_TERRIER)$(ADK_TARGET_SYSTEM_QEMU_ARM_SPITZ),y)
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_ARM_VEXPRESS_A9)$(ADK_TARGET_SYSTEM_QEMU_ARM_VERSATILEPB),y)
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
 	@echo "Use following command to create a QEMU Image:"
 	@echo "./scripts/create.sh qemu-${ADK_TARGET_CPU_ARCH}.img $(FW_DIR)/$(ROOTFSTARBALL)"
