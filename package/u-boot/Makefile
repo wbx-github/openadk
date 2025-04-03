@@ -39,6 +39,7 @@ UBOOT:=			u-boot.img
 endif
 ifeq ($(ADK_TARGET_SYSTEM_PCDUINO_3B),y)
 CONFIG:=		Linksprite_pcDuino3_defconfig
+UBOOT:=			u-boot-sunxi-with-spl.bin
 endif
 ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI),y)
 CONFIG:=		rpi_defconfig

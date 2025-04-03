@@ -202,6 +202,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 VENDOR:=allwinner/
 endif
+ifeq ($(ADK_TARGET_SYSTEM_PCDUINO_3B),y)
+VENDOR:=allwinner/
+endif
 endif
 
 dtb-install:
@@ -243,6 +246,9 @@ ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
 	${KERNEL_MAKE} $(VENDOR)sun7i-a20-bananapro.dtb $(MAKE_TRACE)
+endif
+ifeq ($(ADK_TARGET_SYSTEM_PCDUINO_3B),y)
+	${KERNEL_MAKE} $(VENDOR)sun7i-a20-pcduino3.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
 	${KERNEL_MAKE} sun8i-h2-plus-orangepi-zero.dtb $(MAKE_TRACE)
