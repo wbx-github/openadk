@@ -584,7 +584,7 @@ config BUSYBOX_IPLINK
 
 config BUSYBOX_FEATURE_IP_LINK_CAN
 	bool "ip link set type can"
-	default y
+	default n
 	help
 	Configure CAN devices with "ip".
 
