@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		c8373949d7f0de1059e507b83a655d4cea539f75dc66ccdbb27adbd38d83095e
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
-HOST_BUILDDEP:=		libressl-host dtc-host
-PKG_BUILDDEP:=		u-boot-host
+HOST_BUILDDEP:=		gnutls-host openssl-host dtc-host
+PKG_BUILDDEP:=		u-boot-avr32-host
 PKG_URL:=		http://www.denx.de/wiki/U-Boot	
 PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
@@ -72,20 +72,6 @@ ifneq ($(OS_FOR_BUILD),Darwin)
 	(cd $(IDIR_U_BOOT)/usr/bin && ln -sf fw_printenv fw_setenv)
 	$(INSTALL_BIN) ./files/uboot_print_env $(IDIR_U_BOOT)/usr/bin
 	$(INSTALL_BIN) ./files/uboot_set_env $(IDIR_U_BOOT)/usr/bin
-endif
-ifeq ($(ADK_TARGET_SYSTEM_BANANA_PRO),y)
-	$(INSTALL_BIN) ./files/boot.script.bpi $(FW_DIR)
-endif
-ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG),y)
-	$(INSTALL_BIN) ./files/boot.script.clearfog $(FW_DIR)
-endif
-ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_IMX6),y)
-	$(INSTALL_BIN) $(WRKBUILD)/SPL $(FW_DIR)
-	$(INSTALL_BIN) ./files/boot.script.imx6 $(FW_DIR)
-endif
-ifeq ($(ADK_TARGET_SYSTEM_BEAGLEBONE_BLACK),y)
-	$(CP) ./files/uEnv.txt.bbb $(FW_DIR)/uEnv.txt
-	$(INSTALL_BIN) $(WRKBUILD)/MLO $(FW_DIR)
 endif
 
 include $(ADK_TOPDIR)/mk/host-bottom.mk
