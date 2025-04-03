@@ -4,17 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		python-markupsafe
-PKG_VERSION:=		2.1.5
+PKG_VERSION:=		3.0.2
 PKG_RELEASE:=		1
-PKG_HASH:=		d283d37a890ba4c1ae73ffadf8046435c76e7bc2247bbb63c00bd1a709c6544b
+PKG_HASH:=		ee55d3edf80167e48ea11a923c7386f4669df67d7994554387f84e7d8b0a2bf0
 PKG_DESCR:=		implements a XML/HTML/XHTML markup safe string
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		python3-host
-PKG_SITES:=		https://files.pythonhosted.org/packages/87/5b/aae44c6655f3801e81aa3eef09dbbf012431987ba564d7231722f68df02d/
+PKG_SITES:=		https://files.pythonhosted.org/packages/b2/97/5d42485e71dfc078108a86d6de8fa46db44a1a9295e89c5d6d4a06e23a62/
 
-DISTFILES:=             MarkupSafe-$(PKG_VERSION).tar.gz
+DISTFILES:=             markupsafe-$(PKG_VERSION).tar.gz
 
-WRKDIST=		$(WRKDIR)/MarkupSafe-$(PKG_VERSION)
+WRKDIST=		$(WRKDIR)/markupsafe-$(PKG_VERSION)
 
 include ${ADK_TOPDIR}/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk

@@ -4,17 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		python3-yaml
-PKG_VERSION:=		5.3.1
+PKG_VERSION:=		6.0.2
 PKG_RELEASE:=		1
-PKG_HASH:=		b8eac752c5e14d3eca0e6dd9199cd627518cb5ec06add0de9d32baeee6fe645d
+PKG_HASH:=		d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e
 PKG_DESCR:=		fast, expressive, extensible templating engine
 PKG_SECTION:=		dev/tools
 PKG_BUILDDEP:=		python3-host
-PKG_SITES:=		http://pyyaml.org/download/pyyaml/
+PKG_SITES:=		https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/
 
-DISTFILES:=             PyYAML-$(PKG_VERSION).tar.gz
+DISTFILES:=             pyyaml-$(PKG_VERSION).tar.gz
 
-WRKDIST=		$(WRKDIR)/PyYAML-$(PKG_VERSION)
+WRKDIST=		$(WRKDIR)/pyyaml-$(PKG_VERSION)
 
 include ${ADK_TOPDIR}/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
