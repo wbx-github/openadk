@@ -144,7 +144,7 @@ ifneq ($(filter meson,${BUILD_STYLE}),)
 else ifneq ($(filter manual,${BUILD_STYLE}),)
 	env ${MAKE_ENV} ${MAKE} ${MAKE_FLAGS} do-build $(MAKE_TRACE)
 else ifeq ($(strip ${BUILD_STYLE}),)
-	cd ${WRKBUILD} && env ${MAKE_ENV} ${MAKE} -f ${MAKE_FILE} \
+	cd ${WRKBUILD} && env ${MAKE_ENV} LD_LIBRARY_PATH='$(STAGING_HOST_DIR)/usr/lib' ${MAKE} -f ${MAKE_FILE} \
 	    ${MAKE_FLAGS} ${ALL_TARGET} $(MAKE_TRACE)
 else
 	@echo "Invalid BUILD_STYLE '${BUILD_STYLE}'" >&2
