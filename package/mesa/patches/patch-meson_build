@@ -1,0 +1,23 @@
+--- mesa-25.0.2.orig/meson.build	2025-03-20 14:32:27.000000000 +0100
++++ mesa-25.0.2/meson.build	2025-04-02 20:40:53.964094916 +0200
+@@ -940,20 +940,6 @@ endif
+ # On Windows, a venv has no versioned aliased to 'python'.
+ prog_python = find_program('python3', 'python', version : '>= 3.8')
+ 
+-has_mako = run_command(
+-  prog_python, '-c',
+-  '''
+-try:
+-  from packaging.version import Version
+-except:
+-  from distutils.version import StrictVersion as Version
+-import mako
+-assert Version(mako.__version__) >= Version("0.8.0")
+-  ''', check: false)
+-if has_mako.returncode() != 0
+-  error('Python (3.x) mako module >= 0.8.0 required to build mesa.')
+-endif
+-
+ has_yaml = run_command(
+   prog_python, '-c',
+   '''
