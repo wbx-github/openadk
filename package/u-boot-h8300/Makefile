@@ -4,17 +4,19 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-# last working hash fa0e8426833edc1be3c2ea3acaf248157048a15a
 PKG_VERSION:=		h8300
+PKG_HASH:=		a7dff2049fdadd3f247f0f952a3c4531a31313b7ccfa6e1c99b69ecdc904e84b
 PKG_GIT:=		branch
 PKG_RELEASE:=		1
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
-HOST_BUILDDEP:=		libressl-host dtc-host
+HOST_BUILDDEP:=		openssl-host dtc-host
 PKG_BUILDDEP:=		u-boot-h8300-host
-PKG_SITES:=		git://git.pf.osdn.jp/gitroot/y/ys/ysato/uboot.git
+PKG_SITES:=		https://github.com/ysat0/u-boot.git
 
 PKG_SYSTEM_DEPENDS:=	hitachi-edosk2674
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -24,16 +26,12 @@ $(eval $(call PKG_template,U_BOOT,u-boot,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEP
 
 UBOOT:=			u-boot.bin
 
-HOST_MAKE_FLAGS+=	HOSTCFLAGS="$(HOST_CPPFLAGS) $(HOST_CFLAGS)" \
-			HOSTLDFLAGS="$(HOST_LDFLAGS) -ldl"
 HOST_STYLE:=		manual
 CONFIG_STYLE:=		manual
 BUILD_STYLE:=		manual
 INSTALL_STYLE:=		manual
 
 host-build:
-	(cd $(WRKBUILD) && env $(HOST_MAKE_ENV) $(MAKE) -f $(MAKE_FILE) \
-		$(HOST_MAKE_FLAGS) sandbox_defconfig )
 	(cd $(WRKBUILD) && env $(HOST_MAKE_ENV) $(MAKE) -f $(MAKE_FILE) \
 		$(HOST_MAKE_FLAGS) tools $(MAKE_TRACE) )
 
