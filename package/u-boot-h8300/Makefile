@@ -3,24 +3,25 @@
 
 include $(ADK_TOPDIR)/rules.mk
 
-PKG_NAME:=		u-boot
-# last working hash fa0e8426833edc1be3c2ea3acaf248157048a15a
-PKG_VERSION:=		h8300
-PKG_GIT:=		branch
+PKG_NAME:=		u-boot-h8300
+PKG_VERSION:=		0.1
 PKG_RELEASE:=		1
+PKG_HASH:=		65461cc0cab37251e2487c0f5d4ae34c7ca89767bdf790b9a863800206b83539
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
-HOST_BUILDDEP:=		libressl-host dtc-host
+HOST_BUILDDEP:=		openssl-host dtc-host
 PKG_BUILDDEP:=		u-boot-h8300-host
-PKG_SITES:=		git://git.pf.osdn.jp/gitroot/y/ys/ysato/uboot.git
+PKG_SITES:=		https://distfiles.openadk.org/
 
 PKG_SYSTEM_DEPENDS:=	hitachi-edosk2674
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
 
-$(eval $(call HOST_template,U_BOOT,u-boot,$(PKG_VERSION)-$(PKG_RELEASE)))
-$(eval $(call PKG_template,U_BOOT,u-boot,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
+$(eval $(call HOST_template,U_BOOT_H8300,u-boot-h8300,$(PKG_VERSION)-$(PKG_RELEASE)))
+$(eval $(call PKG_template,U_BOOT_8300,u-boot-h8300,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
 UBOOT:=			u-boot.bin
 
@@ -37,7 +38,7 @@ host-build:
 	(cd $(WRKBUILD) && env $(HOST_MAKE_ENV) $(MAKE) -f $(MAKE_FILE) \
 		$(HOST_MAKE_FLAGS) tools $(MAKE_TRACE) )
 
-u-boot-hostinstall:
+u-boot-h8300-hostinstall:
 	$(INSTALL_BIN) $(WRKBUILD)/tools/mk{,env}image \
 		$(STAGING_HOST_DIR)/usr/bin
 
@@ -48,15 +49,15 @@ do-build:
 	(cd $(WRKBUILD) && env \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
-		GCC_HONOUR_COPTS=s $(MAKE))
+		$(MAKE))
 ifneq ($(OS_FOR_BUILD),Darwin)
 	(cd $(WRKBUILD) && env \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
-		GCC_HONOUR_COPTS=s $(MAKE) env)
+		$(MAKE) env)
 endif
 
-u-boot-install:
+u-boot-h8300-install:
 	$(CP) $(WRKBUILD)/$(UBOOT) $(FW_DIR)
 	$(INSTALL_DIR) $(IDIR_U_BOOT)/etc
 	$(CP) ./files/fw_env.config $(IDIR_U_BOOT)/etc
