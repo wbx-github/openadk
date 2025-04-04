@@ -20,6 +20,7 @@ BUILD_STYLE:=		manual
 INSTALL_STYLE:=		manual
 
 TARGET_CPPFLAGS+=	-DCONFIG_USER_INIT_CONSOLE_SH
+TARGET_CFLAGS+=		-Wno-incompatible-pointer-types
 
 do-build:
 	PATH='$(HOST_PATH)' \
