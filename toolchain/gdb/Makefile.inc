@@ -42,7 +42,7 @@ ifeq ($(ADK_TOOLCHAIN_GDB_H8300_GIT),y)
 PKG_VERSION:=		ysato-h8300
 PKG_RELEASE:=		1
 PKG_GIT:=		branch
-PKG_SITES:=		git://git.pf.osdn.jp/gitroot/y/ys/ysato/binutils_gdb.git
+PKG_SITES:=		https://github.com/ysat0/binutils-gdb.git
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 endif
 ifeq ($(ADK_TOOLCHAIN_GDB_GIT),y)
