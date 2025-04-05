@@ -37,6 +37,7 @@ static const char rcsid[] =
 #include <linux/if_ether.h>
 
 #include <netinet/in.h>
+#include <linux/sockios.h>
 
 #include <errno.h>
 #include <malloc.h>

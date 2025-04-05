@@ -11,7 +11,7 @@ INSTALL_PATH     = /usr/local
 INSTALL_PATH_BIN = $(INSTALL_PATH)/bin
 INSTALL_PATH_DOC = $(INSTALL_PATH)/man/man1
 
-DIRS = libpcap-0.4 sbl doc
+DIRS = libpcap-0.4 sbl
 
 -include $(AXIS_TOP_DIR)/tools/build/Rules.axis
 ifdef prefix
