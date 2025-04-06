@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		iproute2
-PKG_VERSION:=		6.11.0
+PKG_VERSION:=		6.14.0
 PKG_RELEASE:=		1
-PKG_HASH:=		1f795398a04aeaacd06a8f6ace2cfd913c33fa5953ca99daae83bb5c534611c3
+PKG_HASH:=		a6d23588150096591c3d00fc27a324a82ee71d7a1a9eea78df5df17ad9b8461f
 PKG_DESCR:=		routing control utility
 PKG_SECTION:=		net/route
 PKG_BUILDDEP:=		iptables libnl
@@ -14,7 +14,7 @@ PKG_DEPENDS:=		libnl
 PKG_URL:=		http://www.linuxfoundation.org/en/Net:Iproute2
 PKG_SITES:=		http://www.kernel.org/pub/linux/utils/net/iproute2/
 
-PKG_SUBPKGS:=		IP TC TC_ATM TC_IPT IFSTAT LNSTAT ROUTEL RTMON SS
+PKG_SUBPKGS:=		IP TC TC_IPT IFSTAT LNSTAT ROUTEL RTMON SS
 PKGSS_IP:=		libmnl
 PKGSD_TC:=		traffic control utility
 PKGSB_TC:=		iptables
