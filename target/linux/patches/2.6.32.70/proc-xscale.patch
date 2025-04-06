@@ -1,0 +1,12 @@
+diff -Nur linux-2.6.32.70.orig/arch/arm/mm/proc-xscale.S linux-2.6.32.70/arch/arm/mm/proc-xscale.S
+--- linux-2.6.32.70.orig/arch/arm/mm/proc-xscale.S	2016-01-29 22:13:00.000000000 +0100
++++ linux-2.6.32.70/arch/arm/mm/proc-xscale.S	2025-04-06 10:56:31.793163221 +0200
+@@ -605,7 +605,7 @@
+ 
+ 	.align
+ 
+-	.section ".proc.info.init", #alloc, #execinstr
++	.section ".proc.info.init", "ax"
+ 
+ 	.type	__80200_A0_A1_proc_info,#object
+ __80200_A0_A1_proc_info:

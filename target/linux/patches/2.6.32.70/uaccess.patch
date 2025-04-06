@@ -1,0 +1,14 @@
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85745
+
+diff -Nur linux-2.6.32.70.orig/arch/arm/include/asm/uaccess.h linux-2.6.32.70/arch/arm/include/asm/uaccess.h
+--- linux-2.6.32.70.orig/arch/arm/include/asm/uaccess.h	2016-01-29 22:13:00.000000000 +0100
++++ linux-2.6.32.70/arch/arm/include/asm/uaccess.h	2025-04-06 10:41:37.342042671 +0200
+@@ -145,7 +145,7 @@
+ 
+ #define put_user(x,p)							\
+ 	({								\
+-		register const typeof(*(p)) __r2 asm("r2") = (x);	\
++		register typeof(*(p)) __r2 asm("r2") = (x);	\
+ 		register const typeof(*(p)) __user *__p asm("r0") = (p);\
+ 		register int __e asm("r0");				\
+ 		switch (sizeof(*(__p))) {				\
