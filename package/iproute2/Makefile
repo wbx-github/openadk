@@ -9,7 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		1f795398a04aeaacd06a8f6ace2cfd913c33fa5953ca99daae83bb5c534611c3
 PKG_DESCR:=		routing control utility
 PKG_SECTION:=		net/route
-PKG_BUILDDEP:=		iptables libnl linux-atm
+PKG_BUILDDEP:=		iptables libnl
 PKG_DEPENDS:=		libnl
 PKG_URL:=		http://www.linuxfoundation.org/en/Net:Iproute2
 PKG_SITES:=		http://www.kernel.org/pub/linux/utils/net/iproute2/
@@ -18,9 +18,6 @@ PKG_SUBPKGS:=		IP TC TC_ATM TC_IPT IFSTAT LNSTAT ROUTEL RTMON SS
 PKGSS_IP:=		libmnl
 PKGSD_TC:=		traffic control utility
 PKGSB_TC:=		iptables
-PKGSD_TC_ATM:=		traffic control atm support library
-PKGSS_TC_ATM:=		tc libatm
-PKGSB_TC_ATM:=		linux-atm
 PKGSD_TC_IPT:=		traffic control iptables support library
 PKGSS_TC_IPT:=		tc iptables
 PKGSB_TC_IPT:=		iptables
@@ -34,7 +31,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,IP,ip,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,TC,tc,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_TC},${PKGSD_TC},${PKG_SECTION}))
-$(eval $(call PKG_template,TC_ATM,tc-atm,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_TC_ATM},${PKGSD_TC_ATM},${PKG_SECTION}))
 $(eval $(call PKG_template,TC_IPT,tc-iptables,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_TC_IPT},${PKGSD_TC_IPT},${PKG_SECTION}))
 $(eval $(call PKG_template,IFSTAT,ifstat,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_IFSTAT},${PKG_SECTION}))
 $(eval $(call PKG_template,LNSTAT,lnstat,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_LNSTAT},${PKG_SECTION}))
@@ -55,11 +51,6 @@ tc-install:
 	${INSTALL_DIR} ${IDIR_TC}/{usr/sbin,usr/lib/tc}
 	${CP} ${WRKINST}/usr/lib/tc/*.dist ${IDIR_TC}/usr/lib/tc/
 	${INSTALL_BIN} ${WRKINST}/sbin/tc ${IDIR_TC}/usr/sbin/
-
-tc-atm-install:
-	${INSTALL_DIR} ${IDIR_TC_ATM}/usr/lib/tc
-	${INSTALL_DATA} ${WRKINST}/usr/lib/tc/q_atm.so \
-		${IDIR_TC_ATM}/usr/lib/tc/
 
 tc-iptables-install:
 	${INSTALL_DIR} ${IDIR_TC_IPT}/usr/lib/tc
