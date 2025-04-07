@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libXt
-PKG_VERSION:=		1.1.5
+PKG_VERSION:=		1.3.1
 PKG_RELEASE:=		1
-PKG_HASH:=		b59bee38a9935565fa49dc1bfe84cb30173e2e07e1dcdf801430d4b54eb0caa3
+PKG_HASH:=		cf2212189869adb94ffd58c7d9a545a369b83d2274930bfbe148da354030b355
 PKG_DESCR:=		x toolkit intrinsics libraries
 PKG_SECTION:=		x11/libs
 PKG_DEPENDS:=		libsm libice libuuid libx11 libxau libxdmcp libxcb
@@ -24,7 +24,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,LIBXT,libxt,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBXT,libxt,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-AUTOTOOL_STYLE:=	autoreconf
 HOST_STYLE:=		auto
 CONFIGURE_ENV+=		CFLAGS_FOR_BUILD="$(HOST_CPPFLAGS) $(HOST_CFLAGS)"
 CONFIGURE_ARGS+=	--disable-malloc0returnsnull
