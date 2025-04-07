@@ -29,6 +29,7 @@ $(eval $(call PKG_template,CFGFS,cfgfs,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPEN
 
 # runtime problems on x86_64 with O3
 TARGET_CFLAGS:=         $(subst O3,Os,$(TARGET_CFLAGS))
+TARGET_CFLAGS+=		-Wno-incompatible-pointer-types
 
 CONFIG_STYLE:=		manual
 INSTALL_STYLE:=		manual
