@@ -4,14 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		nfs-utils
-PKG_VERSION:=		2.7.1
+PKG_VERSION:=		2.8.3
 PKG_RELEASE:=		1
-PKG_HASH:=		d23bab70a7570d8140de8195c16aa3f46e01b61ef3be51ae14fcbf6363017f14
+PKG_HASH:=		de433cb673180ab4276430e036f785a3f401b66d2c5d7caad4b867c3cdbc1311
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		keyutils libtirpc rpcbind libmount libuuid libevent sqlite
-PKG_DEPENDS+=		libncurses libblkid libxml2
+PKG_DEPENDS+=		libncurses libblkid libxml2 libnl libreadline
 PKG_BUILDDEP:=		keyutils libtirpc util-linux libevent sqlite ncurses libxml2
+PKG_BUILDDEP:=		libnl readline
 PKG_KDEPENDS:=		nfs-fs
 PKG_NEEDS:=		threads
 PKG_URL:=		http://sourceforge.net/projects/nfs
@@ -39,6 +40,8 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call PKG_template,NFS_UTILS,nfs-utils,${PKG_VERSION}-${PKG_RELEASE},${PKG_FDEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,NFS_UTILS_CLIENT,nfs-utils-client,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_NFS_UTILS_CLIENT},${PKGSD_NFS_UTILS_CLIENT},${PKG_SECTION}))
 $(eval $(call PKG_template,NFS_UTILS_SERVER,nfs-utils-server,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_NFS_UTILS_SERVER},${PKGSD_NFS_UTILS_SERVER},${PKG_SECTION}))
+
+TARGET_LDFLAGS+=	-ltinfo
 
 AUTOTOOL_STYLE:=	autoreconf
 ifeq ($(ADK_PACKAGE_NFS_UTILS_V4),y)
