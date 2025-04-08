@@ -1,0 +1,16 @@
+--- toybox-0.8.12.orig/main.c	2025-01-18 21:20:33.000000000 +0100
++++ toybox-0.8.12/main.c	2025-04-07 09:40:53.646935573 +0200
+@@ -179,13 +179,6 @@ void toy_singleinit(struct toy_list *whi
+     toys.old_umask = umask(0);
+     if (!(which->flags & TOYFLAG_UMASK)) umask(toys.old_umask);
+ 
+-    // Try user's locale, but if that isn't UTF-8 merge in a UTF-8 locale's
+-    // character type data. (Fall back to en_US for MacOS.)
+-    setlocale(LC_CTYPE, "");
+-    if (strcmp("UTF-8", nl_langinfo(CODESET)))
+-      uselocale(newlocale(LC_CTYPE_MASK, "C.UTF-8", 0) ? :
+-        newlocale(LC_CTYPE_MASK, "en_US.UTF-8", 0));
+-
+     if (which->flags & TOYFLAG_LINEBUF) btype = _IOLBF;
+     else if (which->flags & TOYFLAG_NOBUF) btype = _IONBF;
+     else buf = xmalloc(4096);

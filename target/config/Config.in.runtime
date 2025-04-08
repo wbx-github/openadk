@@ -22,6 +22,10 @@ config ADK_RUNTIME_INIT_SYSV
 	depends on ADK_PACKAGE_BUSYBOX && \
 		   !ADK_TARGET_SYSTEM_SIPEED_MAIX_BIT
 
+config ADK_RUNTIME_INIT_TOYBOX
+	bool "Use toybox init"
+	select ADK_PACKAGE_TOYBOX
+
 config ADK_RUNTIME_INIT_SIMPLEINIT
 	bool "Use a very simple init"
 	select ADK_PACKAGE_SIMPLEINIT
@@ -421,6 +425,12 @@ config ADK_ROOTSH_HUSH
 	help
 	  hush shell from busybox.
 
+config ADK_ROOTSH_TOYSH
+	bool "toysh (Shell compatible with non-MMU systems)"
+	select ADK_PACKAGE_TOYBOX if !ADK_APPLIANCE_TOOLCHAIN
+	help
+	  ToyBox shell.
+
 config ADK_ROOTSH_SASH
 	bool "sash (Shell compatible with non-MMU systems)"
 	select ADK_PACKAGE_SASH if !ADK_APPLIANCE_TOOLCHAIN
@@ -479,6 +489,12 @@ config ADK_BINSH_HUSH
 	select BUSYBOX_HUSH if !ADK_APPLIANCE_TOOLCHAIN
 	help
 	  hush shell.
+
+config ADK_BINSH_TOYSH
+	bool "toysh (toybox Shell)"
+	select ADK_PACKAGE_TOYBOX if !ADK_APPLIANCE_TOOLCHAIN
+	help
+	  sash shell.
 
 config ADK_BINSH_SASH
 	bool "sash (Standalone Shell)"

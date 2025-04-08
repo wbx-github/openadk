@@ -1,0 +1,29 @@
+--- toybox-0.8.12.orig/toys/pending/sh.c	2025-01-18 21:20:33.000000000 +0100
++++ toybox-0.8.12/toys/pending/sh.c	2025-04-07 16:43:09.861935892 +0200
+@@ -1398,18 +1398,6 @@ static int run_subshell(char *str, int l
+   pid_t pid;
+ //dprintf(2, "%d run_subshell %.*s\n", getpid(), len, str); debug_show_fds();
+   // The with-mmu path is significantly faster.
+-  if (CFG_TOYBOX_FORK) {
+-    if ((pid = fork())<0) perror_msg("fork");
+-    else if (!pid) {
+-      call_function()->pp = (void *)1;
+-      if (str) {
+-        TT.ff->source = fmemopen(str, len, "r");
+-        longjmp(TT.forkchild, 1);
+-      }
+-    }
+-
+-  // On nommu vfork, exec /proc/self/exe, and pipe state data to ourselves.
+-  } else {
+     int pipes[2];
+     unsigned i;
+     char **oldenv = environ, *ss = str ? : pl2str(TT.ff->pl->next, 0);
+@@ -1446,7 +1434,6 @@ static int run_subshell(char *str, int l
+     dprintf(pipes[1], "0 0\n%.*s\n", len, ss);
+     if (!str) free(ss);
+     close(pipes[1]);
+-  }
+ 
+   return pid;
+ }

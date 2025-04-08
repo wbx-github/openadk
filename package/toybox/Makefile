@@ -24,11 +24,16 @@ XAKE_FLAGS+=		CC="gcc" V=1 PREFIX="$(WRKINST)"
 
 do-configure:
 	-rm $(WRKBUILD)/toys/other/swap*.c
+	-rm $(WRKBUILD)/toys/other/gpiod.c
+	-rm $(WRKBUILD)/toys/other/lsattr.c
+	-rm $(WRKBUILD)/toys/other/nsenter.c
 	-rm $(WRKBUILD)/toys/posix/getconf.c
 	-rm $(WRKBUILD)/toys/posix/iconv.c
-	cd $(WRKBUILD); CC="gcc" PATH='$(HOST_PATH)' $(MAKE) defconfig
+	cp ./files/config $(WRKBUILD)/.config
 
 toybox-install:
 	$(CP) $(WRKINST)/* $(IDIR_TOYBOX)/
+	$(INSTALL_DIR) $(IDIR_TOYBOX)/etc
+	$(CP) ./files/inittab $(IDIR_TOYBOX)/etc
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk

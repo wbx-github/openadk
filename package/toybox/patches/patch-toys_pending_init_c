@@ -1,0 +1,12 @@
+--- toybox-0.8.12.orig/toys/pending/init.c	2025-01-18 21:20:33.000000000 +0100
++++ toybox-0.8.12/toys/pending/init.c	2025-04-07 15:31:14.276281021 +0200
+@@ -246,8 +246,7 @@ static pid_t final_run(struct action_lis
+ 
+   sigfillset(&signal_set);
+   sigprocmask(SIG_BLOCK, &signal_set, NULL);
+-  if (x->action & ASKFIRST) pid = fork();
+-  else pid = vfork();
++  pid = vfork();
+ 
+   if (pid > 0) {
+     //parent process or error

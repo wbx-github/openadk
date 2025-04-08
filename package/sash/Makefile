@@ -16,6 +16,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,SASH,sash,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+#TARGET_CFLAGS:=		-Wno-incompatible-pointer-types
 CONFIG_STYLE:=		manual
 INSTALL_STYLE:=		manual
 

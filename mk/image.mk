@@ -13,6 +13,8 @@ ifeq (${ADK_BINSH_ASH},y)
 BINSH:=ash
 else ifeq (${ADK_BINSH_BASH},y)
 BINSH:=bash
+else ifeq (${ADK_BINSH_TOYSH},y)
+BINSH:=toysh
 else ifeq (${ADK_BINSH_SASH},y)
 BINSH:=sash
 else ifeq (${ADK_BINSH_HUSH},y)
@@ -30,6 +32,8 @@ ifeq (${ADK_ROOTSH_ASH},y)
 ROOTSH:=/bin/ash
 else ifeq (${ADK_ROOTSH_BASH},y)
 ROOTSH:=/bin/bash
+else ifeq (${ADK_ROOTSH_TOYSH},y)
+ROOTSH:=/bin/toysh
 else ifeq (${ADK_ROOTSH_SASH},y)
 ROOTSH:=/bin/sash
 else ifeq (${ADK_ROOTSH_HUSH},y)
