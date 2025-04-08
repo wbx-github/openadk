@@ -21,8 +21,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call PKG_template,LIBFAAD2,libfaad2,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 AUTOTOOL_STYLE:=	autoreconf
-# check for lrintf fails on Darwin, don't know why
-CONFIGURE_ENV+=		ac_cv_c99_lrintf=yes
 CONFIGURE_ARGS+=	--without-mpeg4ip \
 			--without-xmms
 TARGET_LDFLAGS+=	-lm

@@ -16,8 +16,6 @@ PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=vtun/}
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
-PKG_HOST_DEPENDS:=	!freebsd
-
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,VTUN,vtun,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))

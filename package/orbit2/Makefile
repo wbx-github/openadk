@@ -27,10 +27,8 @@ $(eval $(call PKG_template,ORBIT2,orbit2,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEP
 
 HOST_CFLAGS+=		$(shell env $(HOST_CONFIGURE_ENV) libIDL-config-2 --cflags 2>/dev/null)
 HOST_LIBS:=		$(shell env $(HOST_CONFIGURE_ENV) libIDL-config-2 --libs 2>/dev/null)
-ifneq ($(OS_FOR_BUILD),Darwin)
 HOST_LDFLAGS+=		-static
 HOST_LIBS+=		-lrt
-endif
 HOST_LIBS+=		-lgmodule-2.0 -ldl -lpthread -lglib-2.0
 CONFIGURE_ENV+=		ac_cv_alignof_CORBA_octet=1 \
 			ac_cv_alignof_CORBA_boolean=1 \

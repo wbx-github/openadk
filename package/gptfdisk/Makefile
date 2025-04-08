@@ -24,10 +24,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,GPTFDISK,gptfdisk,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,GPTFDISK,gptfdisk,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-ifneq ($(OS_FOR_BUILD),Darwin)
 TARGET_LDFLAGS+=	-ltinfo
-endif
-
 HOST_STYLE:=		manual
 CONFIG_STYLE:=		manual
 INSTALL_STYLE:=		manual

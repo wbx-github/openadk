@@ -33,8 +33,6 @@ PKGSB_ULOGD_MOD_PCAP:=		libpcap
 PKGSS_ULOGD_MOD_PCAP:=		libpcap
 PKGSN_ULOGD_MOD_PCAP:=		ulogd
 
-PKG_HOST_DEPENDS:=	!cygwin
-
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
 include ${ADK_TOPDIR}/mk/package.mk

@@ -20,10 +20,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,MTOOLS,mtools,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,MTOOLS,mtools,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-ifeq ($(OS_FOR_BUILD),Darwin)
-HOST_LDFLAGS+=		-liconv
-endif
-
 CONFIGURE_ENV+=		ac_cv_func_setpgrp_void=yes
 
 mtools-install:

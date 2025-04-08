@@ -319,11 +319,7 @@ endif
 
 # host compiler and linker flags
 HOST_CPPFLAGS:=		-I$(STAGING_HOST_DIR)/usr/include
-ifeq ($(OS_FOR_BUILD),Darwin)
-HOST_LDFLAGS:=		-L$(STAGING_HOST_DIR)/usr/lib
-else
 HOST_LDFLAGS:=		-L$(STAGING_HOST_DIR)/usr/lib -Wl,-rpath -Wl,${STAGING_HOST_DIR}/usr/lib
-endif
 
 ifneq (${ADK_UPDATE_PATCHES_GIT},)
 PATCH=			PATH='${HOST_PATH}' ${BASH} $(SCRIPT_DIR)/patch_git.sh

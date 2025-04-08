@@ -19,10 +19,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,AUDIT,audit,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
-ifeq ($(OS_FOR_BUILD),Darwin)
-HOST_CFLAGS+=		-I$(STAGING_TARGET_DIR)/usr/include
-endif
-
 CONFIGURE_ARGS+=	--without-python \
 			--without-python3 \
 			--without-libcap-ng \

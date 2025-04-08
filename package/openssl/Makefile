@@ -65,19 +65,8 @@ CONFIG:=		linux-aarch64
 OPENSSL_OPTIONS+=	no-asm
 endif
 
-ifneq (,$(filter CYGWIN%,${OS_FOR_BUILD}))
-HOSTCONFIG:=		Cygwin-x86_64
-endif
-ifeq ($(OS_FOR_BUILD),Darwin)
-HOSTCONFIG:=		darwin64-x86_64-cc
-endif
-
 host-configure:
-ifeq ($(HOSTCONFIG),)
 	(cd $(WRKBUILD); ./config --prefix='$(STAGING_HOST_DIR)/usr' -fPIC -ldl)
-else
-	(cd $(WRKBUILD); ./Configure $(HOSTCONFIG) --prefix='$(STAGING_HOST_DIR)/usr')
-endif
 
 host-build:
 	(cd $(WRKBUILD); $(MAKE))

@@ -20,10 +20,6 @@ $(eval $(call HOST_template,ELFTOAOUT,elftoaout,$(PKG_VERSION)-$(PKG_RELEASE)))
 
 HOST_STYLE:=		manual
 
-ifeq ($(OS_FOR_BUILD),Darwin)
-HOST_CFLAGS+=		-I$(ADK_TOPDIR)/adk/include
-endif
-
 host-build:
 	$(HOST_CC) $(HOST_CFLAGS) -o $(WRKBUILD)/elftoaout $(WRKBUILD)/elftoaout.c
 

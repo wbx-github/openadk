@@ -15,7 +15,6 @@ PKG_SITES:=		http://de.postfix.org/ftpmirror/official/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
-PKG_HOST_DEPENDS:=	!darwin
 # missing res_send support in resolver
 PKG_LIBC_DEPENDS:=	glibc musl
 

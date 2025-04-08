@@ -26,11 +26,6 @@ $(eval $(call HOST_template,HEIMDAL,heimdal,$(PKG_VERSION)-${PKG_RELEASE}))
 AUTOTOOL_STYLE:=	autoreconf
 
 HOST_STYLE:=		manual
-
-ifeq ($(OS_FOR_BUILD),Darwin)
-HOST_CFLAGS+=		-DHAVE_STRLCPY -DHAVE_STRLCAT
-endif
-
 HOST_CONFIGURE_ARGS+=	--disable-pk-init \
 			--without-openldap \
 			--without-x \

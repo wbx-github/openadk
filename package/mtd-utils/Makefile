@@ -47,9 +47,6 @@ HOST_STYLE:=		auto
 HOST_CONFIGURE_ARGS+=	--disable-tests
 HOST_CPPFLAGS+=		-DWITHOUT_XATTR=1 -I./include
 HOST_MAKE_FLAGS+=	WITHOUT_LZO=1
-ifeq ($(OS_FOR_BUILD),Darwin)
-HOST_CPPFLAGS+=		-D_DARWIN_C_SOURCE
-endif
 
 host-build:
 	(cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -f ${MAKE_FILE} \

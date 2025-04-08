@@ -15,20 +15,8 @@ KERNEL_MAKE_OPTS+=	V=1 \
 			HOSTCC="${HOST_CC}" \
 			HOSTCXX="${HOST_CXX}" \
 			SHELL='${SHELL}' \
-			CONFIG_SHELL='${SHELL}'
-
-# regex for relocs needs pcre
-ifeq ($(OS_FOR_BUILD),Darwin)
-KERNEL_MAKE_OPTS+=	HOSTLDFLAGS='-lpcreposix -Wl,-no_pie'
-endif
-
-# non-Linux platforms need elf.h
-ifneq ($(OS_FOR_BUILD),Linux)
-KERNEL_MAKE_OPTS+=	HOSTCFLAGS='$(HOST_CPPFLAGS) ${HOST_CFLAGS}'
-KERNEL_MAKE_OPTS+=	HOST_EXTRACFLAGS='-I${LINUX_DIR}/tools/include -I${LINUX_DIR}/usr/include -I${LINUX_DIR}/security/selinux/include -I${ADK_TOPDIR}/adk/include -I${LINUX_DIR}/scripts/dtc/libfdt -DKBUILD_NO_NLS'
-else
-KERNEL_MAKE_OPTS+=	HOSTCFLAGS='$(HOST_CPPFLAGS) $(HOST_CFLAGS)'
-endif
+			CONFIG_SHELL='${SHELL}' \
+			HOSTCFLAGS='$(HOST_CPPFLAGS) $(HOST_CFLAGS)'
 
 ifneq ($(ADK_TARGET_KERNEL_LOADADDR),)
 KERNEL_MAKE_OPTS+=	LOADADDR=$(ADK_TARGET_KERNEL_LOADADDR)

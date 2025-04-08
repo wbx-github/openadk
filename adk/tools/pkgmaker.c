@@ -353,7 +353,7 @@ int main() {
 	char *pkg_name, *pkg_depends, *pkg_kdepends, *pkg_needs, *pkg_depends_system, *pkg_depends_libc, *pkg_section, *pkg_descr, *pkg_url;
 	char *pkg_subpkgs, *pkg_cfline, *pkg_dflt;
 	char *pkgname, *sysname, *pkg_debug, *pkg_bb;
-	char *pkg_libc_depends, *pkg_host_depends, *pkg_system_depends, *pkg_arch_depends, *pkg_flavours, *pkg_flavours_string, *pkg_choices, *pseudo_name;
+	char *pkg_libc_depends, *pkg_system_depends, *pkg_arch_depends, *pkg_flavours, *pkg_flavours_string, *pkg_choices, *pseudo_name;
 	char *packages, *pkg_name_u, *pkgs, *pkg_opts, *pkg_libname;
 	char *saveptr, *p_ptr, *s_ptr, *pkg_helper, *sname, *sname2;
 	int result;
@@ -377,7 +377,6 @@ int main() {
 	pkg_subpkgs = NULL;
 	pkg_arch_depends = NULL;
 	pkg_system_depends = NULL;
-	pkg_host_depends = NULL;
 	pkg_libc_depends = NULL;
 	pkg_dflt = NULL;
 	pkg_cfline = NULL;
@@ -573,8 +572,6 @@ int main() {
 					if ((parse_var(buf, variable, NULL, &pkg_dflt)) == 0)
 						continue;
 					if ((parse_var(buf, "PKG_LIBC_DEPENDS", NULL, &pkg_libc_depends)) == 0)
-						continue;
-					if ((parse_var(buf, "PKG_HOST_DEPENDS", NULL, &pkg_host_depends)) == 0)
 						continue;
 					if ((parse_var(buf, "PKG_ARCH_DEPENDS", NULL, &pkg_arch_depends)) == 0)
 						continue;
@@ -856,26 +853,6 @@ int main() {
 							sp = " && ";
 						} else {
 							fprintf(cfg, "%sADK_TARGET_SYSTEM_%s", sp, toupperstr(token));
-							sp = " || ";
-						}
-						token = strtok(NULL, " ");
-					}
-					fprintf(cfg, "\n");
-					free(pkg_helper);
-					pkg_helper = NULL;
-				}
-				/* create package host dependency information */
-				if (pkg_host_depends != NULL) {
-					pkg_helper = strdup(pkg_host_depends);
-					token = strtok(pkg_helper, " ");
-					fprintf(cfg, "\tdepends on ");
-					sp = "";
-					while (token != NULL) {
-						if(strncmp(token, "!", 1) == 0) {
-							fprintf(cfg, "%s!ADK_HOST%s", sp, toupperstr(token));
-							sp = " && ";
-						} else {
-							fprintf(cfg, "%sADK_HOST_%s", sp, toupperstr(token));
 							sp = " || ";
 						}
 						token = strtok(NULL, " ");
@@ -1248,7 +1225,6 @@ int main() {
 			free(pkg_subpkgs);
 			free(pkg_arch_depends);
 			free(pkg_system_depends);
-			free(pkg_host_depends);
 			free(pkg_libc_depends);
 			free(pkg_dflt);
 			free(pkg_cfline);
@@ -1266,7 +1242,6 @@ int main() {
 			pkg_subpkgs = NULL;
 			pkg_arch_depends = NULL;
 			pkg_system_depends = NULL;
-			pkg_host_depends = NULL;
 			pkg_libc_depends = NULL;
 			pkg_dflt = NULL;
 			pkg_cfline = NULL;

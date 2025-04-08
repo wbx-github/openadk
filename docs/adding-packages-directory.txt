@@ -45,10 +45,6 @@ are space separated and can be negated with ! as a prefix.
 ** variable used PKG_LIBC_DEPENDS
 ** allowed values are: uclibc-ng glibc musl
 
-* Host system
-** variable used PKG_HOST_DEPENDS
-** allowed values are: linux darwin cygwin freebsd netbsd openbsd
-
 * Special support needed (Toolchain with Threads, Realtime or C++ enabled)
 ** variable used PKG_NEEDS
 ** allowed values are: threads rt c++

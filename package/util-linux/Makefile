@@ -121,10 +121,8 @@ HOST_CONFIGURE_ARGS+=	--enable-libblkid \
 			--enable-libuuid \
 			--enable-libmount \
 			--disable-all-programs \
-			--disable-use-tty-group
-ifneq ($(OS_FOR_BUILD),Darwin)
-HOST_CONFIGURE_ARGS+=   --enable-libuuid
-endif
+			--disable-use-tty-group \
+			--enable-libuuid
 
 fdisk-install:
 	$(INSTALL_DIR) $(IDIR_FDISK)/usr/sbin

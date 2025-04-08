@@ -25,19 +25,6 @@ rm -f foo
 echo >FOO
 if [ -e foo ]; then
   printf "ERROR: OpenADK cannot be built in a case-insensitive file system.\n"
-  case $os in
-    CYG*)
-      printf "Building OpenADK on $os needs a small registry change.\n"
-      printf "http://cygwin.com/cygwin-ug-net/using-specialnames.html\n"
-      ;;
-    Darwin*)
-      printf "Building OpenADK on $os needs a case-sensitive disk partition.\n"
-      printf "For Snow Leopard and above you can use diskutil to resize your existing disk.\n"
-      printf "Example: sudo diskutil resizeVolume disk0s2 90G 1 jhfsx adk 30G\n"
-      printf "For older versions you might consider to use a disk image:\n"
-      printf "hdiutil create -type SPARSE -fs 'Case-sensitive Journaled HFS+' -size 30g ~/openadk.dmg\n"
-      ;;
-  esac
   rm -f FOO
   exit 1
 fi
@@ -110,11 +97,8 @@ if [ ! -d $topdir/dl ]; then
 fi
 
 # check for c compiler
-if [ $os = "Darwin" ]; then
-  compilerbins="clang cc gcc"
-else
-  compilerbins="cc gcc clang"
-fi
+compilerbins="cc gcc clang"
+
 for compilerbin in $compilerbins; do
   printf " --->  checking if $compilerbin is installed.. "
   if which $compilerbin >/dev/null; then
@@ -133,11 +117,8 @@ if [ -z "$CCFOUND" ]; then
 fi
 
 # check for c++ compiler
-if [ $os = "Darwin" ]; then
-  compilerbins="clang++ c++ g++"
-else
-  compilerbins="c++ g++ clang++"
-fi
+compilerbins="c++ g++ clang++"
+
 for compilerbin in $compilerbins; do
   printf " --->  checking if $compilerbin is installed.. "
   if which $compilerbin >/dev/null; then
@@ -752,36 +733,6 @@ fi
 case $os in
   Linux)
     printf "\nconfig ADK_HOST_LINUX\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tbool\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tdefault y\n" >> $topdir/target/config/Config.in.prereq
-    ;;
-  Darwin)
-    printf "\nconfig ADK_HOST_DARWIN\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tbool\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tdefault y\n" >> $topdir/target/config/Config.in.prereq
-    ;;
-  OpenBSD)
-    printf "\nconfig ADK_HOST_OPENBSD\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tbool\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tdefault y\n" >> $topdir/target/config/Config.in.prereq
-    ;;
-  FreeBSD)
-    printf "\nconfig ADK_HOST_FREEBSD\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tbool\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tdefault y\n" >> $topdir/target/config/Config.in.prereq
-    ;;
-  NetBSD)
-    printf "\nconfig ADK_HOST_NETBSD\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tbool\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tdefault y\n" >> $topdir/target/config/Config.in.prereq
-    ;;
-  MirBSD)
-    printf "\nconfig ADK_HOST_MIRBSD\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tbool\n" >> $topdir/target/config/Config.in.prereq
-    printf "\tdefault y\n" >> $topdir/target/config/Config.in.prereq
-    ;;
-  Cygwin*)
-    printf "\nconfig ADK_HOST_CYGWIN\n" >> $topdir/target/config/Config.in.prereq
     printf "\tbool\n" >> $topdir/target/config/Config.in.prereq
     printf "\tdefault y\n" >> $topdir/target/config/Config.in.prereq
     ;;

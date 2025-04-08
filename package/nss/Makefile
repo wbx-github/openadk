@@ -17,8 +17,6 @@ PKG_URL:=		http://www.mozilla.org/projects/security/pki/nss/
 PKG_SITES:=		https://ftp.mozilla.org/pub/security/nss/releases/NSS_${PKG_MAJ_VERSION}_${PKG_MIN_VERSION}_RTM/src/
 PKG_NOPARALLEL:=	1
 
-PKG_HOST_DEPENDS:=	!cygwin
-
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 WRKSRC=			${WRKDIST}/nss
 

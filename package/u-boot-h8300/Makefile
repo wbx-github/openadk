@@ -50,12 +50,10 @@ do-build:
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
 		$(MAKE))
-ifneq ($(OS_FOR_BUILD),Darwin)
 	(cd $(WRKBUILD) && env \
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
 		$(MAKE) env)
-endif
 
 u-boot-h8300-install:
 	$(CP) $(WRKBUILD)/$(UBOOT) $(FW_DIR)

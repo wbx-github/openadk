@@ -14,8 +14,6 @@ PKG_BUILDDEP:=		font-util
 PKG_URL:=		http://www.x.org/
 PKG_SITES:=		http://www.x.org/releases/individual/font/
 
-PKG_HOST_DEPENDS:=      !netbsd !openbsd !cygwin !freebsd !mirbsd
-
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk

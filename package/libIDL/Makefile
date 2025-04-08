@@ -26,9 +26,6 @@ $(eval $(call HOST_template,LIBIDL,libidl,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBIDL,libidl,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 CONFIGURE_ENV+=		libIDL_cv_long_long_format=ll
-ifeq ($(OS_FOR_BUILD),Darwin)
-HOST_LDFLAGS+=		-liconv
-endif
 
 libidl-install:
 	$(INSTALL_DIR) $(IDIR_LIBIDL)/usr/lib

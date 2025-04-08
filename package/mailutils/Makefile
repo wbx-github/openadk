@@ -14,8 +14,6 @@ PKG_DEPENDS:=		libreadline
 PKG_URL:=		http://mailutils.org/
 PKG_SITES:=		ftp://ftp.gnu.org/gnu/mailutils/
 
-PKG_HOST_DEPENDS:=	x86 x86_64
-
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,MAILUTILS,mailutils,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
