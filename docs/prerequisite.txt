@@ -5,16 +5,11 @@
 System requirements
 -------------------
 
-OpenADK is designed to run on Linux systems. But there is support to run on
-MacOS X, Windows with Cygwin, OpenBSD, MirBSD, NetBSD and FreeBSD. Main
-development happens on Debian/GNU Linux and MacOS X. The other host platforms
-are occasionally tested.  OpenADK detects the host system and displays only the
-software packages, which are known to be cross-compilable on the used host.
-For example OpenJDK7 is only cross-compilable on a Linux host.
-
+OpenADK is designed to run on Linux systems. 
+Main development happens on Debian/GNU Linux. 
 OpenADK needs some software to be already installed on the host
 system; here is the list of the mandatory packages,
-package names may vary between host systems.
+package names may vary between Linux systems.
 
 * Build tools:
 
@@ -28,6 +23,7 @@ package names may vary between host systems.
 ** +git+
 ** +strings+
 ** +curl or wget+
+** +xz+
 ** +ncurses development files+
 ** +zlib development files+
 ** +libc development files+
