@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2025.01
+PKG_VERSION:=		2025.04
 PKG_RELEASE:=		1
-PKG_HASH:=		cdef7d507c93f1bbd9f015ea9bc21fa074268481405501945abc6f854d5b686f
+PKG_HASH:=		439d3bef296effd54130be6a731c5b118be7fddd7fcc663ccbc5fb18294d8718
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		gnutls-host openssl-host dtc-host swig-host python3-host python3-setuptools-host
