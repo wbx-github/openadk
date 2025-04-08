@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		webkitgtk
-PKG_VERSION:=		2.48.0
+PKG_VERSION:=		2.48.1
 PKG_RELEASE:=		1
-PKG_HASH:=		94904a55cf12d44a4e36ceadafff02d46da73d76be9b4769f34cbfdf0eebf88e
+PKG_HASH:=		98efdf21c4cdca0fe0b73ab5a8cb52093b5aa52d9b1b016a93f71dbfa1eb258f
 PKG_DESCR:=		web browser engine
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		glib icu4c zlib libwebp libgtk3 libsoup
@@ -15,7 +15,7 @@ PKG_DEPENDS+=		gstreamer libnotify libwebp gst-plugins-base
 PKG_BUILDDEP:=		glib icu4c zlib libwebp libgtk3 cmake-host
 PKG_BUILDDEP+=		libsoup libsecret libXt harfbuzz libnotify
 PKG_BUILDDEP+=		gstreamer cairo enchant libwebp gst-plugins-base
-PKG_BUILDDEP+=		gnutls libgcrypt ruby-host unifdef-host
+PKG_BUILDDEP+=		gst-plugins-good gnutls libgcrypt ruby-host unifdef-host
 PKG_URL:=		http://www.webkitgtk.org/
 PKG_SITES:=		http://webkitgtk.org/releases/
 PKG_OPTS:=		dev
