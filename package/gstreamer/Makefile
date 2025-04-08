@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gstreamer
-PKG_VERSION:=		1.19.3
+PKG_VERSION:=		1.26.0
 PKG_RELEASE:=		1
-PKG_HASH:=		906d7d4bf92f941586c0cbce717d9cad6aac36994e16fa6f2f153e07e3221bca
+PKG_HASH:=		1b2ee4028010c25b776effa7c396c7e3e1861b60b9417e416f4914abcdff279f
 PKG_DESCR:=		opensource multimedia framework
 PKG_SECTION:=		libs/video
 PKG_BUILDDEP:=		glib
