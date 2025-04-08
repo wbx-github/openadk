@@ -80,10 +80,10 @@ else
 endif
 
 host-build:
-	(cd $(WRKBUILD); make)
+	(cd $(WRKBUILD); $(MAKE))
 
 openssl-hostinstall:
-	(cd $(WRKBUILD); make install)
+	(cd $(WRKBUILD); $(MAKE) install)
 
 do-configure:
 	(cd $(WRKBUILD); \
@@ -100,7 +100,6 @@ do-configure:
 			-DOPENSSL_NO_ASYNC \
 			$(OPENSSL_OPTIONS) \
 		);
-	#$(SED) "s:-O[0-9]:$(TARGET_CFLAGS) -fPIC:" $(WRKBUILD)/Makefile
 
 libopenssl-install:
 	${INSTALL_DIR} ${IDIR_LIBOPENSSL}/usr/lib
