@@ -9,8 +9,6 @@ PKG_RELEASE:=		1
 PKG_HASH:=		3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35
 PKG_DESCR:=		command line editing library
 PKG_SECTION:=		libs/misc
-PKG_DEPENDS:=		libncurses
-PKG_BUILDDEP:=		ncurses
 PKG_SITES:=		${MASTER_SITE_GNU:=readline/}
 PKG_LIBNAME:=		libreadline
 PKG_OPTS:=		dev
@@ -22,9 +20,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call HOST_template,READLINE,readline,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBREADLINE,libreadline,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
-
-CONFIGURE_ARGS+= 	--with-curses
-TARGET_LDFLAGS+=	-ltinfo
 
 libreadline-install:
 	${INSTALL_DIR} ${IDIR_LIBREADLINE}/usr/lib
