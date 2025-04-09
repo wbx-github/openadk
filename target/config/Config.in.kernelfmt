@@ -113,3 +113,4 @@ config ADK_TARGET_KERNEL_APPEND_DTB
 	string
 	default "armada-xp-synology-ds414" if ADK_TARGET_SYSTEM_SYNOLOGY_DS414 && !ADK_TARGET_KERNEL_VENDORED_DTB
 	default "marvell/armada-xp-synology-ds414" if ADK_TARGET_SYSTEM_SYNOLOGY_DS414 && ADK_TARGET_KERNEL_VENDORED_DTB
+	default "intel/ixp/intel-ixp42x-linksys-nslu2" if ADK_TARGET_SYSTEM_LINKSYS_NSLU2 && ADK_TARGET_KERNEL_VENDORED_DTB

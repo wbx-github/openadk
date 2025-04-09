@@ -35,6 +35,15 @@ config ADK_LINUX_KERNEL_IMX2_WDT
 	help
 	  Watchdog driver for IMX6 boards.
 
+config ADK_LINUX_KERNEL_IXP4XX_WATCHDOG
+	bool "Hardware Watchdog for Linksys NSLU2"
+	select ADK_LINUX_KERNEL_WATCHDOG
+	depends on ADK_TARGET_SYSTEM_LINKSYS_NSLU2
+	default y if ADK_TARGET_SYSTEM_LINKSYS_NSLU2
+	default n
+	help
+	  Watchdog driver for Linksys NSLU2.
+
 config ADK_LINUX_KERNEL_SCx200_WDT
 	bool "Natsemi Hardware Watchdog" 
 	depends on ADK_TARGET_SYSTEM_PCENGINES_WRAP

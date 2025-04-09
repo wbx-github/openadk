@@ -1,0 +1,12 @@
+diff -Nur linux-6.6.82.orig/arch/arm/boot/dts/intel/ixp/intel-ixp42x-linksys-nslu2.dts linux-6.6.82/arch/arm/boot/dts/intel/ixp/intel-ixp42x-linksys-nslu2.dts
+--- linux-6.6.82.orig/arch/arm/boot/dts/intel/ixp/intel-ixp42x-linksys-nslu2.dts	2025-03-09 09:55:04.000000000 +0100
++++ linux-6.6.82/arch/arm/boot/dts/intel/ixp/intel-ixp42x-linksys-nslu2.dts	2025-04-08 19:11:26.464512676 +0200
+@@ -21,7 +21,7 @@
+ 	};
+ 
+ 	chosen {
+-		bootargs = "console=ttyS0,115200n8 root=/dev/mtdblock2 rw rootfstype=squashfs,jffs2 rootwait";
++		bootargs = "console=ttyS0,115200n8 root=/dev/mtdblock4 rootfstype=squashfs rootwait";
+ 		stdout-path = "uart0:115200n8";
+ 	};
+ 

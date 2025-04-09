@@ -129,10 +129,6 @@ ifeq ($(ADK_TARGET_FS),nfsroot)
 targethelp:
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSUSERTARBALL)"
-ifeq ($(ADK_TARGET_SYSTEM_LINKSYS_NSLU2),y)
-	@echo "Use following in RedBoot bootloader:"
-	@echo "RedBoot> ip_address -l <localip> -h <serverip>; load -r -v -b 0x01d00000 ${TARGET_KERNEL}; exec 0x01d00000"
-endif
 endif
 ifeq ($(ADK_TARGET_FS),squashfs)
 targethelp:
@@ -205,6 +201,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_PCDUINO_3B),y)
 VENDOR:=allwinner/
 endif
+ifeq ($(ADK_TARGET_SYSTEM_LINKSYS_NSLU2),y)
+VENDOR:=intel/ixp/
+endif
 endif
 
 dtb-install:
@@ -272,6 +271,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
 	${KERNEL_MAKE} $(VENDOR)stm32f746-disco.dtb $(MAKE_TRACE)
 endif
+ifeq ($(ADK_TARGET_SYSTEM_LINKSYS_NSLU2),y)
+	${KERNEL_MAKE} $(VENDOR)intel-ixp42x-linksys-nslu2.dtb $(MAKE_TRACE)
+endif
 	for x in $(LINUX_DIR)/arch/arm/boot/dts/$(VENDOR)*.dtb; do \
 		[[ -e "$$x" ]] && cp $(LINUX_DIR)/arch/arm/boot/dts/$(VENDOR)*.dtb $(FW_DIR); \
 		break; \
@@ -294,7 +296,7 @@ ifeq (${ADK_TARGET_FS},genimage)
 imageinstall: dtb-install $(FW_DIR)/$(GENIMAGE) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)
-imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
+imageinstall: kernel-install dtb-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),squashfs)
 imageinstall: $(BUILD_DIR)/root.squashfs kernel-install dtb-install targethelp

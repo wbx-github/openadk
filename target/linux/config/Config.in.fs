@@ -43,9 +43,6 @@ config ADK_LINUX_KERNEL_FAT_DEFAULT_IOCHARSET
 	string
 	default "iso8859-1"
 
-config ADK_LINUX_KERNEL_SQUASHFS_XZ
-	bool
-
 config ADK_LINUX_KERNEL_JFFS2_COMPRESSION_OPTIONS
 	bool
 
@@ -253,7 +250,6 @@ config ADK_LINUX_KERNEL_JFFS2_FS
 config ADK_LINUX_KERNEL_SQUASHFS
 	tristate "SquashFS filesystem"
 	select ADK_LINUX_KERNEL_MISC_FILESYSTEMS
-	select ADK_LINUX_KERNEL_SQUASHFS_XZ
 	help
 	  Squashfs compressed read-only filesystem
 

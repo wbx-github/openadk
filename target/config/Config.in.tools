@@ -284,13 +284,13 @@ config ADK_HOST_BUILD_OPKG
 	default y if ADK_HOST_NEED_OPKG
 	default n
 
-config ADK_HOST_NEED_SQUASHFS
+config ADK_HOST_NEED_SQUASHFS_TOOLS
 	bool
 	default n
 
-config ADK_HOST_BUILD_SQUASHFS
+config ADK_HOST_BUILD_SQUASHFS_TOOLS
 	bool
-	default y if ADK_HOST_NEED_SQUASHFS
+	default y if ADK_HOST_NEED_SQUASHFS_TOOLS
 	default n
 
 config ADK_HOST_NEED_SYSLINUX
