@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		nmap
-PKG_VERSION:=		7.92
+PKG_VERSION:=		7.95
 PKG_RELEASE:=		1
-PKG_HASH:=		a5479f2f8a6b0b2516767d2f7189c386c1dc858d997167d7ec5cfc798c7571a1
+PKG_HASH:=		e14ab530e47b5afd88f1c8a2bac7f89cd8fe6b478e22d255c5b9bddb7a1c5778
 PKG_DESCR:=		utility for network exploration or security auditing
 PKG_SECTION:=		net/security
-PKG_DEPENDS:=		libdnet libpcap libpcre zlib
-PKG_BUILDDEP:=		libdnet libpcap pcre zlib
+PKG_DEPENDS:=		libdnet libpcap libpcre2 zlib
+PKG_BUILDDEP:=		libdnet libpcap pcre2 zlib
 PKG_NEEDS:=		c++
 PKG_URL:=		http://nmap.org/
 PKG_SITES:=		http://download.insecure.org/nmap/dist/
