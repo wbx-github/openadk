@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		sed
-PKG_VERSION:=		4.4
+PKG_VERSION:=		4.9
 PKG_RELEASE:=		1
-PKG_HASH:=		cbd6ebc5aaf080ed60d0162d7f6aeae58211a1ee9ba9bb25623daa6cd942683b
+PKG_HASH:=		6e226b732e1cd739464ad6862bd1a1aba42d7982922da7a53519631d24975181
 PKG_DESCR:=		stream editor
 PKG_SECTION:=		base/tools
 PKG_URL:=		http://www.gnu.org/software/sed/
