@@ -1,0 +1,14 @@
+--- ethtool-6.14.orig/netlink/permaddr.c	2022-12-08 13:20:15.000000000 +0100
++++ ethtool-6.14/netlink/permaddr.c	2025-04-09 09:17:36.070462620 +0200
+@@ -4,9 +4,11 @@
+  * Implementation of "ethtool -P <dev>"
+  */
+ 
++#define _BSD_SOURCE
+ #include <errno.h>
+ #include <string.h>
+ #include <stdio.h>
++#include <unistd.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/if_link.h>
+ 

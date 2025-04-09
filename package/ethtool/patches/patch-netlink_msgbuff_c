@@ -1,0 +1,15 @@
+--- ethtool-6.14.orig/netlink/msgbuff.c	2024-10-08 23:24:51.000000000 +0200
++++ ethtool-6.14/netlink/msgbuff.c	2025-04-09 09:16:53.367670289 +0200
+@@ -4,10 +4,12 @@
+  * Data structures and code for flexible message buffer abstraction.
+  */
+ 
++#define _BSD_SOURCE
+ #include <string.h>
+ #include <errno.h>
+ #include <stdlib.h>
+ #include <stdint.h>
++#include <unistd.h>
+ 
+ #include "../internal.h"
+ #include "netlink.h"
