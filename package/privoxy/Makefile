@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		privoxy
-PKG_VERSION:=		3.0.26
+PKG_VERSION:=		4.0.0
 PKG_RELEASE:=		1
 PKG_VARIANT:=		stable
-PKG_HASH:=		57e415b43ee5dfdca74685cc034053eaae962952fdabd086171551a86abf9cd8
+PKG_HASH:=		c08e2ba0049307017bf9d8a63dd2a0dfb96aa0cdeb34ae007776e63eba62a26f
 PKG_DESCR:=		web proxy with advanced filtering capabilities
 PKG_SECTION:=		net/proxy
-PKG_DEPENDS:=		libpcre
-PKG_BUILDDEP:=		pcre
+PKG_DEPENDS:=		libpcre2
+PKG_BUILDDEP:=		pcre2
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.privoxy.org/
 PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=ijbswa/}
@@ -25,7 +25,6 @@ $(eval $(call PKG_template,PRIVOXY,privoxy,${PKG_VERSION}-${PKG_RELEASE},${PKG_D
 
 AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--disable-editor \
-			--disable-jar-files \
 			--sysconfdir=/etc/privoxy
 # uClibc setpgrp does not take arguments
 CONFIGURE_ENV+=		ac_cv_func_setpgrp_void=yes \
