@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		syslog-ng
-PKG_VERSION:=		4.6.0
+PKG_VERSION:=		4.8.1
 PKG_RELEASE:=		1
-PKG_HASH:=		a5f8b089887767b5e87f523562fc3c6d5ef4dd320fc9b1f44953cb2d6bd50026
+PKG_HASH:=		f54acc615215d8efac2955c3d0bfa040b61e39f19f18bd05fa933f587a863d40
 PKG_DESCR:=		powerful syslog daemon
 PKG_SECTION:=		sys/misc
-PKG_BUILDDEP:=		cmake-host glib ivykis libressl json-c libnet 
-PKG_BUILDDEP+=		pcre flex
-PKG_DEPENDS:=		glib ivykis libressl json-c libnet
-PKG_URL:=		http://www.balabit.com/
-PKG_SITES:=		https://github.com/balabit/syslog-ng/archive/
+PKG_BUILDDEP:=		cmake-host glib ivykis openssl json-c libnet 
+PKG_BUILDDEP+=		pcre2 flex-host
+PKG_DEPENDS:=		glib ivykis libopenssl json-c libnet
+PKG_SITES:=		https://github.com/syslog-ng/syslog-ng/archive/refs/tags/
+PKG_NEEDS:=		iconv
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 WRKDIST=		${WRKDIR}/$(PKG_NAME)-$(PKG_NAME)-$(PKG_VERSION)
@@ -36,6 +36,9 @@ CMAKE_FLAGS+=		-DSYSLOG_NG_ENABLE_SYSTEMD=OFF \
 syslog-ng-install:
 	${INSTALL_DIR} ${IDIR_SYSLOG_NG}/usr/sbin \
 		${IDIR_SYSLOG_NG}/etc/syslog-ng
+	${INSTALL_DIR} ${IDIR_SYSLOG_NG}/usr/lib
+	${CP} ${WRKINST}/usr/lib/lib*.so* \
+		${IDIR_SYSLOG_NG}/usr/lib/
 	${INSTALL_BIN} ${WRKINST}/usr/sbin/syslog-ng \
 		${IDIR_SYSLOG_NG}/usr/sbin/
 	${INSTALL_DATA} ./files/syslog-ng.conf \
