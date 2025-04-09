@@ -11,6 +11,7 @@ PKG_DESCR:=		crypto library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgmp
 PKG_BUILDDEP:=		gmp
+HOST_BUILDDEP:=		gmp-host
 PKG_URL:=		http://www.lysator.liu.se/~nisse/
 PKG_SITES:=		http://www.lysator.liu.se/~nisse/archive/
 PKG_OPTS:=		dev
