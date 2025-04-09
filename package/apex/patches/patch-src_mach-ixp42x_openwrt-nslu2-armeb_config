@@ -1,0 +1,13 @@
+--- apex-main.orig/src/mach-ixp42x/openwrt-nslu2-armeb_config	2025-04-07 09:10:43.000000000 +0200
++++ apex-main/src/mach-ixp42x/openwrt-nslu2-armeb_config	2025-04-08 20:18:52.524389031 +0200
+@@ -19,8 +19,8 @@ CONFIG_EXPERIMENTAL=y
+ #
+ # General Setup
+ #
+-CONFIG_TARGET_DESCRIPTION="OpenWrt NSLU2/BE (8MiB Flash)"
+-CONFIG_CROSS_COMPILE="armeb-openwrt-linux-"
++CONFIG_TARGET_DESCRIPTION="OpenADK NSLU2/BE (8MiB Flash)"
++CONFIG_CROSS_COMPILE="armeb-openadk-linux-"
+ CONFIG_AEABI=y
+ # CONFIG_DRIVER_LONG_LONG_SIZE is not set
+ CONFIG_CC_OPTIMIZE_FOR_SIZE=y
