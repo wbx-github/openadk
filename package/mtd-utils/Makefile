@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mtd-utils
-PKG_VERSION:=		2.0.0
-PKG_RELEASE:=		2
-PKG_HASH:=		20a377aa86af4c102e930b0d0bb9859e3a10aeb16445f6a1273989b206a717c8
+PKG_VERSION:=		2.2.1
+PKG_RELEASE:=		1
+PKG_HASH:=		f7ae20b2eb79ee83441468f0b99d897024cd96ff853eea59106fb1952065c803
 PKG_DESCR:=		flash filesystem utilities
 PKG_SECTION:=		sys/fs
 PKG_DEPENDS:=		libuuid liblzo
