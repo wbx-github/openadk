@@ -134,7 +134,7 @@ CONFIG_GETTY=y
 # CONFIG_GROUPDEL is not set
 # CONFIG_HEXDUMP is not set
 # CONFIG_HD is not set
-CONFIG_INIT=y
+# CONFIG_INIT is not set
 # CONFIG_IP is not set
 # CONFIG_IPCRM is not set
 # CONFIG_IPCS is not set

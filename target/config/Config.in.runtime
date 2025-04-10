@@ -30,6 +30,10 @@ config ADK_RUNTIME_INIT_SIMPLEINIT
 	bool "Use a very simple init"
 	select ADK_PACKAGE_SIMPLEINIT
 
+config ADK_RUNTIME_INIT_MINIINIT
+	bool "Use a minimal init"
+	select ADK_PACKAGE_MINIINIT
+
 endchoice
 
 choice
