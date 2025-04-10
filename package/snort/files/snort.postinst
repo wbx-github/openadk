@@ -1,4 +1,0 @@
-#!/bin/sh
-. $IPKG_INSTROOT/etc/functions.sh
-add_rcconf snort NO
-add_rcconf snort_flags "-i eth0.0 -c /etc/snort/snort.conf -D -N -q -s"
