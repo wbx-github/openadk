@@ -133,6 +133,10 @@ config ADK_HOST_BUILD_STLINK
 	bool
 	default n
 
+config ADK_HOST_BUILD_UPSLUG2
+	bool
+	default n
+
 config ADK_HOST_BUILD_TAR
 	bool
 	default n
