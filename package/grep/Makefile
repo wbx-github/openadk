@@ -9,9 +9,9 @@ PKG_RELEASE:=		1
 PKG_HASH:=		1db2aedde89d0dea42b16d9528f894c8d15dae4e190b59aecc78f5a951276eab
 PKG_DESCR:=		global search for a regex
 PKG_SECTION:=		base/tools
-PKG_DEPENDS:=		libpcre
-PKG_BUILDDEP:=		pcre
-HOST_BUILDDEP:=		pcre-host
+PKG_DEPENDS:=		libpcre2
+PKG_BUILDDEP:=		pcre2
+HOST_BUILDDEP:=		pcre2-host
 PKG_URL:=		http://www.gnu.org/software/grep/
 PKG_SITES:=		${MASTER_SITE_GNU:=grep/}
 PKG_NOPARALLEL:=	1
