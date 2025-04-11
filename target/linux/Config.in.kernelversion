@@ -265,7 +265,6 @@ config ADK_TARGET_LINUX_KERNEL_GIT_VER
 config ADK_TARGET_LINUX_KERNEL_GIT_TYPE
 	string
 	depends on ADK_TARGET_LINUX_KERNEL_VERSION_GIT
-	default "branch" if ADK_TARGET_LINUX_ARCH_LM32
 	default "branch" if ADK_TARGET_SYSTEM_PHYTEC_WEGA
 	default "hash"
 
