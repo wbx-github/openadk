@@ -1,17 +1,6 @@
---- evilwm-1.1.1.orig/Makefile	2015-07-13 12:19:36.000000000 +0200
-+++ evilwm-1.1.1/Makefile	2016-11-10 02:38:08.961425099 +0100
-@@ -17,6 +17,10 @@ desktopfilesdir = $(datarootdir)/applica
- ############################################################################
- # Features
- 
-+XROOT    ?= /usr/X11R6 
-+OPT_CPPFLAGS += -I$(XROOT)/include 
-+OPT_LDLIBS += -L$(XROOT)/lib
-+
- # Uncomment to enable info banner on holding Ctrl+Alt+I.
- OPT_CPPFLAGS += -DINFOBANNER
- 
-@@ -71,10 +75,10 @@ OPT_CPPFLAGS += -DVWM
+--- evilwm-1.4.3.orig/Makefile	2024-03-09 11:20:46.000000000 +0100
++++ evilwm-1.4.3/Makefile	2025-04-12 11:03:24.427876287 +0200
+@@ -83,10 +83,10 @@ OPT_CPPFLAGS += -DNDEBUG  # disable asse
  # Build tools
  
  # Change this if you don't use gcc:
@@ -24,12 +13,12 @@
  WARN = -Wall -W -Wstrict-prototypes -Wpointer-arith -Wcast-align \
  	-Wshadow -Waggregate-return -Wnested-externs -Winline -Wwrite-strings \
  	-Wundef -Wsign-compare -Wmissing-prototypes -Wredundant-decls
-@@ -89,7 +93,7 @@ WARN = -Wall -W -Wstrict-prototypes -Wpo
+@@ -100,7 +100,7 @@ WARN = -Wall -W -Wstrict-prototypes -Wpo
+ #EXEEXT = .exe
  
- # Override INSTALL_STRIP if you don't want a stripped binary
  INSTALL = install
--INSTALL_STRIP = -s
-+INSTALL_STRIP =
+-STRIP = strip
++STRIP ?= strip
  INSTALL_DIR = $(INSTALL) -d -m 0755
  INSTALL_FILE = $(INSTALL) -m 0644
- INSTALL_PROGRAM = $(INSTALL) -m 0755 $(INSTALL_STRIP)
+ INSTALL_PROGRAM = $(INSTALL) -m 0755
