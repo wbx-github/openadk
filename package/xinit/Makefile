@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xinit
-PKG_VERSION:=		1.2.1
-PKG_RELEASE:=		6
-PKG_HASH:=		3079d3fb86af99f4c2c2907b5725e5820fdb2144d3be6002ec367bfcebc5c480
+PKG_VERSION:=		1.4.4
+PKG_RELEASE:=		1
+PKG_HASH:=		45cca1b0f3a963105f43cecc24e9cc4db0d14faa87bd9860b9ec563e8c73fc47
 PKG_DESCR:=		x window system initializer
 PKG_SECTION:=		x11/utils
 PKG_DEPENDS:=		xorg-server mcookie xauth xset
@@ -33,8 +33,8 @@ xinit-install:
 		$(IDIR_XINIT)/usr/bin/
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/xinit \
 		$(IDIR_XINIT)/usr/bin/
-	$(INSTALL_DIR) $(IDIR_XINIT)/usr/lib/X11/xinit
-	$(INSTALL_DATA) $(WRKINST)/usr/lib/X11/xinit/xinitrc \
-		$(IDIR_XINIT)/usr/lib/X11/xinit/
+	$(INSTALL_DIR) $(IDIR_XINIT)/etc/X11/xinit
+	$(INSTALL_DATA) $(WRKINST)/etc/X11/xinit/xinitrc \
+		$(IDIR_XINIT)/etc/X11/xinit/
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
