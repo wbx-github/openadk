@@ -23,6 +23,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,FLEX,flex,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,FLEX,flex,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
+TARGET_CFLAGS+=		-Wno-int-conversion -Wno-implicit-function-declaration
 AUTOTOOL_STYLE:=	autoreconf
 HOST_MAKE_FLAGS+=	STAGE1FLEX=$(WRKSRC)/src/stage1flex 
 MAKE_FLAGS+=		STAGE1FLEX=$(STAGING_HOST_DIR)/usr/bin/stage1flex

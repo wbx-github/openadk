@@ -1,0 +1,11 @@
+--- flex-2.6.4.orig/lib/malloc.c	2016-10-21 02:43:44.000000000 +0200
++++ flex-2.6.4/lib/malloc.c	2025-04-11 16:38:56.667984564 +0200
+@@ -3,7 +3,7 @@
+      
+      #include <sys/types.h>
+      
+-     void *malloc ();
++     void *malloc (size_t n);
+      
+      /* Allocate an N-byte block of memory from the heap.
+         If N is zero, allocate a 1-byte block.  */
