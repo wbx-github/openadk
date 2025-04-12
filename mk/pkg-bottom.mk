@@ -168,7 +168,7 @@ ifneq ($(filter meson,${INSTALL_STYLE}),)
 else ifneq ($(filter manual,${INSTALL_STYLE}),)
 	env ${MAKE_ENV} ${MAKE} do-install $(MAKE_TRACE)
 else ifeq ($(strip ${INSTALL_STYLE}),)
-	cd ${WRKBUILD} && env ${MAKE_ENV} ${MAKE} -f ${MAKE_FILE} \
+	cd ${WRKBUILD} && env ${MAKE_ENV} LD_LIBRARY_PATH='$(STAGING_HOST_DIR)/usr/lib' ${MAKE} -f ${MAKE_FILE} \
 	    DESTDIR='${WRKINST}' ${FAKE_FLAGS} ${INSTALL_TARGET} $(MAKE_TRACE)
 	env ${MAKE_ENV} ${MAKE} post-install $(MAKE_TRACE)
 else
