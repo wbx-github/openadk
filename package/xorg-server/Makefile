@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xorg-server
-PKG_VERSION:=		21.1.6
+PKG_VERSION:=		21.1.16
 PKG_RELEASE:=		1
-PKG_HASH:=		1eb86ed674d042b6c8b1f9135e59395cbbca35ed551b122f73a7d8bb3bb22484
+PKG_HASH:=		b14a116d2d805debc5b5b2aac505a279e69b217dae2fae2dfcb62400471a9970
 PKG_DESCR:=		xorg server
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		libxfont2 pixman libpciaccess libxkbfile libxcvt
@@ -31,7 +31,10 @@ PKG_CFLINE_XORG_SERVER:=depends on ADK_TARGET_WITH_VGA || ADK_TARGET_QEMU_WITH_G
 PKG_FLAVOURS_XORG_SERVER:=	WITH_KDRIVE
 PKGFD_WITH_KDRIVE:=		build kdrive xfbdev server
 
-PKG_CHOICES_XORG_SERVER:=	WITH_LIBRESSL WITH_GCRYPT
+PKG_CHOICES_XORG_SERVER:=	WITH_OPENSSL WITH_LIBRESSL WITH_GCRYPT
+PKGCD_WITH_OPENSSL:=		use openssl crypto for sha1
+PKGCS_WITH_OPENSSL:=		libopenssl
+PKGCB_WITH_OPENSSL:=		openssl
 PKGCD_WITH_LIBRESSL:=		use libressl crypto for sha1
 PKGCS_WITH_LIBRESSL:=		libressl
 PKGCB_WITH_LIBRESSL:=		libressl
@@ -44,6 +47,10 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,XORG_SERVER,xorg-server,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 TARGET_CPPFLAGS+=	-D_GNU_SOURCE -D__gid_t=gid_t -D__uid_t=uid_t
+
+ifeq (${ADK_PACKAGE_XORG_SERVER_WITH_OPENSSL},y)
+CONFIGURE_ARGS+=	 --with-sha1=libcrypto
+endif
 
 ifeq (${ADK_PACKAGE_XORG_SERVER_WITH_GCRYPT},y)
 CONFIGURE_ARGS+=	 --with-sha1=libgcrypt
