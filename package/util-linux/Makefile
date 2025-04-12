@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		util-linux
 PKG_VERSION:=		2.40.2
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		d78b37a66f5922d70edf3bdfb01a6b33d34ed3c3cafd6628203b2a2b67c8e8b3
 PKG_DESCR:=		basic utilities
 PKG_SECTION:=		base/apps
@@ -162,8 +162,8 @@ mount-install:
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/{u,}mount $(IDIR_MOUNT)/bin
 
 mcookie-install:
-	$(INSTALL_DIR) $(IDIR_MCOOKIE)/bin
-	$(INSTALL_BIN) $(WRKINST)/usr/bin/mcookie $(IDIR_MCOOKIE)/bin
+	$(INSTALL_DIR) $(IDIR_MCOOKIE)/usr/bin
+	$(INSTALL_BIN) $(WRKINST)/usr/bin/mcookie $(IDIR_MCOOKIE)/usr/bin
 
 libuuid-install:
 	$(INSTALL_DIR) $(IDIR_LIBUUID)/usr/lib
