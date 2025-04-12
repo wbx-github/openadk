@@ -164,9 +164,13 @@ ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
 	( \
 		echo "nod /dev/console 0644 0 0 c 5 1"; \
 		echo "nod /dev/tty 0644 0 0 c 5 0"; \
-		for i in 0 1 2 3 4; do \
-			echo "nod /dev/tty$$i 0644 0 0 c 4 $$$$i"; \
-		done; \
+		echo "nod /dev/tty0 0644 0 0 c 4 0"; \
+		echo "nod /dev/tty1 0644 0 0 c 4 1"; \
+		echo "nod /dev/tty2 0644 0 0 c 4 2"; \
+		echo "nod /dev/tty3 0644 0 0 c 4 3"; \
+		echo "nod /dev/tty4 0644 0 0 c 4 4"; \
+		echo "nod /dev/tty5 0644 0 0 c 4 5"; \
+		echo "nod /dev/tty6 0644 0 0 c 4 6"; \
 		echo "nod /dev/null 0666 0 0 c 1 3"; \
 		echo "nod /dev/zero 0666 0 0 c 1 5"; \
 		echo "nod /dev/kmsg 0644 0 0 c 1 11"; \
