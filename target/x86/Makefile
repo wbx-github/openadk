@@ -13,7 +13,9 @@ QEMU_ARGS+=${ADK_QEMU_ARGS}
 
 ifeq ($(ADK_TARGET_QEMU_WITH_VIRTIO),y)
 QEMU_ARGS+=-net nic,model=virtio -net user
+ifeq ($(ADK_TARGET_FS),archive)
 QEMU_ARGS+=-drive file=qemu-${ADK_TARGET_CPU_ARCH}.img,if=virtio
+endif
 else
 QEMU_ARGS+=-net user -net nic,model=e1000
 endif
