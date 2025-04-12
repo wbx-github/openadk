@@ -81,10 +81,11 @@ $(eval $(call PKG_mod_template,PYTHON3_MOD_READLINE,readline))
 MAKE_ENV+=		HOSTPGEN=$(STAGING_HOST_DIR)/usr/bin/pgen3
 FAKE_FLAGS+=		ENSUREPIP=no
 CONFIGURE_ARGS:=	--with-system-expat \
-			--disable-ipv6 \
-			--with-build-python
+			--disable-test-modules \
+			--with-build-python=$(STAGING_HOST_DIR)/usr/bin/python3
 
 CONFIGURE_ENV+=		ac_cv_have_long_long_format=yes \
+			ac_cv_buggy_getaddrinfo=no \
 			ac_cv_file__dev_ptmx=yes \
 			ac_cv_file__dev_ptc=no \
 			ac_cv_header_libintl_h=no
