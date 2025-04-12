@@ -46,6 +46,10 @@ ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_28),y)
 BINUTILS_VERSION:=	2.28
 BFDLIB:=		libbfd.a
 endif
+ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_26),y)
+BINUTILS_VERSION:=	2.26
+BFDLIB:=		libbfd.a
+endif
 
 $(WRKBUILD)/.configured:
 	(cd $(WRKBUILD); PATH='${HOST_PATH}' autoreconf -vif;)
