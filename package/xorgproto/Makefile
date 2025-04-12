@@ -4,11 +4,11 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xorgproto
-PKG_VERSION:=		2021.5
+PKG_VERSION:=		2024.1
 PKG_RELEASE:=		1
 PKG_DESCR:=		xorg extension headers
 PKG_SECTION:=		dev/header
-PKG_HASH:=		be6ddd6590881452fdfa170c1c9ff87209a98d36155332cbf2ccbc431add86ff
+PKG_HASH:=		4f6b9b4faf91e5df8265b71843a91fc73dc895be6210c84117a996545df296ce
 PKG_SITES:=		http://www.x.org/releases/individual/proto/
 PKG_OPTS:=              dev devonly
 
