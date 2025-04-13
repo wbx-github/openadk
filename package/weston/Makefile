@@ -11,6 +11,7 @@ PKG_DESCR:=		wayland compositor
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		wayland libxkbcommon libinput libpng libjpeg-turbo libseat mesa libexpat
 PKG_DEPENDS+=		libwebp pam libxcursor libudev xkeyboard-config cairo libffi libdrm seatd
+PKG_DEPENDS+=		libdisplay-info
 PKG_BUILDDEP:=		wayland wayland-protocols libxkbcommon libinput libpng libjpeg-turbo expat
 PKG_BUILDDEP+=		libwebp pam libXcursor eudev cairo libseat libffi libdrm libdisplay-info mesa
 PKG_SITES:=		https://gitlab.freedesktop.org/wayland/weston/-/releases/$(PKG_VERSION)/downloads/
