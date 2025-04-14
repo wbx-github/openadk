@@ -1,0 +1,190 @@
+--- elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/elf2flt.c	2025-04-14 19:50:51.016711969 +0000
++++ elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/elf2flt.c	2025-04-14 21:41:22.134771290 +0000
+@@ -62,6 +62,8 @@ const char *elf2flt_progname;
+ #include <elf/bfin.h>
+ #elif defined(TARGET_h8300)
+ #include <elf/h8.h>
++#elif defined(TARGET_lm32)
++#include <elf/lm32.h>
+ #elif defined(TARGET_m68k)
+ #include <elf/m68k.h>
+ #elif defined(TARGET_microblaze)
+@@ -115,6 +117,12 @@ const char *elf2flt_progname;
+ #define	ARCH	"sh2"
+ #elif defined(TARGET_h8300)
+ #define	ARCH	"h8300"
++#elif defined(TARGET_lm32)
++#define ARCH	"lm32"
++#define FLAT_LM32_RELOC_TYPE_32_BIT   0
++#define FLAT_LM32_RELOC_TYPE_HI16_BIT 1
++#define FLAT_LM32_RELOC_TYPE_LO16_BIT 2
++#define FLAT_LM32_RELOC_TYPE_PERSIST  3
+ #elif defined(TARGET_microblaze)
+ #define ARCH	"microblaze"
+ #elif defined(TARGET_e1)
+@@ -375,7 +383,7 @@ output_relocs (
+   int			bad_relocs = 0;
+   asymbol		**symb;
+   long			nsymb;
+-#ifdef TARGET_bfin
++#if defined(TARGET_bfin) || defined(TARGET_lm32)
+   unsigned long		persistent_data = 0;
+ #endif
+   
+@@ -674,6 +682,40 @@ output_relocs (
+ 					break;
+ 				default:
+ 					goto bad_resolved_reloc;
++#elif defined(TARGET_lm32)
++				case R_LM32_HI16:
++				case R_LM32_LO16:
++					sym_vma = elf2flt_bfd_section_vma(abs_bfd, sym_section);
++					sym_addr += sym_vma + q->addend;
++					/* remember the upper 16 bits */
++					if ((0xFFFF0000UL & sym_addr) != persistent_data) {
++						flat_relocs = (uint32_t *)realloc(flat_relocs,
++						    (flat_reloc_count + 1) * sizeof (uint32_t));
++						if (verbose)
++							printf("New persistent data for %08"PRIx32"\n", sym_addr);
++						persistent_data = 0xFFFF0000UL & sym_addr;
++						pflags = FLAT_LM32_RELOC_TYPE_PERSIST;
++						pflags <<= 29;
++						flat_relocs[flat_reloc_count++] = pflags | (sym_addr >> 16);
++					}
++					pflags = q->howto->type == R_LM32_HI16 ?
++					    FLAT_LM32_RELOC_TYPE_HI16_BIT :
++					    FLAT_LM32_RELOC_TYPE_LO16_BIT;
++					pflags <<= 29;
++					relocation_needed = 1;
++					break;
++				case R_LM32_32:
++					sym_vma = elf2flt_bfd_section_vma(abs_bfd, sym_section);
++					sym_addr += sym_vma + q->addend;
++					pflags = FLAT_LM32_RELOC_TYPE_32_BIT;
++					pflags <<= 29;
++					relocation_needed = 1;
++					break;
++				case R_LM32_CALL:
++					relocation_needed = 0;
++					break;
++				default:
++					goto bad_resolved_reloc;
+ #elif defined(TARGET_m68k)
+ 				case R_68K_32:
+ 					goto good_32bit_resolved_reloc;
+@@ -1010,6 +1052,63 @@ output_relocs (
+ 					continue;
+ #endif
+ 
++#ifdef TARGET_lm32
++				case R_LM32_HI16:
++				case R_LM32_LO16:
++					sym_vma = elf2flt_bfd_section_vma(abs_bfd, sym_section);
++					sym_addr += sym_vma + q->addend;
++					/* remember the upper 16 bits */
++					if ((0xFFFF0000UL & sym_addr) != persistent_data) {
++						flat_relocs = (uint32_t *)realloc(flat_relocs,
++						    (flat_reloc_count + 1) * sizeof (uint32_t));
++						if (verbose)
++							printf("New persistent data for %08"PRIx32"\n", sym_addr);
++						persistent_data = 0xFFFF0000UL & sym_addr;
++						pflags = FLAT_LM32_RELOC_TYPE_PERSIST;
++						pflags <<= 29;
++						flat_relocs[flat_reloc_count++] = pflags | (sym_addr >> 16);
++					}
++					pflags = q->howto->type == R_LM32_HI16 ?
++					    FLAT_LM32_RELOC_TYPE_HI16_BIT :
++					    FLAT_LM32_RELOC_TYPE_LO16_BIT;
++					pflags <<= 29;
++					relocation_needed = 1;
++					break;
++				case R_LM32_32:
++					sym_vma = elf2flt_bfd_section_vma(abs_bfd, sym_section);
++					sym_addr += sym_vma + q->addend;
++					pflags = FLAT_LM32_RELOC_TYPE_32_BIT;
++					pflags <<= 29;
++					relocation_needed = 1;
++					break;
++				case R_LM32_CALL:
++					sym_vma = 0;
++					sym_addr += sym_vma + q->addend;
++					sym_addr -= q->address;
++					sym_addr = (int32_t)sym_addr >> q->howto->rightshift;
++					{
++						union {
++							uint32_t u;
++							int32_t s;
++						} rangecheck;
++
++						rangecheck.u = (unsigned)sym_addr << 6;
++						rangecheck.s >>= 6;
++						if (rangecheck.u != sym_addr) {
++							printf("ERROR: Relocation overflow for R_LM32_CALL relocation against %s\n", sym_name);
++							++bad_relocs;
++							continue;
++						}
++					}
++					relocation_needed = 0;
++					r_mem[0] = (r_mem[0] & 0xFCU) |
++					          ((sym_addr >> 24) & 0x03U);
++					r_mem[1] = (sym_addr >> 16) & 0xFFU;
++					r_mem[2] = (sym_addr >>  8) & 0xFFU;
++					r_mem[3] =  sym_addr        & 0xFFU;
++					break;
++#endif
++
+ #ifdef TARGET_microblaze
+ 				case R_MICROBLAZE_64:
+ 		/* The symbol is split over two consecutive instructions.  
+@@ -1596,6 +1695,21 @@ DIS29_RELOCATION:
+ 					break;
+ #endif
+ 
++#ifdef TARGET_lm32
++				case R_LM32_HI16:
++				case R_LM32_LO16:
++					r_mem[2] = (sym_addr >>  8) & 0xFFU;
++					r_mem[3] =  sym_addr        & 0xFFU;
++					break;
++				case R_LM32_CALL:
++					/*
++					 * use_resolved=…
++					 * 0: already written above
++					 * 1: no write necessary
++					 */
++					break;
++#endif
++
+ 				default:
+ 					/* The alignment of the build host
+ 					   might be stricter than that of the
+--- elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/elf2flt.ld.in	2025-04-14 19:50:51.020711942 +0000
++++ elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/elf2flt.ld.in	2025-04-14 22:23:40.078052838 +0000
+@@ -34,6 +34,7 @@ W_RODAT		*(.rodata)
+ W_RODAT		*(.rodata1)
+ W_RODAT		*(.rodata.*)
+ W_RODAT		*(.gnu.linkonce.r*)
++W_RODAT		*(.rofixup)
+ 
+ 		/* .ARM.extab name sections containing exception unwinding information */
+ 		*(.ARM.extab* .gnu.linkonce.armextab.*)
+--- elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/flthdr.c	2025-04-14 19:50:43.924759193 +0000
++++ elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/flthdr.c	2025-04-14 22:01:24.467101158 +0000
+@@ -33,6 +33,8 @@ const char *elf2flt_progname;
+ 
+ #if defined TARGET_bfin
+ # define flat_get_relocate_addr(addr) (addr & 0x03ffffff)
++#elif defined(TARGET_lm32)
++# define flat_get_relocate_addr(addr) ((addr) & 0x1FFFFFFFU)
+ #else
+ # define flat_get_relocate_addr(addr) (addr)
+ #endif
+@@ -173,6 +175,8 @@ process_file(const char *ifile, const ch
+ 				addr = ntohl(addr);
+ 				if (r & 1)
+ 					addr &= 0x00ffffff;
++#elif defined(TARGET_lm32)
++				addr = ntohl(addr);
+ #endif
+ 				printf("%"PRIx32"\n", addr);
+ 			}
