@@ -17,6 +17,7 @@ $(WRKBUILD)/.configured:
 		--enable-static \
 		--disable-shared \
 		--without-docbook \
+		--without-tests \
 	);
 	touch $@
 

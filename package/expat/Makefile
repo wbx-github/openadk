@@ -25,7 +25,8 @@ TARGET_CFLAGS:=	$(filter-out -static,$(TARGET_CFLAGS))
 TARGET_LDFLAGS:=$(filter-out -static,$(TARGET_LDFLAGS))
 endif
 
-CONFIGURE_ARGS+=	--without-docbook
+CONFIGURE_ARGS+=	--without-docbook \
+			--without-tests
 
 libexpat-install:
 	${INSTALL_DIR} ${IDIR_LIBEXPAT}/usr/lib
