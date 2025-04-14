@@ -1,0 +1,10 @@
+--- elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/elf2flt.ld.in	2025-04-14 19:50:51.020711942 +0000
++++ elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/elf2flt.ld.in	2025-04-14 22:23:40.078052838 +0000
+@@ -13,7 +13,6 @@ PHDRS {
+ SECTIONS {
+ 
+ 	.text 0x0 : {
+-		. = . + 4;
+ 		. = ALIGN(0x4) ;
+ 		@SYMBOL_PREFIX@_stext = . ;
+ 		*(.literal .text)
