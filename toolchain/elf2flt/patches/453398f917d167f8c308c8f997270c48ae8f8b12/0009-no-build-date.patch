@@ -1,0 +1,11 @@
+--- elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/elf2flt.c	2025-04-14 19:50:51.016711969 +0000
++++ elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/elf2flt.c	2025-04-14 23:14:52.212092781 +0000
+@@ -2132,7 +2132,7 @@ int main(int argc, char *argv[])
+ 	  | (pic_with_got ? FLAT_FLAG_GOTPIC : 0)
+ 	  | (docompress ? (docompress == 2 ? FLAT_FLAG_GZDATA : FLAT_FLAG_GZIP) : 0)
+ 	  );
+-  hdr.build_date = htonl((uint32_t)get_build_date());
++  hdr.build_date = 0;
+   memset(hdr.filler, 0x00, sizeof(hdr.filler));
+ 
+   for (i=0; i<reloc_len; i++) reloc[i] = htonl(reloc[i]);
