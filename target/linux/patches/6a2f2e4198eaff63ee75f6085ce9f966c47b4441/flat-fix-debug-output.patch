@@ -1,0 +1,39 @@
+--- /home/mirabilos/q/linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441/arch/lm32/kernel/flat.c	2025-04-13 20:33:20.000000000 +0000
++++ linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441/arch/lm32/kernel/flat.c	2025-04-14 02:40:22.277112693 +0000
+@@ -23,13 +20,13 @@ unsigned long lm32_get_addr_from_rp(unsi
+ 
+ 	switch (type) {
+ 	case FLAT_LM32_RELOC_TYPE_32_BIT:
+-		pr_debug("*ptr = %lx", get_unaligned(ptr));
++		pr_debug("*ptr = %lx at %p\n", get_unaligned(ptr), ptr);
+ 		val = get_unaligned(ptr);
+ 		break;
+ 
+ 	case FLAT_LM32_RELOC_TYPE_LO16_BIT:
+ 	case FLAT_LM32_RELOC_TYPE_HI16_BIT:
+-		pr_debug("*usptr = %x", get_unaligned(usptr));
++		pr_debug("*usptr = %x at %p\n", get_unaligned(usptr), usptr);
+ 		val = get_unaligned(usptr) & 0xffff;
+ 		val += *persistent;
+ 		break;
+@@ -56,17 +53,17 @@ void lm32_put_addr_at_rp(unsigned long *
+ 	switch (type) {
+ 	case FLAT_LM32_RELOC_TYPE_32_BIT:
+ 		put_unaligned(addr, ptr);
+-		pr_debug("new ptr =%lx", get_unaligned(ptr));
++		pr_debug("new value %lx at %p\n", get_unaligned(ptr), ptr);
+ 		break;
+ 
+ 	case FLAT_LM32_RELOC_TYPE_LO16_BIT:
+ 		put_unaligned(addr, usptr);
+-		pr_debug("new value %x at %p", get_unaligned(usptr), usptr);
++		pr_debug("new value %x (lo) at %p\n", get_unaligned(usptr), usptr);
+ 		break;
+ 
+ 	case FLAT_LM32_RELOC_TYPE_HI16_BIT:
+ 		put_unaligned(addr >> 16, usptr);
+-		pr_debug("new value %x at %p", get_unaligned(usptr), usptr);
++		pr_debug("new value %x (hi) at %p\n", get_unaligned(usptr), usptr);
+ 		break;
+ 
+ 	}
