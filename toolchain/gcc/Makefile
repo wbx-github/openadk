@@ -399,7 +399,7 @@ $(WRKBUILD)/.installed: $(WRKBUILD)/.compiled
 	# remove duplicate tools, convert hardlinks to symlinks
 	set -e; \
 	cd $(TOOLCHAIN_DIR)/usr/$(GNU_TARGET_NAME)/bin; \
-		for app in ar as c++ g++ gcc ld ld.gold ld.bfd nm objcopy objdump ranlib strip; do \
+		for app in ar as c++ g++ gcc ld ld.bfd nm objcopy objdump ranlib strip; do \
 			ln -sf ../../bin/$(GNU_TARGET_NAME)-$${app} $${app}; \
 		done;
 	(cd $(TOOLCHAIN_DIR)/usr/bin && \
