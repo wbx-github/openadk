@@ -11,16 +11,20 @@ PKG_DESCR:=		x11 keyboard compiler
 PKG_SECTION:=		x11/misc
 PKG_BUILDDEP:=		libxkbfile libX11
 PKG_DEPENDS:=		libxkbfile libx11
+HOST_BUILDDEP:=		libxkbfile-host
 PKG_SITES:=		http://xorg.freedesktop.org/releases/X11R7.4/src/everything/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
+include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
 
+$(eval $(call HOST_template,XKBCOMP,xkbcomp,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,XKBCOMP,xkbcomp,$(PKG_VERSION)-$(PKG_RELEASE),${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 xkbcomp-install:
 	${INSTALL_DIR} ${IDIR_XKBCOMP}/usr/bin
 	${INSTALL_BIN} ${WRKINST}/usr/bin/xkbcomp ${IDIR_XKBCOMP}/usr/bin
 
+include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

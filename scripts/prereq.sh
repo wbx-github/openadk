@@ -771,10 +771,6 @@ else
     NEED_STATIC_LIBSTDCXX="$NEED_STATIC_LIBSTDCXX icu4c"
   fi
 
-  if [ -n "$ADK_PACKAGE_XKEYBOARD_CONFIG" ]; then
-    NEED_XKBCOMP="$NEED_XKBCOMP xkeyboard-config"
-  fi
-
   if [ -n "$ADK_PACKAGE_FONT_BH_100DPI" ]; then
     NEED_MKFONTDIR="$NEED_MKFONTDIR font-bh-100dpi"
   fi
@@ -841,13 +837,6 @@ else
   if [ -n "$NEED_MKFONTSCALE" ]; then
     if ! which mkfontscale >/dev/null 2>&1; then
       printf "You need mkfontscale to build $NEED_MKFONTSCALE \n"
-      out=1
-    fi
-  fi
-
-  if [ -n "$NEED_XKBCOMP" ]; then
-    if ! which xkbcomp >/dev/null 2>&1; then
-      printf "You need xkbcomp to build $NEED_XKBCOMP \n"
       out=1
     fi
   fi
