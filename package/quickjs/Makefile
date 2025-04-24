@@ -18,6 +18,7 @@ $(eval $(call PKG_template,QUICKJS,quickjs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_D
 
 XAKE_FLAGS+=		CROSS_PREFIX=$(TARGET_CROSS)
 TARGET_CFLAGS:=
+TARGET_LDFLAGS+=	-latomic
 CONFIG_STYLE:=		manual
 
 quickjs-install:
