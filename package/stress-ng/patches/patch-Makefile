@@ -1,0 +1,25 @@
+--- stress-ng-0.18.12.orig/Makefile	2025-03-30 14:58:32.000000000 +0200
++++ stress-ng-0.18.12/Makefile	2025-04-24 12:52:34.277715554 +0200
+@@ -127,22 +127,6 @@ SANITIZE_FLAGS := \
+ override CFLAGS += $(foreach flag,$(SANITIZE_FLAGS),$(cc_supports_flag))
+ endif
+ 
+-#
+-# Test for hardening flags and apply them if applicable
+-#
+-MACHINE := $(shell make -f Makefile.machine)
+-ifneq ($(PRESERVE_CFLAGS),1)
+-ifneq ($(MACHINE),$(filter $(MACHINE),alpha hppa ia64))
+-flag = -Wformat -fstack-protector-strong -Werror=format-security
+-#
+-# add -D_FORTIFY_SOURCE=2 if _FORTIFY_SOURCE is not already defined
+-#
+-ifeq ($(shell echo _FORTIFY_SOURCE | $(CC) $(CFLAGS) -E -xc - | tail -1),_FORTIFY_SOURCE)
+-flag += -D_FORTIFY_SOURCE=2
+-endif
+-override CFLAGS += $(cc_supports_flag)
+-endif
+-endif
+ 
+ #
+ # Optimization flags
