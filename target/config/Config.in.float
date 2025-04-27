@@ -3,7 +3,8 @@
 
 choice ADK_TARGET_FLOAT_MODE
 prompt "Float configuration"
-depends on ADK_TARGET_ARCH_ARM || \
+depends on ADK_TARGET_ARCH_ARC || \
+	   ADK_TARGET_ARCH_ARM || \
 	   ADK_TARGET_ARCH_CSKY || \
 	   ADK_TARGET_ARCH_M68K || \
 	   ADK_TARGET_ARCH_MIPS || \
@@ -35,7 +36,8 @@ endchoice
 
 config ADK_TARGET_FLOAT
 	string
-	depends on !ADK_TARGET_ARCH_M68K \
+	depends on !ADK_TARGET_ARCH_ARC \
+		&& !ADK_TARGET_ARCH_M68K \
 		&& !ADK_TARGET_ARCH_NIOS2
 	default "hard" if ADK_TARGET_HARD_FLOAT || ADK_TARGET_HARD_FLOAT_SP || ADK_TARGET_HARD_FLOAT_DP
 	default "soft" if ADK_TARGET_SOFT_FLOAT
