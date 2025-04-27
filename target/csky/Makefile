@@ -8,10 +8,8 @@ include $(ADK_TOPDIR)/mk/image.mk
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 
 QEMU:=qemu-system-cskyv2
-ifeq ($(ADK_TARGET_QEMU_WITH_VIRTIO),y)
 QEMU_ARGS:=${ADK_QEMU_ARGS} -M virt
 QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
-endif
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
