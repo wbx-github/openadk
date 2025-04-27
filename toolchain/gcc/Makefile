@@ -132,7 +132,9 @@ GCC_CONFOPTS+=		--with-arch=$(ADK_TARGET_GCC_ARCH)
 endif
 
 ifneq ($(ADK_TARGET_FLOAT),)
+ifneq ($(ADK_TARGET_ARCH_OR1K),y)
 GCC_CONFOPTS+=		--with-float=$(ADK_TARGET_FLOAT)
+endif
 endif
 
 ifneq ($(ADK_TARGET_FPU),)
