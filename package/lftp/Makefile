@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		lftp
-PKG_VERSION:=		4.9.2
+PKG_VERSION:=		4.9.3
 PKG_RELEASE:=		1
-PKG_HASH:=		c517c4f4f9c39bd415d7313088a2b1e313b2d386867fe40b7692b83a20f0670d
+PKG_HASH:=		96e7199d7935be33cf6b1161e955b2aab40ab77ecdf2a19cea4fc1193f457edc
 PKG_DESCR:=		ftp and http client
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		libncurses libexpat
@@ -16,7 +16,10 @@ PKG_NEEDS:=		c++
 PKG_URL:=		http://lftp.yar.ru/
 PKG_SITES:=		http://lftp.yar.ru/ftp/
 
-PKG_CHOICES_LFTP:=	WITH_LIBRESSL WITH_GNUTLS WITHOUT_SSL
+PKG_CHOICES_LFTP:=	WITH_OPENSSL WITH_LIBRESSL WITH_GNUTLS WITHOUT_SSL
+PKGCD_WITH_OPENSSL:=	use openssl for crypto
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
+PKGCB_WITH_OPENSSL:=	openssl
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCB_WITH_LIBRESSL:=	libressl
@@ -40,6 +43,10 @@ endif
 ifeq (${ADK_PACKAGE_LFTP_WITH_GNUTLS},y)
 CONFIGURE_ARGS+=	--without-openssl \
 			--with-gnutls
+endif
+ifeq (${ADK_PACKAGE_LFTP_WITH_OPENSSL},y)
+CONFIGURE_ARGS+=	--with-openssl="$(STAGING_TARGET_DIR)/usr" \
+			--without-gnutls
 endif
 ifeq (${ADK_PACKAGE_LFTP_WITH_LIBRESSL},y)
 CONFIGURE_ARGS+=	--with-openssl="$(STAGING_TARGET_DIR)/usr" \
