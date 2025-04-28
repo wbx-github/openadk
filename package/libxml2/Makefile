@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libxml2
-PKG_VERSION:=		2.10.3
+PKG_VERSION:=		2.14.2
 PKG_RELEASE:=		1
-PKG_HASH:=		5d2cc3d78bec3dbe212a9d7fa629ada25a7da928af432c93060ff5c17ee28a9c
+PKG_HASH:=		353f3c83535d4224a4e5f1e88c90b5d4563ea8fec11f6407df640fd28fc8b8c6
 PKG_DESCR:=		xml parser and toolkit
 PKG_SECTION:=		libs/data
 PKG_DEPENDS:=		zlib
 PKG_BUILDDEP:=		libxml2-host python3 zlib
 HOST_BUILDDEP:=		python3-host
 PKG_URL:=		http://www.xmlsoft.org/
-PKG_SITES:=		https://download.gnome.org/sources/libxml2/2.10/
+PKG_SITES:=		https://download.gnome.org/sources/libxml2/2.14/
 PKG_OPTS:=		dev
 
 include $(ADK_TOPDIR)/mk/host.mk
