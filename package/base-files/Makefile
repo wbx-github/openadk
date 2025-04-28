@@ -127,9 +127,6 @@ ifeq ($(ADK_TARGET_WITH_ROOT_RW),y)
 else
 	echo 'export IPKGTMPDIR=/tmp' >> $(IDIR_BASE_FILES)/etc/profile
 endif
-ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
-	echo 'export LD_LIBRARY_PATH=/opt/vc/lib' >> $(IDIR_BASE_FILES)/etc/profile
-endif
 endif
 ifeq (${ADK_TARGET_PACKAGE_IPKG},y)
 	$(CP) ./files/ipkg.conf $(IDIR_BASE_FILES)/etc/
