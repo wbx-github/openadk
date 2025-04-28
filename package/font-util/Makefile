@@ -14,8 +14,10 @@ PKG_SITES:=		http://www.x.org/releases/individual/font/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
+include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
 
+$(eval $(call HOST_template,FONT_UTIL,font-util,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,FONT_UTIL,font-util,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 # XXX: Push the mapping files to a place where we can find them
@@ -38,4 +40,5 @@ font-util-install:
 	${CP} ${WRKINST}/usr/share/fonts/X11/util/* \
 		${IDIR_FONT_UTIL}/usr/share/fonts/X11/util
 
+include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

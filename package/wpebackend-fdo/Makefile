@@ -9,7 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		beddf321232d5bd08106c179dbc600f8ce88eb3620b4a59a6329063b78f64635
 PKG_DESCR:=		freedesktop.org wpe backend
 PKG_SECTION:=		libs/misc
-PKG_BUILDDEP:=		wayland
+PKG_DEPENDS:=		libwpe
+PKG_BUILDDEP:=		wayland libwpe
 PKG_URL:=		https://wpewebkit.org
 PKG_SITES:=		https://wpewebkit.org/releases/
 PKG_OPTS:=		dev
@@ -26,7 +27,7 @@ INSTALL_STYLE:=		meson
 
 wpebackend-fdo-install:
 	$(INSTALL_DIR) $(IDIR_WPEBACKEND_FDO)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/libwpebackend-fdo*.so* \
+	$(CP) $(WRKINST)/usr/lib/libWPEBackend-fdo*.so* \
 		$(IDIR_WPEBACKEND_FDO)/usr/lib
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk

@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		weston
-PKG_VERSION:=		14.0.1
+PKG_VERSION:=		14.0.2
 PKG_RELEASE:=		1
-PKG_HASH:=		a8150505b126a59df781fe8c30c8e6f87da7013e179039eb844a5bbbcc7c79b3
+PKG_HASH:=		633f4e0f232ad150300c95ffcbc646fedf1349487bf389dbd2045fa69013d6e2
 PKG_DESCR:=		wayland compositor
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		wayland libxkbcommon libinput libpng libjpeg-turbo libseat mesa libexpat
@@ -14,7 +14,9 @@ PKG_DEPENDS+=		libwebp pam libxcursor libudev xkeyboard-config cairo libffi libd
 PKG_DEPENDS+=		libdisplay-info
 PKG_BUILDDEP:=		wayland wayland-protocols libxkbcommon libinput libpng libjpeg-turbo expat
 PKG_BUILDDEP+=		libwebp pam libXcursor eudev cairo libseat libffi libdrm libdisplay-info mesa
-PKG_SITES:=		https://gitlab.freedesktop.org/wayland/weston/-/releases/$(PKG_VERSION)/downloads/
+PKG_SITES:=		https://gitlab.freedesktop.org/wayland/weston/-/archive/$(PKG_VERSION)/
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -29,7 +31,9 @@ MESON_FLAGS+=		-Dsystemd=false \
 			-Dbackend-pipewire=false \
 			-Dxwayland=false \
 			-Dtest-junit-xml=false \
-			-Ddemo-clients=false 
+			-Ddemo-clients=false \
+			-Dshell-fullscreen=true \
+			-Drenderer-gl=true
 
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 

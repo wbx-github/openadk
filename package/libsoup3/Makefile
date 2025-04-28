@@ -31,8 +31,8 @@ BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
 libsoup3-install:
-	$(INSTALL_DIR) $(IDIR_LIBSOUP)/usr/lib
+	$(INSTALL_DIR) $(IDIR_LIBSOUP3)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libsoup*.so* \
-		$(IDIR_LIBSOUP)/usr/lib
+		$(IDIR_LIBSOUP3)/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

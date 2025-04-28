@@ -53,6 +53,7 @@ PKGSS_MOUNT:=		libblkid libmount libuuid libncurses
 PKGSC_MOUNT:=		sys/fs
 PKGSD_MCOOKIE:=		generate magic cookies for xauth
 PKGSC_MCOOKIE:=		x11/utils
+PKGSS_MCOOKIE:=		libncurses
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk

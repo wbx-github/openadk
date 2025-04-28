@@ -6,12 +6,14 @@ include $(ADK_TOPDIR)/rules.mk
 PKG_NAME:=		wayland-protocols
 PKG_VERSION:=		1.43
 PKG_RELEASE:=		1
-PKG_HASH:=		ba3c3425dd27c57b5291e93dba97be12479601e00bcab24d26471948cb643653
+PKG_HASH:=		05fc0ff0c6b3081549d8f81c6b584076a20be18e8c2b9be65ae09ce05e5aea9e
 PKG_DESCR:=		wayland protocols
 PKG_SECTION:=		x11/libs
 PKG_BUILDDEP:=		meson-host wayland-host
-PKG_SITES:=		https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/$(PKG_VERSION)/downloads/
+PKG_SITES:=		https://gitlab.freedesktop.org/wayland/wayland-protocols/-/archive/$(PKG_VERSION)/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 

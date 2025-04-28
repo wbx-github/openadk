@@ -31,6 +31,9 @@ BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
 cog-install:
+	$(INSTALL_DIR) $(IDIR_COG)/usr/lib
+	$(CP) $(WRKINST)/usr/lib/libcogcore.so* \
+		$(IDIR_COG)/usr/lib
 	$(INSTALL_DIR) $(IDIR_COG)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/cog \
 		$(IDIR_COG)/usr/bin

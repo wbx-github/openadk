@@ -20,7 +20,7 @@ PKG_BUILDDEP+=		scrnsaverproto resourceproto fontsproto videoproto
 PKG_BUILDDEP+=		compositeproto evieext libxkbfile libXfont2 pixman
 PKG_BUILDDEP+=		libpciaccess xf86dgaproto recordproto dri3proto
 PKG_BUILDDEP+=		xineramaproto presentproto xf86driproto glproto mesa
-PKG_BUILDDEP+=		xorgproto libxcvt libdrm libepoxy
+PKG_BUILDDEP+=		xorgproto libxcvt libdrm libepoxy font-util-host
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.x.org/
 PKG_SITES:=		http://www.x.org/releases/individual/xserver/
@@ -47,6 +47,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,XORG_SERVER,xorg-server,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 TARGET_CPPFLAGS+=	-D_GNU_SOURCE -D__gid_t=gid_t -D__uid_t=uid_t
+
+AUTOTOOL_STYLE:=	autoreconf
 
 ifeq (${ADK_PACKAGE_XORG_SERVER_WITH_OPENSSL},y)
 CONFIGURE_ARGS+=	 --with-sha1=libcrypto

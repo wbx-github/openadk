@@ -66,7 +66,6 @@ ifeq ($(ADK_PACKAGE_BCM28XX_BOOTLOADER_CUTDOWN),y)
 endif
 	printf "gpu_mem=$(ADK_TARGET_GPU_MEM)\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
-ifeq ($(ADK_PACKAGE_KODI),y)
 ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI4)$(ADK_TARGET_SYSTEM_RASPBERRY_PI4_64),y)
 	printf "dtoverlay=vc4-kms-v3d-pi4\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
@@ -74,7 +73,6 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI5),y)
 	printf "dtoverlay=vc4-kms-v3d-pi5\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
-endif
 endif
 ifneq ($(ADK_TARGET_HARDWARE_HIFIBERRY_AMP),)
 	printf "dtoverlay=hifiberry-amp\n" >> \

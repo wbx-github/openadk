@@ -4,15 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libinput
-PKG_VERSION:=		1.19.2
+PKG_VERSION:=		1.28.1
 PKG_RELEASE:=		1
-PKG_HASH:=		0fc39f0af3ee1a77c60c34bc45391a4d0879169f7c0f7bbbeb5eef590b98b883
+PKG_HASH:=		a13f8c9a7d93df3c85c66afd135f0296701d8d32f911991b7aa4273fdd6a42a3
 PKG_DESCR:=		input library
 PKG_DEPENDS:=		mtdev libevdev libudev
 PKG_BUILDDEP:=		mtdev libevdev eudev
 PKG_SECTION:=		libs/misc
-PKG_SITES:=		https://www.freedesktop.org/software/libinput/
+PKG_SITES:=		https://gitlab.freedesktop.org/libinput/libinput/-/archive/$(PKG_VERSION)/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 

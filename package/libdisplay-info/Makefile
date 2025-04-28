@@ -6,12 +6,14 @@ include $(ADK_TOPDIR)/rules.mk
 PKG_NAME:=		libdisplay-info
 PKG_VERSION:=		0.2.0
 PKG_RELEASE:=		1
-PKG_HASH:=		5a2f002a16f42dd3540c8846f80a90b8f4bdcd067a94b9d2087bc2feae974176
+PKG_HASH:=		f7331fcaf5527251b84c8fb84238d06cd2f458422ce950c80e86c72927aa8c2b
 PKG_DESCR:=		edid and displayid library
 PKG_SECTION:=		libs/misc
-PKG_BUILDDEP:=		hwdata
-PKG_SITES:=		https://gitlab.freedesktop.org/emersion/libdisplay-info/-/releases/$(PKG_VERSION)/downloads/
+PKG_BUILDDEP:=		hwdata meson-host
+PKG_SITES:=		https://gitlab.freedesktop.org/emersion/libdisplay-info/-/archive/$(PKG_VERSION)/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 

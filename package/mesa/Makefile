@@ -40,6 +40,7 @@ MESON_FLAGS+=		-Dllvm=disabled \
 
 mesa-install:
 	$(INSTALL_DIR) $(IDIR_MESA)/usr/lib/dri
+	$(INSTALL_DIR) $(IDIR_MESA)/usr/lib/gbm
 	$(CP) $(WRKINST)/usr/lib/libEGL*.so* \
 		$(IDIR_MESA)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libGL*.so* \
@@ -50,5 +51,7 @@ mesa-install:
 		$(IDIR_MESA)/usr/lib
 	${CP} $(WRKINST)/usr/lib/dri/*.so \
 		${IDIR_MESA}/usr/lib/dri/
+	${CP} $(WRKINST)/usr/lib/gbm/*.so \
+		${IDIR_MESA}/usr/lib/gbm/
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

@@ -4,12 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libxkbcommon
-PKG_VERSION:=		1.5.0
+PKG_VERSION:=		1.7.0
 PKG_RELEASE:=		1
-PKG_HASH:=		560f11c4bbbca10f495f3ef7d3a6aa4ca62b4f8fb0b52e7d459d18a26e46e017
+PKG_HASH:=		65782f0a10a4b455af9c6baab7040e2f537520caa2ec2092805cdfd36863b247
 PKG_DESCR:=		library for handling of keyboard descriptions
 PKG_SECTION:=		libs/misc
-PKG_BUILDDEP:=		meson-host
+PKG_DEPENDS:=		wayland
+PKG_BUILDDEP:=		meson-host wayland wayland-protocols
 PKG_SITES:=		https://xkbcommon.org/download/
 PKG_OPTS:=		dev
 
@@ -18,7 +19,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,LIBXKBCOMMON,libxkbcommon,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
 MESON_FLAGS+=		-Denable-docs=false \
-			-Denable-wayland=false \
+			-Denable-wayland=true \
 			-Dxkb-config-root=/usr/share/X11/xkb
 
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj

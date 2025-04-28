@@ -24,9 +24,9 @@ CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
-libsoup-install:
-	$(INSTALL_DIR) $(IDIR_LIBSOUP)/usr/lib
+libpsl-install:
+	$(INSTALL_DIR) $(IDIR_LIBPSL)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libpsl*.so* \
-		$(IDIR_LIBSOUP)/usr/lib
+		$(IDIR_LIBPSL)/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xf86-video-fbdev
-PKG_VERSION:=		0.4.4
+PKG_VERSION:=		0.5.1
 PKG_RELEASE:=		1
-PKG_HASH:=		49e545951ea5fddc0d9b3ed3bf60e9a588a9c09401cc93ac082e064530bc0f81
+PKG_HASH:=		5e73c01f6ede09ddbc1f553fecdf35dd8efe76b44c7ed263de786a5968c5116f
 PKG_DESCR:=		x11 driver for framebuffer devices
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		xorg-server
