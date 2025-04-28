@@ -6,10 +6,6 @@ include Makefile.inc
 include ../rules.mk
 include ${ADK_TOPDIR}/mk/buildhlp.mk
 
-ifeq (${ADK_MAKE_PARALLEL},y)
-MPC_MAKEOPTS+=		-j${ADK_MAKE_JOBS}
-endif
-
 $(WRKBUILD)/.configured:
 	(cd $(WRKBUILD); \
 		$(WRKBUILD)/configure \
