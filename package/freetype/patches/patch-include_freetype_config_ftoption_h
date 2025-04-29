@@ -1,0 +1,11 @@
+--- freetype-2.13.3.orig/include/freetype/config/ftoption.h	2024-07-18 07:14:58.000000000 +0000
++++ freetype-2.13.3/include/freetype/config/ftoption.h	2025-04-29 09:05:47.004181201 +0000
+@@ -255,7 +255,7 @@ FT_BEGIN_HEADER
+    * stream support, in the cases where file stream support is not necessary
+    * such as memory loading of font files.
+    */
+-/* #define FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT */
++#define FT_CONFIG_OPTION_DISABLE_STREAM_SUPPORT
+ 
+ 
+   /**************************************************************************
