@@ -24,7 +24,7 @@ MESON_FLAGS+=		-Ddocumentation=false \
 			-Dmanpages=false \
 			-Dprograms=true \
 			-Dwpe_api=2.0 \
-			-Dplatforms=drm
+			-Dplatforms="wayland"
 
 CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
@@ -34,6 +34,9 @@ cog-install:
 	$(INSTALL_DIR) $(IDIR_COG)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libcogcore.so* \
 		$(IDIR_COG)/usr/lib
+	$(INSTALL_DIR) $(IDIR_COG)/usr/lib/cog/modules
+	$(CP) $(WRKINST)/usr/lib/cog/modules/* \
+		$(IDIR_COG)/usr/lib/cog/modules
 	$(INSTALL_DIR) $(IDIR_COG)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/cog \
 		$(IDIR_COG)/usr/bin

@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		weston
 PKG_VERSION:=		14.0.2
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		633f4e0f232ad150300c95ffcbc646fedf1349487bf389dbd2045fa69013d6e2
 PKG_DESCR:=		wayland compositor
 PKG_SECTION:=		x11/drivers
@@ -56,7 +56,7 @@ weston-install:
 	$(CP) $(WRKINST)/usr/lib/*so* \
 		$(IDIR_WESTON)/usr/lib/
 	$(INSTALL_DIR) $(IDIR_WESTON)/usr/bin
-	$(INSTALL_BIN) $(WRKINST)/usr/bin/weston \
+	$(INSTALL_BIN) $(WRKINST)/usr/bin/* \
 		$(IDIR_WESTON)/usr/bin
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk

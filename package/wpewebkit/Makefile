@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		wpewebkit
-PKG_VERSION:=		2.48.0
+PKG_VERSION:=		2.48.1
 PKG_RELEASE:=		1
-PKG_HASH:=		25bc557fd62f06ac8393a6f638ffceff3d9f367d6d35195315fa459c82f80850
+PKG_HASH:=		2f411b692bb4c2a924d9bddf0c794fd69a24931ad836d6a93c9a65f5adb0357f
 PKG_DESCR:=		web platform for embedded
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libwpe libsoup3 harfbuzz libjpeg-turbo libgcrypt
 PKG_DEPENDS+=		libtasn1 libwebp gstreamer gst-plugins-base libxslt
-PKG_DEPENDS+=		libpsl libmount
+PKG_DEPENDS+=		libpsl libmount libblkid
 PKG_BUILDDEP:=		cmake-host libwpe libsoup3 harfbuzz libjpeg-turbo
 PKG_BUILDDEP+=		libgcrypt libtasn1 libwebp gstreamer gst-plugins-base
 PKG_BUILDDEP+=		libxslt libpsl
@@ -46,5 +46,8 @@ wpewebkit-install:
 	$(INSTALL_DIR) $(IDIR_WPEWEBKIT)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libWPEWebKit*.so* \
 		$(IDIR_WPEWEBKIT)/usr/lib
+	$(INSTALL_DIR) $(IDIR_WPEWEBKIT)/usr/libexec/wpe-webkit-2.0
+	$(INSTALL_BIN) $(WRKINST)/usr/libexec/wpe-webkit-2.0/* \
+		$(IDIR_WPEWEBKIT)/usr/libexec/wpe-webkit-2.0
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
