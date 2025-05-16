@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		openssh
-PKG_VERSION:=		9.9p1
+PKG_VERSION:=		10.0p1
 PKG_RELEASE:=		1
-PKG_HASH:=		b343fbcdbff87f15b1986e6e15d6d4fc9a7d36066be6b7fb507087ba8f966c02
+PKG_HASH:=		021a2e709a0edf4250b1256bd5a9e500411a90dddabea830ed59cef90eb9d85c
 PKG_DESCR:=		secure shell implementation
 PKG_SECTION:=		net/security
 PKG_BUILDDEP:=		zlib
@@ -109,6 +109,8 @@ openssh-server-install:
 	${INSTALL_BIN} ${WRKINST}/usr/sbin/sshd \
 	 	${IDIR_OPENSSH_SERVER}/usr/sbin
 	${INSTALL_BIN} ${WRKINST}/usr/libexec/sshd-session \
+		${IDIR_OPENSSH_SERVER}/usr/libexec
+	${INSTALL_BIN} ${WRKINST}/usr/libexec/sshd-auth \
 		${IDIR_OPENSSH_SERVER}/usr/libexec
 	# ssh pubkey
 	test -z $(ADK_RUNTIME_SSH_PUBKEY) || ( \
