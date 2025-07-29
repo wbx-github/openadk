@@ -9,6 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		39bd8f1a338e2b7cd4abc3ff11a0eddc6e690f69578a57478d8179b4148708c8
 PKG_DESCR:=		libraries/utilities to handle elf objects (drop in replacement for libelf)
 PKG_SECTION:=		base/libs
+PKG_DEPENDS:=		zlib
+PKG_BUILDDEP:=		zlib
 PKG_NEEDS:=		intl
 PKG_SITES:=		https://sourceware.org/elfutils/ftp/$(PKG_VERSION)/
 
