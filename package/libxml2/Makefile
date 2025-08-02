@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libxml2
-PKG_VERSION:=		2.14.2
+PKG_VERSION:=		2.14.5
 PKG_RELEASE:=		1
-PKG_HASH:=		353f3c83535d4224a4e5f1e88c90b5d4563ea8fec11f6407df640fd28fc8b8c6
+PKG_HASH:=		03d006f3537616833c16c53addcdc32a0eb20e55443cba4038307e3fa7d8d44b
 PKG_DESCR:=		xml parser and toolkit
 PKG_SECTION:=		libs/data
 PKG_DEPENDS:=		zlib
