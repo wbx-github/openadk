@@ -20,6 +20,8 @@ $(eval $(call PKG_template,LIBEPOXY,libepoxy,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG
 
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
+MESON_FLAGS+=		-Dtests=false
+
 CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
