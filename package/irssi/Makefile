@@ -17,10 +17,10 @@ PKG_SITES:=		https://github.com/irssi/irssi/releases/download/$(PKG_VERSION)/
 PKG_CHOICES_IRSSI:=	WITH_OPENSSL WITH_LIBRESSL WITHOUT_SSL
 PKGCD_WITH_OPENSSL:=	use openssl for crypto
 PKGCB_WITH_OPENSSL:=	openssl
-PKGCS_WITH_OPENSSL:=	openssl
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl
+PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 PKG_FLAVOURS_IRSSI:=	WITH_IPV6
