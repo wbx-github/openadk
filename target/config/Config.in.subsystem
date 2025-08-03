@@ -2,6 +2,18 @@
 # material, please see the LICENCE file in the top-level directory.
 
 choice
+prompt "HP Jornada model"
+depends on ADK_TARGET_SYSTEM_HP_JORNADA
+
+config ADK_TARGET_MODEL_HP_JORNADA_690
+	bool "HP Jornada 690"
+
+config ADK_TARGET_MODEL_HP_JORNADA_680
+	bool "HP Jornada 680"
+
+endchoice
+
+choice
 prompt "PCengines ALIX model"
 depends on ADK_TARGET_SYSTEM_PCENGINES_ALIX
 

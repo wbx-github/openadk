@@ -43,6 +43,10 @@ kbd-install:
 		$(IDIR_KBD)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/loadkeys \
 		$(IDIR_KBD)/usr/bin
+ifeq ($(ADK_TARGET_SYSTEM_HP_JORNADA),y)
+	$(INSTALL_DIR) $(IDIR_KBD)/etc
+	$(CP) ./files/hpjornada.map $(IDIR_KBD)/etc
+endif
 ifeq ($(ADK_TARGET_SYSTEM_SHARP_ZAURUS),y)
 	$(INSTALL_DIR) $(IDIR_KBD)/etc
 	$(CP) ./files/zaurus.map $(IDIR_KBD)/etc

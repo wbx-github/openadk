@@ -1,0 +1,15 @@
+platform        = hp680
+boot page       = 0x0c000000
+
+load file       = 0x0c210000 zImage
+#load file       = 0x0c400000 initrd.gz  # ram disk image
+start address   = 0x8c210000
+
+
+set long        = 0x8c001000 0                  # MOUNT_ROOT_RDONLY
+set long        = 0x8c001004 0                  # RAMDISK_FLAGS
+set long        = 0x8c001008 0x0100             # ORIG_ROOT_DEV
+set long        = 0x8c00100c 1                  # LOADER_TYPE
+#set string = 0x8c001100 mem=32M root=/dev/hda2 console=ttySC1,115200 init=/bin/sh
+
+set string = 0x8c001100 mem=16M root=/dev/sda3 

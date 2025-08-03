@@ -1,0 +1,12 @@
+# This file is part of the OpenADK project. OpenADK is copyrighted
+# material, please see the LICENCE file in the top-level directory.
+
+config ADK_LINUX_KERNEL_MEMORY_SIZE
+	hex 
+	default "0x2000000"
+	depends on ADK_TARGET_MODEL_HP_JORNADA_690
+
+config ADK_LINUX_KERNEL_MEMORY_SIZE
+	hex 
+	default "0x1000000"
+	depends on ADK_TARGET_MODEL_HP_JORNADA_680
