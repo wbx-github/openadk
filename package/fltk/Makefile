@@ -4,19 +4,20 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		fltk
-PKG_VERSION:=		1.3.8
+PKG_VERSION:=		1.3.11
 PKG_RELEASE:=		1
-PKG_HASH:=		f3c1102b07eb0e7a50538f9fc9037c18387165bc70d4b626e94ab725b9d4d1bf
+PKG_HASH:=		92805abc84505e3e7e27aec775ab0754ecb4182fe2d8ff2a9d568ccdcb2811ac
 PKG_DESCR:=		fast light toolkit
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		mesa libx11 libxi freeglut libfreetype
 PKG_BUILDDEP:=		libX11 libXi mesa freeglut freetype
+PKG_NEEDS:=		locale
 PKG_URL:=		http://www.fltk.org/
-PKG_SITES:=		http://fltk.org/pub/fltk/$(PKG_VERSION)/
+PKG_SITES:=		https://github.com/fltk/fltk/releases/download/release-$(PKG_VERSION)/
 PKG_LIBNAME:=		libfltk
 PKG_OPTS:=		dev
 
-PKG_ARCH_DEPENDS:=	x86 x86_64 mips arm
+PKG_ARCH_DEPENDS:=	x86 x86_64 mips sh arm
 
 DISTFILES:=		${PKG_NAME}-$(PKG_VERSION)-source.tar.gz
 
@@ -24,7 +25,10 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBFLTK,libfltk,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-CONFIGURE_ARGS+=	--disable-xinerama
+CONFIGURE_ARGS+=	--disable-xinerama \
+			--disable-print \
+			--disable-fluid \
+			--disable-test
 
 libfltk-install:
 	$(INSTALL_DIR) $(IDIR_LIBFLTK)/usr/lib
