@@ -14,13 +14,13 @@ PKG_DEPENDS+=		libfontenc xkeyboard-config xkbcomp libxau libxaw
 PKG_DEPENDS+=		libxmu libxpm libxrender libxt libxxf86dga libxext
 PKG_DEPENDS+=		libxdmcp libxv libsm libice libx11 libxcb libdrm
 PKG_DEPENDS+=		libxshmfence libfreetype libfontenc libpciaccess
-PKG_DEPENDS+=		libepoxy
+PKG_DEPENDS+=		libepoxy libdbus
 PKG_BUILDDEP:=		libX11 randrproto renderproto fixesproto damageproto
 PKG_BUILDDEP+=		scrnsaverproto resourceproto fontsproto videoproto
 PKG_BUILDDEP+=		compositeproto evieext libxkbfile libXfont2 pixman
 PKG_BUILDDEP+=		libpciaccess xf86dgaproto recordproto dri3proto
 PKG_BUILDDEP+=		xineramaproto presentproto xf86driproto glproto mesa
-PKG_BUILDDEP+=		xorgproto libxcvt libdrm libepoxy font-util-host
+PKG_BUILDDEP+=		xorgproto libxcvt libdrm libepoxy font-util-host dbus
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.x.org/
 PKG_SITES:=		http://www.x.org/releases/individual/xserver/
@@ -70,10 +70,11 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--enable-vgahw \
 			--enable-dpms \
 			--enable-xinerama \
+			--disable-config-udev \
+			--enable-debug \
 			--disable-docs \
 			--disable-glamor \
 			--disable-config-hal \
-			--disable-config-udev \
 			--disable-xace \
 			--disable-xephyr \
 			--disable-xf86bigfont \
@@ -85,6 +86,8 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--disable-xvmc \
 			--disable-selective-werror \
 			--disable-strict-compilation \
+			--disable-systemd-logind \
+			--without-systemd-daemon \
 			--enable-dri \
 			--enable-dri2 \
 			--enable-dri3 \
