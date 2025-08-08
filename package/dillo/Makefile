@@ -26,7 +26,7 @@ $(eval $(call PKG_template,DILLO,dillo,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPEN
 
 #TARGET_CFLAGS+=		-fcommon
 #TARGET_CXXFLAGS+=	-fcommon
-TARGET_LDFLAGS+=	-liconv -latomic
+TARGET_LDFLAGS+=	-latomic
 CONFIGURE_ENV+=		PNG_CONFIG=$(STAGING_TARGET_DIR)/scripts/libpng-config
 CONFIGURE_ARGS+=	--enable-tls
 
