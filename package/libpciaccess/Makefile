@@ -4,19 +4,23 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libpciaccess
-PKG_VERSION:=		0.16
+PKG_VERSION:=		0.18.1
 PKG_RELEASE:=		1
-PKG_HASH:=		84413553994aef0070cf420050aa5c0a51b1956b404920e21b81e96db6a61a27
+PKG_HASH:=		4af43444b38adb5545d0ed1c2ce46d9608cc47b31c2387fc5181656765a6fa76
 PKG_DESCR:=		pci access library
 PKG_SECTION:=		x11/libs
-PKG_SITES:=		http://www.x.org/releases/individual/lib/
+PKG_SITES:=		http://xorg.freedesktop.org/releases/individual/lib/
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBPCIACCESS,libpciaccess,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
+
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
 
 libpciaccess-install:
 	${INSTALL_DIR} ${IDIR_LIBPCIACCESS}/usr/lib
