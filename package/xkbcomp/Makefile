@@ -4,17 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xkbcomp
-PKG_VERSION:=		1.0.5
-PKG_RELEASE:=		2
-PKG_HASH:=		817e2bda2ca51ffc1fc664e3f9ab88b359cd91246f0f4736fc747d6fbc59f2e7
+PKG_VERSION:=		1.4.7
+PKG_RELEASE:=		1
+PKG_HASH:=		0a288114e5f44e31987042c79aecff1ffad53a8154b8ec971c24a69a80f81f77
 PKG_DESCR:=		x11 keyboard compiler
 PKG_SECTION:=		x11/misc
 PKG_BUILDDEP:=		libxkbfile libX11
 PKG_DEPENDS:=		libxkbfile libx11
 HOST_BUILDDEP:=		libxkbfile-host
-PKG_SITES:=		http://xorg.freedesktop.org/releases/X11R7.4/src/everything/
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_SITES:=		http://xorg.freedesktop.org/releases/individual/app/
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
