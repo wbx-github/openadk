@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		glib
-PKG_VERSION:=		2.84.0
+PKG_VERSION:=		2.84.3
 PKG_RELEASE:=		1
 PKG_EXTRAVER:=		2.84
-PKG_HASH:=		f8823600cb85425e2815cfad82ea20fdaa538482ab74e7293d58b3f64a5aff6a
+PKG_HASH:=		aa4f87c3225bf57ca85f320888f7484901a17934ca37023c3bd8435a72db863e
 PKG_DESCR:=		low-level core library that forms the basis of gtk+
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		pcre2 zlib libffi
@@ -35,11 +35,20 @@ CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
-HOST_MESON_FLAGS:=	-Dintrospection=disabled -Dnls=disabled -Dtests=false -Dxattr=false \
+HOST_MESON_FLAGS:=	-Dintrospection=disabled \
+			-Dnls=disabled \
+			-Dtests=false \
+			-Dxattr=false \
 		       	-Doss_fuzz=disabled \
 			-Dsysprof=disabled \
 			--default-library=static
-MESON_FLAGS:=		-Dintrospection=disabled -Dtests=false -Dxattr=false -Doss_fuzz=disabled -Dsysprof=disabled
+MESON_FLAGS:=		-Dintrospection=disabled \
+			-Dnls=disabled \
+			-Dtests=false \
+			-Dxattr=false \
+			-Doss_fuzz=disabled \
+			-Dglib_debug=disabled \
+			-Dsysprof=disabled
 
 hostpost-install:
 	$(CP) $(HOSTWRKBUILD)/../glib-obj/meson-private/*.pc \
@@ -56,7 +65,7 @@ glib-install:
 	$(CP) $(WRKINST)/usr/lib/libgobject*.so* $(IDIR_GLIB)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libgmodule*.so* $(IDIR_GLIB)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libgthread*.so* $(IDIR_GLIB)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/libintl*.so* $(IDIR_GLIB)/usr/lib
+	-$(CP) $(WRKINST)/usr/lib/libintl*.so* $(IDIR_GLIB)/usr/lib
 	# workaround for dev subpackage
 	$(INSTALL_DIR) $(IDIR_GLIB_DEV)/usr/include
 	$(INSTALL_DIR) $(IDIR_GLIB_DEV)/usr/lib/glib-2.0/include
