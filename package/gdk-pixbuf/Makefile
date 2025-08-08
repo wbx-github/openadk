@@ -10,6 +10,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		b9505b3445b9a7e48ced34760c3bcb73e966df3ac94c95a148cb669ab748e3c7
 PKG_DESCR:=		image loading and pixel buffer manipulation library
 PKG_SECTION:=		libs/image
+PKG_DEPENDS:=		libjpeg-turbo libtiff glib libpng
 PKG_BUILDDEP:=		libjpeg-turbo libtiff glib libpng gdk-pixbuf-host
 HOST_BUILDDEP:=		glib-host libffi-host libpng-host libjpeg-turbo-host
 PKG_NEEDS:=		c++
