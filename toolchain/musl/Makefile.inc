@@ -6,7 +6,7 @@ ifeq ($(ADK_LIBC_VERSION),git)
 PKG_VERSION:=		git
 PKG_RELEASE:=		1
 PKG_SITES:=		git://git.musl-libc.org/musl
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.xz
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 endif
 ifeq ($(ADK_TARGET_LIB_MUSL_1_2_5),y)
 PKG_VERSION:=		1.2.5
