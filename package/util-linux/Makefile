@@ -24,6 +24,7 @@ PKGSD_LIBFDISK:=	fdisk library
 PKGSC_LIBFDISK:=	libs/misc
 PKGSD_LIBMOUNT:=	mount library
 PKGSC_LIBMOUNT:=	libs/misc
+PKGSS_LIBMOUNT:=	libblkid
 PKGSD_LIBSMARTCOLS:=	smartcols library
 PKGSC_LIBSMARTCOLS:=	libs/misc
 PKGSD_FDISK:=		partition table manipulation utility
