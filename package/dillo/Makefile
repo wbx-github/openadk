@@ -16,7 +16,7 @@ PKG_NEEDS:=		threads cxx
 PKG_URL:=		https://dillo-browser.github.io/
 PKG_SITES:=		https://github.com/dillo-browser/dillo/releases/download/v$(PKG_VERSION)/
 
-PKG_ARCH_DEPENDS:=	arm mips mips64 sh x86 x86_64
+PKG_ARCH_DEPENDS:=	aarch64 arm mips mips64 sh x86 x86_64
 
 DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
@@ -24,8 +24,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,DILLO,dillo,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-#TARGET_CFLAGS+=		-fcommon
-#TARGET_CXXFLAGS+=	-fcommon
 TARGET_LDFLAGS+=	-latomic
 CONFIGURE_ENV+=		PNG_CONFIG=$(STAGING_TARGET_DIR)/scripts/libpng-config
 CONFIGURE_ARGS+=	--enable-tls
