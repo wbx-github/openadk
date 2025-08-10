@@ -17,7 +17,7 @@ PKG_SITES:=		https://github.com/fltk/fltk/releases/download/release-$(PKG_VERSIO
 PKG_LIBNAME:=		libfltk
 PKG_OPTS:=		dev
 
-PKG_ARCH_DEPENDS:=	x86 x86_64 mips sh arm
+PKG_ARCH_DEPENDS:=	aarch64 x86 x86_64 mips sh arm
 
 DISTFILES:=		${PKG_NAME}-$(PKG_VERSION)-source.tar.gz
 
