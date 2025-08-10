@@ -131,6 +131,10 @@ ifeq (${ADK_TARGET_SYSTEM_SHARP_ZAURUS},y)
 	${CP} ./files/xorg.conf.sharp-zaurus \
 		$(IDIR_XORG_SERVER)/etc/X11/xorg.conf
 endif
+ifeq (${ADK_TARGET_SYSTEM_RASPBERRY_PI5},y)
+	${CP} ./files/xorg.conf.raspberry-pi5 \
+		$(IDIR_XORG_SERVER)/etc/X11/xorg.conf
+endif
 	# add m4 file to host directory
 	$(INSTALL_DIR) $(STAGING_HOST_DIR)/usr/share/aclocal
 	$(CP) ${WRKINST}/usr/share/aclocal/xorg-server.m4 \
