@@ -1,0 +1,11 @@
+--- dillo-3.2.0.orig/src/decode.c	2024-10-23 22:26:03.000000000 +0200
++++ dillo-3.2.0/src/decode.c	2025-08-17 08:44:05.687194623 +0200
+@@ -373,7 +373,7 @@ Decode *a_Decode_charset_init(const char
+       iconv_t ic = iconv_open("UTF-8", format);
+       if (ic != (iconv_t) -1) {
+            dc = dNew(Decode, 1);
+-           dc->state = ic;
++           dc->state = (void *)ic;
+            dc->buffer = dNew(char, bufsize);
+            dc->leftover = dStr_new("");
+ 
