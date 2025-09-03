@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gettext
-PKG_VERSION:=		0.19.8
+PKG_VERSION:=		0.26
 PKG_RELEASE:=		1
-PKG_HASH:=		9c1781328238caa1685d7bc7a2e1dcf1c6c134e86b42ed554066734b621bd12f
+PKG_HASH:=		d1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00
 PKG_DESCR:=		i18n tools and libs
 PKG_SECTION:=		libs/misc
 HOST_BUILDDEP:=		automake-host
