@@ -70,8 +70,8 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--enable-vgahw \
 			--enable-dpms \
 			--enable-xinerama \
-			--disable-config-udev \
-			--enable-debug \
+			--enable-config-udev \
+			--disable-debug \
 			--disable-docs \
 			--disable-glamor \
 			--disable-config-hal \

@@ -23,5 +23,8 @@ xf86-input-libinput-install:
 	${INSTALL_DIR} ${IDIR_XF86_INPUT_LIBINPUT}/usr/lib/xorg/modules/input
 	${CP} ${WRKINST}/usr/lib/xorg/modules/input/*.so \
 		${IDIR_XF86_INPUT_LIBINPUT}/usr/lib/xorg/modules/input/
+	${INSTALL_DIR} ${IDIR_XF86_INPUT_LIBINPUT}/usr/share/X11/xorg.conf.d
+	${CP} ${WRKINST}/usr/share/X11/xorg.conf.d/40-libinput.conf \
+		${IDIR_XF86_INPUT_LIBINPUT}/usr/share/X11/xorg.conf.d
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
