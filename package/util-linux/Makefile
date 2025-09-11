@@ -16,6 +16,7 @@ PKG_OPTS:=		dev
 
 PKG_SUBPKGS:=		FDISK AGETTY SFDISK SWAP_UTILS LOSETUP LSFD MCOOKIE MOUNT
 PKG_SUBPKGS+=		LIBFDISK LIBUUID LIBBLKID LIBMOUNT LIBSMARTCOLS CFDISK MKFS
+PKG_SUBPKGS+=		SWITCHROOT
 PKGSD_LIBUUID:=		uuid library
 PKGSC_LIBUUID:=		libs/misc
 PKGSD_LIBBLKID:=	blkid library
@@ -52,6 +53,8 @@ PKGSC_MKFS:=		sys/fs
 PKGSD_MOUNT:=		mount/umount utilities
 PKGSS_MOUNT:=		libblkid libmount libuuid libncurses
 PKGSC_MOUNT:=		sys/fs
+PKGSD_SWITCHROOT:=	switch_root utility
+PKGSC_SWITCHROOT:=	sys/utils
 PKGSD_MCOOKIE:=		generate magic cookies for xauth
 PKGSC_MCOOKIE:=		x11/utils
 PKGSS_MCOOKIE:=		libncurses
@@ -69,6 +72,7 @@ $(eval $(call PKG_template,LOSETUP,losetup,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS
 $(eval $(call PKG_template,LSFD,lsfd,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_LSFD),$(PKGSD_LSFD),$(PKGSC_LSFD)))
 $(eval $(call PKG_template,MKFS,mkfs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_MKFS),$(PKGSD_MKFS),$(PKGSC_MKFS)))
 $(eval $(call PKG_template,MOUNT,mount,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_MOUNT),$(PKGSD_MOUNT),$(PKGSC_MOUNT)))
+$(eval $(call PKG_template,SWITCHROOT,switchroot,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_MOUNT),$(PKGSD_MOUNT),$(PKGSC_MOUNT)))
 $(eval $(call PKG_template,MCOOKIE,mcookie,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_MCOOKIE),$(PKGSC_MCOOKIE)))
 $(eval $(call PKG_template,LIBUUID,libuuid,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_LIBUUID),$(PKGSC_LIBUUID),$(PKG_OPTS)))
 $(eval $(call PKG_template,LIBBLKID,libblkid,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_LIBBLKID),$(PKGSC_LIBBLKID),$(PKG_OPTS)))
@@ -98,7 +102,6 @@ CONFIGURE_ARGS+=	--exec-prefix=/usr \
 			--disable-cramfs \
 			--disable-login \
 			--disable-eject \
-			--disable-switch_root \
 			--disable-nsenter \
 			--disable-unshare \
 			--disable-wall \
@@ -107,6 +110,7 @@ CONFIGURE_ARGS+=	--exec-prefix=/usr \
 			--without-python \
 			--without-systemd \
 			--without-user \
+			--enable-switch_root \
 			--enable-libfdisk \
 			--enable-libuuid \
 			--enable-libblkid \
@@ -162,6 +166,10 @@ mkfs-install:
 mount-install:
 	$(INSTALL_DIR) $(IDIR_MOUNT)/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/{u,}mount $(IDIR_MOUNT)/bin
+
+switchroot-install:
+	$(INSTALL_DIR) $(IDIR_SWITCHROOT)/sbin
+	$(INSTALL_BIN) $(WRKINST)/sbin/switch_root $(IDIR_SWITCHROOT)/sbin
 
 mcookie-install:
 	$(INSTALL_DIR) $(IDIR_MCOOKIE)/usr/bin
