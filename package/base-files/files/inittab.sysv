@@ -1,5 +1,6 @@
 null::sysinit:/bin/mount -t proc proc /proc
 null::sysinit:/bin/mount -t sysfs sys /sys
+null::sysinit:/bin/mount -t devtmpfs devtmpfs /dev
 null::sysinit:/bin/mkdir -p /dev/pts
 null::sysinit:/bin/mkdir -p /dev/shm
 null::sysinit:/bin/mount -a -t devpts
