@@ -10,6 +10,7 @@ PKG_HASH:=		4a093979a3c2d02de2fbc00549a32771007f2e78032c6faa5ecd2f7a9e152025
 PKG_DESCR:=		client-side url transfer tool
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		zlib
+HOST_BUILDDEP:=		openssl-host
 PKG_NEEDS:=		threads
 PKG_URL:=		https://curl.se/
 PKG_SITES:=		https://curl.se/download/
@@ -49,7 +50,7 @@ $(eval $(call HOST_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBCURL,libcurl,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_LIBCURL},${PKGSD_LIBCURL},${PKGSC_LIBCURL},${PKG_OPTS}))
 $(eval $(call PKG_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-HOST_CONFIGURE_ARGS+=	--without-ssl \
+HOST_CONFIGURE_ARGS+=	--with-openssl="$(STAGING_HOST_DIR)/usr" \
 			--without-libpsl
 
 ifeq (${ADK_PACKAGE_LIBCURL_WITH_LIBRESSL},y)
