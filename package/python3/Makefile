@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		python3
-PKG_VERSION:=		3.12.9
+PKG_VERSION:=		3.13.7
 PKG_RELEASE:=		1
-PKG_HASH:=		7220835d9f90b37c006e9842a8dff4580aaca4318674f947302b8d28f3f81112
+PKG_HASH:=		5462f9099dfd30e238def83c71d91897d8caa5ff6ebc7a50f14d4802cdaaa79a
 PKG_DESCR:=		python scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libffi zlib libexpat
@@ -52,9 +52,9 @@ define PKG_mod_template
 INSTALL_MODS_$${ADK_PACKAGE_${1}}+=    ${2}-install
 
 ${2}-install:
-	${INSTALL_DIR} $$(IDIR_$(1))/usr/lib/python3.12/lib-dynload
+	${INSTALL_DIR} $$(IDIR_$(1))/usr/lib/python3.13/lib-dynload
 	for m in ${2}; do \
-		${INSTALL_DATA} $(WRKINST)/usr/lib/python3.12/lib-dynload/$$$${m}*.so $$(IDIR_$(1))/usr/lib/python3.12/lib-dynload ;\
+		${INSTALL_DATA} $(WRKINST)/usr/lib/python3.13/lib-dynload/$$$${m}*.so $$(IDIR_$(1))/usr/lib/python3.13/lib-dynload ;\
 	done
 endef
 
@@ -98,15 +98,15 @@ endif
 
 python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
-	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.12
-	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.12
+	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.13
+	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.13
 	${INSTALL_BIN} ${WRKINST}/usr/bin/python3 ${IDIR_PYTHON3}/usr/bin
 	${CP} ${WRKINST}/usr/lib/libpython*.so* ${IDIR_PYTHON3}/usr/lib
-	${CP} ${WRKINST}/usr/lib/python3.12/* ${IDIR_PYTHON3}/usr/lib/python3.12
-	${CP} ${WRKINST}/usr/include/python3.12/pyconfig.h \
-		 ${IDIR_PYTHON3}/usr/include/python3.12
+	${CP} ${WRKINST}/usr/lib/python3.13/* ${IDIR_PYTHON3}/usr/lib/python3.13
+	${CP} ${WRKINST}/usr/include/python3.13/pyconfig.h \
+		 ${IDIR_PYTHON3}/usr/include/python3.13
 	@-for i in zlib _bz2 _curses _ssl _gdbm _sqlite pyexpat readline; do \
-		rm ${IDIR_PYTHON3}/usr/lib/python3.12/lib-dynload/$${i}*so; \
+		rm ${IDIR_PYTHON3}/usr/lib/python3.13/lib-dynload/$${i}*so; \
 	done
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
