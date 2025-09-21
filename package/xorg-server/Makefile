@@ -47,7 +47,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,XORG_SERVER,xorg-server,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 TARGET_CPPFLAGS+=	-D_GNU_SOURCE -D__gid_t=gid_t -D__uid_t=uid_t
-TARGET_LDFLAGS+=	-latomic
+TARGET_LDFLAGS+=	-latomic -lstdc++
 
 AUTOTOOL_STYLE:=	autoreconf
 
