@@ -4,11 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mkfontscale
-PKG_VERSION:=		1.1.0
+PKG_VERSION:=		1.2.3
 PKG_RELEASE:=		1
-PKG_HASH:=		53515d688c8d0ed24f74374d9c33e36a20b024d59b8127d9f23b481ab5e98150
+PKG_HASH:=		3a026b468874eb672a1d0a57dbd3ddeda4f0df09886caf97d30097b70c2df3f8
 PKG_DESCR:=		font utility
 PKG_SECTION:=		x11/fonts
+PKG_DEPENDS:=		freetype libfontenc
 PKG_BUILDDEP:=		freetype libfontenc
 PKG_SITES:=		http://www.x.org/releases/individual/app/
 
