@@ -70,12 +70,10 @@ image-prepare-post:
 	rng=/dev/arandom; test -e $$rng || rng=/dev/urandom; \
 	    dd if=$$rng bs=512 count=1 >>${TARGET_DIR}/etc/.rnd 2>/dev/null; \
 	    chmod 600 ${TARGET_DIR}/etc/.rnd
-	-for dir in X11 truetype; do \
+	-for dir in X11 truetype dejavu; do \
 		if [ -d ${TARGET_DIR}/usr/share/fonts/$${dir} ];then \
-			for i in $$(ls ${TARGET_DIR}/usr/share/fonts/$${dir}/);do \
-				mkfontdir ${TARGET_DIR}/usr/share/fonts/$${dir}/$${i}; \
-				mkfontscale ${TARGET_DIR}/usr/share/fonts/$${dir}/$${i}; \
-			done; \
+			mkfontdir ${TARGET_DIR}/usr/share/fonts/$${dir}; \
+			mkfontscale ${TARGET_DIR}/usr/share/fonts/$${dir}; \
 		fi; \
 	done
 	$(SED) '/^root:/s!:/bin/sh$$!:${ROOTSH}!' ${TARGET_DIR}/etc/passwd
