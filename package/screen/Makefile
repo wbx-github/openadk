@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		screen
-PKG_VERSION:=		5.0.0
+PKG_VERSION:=		5.0.1
 PKG_RELEASE:=		1
-PKG_HASH:=		f04a39d00a0e5c7c86a55338808903082ad5df4d73df1a2fd3425976aed94971
+PKG_HASH:=		2dae36f4db379ffcd14b691596ba6ec18ac3a9e22bc47ac239789ab58409869d
 PKG_DESCR:=		window manager for the terminal session
 PKG_SECTION:=		sys/utils
-PKG_DEPENDS:=		libncurses elfutils
-PKG_BUILDDEP:=		ncurses elfutils
+PKG_DEPENDS:=		libncurses
+PKG_BUILDDEP:=		ncurses
 PKG_NEEDS:=		mmu
 PKG_URL:=		http://www.gnu.org/software/screen/
 PKG_SITES:=		${MASTER_SITE_GNU:=screen/}
