@@ -751,6 +751,9 @@ else
   # scan host-tool prerequisites of certain packages before building.
   . $topdir/.config
 
+  if [ -n "$ADK_TARGET_ARCH_X86_64" ]; then
+    NEED_LIBELF="$NEED_LIBELF x86_64 arch"
+  fi
   if [ -n "$ADK_PACKAGE_FIREFOX" ]; then
     NEED_RUST="$NEED_RUST firefox"
   fi
@@ -872,6 +875,13 @@ else
   if [ -n "$NEED_CBINDGEN" ]; then
     if ! which cbindgen >/dev/null 2>&1; then
       printf "You need cbindgen to build $NEED_CBINDGEN \n"
+      out=1
+    fi
+  fi
+
+  if [ -n "$NEED_LIBELF" ]; then
+    if ! test -f /usr/include/gelf.h >/dev/null 2>&1; then
+      printf "You need libelf-dev to build $NEED_LIBELF \n"
       out=1
     fi
   fi
