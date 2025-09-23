@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		openssl
-PKG_VERSION:=		3.5.1
+PKG_VERSION:=		3.5.3
 PKG_RELEASE:=		1
-PKG_HASH:=		529043b15cffa5f36077a4d0af83f3de399807181d607441d734196d889b641f
+PKG_HASH:=		c9489d2abcf943cdc8329a57092331c598a402938054dc3a22218aea8a8ec3bf
 PKG_DESCR:=		ssl/tls library
 PKG_SECTION:=		libs/crypto
 PKG_URL:=		https://openssl-library.org/
