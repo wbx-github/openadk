@@ -22,6 +22,8 @@ MASTER_SITE_KERNEL?=	\
 endif
 
 MASTER_SITE_GNU?=	\
+	https://ftp.fau.de/gnu/ \
+	https://ftp.halifax.rwth-aachen.de/gnu/ \
 	https://ftp.gnu.org/gnu/ \
 	http://ftp.gnu.org/gnu/ \
 
