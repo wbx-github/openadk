@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		openvpn
-PKG_VERSION:=		2.6.10
+PKG_VERSION:=		2.6.15
 PKG_RELEASE:=		1
-PKG_HASH:=		1993bbb7b9edb430626eaa24573f881fd3df642f427fcb824b1aed1fca1bcc9b
+PKG_HASH:=		e35513ee15995e3c71adfd8891b9f33522896c70b3baa2ed9a23c7a42c4d7bde
 PKG_DESCR:=		vpn solution using ssl/tls
-PKG_DEPENDS:=		libressl libcap-ng
-PKG_BUILDDEP:=		libressl libcap-ng
+PKG_DEPENDS:=		libopenssl libcap-ng
+PKG_BUILDDEP:=		openssl libcap-ng
 PKG_KDEPENDS:=		tun
 PKG_SECTION:=		net/security
 PKG_URL:=		http://openvpn.net/
@@ -31,6 +31,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,OPENVPN,openvpn,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+TARGET_LDFLAGS+=	-latomic
 CONFIGURE_ENV+=		ac_cv_lib_nsl_inet_ntoa=no
 
 ifneq ($(ADK_PACKAGE_OPENVPN_WITH_LZ4),)
