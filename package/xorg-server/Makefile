@@ -28,9 +28,6 @@ PKG_OPTS:=		dev
 
 PKG_CFLINE_XORG_SERVER:=depends on ADK_TARGET_WITH_VGA || ADK_TARGET_QEMU_WITH_GRAPHIC
 
-PKG_FLAVOURS_XORG_SERVER:=	WITH_KDRIVE
-PKGFD_WITH_KDRIVE:=		build kdrive xfbdev server
-
 PKG_CHOICES_XORG_SERVER:=	WITH_OPENSSL WITH_LIBRESSL WITH_GCRYPT
 PKGCD_WITH_OPENSSL:=		use openssl crypto for sha1
 PKGCS_WITH_OPENSSL:=		libopenssl
@@ -96,12 +93,6 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--with-xkb-output=/tmp \
 			--with-fontrootdir=/usr/share/fonts/X11/ \
 			--with-vendor-web="$(ADK_VENDOR_URL)"
-
-ifeq (${ADK_PACKAGE_XORG_SERVER_WITH_KDRIVE},y)
-CONFIGURE_ARGS+=	--enable-kdrive --enable-kdrive-kbd --enable-kdrive-mouse --enable-kdrive-evdev
-else
-CONFIGURE_ARGS+=	--disable-kdrive
-endif
 
 ifeq (${ADK_TARGET_SYSTEM_LEMOTE_YEELONG},y)
 CONFIGURE_ARGS+=	--with-int10=stub
