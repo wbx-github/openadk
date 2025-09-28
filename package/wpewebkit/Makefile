@@ -4,17 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		wpewebkit
-PKG_VERSION:=		2.48.1
+PKG_VERSION:=		2.50.0
 PKG_RELEASE:=		1
-PKG_HASH:=		2f411b692bb4c2a924d9bddf0c794fd69a24931ad836d6a93c9a65f5adb0357f
+PKG_HASH:=		a9af62c5e18551b7386b7db864e8ba8156f219b8e6c639934bf6f3a567969922
 PKG_DESCR:=		web platform for embedded
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libwpe libsoup3 harfbuzz libjpeg-turbo libgcrypt
 PKG_DEPENDS+=		libtasn1 libwebp gstreamer gst-plugins-base libxslt
-PKG_DEPENDS+=		libpsl libmount libblkid
+PKG_DEPENDS+=		libpsl libmount libblkid libepoxy
 PKG_BUILDDEP:=		cmake-host libwpe libsoup3 harfbuzz libjpeg-turbo
 PKG_BUILDDEP+=		libgcrypt libtasn1 libwebp gstreamer gst-plugins-base
-PKG_BUILDDEP+=		libxslt libpsl
+PKG_BUILDDEP+=		libxslt libpsl libepoxy unifdef-host libatomic
 PKG_URL:=		https://wpewebkit.org
 PKG_SITES:=		https://wpewebkit.org/releases/
 PKG_OPTS:=		dev
@@ -23,6 +23,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,WPEWEBKIT,wpewebkit,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
+XAKE_FLAGS+=		VERBOSE=1
 CONFIG_STYLE:=		cmake
 CMAKE_FLAGS+=		-DPORT=WPE \
 			-DUSE_SYSTEM_SYSPROF_CAPTURE=NO \
@@ -40,7 +41,8 @@ CMAKE_FLAGS+=		-DPORT=WPE \
 			-DUSE_LCMS=OFF \
 			-DUSE_WOFF2=OFF \
 			-DUSE_AVIF=OFF \
-			-DUSE_ATK=OFF
+			-DUSE_ATK=OFF \
+			-DUSE_SKIA=OFF
 
 wpewebkit-install:
 	$(INSTALL_DIR) $(IDIR_WPEWEBKIT)/usr/lib
