@@ -11,7 +11,7 @@ PKG_DESCR:=		i18n tools and libs
 PKG_SECTION:=		libs/misc
 HOST_BUILDDEP:=		automake-host
 PKG_URL:=		https://www.gnu.org/software/gettext/
-PKG_SITES:=		http://ftp.gnu.org/pub/gnu/gettext/
+PKG_SITES:=		${MASTER_SITE_GNU:=gettext/}
 PKG_OPTS:=		dev
 PKG_CFLINE_GETTEXT:=	depends on !ADK_TARGET_LIBC_WITHOUT_LIBICONV
 
