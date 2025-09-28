@@ -10,7 +10,7 @@ PKG_HASH:=		65782f0a10a4b455af9c6baab7040e2f537520caa2ec2092805cdfd36863b247
 PKG_DESCR:=		library for handling of keyboard descriptions
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		wayland
-PKG_BUILDDEP:=		meson-host wayland wayland-protocols
+PKG_BUILDDEP:=		meson-host wayland wayland-protocols libxcb
 PKG_SITES:=		https://xkbcommon.org/download/
 PKG_OPTS:=		dev
 
