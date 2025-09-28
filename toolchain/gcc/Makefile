@@ -414,6 +414,8 @@ $(WRKBUILD)/.final:
 ifeq ($(ADK_TARGET_CPU_CF),y)
 	find $(STAGING_TARGET_DIR) -name libgcc.a -print | while read t; do $(GNU_TARGET_NAME)-ar dv "$t" _ctors.o; done
 endif
+	# install libatomic including .so symlink
+	-$(CP) $(GCC_BUILD_DIR_FINAL)/$(GNU_TARGET_NAME)/libatomic/.libs/libatomic*.so* $(STAGING_TARGET_DIR)/usr/lib
 	# cleanup unneeded docs
 	rm -rf $(TOOLCHAIN_DIR)/usr/share
 	# cleanup unneeded libtool files
