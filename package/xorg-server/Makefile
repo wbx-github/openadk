@@ -70,7 +70,6 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--enable-config-udev \
 			--disable-debug \
 			--disable-docs \
-			--disable-glamor \
 			--disable-config-hal \
 			--disable-xace \
 			--disable-xephyr \
