@@ -33,10 +33,11 @@ BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
 MESON_FLAGS+=		-Dllvm=disabled \
-			-Dgallium-drivers=panfrost,vc4,v3d \
+			-Dgallium-drivers=panfrost,vc4,v3d,virgl \
 			-Dvulkan-drivers= \
 			-Dgbm=enabled \
-			-Dplatforms=x11
+			-Dglx=dri \
+			-Dplatforms=x11,wayland
 
 mesa-install:
 	$(INSTALL_DIR) $(IDIR_MESA)/usr/lib/dri
