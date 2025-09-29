@@ -14,6 +14,10 @@ PKG_BUILDDEP:=		wpewebkit wpebackend-fdo libinput
 PKG_URL:=		https://wpewebkit.org
 PKG_SITES:=		https://wpewebkit.org/releases/
 
+PKG_CHOICES_COG:=	WITH_X11 WITH_WAYLAND
+PKGCD_WITH_WAYLAND:=	with wayland support
+PKGCD_WITH_X11:=	with X11 support
+
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,COG,cog,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
@@ -23,8 +27,15 @@ WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 MESON_FLAGS+=		-Ddocumentation=false \
 			-Dmanpages=false \
 			-Dprograms=true \
-			-Dwpe_api=2.0 \
-			-Dplatforms="wayland"
+			-Dwpe_api=2.0
+
+ifeq ($(ADK_PACKAGE_COG_WITH_WAYLAND),y)
+MESON_FLAGS+=		-Dplatforms="wayland"
+endif
+
+ifeq ($(ADK_PACKAGE_COG_WITH_X11),y)
+MESON_FLAGS+=		-Dplatforms="x11"
+endif
 
 CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
