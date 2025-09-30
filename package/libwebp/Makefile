@@ -27,5 +27,7 @@ libwebp-install:
 	$(INSTALL_DIR) $(IDIR_LIBWEBP)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libwebp*so* \
 		$(IDIR_LIBWEBP)/usr/lib
+	$(CP) $(WRKINST)/usr/lib/libsharpyuv*so* \
+		$(IDIR_LIBWEBP)/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
