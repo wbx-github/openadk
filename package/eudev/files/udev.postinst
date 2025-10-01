@@ -5,8 +5,10 @@ add_group dialout $(get_next_gid)
 add_group disk $(get_next_gid)
 add_group input $(get_next_gid)
 add_group kmem $(get_next_gid)
+add_group kvm $(get_next_gid)
 add_group lp $(get_next_gid)
 add_group tape $(get_next_gid)
+add_group sgx $(get_next_gid)
 echo Generating hwdb
 udevadm hwdb --update --root="$IPKG_INSTROOT"
 rm -rf "$IPKG_INSTROOT/etc/udev/hwdb.d"

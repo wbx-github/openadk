@@ -11,6 +11,7 @@ PKG_DESCR:=		device manager
 PKG_SECTION:=		sys/utils
 PKG_BUILDDEP:=		gperf-host
 PKG_DEPENDS:=		libkmod
+PKG_KDEPENDS:=		inotify-user
 PKG_URL:=		http://wiki.gentoo.org/wiki/Project:Eudev
 PKG_SITES:=		https://github.com/eudev-project/eudev/releases/download/v$(PKG_VERSION)/
 PKG_LIBNAME:=		libudev
