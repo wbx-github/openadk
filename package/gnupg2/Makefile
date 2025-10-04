@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gnupg2
-PKG_VERSION:=		2.4.4
+PKG_VERSION:=		2.4.8
 PKG_RELEASE:=		1
-PKG_HASH:=		67ebe016ca90fa7688ce67a387ebd82c6261e95897db7b23df24ff335be85bc6
+PKG_HASH:=		b58c80d79b04d3243ff49c1c3fc6b5f83138eb3784689563bcdd060595318616
 PKG_DESCR:=		gnu privacy guard (modern)
 PKG_SECTION:=		app/crypto
 PKG_DEPENDS:=		libreadline libncurses libgcrypt libgpg-error libassuan
@@ -15,7 +15,7 @@ PKG_BUILDDEP:=		readline ncurses libgcrypt libgpg-error libassuan
 PKG_BUILDDEP+=		libksba npth
 PKG_NEEDS:=		iconv
 PKG_URL:=		http://www.gnupg.org/
-PKG_SITES:=		ftp://ftp.gnupg.org/gcrypt/gnupg/
+PKG_SITES:=		https://www.gnupg.org/ftp/gcrypt/gnupg/
 
 DISTFILES:=		gnupg-$(PKG_VERSION).tar.bz2
 WRKDIST=		${WRKDIR}/gnupg-${PKG_VERSION}
@@ -46,8 +46,10 @@ gpgv2-install:
 
 gnupg2-install:
 	$(INSTALL_DIR) $(IDIR_GNUPG2)/usr/bin/
+	$(INSTALL_DIR) $(IDIR_GNUPG2)/usr/libexec/
 	$(INSTALL_BIN) $(WRKBUILD)/g10/gpg $(IDIR_GNUPG2)/usr/bin/
 	$(INSTALL_BIN) $(WRKBUILD)/agent/gpg-agent $(IDIR_GNUPG2)/usr/bin/
+	$(INSTALL_BIN) $(WRKBUILD)/kbx/keyboxd $(IDIR_GNUPG2)/usr/libexec/
 	# we need root privileges for secure memory (locked pages)
 	chmod u+s $(IDIR_GNUPG2)/usr/bin/gpg
 
