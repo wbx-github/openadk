@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		flac
-PKG_VERSION:=		1.3.4
+PKG_VERSION:=		1.5.0
 PKG_RELEASE:=		1
-PKG_HASH:=		8ff0607e75a322dd7cd6ec48f4f225471404ae2730d0ea945127b1355155e737
+PKG_HASH:=		f2c1c76592a82ffff8413ba3c4a1299b6c7ab06c734dee03fd88630485c2b920
 PKG_DESCR:=		free lossless audio codec utility
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		libflac
