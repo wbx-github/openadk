@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libx264
-PKG_VERSION:=		7d0ff22e8c96de126be9d3de4952edd6d1b75a8c
+PKG_VERSION:=		0480cb05fa188d37ae87e8f4fd8f1aea3711f7ee
 PKG_RELEASE:=		1
 PKG_GIT:=		hash
 PKG_DESCR:=		h264 encoding library
@@ -13,16 +13,16 @@ PKG_URL:=		http://www.videolan.org/developers/x264.html
 PKG_SITES:=		http://git.videolan.org/git/x264.git
 PKG_OPTS:=		dev
 
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
+
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBX264,libx264,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 CONFIG_STYLE:=		minimal
 
-ifeq ($(ADK_TARGET_SYSTEM_SHARP_ZAURUS),y)
-CONFIGURE_ARGS+=	--disable-asm
-endif
-CONFIGURE_ARGS+=	--disable-cli \
+CONFIGURE_ARGS+=	--disable-asm \
+			--disable-cli \
 			--disable-opencl \
 			--enable-shared \
 			--prefix=/usr \
