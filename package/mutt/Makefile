@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		mutt
-PKG_VERSION:=		2.2.12
+PKG_VERSION:=		2.2.15
 PKG_RELEASE:=		1
-PKG_HASH:=		043af312f64b8e56f7fd0bf77f84a205d4c498030bd9586457665c47bb18ce38
+PKG_HASH:=		a51686104e4203f4c2a3b176527be3b95d08e808e94fd2dcadb7c30566bf894d
 PKG_DESCR:=		mail client for console
 PKG_SECTION:=		net/mail
 PKG_DEPENDS:=		libncurses
@@ -14,7 +14,10 @@ PKG_BUILDDEP:=		ncurses
 PKG_URL:=		http://www.mutt.org/
 PKG_SITES:=		ftp://ftp.mutt.org/pub/mutt/
 
-PKG_CHOICES_MUTT:=	WITH_LIBRESSL WITHOUT_SSL
+PKG_CHOICES_MUTT:=	WITH_OPENSSL WITH_LIBRESSL WITHOUT_SSL
+PKGCD_WITH_OPENSSL:=	use openssl for crypto
+PKGCB_WITH_OPENSSL:=	openssl
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCB_WITH_LIBRESSL:=	libressl
 PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
@@ -31,6 +34,7 @@ CONFIGURE_ARGS+=	--with-homespool="~/Maildir" \
 			--with-curses="$(STAGING_TARGET_DIR)/usr" \
 			--enable-pop \
 			--enable-imap \
+			--enable-smtp \
 			--disable-doc
 
 ifeq ($(ADK_PACKAGE_MUTT_WITHOUT_SSL),y)
