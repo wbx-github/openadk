@@ -4,16 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libsamplerate
-PKG_VERSION:=		0.1.9
+PKG_VERSION:=		0.2.2
 PKG_RELEASE:=		1
-PKG_HASH:=		0a7eb168e2f21353fb6d84da152e4512126f7dc48ccb0be80578c565413444c1
+PKG_HASH:=		3258da280511d24b49d6b08615bbe824d0cacc9842b0e4caf11c52cf2b043893
 PKG_DESCR:=		sample rate converter for audio
 PKG_SECTION:=		libs/audio
-PKG_URL:=		http://www.mega-nerd.com/SRC/
-PKG_SITES:=		http://www.mega-nerd.com/SRC/
+PKG_SITES:=		https://github.com/libsndfile/libsamplerate/releases/download/$(PKG_VERSION)/
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
