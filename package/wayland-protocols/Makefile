@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		wayland-protocols
-PKG_VERSION:=		1.43
+PKG_VERSION:=		1.45
 PKG_RELEASE:=		1
-PKG_HASH:=		05fc0ff0c6b3081549d8f81c6b584076a20be18e8c2b9be65ae09ce05e5aea9e
+PKG_HASH:=		460dad72a6c84b2a7d80745bee43d96ba117f4e3dfc4d7c45f83f66469ea27df
 PKG_DESCR:=		wayland protocols
 PKG_SECTION:=		x11/libs
 PKG_BUILDDEP:=		meson-host wayland-host
