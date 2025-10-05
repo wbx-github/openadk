@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		wayland
-PKG_VERSION:=		1.23.1
+PKG_VERSION:=		1.24.0
 PKG_RELEASE:=		1
-PKG_HASH:=		864fb2a8399e2d0ec39d56e9d9b753c093775beadc6022ce81f441929a81e5ed
+PKG_HASH:=		82892487a01ad67b334eca83b54317a7c86a03a89cfadacfef5211f11a5d0536
 PKG_DESCR:=		wayland
 PKG_SECTION:=		x11/libs
 PKG_BUILDDEP:=		wayland-host libffi
