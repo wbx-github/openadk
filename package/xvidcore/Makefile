@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xvidcore
-PKG_VERSION:=		1.3.5
+PKG_VERSION:=		1.3.7
 PKG_RELEASE:=		1
-PKG_HASH:=		165ba6a2a447a8375f7b06db5a3c91810181f2898166e7c8137401d7fc894cf0
+PKG_HASH:=		abbdcbd39555691dd1c9b4d08f0a031376a3b211652c0d8b3b8aa9be1303ce2d
 PKG_DESCR:=		xvid codec library
 PKG_SECTION:=		libs/video
 PKG_URL:=		http://www.xvid.org/
