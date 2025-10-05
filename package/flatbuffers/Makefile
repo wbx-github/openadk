@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		flatbuffers
-PKG_VERSION:=		2.0.6
+PKG_VERSION:=		25.9.23
 PKG_RELEASE:=		1
-PKG_HASH:=		e2dc24985a85b278dd06313481a9ca051d048f9474e0f199e372fea3ea4248c9
+PKG_HASH:=		9102253214dea6ae10c2ac966ea1ed2155d22202390b532d1dea64935c518ada
 PKG_DESCR:=		cross platform serialization library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		flatbuffers-host
