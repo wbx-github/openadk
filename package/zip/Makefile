@@ -31,7 +31,7 @@ MAKE_FILE:=		unix/Makefile
 ALL_TARGET:=		generic_gcc
 
 host-build:
-	(cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -f ${MAKE_FILE} \
+	(cd ${WRKBUILD} && env ${HOST_MAKE_ENV} CC="$(HOST_CC) -std=gnu89" ${MAKE} -f ${MAKE_FILE} \
 		${HOST_MAKE_FLAGS} ${ALL_TARGET})
 
 zip-hostinstall:

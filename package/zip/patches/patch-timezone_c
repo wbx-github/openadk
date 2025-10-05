@@ -1,0 +1,10 @@
+--- zip30.orig/timezone.c	2004-11-13 09:35:12.000000000 +0100
++++ zip30/timezone.c	2025-10-05 03:57:25.603996335 +0200
+@@ -41,6 +41,7 @@
+ #include "timezone.h"
+ #include <ctype.h>
+ #include <errno.h>
++#include <time.h>
+ 
+ #ifdef IZTZ_DEFINESTDGLOBALS
+ long timezone = 0;
