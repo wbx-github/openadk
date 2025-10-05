@@ -4,6 +4,12 @@
 menu "Virtio driver support"
 depends on ADK_TARGET_WITH_VIRTIO || ADK_TARGET_QEMU
 
+config ADK_LINUX_KERNEL_DRM_FBDEV_EMULATION
+	bool
+
+config ADK_LINUX_KERNEL_DRM_VIRTIO_GPU_KMS
+	bool
+
 config ADK_LINUX_KERNEL_VIRTIO_MENU
 	bool
 
@@ -69,5 +75,13 @@ config ADK_LINUX_KERNEL_VIRTIO_BLK
 	default n
 	help
 	  Enables support for Virtio Block driver.
+
+config ADK_LINUX_KERNEL_DRM_VIRTIO_GPU
+	tristate "Virtio GPU support"
+	select ADK_LINUX_KERNEL_DRM_VIRTIO_GPU_KMS
+	select ADK_LINUX_KERNEL_DRM_FBDEV_EMULATION
+	default n
+	help
+	  Enables support for Virtio GPU driver.
 
 endmenu
