@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nghttp2
-PKG_VERSION:=		1.65.0
+PKG_VERSION:=		1.67.1
 PKG_RELEASE:=		1
-PKG_HASH:=		f1b9df5f02e9942b31247e3d415483553bc4ac501c87aa39340b6d19c92a9331
+PKG_HASH:=		153972aad57e7bf9d911666df7613f2390acf37ea7e1a97a0c5567e90f98e830
 PKG_DESCR:=		http2 library
 PKG_SECTION:=		libs/misc
-PKG_SITES:=		https://github.com/nghttp2/nghttp2/releases/download/v1.65.0/
+PKG_SITES:=		https://github.com/nghttp2/nghttp2/releases/download/v$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 include $(ADK_TOPDIR)/mk/package.mk
