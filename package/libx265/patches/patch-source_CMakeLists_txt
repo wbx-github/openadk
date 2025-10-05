@@ -1,0 +1,18 @@
+--- x265_4.1.orig/source/CMakeLists.txt	2024-11-22 13:07:34.000000000 +0100
++++ x265_4.1/source/CMakeLists.txt	2025-10-05 03:09:19.216070894 +0200
+@@ -6,15 +6,9 @@ if(NOT CMAKE_BUILD_TYPE)
+         FORCE)
+ endif()
+ message(STATUS "cmake version ${CMAKE_VERSION}")
+-if(POLICY CMP0025)
+-    cmake_policy(SET CMP0025 OLD) # report Apple's Clang as just Clang
+-endif()
+ if(POLICY CMP0042)
+     cmake_policy(SET CMP0042 NEW) # MACOSX_RPATH
+ endif()
+-if(POLICY CMP0054)
+-    cmake_policy(SET CMP0054 OLD) # Only interpret if() arguments as variables or keywords when unquoted
+-endif()
+ 
+ project (x265)
+ cmake_minimum_required (VERSION 2.8.8) # OBJECT libraries require 2.8.8

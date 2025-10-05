@@ -4,8 +4,8 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libx265
-PKG_VERSION:=		3.2
-PKG_HASH:=		364d79bcd56116a9e070fdeb1d9d2aaef1a786b4970163fb56ff0991a183133b
+PKG_VERSION:=		4.1
+PKG_HASH:=		a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29
 PKG_RELEASE:=		1
 PKG_DESCR:=		h265 encoding library
 PKG_SECTION:=		libs/video
