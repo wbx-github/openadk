@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libvpx
-PKG_VERSION:=		1.14.0
+PKG_VERSION:=		1.15.2
 PKG_RELEASE:=		1
-PKG_HASH:=		5f21d2db27071c8a46f1725928a10227ae45c5cd1cad3727e4aafbe476e321fa
+PKG_HASH:=		26fcd3db88045dee380e581862a6ef106f49b74b6396ee95c2993a260b4636aa
 PKG_DESCR:=		vp8/vp9 codec library
 PKG_SECTION:=		libs/video
 PKG_BUILDDEP:=		yasm-host
@@ -20,7 +20,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBVPX,libvpx,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-CONFIGURE_ENV+=		LD=$(TARGET_CC)
+CONFIGURE_ENV+=		LD="$(TARGET_CC)"
 
 CONFIG_STYLE:=		minimal
 ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
