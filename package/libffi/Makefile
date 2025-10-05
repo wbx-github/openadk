@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libffi
-PKG_VERSION:=		3.4.7
+PKG_VERSION:=		3.5.2
 PKG_RELEASE:=		1
-PKG_HASH:=		138607dee268bdecf374adf9144c00e839e38541f75f24a1fcf18b78fda48b2d
+PKG_HASH:=		f3a3082a23b37c293a4fcd1053147b371f2ff91fa7ea1b2a52e335676bac82dc
 PKG_DESCR:=		foreign function interface library
 PKG_SECTION:=		libs/misc
 HOST_BUILDDEP:=		libtool-host
@@ -24,10 +24,6 @@ $(eval $(call PKG_template,LIBFFI,libffi,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEP
 
 HOST_CONFIGURE_ARGS+=	--disable-builddir --with-pic --disable-symvers
 CONFIGURE_ARGS+=	--disable-builddir --with-pic --disable-symvers
-
-ifeq ($(ADK_PACKAGE_OPENJDK7),y)
-CONFIGURE_ARGS+=	--enable-static
-endif
 
 libffi-install:
 	${INSTALL_DIR} ${IDIR_LIBFFI}/usr/lib
