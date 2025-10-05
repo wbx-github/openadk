@@ -13,7 +13,7 @@ autostart)
 	;;
 start)
 	if [ ! -d /data/kodi ]; then
-		mkdir /data/kodi
+		mkdir -p /data/kodi
 	fi
 	cd / && /usr/lib/kodi/kodi-gbm &
 	;;

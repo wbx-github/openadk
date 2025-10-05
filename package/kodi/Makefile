@@ -4,29 +4,29 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kodi
-PKG_VERSION:=		21.0b2
+PKG_VERSION:=		21.2
 PKG_RELEASE:=		1
-PKG_HASH:=		b9d6ecbb8769cdfe00cbbe5da5c330a7624eee50cffb87d87f6271033f1ee74b
+PKG_HASH:=		da3a5df663684664b9383b65f1c06568222629d935084a59e4e641fcdcb6c383
 PKG_DESCR:=		software media player
 PKG_SECTION:=		mm/video
-PKG_DEPENDS:=		python3 libsquish libressl libxz libfmt rapidjson
+PKG_DEPENDS:=		python3 libsquish libopenssl libfmt rapidjson libpcre
 PKG_DEPENDS+=		libass libmpeg2 libmad libmodplug libcurl libxshmfence
-PKG_DEPENDS+=		libflac libbz2 libtiff libnettle librtmp liblzo
+PKG_DEPENDS+=		libflac libbz2 libtiff libnettle librtmp liblzo libXext
 PKG_DEPENDS+=		yajl tinyxml libsqlite libpcrecpp libncurses libpng
-PKG_DEPENDS+=		libpcre libcdio libfreetype libsamplerate libuuid
-PKG_DEPENDS+=		taglib libjasper libmp3lame libgpg-error giflib
+PKG_DEPENDS+=		libpcre2 libcdio libfreetype libsamplerate libuuid
+PKG_DEPENDS+=		taglib libjasper libmp3lame libgpg-error giflib nghttp2
 PKG_DEPENDS+=		glib libdcadec libffmpeg libxvidcore libiconv harfbuzz
 PKG_DEPENDS+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
 PKG_DEPENDS+=		xkeyboard-config tinyxml2 libdisplay-info libudfread
 PKG_BUILDDEP:=		python3 libass ffmpeg rtmpdump libiconv libudfread
 PKG_BUILDDEP+=		libmpeg2 libmad libjpeg-turbo fmt rapidjson
 PKG_BUILDDEP+=		curl flac bzip2 libtiff yajl cmake-host libdisplay-info
-PKG_BUILDDEP+=		tinyxml tinyxml2 sqlite pcre libcdio freetype libpng
+PKG_BUILDDEP+=		tinyxml tinyxml2 sqlite pcre2 libcdio freetype libpng
 PKG_BUILDDEP+=		libsamplerate taglib libjasper giflib xkeyboard-config
 PKG_BUILDDEP+=		glib libmodplug libgpg-error xvidcore libxshmfence
 PKG_BUILDDEP+=		swig-host liblzo-host libpng-host libjpeg-turbo-host
 PKG_BUILDDEP+=		zip-host unzip-host giflib-host libsquish libdcadec
-PKG_BUILDDEP+=		libcrossguid libressl xz bzip2 liblzo harfbuzz
+PKG_BUILDDEP+=		libcrossguid openssl bzip2 liblzo harfbuzz pcre
 PKG_BUILDDEP+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
 PKG_NEEDS:=		threads c++ data iconv
 PKG_URL:=		http://kodi.tv/
@@ -36,7 +36,7 @@ DISTFILES:=		$(PKG_VERSION)-Omega.tar.gz
 WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Omega
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
-PKG_SYSTEM_DEPENDS:=	raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 raspberry-pi4-64 rockpi4-plus raspberry-pi5
+PKG_SYSTEM_DEPENDS:=	qemu-x86_64 raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 raspberry-pi4-64 rockpi4-plus raspberry-pi5
 
 PKG_FLAVOURS_KODI:=	WITH_ALSA WITH_CEC WITH_PULSEAUDIO WITH_SMB
 PKG_FLAVOURS_KODI+=	WITH_MICROHTTPD WITH_SSH WITH_AVAHI
@@ -69,17 +69,18 @@ $(eval $(call PKG_template,KODI,kodi,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS
 HOST_CXXFLAGS:=		-DTARGET_POSIX -DTARGET_LINUX -D_LINUX -I$(WRKSRC)/xbmc/linux
 CONFIG_STYLE:=		cmake
 CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
+			-DENABLE_TESTING=OFF \
 			-DCMAKE_BUILD_TYPE=Release \
 			-DVERBOSE=ON \
 			-DENABLE_DVDCSS=ON \
-			-DENABLE_INTERNAL_CROSSGUID=OFF \
 			-DENABLE_INTERNAL_FFMPEG=OFF \
+			-DENABLE_INTERNAL_CROSSGUID=OFF \
 			-DENABLE_INTERNAL_RapidJSON=OFF \
 			-DWITH_FFMPEG=$(STAGING_TARGET_DIR)/usr \
 			-DPYTHON_EXECUTABLE=$(STAGING_HOST_DIR)/usr/bin/python3 \
-			-DPYTHON_INCLUDE_DIRS=$(STAGING_TARGET_DIR)/usr/include/python3.11 \
-			-DPYTHON_PATH=$(STAGING_TARGET_DIR)/usr/lib/python3.11 \
-			-DPYTHON_VER=3.11 \
+			-DPYTHON_INCLUDE_DIRS=$(STAGING_TARGET_DIR)/usr/include/python3.13 \
+			-DPYTHON_PATH=$(STAGING_TARGET_DIR)/usr/lib/python3.13 \
+			-DPYTHON_VER=3.13 \
 			-DKODI_DEPENDSBUILD=OFF \
 			-DENABLE_OPENSSL=ON \
 			-DENABLE_MYSQLCLIENT=OFF \
@@ -99,9 +100,8 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DENABLE_PLIST=OFF \
 			-DNATIVEPREFIX=$(STAGING_HOST_DIR)/usr \
 			-DDEPENDS_PATH=$(STAGING_TARGET_DIR)/usr \
-			-DWITH_TEXTUREPACKER=$(STAGING_HOST_DIR)/usr/bin/TexturePacker \
 			-DWITH_JSONSCHEMABUILDER=$(STAGING_HOST_DIR)/usr/bin/JsonSchemaBuilder \
-			-DCMAKE_EXE_LINKER_FLAGS=-latomic \
+			-DCMAKE_EXE_LINKER_FLAGS="-latomic -liconv" \
 			-DLIBDVDCSS_URL=$(DL_DIR)/libdvdcss-1.4.3-Next-Nexus-Alpha2-2.tar.gz \
 			-DLIBDVDNAV_URL=$(DL_DIR)/libdvdnav-6.1.1-Next-Nexus-Alpha2-2.tar.gz \
 			-DLIBDVDREAD_URL=$(DL_DIR)/libdvdread-6.1.3-Next-Nexus-Alpha2-2.tar.gz
@@ -112,9 +112,16 @@ CMAKE_FLAGS+=		-DWITH_ARCH=aarch64 \
 			-DENABLE_NEON=OFF
 endif
 ifeq ($(ADK_TARGET_ARCH_ARM),y)
-			-DWITH_ARCH=arm \
+CMAKE_FLAGS+=		-DWITH_ARCH=arm \
 			-DWITH_CPU=arm \
 			-DENABLE_NEON=ON
+endif
+ifeq ($(ADK_TARGET_ARCH_X86_64),y)
+CMAKE_FLAGS+=		-DWITH_ARCH=x86_64 \
+			-DAPP_RENDER_SYSTEM=gl \
+			-DCORE_PLATFORM_NAME=x11 \
+			-DENABLE_OPENGL=ON \
+			-DENABLE_X11=ON
 endif
 
 ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
@@ -162,17 +169,16 @@ CMAKE_FLAGS+=		-DENABLE_SSH=OFF
 endif
 
 XAKE_FLAGS+=		VERBOSE=1
-TARGET_LDFLAGS+=	-latomic -liconv
 
 KODI_LIBDVDCSS_VERSION 	= 1.4.3-Next-Nexus-Alpha2-2
 KODI_LIBDVDNAV_VERSION 	= 6.1.1-Next-Nexus-Alpha2-2
 KODI_LIBDVDREAD_VERSION = 6.1.3-Next-Nexus-Alpha2-2
 
 pre-configure:
-	#(cd $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src && PATH='$(HOST_PATH)' cmake .)
-	#PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src
-	#cp $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src/JsonSchemaBuilder \
-	#	$(STAGING_HOST_DIR)/usr/bin/JsonSchemaBuilder
+	(cd $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src && PATH='$(HOST_PATH)' cmake .)
+	PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src
+	cp $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src/JsonSchemaBuilder \
+		$(STAGING_HOST_DIR)/usr/bin/JsonSchemaBuilder
 	#(cd $(WRKSRC)/tools/depends/native/TexturePacker/src && PATH='$(HOST_PATH)' cmake \
 	#	-DKODI_SOURCE_DIR=$(WRKSRC) \
 	#	-DCMAKE_MODULE_PATH=$(WRKSRC)/cmake/modules \
