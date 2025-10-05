@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		taglib
-PKG_VERSION:=		1.13.1
+PKG_VERSION:=		2.1.1
 PKG_RELEASE:=		1
-PKG_HASH:=		c8da2b10f1bfec2cd7dbfcd33f4a2338db0765d851a50583d410bacf055cfd0b
+PKG_HASH:=		3716d31f7c83cbf17b67c8cf44dd82b2a2f17e6780472287a16823e70305ddba
 PKG_DESCR:=		audio meta-data library
 PKG_SECTION:=		libs/audio
 PKG_DEPENDS:=		zlib
