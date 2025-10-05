@@ -28,6 +28,7 @@ $(eval $(call PKG_template,GNUPG2,gnupg2,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEP
 $(eval $(call PKG_template,GPGV2,gpgv2,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
 CONFIGURE_ARGS+=	--disable-dirmngr \
+			--disable-keyboxd \
 			--disable-gpgsm \
 			--disable-scdaemon \
 			--disable-card-support \
@@ -46,10 +47,8 @@ gpgv2-install:
 
 gnupg2-install:
 	$(INSTALL_DIR) $(IDIR_GNUPG2)/usr/bin/
-	$(INSTALL_DIR) $(IDIR_GNUPG2)/usr/libexec/
 	$(INSTALL_BIN) $(WRKBUILD)/g10/gpg $(IDIR_GNUPG2)/usr/bin/
 	$(INSTALL_BIN) $(WRKBUILD)/agent/gpg-agent $(IDIR_GNUPG2)/usr/bin/
-	$(INSTALL_BIN) $(WRKBUILD)/kbx/keyboxd $(IDIR_GNUPG2)/usr/libexec/
 	# we need root privileges for secure memory (locked pages)
 	chmod u+s $(IDIR_GNUPG2)/usr/bin/gpg
 
