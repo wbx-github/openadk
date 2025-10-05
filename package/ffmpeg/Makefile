@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ffmpeg
-PKG_VERSION:=		6.1.1
-PKG_RELEASE:=		2
-PKG_HASH:=		5e3133939a61ef64ac9b47ffd29a5ea6e337a4023ef0ad972094b4da844e3a20
+PKG_VERSION:=		7.1.2
+PKG_RELEASE:=		1
+PKG_HASH:=		5eb62f529114778333b7eb0381cb16e2b8725ce2ae081d07b1082effe22b12e9
 PKG_DESCR:=		record, convert and stream audio & video
 PKG_SECTION:=		libs/video
 PKG_NEEDS:=		threads
@@ -17,7 +17,7 @@ PKG_SITES:=		http://www.ffmpeg.org/releases/
 PKG_LIBNAME:=		libffmpeg
 PKG_OPTS:=		dev
 
-PKG_CHOICES_LIBFFMPEG:=	WITH_LIBRESSL WITH_OPENSSL
+PKG_CHOICES_LIBFFMPEG:=	WITH_OPENSSL WITH_LIBRESSL
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCB_WITH_LIBRESSL:=	libressl
@@ -196,7 +196,6 @@ CONFIGURE_ARGS:=	--prefix=/usr \
 			--disable-doc \
 			--disable-debug \
 			--disable-iconv \
-			--disable-yasm \
 			--disable-optimizations \
 			--disable-stripping \
 			--enable-shared \
@@ -206,6 +205,7 @@ CONFIGURE_ARGS:=	--prefix=/usr \
 			--enable-swscale \
 			--enable-postproc \
 			--enable-openssl \
+			--disable-x86asm \
 			$(CONFIGURE_CPU_OPTS)
 
 ifeq ($(ADK_PACKAGE_LIBFFMPEG_WITH_BZIP2),y)
