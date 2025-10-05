@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gnutls
-PKG_VERSION:=		3.8.9
+PKG_VERSION:=		3.8.10
 PKG_RELEASE:=		1
-PKG_HASH:=		69e113d802d1670c4d5ac1b99040b1f2d5c7c05daec5003813c049b5184820ed
+PKG_HASH:=		db7fab7cce791e7727ebbef2334301c821d79a550ec55c9ef096b610b03eb6b7
 PKG_DESCR:=		transport layer security library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgcrypt libtasn1 zlib libnettle libgmp libunistring
