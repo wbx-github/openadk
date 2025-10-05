@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libogg
-PKG_VERSION:=		1.3.1
+PKG_VERSION:=		1.3.6
 PKG_RELEASE:=		1
-PKG_HASH:=		3a5bad78d81afb78908326d11761c0fb1a0662ee7150b6ad587cc586838cdcfa
+PKG_HASH:=		5c8253428e181840cd20d41f3ca16557a9cc04bad4a3d04cce84808677fa1061
 PKG_DESCR:=		ogg bitstream handling library
 PKG_SECTION:=		libs/audio
 PKG_URL:=		http://www.xiph.org/ogg
