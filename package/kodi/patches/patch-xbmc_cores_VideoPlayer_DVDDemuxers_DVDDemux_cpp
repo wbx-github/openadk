@@ -1,0 +1,55 @@
+--- xbmc-21.2-Omega.orig/xbmc/cores/VideoPlayer/DVDDemuxers/DVDDemux.cpp	2025-01-15 23:14:15.000000000 +0100
++++ xbmc-21.2-Omega/xbmc/cores/VideoPlayer/DVDDemuxers/DVDDemux.cpp	2025-10-06 04:40:59.031472961 +0200
+@@ -15,15 +15,15 @@ std::string CDemuxStreamAudio::GetStream
+   std::string strInfo;
+   switch (codec)
+   {
+-    //! @todo: With ffmpeg >= 6.1 add new AC4 codec
+     case AV_CODEC_ID_AC3:
+       strInfo = "AC3 ";
+       break;
++    case AV_CODEC_ID_AC4:
++      strInfo = "AC4 ";
++      break;
+     case AV_CODEC_ID_EAC3:
+     {
+-      //! @todo: With ffmpeg >= 6.1 add new atmos profile case
+-      // "JOC" its EAC3 Atmos underlying profile, there is no standard codec name string
+-      if (StringUtils::Contains(codecName, "JOC"))
++      if (profile == FF_PROFILE_EAC3_DDP_ATMOS)
+         strInfo = "DD+ ATMOS ";
+       else
+         strInfo = "DD+ ";
+@@ -31,7 +31,6 @@ std::string CDemuxStreamAudio::GetStream
+     }
+     case AV_CODEC_ID_DTS:
+     {
+-      //! @todo: With ffmpeg >= 6.1 add new DTSX profile cases
+       switch (profile)
+       {
+         case FF_PROFILE_DTS_96_24:
+@@ -49,6 +48,12 @@ std::string CDemuxStreamAudio::GetStream
+         case FF_PROFILE_DTS_HD_HRA:
+           strInfo = "DTS-HD HRA ";
+           break;
++        case FF_PROFILE_DTS_HD_MA_X:
++          strInfo = "DTS-HD MA X ";
++          break;
++        case FF_PROFILE_DTS_HD_MA_X_IMAX:
++          strInfo = "DTS-HD MA X (IMAX) ";
++          break;
+         default:
+           strInfo = "DTS ";
+           break;
+@@ -62,7 +67,10 @@ std::string CDemuxStreamAudio::GetStream
+       strInfo = "MP3 ";
+       break;
+     case AV_CODEC_ID_TRUEHD:
+-      strInfo = "TrueHD ";
++      if (profile == FF_PROFILE_TRUEHD_ATMOS)
++        strInfo = "TrueHD ATMOS ";
++      else
++        strInfo = "TrueHD ";
+       break;
+     case AV_CODEC_ID_AAC:
+     {

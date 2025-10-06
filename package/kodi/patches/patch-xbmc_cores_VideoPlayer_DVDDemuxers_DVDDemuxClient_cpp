@@ -1,0 +1,10 @@
+--- xbmc-21.2-Omega.orig/xbmc/cores/VideoPlayer/DVDDemuxers/DVDDemuxClient.cpp	2025-01-15 23:14:15.000000000 +0100
++++ xbmc-21.2-Omega/xbmc/cores/VideoPlayer/DVDDemuxers/DVDDemuxClient.cpp	2025-10-06 04:40:59.031472961 +0200
+@@ -188,7 +188,6 @@ bool CDVDDemuxClient::ParsePacket(DemuxP
+       if (!avcodec_open2(stream->m_context, stream->m_context->codec, nullptr))
+       {
+         avcodec_send_packet(stream->m_context, avpkt);
+-        avcodec_close(stream->m_context);
+       }
+     }
+     av_packet_free(&avpkt);

@@ -1,6 +1,6 @@
---- xbmc-21.2-Omega.orig/CMakeLists.txt	2025-01-15 23:14:15.000000000 +0100
-+++ xbmc-21.2-Omega/CMakeLists.txt	2025-10-06 04:40:59.015473347 +0200
-@@ -184,7 +184,6 @@ endforeach()
+--- xbmc-21.0b2-Omega.orig/CMakeLists.txt	2023-12-09 22:24:46.000000000 +0100
++++ xbmc-21.0b2-Omega/CMakeLists.txt	2024-01-31 10:45:45.831435209 +0100
+@@ -178,7 +178,6 @@ endforeach()
  # Required tools. Keep in alphabetical order please
  set(required_buildtools FlatC
                          JsonSchemaBuilder
@@ -8,7 +8,7 @@
  )
  
  # Optional build tools
-@@ -473,7 +472,6 @@ endif()
+@@ -468,7 +467,6 @@ endif()
  add_custom_command(
    OUTPUT ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/${CONFIG_VAR}/gen_skin.timestamp
    COMMAND ${CMAKE_COMMAND} -DBUNDLEDIR=${_bundle_dir}
@@ -16,7 +16,7 @@
                             -P ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/GeneratedPackSkins.cmake
    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/${CONFIG_VAR}
    COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/${CONFIG_VAR}/gen_skin.timestamp
-@@ -486,7 +484,7 @@ add_custom_target(gen_skin_pack DEPENDS
+@@ -481,7 +479,7 @@ add_custom_target(gen_skin_pack DEPENDS
  
  # Packaging target. This generates system addon, xbt creation, copy files to build tree
  add_custom_target(generate-packaging ALL

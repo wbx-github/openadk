@@ -1,0 +1,10 @@
+--- xbmc-21.2-Omega.orig/xbmc/settings/AdvancedSettings.h	2025-01-15 23:14:15.000000000 +0100
++++ xbmc-21.2-Omega/xbmc/settings/AdvancedSettings.h	2025-10-06 04:40:59.031472961 +0200
+@@ -121,7 +121,6 @@ class CAdvancedSettings : public ISettin
+ 
+     std::string m_audioDefaultPlayer;
+     float m_audioPlayCountMinimumPercent;
+-    bool m_VideoPlayerIgnoreDTSinWAV;
+     float m_limiterHold;
+     float m_limiterRelease;
+ 
