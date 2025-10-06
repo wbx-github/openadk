@@ -21,6 +21,11 @@ PKG_SITES:=		https://archive.mesa3d.org/
 PKG_LIBNAME:=		mesa
 PKG_OPTS:=		dev
 
+PKG_CHOICES_MESA:=	WITH_X11 WITH_WAYLAND
+PKGCD_WITH_X11:=	with X11 support
+PKGCD_WITH_WAYLAND:=	with wayland support
+PKGCB_WITH_WAYLAND:=	wayland wayland-protocols
+
 PKG_ARCH_DEPENDS:=	x86 x86_64 mips mipsel mips64 mips64el arm aarch64
 
 include $(ADK_TOPDIR)/mk/package.mk
@@ -36,8 +41,15 @@ MESON_FLAGS+=		-Dllvm=disabled \
 			-Dgallium-drivers=panfrost,vc4,v3d,virgl \
 			-Dvulkan-drivers= \
 			-Dgbm=enabled \
-			-Dglx=dri \
-			-Dplatforms=x11,wayland
+			-Dglx=dri
+
+ifeq ($(ADK_PACKAGE_MESA_WITH_WAYLAND),y)
+MESON_FLAGS+=		-Dplatforms="wayland"
+endif
+
+ifeq ($(ADK_PACKAGE_MESA_WITH_X11),y)
+MESON_FLAGS+=		-Dplatforms="x11"
+endif
 
 mesa-install:
 	$(INSTALL_DIR) $(IDIR_MESA)/usr/lib/dri
