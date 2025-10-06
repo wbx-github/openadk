@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		curl
-PKG_VERSION:=		8.13.0
+PKG_VERSION:=		8.16.0
 PKG_RELEASE:=		1
-PKG_HASH:=		4a093979a3c2d02de2fbc00549a32771007f2e78032c6faa5ecd2f7a9e152025
+PKG_HASH:=		40c8cddbcb6cc6251c03dea423a472a6cea4037be654ba5cf5dec6eb2d22ff1d
 PKG_DESCR:=		client-side url transfer tool
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		zlib
@@ -21,7 +21,7 @@ PKG_SUBPKGS:=		LIBCURL CURL
 PKGSD_LIBCURL:=		client-side url transfer library
 PKGSC_LIBCURL:=		libs/net
 PKGSS_LIBCURL:=		zlib
-PKGSD_CURL:=		client-side url transfer utiity
+PKGSD_CURL:=		client-side url transfer utility
 PKGSC_CURL:=		net/http
 PKGSS_CURL:=		zlib libcurl
 
