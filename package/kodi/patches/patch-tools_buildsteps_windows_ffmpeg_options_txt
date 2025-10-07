@@ -1,8 +1,0 @@
---- xbmc-21.2-Omega.orig/tools/buildsteps/windows/ffmpeg_options.txt	2025-01-15 23:14:15.000000000 +0100
-+++ xbmc-21.2-Omega/tools/buildsteps/windows/ffmpeg_options.txt	2025-10-06 04:40:59.031472961 +0200
-@@ -1,5 +1,4 @@
- --disable-avdevice
----disable-crystalhd
- --disable-cuda
- --disable-cuvid
- --disable-devices

@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kodi
-PKG_VERSION:=		21.2
+PKG_VERSION:=		22.0a1
 PKG_RELEASE:=		1
-PKG_HASH:=		da3a5df663684664b9383b65f1c06568222629d935084a59e4e641fcdcb6c383
+PKG_HASH:=		da88f6aee01995caadfc6e194b8e3b51dfd193164a6c8d559d2443dd7f58f9f8
 PKG_DESCR:=		software media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		python3 libsquish libopenssl libfmt rapidjson libpcre
@@ -15,10 +15,10 @@ PKG_DEPENDS+=		libflac libbz2 libtiff libnettle librtmp liblzo libXext
 PKG_DEPENDS+=		yajl tinyxml libsqlite libpcrecpp libncurses libpng
 PKG_DEPENDS+=		libpcre2 libcdio libfreetype libsamplerate libuuid
 PKG_DEPENDS+=		taglib libjasper libmp3lame libgpg-error giflib nghttp2
-PKG_DEPENDS+=		glib libdcadec libffmpeg libxvidcore harfbuzz
+PKG_DEPENDS+=		glib libdcadec libffmpeg libxvidcore harfbuzz exiv2
 PKG_DEPENDS+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
-PKG_DEPENDS+=		xkeyboard-config tinyxml2 libdisplay-info libudfread
-PKG_BUILDDEP:=		python3 libass ffmpeg rtmpdump libudfread
+PKG_DEPENDS+=		xkeyboard-config tinyxml2 libdisplay-info libudfread json
+PKG_BUILDDEP:=		python3 libass ffmpeg rtmpdump libudfread exiv2
 PKG_BUILDDEP+=		libmpeg2 libmad libjpeg-turbo fmt rapidjson
 PKG_BUILDDEP+=		curl flac bzip2 libtiff yajl cmake-host libdisplay-info
 PKG_BUILDDEP+=		tinyxml tinyxml2 sqlite pcre2 libcdio freetype libpng
@@ -26,14 +26,14 @@ PKG_BUILDDEP+=		libsamplerate taglib libjasper giflib xkeyboard-config
 PKG_BUILDDEP+=		glib libmodplug libgpg-error xvidcore libxshmfence
 PKG_BUILDDEP+=		swig-host liblzo-host libpng-host libjpeg-turbo-host
 PKG_BUILDDEP+=		zip-host unzip-host giflib-host libsquish libdcadec
-PKG_BUILDDEP+=		libcrossguid openssl bzip2 liblzo harfbuzz pcre
+PKG_BUILDDEP+=		openssl bzip2 liblzo harfbuzz pcre json
 PKG_BUILDDEP+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
 PKG_NEEDS:=		threads c++ data iconv
 PKG_URL:=		http://kodi.tv/
 PKG_SITES:=		https://github.com/xbmc/xbmc/archive/
 
-DISTFILES:=		$(PKG_VERSION)-Omega.tar.gz
-WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Omega
+DISTFILES:=		$(PKG_VERSION)-Piers.tar.gz
+WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Piers
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
 PKG_SYSTEM_DEPENDS:=	qemu-x86_64 raspberry-pi raspberry-pi2 raspberry-pi3 raspberry-pi4 raspberry-pi4-64 rockpi4-plus raspberry-pi5
@@ -74,7 +74,6 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DVERBOSE=ON \
 			-DENABLE_DVDCSS=ON \
 			-DENABLE_INTERNAL_FFMPEG=OFF \
-			-DENABLE_INTERNAL_CROSSGUID=OFF \
 			-DENABLE_INTERNAL_RapidJSON=OFF \
 			-DWITH_FFMPEG=$(STAGING_TARGET_DIR)/usr \
 			-DPYTHON_EXECUTABLE=$(STAGING_HOST_DIR)/usr/bin/python3 \
@@ -101,6 +100,7 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DNATIVEPREFIX=$(STAGING_HOST_DIR)/usr \
 			-DDEPENDS_PATH=$(STAGING_TARGET_DIR)/usr \
 			-DWITH_JSONSCHEMABUILDER=$(STAGING_HOST_DIR)/usr/bin/JsonSchemaBuilder \
+			-DWITH_TEXTUREPACKER=$(STAGING_HOST_DIR)/usr/bin/TexturePacker \
 			-DCMAKE_EXE_LINKER_FLAGS="-latomic" \
 			-DLIBDVDCSS_URL=$(DL_DIR)/libdvdcss-1.4.3-Next-Nexus-Alpha2-2.tar.gz \
 			-DLIBDVDNAV_URL=$(DL_DIR)/libdvdnav-6.1.1-Next-Nexus-Alpha2-2.tar.gz \
@@ -179,13 +179,13 @@ pre-configure:
 	PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src
 	cp $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src/JsonSchemaBuilder \
 		$(STAGING_HOST_DIR)/usr/bin/JsonSchemaBuilder
-	#(cd $(WRKSRC)/tools/depends/native/TexturePacker/src && PATH='$(HOST_PATH)' cmake \
-	#	-DKODI_SOURCE_DIR=$(WRKSRC) \
-	#	-DCMAKE_MODULE_PATH=$(WRKSRC)/cmake/modules \
-	#	-DCMAKE_CXX_FLAGS="$(HOST_CXXFLAGS)" .)
-	#PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/TexturePacker/src
-	#cp $(WRKSRC)/tools/depends/native/TexturePacker/src/TexturePacker \
-	#	$(STAGING_HOST_DIR)/usr/bin
+	(cd $(WRKSRC)/tools/depends/native/TexturePacker/src && PATH='$(HOST_PATH)' cmake \
+		-DKODI_SOURCE_DIR=$(WRKSRC) \
+		-DCMAKE_MODULE_PATH=$(WRKSRC)/cmake/modules \
+		-DCMAKE_CXX_FLAGS="$(HOST_CXXFLAGS)" .)
+	PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/TexturePacker/src
+	cp $(WRKSRC)/tools/depends/native/TexturePacker/src/TexturePacker \
+		$(STAGING_HOST_DIR)/usr/bin
 	(cd $(DL_DIR) && wget -O libdvdcss-$(KODI_LIBDVDCSS_VERSION).tar.gz https://github.com/xbmc/libdvdcss/archive/refs/tags/$(KODI_LIBDVDCSS_VERSION).tar.gz)
 	(cd $(DL_DIR) && wget -O libdvdnav-$(KODI_LIBDVDNAV_VERSION).tar.gz https://github.com/xbmc/libdvdnav/archive/refs/tags/$(KODI_LIBDVDNAV_VERSION).tar.gz)
 	(cd $(DL_DIR) && wget -O libdvdread-$(KODI_LIBDVDREAD_VERSION).tar.gz https://github.com/xbmc/libdvdread/archive/refs/tags/$(KODI_LIBDVDREAD_VERSION).tar.gz)
