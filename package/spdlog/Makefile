@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		spdlog
-PKG_VERSION:=		1.9.2
+PKG_VERSION:=		1.15.3
 PKG_RELEASE:=		1
-PKG_HASH:=		6fff9215f5cb81760be4cc16d033526d1080427d236e86d70bb02994f85e3d38
+PKG_HASH:=		15a04e69c222eb6c01094b5c7ff8a249b36bb22788d72519646fb85feb267e67
 PKG_DESCR:=		very fast, header-only/compiled, C++ logging library
 PKG_BUILDDEP:=		fmt
 PKG_SECTION:=		libs/misc
