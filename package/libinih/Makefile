@@ -32,5 +32,7 @@ libinih-install:
 	$(INSTALL_DIR) $(IDIR_LIBINIH)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libinih*.so* \
 		$(IDIR_LIBINIH)/usr/lib
+	$(CP) $(WRKINST)/usr/lib/libINIReader*.so* \
+		$(IDIR_LIBINIH)/usr/lib
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
