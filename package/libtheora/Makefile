@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libtheora
-PKG_VERSION:=		1.1.1
-PKG_RELEASE:=		2
-PKG_HASH:=		b6ae1ee2fa3d42ac489287d3ec34c5885730b1296f0801ae577a35193d3affbc
+PKG_VERSION:=		1.2.0
+PKG_RELEASE:=		1
+PKG_HASH:=		279327339903b544c28a92aeada7d0dcfd0397b59c2f368cc698ac56f515906e
 PKG_DESCR:=		open source video codec library
 PKG_SECTION:=		libs/video
 PKG_DEPENDS:=		libogg libvorbis
@@ -15,7 +15,7 @@ PKG_URL:=		http://www.theora.org/
 PKG_SITES:=		http://downloads.xiph.org/releases/theora/
 PKG_OPTS:=		dev
 
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
+DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
