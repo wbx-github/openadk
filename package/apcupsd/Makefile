@@ -11,12 +11,12 @@ PKG_DESCR:=		APC UPS daemon with integrated tcp/ip remote shutdown
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		libusb
 PKG_BUILDDEP:=		libusb
+PKG_KDEPENDS:=		usb-hid usb-hiddev
 PKG_URL:=		http://www.apcupsd.org
 PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=apcupsd/)
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_CFLINE_APCUPSD:=	select BUSYBOX_WALL@
-PKG_CFLINE_APCUPSD+=	select ADK_LINUX_KERNEL_USB_HID@
 
 include $(ADK_TOPDIR)/mk/package.mk
 

@@ -112,6 +112,12 @@ config ADK_LINUX_KERNEL_USB_HID
 	help
 	  You need this driver for USB keyboard and mouse support.
 
+config ADK_LINUX_KERNEL_USB_HIDDEV
+	bool "support for /dev/usb/hiddevX device"
+	help
+	  Enable access to HID devices that aren't strictly user interface
+	  devices, like monitor controls and Uninterruptible Power Supplies.
+
 config ADK_TARGET_USB_KEYBOARD
 	bool "enable keyboard support"
 	depends on ADK_LINUX_KERNEL_USB_HID
