@@ -74,6 +74,11 @@ ifeq ($(ADK_TARGET_SOFT_FLOAT),y)
 	$(SED) 's/.*\(UCLIBC_HAS_FENV\).*/# \1 is not set/' ${WRKBUILD}/.config
 	$(SED) 's/.*\(UCLIBC_HAS_SOFT_FLOAT\).*/#\1=y/' ${WRKBUILD}/.config
 endif
+ifeq ($(ADK_TARGET_SOFTFP_FLOAT),y)
+	$(SED) 's/.*\(UCLIBC_HAS_FPU\).*/# \1 is not set/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(UCLIBC_HAS_FENV\).*/# \1 is not set/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(UCLIBC_HAS_SOFT_FLOAT\).*/#\1=y/' ${WRKBUILD}/.config
+endif
 ifeq ($(ADK_TARGET_HARD_FLOAT),y)
 	$(SED) 's/.*\(UCLIBC_HAS_FPU\).*/\1=y/' ${WRKBUILD}/.config
 	$(SED) 's/.*\(UCLIBC_HAS_SOFT_FLOAT\).*/# \1 is not set/' ${WRKBUILD}/.config
