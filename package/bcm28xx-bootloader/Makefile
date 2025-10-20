@@ -41,7 +41,7 @@ ifeq ($(ADK_RUNTIME_VERBOSE_KERNEL_VGA_ONLY),y)
 			$(IDIR_BCM28XX_BOOTLOADER)/boot/cmdline.txt
 endif
 	printf "kernel=kernel\n" > $(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
-	printf "dtparam=audio,i2s,spi,i2c\n" >> \
+	printf "dtparam=audio=on,spi=on,i2c_arm=on\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 ifeq ($(ADK_PACKAGE_BCM28XX_BOOTLOADER_DEFAULT),y)
 ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI4)$(ADK_TARGET_SYSTEM_RASPBERRY_PI4_64),y)
