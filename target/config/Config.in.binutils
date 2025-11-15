@@ -18,7 +18,7 @@ config ADK_TOOLCHAIN_BINUTILS_GIT
 	depends on !ADK_TARGET_ARCH_AVR32
 
 config ADK_TOOLCHAIN_BINUTILS_2_45
-	bool "2.45"
+	bool "2.45.1"
 	depends on !ADK_TARGET_ARCH_AVR32
 	depends on !ADK_TARGET_ARCH_NIOS2
 

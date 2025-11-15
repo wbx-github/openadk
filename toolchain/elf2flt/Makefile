@@ -11,7 +11,7 @@ BINUTILS_VERSION:=	git
 BFDLIB:=		.libs/libbfd.a
 endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_45),y)
-BINUTILS_VERSION:=	2.45
+BINUTILS_VERSION:=	2.45.1
 BFDLIB:=		.libs/libbfd.a
 endif
 ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_44),y)
