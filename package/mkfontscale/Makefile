@@ -9,7 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		3a026b468874eb672a1d0a57dbd3ddeda4f0df09886caf97d30097b70c2df3f8
 PKG_DESCR:=		font utility
 PKG_SECTION:=		x11/fonts
-PKG_DEPENDS:=		freetype libfontenc
+PKG_DEPENDS:=		libfreetype libfontenc
 PKG_BUILDDEP:=		freetype libfontenc
 PKG_SITES:=		http://www.x.org/releases/individual/app/
 
