@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		valgrind
-PKG_VERSION:=		3.24.0
+PKG_VERSION:=		3.26.0
 PKG_RELEASE:=		1
-PKG_HASH:=		71aee202bdef1ae73898ccf7e9c315134fa7db6c246063afc503aef702ec03bd
+PKG_HASH:=		8d54c717029106f1644aadaf802ab9692e53d93dd015cbd19e74190eba616bd7
 PKG_DESCR:=		memory management debugging tool
 PKG_SECTION:=		app/debug
 PKG_URL:=		http://valgrind.org/
