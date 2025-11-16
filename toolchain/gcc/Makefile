@@ -416,6 +416,7 @@ ifeq ($(ADK_TARGET_CPU_CF),y)
 endif
 	# install libatomic including .so symlink
 	-$(CP) $(GCC_BUILD_DIR_FINAL)/$(GNU_TARGET_NAME)/libatomic/.libs/libatomic*.so* $(STAGING_TARGET_DIR)/usr/lib
+	-$(CP) $(GCC_BUILD_DIR_FINAL)/$(GNU_TARGET_NAME)/libstdc++-v3/src/.libs/libstdc++.so* $(STAGING_TARGET_DIR)/usr/lib
 	# cleanup unneeded docs
 	rm -rf $(TOOLCHAIN_DIR)/usr/share
 	# cleanup unneeded libtool files
