@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		lua
-PKG_VERSION:=		5.3.4
+PKG_VERSION:=		5.4.8
 PKG_RELEASE:=		1
-PKG_HASH:=		f681aa518233bc407e23acf0f5887c884f17436f000d453b2491a9f11a52400c
+PKG_HASH:=		4f18ddae154e793e46eeab727c59ef1c0c0c2b744e7b94219710d76f530629ae
 PKG_DESCR:=		programming language interpreter
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libreadline
@@ -33,6 +33,9 @@ MAKE_FLAGS+=		CFLAGS="${TARGET_CFLAGS} ${TARGET_CPPFLAGS} -DLUA_USE_LINUX -fPIC"
 			RANLIB="${TARGET_CROSS}ranlib"
 XAKE_FLAGS+=		INSTALL_TOP="${WRKINST}/usr"
 ALL_TARGET:=		linux
+
+post-install:
+	$(CP) ./files/lua.pc $(STAGING_TARGET_DIR)/usr/lib/pkgconfig
 
 lua-install:
 	${INSTALL_DIR} ${IDIR_LUA}/usr/bin
