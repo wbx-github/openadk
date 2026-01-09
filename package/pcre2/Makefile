@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pcre2
-PKG_VERSION:=		10.45
+PKG_VERSION:=		10.47
 PKG_RELEASE:=		1
-PKG_HASH:=		35ce7d21f511c4a81d7079164077d25fbc41af00f19e1b547801df905c5f0fab
+PKG_HASH:=		409c443549b13b216da40049850a32f3e6c57d4224ab11553ab5a786878a158e
 PKG_DESCR:=		perl compatible regular expression library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		cmake-host
