@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		readline
-PKG_VERSION:=		8.2
+PKG_VERSION:=		8.3
 PKG_RELEASE:=		1
-PKG_HASH:=		3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35
+PKG_HASH:=		fe5383204467828cd495ee8d1d3c037a7eba1389c22bc6a041f627976f9061cc
 PKG_DESCR:=		command line editing library
 PKG_SECTION:=		libs/misc
 PKG_SITES:=		${MASTER_SITE_GNU:=readline/}
