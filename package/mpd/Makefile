@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mpd
-PKG_VERSION:=		0.23.15
+PKG_VERSION:=		0.24.6
 PKG_RELEASE:=		1
-PKG_HASH:=		550132239ad1acf82ccf8905b56cc13dc2c81a4489b96fba7731b3049907661a
+PKG_HASH:=		8ce34a010577feb42999a96d867325c6d38bf7ae1b7a57f878d7e548c1fd1fa9
 PKG_DESCR:=		music player daemon
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		libmpdclient boost libncurses libexpat libsqlite libfmt libxcb
@@ -16,12 +16,12 @@ PKG_BUILDDEP+=		libXau libXdmcp
 PKG_FDEPENDS:=		libmpdclient
 PKG_NEEDS:=		threads c++ data
 PKG_URL:=		http://www.musicpd.org/
-PKG_SITES:=		http://www.musicpd.org/download/mpd/0.23/
+PKG_SITES:=		http://www.musicpd.org/download/mpd/0.24/
 
 PKG_FLAVOURS_MPD:=	WITH_ALSA WITH_AO WITH_MP3 WITH_MP4
 PKG_FLAVOURS_MPD+=	WITH_OGG WITH_FLAC WITH_WAV WITH_MMS WITH_FFMPEG
 PKG_FLAVOURS_MPD+=	WITH_SHOUT WITH_CURL WITH_SAMPLERATE WITH_HTTPD
-PKG_FLAVOURS_MPD+=	WITH_SNDFILE WITH_OPUS WITH_PULSE WITH_AVAHI WITH_JACK
+PKG_FLAVOURS_MPD+=	WITH_SNDFILE WITH_OPUS WITH_PULSE WITH_AVAHI
 
 PKGFD_WITH_ALSA:=	enable ALSA output
 PKGFS_WITH_ALSA:=	alsa-lib
@@ -34,12 +34,6 @@ PKGFS_WITH_AO:=		libao
 PKGFB_WITH_AO:=		libao
 ifeq ($(ADK_PACKAGE_MPD_WITH_AO),y)
 PKG_FDEPENDS+=		libao
-endif
-PKGFD_WITH_JACK:=	enable JACK support
-PKGFS_WITH_JACK:=	jack
-PKGFB_WITH_JACK:=	jack
-ifeq ($(ADK_PACKAGE_MPD_WITH_JACK),y)
-PKG_FDEPENDS+=		jack
 endif
 PKGFD_WITH_MP3:=	enable MP3 support
 PKGFS_WITH_MP3:=	libid3tag libmad
@@ -147,13 +141,8 @@ TARGET_CPPFLAGS+=	-D_GNU_SOURCE -D_POSIX_SOURCE
 TARGET_CFLAGS+=		-std=gnu99
 
 MESON_FLAGS+=	-Dfifo=false \
-		-Doss=disabled
-
-ifneq ($(ADK_PACKAGE_MPD_WITH_JACK),)
-MESON_FLAGS+=	-Djack=enabled
-else
-MESON_FLAGS+=	-Djack=disabled
-endif
+		-Doss=disabled \
+		-Djack=disabled
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_SNDFILE),)
 MESON_FLAGS+=	-Dsndfile=enabled
