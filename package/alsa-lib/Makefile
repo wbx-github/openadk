@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		alsa-lib
-PKG_VERSION:=		1.2.14
+PKG_VERSION:=		1.2.15.2
 PKG_RELEASE:=		1
-PKG_HASH:=		be9c88a0b3604367dd74167a2b754a35e142f670292ae47a2fdef27a2ee97a32
+PKG_HASH:=		637eefd4966ce738da44464494df2b2894e19778fac2f9e7c47277e2af9297f4
 PKG_DESCR:=		sound library
 PKG_SECTION:=		libs/audio
 PKG_URL:=		http://www.alsa-project.org/
@@ -20,10 +20,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call HOST_template,ALSA_LIB,alsa-lib,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,ALSA_LIB,alsa-lib,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
-
-ifneq ($(ADK_HOST_LINUX),y)
-HOST_LINUX_ONLY:=	1
-endif
 
 HOST_STYLE:=		auto
 HOST_CONFIGURE_ARGS+=	--disable-python
