@@ -1,4 +1,0 @@
-#!/bin/sh
-. $IPKG_INSTROOT/etc/functions.sh
-add_rcconf jack NO
-add_rcconf jack_flags '-R -P70 -dalsa -r44100 -dhw:0 -p1024'

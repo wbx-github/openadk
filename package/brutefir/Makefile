@@ -16,11 +16,8 @@ PKG_SITES:=		https://www.ludd.ltu.se/~torger/files/
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
-PKG_CHOICES_BRUTEFIR:=	WITH_JACK WITH_JACK2
-PKGCD_WITH_JACK:=	use jack (v1)
-PKGCB_WITH_JACK:=	jack
-PKGCS_WITH_JACK:=	jack
-PKGCD_WITH_JACK2:=	use jack (v2)
+PKG_CHOICES_BRUTEFIR:=	WITH_JACK2
+PKGCD_WITH_JACK2:=	use jack
 PKGCB_WITH_JACK2:=	jack2
 PKGCS_WITH_JACK2:=	jack2
 

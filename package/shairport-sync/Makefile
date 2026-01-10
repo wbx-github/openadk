@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_GIT:=		tag
 PKG_DESCR:=		airplay daemon	
 PKG_SECTION:=		mm/audio	
-PKG_DEPENDS:=		libressl libpopt libdaemon libconfig jack mosquitto libavahi
-PKG_BUILDDEP:=		libressl popt libdaemon libconfig jack mosquitto avahi
+PKG_DEPENDS:=		libopenssl libpopt libdaemon libconfig mosquitto libavahi
+PKG_BUILDDEP:=		openssl popt libdaemon libconfig mosquitto avahi
 PKG_URL:=		https://github.com/mikebrady/shairport-sync
 PKG_SITES:=		https://github.com/mikebrady/shairport-sync.git
 
@@ -22,11 +22,11 @@ AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--with-pkg-config \
   			--without-systemv \
   			--without-systemd \
+  			--without-jack \
 			--with-libdaemon \
   			--with-avahi \
  			--disable-tinysvcmdns \
   			--with-alsa \
-  			--with-jack \
   			--with-mqtt-client \
 			-with-ssl=openssl
 
