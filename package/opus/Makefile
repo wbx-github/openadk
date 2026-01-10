@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		opus
-PKG_VERSION:=		1.3.1
+PKG_VERSION:=		1.6
 PKG_RELEASE:=		1
-PKG_HASH:=		65b58e1e25b2a114157014736a3d9dfeaad8d41be1c8179866f144a2fb44ff9d
+PKG_HASH:=		b7637334527201fdfd6dd6a02e67aceffb0e5e60155bbd89175647a80301c92c
 PKG_DESCR:=		open, royalty-free, highly versatile audio codec
 PKG_SECTION:=		libs/audio
 PKG_URL:=		http://opus-codec.org/
-PKG_SITES:=		https://archive.mozilla.org/pub/opus/
+PKG_SITES:=		https://downloads.xiph.org/releases/opus/
 PKG_LIBNAME:=		libopus
 PKG_OPTS:=		dev
 
@@ -21,6 +21,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,LIBOPUS,libopus,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 TARGET_CFLAGS:=		$(filter-out -ffast-math,$(TARGET_CFLAGS))
+CONFIGURE_ARGS+=	--disable-stack-protector
 
 libopus-install:
 	$(INSTALL_DIR) $(IDIR_LIBOPUS)/usr/lib
