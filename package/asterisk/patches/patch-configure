@@ -1,0 +1,22 @@
+--- asterisk-22.7.0.orig/configure	2025-11-20 21:00:34.000000000 +0100
++++ asterisk-22.7.0/configure	2026-01-10 10:22:02.971366731 +0100
+@@ -32294,19 +32294,6 @@ printf "%s\n" "no" >&6; }
+ fi
+ 
+ 
+-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for -march=native support" >&5
+-printf %s "checking for -march=native support... " >&6; }
+-if $(${CC} -march=native -S -o /dev/null -xc /dev/null > /dev/null 2>&1); then
+-	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+-printf "%s\n" "yes" >&6; }
+-	AST_NATIVE_ARCH=1
+-else
+-	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-printf "%s\n" "no" >&6; }
+-	AST_NATIVE_ARCH=0
+-fi
+-
+-
+ 
+ # Check whether --enable-rpath was given.
+ if test ${enable_rpath+y}
