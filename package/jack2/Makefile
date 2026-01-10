@@ -6,6 +6,7 @@ include $(ADK_TOPDIR)/rules.mk
 PKG_NAME:=		jack2
 PKG_VERSION:=		1.9.22
 PKG_RELEASE:=		1
+PKG_DESCR:=		audio connection kit
 PKG_HASH:=		1e42b9fc4ad7db7befd414d45ab2f8a159c0b30fcd6eee452be662298766a849
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		alsa-lib libsndfile libsamplerate
