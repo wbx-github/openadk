@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pulseaudio
-PKG_VERSION:=		15.0
+PKG_VERSION:=		17.0
 PKG_RELEASE:=		1
-PKG_HASH:=		a40b887a3ba98cc26976eb11bdb6613988f145b19024d1b6555c6a03c9cba1a0
+PKG_HASH:=		053794d6671a3e397d849e478a80b82a63cb9d8ca296bd35b73317bb5ceb87b5
 PKG_DESCR:=		sound system
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		libltdl json-c libsndfile libspeex libncurses
@@ -50,9 +50,9 @@ pulseaudio-install:
 	$(INSTALL_DIR) $(IDIR_PULSEAUDIO)/usr/lib/pulseaudio
 	$(CP) $(WRKINST)/usr/lib/pulseaudio/libpulse*.so* \
 		$(IDIR_PULSEAUDIO)/usr/lib/pulseaudio
-	$(INSTALL_DIR) $(IDIR_PULSEAUDIO)/usr/lib/pulse-$(PKG_VERSION)/modules
-	$(CP) $(WRKINST)/usr/lib/pulse-$(PKG_VERSION)/modules/*.so \
-		$(IDIR_PULSEAUDIO)/usr/lib/pulse-$(PKG_VERSION)/modules
+	$(INSTALL_DIR) $(IDIR_PULSEAUDIO)/usr/lib/pulseaudio/modules
+	$(CP) $(WRKINST)/usr/lib/pulseaudio/modules/*.so \
+		$(IDIR_PULSEAUDIO)/usr/lib/pulseaudio/modules
 	# pa uses $HOME from root user otherwise
 	mv $(IDIR_PULSEAUDIO)/usr/bin/pacmd $(IDIR_PULSEAUDIO)/usr/bin/pacmd.bin
 	echo "#!/bin/sh" > $(IDIR_PULSEAUDIO)/usr/bin/pacmd
