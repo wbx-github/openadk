@@ -42,8 +42,8 @@ endif
 ifeq ($(ADK_TOOLCHAIN_WITH_GDB),y)
 # disable gdb for some architectures
 ifeq ($(ADK_TARGET_ARCH_CR16)$(ADK_TARGET_ARCH_EPIPHANY)$(ADK_TARGET_ARCH_METAG)$(ADK_TARGET_ARCH_NDS32),)
-TARGETS+=expat gdb
-GDB:=expat-install gdb-install
+TARGETS+=libiconv expat gdb
+GDB:=libiconv-install expat-install gdb-install
 endif
 endif
 

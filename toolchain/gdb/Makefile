@@ -33,6 +33,7 @@ $(WRKBUILD)/.configured:
 		--with-mpfr='${STAGING_HOST_DIR}/usr' \
 		--with-expat \
 		--with-libexpat-prefix='${STAGING_HOST_DIR}/usr' \
+		--with-libiconv-prefix='${STAGING_HOST_DIR}/usr' \
 		--disable-dependency-tracking \
 		--without-uiout \
 		--enable-gdbmi \
