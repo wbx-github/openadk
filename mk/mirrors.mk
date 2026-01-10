@@ -28,8 +28,6 @@ MASTER_SITE_GNU?=	\
 	http://ftp.gnu.org/gnu/ \
 
 MASTER_SITE_SOURCEFORGE?=	\
-	http://jaist.dl.sourceforge.net/sourceforge/ \
-	http://heanet.dl.sourceforge.net/sourceforge/ \
 	http://netcologne.dl.sourceforge.net/sourceforge/ \
 	http://nchc.dl.sourceforge.net/sourceforge/ \
 	http://kent.dl.sourceforge.net/sourceforge/ \
