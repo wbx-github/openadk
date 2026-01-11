@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ruby
-PKG_VERSION:=		3.4.6
+PKG_VERSION:=		4.0.0
 PKG_RELEASE:=		1
-PKG_HASH:=		804995bc22938aa475127000d3103cb133409ad3955edfc0e7412be66a4859b8
+PKG_HASH:=		a72bacee9de07283ebc19baa4ac243b193129f21aa4e168c7186fb1fe7d07fe1
 PKG_DESCR:=		scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libopenssl zlib
@@ -14,7 +14,7 @@ PKG_BUILDDEP:=		ruby-host openssl zlib
 HOST_BUILDDEP:=		openssl-host yaml-host
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.ruby-lang.org/
-PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/3.4/
+PKG_SITES:=		http://ftp.ruby-lang.org/pub/ruby/4.0/
 
 include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
