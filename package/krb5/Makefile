@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		krb5
-PKG_VERSION:=		1.18
+PKG_VERSION:=		1.22.1
 PKG_RELEASE:=		1
-PKG_HASH:=		73913934d711dcf9d5f5605803578edb44b9a11786df3c1b2711f4e1752f2c88
+PKG_HASH:=		1a8832b8cad923ebbf1394f67e2efcf41e3a49f460285a66e35adec8fa0053af
 PKG_DESCR:=		kerberos server
 PKG_SECTION:=		app/crypto
 PKG_DEPENDS:=		libkrb5 libncurses keyutils
 PKG_BUILDDEP:=		ncurses bison-host
 PKG_NEEDS:=		threads intl
 PKG_URL:=		http://web.mit.edu/kerberos/
-PKG_SITES:=		https://kerberos.org/dist/krb5/1.18/
+PKG_SITES:=		https://kerberos.org/dist/krb5/1.22/
 PKG_LIBNAME:=		libkrb5
 PKG_OPTS:=		dev noscripts
 PKG_NOPARALLEL:=	1
