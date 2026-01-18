@@ -43,8 +43,9 @@ CONFIGURE_ARGS+=	--without-cxx \
 			--with-build-cc="${HOST_CC}" \
 			--with-pkg-config-libdir=/usr/lib/pkgconfig \
 			--without-progs \
-			--disable-termcap \
+			--enable-pc-files \
 			--enable-symlinks \
+			--disable-termcap \
 			--without-ada \
 			--without-normal \
 			--enable-pc-files \

@@ -21,6 +21,8 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,READLINE,readline,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBREADLINE,libreadline,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+CONFIGURE_ARGS+=	--with-curses
+
 libreadline-install:
 	${INSTALL_DIR} ${IDIR_LIBREADLINE}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libhistory.so* ${IDIR_LIBREADLINE}/usr/lib
