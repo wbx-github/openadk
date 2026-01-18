@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		strongswan
-PKG_VERSION:=		5.9.5
+PKG_VERSION:=		6.0.4
 PKG_RELEASE:=		1
-PKG_HASH:=		6db028c9033dfd7cab578ca7e4b0075922cffec7af8bffc7d67cac67f348a5be
+PKG_HASH:=		7e1e7be46393477f908d82968162d409a28c47c1ba7d60e17122670a129a79f8
 PKG_DESCR:=		ipsec based vpn software
 PKG_SECTION:=		net/security
 PKG_KDEPENDS:=		net-key inet-esp xfrm-user inet-xfrm-mode-transport
@@ -17,7 +17,10 @@ PKG_SITES:=		http://download.strongswan.org/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
-PKG_CHOICES_STRONGSWAN:=WITH_LIBRESSL WITH_GNUTLS WITH_GMP
+PKG_CHOICES_STRONGSWAN:=WITH_OPENSSL WITH_LIBRESSL WITH_GNUTLS WITH_GMP
+PKGCD_WITH_OPENSSL:=	use openssl for crypto
+PKGCS_WITH_OPENSSL:=	libopenssl
+PKGCB_WITH_OPENSSL:=	openssl
 PKGCD_WITH_GMP:=	use gmp for crypto
 PKGCS_WITH_GMP:=	libgmp
 PKGCB_WITH_GMP:=	gmp
@@ -32,6 +35,11 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,STRONGSWAN,strongswan,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+ifeq (${ADK_PACKAGE_STRONGSWAN_WITH_OPENSSL},y)
+CONFIGURE_ARGS+=	--enable-openssl \
+			--disable-gcrypt \
+			--disable-gmp
+endif
 ifeq (${ADK_PACKAGE_STRONGSWAN_WITH_LIBRESSL},y)
 CONFIGURE_ARGS+=	--enable-openssl \
 			--disable-gcrypt \
@@ -66,7 +74,7 @@ strongswan-install:
 	$(CP) $(WRKINST)/etc/* $(IDIR_STRONGSWAN)/etc
 	$(CP) $(WRKINST)/usr/libexec/ipsec/* \
 		$(IDIR_STRONGSWAN)/usr/libexec/ipsec
-	$(INSTALL_BIN) $(WRKINST)/usr/sbin/ipsec \
+	$(INSTALL_BIN) $(WRKINST)/usr/sbin/swanctl \
 		$(IDIR_STRONGSWAN)/usr/sbin
 	$(CP) $(WRKINST)/usr/lib/ipsec/libvici*.so* \
 		$(IDIR_STRONGSWAN)/usr/lib/ipsec/
