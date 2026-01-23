@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nginx
-PKG_VERSION:=		1.26.1
+PKG_VERSION:=		1.28.1
 PKG_RELEASE:=		1
-PKG_HASH:=		f9187468ff2eb159260bfd53867c25ff8e334726237acf227b9e870e53d3e36b
+PKG_HASH:=		40e7a0916d121e8905ef50f2a738b675599e42b2224a582dd938603fed15788e
 PKG_DESCR:=		powerful http reverse proxy and webserver
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		pcre zlib
@@ -17,7 +17,10 @@ PKG_SITES:=		http://nginx.org/download/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
-PKG_CHOICES_NGINX:=	WITH_LIBRESSL WITHOUT_SSL
+PKG_CHOICES_NGINX:=	WITH_OPENSSL WITH_LIBRESSL WITHOUT_SSL
+PKGCD_WITH_OPENSSL:=	use openssl for crypto
+PKGCB_WITH_OPENSSL:=	openssl
+PKGCS_WITH_OPENSSL:=	openssl ca-certificates
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCB_WITH_LIBRESSL:=	libressl
 PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
@@ -53,6 +56,10 @@ CONFIGURE_ARGS:=        --prefix=/srv/www \
 ifeq ($(ADK_PACKAGE_NGINX_WITH_LIBRESSL),y)
 CONFIGURE_ARGS+=	--with-http_ssl_module
 endif
+ifeq ($(ADK_PACKAGE_NGINX_WITH_OPENSSL),y)
+CONFIGURE_ARGS+=	--with-http_ssl_module
+endif
+
 
 ALL_TARGET:=		
 
