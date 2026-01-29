@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2025.04
+PKG_VERSION:=		2026.01
 PKG_RELEASE:=		1
-PKG_HASH:=		439d3bef296effd54130be6a731c5b118be7fddd7fcc663ccbc5fb18294d8718
+PKG_HASH:=		b60d5865cefdbc75da8da4156c56c458e00de75a49b80c1a2e58a96e30ad0d54
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		gnutls-host openssl-host dtc-host swig-host python3-host python3-setuptools-host
@@ -16,7 +16,7 @@ PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
-PKG_SYSTEM_DEPENDS:=	banana-p2-zero beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g starfive-visionfive2
+PKG_SYSTEM_DEPENDS:=	banana-p2-zero beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g starfive-visionfive2 microchip-pic32
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -90,6 +90,10 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_STARFIVE_VISIONFIVE2),y)
 CONFIG:=		starfive_visionfive2_defconfig
 UBOOT:=			u-boot.itb
+endif
+ifeq ($(ADK_TARGET_SYSTEM_MICROCHIP_PIC32),y)
+CONFIG:=		pic32mzdask_defconfig
+UBOOT:=			u-boot-dtb.bin
 endif
 
 MAKE_FLAGS+=		HOSTCFLAGS="-I$(STAGING_HOST_DIR)/usr/include" \
