@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #-
-# Copyright © 2010-2025
+# Copyright © 2010-2026
 #	Waldemar Brodkorb <wbx@openadk.org>
 #	Thorsten Glaser <tg@mirbsd.org>
 #
@@ -128,7 +128,7 @@ case $ostype {
 	tools="bc mkfs.ext4 mkfs.vfat tune2fs partprobe"
 	;;
 (*)
-	print -u2 Sorry, not ported to the OS "'$ostype'" yet.
+	print -u2 Sorry, not ported to the OS "'$ostype'".
 	exit 1
 	;;
 }
@@ -148,7 +148,7 @@ tgt=$2
 src=$3
 
 case $target {
-(atmel-ngw100|banana-pro|banana-pro-zero|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|raspberry-pi5|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|hp-jornada|default) ;;
+(atmel-ngw100|banana-pro|banana-pro-zero|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|raspberry-pi5|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|hp-jornada|olpc-xo-1|default) ;;
 (*)
 	print -u2 "Unknown target '$target', exiting"
 	exit 1 ;;
@@ -658,6 +658,9 @@ case $target {
 	mkimage -A arm -O linux -T script -C none -a 0 -e 0 \
 		-n "BananaProZero" \
 		-d $fwdir/boot.script.bpizero $R/boot/boot.scr.uimg
+	;;
+(olpc-xo-1)
+        cp $ADK_TOPDIR/target/x86/olpc-xo-1/olpc.fth "$R/boot/"
 	;;
 }
 
