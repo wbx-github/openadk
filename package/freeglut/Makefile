@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		freeglut
-PKG_VERSION:=		3.6.0
+PKG_VERSION:=		3.8.0
 PKG_RELEASE:=		1
-PKG_HASH:=		9c3d4d6516fbfa0280edc93c77698fb7303e443c1aaaf37d269e3288a6c3ea52
+PKG_HASH:=		674dcaff25010e09e450aec458b8870d9e98c46f99538db457ab659b321d9989
 PKG_DESCR:=		opengl utility toolkit libraries
 PKG_SECTION:=		libs/video
 PKG_DEPENDS:=		libglu
 PKG_BUILDDEP:=		glu cmake-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://freeglut.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=freeglut/}
+PKG_SITES:=		https://github.com/freeglut/freeglut/releases/download/v3.8.0/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
