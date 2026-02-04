@@ -5,7 +5,7 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xorg-server
 PKG_VERSION:=		21.1.18
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		c878d1930d87725d4a5bf498c24f4be8130d5b2646a9fd0f2994deff90116352
 PKG_DESCR:=		xorg server
 PKG_SECTION:=		x11/drivers
@@ -14,7 +14,7 @@ PKG_DEPENDS+=		libfontenc xkeyboard-config xkbcomp libxau libxaw
 PKG_DEPENDS+=		libxmu libxpm libxrender libxt libxxf86dga libxext
 PKG_DEPENDS+=		libxdmcp libxv libsm libice libx11 libxcb libdrm
 PKG_DEPENDS+=		libxshmfence libfreetype libfontenc libpciaccess
-PKG_DEPENDS+=		libepoxy libdbus
+PKG_DEPENDS+=		libepoxy libdbus libudev
 PKG_BUILDDEP:=		libX11 randrproto renderproto fixesproto damageproto
 PKG_BUILDDEP+=		scrnsaverproto resourceproto fontsproto videoproto
 PKG_BUILDDEP+=		compositeproto evieext libxkbfile libXfont2 pixman
@@ -66,6 +66,7 @@ CONFIGURE_ARGS+=	--enable-dga \
 			--enable-xv \
 			--enable-vgahw \
 			--enable-dpms \
+			--enable-int10-module \
 			--enable-xinerama \
 			--enable-config-udev \
 			--disable-debug \
