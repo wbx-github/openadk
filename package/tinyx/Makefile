@@ -31,6 +31,7 @@ $(eval $(call PKG_template,TINYX,tinyx,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPEN
 
 AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--with-fontdir=/usr/share/fonts/X11
+TARGET_CFLAGS+=		-std=gnu89
 
 tinyx-install:
 	$(INSTALL_DIR) $(IDIR_TINYX)/usr/bin
