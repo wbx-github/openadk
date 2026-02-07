@@ -10,7 +10,7 @@ PKG_HASH:=		1066ed42ea7fe0ce19e79becd029c651c15689922de8408e13e70bb5701931bf
 PKG_DESCR:=		small graphical web browser
 PKG_SECTION:=		x11/apps
 PKG_DEPENDS:=		libfltk libxi libpng zlib libjpeg-turbo libopenssl
-PKG_DEPENDS+=		libXrender libXfixes libXext fontconfig libxml2
+PKG_DEPENDS+=		libXrender libXfixes libXext fontconfig libxml2 ca-certificates
 PKG_BUILDDEP:=		fltk libXi libjpeg-turbo libpng zlib openssl
 PKG_NEEDS:=		threads cxx
 PKG_URL:=		https://dillo-browser.github.io/
@@ -26,7 +26,8 @@ $(eval $(call PKG_template,DILLO,dillo,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPEN
 
 TARGET_LDFLAGS+=	-latomic
 CONFIGURE_ENV+=		PNG_CONFIG=$(STAGING_TARGET_DIR)/scripts/libpng-config
-CONFIGURE_ARGS+=	--enable-tls
+CONFIGURE_ARGS+=	--enable-tls \
+			--disable-xembed
 
 dillo-install:
 	$(INSTALL_DIR) $(IDIR_DILLO)/etc/dillo
