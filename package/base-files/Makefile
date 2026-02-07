@@ -217,9 +217,11 @@ endif
 
 ifeq ($(ADK_RUNTIME_ADDUSER),y)
 	mkdir -p ${IDIR_BASE_FILES}/$(ADK_RUNTIME_USER_HOME)
-	printf "$(ADK_RUNTIME_USER_NAME):x:100:100:$(ADK_RUNTIME_USER_NAME):$(ADK_RUNTIME_USER_HOME):$(ADK_RUNTIME_USER_SHELL)\n" >> ${IDIR_BASE_FILES}/etc/passwd
-	printf "$(ADK_RUNTIME_USER_NAME):$(ADK_RUNTIME_USER_PASSWORD):16514:0:::::\n" >> ${IDIR_BASE_FILES}/etc/shadow
-	printf "$(ADK_RUNTIME_USER_NAME):x:100:\n" >> ${IDIR_BASE_FILES}/etc/group
+	printf '$(ADK_RUNTIME_USER_NAME):x:100:100:$(ADK_RUNTIME_USER_NAME):$(ADK_RUNTIME_USER_HOME):$(ADK_RUNTIME_USER_SHELL)\n' >> ${IDIR_BASE_FILES}/etc/passwd
+	printf '$(ADK_RUNTIME_USER_NAME):*NP*:16514:0:::::\n' >> ${IDIR_BASE_FILES}/etc/shadow
+	printf '$(ADK_RUNTIME_USER_NAME):x:100:\n' >> ${IDIR_BASE_FILES}/etc/group
+	$(SED) 's,\*NP\*,'"$$(awk -F\= '/^ADK_RUNTIME_USER_PASSWORD/ { print $$2 }' $(ADK_TOPDIR)/.config|sed -e 's^\"^^g'),g" \
+		 $(IDIR_BASE_FILES)/etc/shadow
 endif
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
