@@ -12,6 +12,9 @@ endif
 ifeq ($(ADK_TARGET_KERNEL_UIMAGEGZ),y)
 KERNEL:=$(LINUX_DIR)/arch/mips/boot/uImage.gz
 endif
+ifeq ($(ADK_TARGET_KERNEL_UIMAGEBIN),y)
+KERNEL:=$(LINUX_DIR)/arch/mips/boot/uImage.bin
+endif
 
 OSTRIP:=-R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id
 
@@ -93,12 +96,15 @@ targethelp:
 	@echo 'The UBI image is: ${FW_DIR}/${ROOTFSUBIFS}'
 endif
 
-# dummy
 kernel-strip:
-	@cp $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
+ifeq ($(ADK_TARGET_KERNEL_UIMAGE)$(ADK_TARGET_KERNEL_UIMAGEBIN),)
+	$(TARGET_CROSS)objcopy $(OSTRIP) -S $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
+else
+	$(CP) $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
+endif
 
 kernel-install: kernel-strip
-	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/${TARGET_KERNEL}
+	$(CP) $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/${TARGET_KERNEL}
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)

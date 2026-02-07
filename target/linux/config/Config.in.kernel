@@ -246,7 +246,7 @@ config ADK_LINUX_KERNEL_SMP
 config ADK_LINUX_KERNEL_HIGHMEM
 	bool "Enable high memory"
 	# produces broken kernel on bcm28xx
-	depends on !ADK_TARGET_BOARD_BCM28XX
+	depends on !ADK_TARGET_BOARD_BCM28XX && !ADK_TARGET_SYSTEM_MICROCHIP_PIC32
 	default y if ADK_TARGET_MODEL_CUBOX_I4PRO
 	default y if ADK_TARGET_MODEL_CUBOX_I2ULTRA
 	default y if ADK_TARGET_MODEL_CUBOX_I2EX

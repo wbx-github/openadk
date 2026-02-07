@@ -74,6 +74,7 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "lemote2f_defconfig" if ADK_TARGET_SYSTEM_LEMOTE_FULOONG
 	default "etraxfs_defconfig" if ADK_TARGET_SYSTEM_AXIS_89_DEVICE_SERVER
 	default "hp6xx_defconfig" if ADK_TARGET_SYSTEM_HP_JORNADA
+	default "pic32mzda_defconfig" if ADK_TARGET_SYSTEM_MICROCHIP_PIC32
 	default ""
 
 config ADK_TARGET_LINUX_KERNEL_CUSTOMCONFIG_PATH
