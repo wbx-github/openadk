@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xdm
-PKG_VERSION:=		1.1.14
+PKG_VERSION:=		1.1.17
 PKG_RELEASE:=		1
-PKG_HASH:=		bcc543c3c120094d58d9cc9837958d4303693c2116ba342ba3dd9440137b4026
+PKG_HASH:=		b1d1db9ba7fd96d50e0b6cf743be2b9ff954f7969a7a9b74d1951b89ec15ca9c
 PKG_DESCR:=		display manager
 PKG_SECTION:=		x11/apps
-PKG_BUILDDEP:=		pam libXaw
-PKG_DEPENDS:=		xconsole pam xsm libxaw
+PKG_BUILDDEP:=		libXaw
+PKG_DEPENDS:=		xconsole xsm libxaw
 PKG_URL:=		http://xorg.freedesktop.org/
 PKG_SITES:=		http://www.x.org/releases/individual/app/
 
@@ -23,7 +23,8 @@ $(eval $(call PKG_template,XDM,xdm,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},
 CONFIGURE_ARGS+=	--with-random-device=/dev/urandom \
 			--with-appdefaultdir=/usr/share/X11/app-defaults \
 			--with-utmp-file=/dev/null \
-			--with-wtmp-file=/dev/null
+			--with-wtmp-file=/dev/null \
+			--without-pam
 
 xdm-install:
 	$(INSTALL_DIR) $(IDIR_XDM)/usr/lib/X11
