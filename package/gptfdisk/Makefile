@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gptfdisk
-PKG_VERSION:=		1.0.1
+PKG_VERSION:=		1.0.10
 PKG_RELEASE:=		1
-PKG_HASH:=		864c8aee2efdda50346804d7e6230407d5f42a8ae754df70404dd8b2fdfaeac7
+PKG_HASH:=		2abed61bc6d2b9ec498973c0440b8b804b7a72d7144069b5a9209b2ad693a282
 PKG_DESCR:=		utilities to create gpt partition tables
 PKG_SECTION:=		sys/fs
 PKG_DEPENDS:=		libncurses libuuid
