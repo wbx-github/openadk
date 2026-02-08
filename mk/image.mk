@@ -204,7 +204,7 @@ ${BUILD_DIR}/root.squashfs: ${TARGET_DIR}/.adk
 		-nopad -noappend -root-owned $(MAKE_TRACE)
 
 ${FW_DIR}/${ROOTFSJFFS2}: ${TARGET_DIR}
-	PATH='${HOST_PATH}' mkfs.jffs2 $(ADK_JFFS2_OPTS) -q -r ${TARGET_DIR} \
+	PATH='${HOST_PATH}' mkfs.jffs2 -Xzlib $(ADK_JFFS2_OPTS) -q -r ${TARGET_DIR} \
 		--pad=$(ADK_TARGET_MTD_SIZE) -o ${FW_DIR}/${ROOTFSJFFS2} $(MAKE_TRACE)
 
 ${FW_DIR}/${ROOTFSUBIFS}: ${TARGET_DIR}
