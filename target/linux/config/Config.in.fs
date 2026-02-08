@@ -49,6 +49,9 @@ config ADK_LINUX_KERNEL_JFFS2_COMPRESSION_OPTIONS
 config ADK_LINUX_KERNEL_JFFS2_ZLIB
 	bool
 
+config ADK_LINUX_KERNEL_SQUASHFS_ZSTD
+	bool
+
 menu "Filesystems"
 
 config ADK_LINUX_KERNEL_EXT2_FS
@@ -249,6 +252,7 @@ config ADK_LINUX_KERNEL_JFFS2_FS
 
 config ADK_LINUX_KERNEL_SQUASHFS
 	tristate "SquashFS filesystem"
+	select ADK_LINUX_KERNEL_SQUASHFS_ZSTD
 	select ADK_LINUX_KERNEL_MISC_FILESYSTEMS
 	help
 	  Squashfs compressed read-only filesystem

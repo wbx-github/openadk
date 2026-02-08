@@ -200,7 +200,7 @@ ${FW_DIR}/${INITRAMFS}: ${STAGING_TARGET_DIR}/${INITRAMFS}_list
 
 ${BUILD_DIR}/root.squashfs: ${TARGET_DIR}/.adk
 	${STAGING_HOST_DIR}/usr/bin/mksquashfs ${TARGET_DIR} \
-		${BUILD_DIR}/root.squashfs -comp gzip \
+		${BUILD_DIR}/root.squashfs -comp zstd \
 		-nopad -noappend -root-owned $(MAKE_TRACE)
 
 ${FW_DIR}/${ROOTFSJFFS2}: ${TARGET_DIR}
