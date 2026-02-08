@@ -1,0 +1,15 @@
+--- apex-main.orig/include/linux/stddef.h	2026-02-08 12:09:33.000000000 +0100
++++ apex-main/include/linux/stddef.h	2026-02-08 12:19:50.027737821 +0100
+@@ -12,10 +12,12 @@
+ 
+ #ifdef __KERNEL__
+ 
++/*
+ enum {
+ 	false	= 0,
+ 	true	= 1
+ };
++*/
+ 
+ #undef offsetof
+ #ifdef __compiler_offsetof

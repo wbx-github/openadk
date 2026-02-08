@@ -1,0 +1,11 @@
+--- apex-main.orig/include/linux/types.h	2026-02-08 12:09:33.000000000 +0100
++++ apex-main/include/linux/types.h	2026-02-08 12:20:47.195333594 +0100
+@@ -30,7 +30,7 @@ typedef __kernel_clockid_t	clockid_t;
+ typedef __kernel_mqd_t		mqd_t;
+ 
+ #ifdef __KERNEL__
+-typedef _Bool			bool;
++//typedef _Bool			bool;
+ 
+ typedef __kernel_uid32_t	uid_t;
+ typedef __kernel_gid32_t	gid_t;
