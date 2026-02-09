@@ -102,8 +102,8 @@ CONFIGURE_ARGS+=	--disable-warnings \
 			--disable-prettysrc \
 			--disable-finger \
 			--disable-dired \
-			--with-screen=ncurses \
-			--disable-widec \
+			--with-screen=ncursesw \
+			--enable-widec \
 			--disable-locale-charset \
 			--with-build-cc='$(HOST_CC)' \
 			--with-build-cflags="$(HOST_CFLAGS)" \
