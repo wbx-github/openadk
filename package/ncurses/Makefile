@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ncurses
-PKG_VERSION:=		6.4
+PKG_VERSION:=		6.6
 PKG_RELEASE:=		1
-PKG_HASH:=		6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159
+PKG_HASH:=		355b4cbbed880b0381a04c46617b7656e362585d52e9cf84a67e2009b749ff11
 PKG_DESCR:=		terminal handling library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		ncurses-host
@@ -93,7 +93,7 @@ libncurses-install:
 	echo 'GROUP(-lncurses)' >${WRKINST}/usr/lib/libcurses.so
 	# libcurses will not show up in the IPKG, only in STAGING_TARGET_DIR
 	${INSTALL_DIR} ${IDIR_LIBNCURSES}/usr/lib
-	${CP} ${WRKINST}/usr/lib/lib{tinfo,form,menu,ncurses,panel}.so* \
+	${CP} ${WRKINST}/usr/lib/lib{tinfo,form,menu,ncurses,panel}w.so* \
 	    ${IDIR_LIBNCURSES}/usr/lib
 ifeq (${ADK_PACKAGE_LIBNCURSES_FULL_TERMINFO},y)
 	${INSTALL_DIR} ${IDIR_LIBNCURSES}/usr/share
