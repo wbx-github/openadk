@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		util-linux
-PKG_VERSION:=		2.41.1
+PKG_VERSION:=		2.41.3
 PKG_RELEASE:=		1
-PKG_HASH:=		be9ad9a276f4305ab7dd2f5225c8be1ff54352f565ff4dede9628c1aaa7dec57
+PKG_HASH:=		3330d873f0fceb5560b89a7dc14e4f3288bbd880e96903ed9b50ec2b5799e58b
 PKG_DESCR:=		basic utilities
 PKG_SECTION:=		base/apps
 PKG_BUILDDEP:=		ncurses
@@ -81,16 +81,14 @@ $(eval $(call PKG_template,LIBMOUNT,libmount,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG
 $(eval $(call PKG_template,LIBSMARTCOLS,libsmartcols,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_LIBSMARTCOLS),$(PKGSC_LIBSMARTCOLS),$(PKG_OPTS)))
 
 TARGET_CFLAGS+=		-DSWAPON_HAS_TWO_ARGS -DHAVE_LLSEEK
-TARGET_LDFLAGS+=	-ltinfo
+#TARGET_LDFLAGS+=	-ltinfo
 
 CONFIGURE_ARGS+=	--exec-prefix=/usr \
 			--libdir=/usr/lib \
 			--with-pic \
-			--with-ncurses \
-			--without-ncursesw \
+			--with-ncursesw \
 			--disable-makeinstall-chown \
 			--disable-makeinstall-setuid \
-			--disable-widechar \
 			--disable-use-tty-group \
 			--disable-chfn-chsh \
 			--disable-more \
