@@ -14,40 +14,23 @@ PKG_BUILDDEP:=		glib ncurses
 PKG_URL:=		http://www.irssi.org/
 PKG_SITES:=		https://github.com/irssi/irssi/releases/download/$(PKG_VERSION)/
 
-PKG_CHOICES_IRSSI:=	WITH_OPENSSL WITH_LIBRESSL WITHOUT_SSL
+PKG_CHOICES_IRSSI:=	WITH_OPENSSL WITH_LIBRESSL
 PKGCD_WITH_OPENSSL:=	use openssl for crypto
 PKGCB_WITH_OPENSSL:=	openssl
 PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
 PKGCD_WITH_LIBRESSL:=	use libressl for crypto
 PKGCB_WITH_LIBRESSL:=	libressl
 PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
-PKGCD_WITHOUT_SSL:=	use no ssl
-
-PKG_FLAVOURS_IRSSI:=	WITH_IPV6
-PKGFD_WITH_IPV6:=	enable ipv6 support
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,IRSSI,irssi,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfo -latomic
+TARGET_LDFLAGS+=	-latomic -ltinfow
 CONFIGURE_ARGS+=	--with-perl=no \
 			--with-textui \
-			--with-terminfo \
 			--without-bot \
 			--without-proxy
-
-ifneq (${ADK_PACKAGE_IRSSI_WITH_IPV6},)
-CONFIGURE_ARGS+=	--enable-ipv6
-else
-CONFIGURE_ARGS+=	--disable-ipv6
-endif
-
-ifeq (${ADK_PACKAGE_IRSSI_WITHOUT_SSL},y)
-CONFIGURE_ARGS+=	--disable-ssl
-else
-CONFIGURE_ARGS+=	--enable-ssl
-endif
 
 irssi-install:
 	${INSTALL_DIR} ${IDIR_IRSSI}/usr/bin
