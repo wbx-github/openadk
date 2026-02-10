@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libtirpc
-PKG_VERSION:=		1.3.6
+PKG_VERSION:=		1.3.7
 PKG_RELEASE:=		1
-PKG_HASH:=		bbd26a8f0df5690a62a47f6aa30f797f3ef8d02560d1bc449a83066b5a1d3508
+PKG_HASH:=		b47d3ac19d3549e54a05d0019a6c400674da716123858cfdb6d3bdd70a66c702
 PKG_DESCR:=		transport independent rpc library
 PKG_SECTION:=		libs/net
 PKG_URL:=		http://sourceforge.net/projects/libtirpc/
@@ -25,6 +25,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,LIBTIRPC,libtirpc,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+TARGET_CFLAGS+=		-DGQ
 MAKE_ENV+=		V=1
 HOST_CPPFLAGS+=		-I/usr/include/tirpc
 
@@ -40,6 +41,7 @@ CFG:=			.ipv6
 else
 CONFIGURE_ARGS+=	--disable-ipv6
 endif
+CONFIGURE_ARGS+=	--enable-rpcdb
 
 libtirpc-install:
 	${INSTALL_DIR} ${IDIR_LIBTIRPC}/usr/lib ${IDIR_LIBTIRPC}/etc

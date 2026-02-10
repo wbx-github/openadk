@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		nfs-utils
-PKG_VERSION:=		2.8.4
+PKG_VERSION:=		2.8.5
 PKG_RELEASE:=		1
-PKG_HASH:=		30b109638f54e506ecdf60075972df626a4906ea3692fe04e323d56a483ae324
+PKG_HASH:=		b13ca4a9df44186bdbe107514b22732d4243f785f95daf2fb86afc1edba15bbb
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		keyutils libtirpc rpcbind libmount libuuid libevent sqlite
@@ -16,7 +16,7 @@ PKG_BUILDDEP:=		libnl readline
 PKG_KDEPENDS:=		nfs-fs
 PKG_NEEDS:=		threads
 PKG_URL:=		http://sourceforge.net/projects/nfs
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=nfs/}
+PKG_SITES:=		https://www.kernel.org/pub/linux/utils/nfs-utils/$(PKG_VERSION)/
 
 PKG_CFLINE_NFS_UTILS:=	select ADK_PACKAGE_LIBTIRPC_WITH_GSS if ADK_PACKAGE_NFS_UTILS_V4
 
@@ -32,8 +32,6 @@ PKGCD_V3:=		nfs version 3
 PKGCD_V4:=		nfs version 4
 PKGCB_V4:=		libevent libnfsidmap krb5 libgssglue librpcsecgss
 PKGCS_V4:=		libkrb5 libevent libnfsidmap librpcsecgss libcom-err libgssglue
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
 include ${ADK_TOPDIR}/mk/package.mk
 
