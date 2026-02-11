@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		opensbi
-PKG_VERSION:=		1.4
+PKG_VERSION:=		1.8.1
 PKG_RELEASE:=		1
-PKG_HASH:=		319b62a4186fbce9b81a0c5f0ec9f003a10c808397a72138bc9745d9b87b1eb1
+PKG_HASH:=		fb1ae61a85e966322101acb1c982f84d9eaafc4de7dd474a7d7546d9bb321c6f
 PKG_DESCR:=		bootloader for riscv hardware
 PKG_SECTION:=		base/boot
 PKG_URL:=		https://github.com/riscv-software-src/opensbi
