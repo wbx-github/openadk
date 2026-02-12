@@ -1365,8 +1365,8 @@ config ADK_TARGET_CPU_SPARC_V7
 	select ADK_TARGET_WITH_MMU
 	depends on ADK_TARGET_ARCH_SPARC
 
-config ADK_TARGET_CPU_SPARC_LEON
-	bool "leon"
+config ADK_TARGET_CPU_SPARC_LEON3
+	bool "leon3"
 	select ADK_TARGET_SUPPORTS_THREADS
 	select ADK_TARGET_SUPPORTS_NPTL
 	select ADK_TARGET_SUPPORTS_LT
@@ -2055,7 +2055,7 @@ config ADK_TARGET_GCC_CPU
 	default "ev5" if ADK_TARGET_CPU_ALPHA_EV5
 	default "ev6" if ADK_TARGET_CPU_ALPHA_EV6
 	default "ev67" if ADK_TARGET_CPU_ALPHA_EV67
-	default "leon" if ADK_TARGET_CPU_SPARC_LEON
+	default "leon3" if ADK_TARGET_CPU_SPARC_LEON3
 	default "mpcore" if ADK_TARGET_CPU_ARM_ARM11MPCORE
 	default "n13" if ADK_TARGET_CPU_NDS32
 	default "powerpc" if ADK_TARGET_CPU_PPC
@@ -2288,7 +2288,7 @@ config ADK_TARGET_CPU_TYPE
 	default "nds32" if ADK_TARGET_CPU_NDS32
 	default "v8" if ADK_TARGET_CPU_SPARC_V8
 	default "v9" if ADK_TARGET_CPU_SPARC64_V9
-	default "leon" if ADK_TARGET_CPU_SPARC_LEON
+	default "leon3" if ADK_TARGET_CPU_SPARC_LEON3
 	default "dc233c" if ADK_TARGET_CPU_XTENSA_DC233C
 	default "dc232b" if ADK_TARGET_CPU_XTENSA_DC232B
 	default "de212" if ADK_TARGET_CPU_XTENSA_DE212

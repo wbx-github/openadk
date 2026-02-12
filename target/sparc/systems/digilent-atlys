@@ -1,0 +1,9 @@
+config ADK_TARGET_SYSTEM_DIGILENT_ATLYS
+	bool "Digilent Atlys (LEON3 CPU)"
+	select ADK_TARGET_CPU_SPARC_LEON3
+	select ADK_TARGET_WITH_SERIAL
+	select ADK_TARGET_WITH_NET
+	select ADK_TARGET_WITH_NETDEVICE
+	help
+	  Support for Digilent Atlys FPGA with LEON3 CPU Bitstream.
+
