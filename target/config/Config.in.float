@@ -9,7 +9,8 @@ depends on ADK_TARGET_ARCH_ARC || \
 	   ADK_TARGET_ARCH_M68K || \
 	   ADK_TARGET_ARCH_MIPS || \
 	   ADK_TARGET_ARCH_NIOS2 || \
-	   ADK_TARGET_ARCH_PPC
+	   ADK_TARGET_ARCH_PPC || \
+	   ADK_TARGET_ARCH_SPARC
 
 config ADK_TARGET_HARD_FLOAT
 	bool "hard-float"
