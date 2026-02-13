@@ -285,6 +285,12 @@ ifeq ($(ADK_TARGET_CPU_SH_SH2A),y)
 endif
 endif
 
+# sparc
+ifeq ($(ADK_TARGET_CPU_SPARC_LEON3),y)
+	$(SED) 's/.*\(CONFIG_SPARC_V8\).*/# \1 is not set/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(CONFIG_SPARC_LEON3\).*/\1=y/' ${WRKBUILD}/.config
+endif
+
 # x86
 ifeq ($(ADK_TARGET_ARCH_X86),y)
 ifeq ($(ADK_TARGET_CPU_X86_I486),y)
