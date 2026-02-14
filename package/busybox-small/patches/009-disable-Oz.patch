@@ -1,0 +1,20 @@
+diff -Nur busybox-1.36.1.orig/Makefile.flags busybox-1.36.1/Makefile.flags
+--- busybox-1.36.1.orig/Makefile.flags	2023-01-03 15:14:43.000000000 +0100
++++ busybox-1.36.1/Makefile.flags	2023-07-30 15:24:31.983113101 +0200
+@@ -87,14 +87,14 @@
+ #CFLAGS += $(call cc-option,-Wconversion,)
+ 
+ ifneq ($(CONFIG_DEBUG),y)
+-CFLAGS += $(call cc-option,-Oz,$(call cc-option,-Os,$(call cc-option,-O2,)))
++CFLAGS += $(call cc-option,-Os,$(call cc-option,-O2,))
+ else
+ CFLAGS += $(call cc-option,-g,)
+ #CFLAGS += "-D_FORTIFY_SOURCE=2"
+ ifeq ($(CONFIG_DEBUG_PESSIMIZE),y)
+ CFLAGS += $(call cc-option,-O0,)
+ else
+-CFLAGS += $(call cc-option,-Oz,$(call cc-option,-Os,$(call cc-option,-O2,)))
++CFLAGS += $(call cc-option,-Os,$(call cc-option,-O2,))
+ endif
+ endif
+ ifeq ($(CONFIG_DEBUG_SANITIZE),y)

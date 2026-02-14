@@ -1,0 +1,21 @@
+diff -Nur busybox-1.25.0.orig/networking/ifupdown.c busybox-1.25.0/networking/ifupdown.c
+--- busybox-1.25.0.orig/networking/ifupdown.c	2016-05-26 19:42:44.000000000 +0200
++++ busybox-1.25.0/networking/ifupdown.c	2016-06-25 01:14:51.656598262 +0200
+@@ -537,7 +537,7 @@
+ 	},
+ 	{ "udhcpc",
+ 		"udhcpc " UDHCPC_CMD_OPTIONS " -p /var/run/udhcpc.%iface%.pid -i %iface%[[ -x hostname:%hostname%]][[ -c %client%]]"
+-				"[[ -s %script%]][[ %udhcpc_opts%]]",
++				"[[ -s %script%]][[ %udhcpc_opts%]] 2>/dev/null",
+ 		"kill `cat /var/run/udhcpc.%iface%.pid` 2>/dev/null",
+ 	},
+ };
+@@ -576,7 +576,7 @@
+ 		return 0;
+ #  endif
+ 	return execute("udhcpc " UDHCPC_CMD_OPTIONS " -p /var/run/udhcpc.%iface%.pid "
+-			"-i %iface%[[ -x hostname:%hostname%]][[ -c %client%]][[ -s %script%]][[ %udhcpc_opts%]]",
++			"-i %iface%[[ -x hostname:%hostname%]][[ -c %client%]][[ -s %script%]][[ %udhcpc_opts%]] 2>/dev/null",
+ 			ifd, exec);
+ }
+ # else

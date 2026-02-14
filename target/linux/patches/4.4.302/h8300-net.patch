@@ -1,15 +1,6 @@
 diff -Nur linux-4.4.302.orig/arch/h8300/boot/dts/edosk2674.dts linux-4.4.302/arch/h8300/boot/dts/edosk2674.dts
 --- linux-4.4.302.orig/arch/h8300/boot/dts/edosk2674.dts	2022-02-03 09:27:54.000000000 +0100
 +++ linux-4.4.302/arch/h8300/boot/dts/edosk2674.dts	2022-02-14 05:05:26.253691787 +0100
-@@ -6,7 +6,7 @@
- 	interrupt-parent = <&h8intc>;
- 
- 	chosen {
--		bootargs = "console=ttySC2,38400";
-+		bootargs = "console=ttySC2,38400 init=/bin/sh";
- 		stdout-path = &sci2;
- 	};
- 	aliases {
 @@ -104,4 +104,9 @@
  		clocks = <&fclk>;
  		clock-names = "sci_ick";

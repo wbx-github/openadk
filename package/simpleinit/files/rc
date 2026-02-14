@@ -1,10 +1,10 @@
 #!/bin/sh
 echo Starting OpenADK
-mount -t proc proc /proc
-mount -t sysfs sys /sys
-mkdir /dev/pts
-mount -t devpts devpts /dev/pts
-mount -t tmpfs tmpfs /tmp
-chmod 1777 /tmp
-mkdir /var/log
-mkdir /var/tmp
+/bin/mount -t proc proc /proc
+/bin/mount -t sysfs sys /sys
+/bin/mkdir /dev/pts
+/bin/mount -t devpts devpts /dev/pts
+/bin/mount -t tmpfs tmpfs /tmp
+/bin/chmod 1777 /tmp
+/bin/mkdir /var/log
+/bin/mkdir /var/tmp

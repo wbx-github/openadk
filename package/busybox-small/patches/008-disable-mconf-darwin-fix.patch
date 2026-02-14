@@ -1,0 +1,12 @@
+diff -Nur busybox-1.19.4.orig/scripts/kconfig/Makefile busybox-1.19.4/scripts/kconfig/Makefile
+--- busybox-1.19.4.orig/scripts/kconfig/Makefile	2012-02-04 20:24:55.000000000 +0100
++++ busybox-1.19.4/scripts/kconfig/Makefile	2012-03-20 18:50:47.000000000 +0100
+@@ -114,7 +114,7 @@
+ #         Based on GTK which needs to be installed to compile it
+ # object files used by all kconfig flavours
+ 
+-hostprogs-y	:= conf mconf qconf gconf kxgettext
++hostprogs-y	:= conf qconf gconf kxgettext
+ conf-objs	:= conf.o  zconf.tab.o
+ mconf-objs	:= mconf.o zconf.tab.o
+ kxgettext-objs	:= kxgettext.o zconf.tab.o

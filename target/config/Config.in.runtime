@@ -22,6 +22,10 @@ config ADK_RUNTIME_INIT_SYSV
 	depends on ADK_PACKAGE_BUSYBOX && \
 		   !ADK_TARGET_SYSTEM_SIPEED_MAIX_BIT
 
+config ADK_RUNTIME_INIT_BUSYBOX
+	bool "Use busybox init (small)"
+	select ADK_PACKAGE_BUSYBOX_SMALL
+
 config ADK_RUNTIME_INIT_TOYBOX
 	bool "Use toybox init"
 	select ADK_PACKAGE_TOYBOX
@@ -69,13 +73,17 @@ endchoice
 choice
 prompt "base applications"
 depends on !ADK_APPLIANCE_TOOLCHAIN
-default ADK_RUNTIME_BASE_NONE if ADK_TARGET_ARCH_H8300
+default ADK_RUNTIME_BASE_BUSYBOX_SMALL if ADK_TARGET_ARCH_H8300
 default ADK_RUNTIME_BASE_NONE if ADK_TARGET_ARCH_C6X
 default ADK_RUNTIME_BASE_BUSYBOX
 
 config ADK_RUNTIME_BASE_BUSYBOX
 	bool "Use busybox"
 	select ADK_PACKAGE_BUSYBOX
+
+config ADK_RUNTIME_BASE_BUSYBOX_SMALL
+	bool "Use busybox (small)"
+	select ADK_PACKAGE_BUSYBOX_SMALL
 
 config ADK_RUNTIME_BASE_TOYBOX
 	bool "Use toybox"
