@@ -9,12 +9,13 @@ PKG_RELEASE:=		1
 PKG_HASH:=		c8373949d7f0de1059e507b83a655d4cea539f75dc66ccdbb27adbd38d83095e
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
-HOST_BUILDDEP:=		gnutls-host openssl-host dtc-host
+HOST_BUILDDEP:=		gnutls-host openssl-legacy-host dtc-host
 PKG_BUILDDEP:=		u-boot-avr32-host
 PKG_URL:=		http://www.denx.de/wiki/U-Boot	
 PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
 DISTFILES:=		u-boot-$(PKG_VERSION).tar.bz2
+WRKDIST=		$(WRKDIR)/u-boot-$(PKG_VERSION)
 
 PKG_SYSTEM_DEPENDS:=	atmel-ngw100
 
@@ -42,7 +43,7 @@ host-build:
 	(cd $(WRKBUILD) && env $(HOST_MAKE_ENV) $(MAKE) -f $(MAKE_FILE) \
 		$(HOST_MAKE_FLAGS) tools $(MAKE_TRACE) )
 
-u-boot-hostinstall:
+u-boot-avr32-hostinstall:
 	$(INSTALL_BIN) $(WRKBUILD)/tools/mk{,env}image \
 		$(STAGING_HOST_DIR)/usr/bin
 
@@ -59,7 +60,7 @@ do-build:
 		CROSS_COMPILE='$(TARGET_CROSS)' \
 		$(MAKE) env)
 
-u-boot-install:
+u-boot-avr32-install:
 	$(CP) $(WRKBUILD)/$(UBOOT) $(FW_DIR)
 	$(INSTALL_DIR) $(IDIR_U_BOOT)/etc
 	$(CP) ./files/fw_env.config $(IDIR_U_BOOT)/etc

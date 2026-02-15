@@ -41,7 +41,7 @@ config ADK_HOST_BUILD_LIBTOOL
 
 config ADK_HOST_BUILD_OPENSSL
 	bool
-	default y
+	default y if !ADK_TARGET_ARCH_AVR32
 
 config ADK_HOST_BUILD_PKGCONF
 	bool
@@ -89,12 +89,10 @@ config ADK_HOST_BUILD_FINDUTILS
 
 config ADK_HOST_BUILD_GAWK
 	bool
-	default y if ADK_HOST_DARWIN
 	default n
 
 config ADK_HOST_BUILD_OBJCONV
 	bool
-	default y if ADK_HOST_DARWIN
 	default n
 
 config ADK_HOST_BUILD_GREP
@@ -103,7 +101,13 @@ config ADK_HOST_BUILD_GREP
 
 config ADK_HOST_BUILD_U_BOOT
 	bool
-	depends on !ADK_TARGET_ARCH_H8300
+	depends on !ADK_TARGET_ARCH_H8300 && !ADK_TARGET_ARCH_AVR32
+	default y if ADK_HOST_NEED_UBOOT
+	default n
+
+config ADK_HOST_BUILD_U_BOOT_AVR32
+	bool
+	depends on ADK_TARGET_ARCH_AVR32
 	default y if ADK_HOST_NEED_UBOOT
 	default n
 
