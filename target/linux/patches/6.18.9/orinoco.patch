@@ -1,6 +1,6 @@
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/Kconfig linux-6.15.6/drivers/net/wireless/intersil/Kconfig
---- linux-6.15.6.orig/drivers/net/wireless/intersil/Kconfig	2025-07-10 16:08:55.000000000 +0200
-+++ linux-6.15.6/drivers/net/wireless/intersil/Kconfig	2025-08-03 00:20:27.566744589 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/Kconfig linux-6.18.9/drivers/net/wireless/intersil/Kconfig
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/Kconfig	2026-02-06 16:57:45.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/Kconfig	2026-02-16 14:00:36.619256404 +0100
 @@ -12,6 +12,7 @@
  
  if WLAN_VENDOR_INTERSIL
@@ -9,16 +9,16 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/Kconfig linux-6.15.6/d
  source "drivers/net/wireless/intersil/p54/Kconfig"
  
  endif # WLAN_VENDOR_INTERSIL
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/Makefile linux-6.15.6/drivers/net/wireless/intersil/Makefile
---- linux-6.15.6.orig/drivers/net/wireless/intersil/Makefile	2025-07-10 16:08:55.000000000 +0200
-+++ linux-6.15.6/drivers/net/wireless/intersil/Makefile	2025-08-03 00:20:54.161967083 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/Makefile linux-6.18.9/drivers/net/wireless/intersil/Makefile
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/Makefile	2026-02-06 16:57:45.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/Makefile	2026-02-16 14:00:36.619256404 +0100
 @@ -1,2 +1,3 @@
  # SPDX-License-Identifier: GPL-2.0-only
 +obj-$(CONFIG_HERMES)		+= orinoco/
  obj-$(CONFIG_P54_COMMON)	+= p54/
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/airport.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/airport.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/airport.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/airport.c	2025-08-03 15:01:59.313131673 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/airport.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/airport.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/airport.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/airport.c	2026-02-16 14:00:36.619256404 +0100
 @@ -0,0 +1,268 @@
 +/* airport.c
 + *
@@ -288,10 +288,10 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/airport.c linu
 +
 +module_init(init_airport);
 +module_exit(exit_airport);
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/cfg.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/cfg.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/cfg.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/cfg.c	2025-08-03 16:35:08.118093622 +0200
-@@ -0,0 +1,292 @@
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/cfg.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/cfg.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/cfg.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/cfg.c	2026-02-16 14:03:20.553871680 +0100
+@@ -0,0 +1,297 @@
 +/* cfg80211 support
 + *
 + * See copyright notice in main.c
@@ -495,12 +495,17 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/cfg.c linux-6.
 +	return err;
 +}
 +
-+static int orinoco_set_wiphy_params(struct wiphy *wiphy, u32 changed)
++static int orinoco_set_wiphy_params(struct wiphy *wiphy, 
++					int radio_idx,
++					u32 changed)
 +{
 +	struct orinoco_private *priv = wiphy_priv(wiphy);
 +	int frag_value = -1;
 +	int rts_value = -1;
 +	int err = 0;
++
++	if (radio_idx != 0)
++        	return -EINVAL;
 +
 +	if (changed & WIPHY_PARAM_RETRY_SHORT) {
 +		/* Setting short retry not supported */
@@ -584,9 +589,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/cfg.c linux-6.
 +	.scan = orinoco_scan,
 +	.set_wiphy_params = orinoco_set_wiphy_params,
 +};
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/cfg.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/cfg.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/cfg.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/cfg.h	2025-08-03 15:01:59.313131673 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/cfg.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/cfg.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/cfg.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/cfg.h	2026-02-16 14:00:36.619256404 +0100
 @@ -0,0 +1,15 @@
 +/* cfg80211 support.
 + *
@@ -603,9 +608,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/cfg.h linux-6.
 +int orinoco_wiphy_register(struct wiphy *wiphy);
 +
 +#endif /* ORINOCO_CFG_H */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/fw.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/fw.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/fw.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/fw.c	2025-08-03 15:01:59.313131673 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/fw.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/fw.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/fw.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/fw.c	2026-02-16 14:00:36.619256404 +0100
 @@ -0,0 +1,387 @@
 +/* Firmware file reading and download helpers
 + *
@@ -994,9 +999,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/fw.c linux-6.1
 +	priv->cached_fw = NULL;
 +}
 +#endif
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/fw.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/fw.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/fw.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/fw.h	2025-08-03 15:01:59.313131673 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/fw.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/fw.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/fw.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/fw.h	2026-02-16 14:00:36.619256404 +0100
 @@ -0,0 +1,21 @@
 +/* Firmware file reading and download helpers
 + *
@@ -1019,9 +1024,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/fw.h linux-6.1
 +#endif
 +
 +#endif /* _ORINOCO_FW_H_ */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes.c	2025-08-03 22:42:47.279513981 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes.c	2026-02-16 14:00:36.619256404 +0100
 @@ -0,0 +1,778 @@
 +/* hermes.c
 + *
@@ -1801,9 +1806,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes.c linux
 +	.lock_irq = hermes_lock_irq,
 +	.unlock_irq = hermes_unlock_irq,
 +};
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes_dld.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes_dld.c	2025-08-03 15:01:59.325131328 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes_dld.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes_dld.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,477 @@
 +/*
 + * Hermes download helper.
@@ -2282,9 +2287,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.c l
 +	}
 +	return 0;
 +}
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes_dld.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes_dld.h	2025-08-03 15:01:59.325131328 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes_dld.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes_dld.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2007, David Kilroy
@@ -2338,9 +2343,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_dld.h l
 +size_t hermes_blocks_length(const char *first_block, const void *end);
 +
 +#endif /* _HERMES_DLD_H */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes.h	2025-08-03 15:01:59.329131213 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,534 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +/* hermes.h
@@ -2876,9 +2881,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes.h linux
 +}
 +
 +#endif  /* _HERMES_H */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_rid.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes_rid.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_rid.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/hermes_rid.h	2025-08-03 15:01:59.341130868 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes_rid.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes_rid.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hermes_rid.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/hermes_rid.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,165 @@
 +#ifndef _HERMES_RID_H
 +#define _HERMES_RID_H
@@ -3045,9 +3050,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hermes_rid.h l
 +#define HERMES_RID_FWID				0xFFFF
 +
 +#endif
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hw.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/hw.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hw.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/hw.c	2025-08-03 15:01:59.341130868 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hw.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/hw.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hw.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/hw.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,1362 @@
 +/* Encapsulate basic setting changes and retrieval on Hermes hardware
 + *
@@ -4411,9 +4416,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hw.c linux-6.1
 +
 +	return err;
 +}
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hw.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/hw.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hw.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/hw.h	2025-08-03 15:01:59.341130868 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hw.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/hw.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/hw.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/hw.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,60 @@
 +/* Encapsulate basic setting changes on Hermes hardware
 + *
@@ -4475,9 +4480,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/hw.h linux-6.1
 +				 u8 *addr);
 +
 +#endif /* _ORINOCO_HW_H_ */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/Kconfig linux-6.15.6/drivers/net/wireless/intersil/orinoco/Kconfig
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/Kconfig	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/Kconfig	2025-08-03 15:01:59.341130868 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/Kconfig linux-6.18.9/drivers/net/wireless/intersil/orinoco/Kconfig
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/Kconfig	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/Kconfig	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,143 @@
 +# SPDX-License-Identifier: GPL-2.0-only
 +config HERMES
@@ -4622,9 +4627,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/Kconfig linux-
 +	select FW_LOADER
 +	help
 +	  This driver is for USB versions of the Agere Orinoco card.
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/main.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/main.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/main.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/main.c	2025-08-03 16:31:03.372980267 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/main.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/main.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/main.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/main.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,2414 @@
 +/* main.c - (formerly known as dldwd_cs.c, orinoco_cs.c and orinoco.c)
 + *
@@ -7040,9 +7045,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/main.c linux-6
 +
 +module_init(init_orinoco);
 +module_exit(exit_orinoco);
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/main.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/main.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/main.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/main.h	2025-08-03 15:01:59.349130638 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/main.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/main.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/main.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/main.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,50 @@
 +/* Exports from main to helper modules
 + *
@@ -7094,9 +7099,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/main.h linux-6
 +}
 +
 +#endif /* _ORINOCO_MAIN_H_ */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/Makefile linux-6.15.6/drivers/net/wireless/intersil/orinoco/Makefile
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/Makefile	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/Makefile	2025-08-03 15:01:59.349130638 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/Makefile linux-6.18.9/drivers/net/wireless/intersil/orinoco/Makefile
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/Makefile	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,15 @@
 +# SPDX-License-Identifier: GPL-2.0
 +#
@@ -7113,9 +7118,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/Makefile linux
 +obj-$(CONFIG_NORTEL_HERMES)	+= orinoco_nortel.o
 +obj-$(CONFIG_PCMCIA_SPECTRUM)	+= spectrum_cs.o
 +obj-$(CONFIG_ORINOCO_USB)	+= orinoco_usb.o
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/mic.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/mic.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/mic.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/mic.c	2025-08-03 15:01:59.349130638 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/mic.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/mic.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/mic.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/mic.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,89 @@
 +/* Orinoco MIC helpers
 + *
@@ -7206,9 +7211,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/mic.c linux-6.
 +
 +	return err;
 +}
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/mic.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/mic.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/mic.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/mic.h	2025-08-03 15:01:59.349130638 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/mic.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/mic.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/mic.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/mic.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,23 @@
 +/* Orinoco MIC helpers
 + *
@@ -7233,9 +7238,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/mic.h linux-6.
 +		u8 *data, size_t data_len, u8 *mic);
 +
 +#endif /* ORINOCO_MIC_H */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_cs.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_cs.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_cs.c	2025-08-03 15:01:59.353130523 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_cs.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_cs.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_cs.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,350 @@
 +/* orinoco_cs.c (formerly known as dldwd_cs.c)
 + *
@@ -7587,9 +7592,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_cs.c l
 +	.resume		= orinoco_cs_resume,
 +};
 +module_pcmcia_driver(orinoco_driver);
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco.h	2025-08-03 22:43:06.558981951 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,249 @@
 +/* orinoco.h
 + *
@@ -7840,9 +7845,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco.h linu
 +	return wdev_priv(wdev);
 +}
 +#endif /* _ORINOCO_H */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_nortel.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_nortel.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_nortel.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_nortel.c	2025-08-03 15:01:59.353130523 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_nortel.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_nortel.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_nortel.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_nortel.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,314 @@
 +/* orinoco_nortel.c
 + *
@@ -8158,9 +8163,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_nortel
 +
 +module_init(orinoco_nortel_init);
 +module_exit(orinoco_nortel_exit);
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_pci.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_pci.c	2025-08-03 15:01:59.353130523 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_pci.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_pci.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,257 @@
 +/* orinoco_pci.c
 + *
@@ -8419,9 +8424,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.c 
 +
 +module_init(orinoco_pci_init);
 +module_exit(orinoco_pci_exit);
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_pci.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_pci.h	2025-08-03 15:01:59.365130178 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_pci.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_pci.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,54 @@
 +/* orinoco_pci.h
 + *
@@ -8477,9 +8482,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_pci.h 
 +			 orinoco_pci_resume);
 +
 +#endif /* _ORINOCO_PCI_H */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_plx.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_plx.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_plx.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_plx.c	2025-08-03 15:01:59.365130178 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_plx.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_plx.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_plx.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_plx.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,362 @@
 +/* orinoco_plx.c
 + *
@@ -8843,9 +8848,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_plx.c 
 +
 +module_init(orinoco_plx_init);
 +module_exit(orinoco_plx_exit);
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c	2025-08-03 15:01:59.365130178 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,237 @@
 +/* orinoco_tmd.c
 + *
@@ -9084,9 +9089,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_tmd.c 
 +
 +module_init(orinoco_tmd_init);
 +module_exit(orinoco_tmd_exit);
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_usb.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_usb.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_usb.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/orinoco_usb.c	2025-08-03 15:01:59.365130178 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_usb.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_usb.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/orinoco_usb.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/orinoco_usb.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,1787 @@
 +/*
 + * USB Orinoco driver
@@ -10875,9 +10880,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/orinoco_usb.c 
 +MODULE_AUTHOR("Manuel Estrada Sainz");
 +MODULE_DESCRIPTION("Driver for Orinoco wireless LAN cards using EZUSB bridge");
 +MODULE_LICENSE("Dual MPL/GPL");
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/scan.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/scan.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/scan.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/scan.c	2025-08-03 15:01:59.385129604 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/scan.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/scan.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/scan.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/scan.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,259 @@
 +/* Helpers for managing scan queues
 + *
@@ -11138,9 +11143,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/scan.c linux-6
 +		priv->scan_request = NULL;
 +	}
 +}
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/scan.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/scan.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/scan.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/scan.h	2025-08-03 15:01:59.385129604 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/scan.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/scan.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/scan.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/scan.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,21 @@
 +/* Helpers for managing scan queues
 + *
@@ -11163,9 +11168,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/scan.h linux-6
 +void orinoco_scan_done(struct orinoco_private *priv, bool abort);
 +
 +#endif /* _ORINOCO_SCAN_H_ */
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/spectrum_cs.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/spectrum_cs.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/spectrum_cs.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/spectrum_cs.c	2025-08-03 15:01:59.385129604 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/spectrum_cs.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/spectrum_cs.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/spectrum_cs.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/spectrum_cs.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,328 @@
 +/*
 + * Driver for 802.11b cards using RAM-loadable Symbol firmware, such as
@@ -11495,9 +11500,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/spectrum_cs.c 
 +	.id_table       = spectrum_cs_ids,
 +};
 +module_pcmcia_driver(orinoco_driver);
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/wext.c linux-6.15.6/drivers/net/wireless/intersil/orinoco/wext.c
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/wext.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/wext.c	2025-08-03 16:32:17.782885098 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/wext.c linux-6.18.9/drivers/net/wireless/intersil/orinoco/wext.c
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/wext.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/wext.c	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,1415 @@
 +/* Wireless extensions support.
 + *
@@ -12914,9 +12919,9 @@ diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/wext.c linux-6
 +	.private_args = orinoco_privtab,
 +	.get_wireless_stats = orinoco_get_wireless_stats,
 +};
-diff -Nur linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/wext.h linux-6.15.6/drivers/net/wireless/intersil/orinoco/wext.h
---- linux-6.15.6.orig/drivers/net/wireless/intersil/orinoco/wext.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-6.15.6/drivers/net/wireless/intersil/orinoco/wext.h	2025-08-03 15:01:59.393129374 +0200
+diff -Nur linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/wext.h linux-6.18.9/drivers/net/wireless/intersil/orinoco/wext.h
+--- linux-6.18.9.orig/drivers/net/wireless/intersil/orinoco/wext.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.18.9/drivers/net/wireless/intersil/orinoco/wext.h	2026-02-16 14:00:36.623256352 +0100
 @@ -0,0 +1,13 @@
 +/* Wireless extensions support.
 + *
