@@ -187,7 +187,7 @@ extern char ** environ;
 char	buf[CMDLEN];
 int exit_code = 0;
 
-int main(argc, argv, env)
+int main(int argc, char *argv[])
 	int	argc;
 	char	**argv;
 	char	*env[];
