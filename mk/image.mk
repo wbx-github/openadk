@@ -191,6 +191,7 @@ ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
 		echo "nod /dev/ttyUL0 0660 0 0 c 204 187"; \
 		echo "nod /dev/ttyUL1 0660 0 0 c 204 188"; \
 		echo "nod /dev/ttyGF0 0660 0 0 c 254 0"; \
+		echo "nod /dev/ttySIF0 0660 0 0 c 253 0"; \
 		echo "slink /init /sbin/init 755 0 0"; \
 	) >>$@
 
