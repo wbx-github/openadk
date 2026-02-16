@@ -43,5 +43,7 @@ do-install:
 	$(CP) $(WRKINST)/* $(IDIR_BUSYBOX_SMALL)/
 	mkdir -p $(IDIR_BUSYBOX_SMALL)/etc
 	$(CP) ./files/inittab $(IDIR_BUSYBOX_SMALL)/etc
+	$(SED) 's#@DEVICE@#$(ADK_RUNTIME_CONSOLE_SERIAL_DEVICE)#g' $(IDIR_BUSYBOX_SMALL)/etc/inittab
+	$(SED) 's#@SPEED@#$(ADK_RUNTIME_CONSOLE_SERIAL_SPEED)#' $(IDIR_BUSYBOX_SMALL)/etc/inittab
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
