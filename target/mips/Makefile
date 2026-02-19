@@ -15,6 +15,9 @@ endif
 ifeq ($(ADK_TARGET_KERNEL_UIMAGEBIN),y)
 KERNEL:=$(LINUX_DIR)/arch/mips/boot/uImage.bin
 endif
+ifeq ($(ADK_TARGET_KERNEL_VMLINUX_BIN),y)
+KERNEL:=$(LINUX_DIR)/arch/mips/boot/vmlinux.bin
+endif
 
 OSTRIP:=-R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id
 
@@ -97,10 +100,20 @@ targethelp:
 endif
 
 kernel-strip:
-ifeq ($(ADK_TARGET_KERNEL_UIMAGE)$(ADK_TARGET_KERNEL_UIMAGEBIN),)
+ifeq ($(ADK_TARGET_KERNEL_UIMAGE)$(ADK_TARGET_KERNEL_UIMAGEBIN)$(ADK_TARGET_KERNEL_VMLINUX_BIN),)
 	$(TARGET_CROSS)objcopy $(OSTRIP) -S $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
 else
 	$(CP) $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
+endif
+
+ifeq ($(ADK_TARGET_LINUX_KERNEL_VERSION_6_6)$(ADK_TARGET_LINUX_KERNEL_VERSION_6_12)$(ADK_TARGET_LINUX_KERNEL_VERSION_6_18)$(ADK_TARGET_LINUX_KERNEL_VERSION_GIT),y)
+VENDOR:=qca/
+endif
+
+dtb-install:
+ifeq ($(ADK_TARGET_SYSTEM_DRAGINO_MS14S),y)
+	${KERNEL_MAKE} $(VENDOR)ar9331_dragino_ms14.dtb $(MAKE_TRACE)
+	cp $(LINUX_DIR)/arch/mips/boot/dts/$(VENDOR)ar9331_dragino_ms14.dtb ${FW_DIR}/
 endif
 
 kernel-install: kernel-strip
@@ -123,7 +136,7 @@ ifeq (${ADK_TARGET_FS},genimage)
 imageinstall: ${FW_DIR}/${GENIMAGE} targethelp
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)
-imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
+imageinstall: dtb-install kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),ubifs)
 imageinstall: $(FW_DIR)/$(ROOTFSUBIFS) targethelp
