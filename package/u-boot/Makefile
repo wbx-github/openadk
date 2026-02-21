@@ -10,7 +10,7 @@ PKG_HASH:=		b60d5865cefdbc75da8da4156c56c458e00de75a49b80c1a2e58a96e30ad0d54
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
 HOST_BUILDDEP:=		gnutls-host openssl-host dtc-host swig-host python3-host python3-setuptools-host
-PKG_BUILDDEP:=		python3-host python3-setuptools-host swig-host u-boot-host
+PKG_BUILDDEP:=		python3-host python3-setuptools-host python3-pyelftools-host swig-host u-boot-host
 PKG_URL:=		http://www.denx.de/wiki/U-Boot	
 PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
@@ -131,6 +131,7 @@ do-build:
 		PATH='$(HOST_PATH)' \
 		CROSS_COMPILE='$(TARGET_CROSS)' \
 		OPENSBI="$(FW_DIR)/fw_dynamic.bin" \
+		BL31="$(WRKBUILD)/bl31.elf" \
 		$(MAKE))
 	(cd $(WRKBUILD) && env \
 		PATH='$(HOST_PATH)' \
