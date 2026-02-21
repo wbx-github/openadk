@@ -204,6 +204,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_LINKSYS_NSLU2),y)
 VENDOR:=intel/ixp/
 endif
+ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
+VENDOR:=allwinner/
+endif
 endif
 
 dtb-install:
@@ -250,7 +253,7 @@ ifeq ($(ADK_TARGET_SYSTEM_PCDUINO_3B),y)
 	${KERNEL_MAKE} $(VENDOR)sun7i-a20-pcduino3.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
-	${KERNEL_MAKE} sun8i-h2-plus-orangepi-zero.dtb $(MAKE_TRACE)
+	${KERNEL_MAKE} $(VENDOR)sun8i-h2-plus-orangepi-zero.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_BANANA_P2_ZERO),y)
 	${KERNEL_MAKE} sun8i-h2-plus-bananapi-m2-zero.dtb $(MAKE_TRACE)
