@@ -4,21 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		bash
-PKG_VERSION:=		5.2.37
+PKG_VERSION:=		5.3
 PKG_RELEASE:=		1
-PKG_HASH:=		9599b22ecd1d5787ad7d3b7bf0c59f312b3396d1e281175dd1f8a4014da621ff
+PKG_HASH:=		0d5cd86965f869a26cf64f4b71be7b96f90a3ba8b3d74e27e8e9d9d5550f31ba
 PKG_DESCR:=		bourne-again shell
 PKG_SECTION:=		base/shells
 PKG_URL:=		http://www.gnu.org/software/bash/
 PKG_SITES:=		http://ftp.gnu.org/gnu/bash/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
-
-PKG_CHOICES_BASH:=	WITH_CURSES WITH_TERMCAP
-PKGCD_WITH_CURSES:=	use curses library instead of termcap
-PKGCS_WITH_CURSES:=	libncurses
-PKGCB_WITH_CURSES:=	ncurses
-PKGCD_WITH_TERMCAP:=	use termcap library instead of curses
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -31,9 +25,6 @@ CONFIGURE_ARGS+=	--disable-rpath \
 			--cache-file=/dev/null \
 			--enable-job-control \
 			--enable-history
-ifneq (${ADK_PACKAGE_BASH_WITH_CURSES},)
-CONFIGURE_ARGS+=	--with-curses
-endif
 XAKE_FLAGS+=		LIBS_FOR_BUILD=''
 
 bash-install:
