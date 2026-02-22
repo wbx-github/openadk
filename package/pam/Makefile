@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pam
-PKG_VERSION:=		1.7.0
+PKG_VERSION:=		1.7.2
 PKG_RELEASE:=		1
-PKG_HASH:=		1dad9cb50b4a19accd7d7b9716777caf5a0f33d26f018f27d63e9e095998f12b
+PKG_HASH:=		d7ce5cb6e07ee8603d8af41a672bcb515b9d27079ee309fb3f729a8020166694
 PKG_DESCR:=		pluggable authentication modules
 PKG_DEPENDS_GLIBC:=	libxcrypt
 PKG_BUILDDEP:=		meson-host
@@ -39,6 +39,8 @@ pam-install:
 	$(INSTALL_DIR) $(IDIR_PAM)/usr/lib/security
 	$(CP) $(WRKINST)/usr/lib/libpam*.so* $(IDIR_PAM)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/security/*.so* $(IDIR_PAM)/usr/lib/security
+	$(INSTALL_DIR) $(IDIR_PAM)/usr/sbin
+	$(CP) $(WRKINST)/usr/sbin/* $(IDIR_PAM)/usr/sbin
 	$(CP) ./files/pam.conf $(IDIR_PAM)/etc
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
