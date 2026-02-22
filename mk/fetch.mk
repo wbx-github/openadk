@@ -62,7 +62,8 @@ $(1):
 	mkdir -p "$$$${fullname%%/$$$$filename}"; \
 	cd "$$$${fullname%%/$$$$filename}"; \
 	for url in "${PKG_SITES}"; do case $$$$url in \
-	   file://*|git://*|*.git) \
+	      file://*|git://*|*.git) \
+	        if [ ! -z "$${PKG_GIT}" ]; then \
 		echo "Trying to downloading from backup site first"; \
 		if $${FETCHCMD} $$$$filename $${MASTER_SITE_BACKUP}/$$$$filename $(DL_TRACE); then \
 			touch $$$$filename.nohash; \
@@ -70,7 +71,6 @@ $(1):
 			[[ ! -e $$$$filename ]] || exit 0; \
 		fi; \
 		rm -rf $${PKG_NAME}-$${PKG_VERSION}; \
-		if [ ! -z "$${PKG_GIT}" ]; then \
 		  echo "Using git ${PKG_GIT}: $${PKG_VERSION}" $(DL_TRACE); \
 		  case "$${PKG_GIT}" in \
 		    tag|branch) \
