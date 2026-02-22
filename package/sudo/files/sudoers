@@ -1,3 +1,4 @@
 ## sudoers file.
 root ALL=(ALL) ALL
 %root ALL=(ALL) ALL
+%adk ALL=(ALL) ALL
