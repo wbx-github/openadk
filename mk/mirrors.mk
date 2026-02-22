@@ -28,10 +28,8 @@ MASTER_SITE_GNU?=	\
 	http://ftp.gnu.org/gnu/ \
 
 MASTER_SITE_SOURCEFORGE?=	\
+	https://downloads.sourceforge.net/projects/ \
 	http://nchc.dl.sourceforge.net/sourceforge/ \
-	http://kent.dl.sourceforge.net/sourceforge/ \
-	http://ufpr.dl.sourceforge.net/sourceforge/ \
-	http://easynews.dl.sourceforge.net/sourceforge/ \
 
 MASTER_SITE_MYSQL?=		\
 	http://sunsite.informatik.rwth-aachen.de/mysql/ \
