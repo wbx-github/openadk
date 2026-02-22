@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		vlc
-PKG_VERSION:=		3.0.20
+PKG_VERSION:=		3.0.23
 PKG_RELEASE:=		1
-PKG_HASH:=		adc7285b4d2721cddf40eb5270cada2aaa10a334cb546fd55a06353447ba29b5
+PKG_HASH:=		e891cae6aa3ccda69bf94173d5105cbc55c7a7d9b1d21b9b21666e69eff3e7e0
 PKG_DESCR:=		popular media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		libffmpeg xcb-util libgcrypt alsa-lib

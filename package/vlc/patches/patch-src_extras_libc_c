@@ -1,0 +1,29 @@
+--- vlc-3.0.23.orig/src/extras/libc.c	2025-12-23 11:49:21.000000000 +0100
++++ vlc-3.0.23/src/extras/libc.c	2026-02-22 21:28:32.652332391 +0100
+@@ -437,7 +437,7 @@ vlc_iconv_t vlc_iconv_open( const char *
+ 
+     return ( vlc_iconv_t )p_os2_iconv;
+ # else
+-    return iconv_open( tocode, fromcode );
++    return (vlc_iconv_t)iconv_open( tocode, fromcode );
+ # endif
+ #else
+     return (vlc_iconv_t)(-1);
+@@ -470,7 +470,7 @@ size_t vlc_iconv( vlc_iconv_t cd, const
+         if (inbuf != NULL)
+             cin = (ICONV_CONST char *)*inbuf;
+ 
+-        ret = iconv( cd, &cin, inbytesleft, outbuf, outbytesleft );
++        ret = iconv( (iconv_t)cd, &cin, inbytesleft, outbuf, outbytesleft );
+         if (inbuf != NULL)
+             *inbuf = cin;
+     }
+@@ -487,7 +487,7 @@ int vlc_iconv_close( vlc_iconv_t cd )
+         return 0;
+ #endif
+ #if defined(HAVE_ICONV)
+-    return iconv_close( cd );
++    return iconv_close( (iconv_t)cd );
+ #else
+     abort ();
+ #endif

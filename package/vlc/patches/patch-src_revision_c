@@ -1,0 +1,5 @@
+--- vlc-3.0.23.orig/src/revision.c	2025-12-23 12:00:14.000000000 +0100
++++ vlc-3.0.23/src/revision.c	2026-02-22 21:10:50.152907982 +0100
+@@ -1 +1 @@
+-const char psz_vlc_changeset[] = "3.0.23-2-0-g79128878dd";
++const char psz_vlc_changeset[] = "bf934e746";
