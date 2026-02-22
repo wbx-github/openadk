@@ -1,0 +1,2 @@
+# Allow normal user access to /dev/fb0
+KERNEL=="fb0", SUBSYSTEM=="graphics", GROUP="video", MODE="0660"

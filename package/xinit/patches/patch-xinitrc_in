@@ -1,5 +1,5 @@
 --- xinit-1.4.4.orig/xinitrc.in	2025-03-09 21:44:26.000000000 +0100
-+++ xinit-1.4.4/xinitrc.in	2025-09-27 00:32:37.482563426 +0200
++++ xinit-1.4.4/xinitrc.in	2026-02-20 08:08:31.510209322 +0100
 @@ -49,8 +49,5 @@ if [ -d "$xinitdir"/xinitrc.d ] ; then
  	unset f
  fi
@@ -9,5 +9,5 @@
 -"$xterm" -geometry 80x50+494+51 &
 -"$xterm" -geometry 80x20+494-0 &
 -exec "$xterm" -geometry 80x66+0+0 -name login
-+evilwm -fn fixed -term xterm &
++/usr/bin/openbox &
 +exec "$xterm" -geometry 80x18

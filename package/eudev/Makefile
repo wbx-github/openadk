@@ -42,6 +42,7 @@ udev-install:
 	$(CP) $(WRKINST)/usr/lib/udev/* $(IDIR_UDEV)/usr/lib/udev
 	$(CP) $(WRKINST)/usr/bin/udevadm $(IDIR_UDEV)/usr/bin
 	$(CP) $(WRKINST)/usr/sbin/udevd $(IDIR_UDEV)/usr/sbin
+	$(CP) ./files/*.rules $(IDIR_UDEV)/etc/udev/rules.d
 
 libudev-install:
 	$(INSTALL_DIR) $(IDIR_LIBUDEV)/usr/lib

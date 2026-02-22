@@ -1,0 +1,28 @@
+--- elogind-255.22.orig/meson.build	2025-11-18 08:14:12.000000000 +0100
++++ elogind-255.22/meson.build	2026-02-08 08:29:01.710825258 +0100
+@@ -493,14 +493,7 @@ possible_common_cc_flags = [
+ 
+         '-fdiagnostics-show-option',
+         '-fno-common',
+-        '-fstack-protector',
+-        '-fstack-protector-strong',
+         '-fstrict-flex-arrays=3',
+-        '--param=ssp-buffer-size=4',
+-]
+-
+-possible_common_link_flags = [
+-        '-fstack-protector',
+ ]
+ 
+ c_args = get_option('c_args')
+@@ -581,10 +574,6 @@ add_project_arguments(
+         ),
+         language : 'c')
+ 
+-add_project_link_arguments(
+-        cc.get_supported_link_arguments(possible_common_link_flags),
+-        language : 'c')
+-
+ userspace_c_args += cc.get_supported_arguments(possible_cc_flags)
+ userspace_c_ld_args += cc.get_supported_link_arguments(possible_link_flags)
+ 

@@ -1,0 +1,6 @@
+--- xdm-1.1.17.orig/config/Xsetup_0	2025-03-09 02:13:49.000000000 +0100
++++ xdm-1.1.17/config/Xsetup_0	2026-02-21 07:20:50.567463087 +0100
+@@ -1,2 +1,3 @@
+ #!/bin/sh
++feh --bg-tile /usr/share/backgrounds/puppy.png &
+ xconsole -geometry 480x130-0-0 -daemon -notify -verbose -fn fixed -exitOnFail

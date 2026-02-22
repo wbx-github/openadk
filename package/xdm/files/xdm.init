@@ -18,7 +18,7 @@ start)
 	xdm
 	;;
 stop)
-	kill $(pgrep -f /usr/bin/xdm)
+	kill $(pgrep -f xdm)
 	;;
 restart)
 	sh $0 stop

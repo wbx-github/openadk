@@ -1,0 +1,26 @@
+--- lightdm-1.32.0.orig/liblightdm-gobject/language.c	2021-02-15 23:06:28.000000000 +0100
++++ lightdm-1.32.0/liblightdm-gobject/language.c	2026-02-21 02:31:23.945228594 +0100
+@@ -214,10 +214,9 @@ lightdm_language_get_name (LightDMLangua
+         if (locale)
+         {
+             const gchar *current = setlocale (LC_ALL, NULL);
+-            setlocale (LC_IDENTIFICATION, locale);
+             setlocale (LC_MESSAGES, "");
+ 
+-            const gchar *language_en = nl_langinfo (_NL_IDENTIFICATION_LANGUAGE);
++            const gchar *language_en = "";
+             if (language_en && strlen (language_en) > 0)
+                 priv->name = g_strdup (dgettext ("iso_639_3", language_en));
+ 
+@@ -254,10 +253,9 @@ lightdm_language_get_territory (LightDML
+         if (locale)
+         {
+             gchar *current = setlocale (LC_ALL, NULL);
+-            setlocale (LC_IDENTIFICATION, locale);
+             setlocale (LC_MESSAGES, "");
+ 
+-            gchar *country_en = nl_langinfo (_NL_IDENTIFICATION_TERRITORY);
++            gchar *country_en = "";
+             if (country_en && strlen (country_en) > 0 && g_strcmp0 (country_en, "ISO") != 0)
+                 priv->territory = g_strdup (dgettext ("iso_3166", country_en));
+ 

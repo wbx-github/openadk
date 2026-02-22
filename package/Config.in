@@ -59,6 +59,7 @@ endmenu
 
 menu "Xorg"
 source package/Config.in.auto.x11.apps
+source package/Config.in.auto.x11.lxde
 source package/Config.in.auto.x11.utils
 source package/Config.in.auto.x11.drivers
 source package/Config.in.auto.x11.misc

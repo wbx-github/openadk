@@ -1,0 +1,15 @@
+--- lxde-common-0.99.3.orig/pcmanfm/pcmanfm.conf.in	2025-03-21 18:31:27.000000000 +0100
++++ lxde-common-0.99.3/pcmanfm/pcmanfm.conf.in	2026-02-21 11:28:59.676295064 +0100
+@@ -7,9 +7,9 @@ mount_removable=1
+ autorun=1
+ 
+ [desktop]
+-wallpaper_mode=crop
+-wallpaper=@prefix@/share/lxde/wallpapers/lxde_blue.jpg
+-desktop_bg=#000000
++wallpaper_mode=tile
++wallpaper=@prefix@/share/backgrounds/puppy.png
++desktop_bg=#2d2d2d
+ desktop_fg=#ffffff
+ desktop_shadow=#000000
+ show_wm_menu=0

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec dbus-launch --exit-with-session ck-launch-session startlxde

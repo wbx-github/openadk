@@ -43,6 +43,7 @@ mm/audio	Audio
 mm/image	Image
 mm/video	Video
 x11/apps	Xorg applications
+x11/lxde	LXDE applications and libraries
 x11/utils	Xorg utilities
 x11/drivers	Xorg server and drivers
 x11/misc	Xorg misc

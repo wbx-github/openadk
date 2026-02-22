@@ -2,7 +2,7 @@
 #-
 # Copyright © 2010, 2011, 2012
 #	Thorsten Glaser <tg@mirbsd.org>
-# Copyright © 2010-2025
+# Copyright © 2010-2026
 #	Waldemar Brodkorb <wbx@openadk.org>
 #
 # Provided that these terms and disclaimer and all copyright notices
@@ -67,7 +67,7 @@ EOF
 
 cfgfs=1
 usegrub=0
-tgtmib=512
+tgtmib=768
 panicreboot=10
 speed=115200
 serial=0
@@ -246,6 +246,7 @@ dd if=$rnddev bs=16 count=1 >>etc/.rnd 2>/dev/null
 print Fixing up permissions...
 chmod 1777 tmp
 [[ -f usr/bin/sudo ]] && chmod 4755 usr/bin/sudo
+[[ -f usr/lib/polkit-1/polkit-agent-helper-1 ]] && chmod 4755 usr/lib/polkit-1/polkit-agent-helper-1
 
 if (( usegrub )); then
 	print Configuring GRUB2 bootloader...

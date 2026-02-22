@@ -1,0 +1,20 @@
+--- lxdm-0.5.3.orig/data/lxdm.conf.in	2014-11-23 10:56:36.000000000 +0100
++++ lxdm-0.5.3/data/lxdm.conf.in	2026-02-20 14:45:09.285073978 +0100
+@@ -7,7 +7,7 @@
+ # timeout=10
+ 
+ ## default session or desktop used when no systemwide config
+-# session=/usr/bin/startlxde
++session=/usr/bin/startlxde
+ 
+ ## uncomment and set to set numlock on your keyboard
+ # numlock=0
+@@ -40,7 +40,7 @@ bg=/usr/share/backgrounds/default.png
+ bottom_pane=1
+ 
+ ## if show language select control
+-lang=1
++lang=0
+ 
+ ## if show keyboard layout select control
+ keyboard=0

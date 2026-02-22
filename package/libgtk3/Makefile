@@ -48,5 +48,8 @@ libgtk3-install:
 	$(CP) $(WRKINST)/usr/lib/libgdk-3.so* $(IDIR_LIBGTK3)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libgtk-3.so* $(IDIR_LIBGTK3)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libgailutil-3.so* $(IDIR_LIBGTK3)/usr/lib
+	$(INSTALL_DIR) $(IDIR_LIBGTK3)/usr/share/themes/Adwaita/gtk-3.0
+	$(CP) $(WRKSRC)/gtk/theme/Adwaita/* \
+		$(IDIR_LIBGTK3)/usr/share/themes/Adwaita/gtk-3.0
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk

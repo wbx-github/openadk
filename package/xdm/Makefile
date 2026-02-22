@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		b1d1db9ba7fd96d50e0b6cf743be2b9ff954f7969a7a9b74d1951b89ec15ca9c
 PKG_DESCR:=		display manager
 PKG_SECTION:=		x11/apps
-PKG_BUILDDEP:=		libXaw
-PKG_DEPENDS:=		xconsole xsm libxaw
+PKG_BUILDDEP:=		libXaw libXmu libXt libSM libICE libXft
+PKG_DEPENDS:=		xconsole xsm libxaw libxmu libxt libsm libice libxft
 PKG_URL:=		http://xorg.freedesktop.org/
 PKG_SITES:=		http://www.x.org/releases/individual/app/
 
@@ -24,7 +24,7 @@ CONFIGURE_ARGS+=	--with-random-device=/dev/urandom \
 			--with-appdefaultdir=/usr/share/X11/app-defaults \
 			--with-utmp-file=/dev/null \
 			--with-wtmp-file=/dev/null \
-			--without-pam
+			--with-pam
 
 xdm-install:
 	$(INSTALL_DIR) $(IDIR_XDM)/usr/lib/X11
@@ -36,5 +36,8 @@ xdm-install:
 	$(INSTALL_DIR) $(IDIR_XDM)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/xdm \
 		$(IDIR_XDM)/usr/bin
+	$(INSTALL_DIR) $(IDIR_XDM)/usr/share/backgrounds
+	$(CP) ./files/puppy.png \
+		$(IDIR_XDM)/usr/share/backgrounds
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

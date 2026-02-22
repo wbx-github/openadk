@@ -1,0 +1,11 @@
+--- elogind-255.22.orig/src/shared/common-signal.c	2025-11-18 08:14:12.000000000 +0100
++++ elogind-255.22/src/shared/common-signal.c	2026-02-08 08:17:14.308478027 +0100
+@@ -66,7 +66,7 @@ int sigrtmin18_handler(sd_event_source *
+                         break;
+                 }
+ 
+-#ifdef __GLIBC__
++#if defined(__GLIBC__) && !defined(__UCLIBC__)
+                 if (malloc_info(0, f) < 0) {
+                         log_error_errno(errno, "Failed to invoke malloc_info(): %m");
+                         break;

@@ -1,0 +1,11 @@
+--- xdm-1.1.17.orig/greeter/Login.c	2025-03-09 02:13:49.000000000 +0100
++++ xdm-1.1.17/greeter/Login.c	2026-02-21 08:01:43.175481006 +0100
+@@ -194,7 +194,7 @@ static XtResource resources[] = {
+ 	offset(failcolor), XtRString,	XtDefaultForeground},
+ #endif
+     {XtNgreeting, XtCGreeting, XtRString, sizeof (char *),
+-	offset(greeting), XtRString, "X Window System"},
++	offset(greeting), XtRString, "Linux built with OpenADK"},
+     {XtNunsecureGreeting, XtCGreeting, XtRString, sizeof (char *),
+ 	offset(unsecure_greet), XtRString, "This is an unsecure session"},
+     {XtNnamePrompt, XtCNamePrompt, XtRString, sizeof (char *),

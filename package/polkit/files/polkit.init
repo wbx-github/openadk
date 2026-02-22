@@ -1,0 +1,28 @@
+#!/bin/sh
+#PKG polkit
+#INIT 70
+. /etc/rc.conf
+
+case $1 in
+autostop) ;;
+autostart)
+	test x"${polkit:-NO}" = x"NO" && exit 0
+	test x"$polkit" = x"DAEMON" && test -x /bin/mksh && exec mksh -T- $0 start
+	exec sh $0 start
+	;;
+start)
+	nohup /usr/lib/polkit-1/polkitd -n &
+	;;
+stop)
+	kill $(pgrep -f polkitd)
+	;;
+restart)
+	sh $0 stop
+	sh $0 start
+	;;
+*)
+	echo "Usage: $0 {start | stop | restart}"
+	exit 1
+	;;
+esac
+exit $?

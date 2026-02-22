@@ -66,6 +66,8 @@ glib-install:
 	$(CP) $(WRKINST)/usr/lib/libgmodule*.so* $(IDIR_GLIB)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libgthread*.so* $(IDIR_GLIB)/usr/lib
 	-$(CP) $(WRKINST)/usr/lib/libintl*.so* $(IDIR_GLIB)/usr/lib
+	$(INSTALL_DIR) $(IDIR_GLIB)/usr/libexec
+	$(CP) $(WRKINST)/usr/libexec/* $(IDIR_GLIB)/usr/libexec
 	# workaround for dev subpackage
 	$(INSTALL_DIR) $(IDIR_GLIB_DEV)/usr/include
 	$(INSTALL_DIR) $(IDIR_GLIB_DEV)/usr/lib/glib-2.0/include

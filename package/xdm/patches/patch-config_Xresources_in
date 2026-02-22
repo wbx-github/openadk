@@ -1,0 +1,11 @@
+--- xdm-1.1.17.orig/config/Xresources.in	2025-03-09 02:13:49.000000000 +0100
++++ xdm-1.1.17/config/Xresources.in	2026-02-21 07:43:35.045746497 +0100
+@@ -13,7 +13,7 @@ xlogin*login.translations: #override BS
+ 	Ctrl<Key>Return: set-session-argument(failsafe) finish-field()NLBS
+ 	<Key>Return: set-session-argument() finish-field()
+ 
+-xlogin*greeting: Welcome to CLIENTHOST
++xlogin*greeting: Welcome to Linux built by OpenADK
+ xlogin*namePrompt: \040\040\040\040\040\040\040Login:
+ xlogin*fail: Login incorrect or forbidden by policy
+ 

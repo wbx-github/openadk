@@ -1,0 +1,13 @@
+--- ConsoleKit2-1.2.6.orig/m4/xdt-features.m4	2023-08-08 18:55:45.000000000 +0200
++++ ConsoleKit2-1.2.6/m4/xdt-features.m4	2026-02-21 14:55:59.382020809 +0100
+@@ -79,10 +79,6 @@ AC_HELP_STRING([--disable-debug], [Inclu
+                               -Wnested-externs"
+     CPPFLAGS="$CPPFLAGS"
+ 
+-    if test x`uname` = x"Linux"; then
+-      xdt_cv_additional_CFLAGS="$xdt_cv_additional_CFLAGS -fstack-protector"
+-    fi
+-
+     dnl # signal.h inline is crapy on openbsd
+     if test x`uname` != x"OpenBSD"; then
+       xdt_cv_additional_CFLAGS="$xdt_cv_additional_CFLAGS"

@@ -222,6 +222,9 @@ ifeq ($(ADK_RUNTIME_ADDUSER),y)
 	printf '$(ADK_RUNTIME_USER_NAME):x:100:\n' >> ${IDIR_BASE_FILES}/etc/group
 	$(SED) 's,\*NP\*,'"$$(awk -F\= '/^ADK_RUNTIME_USER_PASSWORD/ { print $$2 }' $(ADK_TOPDIR)/.config|sed -e 's^\"^^g'),g" \
 		 $(IDIR_BASE_FILES)/etc/shadow
+ifeq ($(ADK_APPLIANCE_LXDE),y)	
+	printf '#!/bin/sh\nck-launch-session startlxde' > ${IDIR_BASE_FILES}/$(ADK_RUNTIME_USER_HOME)/.xsession
+endif
 endif
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

@@ -1,0 +1,31 @@
+--- lxdm-0.5.3.orig/src/lxdm.c	2015-11-23 12:15:52.000000000 +0100
++++ lxdm-0.5.3/src/lxdm.c	2026-02-11 05:22:25.605934764 +0100
+@@ -49,8 +49,6 @@
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+ 
+-#include <execinfo.h>
+-
+ #ifdef HAVE_UTMPX_H
+ #include <utmpx.h>
+ #endif
+@@ -1541,18 +1539,7 @@ int lxdm_do_auto_login(void)
+ 
+ static void log_sigsegv(void)
+ {
+-	void *array[40];
+-	size_t size;
+-	char **bt_strs;
+-	size_t i;
+-
+-	size=backtrace(array,40);
+-	bt_strs=backtrace_symbols(array, size);
+-
+-	for (i=0; i<size; i++)
+-	    fprintf(stderr, "%s\n", bt_strs[i]);
+-
+-	free(bt_strs);
++	return;
+ }
+ 
+ static void sigsegv_handler(int sig)

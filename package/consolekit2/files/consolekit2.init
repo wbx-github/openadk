@@ -1,0 +1,28 @@
+#!/bin/sh
+#PKG consolekit2
+#INIT 80
+. /etc/rc.conf
+
+case $1 in
+autostop) ;;
+autostart)
+	test x"${consolekit2:-NO}" = x"NO" && exit 0
+	test x"$consolekit2" = x"DAEMON" && test -x /bin/mksh && exec mksh -T- $0 start
+	exec sh $0 start
+	;;
+start)
+	/usr/sbin/console-kit-daemon 
+	;;
+stop)
+	kill $(pgrep -f console-kit-daemon)
+	;;
+restart)
+	sh $0 stop
+	sh $0 start
+	;;
+*)
+	echo "Usage: $0 {start | stop | restart}"
+	exit 1
+	;;
+esac
+exit $?
