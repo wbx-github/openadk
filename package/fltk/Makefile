@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		fltk
-PKG_VERSION:=		1.3.11
+PKG_VERSION:=		1.4.4
 PKG_RELEASE:=		1
-PKG_HASH:=		92805abc84505e3e7e27aec775ab0754ecb4182fe2d8ff2a9d568ccdcb2811ac
+PKG_HASH:=		94b464cce634182c8407adac1be5fc49678986ca93285699b444352af89b4efe
 PKG_DESCR:=		fast light toolkit
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		mesa libx11 libxi freeglut libfreetype
