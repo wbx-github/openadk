@@ -4,8 +4,8 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		dillo
-PKG_VERSION:=		c1fb64dd43c8cc479c8bfbff6df341c97a26423c
-PKG_GIT:=		hash
+PKG_VERSION:=		fltk-1.4
+PKG_GIT:=		branch
 PKG_RELEASE:=		1
 PKG_DESCR:=		small graphical web browser
 PKG_SECTION:=		x11/apps
@@ -29,6 +29,7 @@ TARGET_LDFLAGS+=	-latomic
 AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ENV+=		PNG_CONFIG=$(STAGING_TARGET_DIR)/scripts/libpng-config
 CONFIGURE_ARGS+=	--enable-tls \
+			--enable-experimental-fltk \
 			--disable-xembed
 
 dillo-install:
