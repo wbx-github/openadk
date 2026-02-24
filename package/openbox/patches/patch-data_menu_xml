@@ -1,5 +1,5 @@
 --- openbox-3.6.1.orig/data/menu.xml	2009-12-18 19:49:32.000000000 +0100
-+++ openbox-3.6.1/data/menu.xml	2026-02-22 18:20:04.824616420 +0100
++++ openbox-3.6.1/data/menu.xml	2026-02-23 12:03:28.078682836 +0100
 @@ -2,103 +2,22 @@
  
  <openbox_menu xmlns="http://openbox.org/3.4/menu">
@@ -70,7 +70,7 @@
 +  <item label="vim">
      <action name="Execute">
 -      <command>kwrite</command>
-+      <command>vim</command>
++      <command>xterm -e vim</command>
        <startupnotify>
          <enabled>yes</enabled>
 +        <wmclass>vim</wmclass>
@@ -109,7 +109,7 @@
        <startupnotify>
          <enabled>yes</enabled>
        </startupnotify>
-@@ -110,141 +29,21 @@
+@@ -110,182 +29,18 @@
  </menu>
  
  <menu id="apps-net-menu" label="Internet">
@@ -164,18 +164,15 @@
 -    </action>
 -  </item>
 -  <item label="XChat">
-+  <item label="Dillo">
-     <action name="Execute">
+-    <action name="Execute">
 -      <command>xchat</command>
-+      <command>dillo</command>
-       <startupnotify>
-         <enabled>yes</enabled>
-+        <wmclass>Dillo</wmclass>
-       </startupnotify>
-     </action>
-   </item>
- </menu>
- 
+-      <startupnotify>
+-        <enabled>yes</enabled>
+-      </startupnotify>
+-    </action>
+-  </item>
+-</menu>
+-
 -<menu id="apps-office-menu" label="Office">
 -  <item label="OpenOffice Base">
 -    <action name="Execute">
@@ -214,7 +211,7 @@
 -  </item>
 -</menu>
 -
- <menu id="apps-multimedia-menu" label="Multimedia">
+-<menu id="apps-multimedia-menu" label="Multimedia">
 -  <item label="Amarok">
 -    <action name="Execute">
 -      <command>amarok</command>
@@ -249,14 +246,16 @@
 -    </action>
 -  </item>
 -  <item label="Totem">
-+  <item label="Mpv">
++  <item label="Dillo">
      <action name="Execute">
 -      <command>totem</command>
-+      <command>mpv</command>
++      <command>dillo</command>
        <startupnotify>
          <enabled>yes</enabled>
++        <wmclass>Dillo</wmclass>
        </startupnotify>
-@@ -253,39 +52,6 @@
+     </action>
+   </item>
  </menu>
  
  <menu id="apps-fileman-menu" label="File Managers">
@@ -296,10 +295,11 @@
    <item label="PCMan File Manager">
      <action name="Execute">
        <command>pcmanfm</command>
-@@ -297,33 +63,9 @@
+@@ -296,41 +51,6 @@
+   </item>
  </menu>
  
- <menu id="apps-graphics-menu" label="Graphics">
+-<menu id="apps-graphics-menu" label="Graphics">
 -  <item label="Gimp">
 -    <action name="Execute">
 -      <command>gimp</command>
@@ -325,14 +325,19 @@
 -    </action>
 -  </item>
 -  <item label="Inkscape">
-+  <item label="Feh">
-     <action name="Execute">
+-    <action name="Execute">
 -      <command>inkscape</command>
-+      <command>feh</command>
-       <startupnotify>
-         <enabled>yes</enabled>
-       </startupnotify>
-@@ -338,33 +80,6 @@
+-      <startupnotify>
+-        <enabled>yes</enabled>
+-      </startupnotify>
+-    </action>
+-  </item>
+-</menu>
+-
+ <menu id="system-menu" label="System">
+   <item label="Openbox Configuration Manager">
+     <action name="Execute">
+@@ -338,47 +58,12 @@
        <startupnotify><enabled>yes</enabled></startupnotify>
      </action>
    </item>
@@ -363,18 +368,20 @@
 -      </startupnotify>
 -    </action>
 -  </item>
-   <separator />
-   <item label="Reconfigure Openbox">
-     <action name="Reconfigure" />
-@@ -373,11 +88,9 @@
+-  <separator />
+-  <item label="Reconfigure Openbox">
+-    <action name="Reconfigure" />
+-  </item>
+ </menu>
  
  <menu id="root-menu" label="Openbox 3">
    <separator label="Applications" />
 -  <menu id="apps-accessories-menu"/>
    <menu id="apps-editors-menu"/>
-   <menu id="apps-graphics-menu"/>
+-  <menu id="apps-graphics-menu"/>
    <menu id="apps-net-menu"/>
 -  <menu id="apps-office-menu"/>
-   <menu id="apps-multimedia-menu"/>
+-  <menu id="apps-multimedia-menu"/>
    <menu id="apps-term-menu"/>
    <menu id="apps-fileman-menu"/>
+   <separator label="System" />
