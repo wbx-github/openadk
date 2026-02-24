@@ -1,4 +1,6 @@
 ## sudoers file.
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 root ALL=(ALL) ALL
 %root ALL=(ALL) ALL
 %adk ALL=(ALL) ALL
