@@ -1,0 +1,10 @@
+--- vlc-3.0.23.orig/include/vlc/libvlc_media.h	2025-12-23 11:49:20.000000000 +0100
++++ vlc-3.0.23/include/vlc/libvlc_media.h	2026-02-23 06:49:59.350283178 +0100
+@@ -35,6 +35,7 @@ extern "C" {
+ typedef SSIZE_T ssize_t;
+ #endif
+ 
++#include <sys/types.h>
+ 
+ /** \defgroup libvlc_media LibVLC media
+  * \ingroup libvlc

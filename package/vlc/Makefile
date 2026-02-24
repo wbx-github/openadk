@@ -16,7 +16,7 @@ PKG_URL:=		http://www.videolan.org/vlc/
 PKG_SITES:=		http://download.videolan.org/pub/videolan/vlc/$(PKG_VERSION)/
 
 PKG_FLAVOURS_VLC:=	WITH_BLURAY WITH_MAD WITH_OGG WITH_OPUS WITH_SPEEX WITH_THEORA
-PKG_FLAVOURS_VLC+=	WITH_VPX WITH_X264
+PKG_FLAVOURS_VLC+=	WITH_VPX WITH_X264 WITH_X265
 PKGFD_WITH_BLURAY:=	enable bluray support
 PKGFB_WITH_BLURAY:=	libbluray
 PKGFS_WITH_BLURAY:=	libbluray
@@ -41,6 +41,9 @@ PKGFS_WITH_VPX:=	libvpx
 PKGFD_WITH_X264:=	enable h264 support
 PKGFB_WITH_X264:=	libx264
 PKGFS_WITH_X264:=	libx264
+PKGFD_WITH_X265:=	enable h265 support
+PKGFB_WITH_X265:=	libx265
+PKGFS_WITH_X265:=	libx265
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -114,6 +117,11 @@ ifneq ($(ADK_PACKAGE_VLC_WITH_X264),)
 CONFIGURE_ARGS+=	--enable-x264
 else
 CONFIGURE_ARGS+=	--disable-x264
+endif
+ifneq ($(ADK_PACKAGE_VLC_WITH_X265),)
+CONFIGURE_ARGS+=	--enable-x265
+else
+CONFIGURE_ARGS+=	--disable-x265
 endif
 
 vlc-install:
