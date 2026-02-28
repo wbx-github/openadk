@@ -6,6 +6,7 @@ include $(ADK_TOPDIR)/rules.mk
 PKG_NAME:=		dillo
 PKG_VERSION:=		fltk-1.4
 PKG_GIT:=		branch
+PKG_HASH:=		2b5c73bc771f69426e34e538281c163cccb02191964b01f59be8b61555e4949e
 PKG_RELEASE:=		1
 PKG_DESCR:=		small graphical web browser
 PKG_SECTION:=		x11/apps
