@@ -70,8 +70,8 @@ CONFIGURE_ARGS+=	--disable-lua \
 			--disable-optimizations \
 			--disable-static \
 			--disable-swscale \
-			--disable-avformat \
-			--disable-avcodec \
+			--enable-avformat \
+			--enable-avcodec \
 			--disable-mpg123
 
 ifeq ($(ADK_TARGET_ARCH_ARM_WITH_NEON),)
