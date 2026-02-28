@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libinput
-PKG_VERSION:=		1.28.1
+PKG_VERSION:=		1.30.2
 PKG_RELEASE:=		1
-PKG_HASH:=		a13f8c9a7d93df3c85c66afd135f0296701d8d32f911991b7aa4273fdd6a42a3
+PKG_HASH:=		76130ec033ae0359d9e0288fd6576da70d7bfc682464c394551841f3a3e08e08
 PKG_DESCR:=		input library
 PKG_DEPENDS:=		mtdev libevdev libudev
 PKG_BUILDDEP:=		mtdev libevdev eudev
