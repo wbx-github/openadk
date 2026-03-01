@@ -22,6 +22,9 @@ config ADK_LINUX_KERNEL_VIRTIO_PCI_LEGACY
 config ADK_LINUX_KERNEL_VIRTIO_PCI
 	bool
 
+config ADK_LINUX_KERNEL_VIRTIO_INPUT
+	bool
+
 config ADK_LINUX_KERNEL_VIRTIO_MMIO
 	bool
 
@@ -80,6 +83,7 @@ config ADK_LINUX_KERNEL_DRM_VIRTIO_GPU
 	tristate "Virtio GPU support"
 	select ADK_LINUX_KERNEL_DRM_VIRTIO_GPU_KMS
 	select ADK_LINUX_KERNEL_DRM_FBDEV_EMULATION
+	select ADK_LINUX_KERNEL_VIRTIO_INPUT
 	default n
 	help
 	  Enables support for Virtio GPU driver.
