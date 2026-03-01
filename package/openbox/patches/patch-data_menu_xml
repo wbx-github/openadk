@@ -1,5 +1,5 @@
 --- openbox-3.6.1.orig/data/menu.xml	2009-12-18 19:49:32.000000000 +0100
-+++ openbox-3.6.1/data/menu.xml	2026-02-23 12:03:28.078682836 +0100
++++ openbox-3.6.1/data/menu.xml	2026-03-01 14:56:24.010659791 +0100
 @@ -2,103 +2,22 @@
  
  <openbox_menu xmlns="http://openbox.org/3.4/menu">
@@ -33,10 +33,11 @@
 -
  <menu id="apps-editors-menu" label="Editors">
 -  <item label="GVim">
--    <action name="Execute">
--      <command>gvim</command>
--      <startupnotify>
--        <enabled>yes</enabled>
++  <item label="vim">
+     <action name="Execute">
+       <command>gvim</command>
+       <startupnotify>
+         <enabled>yes</enabled>
 -        <wmclass>GVim</wmclass>
 -      </startupnotify>
 -    </action>
@@ -67,13 +68,11 @@
 -    </action>
 -  </item>
 -  <item label="Kwrite">
-+  <item label="vim">
-     <action name="Execute">
+-    <action name="Execute">
 -      <command>kwrite</command>
-+      <command>xterm -e vim</command>
-       <startupnotify>
-         <enabled>yes</enabled>
-+        <wmclass>vim</wmclass>
+-      <startupnotify>
+-        <enabled>yes</enabled>
++        <wmclass>gvim</wmclass>
        </startupnotify>
      </action>
    </item>
