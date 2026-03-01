@@ -16,7 +16,7 @@ PKG_SITES:=		http://www.x.org/releases/individual/driver/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
-PKG_CFLINE_XF86_INPUT_MOUSE:=	depends on ADK_TARGET_WITH_INPUT || ADK_TARGET_QEMU_WITH_GRAPHIC
+PKG_CFLINE_XF86_INPUT_MOUSE:=	depends on ADK_TARGET_WITH_INPUT || ADK_TARGET_QEMU
 
 include $(ADK_TOPDIR)/mk/package.mk
 
