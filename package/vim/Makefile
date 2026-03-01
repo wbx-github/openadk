@@ -15,6 +15,11 @@ PKG_BUILDDEP:=		ncurses
 PKG_URL:=		http://www.vim.org/
 PKG_SITES:=		https://github.com/vim/vim/archive/refs/tags/
 
+PKG_FLAVOURS_VIM:=	WITH_X
+PKGFD_WITH_X:=		enable Xorg support
+PKGFS_WITH_X:=		libx11 libgtk3
+PKGFB_WITH_X:=		libX11 libgtk3
+
 DISTFILES:=		v${PKG_VERSION}.${PKG_EXTRAVER}.tar.gz
 WRKDIST=		${WRKDIR}/$(PKG_NAME)-$(PKG_VERSION).$(PKG_EXTRAVER)
 WRKSRC=			${WRKDIST}/src
@@ -49,11 +54,16 @@ CONFIGURE_ARGS+=	--disable-darwin \
 			--disable-gpm \
 			--with-features=small \
 			--with-compiledby=OpenADK \
-			--without-x \
 			--with-tlib=ncursesw
 XAKE_FLAGS+=		prefix=/usr \
 			DESTDIR=${WRKINST} \
 			STRIP=:
+
+ifeq ($(ADK_PACKAGE_VIM_WITH_X),y)
+CONFIGURE_ARGS+=	--with-x --enable-gui=gtk3
+else
+CONFIGURE_ARGS+=	--without-x
+endif
 
 vim-install:
 	${INSTALL_DIR} ${IDIR_VIM}/usr/bin
@@ -63,5 +73,8 @@ vim-install:
 		${IDIR_VIM}/usr/share/vim/
 	${CP} ${WRKINST}/usr/share/vim/vim91/vimrc_example.vim \
 		${IDIR_VIM}/usr/share/vim/vimrc
+ifeq ($(ADK_PACKAGE_VIM_WITH_X),y)
+	${CP} ${WRKINST}/usr/bin/gvim ${IDIR_VIM}/usr/bin
+endif
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
