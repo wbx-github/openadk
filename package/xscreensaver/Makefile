@@ -9,6 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		07f310eb60ece3a6c57abaa722d7209a2c4f54309a5a7b09b6eed20152d073f2
 PKG_DESCR:=		popular screensaver for xorg
 PKG_SECTION:=		x11/apps
+PKG_BUILDDEP:=		mesa
 PKG_URL:=		https://www.jwz.org/xscreensaver/
 PKG_SITES:=		https://www.jwz.org/xscreensaver/
 
