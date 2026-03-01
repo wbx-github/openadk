@@ -186,6 +186,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG),y)
 VENDOR:=marvell/
 endif
+ifeq ($(ADK_TARGET_SYSTEM_SHEEVAPLUG),y)
+VENDOR:=marvell/
+endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F746G),y)
 VENDOR:=st/
 endif
@@ -264,6 +267,9 @@ ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_IMX6),y)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG),y)
 	${KERNEL_MAKE} $(VENDOR)armada-388-clearfog.dtb $(MAKE_TRACE)
+endif
+ifeq ($(ADK_TARGET_SYSTEM_SHEEVAPLUG),y)
+	${KERNEL_MAKE} $(VENDOR)kirkwood-sheevaplug.dtb $(MAKE_TRACE)
 endif
 ifeq ($(ADK_TARGET_SYSTEM_ST_STM32F429),y)
 	${KERNEL_MAKE} dtbs $(MAKE_TRACE)

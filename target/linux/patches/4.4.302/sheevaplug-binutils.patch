@@ -1,0 +1,33 @@
+diff -Nur linux-4.4.302.orig/arch/arm/boot/compressed/head.S linux-4.4.302/arch/arm/boot/compressed/head.S
+--- linux-4.4.302.orig/arch/arm/boot/compressed/head.S	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/arch/arm/boot/compressed/head.S	2026-03-02 00:03:12.847474448 +0100
+@@ -112,7 +112,7 @@
+ #endif
+ 		.endm
+ 
+-		.section ".start", #alloc, #execinstr
++		.section ".start", "ax"
+ /*
+  * sort out different calling conventions
+  */
+diff -Nur linux-4.4.302.orig/arch/arm/boot/compressed/piggy.gzip.S linux-4.4.302/arch/arm/boot/compressed/piggy.gzip.S
+--- linux-4.4.302.orig/arch/arm/boot/compressed/piggy.gzip.S	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/arch/arm/boot/compressed/piggy.gzip.S	2026-03-02 00:11:14.938502449 +0100
+@@ -1,4 +1,4 @@
+-	.section .piggydata,#alloc
++	.section .piggydata,"a"
+ 	.globl	input_data
+ input_data:
+ 	.incbin	"arch/arm/boot/compressed/piggy.gzip"
+diff -Nur linux-4.4.302.orig/arch/arm/mm/proc-feroceon.S linux-4.4.302/arch/arm/mm/proc-feroceon.S
+--- linux-4.4.302.orig/arch/arm/mm/proc-feroceon.S	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/arch/arm/mm/proc-feroceon.S	2026-03-01 23:57:07.471968342 +0100
+@@ -584,7 +584,7 @@
+ 
+ 	.align
+ 
+-	.section ".proc.info.init", #alloc
++	.section ".proc.info.init", "a"
+ 
+ .macro feroceon_proc_info name:req, cpu_val:req, cpu_mask:req, cpu_name:req, cache:req
+ 	.type	__\name\()_proc_info,#object

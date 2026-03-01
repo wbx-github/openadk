@@ -16,7 +16,7 @@ PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
-PKG_SYSTEM_DEPENDS:=	banana-p2-zero beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g starfive-visionfive2 microchip-pic32
+PKG_SYSTEM_DEPENDS:=	banana-p2-zero beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g starfive-visionfive2 microchip-pic32 sheevaplug
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -25,6 +25,10 @@ $(eval $(call HOST_template,U_BOOT,u-boot,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,U_BOOT,u-boot,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
 UBOOT:=			u-boot.bin
+ifeq ($(ADK_TARGET_SYSTEM_SHEEVAPLUG),y)
+CONFIG:=		sheevaplug_defconfig
+UBOOT:=			u-boot.kwb
+endif
 ifeq ($(ADK_TARGET_SYSTEM_SOLIDRUN_CLEARFOG),y)
 CONFIG:=		clearfog_defconfig
 UBOOT:=			u-boot-with-spl.kwb

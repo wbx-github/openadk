@@ -75,6 +75,7 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "etraxfs_defconfig" if ADK_TARGET_SYSTEM_AXIS_89_DEVICE_SERVER
 	default "hp6xx_defconfig" if ADK_TARGET_SYSTEM_HP_JORNADA
 	default "pic32mzda_defconfig" if ADK_TARGET_SYSTEM_MICROCHIP_PIC32
+	default "mvebu_v5_defconfig" if ADK_TARGET_SYSTEM_SHEEVAPLUG
 	default ""
 
 config ADK_TARGET_LINUX_KERNEL_CUSTOMCONFIG_PATH
