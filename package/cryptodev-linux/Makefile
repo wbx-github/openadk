@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		cryptodev-linux
-PKG_VERSION:=		5e7121e45ff283d30097da381fd7e97c4bb61364
+PKG_VERSION:=		08644db02d43478f802755903212f5ee506af73b
 PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_DESCR:=		device that allows access to kernel cryptographic drivers
@@ -14,6 +14,8 @@ PKG_BUILDDEP:=		libressl
 PKG_KDEPENDS:=		crypto-aead crypto-algapi crypto-manager
 PKG_URL:=		http://home.gna.org/cryptodev-linux/
 PKG_SITES:=		https://github.com/cryptodev-linux/cryptodev-linux.git
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 include $(ADK_TOPDIR)/mk/$(ADK_TARGET_OS)-ver.mk
