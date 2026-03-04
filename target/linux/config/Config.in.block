@@ -668,6 +668,7 @@ menu "Block driver support"
 
 config ADK_LINUX_KERNEL_SCSI
 	tristate "SCSI support"
+	select ADK_LINUX_KERNEL_BLOCK
 	select ADK_LINUX_KERNEL_IOSCHED_AS
 	help
 	  If you want to use a SCSI hard disk, SCSI tape drive, SCSI CD-ROM or
