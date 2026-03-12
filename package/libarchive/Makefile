@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libarchive
-PKG_VERSION:=		3.8.5
+PKG_VERSION:=		3.8.6
 PKG_RELEASE:=		1
-PKG_HASH:=		8a60f3a7bfd59c54ce82ae805a93dba65defd04148c3333b7eaa2102f03b7ffd
+PKG_HASH:=		213269b05aac957c98f6e944774bb438d0bd168a2ec60b9e4f8d92035925821c
 PKG_DESCR:=		multiformat archive and compression library
 PKG_SECTION:=		libs/comp
 PKG_URL:=		http://www.libarchive.org/
