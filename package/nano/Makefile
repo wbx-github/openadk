@@ -21,7 +21,7 @@ $(eval $(call PKG_template,NANO,nano,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS
 CONFIGURE_ENV+=		ac_cv_header_regex_h=no
 CONFIGURE_ARGS+=	--enable-nanorc \
 			--enable-tiny \
-			--disable-utf8 \
+			--enable-utf8 \
 			--disable-glibtest \
 			--disable-color \
 			--without-slang \
@@ -31,7 +31,7 @@ CONFIGURE_ARGS+=	--enable-nanorc \
 			--disable-speller \
 			--disable-operatingdir \
 			--enable-multibuffer
-TARGET_LDFLAGS+=	-ltinfo
+TARGET_LDFLAGS+=	-ltinfow
 
 nano-install:
 	${INSTALL_DIR} ${IDIR_NANO}/usr/bin
