@@ -37,7 +37,7 @@ int main(int argc, char **argv){
 	for(loop = 0; loop < (64 * 1024) - sizeof(magic_str); loop++){
 		if(buffer[loop] == magic_str[0]){
 			if((magic = strstr(&buffer[loop], magic_str))){
-				//printf("Magic at 0x%.08X %p %p\n", magic - buffer, magic, buffer);
+				printf("Magic at 0x%.08X %p %p\n", magic - buffer, magic, buffer);
 				printf("Found Magic %X%X%X%X\n",
 					buffer[loop + strlen(magic_str)],
 					buffer[loop + strlen(magic_str) + 2],

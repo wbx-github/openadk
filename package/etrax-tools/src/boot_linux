@@ -204,9 +204,9 @@ if ($opts{'f'} || $opts{'F'})
 }
 
 # Create the command line to boot the image
-if (system('./etrax100boot --help > /dev/null') == 0)
+if (system('./e100boot --help > /dev/null') == 0)
 {
-  $cmd = './etrax100boot';
+  $cmd = './e100boot';
 }
 elsif (system('svinto_boot --help > /dev/null') == 0)
 {

@@ -1,0 +1,10 @@
+diff -Nur linux-3.16.85.orig/arch/cris/arch-v10/lib/hw_settings.S linux-3.16.85/arch/cris/arch-v10/lib/hw_settings.S
+--- linux-3.16.85.orig/arch/cris/arch-v10/lib/hw_settings.S	2020-06-11 20:06:00.000000000 +0200
++++ linux-3.16.85/arch/cris/arch-v10/lib/hw_settings.S	2026-03-07 18:01:45.788327063 +0100
+@@ -58,3 +58,6 @@
+ 	.dword R_PORT_PB_SET
+ 	.dword PB_SET_VALUE
+ 	.dword 0 ; No more register values
++	.ascii "ACME_PART_MAGIC" 
++	.dword 0xdeadc0de
++

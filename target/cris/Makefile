@@ -5,8 +5,12 @@ include $(ADK_TOPDIR)/rules.mk
 include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
+ifeq ($(ADK_TARGET_SYSTEM_FOXBOARD_LX832),y)
+KERNEL:=$(LINUX_DIR)/arch/cris/boot/zImage
+else
 KERNEL:=$(LINUX_DIR)/arch/cris/boot/Image
 QEMU_ARGS:=-M axis-dev88 -nographic -monitor none
+endif
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
@@ -41,25 +45,34 @@ ifeq ($(ADK_TARGET_FS),nfsroot)
 targethelp:
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSUSERTARBALL)"
-	@echo Use sudo ./boot_linux -F -i $(BIN_DIR)/${TARGET_KERNEL} to flash the kernel
+	@echo "Use following command to flash the kernel:"
+	@echo "cd $(STAGING_HOST_DIR)/usr/bin && sudo ./boot_linux -F -i $(FW_DIR)/${TARGET_KERNEL}"
 	@echo Do not forget to set network boot jumper, before you start the foxboard
 endif
 ifeq ($(ADK_TARGET_FS),squashfs)
 targethelp:
-	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
-	@echo "The RootFS image is: $(FW_DIR)/$(ROOTFSSQUASHFS)"
+	@echo "The image is: $(FW_DIR)/$(ROOTFSSQUASHFS)"
+	@echo "Use following command to flash the image:"
+	@echo "cd $(STAGING_HOST_DIR)/usr/bin && sudo ./boot_linux -F -i $(FW_DIR)/${ROOTFSSQUASHFS}"
+	@echo Do not forget to set network boot jumper, before you start the foxboard
 endif
 ifeq ($(ADK_TARGET_FS),jffs2)
 targethelp:
-	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
-	@echo "The RootFS image is: $(FW_DIR)/$(ROOTFSJFFS2)"
+	@echo "The image is: $(FW_DIR)/$(ROOTFSJFFS2)"
 endif
 
 kernel-strip:
 	@cp $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
 
 kernel-install: kernel-strip
-	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
+ifeq ($(ADK_TARGET_FS),squashfs)
+	$(STAGING_HOST_DIR)/usr/bin/mkfimage $(KERNEL) $(KERNEL).fimage
+	cat $(KERNEL).fimage $(BUILD_DIR)/root.squashfs > \
+		$(BUILD_DIR)/$(ROOTFSSQUASHFS)
+	dd if=$(BUILD_DIR)/$(ROOTFSSQUASHFS) of=$(FW_DIR)/$(ROOTFSSQUASHFS) bs=4194304 conv=sync
+else
+	$(STAGING_HOST_DIR)/usr/bin/mkfimage $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
+endif
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)
