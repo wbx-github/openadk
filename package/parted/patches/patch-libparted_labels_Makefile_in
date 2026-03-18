@@ -1,6 +1,6 @@
---- parted-3.3.orig/libparted/labels/Makefile.in	2019-10-11 01:03:39.000000000 +0200
-+++ parted-3.3/libparted/labels/Makefile.in	2020-06-06 20:30:12.000000000 +0200
-@@ -206,11 +206,11 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
+--- parted-3.6.orig/libparted/labels/Makefile.in	2023-04-11 00:37:53.000000000 +0200
++++ parted-3.6/libparted/labels/Makefile.in	2026-03-17 19:50:28.771158069 +0100
+@@ -208,11 +208,11 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
  am__DEPENDENCIES_1 =
  liblabels_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
  	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -14,7 +14,7 @@
  	dos.lo dvh.lo efi_crc32.lo gpt.lo loop.lo mac.lo pc98.lo \
  	pt-tools.lo rdb.lo sun.lo
  liblabels_la_OBJECTS = $(am_liblabels_la_OBJECTS)
-@@ -233,7 +233,7 @@ am__v_at_1 = 
+@@ -235,7 +235,7 @@ am__v_at_1 =
  DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/lib
  depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
  am__maybe_remake_depfiles = depfiles
@@ -23,7 +23,7 @@
  	./$(DEPDIR)/bsd.Plo ./$(DEPDIR)/dasd.Plo ./$(DEPDIR)/dos.Plo \
  	./$(DEPDIR)/dvh.Plo ./$(DEPDIR)/efi_crc32.Plo \
  	./$(DEPDIR)/fdasd.Plo ./$(DEPDIR)/gpt.Plo ./$(DEPDIR)/loop.Plo \
-@@ -1416,7 +1416,6 @@ noinst_LTLIBRARIES = liblabels.la
+@@ -1670,7 +1670,6 @@ noinst_LTLIBRARIES = liblabels.la
  liblabels_la_SOURCES = \
    $(S390_SRCS)	\
    aix.c		\
@@ -31,7 +31,7 @@
    bsd.c		\
    dos.c		\
    dvh.c		\
-@@ -1501,7 +1500,6 @@ distclean-compile:
+@@ -1755,7 +1754,6 @@ distclean-compile:
  	-rm -f *.tab.c
  
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/aix.Plo@am__quote@ # am--include-marker
@@ -39,7 +39,7 @@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bsd.Plo@am__quote@ # am--include-marker
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dasd.Plo@am__quote@ # am--include-marker
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dos.Plo@am__quote@ # am--include-marker
-@@ -1683,7 +1681,6 @@ clean-am: clean-generic clean-libtool cl
+@@ -1937,7 +1935,6 @@ clean-am: clean-generic clean-libtool cl
  
  distclean: distclean-am
  		-rm -f ./$(DEPDIR)/aix.Plo
@@ -47,7 +47,7 @@
  	-rm -f ./$(DEPDIR)/bsd.Plo
  	-rm -f ./$(DEPDIR)/dasd.Plo
  	-rm -f ./$(DEPDIR)/dos.Plo
-@@ -1744,7 +1741,6 @@ installcheck-am:
+@@ -1998,7 +1995,6 @@ installcheck-am:
  
  maintainer-clean: maintainer-clean-am
  		-rm -f ./$(DEPDIR)/aix.Plo

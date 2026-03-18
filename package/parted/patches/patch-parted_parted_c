@@ -1,0 +1,11 @@
+--- parted-3.6.orig/parted/parted.c	2023-03-25 01:02:17.000000000 +0100
++++ parted-3.6/parted/parted.c	2026-03-17 19:58:01.637343768 +0100
+@@ -2172,7 +2172,7 @@ do_unit (PedDevice** dev, PedDisk** disk
+ }
+ 
+ static int
+-do_version ()
++do_version (PedDevice** dev, PedDisk** diskp)
+ {
+     printf ("\n%s\n%s",
+             prog_name,

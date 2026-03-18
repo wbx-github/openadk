@@ -1,6 +1,6 @@
---- parted-3.3.orig/libparted/libparted.c	2019-10-11 00:58:51.000000000 +0200
-+++ parted-3.3/libparted/libparted.c	2020-06-06 20:37:57.000000000 +0200
-@@ -75,7 +75,6 @@ extern void ped_disk_pc98_init ();
+--- parted-3.6.orig/libparted/libparted.c	2023-03-25 01:02:17.000000000 +0100
++++ parted-3.6/libparted/libparted.c	2026-03-17 19:50:28.775158081 +0100
+@@ -76,7 +76,6 @@ extern void ped_disk_pc98_init ();
  extern void ped_disk_sun_init ();
  extern void ped_disk_amiga_init ();
  extern void ped_disk_dasd_init ();
@@ -8,7 +8,7 @@
  
  static void
  init_disk_types ()
-@@ -86,7 +85,6 @@ init_disk_types ()
+@@ -87,7 +86,6 @@ init_disk_types ()
  #if defined __s390__ || defined __s390x__
  	ped_disk_dasd_init();
  #endif
@@ -16,7 +16,7 @@
  	ped_disk_sun_init ();
  #ifdef ENABLE_PC98
  	ped_disk_pc98_init ();
-@@ -143,7 +141,6 @@ extern void ped_disk_pc98_done ();
+@@ -146,7 +144,6 @@ extern void ped_disk_pc98_done ();
  extern void ped_disk_sun_done ();
  extern void ped_disk_amiga_done ();
  extern void ped_disk_dasd_done ();
@@ -24,7 +24,7 @@
  
  static void
  done_disk_types ()
-@@ -163,7 +160,6 @@ done_disk_types ()
+@@ -166,7 +163,6 @@ done_disk_types ()
  	ped_disk_bsd_done ();
  	ped_disk_amiga_done ();
  	ped_disk_aix_done ();
