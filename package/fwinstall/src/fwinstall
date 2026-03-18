@@ -37,7 +37,7 @@ archive=$1
 device=$2
 fs=ext4
 cfgfssize=16384
-tools="parted partprobe sfdisk mkfs.ext2"
+tools="parted partprobe sfdisk mkfs.ext4"
 
 f=0
 for tool in $tools;do
@@ -97,7 +97,7 @@ function change_part_type {
 
 function create_filesystem {
   print creating filesystem $2 on $1 partition $3
-  mkfs.ext2 -j -F -q ${1}${3} >/dev/null 2>&1
+  mkfs.ext4 -j -F -q ${1}${3} >/dev/null 2>&1
   if [ $? -ne 0 ]; then
     echo "creating filesystem on partition failed!"
     exit 1
@@ -151,7 +151,7 @@ function fix_perm {
 }
 
 case $arch {
-  (x86|x86_64)
+  (i586|x86_64)
     get_max_size $device
     create_label $device
     create_partition $device ext2 16385 $rootsize
@@ -159,7 +159,6 @@ case $arch {
     set_boot_flag $device 1
     change_part_type $device 2 88
     partprobe $device
-    sync
     create_filesystem $device $fs 1
     [[ -x /sbin/mdev ]] && mdev -s
     mount_fs $device 1 $fs /mnt
