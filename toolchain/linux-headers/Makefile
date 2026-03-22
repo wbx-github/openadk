@@ -14,10 +14,11 @@ include $(ADK_TOPDIR)/mk/kernel-vars.mk
 
 $(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/linux-$(KERNEL_FILE_VER)/.patched:
 ifeq ($(ADK_TARGET_SYSTEM_PCENGINES_APU),y)
-ifeq ($(ADK_KERNEL_ROOT_NFS),y)
-	cd $(DL_DIR) && wget http://distfiles.openadk.org/realtek-firmware-1.1.tar.xz
-	tar xf $(DL_DIR)/realtek-firmware-1.1.tar.xz \
-		--strip-components=2 -C $(WRKSRC)/firmware realtek-firmware-1.1
+ifeq ($(ADK_TARGET_ROOTFS_NFSROOT),y)
+	cd $(DL_DIR) && wget https://distfiles.openadk.org/realtek-firmware-1.2.tar.gz
+	mkdir -p $(WRKSRC)/firmware
+	tar xf $(DL_DIR)/realtek-firmware-1.2.tar.gz \
+		--strip-components=2 -C $(WRKSRC)/firmware realtek-firmware-1.2
 endif
 endif
 ifeq ($(ADK_TARGET_ARCH_XTENSA),y)

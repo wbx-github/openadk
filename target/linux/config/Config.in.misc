@@ -24,6 +24,10 @@ config ADK_LINUX_KERNEL_EXTRA_FIRMWARE
 	default "usb8388.bin" if ADK_TARGET_SYSTEM_OLPC_XO_1
 	default ""
 
+config ADK_LINUX_KERNEL_EXTRA_FIRMWARE_DIR
+	string 
+	default "firmware"
+
 config ADK_LINUX_KERNEL_FW_LOADER_USER_HELPER
 	bool
 
