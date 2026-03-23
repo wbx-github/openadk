@@ -2,8 +2,8 @@
 # material, please see the LICENCE file in the top-level directory.
 
 PKG_NAME:=		expat
-PKG_VERSION:=		2.7.3
+PKG_VERSION:=		2.7.5
 PKG_RELEASE:=		1
-PKG_HASH:=		821ac9710d2c073eaf13e1b1895a9c9aa66c1157a99635c639fbff65cdbdd732
-PKG_SITES:=		https://github.com/libexpat/libexpat/releases/download/R_2_7_3/
+PKG_HASH:=		9931f9860d18e6cf72d183eb8f309bfb96196c00e1d40caa978e95bc9aa978b6
+PKG_SITES:=		https://github.com/libexpat/libexpat/releases/download/R_2_7_5/
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
