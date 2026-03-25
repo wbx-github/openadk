@@ -80,6 +80,9 @@ source "target/linux/config/Config.in.regmap"
 source "target/linux/config/Config.in.regulator"
 source "target/linux/config/Config.in.gpio"
 source "target/linux/config/Config.in.dma"
+source "target/linux/config/Config.in.clock"
+source "target/linux/config/Config.in.mailbox"
+source "target/linux/config/Config.in.power"
 source "target/linux/config/Config.in.lib"
 
 config ADK_LINUX_KERNEL_PWM

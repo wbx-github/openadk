@@ -1,0 +1,13 @@
+# This file is part of the OpenADK project. OpenADK is copyrighted
+# material, please see the LICENCE file in the top-level directory.
+
+config ADK_LINUX_KERNEL_CLK_BCM2835
+	bool
+	depends on ADK_TARGET_BOARD_BCM28XX
+	default y if ADK_TARGET_BOARD_BCM28XX
+
+config ADK_LINUX_KERNEL_CLK_RASPBERRYPI
+	bool
+	depends on ADK_TARGET_BOARD_BCM28XX
+	default y if ADK_TARGET_BOARD_BCM28XX
+

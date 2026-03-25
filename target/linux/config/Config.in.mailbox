@@ -1,0 +1,12 @@
+# This file is part of the OpenADK project. OpenADK is copyrighted
+# material, please see the LICENCE file in the top-level directory.
+
+config ADK_LINUX_KERNEL_MAILBOX
+	tristate
+
+config ADK_LINUX_KERNEL_BCM2835_MBOX
+	bool
+	select ADK_LINUX_KERNEL_MAILBOX
+	depends on ADK_TARGET_BOARD_BCM28XX
+	default y if ADK_TARGET_BOARD_BCM28XX
+	help

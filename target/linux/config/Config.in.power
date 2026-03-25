@@ -1,0 +1,19 @@
+# This file is part of the OpenADK project. OpenADK is copyrighted
+# material, please see the LICENCE file in the top-level directory.
+
+config ADK_LINUX_KERNEL_POWER_RESET
+	bool
+
+config ADK_LINUX_KERNEL_POWER_SUPPLY
+	bool
+
+config ADK_LINUX_KERNEL_POWER_RESET_GPIO
+	bool
+	select ADK_LINUX_KERNEL_POWER_RESET
+	depends on ADK_TARGET_BOARD_BCM28XX
+	default y if ADK_TARGET_BOARD_BCM28XX
+
+config ADK_LINUX_KERNEL_POWER_SUPPLY_HWMON
+	bool
+	depends on ADK_TARGET_BOARD_BCM28XX
+	default y if ADK_TARGET_BOARD_BCM28XX
