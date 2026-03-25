@@ -1,0 +1,83 @@
+diff -Nur linux-6.18.18.orig/arch/microblaze/kernel/entry.S linux-6.18.18/arch/microblaze/kernel/entry.S
+--- linux-6.18.18.orig/arch/microblaze/kernel/entry.S	2026-03-13 17:23:30.000000000 +0100
++++ linux-6.18.18/arch/microblaze/kernel/entry.S	2026-03-27 08:00:11.173928808 +0100
+@@ -339,6 +339,9 @@
+  * Trap entered via brki instruction, so BIP bit is set, and interrupts
+  * are masked. This is nice, means we don't have to CLI before state save
+  */
++
++#define SYSCALL_ARGS_SIZE 36
++
+ C_ENTRY(_user_exception):
+ 	swi	r1, r0, TOPHYS(PER_CPU(ENTRY_SP)) /* save stack */
+ 	addi	r14, r14, 4	/* return address is 4 byte after call */
+@@ -422,16 +425,19 @@
+ 	lwi	r12, r12, sys_call_table
+ 	/* where the trap should return need -8 to adjust for rtsd r15, 8 */
+ 	addi	r15, r0, ret_from_trap-8
++	addik 	r1, r1, -SYSCALL_ARGS_SIZE
+ 	bra	r12
+ 
+ 	/* The syscall number is invalid, return an error.  */
+ 5:
+-	braid	ret_from_trap
++	braid	ret_from_trap2
+ 	addi	r3, r0, -ENOSYS;
+ 
+ /* Entry point used to return from a syscall/trap */
+ /* We re-enable BIP bit before state restore */
+ C_ENTRY(ret_from_trap):
++	addik	r1, r1, SYSCALL_ARGS_SIZE
++C_ENTRY(ret_from_trap2):
+ 	swi	r3, r1, PT_R3
+ 	swi	r4, r1, PT_R4
+ 
+@@ -504,7 +510,7 @@
+ 	bralid	r15, schedule_tail; /* ...which is schedule_tail's arg */
+ 	add	r5, r3, r0;	/* switch_thread returns the prev task */
+ 				/* ( in the delay slot ) */
+-	brid	ret_from_trap;	/* Do normal trap return */
++	brid	ret_from_trap2;	/* Do normal trap return */
+ 	add	r3, r0, r0;	/* Child's fork call should return 0. */
+ 
+ C_ENTRY(ret_from_kernel_thread):
+@@ -513,13 +519,13 @@
+ 				/* ( in the delay slot ) */
+ 	brald	r15, r20	/* fn was left in r20 */
+ 	addk	r5, r0, r19	/* ... and argument - in r19 */
+-	brid	ret_from_trap
++	brid	ret_from_trap2
+ 	add	r3, r0, r0
+ 
+ C_ENTRY(sys_rt_sigreturn_wrapper):
+ 	addik	r30, r0, 0		/* no restarts */
+ 	brid	sys_rt_sigreturn	/* Do real work */
+-	addik	r5, r1, 0;		/* add user context as 1st arg */
++	addik	r5, r1, SYSCALL_ARGS_SIZE; /* add user context as 1st arg */
+ 
+ /*
+  * HW EXCEPTION rutine start
+@@ -729,11 +735,13 @@
+ 	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
+ 	tovirt(r1,r1)
+ 	addik	r15, r0, irq_call;
++	addik 	r1, r1, -8
+ irq_call:rtbd	r0, do_IRQ;
+-	addik	r5, r1, 0;
++	addik	r5, r1, 8;
+ 
+ /* MS: we are in virtual mode */
+ ret_from_irq:
++	addik 	r1, r1, 8
+ 	lwi	r11, r1, PT_MODE;
+ 	bnei	r11, 2f;
+ 
+@@ -1302,7 +1310,7 @@
+ .global microblaze_trap_handlers
+ microblaze_trap_handlers:
+ 	/* Exact matches come first */
+-	.word ret_from_trap; .word ret_from_trap   ; .word type_SYSCALL
++	.word ret_from_trap; .word ret_from_trap2  ; .word type_SYSCALL
+ 	.word ret_from_irq ; .word ret_from_irq    ; .word type_IRQ
+ 	/* Fuzzy matches go here */
+ 	.word ret_from_irq ; .word no_intr_resched ; .word type_IRQ_PREEMPT

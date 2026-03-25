@@ -6,6 +6,9 @@ include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/arch/microblaze/boot/$(ADK_TARGET_KERNEL)
+ifeq ($(ADK_TARGET_SYSTEM_NUMATO_MIMASA7_MINI),y)
+KERNEL:=$(LINUX_DIR)/arch/microblaze/boot/simpleImage.mimasa7_mini
+endif
 
 QEMU_ARGS:=${ADK_QEMU_ARGS}
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_MICROBLAZE_ML605),y)
