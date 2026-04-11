@@ -156,8 +156,8 @@ config ADK_TARGET_LIB_UCLIBC_NG_GIT
 	bool "git"
 	depends on ADK_TARGET_LIB_UCLIBC_NG && ADK_EXPERIMENTAL
 
-config ADK_TARGET_LIB_GLIBC_2_42
-	bool "2.42"
+config ADK_TARGET_LIB_GLIBC_2_43
+	bool "2.43"
 	depends on ADK_TARGET_LIB_GLIBC
 
 config ADK_TARGET_LIB_GLIBC_GIT
@@ -200,7 +200,7 @@ config ADK_LIBC_VERSION
 	string
 	default "1.0.57" if ADK_TARGET_LIB_UCLIBC_NG_1_0_57
 	default "1.2.6" if ADK_TARGET_LIB_MUSL_1_2_6
-	default "2.42" if ADK_TARGET_LIB_GLIBC_2_42
+	default "2.43" if ADK_TARGET_LIB_GLIBC_2_43
 	default "4.4.0" if ADK_TARGET_LIB_NEWLIB_4_4_0
 	default "git" if ADK_TARGET_LIB_UCLIBC_NG_GIT || \
 		         ADK_TARGET_LIB_MUSL_GIT || \
