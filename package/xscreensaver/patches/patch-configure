@@ -1,0 +1,15 @@
+--- xscreensaver-6.14.orig/configure	2026-01-15 23:28:56.616217250 +0100
++++ xscreensaver-6.14/configure	2026-03-23 06:48:38.674173046 +0100
+@@ -22581,5 +22581,11 @@ echo "             Extra Fonts:   ${FONT
+ echo "             App Defaults:  ${APPDEFAULTS}/$addir_err"
+ echo ""
+ 
+-exit $CONF_STATUS
++if test "$CONF_STATUS" != 0; then
++	echo ""
++	echo "Warning: Buildroot build will proceed regardless of above warnings"
++	echo ""
++fi
++
++exit 0
+ 
