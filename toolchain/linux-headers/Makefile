@@ -13,6 +13,10 @@ LINUX_DIR=${WRKBUILD}
 include $(ADK_TOPDIR)/mk/kernel-vars.mk
 
 $(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/linux-$(KERNEL_FILE_VER)/.patched:
+ifeq ($(ADK_TARGET_SYSTEM_OLPC_XO_1),y)
+	mkdir -p $(WRKSRC)/firmware
+	cp $(ADK_TOPDIR)/target/x86/olpc-xo-1/usb8388.bin $(WRKSRC)/firmware/
+endif
 ifeq ($(ADK_TARGET_SYSTEM_PCENGINES_APU),y)
 ifeq ($(ADK_TARGET_ROOTFS_NFSROOT),y)
 	cd $(DL_DIR) && wget https://distfiles.openadk.org/realtek-firmware-1.2.tar.gz
