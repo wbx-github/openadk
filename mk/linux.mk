@@ -10,7 +10,8 @@ PKG_SITES:=	$(ADK_TARGET_LINUX_KERNEL_GIT_REPO)
 DISTFILES=	$(PKG_NAME)-$(PKG_VERSION).tar.gz
 else
 PKG_VERSION:=	$(KERNEL_FILE_VER)
-PKG_SITES:=  	${MASTER_SITE_KERNEL:=kernel/v6.x/} \
+PKG_SITES:=  	${MASTER_SITE_KERNEL:=kernel/v7.x/} \
+		${MASTER_SITE_KERNEL:=kernel/v6.x/} \
 		${MASTER_SITE_KERNEL:=kernel/v5.x/} \
 		${MASTER_SITE_KERNEL:=kernel/v4.x/} \
 		${MASTER_SITE_KERNEL:=kernel/v3.x/} \
