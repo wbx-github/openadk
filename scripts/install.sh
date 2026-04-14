@@ -148,7 +148,7 @@ tgt=$2
 src=$3
 
 case $target {
-(atmel-ngw100|banana-pro|banana-pro-zero|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|raspberry-pi5|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|hp-jornada|olpc-xo-1|default) ;;
+(atmel-ngw100|banana-pro|banana-pro-zero|orange-pi0|pcengines-apu|phytec-imx6|phytec-wega|raspberry-pi|raspberry-pi0|raspberry-pi2|raspberry-pi3|raspberry-pi3-64|raspberry-pi4|raspberry-pi4-64|raspberry-pi5|rockpi4-plus|solidrun-imx6|solidrun-clearfog|imgtec-ci20|hp-jornada|olpc-xo-1|synopsys-hsdk|default) ;;
 (*)
 	print -u2 "Unknown target '$target', exiting"
 	exit 1 ;;

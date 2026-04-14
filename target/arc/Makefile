@@ -41,6 +41,11 @@ endif
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSTARBALL)"
+ifeq ($(ADK_TARGET_SYSTEM_SYNOPSYS_HSDK),y)
+	@echo "In u-boot type after installation with scripts/install.sh to SD-card:"
+	@echo 'hsdk# ext4load mmc 0:1 $${loadaddr} boot/kernel'
+	@echo 'hsdk# bootm'
+endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)
 targethelp:
