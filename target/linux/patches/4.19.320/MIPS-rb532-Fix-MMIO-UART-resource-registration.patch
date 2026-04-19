@@ -1,0 +1,17 @@
+diff -Nur linux-4.19.320.orig/arch/mips/rb532/devices.c linux-4.19.320/arch/mips/rb532/devices.c
+--- linux-4.19.320.orig/arch/mips/rb532/devices.c	2024-08-19 05:32:18.000000000 +0200
++++ linux-4.19.320/arch/mips/rb532/devices.c	2026-04-19 09:36:30.112899077 +0200
+@@ -225,11 +225,11 @@
+ static struct plat_serial8250_port rb532_uart_res[] = {
+ 	{
+ 		.type           = PORT_16550A,
+-		.membase	= (char *)KSEG1ADDR(REGBASE + UART0BASE),
++		.mapbase        = REGBASE + UART0BASE,
+ 		.irq		= UART0_IRQ,
+ 		.regshift	= 2,
+ 		.iotype		= UPIO_MEM,
+-		.flags		= UPF_BOOT_AUTOCONF,
++		.flags		= UPF_BOOT_AUTOCONF | UPF_IOREMAP,
+ 	},
+ 	{
+ 		.flags		= 0,
