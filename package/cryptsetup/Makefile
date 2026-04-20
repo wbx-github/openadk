@@ -4,12 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		cryptsetup
-PKG_VERSION:=		2.4.1
+PKG_VERSION:=		2.8.6
 PKG_RELEASE:=		1
-PKG_HASH:=		a356a727a83a464ade566e95239622a22dbe4e0f482b198fdb04ab0d3a5a9c5f
+PKG_HASH:=		8004265fd993885d08f7b633dbe056851de1a210307613a4ebddc743fccefe5a
 PKG_DESCR:=		utility used to conveniently setup disk encryption
 PKG_SECTION:=		app/crypto
 PKG_DEPENDS:=		libgcrypt device-mapper libuuid libpopt json-c libncurses
+PKG_DEPENDS+=		libblkid
 PKG_BUILDDEP:=		libgcrypt popt e2fsprogs lvm json-c ncurses
 PKG_NEEDS:=		iconv
 PKG_KDEPENDS:=		crypto-user-api-hash crypto-user-api-skcipher
@@ -18,7 +19,7 @@ PKG_KDEPENDS+=		crypto-user-api-rng crypto-user-api-aead
 PKG_KDEPENDS+=		dm-crypt crypto-essiv crypto-cbc crypto-xts
 PKG_KDEPENDS+=		crypto-aes crypto-sha1 crypto-sha256
 PKG_URL:=		https://gitlab.com/cryptsetup/cryptsetup
-PKG_SITES:=		https://www.kernel.org/pub/linux/utils/cryptsetup/v2.4/
+PKG_SITES:=		https://www.kernel.org/pub/linux/utils/cryptsetup/v2.8/
 PKG_OPTS:=		dev
 
 PKG_FLAVOURS_CRYPTSETUP:=	WITH_LIBARGON2
@@ -47,6 +48,7 @@ CONFIGURE_ARGS+=	--disable-selinux \
 			--disable-ssh-token \
 			--disable-udev \
 			--disable-nls \
+			--disable-asciidoc \
 			--enable-libargon2
 
 ifeq (${ADK_PACKAGE_CRYPTSETUP_WITH_GCRYPT},y)
