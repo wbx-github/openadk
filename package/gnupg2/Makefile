@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gnupg2
-PKG_VERSION:=		2.5.16
+PKG_VERSION:=		2.5.18
 PKG_RELEASE:=		1
-PKG_HASH:=		05144040fedb828ced2a6bafa2c4a0479ee4cceacf3b6d68ccc75b175ac13b7e
+PKG_HASH:=		0dbd64e0322fe1a4813360d46539d5f8daf4a8fa235cf5fce464e8b0214a7e4f
 PKG_DESCR:=		gnu privacy guard (modern)
 PKG_SECTION:=		app/crypto
 PKG_DEPENDS:=		libreadline libncurses libgcrypt libgpg-error libassuan
