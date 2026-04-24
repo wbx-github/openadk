@@ -71,6 +71,21 @@ config ADK_TOOLCHAIN_BINUTILS_2_26
 	depends on !ADK_TARGET_ARCH_AVR32
 	depends on !ADK_TARGET_ARCH_KVX
 
+config ADK_TOOLCHAIN_BINUTILS_2_25
+	bool "2.25"
+	depends on !ADK_TARGET_ARCH_AVR32
+	depends on !ADK_TARGET_ARCH_KVX
+
+config ADK_TOOLCHAIN_BINUTILS_2_24
+	bool "2.24"
+	depends on !ADK_TARGET_ARCH_AVR32
+	depends on !ADK_TARGET_ARCH_KVX
+
+config ADK_TOOLCHAIN_BINUTILS_2_23
+	bool "2.23"
+	depends on !ADK_TARGET_ARCH_AVR32
+	depends on !ADK_TARGET_ARCH_KVX
+
 config ADK_TOOLCHAIN_BINUTILS_ARC
 	bool "arc-2023.09"
 	depends on ADK_TARGET_ARCH_ARC
