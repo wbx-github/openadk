@@ -1,0 +1,3047 @@
+diff -Nur linux-4.9.287.orig/arch/powerpc/boot/dts/rb333.dts linux-4.9.287/arch/powerpc/boot/dts/rb333.dts
+--- linux-4.9.287.orig/arch/powerpc/boot/dts/rb333.dts	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/arch/powerpc/boot/dts/rb333.dts	2026-04-25 21:34:31.758388531 +0200
+@@ -0,0 +1,455 @@
++/*
++ * RouterBOARD 333 series Device Tree Source
++ *
++ * Copyright (C) 2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) 2010 Alexandros C. Couloumbis <alex@ozo.com>
++ * Copyright (C) 2009 Michael Guntsche <mike@it-loops.com>
++ *
++ * This program is free software; you can redistribute  it and/or modify it
++ * under  the terms of  the GNU General  Public License as published by the
++ * Free Software Foundation;  either version 2 of the  License, or (at your
++ * option) any later version.
++ */
++
++/dts-v1/;
++
++/ {
++	model = "RB333";
++	compatible = "RB333", "RBPPC";
++	#size-cells = <1>;
++	#address-cells = <1>;
++
++	aliases {
++		ethernet0 = &enet0;
++		ethernet1 = &enet1;
++		ethernet2 = &enet2;
++		pci0 = &pci0;
++	};
++
++	chosen {
++		bootargs = "console=ttyS0,115200 board=mpc8323";
++		linux,stdout-path = "/soc8323@e0000000/serial@4500";
++	};
++
++	cpus {
++		#cpus = <1>;
++		#size-cells = <0>;
++		#address-cells = <1>;
++
++		PowerPC,8323E@0 {
++			device_type = "cpu";
++			reg = <0x0>;
++			i-cache-size = <0x4000>;
++			d-cache-size = <0x4000>;
++			i-cache-line-size = <0x20>;
++			d-cache-line-size = <0x20>;
++			timebase-frequency = <0>; // Filled from the bootloader
++			clock-frequency = <0>; // Filled from the bootloader
++			32-bit;
++		};
++	};
++
++	memory {
++		device_type = "memory";
++		reg = <0 0>; // Filled from the bootloader
++	};
++
++	voltage {
++		//voltage_gpio = <&gpio3 0x11>;
++	};
++
++	fancon {
++		interrupts = <20 0x8>;
++		interrupt-parent = <&ipic>;
++		//fan_on = <&gpio0 0x10>;
++	};
++
++	localbus@e0005000 {
++		#address-cells = <2>;
++		#size-cells = <1>;
++		compatible = "fsl,mpc8323e-localbus", "fsl,pq2pro-localbus", "simple-bus";
++		reg = <0xe0005000 0xe0>;
++		interrupts = <77 0x8>;
++		interrupt-parent = <&ipic>;
++		// FIXME: May not be correct (actual) ranges
++		ranges = <
++			0x0 0x0 0xfe000000 0x00100000   // Flash
++			0x1 0x0 0xf8000000 0x00008000   // NAND (IO base)
++			0x2 0x0 0xf0000000 0x00008000>; // NAND (nNAND?)
++
++		flash@0,0 {
++			reg = <0x0 0x0 0x20000>;
++		};
++
++		nand@1,0 {
++			compatible = "rb,rb333-nand", "rb,nand";
++			reg = <
++				0x1 0x0 0x1000   // IO
++				0x2 0x0 0x1000>; // Sync
++
++			gpios = <
++				&pio_gpio2 0 0   // R/B
++				&pio_gpio2 1 0   // nCE
++				&pio_gpio2 2 0   // CLE
++				&pio_gpio2 3 0>; // ALE
++
++			partitions {
++				#address-cells = <1>;
++				#size-cells = <1>;
++
++				kernel@0 {
++					label = "kernel";
++					reg = <0x00000000 0x00400000>;
++				};
++				rootfs@400000 {
++					label = "rootfs";
++					reg = <0x00400000 0x03c00000>;
++				};
++			};
++		};
++	};
++
++	pci0: pci@e0008500 {
++		#address-cells = <3>;
++		#size-cells = <2>;
++		#interrupt-cells = <1>;
++		device_type = "pci";
++		compatible = "fsl,mpc8349-pci";
++		reg = <0xe0008500 0x100 0xe0008300 0x8>;
++		ranges = <
++			0x02000000 0x0 0x80000000
++			0x80000000 0x0 0x20000000
++			0x01000000 0x0 0x00000000
++			0xd0000000 0x0 0x04000000>;
++		bus-range = <0x0 0x0>;
++		interrupt-map = <
++			/* IDSEL 0x10 AD16 miniPCI slot 0 */
++			0x8000 0x0 0x0 0x1 &ipic 0x11 0x8
++			0x8000 0x0 0x0 0x2 &ipic 0x12 0x8
++
++			/* IDSEL 0x11 AD17 miniPCI slot 1 */
++			0x8800 0x0 0x0 0x1 &ipic 0x12 0x8
++			0x8800 0x0 0x0 0x2 &ipic 0x13 0x8
++
++			/* IDSEL 0x12 AD18  miniPCI slot 2 */
++			0x9000 0x0 0x0 0x1 &ipic 0x13 0x8
++			0x9000 0x0 0x0 0x2 &ipic 0x11 0x8>;
++		interrupt-map-mask = <0xf800 0x0 0x0 0x7>;
++		interrupt-parent = <&ipic>;
++	};
++
++	qe@e0100000 {
++		#size-cells = <1>;
++		#address-cells = <1>;
++		device_type = "qe";
++		compatible = "fsl,qe";
++		reg = <0xe0100000 0x480>;
++		ranges = <0x0 0xe0100000 0x100000>;
++		brg-frequency = <0>;
++		bus-frequency = <198000000>;
++		fsl,qe-num-riscs = <1>;
++		fsl,qe-num-snums = <28>;
++
++		qeic: qeic@80 {
++			#address-cells = <0>;
++			#interrupt-cells = <1>;
++			device_type = "qeic";
++			compatible = "fsl,qe-ic";
++			reg = <0x80 0x80>;
++			big-endian;
++			built-in;
++			interrupts = <32 0x8 33 0x8>;
++			interrupt-parent = <&ipic>;
++			interrupt-controller;
++		};
++
++		enet0: ucc@2200 {
++			device_type = "network";
++			compatible = "ucc_geth";
++			reg = <0x2200 0x200>;
++			tx-clock = <0x1a>;
++			rx-clock = <0x1f>;
++			mac-address = [00 00 00 00 00 00]; // Filled from the bootloader
++			interrupt-parent = <&qeic>;
++			interrupts = <0x22>;
++			device-id = <0x3>;
++			phy-handle = <&phy2>;
++			pio-handle = <&pio3>;
++		};
++
++		enet1: ucc@3200 {
++			device_type = "network";
++			compatible = "ucc_geth";
++			reg = <0x3200 0x200>;
++			tx-clock = <0x22>;
++			rx-clock = <0x20>;
++			mac-address = [00 00 00 00 00 00]; // Filled from the bootloader
++			interrupt-parent = <&qeic>;
++			interrupts = <0x23>;
++			device-id = <0x4>;
++			phy-handle = <&phy3>;
++			pio-handle = <&pio4>;
++		};
++
++		enet2: ucc@3000 {
++			tx-clock = <0x18>;
++			rx-clock = <0x17>;
++			mac-address = [00 00 00 00 00 00]; // Filled from the bootloader
++			interrupt-parent = <&qeic>;
++			interrupts = <0x21>;
++			reg = <0x3000 0x200>;
++			device-id = <0x2>;
++			compatible = "ucc_geth";
++			device_type = "network";
++			phy-handle = <&phy1>;
++			pio-handle = <&pio2>;
++		};
++
++		mdio@3120 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			compatible = "ucc_geth_phy";
++			device_type = "mdio";
++			reg = <0x3120 0x18>;
++
++			phy1: ethernet-phy@01 {
++				device_type = "ethernet-phy";
++				reg = <0x1>;
++			};
++
++			phy2: ethernet-phy@02 {
++				device_type = "ethernet-phy";
++				reg = <0x2>;
++			};
++
++			phy3: ethernet-phy@03 {
++				device_type = "ethernet-phy";
++				reg = <0x3>;
++			};
++		};
++
++		spi@500 {
++			device_type = "spi";
++			compatible = "fsl,spi";
++			reg = <0x500 0x40>;
++			mode = "cpu";
++			interrupts = <1>;
++			interrupt-parent = <&qeic>;
++		};
++
++		spi@4c0 {
++			device_type = "spi";
++			compatible = "fsl,spi";
++			reg = <0x4c0 0x40>;
++			mode = "cpu";
++			interrupts = <0x2>;
++			interrupt-parent = <&qeic>;
++		};
++
++		muram@10000 {
++			#address-cells = <1>;
++			#size-cells = <1>;
++			device_type = "muram";
++			compatible = "fsl,qe-muram", "fsl,cpm-muram";
++			ranges = <0x0 0x10000 0x4000>;
++
++			data-only@0 {
++				compatible = "fsl,qe-muram-data",
++					"fsl,cpm-muram-data";
++				reg = <0x0 0x4000>;
++			};
++		};
++	};
++
++	soc8323@e0000000 {
++		#interrupt-cells = <0x2>;
++		#size-cells = <1>;
++		#address-cells = <1>;
++		device_type = "soc";
++		compatible = "simple-bus";
++		reg = <0xe0000000 0x200>;
++		ranges = <0x0 0xe0000000 0x100000>;
++		bus-frequency = <0>; // Filled from the bootloader
++
++		gtm1: timer@500 {
++			compatible = "fsl,mpc8323e-gtm", "fsl,gtm";
++			reg = <0x500 0x40>;
++			interrupts = <90 0x8 78 0x8 84 0x8 72 0x8>;
++			interrupt-parent = <&ipic>;
++			clock-frequency = <0>; // Filled from the bootloader
++		};
++
++		timer@600 {
++			compatible = "fsl,mpc8323e-gtm", "fsl,gtm";
++			reg = <0x600 0x40>;
++			interrupts = <91 0x8 79 0x8 85 0x8 73 0x8>;
++			interrupt-parent = <&ipic>;
++			clock-frequency = <0>; // Filled from the bootloader
++		};
++
++		par_io@1400 {
++			#address-cells = <1>;
++			#size-cells = <1>;
++			device_type = "par_io";
++			compatible = "fsl,mpc8323-qe-pario";
++			reg = <0x1400 0x100>;
++			ranges = <
++				0x0 0x1400 0x18
++				0x1 0x1430 0x18
++				0x2 0x1448 0x18>;
++			num-ports = <4>;
++
++			pio_gpio1: gpio-controller@1400 {
++				#gpio-cells = <2>;
++				compatible = "fsl,mpc8323-qe-pario-bank";
++				reg = <0 0x18>;
++				gpio-controller;
++			};
++
++			pio_gpio2: gpio-controller@1430 {
++				#gpio-cells = <2>;
++				compatible = "fsl,mpc8323-qe-pario-bank";
++				reg = <1 0x18>;
++				gpio-controller;
++			};
++
++			pio_gpio3: gpio-controller@1448 {
++				#gpio-cells = <2>;
++				compatible = "fsl,mpc8323-qe-pario-bank";
++				reg = <2 0x18>;
++				gpio-controller;
++			};
++
++			pio4: ucc_pin@04 {
++				pio-map = <
++			/* port  pin  dir  open_drain  assignment  has_irq */
++					1 18 1 0 1 0 
++					1 19 1 0 1 0 
++					1 20 1 0 1 0 
++					1 21 1 0 1 0 
++					1 30 1 0 1 0 
++					3 20 2 0 1 0 
++					1 30 2 0 1 0 
++					1 31 2 0 1 0 
++					1 22 2 0 1 0 
++					1 23 2 0 1 0 
++					1 24 2 0 1 0 
++					1 25 2 0 1 0 
++					1 28 2 0 1 0 
++					1 26 2 0 1 0 
++					3 21 2 0 1 0>;
++			};
++
++			pio3: ucc_pin@03 {
++				pio-map = <
++			/* port  pin  dir  open_drain  assignment  has_irq */
++					1 0  1 0 1 0 
++					1 1  1 0 1 0 
++					1 2  1 0 1 0 
++					1 3  1 0 1 0 
++					1 12 1 0 1 0 
++					3 24 2 0 1 0 
++					1 11 2 0 1 0 
++					1 13 2 0 1 0 
++					1 4  2 0 1 0 
++					1 5  2 0 1 0 
++					1 6  2 0 1 0 
++					1 7  2 0 1 0 
++					1 10 2 0 1 0 
++					1 8  2 0 1 0 
++					3 29 2 0 1 0>;
++			};
++
++			pio2: ucc_pin@02 {
++				pio-map = <
++			/* port  pin  dir  open_drain  assignment  has_irq */
++					3 4  3 0 2 0 
++					3 5  1 0 2 0 
++					0 18 1 0 1 0 
++					0 19 1 0 1 0 
++					0 20 1 0 1 0 
++					0 21 1 0 1 0 
++					0 30 1 0 1 0 
++					3 6  2 0 1 0 
++					0 29 2 0 1 0 
++					0 31 2 0 1 0 
++					0 22 2 0 1 0 
++					0 23 2 0 1 0 
++					0 24 2 0 1 0 
++					0 25 2 0 1 0 
++					0 28 2 0 1 0 
++					0 26 2 0 1 0 
++					3 31 2 0 1 0>;
++			};
++		};
++
++		ipic: pic@700 {
++			#address-cells = <0x0>;
++			#interrupt-cells = <0x2>;
++			device_type = "ipic";
++			reg = <0x700 0x100>;
++			built-in;
++			interrupt-controller;
++		};
++
++		serial@4500 {
++			interrupt-parent = <&ipic>;
++			interrupts = <0x9 0x8>;
++			clock-frequency = <0>; // Filled from the bootloader
++			reg = <0x4500 0x100>;
++			compatible = "ns16550";
++			device_type = "serial";
++		};
++
++		dma@82a8 {
++			#address-cells = <1>;
++			#size-cells = <1>;
++			compatible = "fsl,mpc8323-dma", "fsl,elo-dma";
++			reg = <0x82a8 4>;
++			ranges = <0 0x8100 0x1a8>;
++			interrupt-parent = <&ipic>;
++			interrupts = <71 8>;
++			cell-index = <0>;
++			dma-channel@0 {
++				compatible = "fsl,mpc8323-dma-channel", "fsl,elo-dma-channel";
++				reg = <0 0x80>;
++				cell-index = <0>;
++				interrupt-parent = <&ipic>;
++				interrupts = <71 8>;
++			};
++			dma-channel@80 {
++				compatible = "fsl,mpc8323-dma-channel", "fsl,elo-dma-channel";
++				reg = <0x80 0x80>;
++				cell-index = <1>;
++				interrupt-parent = <&ipic>;
++				interrupts = <71 8>;
++			};
++			dma-channel@100 {
++				compatible = "fsl,mpc8323-dma-channel", "fsl,elo-dma-channel";
++				reg = <0x100 0x80>;
++				cell-index = <2>;
++				interrupt-parent = <&ipic>;
++				interrupts = <71 8>;
++			};
++			dma-channel@180 {
++				compatible = "fsl,mpc8323-dma-channel", "fsl,elo-dma-channel";
++				reg = <0x180 0x28>;
++				cell-index = <3>;
++				interrupt-parent = <&ipic>;
++				interrupts = <71 8>;
++			};
++		};
++
++		wdt@200 {
++			reg = <0x200 0x100>;
++			compatible = "mpc83xx_wdt";
++			device_type = "watchdog";
++		};
++
++		beeper {
++			compatible = "rb,rb333-gtm-beeper", "rb,gtm-beeper";
++			timer = <&gtm1 3>;
++			gpios = <&pio_gpio3 18 0>;
++		};
++	};
++};
+diff -Nur linux-4.9.287.orig/arch/powerpc/boot/dts/rb600.dts linux-4.9.287/arch/powerpc/boot/dts/rb600.dts
+--- linux-4.9.287.orig/arch/powerpc/boot/dts/rb600.dts	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/arch/powerpc/boot/dts/rb600.dts	2026-04-25 21:34:31.758388531 +0200
+@@ -0,0 +1,344 @@
++/*
++ * RouterBOARD 600 series Device Tree Source
++ *
++ * Copyright (C) 2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) 2009 Michael Guntsche <mike@it-loops.com>
++ *
++ * This program is free software; you can redistribute  it and/or modify it
++ * under  the terms of  the GNU General  Public License as published by the
++ * Free Software Foundation;  either version 2 of the  License, or (at your
++ * option) any later version.
++ */
++
++/dts-v1/;
++
++/ {
++	model = "RB600";
++	compatible = "RB600", "RBPPC";
++	#address-cells = <1>;
++	#size-cells = <1>;
++
++	aliases {
++		ethernet0 = &enet0;
++		ethernet1 = &enet1;
++		pci0 = &pci0;
++	};
++
++	chosen {
++		bootargs = "console=ttyS0,115200 board=mpc8349";
++		linux,stdout-path = "/soc8343@e0000000/serial@4500";
++	};
++
++	cpus {
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		PowerPC,8343E@0 {
++			device_type = "cpu";
++			reg = <0x0>;
++			d-cache-line-size = <0x20>;
++			i-cache-line-size = <0x20>;
++			d-cache-size = <0x8000>;
++			i-cache-size = <0x8000>;
++			timebase-frequency = <0>; // Filled from the bootloader
++			clock-frequency = <0>; // Filled from the bootloader
++		};
++	};
++
++	memory {
++		device_type = "memory";
++		reg = <0 0>; // Filled from the bootloader
++	};
++
++	localbus@e0005000 {
++		#address-cells = <2>;
++		#size-cells = <1>;
++		compatible = "fsl,mpc8349-localbus", "fsl,pq2pro-localbus", "simple-bus";
++		reg = <0xe0005000 0xe0>;
++		interrupts = <77 0x8>;
++		interrupt-parent = <&ipic>;
++		ranges = <
++			0x0 0x0 0xff800000 0x00100000   // Flash, GPCM
++			0x1 0x0 0xf8000000 0x00008000   // NAND (IO base), UPMA
++			0x2 0x0 0xf9000000 0x00020000   // CompactFlash (ATA), UPMC
++			0x3 0x0 0xf9200000 0x00020000   // CompactFlash (ATA), UPMC
++			0x4 0x0 0xf0000000 0x00008000>; // NAND (nNAND?), UPMB
++
++		flash@0,0 {
++			reg = <0x0 0x0 0x20000>;
++		};
++
++		nand@1,0 {
++			compatible = "rb,rb600-nand", "rb,nand";
++			reg = <
++				0x1 0x0 0x1000   // IO
++				0x4 0x0 0x1000>; // Sync
++
++			gpios = <
++				&gpio1 3 0   // RNB
++				&gpio1 4 0   // NCE
++				&gpio1 5 0   // CLE
++				&gpio1 6 0>; // ALE
++
++			partitions {
++				#address-cells = <1>;
++				#size-cells = <1>;
++
++				kernel@0 {
++					label = "kernel";
++					reg = <0x00000000 0x00400000>;
++				};
++				rootfs@400000 {
++					label = "rootfs";
++					reg = <0x00400000 0x03c00000>;
++				};
++			};
++		};
++
++		pata-upm@2,0 {
++			compatible = "rb,rb600-pata-upm", "rb,pata-upm";
++			reg = <0x2 0x0 0x200000>;
++			interrupts = <20 0x8>;
++			interrupt-parent = <&ipic>;
++
++			rb,pata-upm-localbus-timings = <1500 1000 4500 1500 11000>;
++		};
++
++		pata-upm@3,0 {
++			compatible = "rb,rb600-pata-upm", "rb,pata-upm";
++			reg = <0x3 0x0 0x200000>;
++			interrupts = <22 0x8>;
++			interrupt-parent = <&ipic>;
++
++			rb,pata-upm-localbus-timings = <1500 1000 4500 1500 11000>;
++		};
++	};
++
++	pci0: pci@e0008500 {
++		device_type = "pci";
++		compatible = "fsl,mpc8349-pci";
++		reg = <0xe0008500 0x100 0xe0008300 0x8>;
++		#address-cells = <3>;
++		#size-cells = <2>;
++		#interrupt-cells = <1>;
++		ranges = <0x2000000 0x0 0x80000000 0x80000000 0x0 0x20000000 0x1000000 0x0 0x0 0xd0000000 0x0 0x4000000>;
++		bus-range = <0x0 0x0>;
++		interrupt-map = <
++			0x5800 0x0 0x0 0x1 &ipic 0x15 0x8
++			0x6000 0x0 0x0 0x1 &ipic 0x30 0x8
++			0x6000 0x0 0x0 0x2 &ipic 0x11 0x8
++			0x6800 0x0 0x0 0x1 &ipic 0x11 0x8
++			0x6800 0x0 0x0 0x2 &ipic 0x12 0x8
++			0x7000 0x0 0x0 0x1 &ipic 0x12 0x8
++			0x7000 0x0 0x0 0x2 &ipic 0x13 0x8
++			0x7800 0x0 0x0 0x1 &ipic 0x13 0x8
++			0x7800 0x0 0x0 0x2 &ipic 0x30 0x8
++			0x8000 0x0 0x0 0x1 &ipic 0x30 0x8
++			0x8000 0x0 0x0 0x2 &ipic 0x12 0x8
++			0x8000 0x0 0x0 0x3 &ipic 0x11 0x8
++			0x8000 0x0 0x0 0x4 &ipic 0x13 0x8
++			0xa000 0x0 0x0 0x1 &ipic 0x30 0x8
++			0xa000 0x0 0x0 0x2 &ipic 0x11 0x8
++			0xa000 0x0 0x0 0x3 &ipic 0x12 0x8
++			0xa000 0x0 0x0 0x4 &ipic 0x13 0x8
++			0xa800 0x0 0x0 0x1 &ipic 0x11 0x8
++			0xa800 0x0 0x0 0x2 &ipic 0x12 0x8
++			0xa800 0x0 0x0 0x3 &ipic 0x13 0x8
++			0xa800 0x0 0x0 0x4 &ipic 0x30 0x8>;
++		interrupt-map-mask = <0xf800 0x0 0x0 0x7>;
++		interrupt-parent = <&ipic>;
++	};
++
++	soc8343@e0000000 {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		device_type = "soc";
++		compatible = "simple-bus";
++		ranges = <0x0 0xe0000000 0x100000>;
++		reg = <0xe0000000 0x200>;
++		bus-frequency = <0>; // Filled from the bootloader
++
++		gtm1: timer@500 {
++			compatible = "fsl,mpc8349-gtm", "fsl,gtm";
++			reg = <0x500 0x40>;
++			interrupts = <90 0x8 78 0x8 84 0x8 72 0x8>;
++			interrupt-parent = <&ipic>;
++			clock-frequency = <0>; // Filled from the bootloader
++		};
++
++		timer@600 {
++			compatible = "fsl,mpc8349-gtm", "fsl,gtm";
++			reg = <0x600 0x40>;
++			interrupts = <91 0x8 79 0x8 85 0x8 73 0x8>;
++			interrupt-parent = <&ipic>;
++			clock-frequency = <0>; // Filled from the bootloader
++		};
++
++		gpio1: gpio-controller@c00 {
++			#gpio-cells = <2>;
++			compatible = "fsl,mpc8349-gpio";
++			reg = <0xc00 0x100>;
++			interrupts = <74 0x8>;
++			interrupt-parent = <&ipic>;
++			gpio-controller;
++		};
++
++		gpio2: gpio-controller@d00 {
++			#gpio-cells = <2>;
++			compatible = "fsl,mpc8349-gpio";
++			reg = <0xd00 0x100>;
++			interrupts = <75 0x8>;
++			interrupt-parent = <&ipic>;
++			gpio-controller;
++		};
++
++		dma@82a8 {
++			#address-cells = <1>;
++			#size-cells = <1>;
++			compatible = "fsl,mpc8349-dma", "fsl,elo-dma";
++			reg = <0x82a8 4>;
++			ranges = <0 0x8100 0x1a8>;
++			interrupt-parent = <&ipic>;
++			interrupts = <71 8>;
++			cell-index = <0>;
++			dma-channel@0 {
++				compatible = "fsl,mpc8349-dma-channel", "fsl,elo-dma-channel";
++				reg = <0 0x80>;
++				cell-index = <0>;
++				interrupt-parent = <&ipic>;
++				interrupts = <71 8>;
++			};
++			dma-channel@80 {
++				compatible = "fsl,mpc8349-dma-channel", "fsl,elo-dma-channel";
++				reg = <0x80 0x80>;
++				cell-index = <1>;
++				interrupt-parent = <&ipic>;
++				interrupts = <71 8>;
++			};
++			dma-channel@100 {
++				compatible = "fsl,mpc8349-dma-channel", "fsl,elo-dma-channel";
++				reg = <0x100 0x80>;
++				cell-index = <2>;
++				interrupt-parent = <&ipic>;
++				interrupts = <71 8>;
++			};
++			dma-channel@180 {
++				compatible = "fsl,mpc8349-dma-channel", "fsl,elo-dma-channel";
++				reg = <0x180 0x28>;
++				cell-index = <3>;
++				interrupt-parent = <&ipic>;
++				interrupts = <71 8>;
++			};
++		};
++
++		enet0: ethernet@25000 {
++			#address-cells = <1>;
++			#size-cells = <1>;
++			cell-index = <0>;
++			phy-handle = <&phy0>;
++			tbi-handle = <&tbi0>;
++			interrupt-parent = <&ipic>;
++			interrupts = <0x23 0x8 0x24 0x8 0x25 0x8>;
++			local-mac-address = [00 00 00 00 00 00]; // Filled from the bootloader
++			reg = <0x25000 0x1000>;
++			ranges = <0x0 0x25000 0x1000>;
++			compatible = "gianfar";
++			model = "TSEC";
++			device_type = "network";
++
++			mdio@520 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				compatible = "fsl,gianfar-tbi";
++				reg = <0x520 0x20>;
++
++				tbi0: tbi-phy@11 {
++					reg = <0x11>;
++					device_type = "tbi-phy";
++				};
++			};
++		};
++
++		enet1: ethernet@24000 {
++			#address-cells = <1>;
++			#size-cells = <1>;
++			cell-index = <1>;
++			phy-handle = <&phy1>;
++			tbi-handle = <&tbi1>;
++			interrupt-parent = <&ipic>;
++			interrupts = <0x20 0x8 0x21 0x8 0x22 0x8>;
++			local-mac-address = [00 00 00 00 00 00]; // Filled from the bootloader
++			reg = <0x24000 0x1000>;
++			ranges = <0x0 0x24000 0x1000>;
++			compatible = "gianfar";
++			model = "TSEC";
++			device_type = "network";
++
++			mdio@520 {
++				#size-cells = <0x0>;
++				#address-cells = <0x1>;
++				reg = <0x520 0x20>;
++				compatible = "fsl,gianfar-mdio";
++
++				phy0: ethernet-phy@0 {
++					device_type = "ethernet-phy";
++					reg = <0x0>;
++				};
++
++				phy1: ethernet-phy@1 {
++					device_type = "ethernet-phy";
++					reg = <0x1>;
++				};
++
++				tbi1: tbi-phy@11 {
++					reg = <0x11>;
++					device_type = "tbi-phy";
++				};
++			};
++		};
++
++		ipic: pic@700 {
++			#address-cells = <0>;
++			#interrupt-cells = <2>;
++			device_type = "ipic";
++			reg = <0x700 0x100>;
++			interrupt-controller;
++		};
++
++		serial@4500 {
++			device_type = "serial";
++			compatible = "ns16550";
++			reg = <0x4500 0x100>;
++			interrupts = <9 0x8>;
++			interrupt-parent = <&ipic>;
++			clock-frequency = <0>; // Filled from the bootloader
++		};
++
++		wdt@200 {
++			device_type = "watchdog";
++			compatible = "mpc83xx_wdt";
++			reg = <0x200 0x100>;
++		};
++
++		leds {
++			compatible = "gpio-leds";
++
++			user-led {
++				gpios = <&gpio1 8 0>;
++				linux,default-trigger = "heartbeat";
++			};
++		};
++
++		beeper {
++			compatible = "rb,rb600-gtm-beeper", "rb,gtm-beeper";
++			timer = <&gtm1 3>;
++		};
++	};
++
++	fan-controller {
++		interrupt-parent = <&ipic>;
++		interrupts = <0x17 0x8>;
++		//sense = <&gpio 0x7>;
++		//fan_on = <&gpio 0x9>;
++	};
++};
+diff -Nur linux-4.9.287.orig/arch/powerpc/boot/Makefile linux-4.9.287/arch/powerpc/boot/Makefile
+--- linux-4.9.287.orig/arch/powerpc/boot/Makefile	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/arch/powerpc/boot/Makefile	2026-04-25 21:35:17.118601252 +0200
+@@ -138,6 +138,8 @@
+ src-plat-$(CONFIG_PPC_POWERNV) += pseries-head.S
+ src-plat-$(CONFIG_PPC_IBM_CELL_BLADE) += pseries-head.S
+ src-plat-$(CONFIG_MVME7100) += motload-head.S mvme7100.c
++src-plat-$(CONFIG_RB333) += rbppc.c
++src-plat-$(CONFIG_RB600) += rbppc.c
+ 
+ src-wlib := $(sort $(src-wlib-y))
+ src-plat := $(sort $(src-plat-y))
+@@ -299,9 +301,11 @@
+ # Board ports in arch/powerpc/platform/83xx/Kconfig
+ image-$(CONFIG_MPC832x_MDS)		+= cuImage.mpc832x_mds
+ image-$(CONFIG_MPC832x_RDB)		+= cuImage.mpc832x_rdb
++image-$(CONFIG_RB333)			+= dtbImage.rb333
+ image-$(CONFIG_MPC834x_ITX)		+= cuImage.mpc8349emitx \
+ 					   cuImage.mpc8349emitxgp
+ image-$(CONFIG_MPC834x_MDS)		+= cuImage.mpc834x_mds
++image-$(CONFIG_RB600)			+= dtbImage.rb600
+ image-$(CONFIG_MPC836x_MDS)		+= cuImage.mpc836x_mds
+ image-$(CONFIG_ASP834x)			+= dtbImage.asp834x-redboot
+ 
+diff -Nur linux-4.9.287.orig/arch/powerpc/boot/rbppc.c linux-4.9.287/arch/powerpc/boot/rbppc.c
+--- linux-4.9.287.orig/arch/powerpc/boot/rbppc.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/arch/powerpc/boot/rbppc.c	2026-04-25 21:34:31.758388531 +0200
+@@ -0,0 +1,195 @@
++/*
++ * The RouterBOARD platform -- for booting RouterBOARDs based on
++ * MPC83xx/MPC85xx SoC CPUs.
++ *
++ * Copyright (C) 2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) 2010 Alexandros C. Couloumbis <alex@ozo.com>
++ * Copyright (C) 2009 Michael Guntsche <mike@it-loops.com>
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License version 2 as published
++ * by the Free Software Foundation.
++ */
++
++#include "ops.h"
++#include "types.h"
++#include "io.h"
++#include "stdio.h"
++#include <libfdt.h>
++
++BSS_STACK(4096);
++
++const void *firmware_dtb_start;
++u64 memsize64;
++
++struct rbppc_ethernet_map {
++	char *firmware_dtb_path;
++	char *alias;
++};
++
++static const struct rbppc_ethernet_map ethernet_maps[] = {
++	/*
++	 * RB333 (MPC832x/QE)
++	 */
++	{ .firmware_dtb_path = "/qe@e0100000/ucc@2200",
++	  .alias = "ethernet0", },
++	{ .firmware_dtb_path = "/qe@e0100000/ucc@3200",
++	  .alias = "ethernet1", },
++	{ .firmware_dtb_path = "/qe@e0100000/ucc@3000",
++	  .alias = "ethernet2", },
++
++	/*
++	 * RB600 (MPC834x)
++	 */
++	{ .firmware_dtb_path = "/soc8343@e0000000/ethernet@24000",
++	  .alias = "ethernet1", },
++	{ .firmware_dtb_path = "/soc8343@e0000000/ethernet@25000",
++	  .alias = "ethernet0", },
++
++	{ },
++};
++
++static void rbppc_fixup_mac_addresses(void)
++{
++	const struct rbppc_ethernet_map *maps = ethernet_maps;
++	struct rbppc_ethernet_map map;
++
++	while((map = *maps++).firmware_dtb_path != NULL) {
++		const u32 *prop;
++		int node, size;
++
++		node = fdt_path_offset(firmware_dtb_start,
++				       map.firmware_dtb_path);
++		if (node < 0)
++			continue;
++
++		prop = fdt_getprop(firmware_dtb_start, node, "mac-address",
++				   &size);
++		if (size != 6 * sizeof(u8))
++			continue;
++
++		dt_fixup_mac_address_by_alias(map.alias, (const u8 *)prop);
++	}
++}
++
++static void rbppc_fixups(void)
++{
++	u32 timebase_frequency, clock_frequency, bus_frequency;
++	void *dev;
++	int node, size;
++
++	/*
++	 * Assign memory address.
++	 */
++	dt_fixup_memory(0, memsize64);
++
++	/*
++	 * Assign CPU clock frequency, time-base frequency, and bus frequency.
++	 * The MPC834x documentation states that time-base frequency is equal
++	 * to one-quarter bus frequency.
++	 */
++	node = fdt_node_offset_by_prop_value(firmware_dtb_start, -1,
++					     "device_type", "cpu",
++					     sizeof("cpu"));
++	if (node < 0)
++		fatal("Cannot find CPU node\n\r");
++
++	clock_frequency = *(const u32 *)fdt_getprop(firmware_dtb_start, node,
++						    "clock-frequency", &size);
++	timebase_frequency = *(const u32 *)fdt_getprop(firmware_dtb_start, node,
++						       "timebase-frequency",
++						       &size);
++	bus_frequency = timebase_frequency * 4;
++
++	dt_fixup_cpu_clocks(clock_frequency, timebase_frequency, bus_frequency);
++
++	/*
++	 * Assign bus frequency to SoC node, serial devices, and GTMs.
++	 *
++	 * Borrowed from cuboot-83xx.c.
++	 */
++	dev = find_node_by_devtype(NULL, "soc");
++	if (dev) {
++		void *child;
++
++		setprop_val(dev, "bus-frequency", bus_frequency);
++
++		child = NULL;
++		while ((child = find_node_by_devtype(child, "serial"))) {
++			if (get_parent(child) != dev)
++				continue;
++
++			setprop_val(child, "clock-frequency", bus_frequency);
++		}
++
++		child = NULL;
++		while ((child = find_node_by_compatible(child, "fsl,gtm"))) {
++			if (get_parent(child) != dev)
++				continue;
++
++			setprop_val(child, "clock-frequency", bus_frequency);
++		}
++	}
++
++	/*
++	 * Fix up NIC MAC addresses. RB333 and RB600 vary here.
++	 */
++	rbppc_fixup_mac_addresses();
++
++	/*
++	 * Set up /chosen so it contains the boot parameters specified in the
++	 * kernelparm segment of the image.
++	 */
++	dev = finddevice("/chosen");
++	node = fdt_path_offset(firmware_dtb_start, "/chosen");
++	if (dev && node >= 0) {
++		const char *bootargs = fdt_getprop(firmware_dtb_start, node,
++						   "bootargs", &size);
++		if (size > 0)
++			setprop_str(dev, "bootargs", bootargs);
++	}
++}
++
++void platform_init(unsigned long r3, unsigned long r4, unsigned long r5,
++		   unsigned long r6, unsigned long r7)
++{
++	const u32 *reg;
++	int node, size;
++
++	/*
++	 * Make sure we're going to start with a device tree that's not insane.
++	 */
++	if (fdt_check_header(_dtb_start) != 0)
++		fatal("Invalid device tree blob\n\r");
++
++	firmware_dtb_start = (const void *)r3;
++
++	/*
++	 * Allocate memory based on the size that the bootloader device tree
++	 * reports.
++	 */
++	node = fdt_node_offset_by_prop_value(firmware_dtb_start, -1,
++					     "device_type", "memory",
++					     sizeof("memory"));
++	if (node < 0)
++		fatal("Cannot find memory node\n\r");
++
++	reg = fdt_getprop(firmware_dtb_start, node, "reg", &size);
++	if (size != 2 * sizeof(u32))
++		fatal("Cannot get memory range\n\r");
++
++	memsize64 = reg[1];
++	simple_alloc_init(_end, memsize64 - (unsigned long)_end, 32, 64);
++
++	/*
++	 * Use our device-tree for actual initialization, like in simpleboot.
++	 */
++	fdt_init(_dtb_start);
++
++	/*
++	 * And finish everything up; we'll fixup our blob with correct values
++	 * for clocks and MAC address shortly.
++	 */
++	serial_console_init();
++	platform_ops.fixups = rbppc_fixups;
++}
+diff -Nur linux-4.9.287.orig/arch/powerpc/boot/wrapper linux-4.9.287/arch/powerpc/boot/wrapper
+--- linux-4.9.287.orig/arch/powerpc/boot/wrapper	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/arch/powerpc/boot/wrapper	2026-04-25 21:34:31.758388531 +0200
+@@ -298,6 +298,11 @@
+     platformo="$object/fixed-head.o $object/$platform.o"
+     binary=y
+     ;;
++rb600|rb333)
++    platformo="$object/fixed-head.o $object/rbppc.o"
++    link_address='0x498000'
++    binary=y
++    ;;
+ adder875-redboot)
+     platformo="$object/fixed-head.o $object/redboot-8xx.o"
+     binary=y
+diff -Nur linux-4.9.287.orig/arch/powerpc/Kconfig linux-4.9.287/arch/powerpc/Kconfig
+--- linux-4.9.287.orig/arch/powerpc/Kconfig	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/arch/powerpc/Kconfig	2026-04-25 21:34:31.758388531 +0200
+@@ -837,6 +837,9 @@
+ 	help
+ 	  Freescale General-purpose Timers support
+ 
++config RBPPC_PCI
++	bool
++
+ # Yes MCA RS/6000s exist but Linux-PPC does not currently support any
+ config MCA
+ 	bool
+diff -Nur linux-4.9.287.orig/arch/powerpc/platforms/83xx/Kconfig linux-4.9.287/arch/powerpc/platforms/83xx/Kconfig
+--- linux-4.9.287.orig/arch/powerpc/platforms/83xx/Kconfig	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/arch/powerpc/platforms/83xx/Kconfig	2026-04-25 21:34:31.758388531 +0200
+@@ -38,6 +38,30 @@
+ 	help
+ 	  This option enables support for the MPC8323 RDB board.
+ 
++config RB333
++	bool "MikroTik RouterBOARD 333 series"
++	select RBPPC_PCI if PCI
++	select PPC_MPC832x
++	select QUICC_ENGINE
++	select QE_GPIO
++	select FSL_GTM
++	select FSL_LBC
++	help
++	  This option enables support for MikroTik RouterBOARD 333 series
++	  boards.
++
++config RB600
++	bool "MikroTik RouterBOARD 600 series"
++	select RBPPC_PCI if PCI
++	select PPC_MPC834x
++	select ARCH_REQUIRE_GPIOLIB
++	select GPIO_MPC8XXX
++	select FSL_GTM
++	select FSL_LBC
++	help
++	  This option enables support for MikroTik RouterBOARD 600 series
++	  boards.
++
+ config MPC834x_MDS
+ 	bool "Freescale MPC834x MDS"
+ 	select DEFAULT_UIMAGE
+diff -Nur linux-4.9.287.orig/arch/powerpc/platforms/83xx/Makefile linux-4.9.287/arch/powerpc/platforms/83xx/Makefile
+--- linux-4.9.287.orig/arch/powerpc/platforms/83xx/Makefile	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/arch/powerpc/platforms/83xx/Makefile	2026-04-25 21:34:31.758388531 +0200
+@@ -7,8 +7,10 @@
+ obj-$(CONFIG_MPC830x_RDB)	+= mpc830x_rdb.o
+ obj-$(CONFIG_MPC831x_RDB)	+= mpc831x_rdb.o
+ obj-$(CONFIG_MPC832x_RDB)	+= mpc832x_rdb.o
++obj-$(CONFIG_RB333)		+= rb333.o
+ obj-$(CONFIG_MPC834x_MDS)	+= mpc834x_mds.o
+ obj-$(CONFIG_MPC834x_ITX)	+= mpc834x_itx.o
++obj-$(CONFIG_RB600)		+= rb600.o
+ obj-$(CONFIG_MPC836x_MDS)	+= mpc836x_mds.o
+ obj-$(CONFIG_MPC836x_RDK)	+= mpc836x_rdk.o
+ obj-$(CONFIG_MPC832x_MDS)	+= mpc832x_mds.o
+diff -Nur linux-4.9.287.orig/arch/powerpc/platforms/83xx/rb333.c linux-4.9.287/arch/powerpc/platforms/83xx/rb333.c
+--- linux-4.9.287.orig/arch/powerpc/platforms/83xx/rb333.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/arch/powerpc/platforms/83xx/rb333.c	2026-04-25 21:54:51.673518977 +0200
+@@ -0,0 +1,139 @@
++/*
++ * Copyright (C) 2010 Alexandros C. Couloumbis <alex@ozo.com>
++ * Copyright (C) 2008-2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) 2009 Michael Guntsche <mike@it-loops.com>
++ * Copyright (C) Mikrotik 2007
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or (at your
++ * option) any later version.
++ */
++
++#include <linux/stddef.h>
++#include <linux/kernel.h>
++#include <linux/delay.h>
++#include <linux/root_dev.h>
++#include <linux/initrd.h>
++#include <linux/interrupt.h>
++#include <linux/of_platform.h>
++#include <linux/of_device.h>
++
++#include <asm/time.h>
++#include <asm/ipic.h>
++#include <asm/udbg.h>
++#include <asm/pci-bridge.h>
++#include <asm/io.h>
++#include <soc/fsl/qe/qe.h>
++#include <soc/fsl/qe/qe_ic.h>
++
++#include <sysdev/fsl_soc.h>
++#include <sysdev/fsl_pci.h>
++
++#include "mpc83xx.h"
++
++#define CPDIR1A_OFFS		0x1408
++#define CPDIR1A_DIR4_MASK	0x00c00000
++#define CPDIR1A_DIR4_OUT	0x00400000
++#define CPDATA_OFFS		0x1404
++#define CPDATA_D4_MASK		0x08000000
++
++static void __init rb333_setup_arch(void)
++{
++#if defined (CONFIG_PCI) || defined (CONFIG_QUICC_ENGINE)
++	struct device_node *np;
++#endif
++
++#ifdef CONFIG_PCI
++	for_each_compatible_node(np, "pci", "fsl,mpc8349-pci")
++		mpc83xx_add_bridge(np);
++#endif
++
++#ifdef CONFIG_QUICC_ENGINE
++	qe_reset();
++
++	if ((np = of_find_node_by_name(NULL, "par_io")) != NULL) {
++		par_io_init(np);
++		of_node_put(np);
++
++		for (np = NULL; (np = of_find_node_by_name(np, "ucc")) != NULL;)
++			par_io_of_config(np);
++	}
++#endif
++}
++
++static void __init rb333_init_IRQ(void)
++{
++	struct device_node *np;
++
++	np = of_find_node_by_type(NULL, "ipic");
++	if (!np)
++		return;
++
++	ipic_init(np, 0);
++	ipic_set_default_priority();
++
++	of_node_put(np);
++
++#ifdef CONFIG_QUICC_ENGINE
++	np = of_find_compatible_node(NULL, NULL, "fsl,qe-ic");
++	if (!np)
++		return;
++
++	qe_ic_init(np, 0, qe_ic_cascade_low_ipic, qe_ic_cascade_high_ipic);
++	of_node_put(np);
++#endif
++}
++
++static int __init rb333_probe(void)
++{
++	unsigned long root = of_get_flat_dt_root();
++
++	return of_flat_dt_is_compatible(root, "RB333");
++}
++
++static void __noreturn rb333_restart(char *cmd)
++{
++	void __iomem *cfg;
++
++	cfg = ioremap(get_immrbase(), 0x2000);
++	if (cfg) {
++		local_irq_disable();
++
++		/*
++		 * GPIO on QE port A (at 0x1400): Put the fifth pin into output
++		 * mode and zero it out.
++		 */
++		clrsetbits_be32(cfg + CPDIR1A_OFFS, CPDIR1A_DIR4_MASK,
++				CPDIR1A_DIR4_OUT);
++		clrbits32(cfg + CPDATA_OFFS, CPDATA_D4_MASK);
++
++		for (;;) ;
++	}
++	else
++		mpc83xx_restart(cmd);
++}
++
++static struct of_device_id rb333_ids[] = {
++	{ .compatible = "fsl,pq2pro-localbus", },
++	{ .compatible = "simple-bus", },
++	{ .compatible = "fsl,qe", },
++	{ },
++};
++
++static int __init rb333_declare_of_platform_devices(void)
++{
++	return of_platform_bus_probe(NULL, rb333_ids, NULL);
++}
++machine_device_initcall(rb333, rb333_declare_of_platform_devices);
++
++define_machine(rb333) {
++	.name 				= "MikroTik RouterBOARD 333 series",
++	.probe 				= rb333_probe,
++	.setup_arch 			= rb333_setup_arch,
++	.init_IRQ 			= rb333_init_IRQ,
++	.get_irq 			= ipic_get_irq,
++	.restart 			= rb333_restart,
++	.time_init 			= mpc83xx_time_init,
++	.calibrate_decr			= generic_calibrate_decr,
++};
+diff -Nur linux-4.9.287.orig/arch/powerpc/platforms/83xx/rb600.c linux-4.9.287/arch/powerpc/platforms/83xx/rb600.c
+--- linux-4.9.287.orig/arch/powerpc/platforms/83xx/rb600.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/arch/powerpc/platforms/83xx/rb600.c	2026-04-25 21:34:31.758388531 +0200
+@@ -0,0 +1,133 @@
++/*
++ * Copyright (C) 2010 Alexandros C. Couloumbis <alex@ozo.com>
++ * Copyright (C) 2008-2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) 2009 Michael Guntsche <mike@it-loops.com>
++ * Copyright (C) Mikrotik 2007
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or (at your
++ * option) any later version.
++ */
++
++#include <linux/stddef.h>
++#include <linux/kernel.h>
++#include <linux/delay.h>
++#include <linux/root_dev.h>
++#include <linux/initrd.h>
++#include <linux/interrupt.h>
++#include <linux/of_platform.h>
++#include <linux/of_device.h>
++
++#include <asm/time.h>
++#include <asm/ipic.h>
++#include <asm/udbg.h>
++#include <asm/pci-bridge.h>
++#include <asm/io.h>
++
++#include <sysdev/fsl_soc.h>
++#include <sysdev/fsl_pci.h>
++
++#include "mpc83xx.h"
++
++#define SICRL_GPIO1C_MASK	0x00800000
++#define SICRL_GPIO1L_MASK 	0x00003000
++#define SICRL_GPIO1L_GTM1_TOUT4	0x00001000
++
++#define GP1DIR_OFFS		0xc00
++#define GP1DIR_MASK(pin)	(1 << (31 - (pin)))
++#define GP1DAT_OFFS		0xc08
++#define GP1DAT_MASK(pin)	(1 << (31 - (pin)))
++
++static void __init rb600_setup_arch(void) {
++	void __iomem *cfg;
++#ifdef CONFIG_PCI
++	struct device_node *np;
++#endif
++
++	/*
++	 * We do have to configure GTM1_TOUT4 to be used instead of GPIO1[11] if
++	 * we want the speaker to work.
++	 */
++	cfg = ioremap(get_immrbase(), 0x1000);
++	if (cfg) {
++		clrsetbits_be32(cfg + MPC83XX_SICRL_OFFS, SICRL_GPIO1L_MASK,
++				SICRL_GPIO1L_GTM1_TOUT4);
++		iounmap(cfg);
++	}
++
++#ifdef CONFIG_PCI
++	for_each_compatible_node(np, "pci", "fsl,mpc8349-pci")
++		mpc83xx_add_bridge(np);
++#endif
++}
++
++static void __init rb600_init_IRQ(void)
++{
++	struct device_node *np;
++
++	np = of_find_node_by_type(NULL, "ipic");
++	if (!np)
++		return;
++
++	ipic_init(np, 0);
++	ipic_set_default_priority();
++
++	of_node_put(np);
++}
++
++static int __init rb600_probe(void)
++{
++	unsigned long root = of_get_flat_dt_root();
++
++        return of_flat_dt_is_compatible(root, "RB600");
++}
++
++static void rb600_restart(char *cmd) {
++	void __iomem *cfg;
++
++	cfg = ioremap(get_immrbase(), 0x1000);
++	if (cfg) {
++		local_irq_disable();
++
++		/*
++		 * Make sure GPIO1[2] is active.
++		 */
++		clrbits32(cfg + MPC83XX_SICRL_OFFS, SICRL_GPIO1C_MASK);
++
++		/*
++		 * Grab GPIO1 (at 0xc00), put the third pin into output mode,
++		 * and zero it out.
++		 */
++		clrsetbits_be32(cfg + GP1DIR_OFFS, GP1DIR_MASK(2), GP1DIR_MASK(2));
++		clrbits32(cfg + GP1DAT_OFFS, GP1DAT_MASK(2));
++
++		for (;;) ;
++	}
++	else
++		mpc83xx_restart(cmd);
++}
++
++static struct of_device_id rb600_ids[] = {
++	{ .compatible = "fsl,pq2pro-localbus", },
++	{ .compatible = "simple-bus", },
++	{ .compatible = "gianfar", },
++	{ },
++};
++
++static int __init rb600_declare_of_platform_devices(void)
++{
++	return of_platform_bus_probe(NULL, rb600_ids, NULL);
++}
++machine_device_initcall(rb600, rb600_declare_of_platform_devices);
++
++define_machine(rb600) {
++	.name 				= "MikroTik RouterBOARD 600 series",
++	.probe 				= rb600_probe,
++	.setup_arch 			= rb600_setup_arch,
++	.init_IRQ 			= rb600_init_IRQ,
++	.get_irq 			= ipic_get_irq,
++	.restart 			= rb600_restart,
++	.time_init 			= mpc83xx_time_init,
++	.calibrate_decr			= generic_calibrate_decr,
++};
+diff -Nur linux-4.9.287.orig/arch/powerpc/sysdev/Makefile linux-4.9.287/arch/powerpc/sysdev/Makefile
+--- linux-4.9.287.orig/arch/powerpc/sysdev/Makefile	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/arch/powerpc/sysdev/Makefile	2026-04-25 21:34:31.758388531 +0200
+@@ -23,6 +23,7 @@
+ obj-$(CONFIG_FSL_CORENET_RCPM)	+= fsl_rcpm.o
+ obj-$(CONFIG_FSL_LBC)		+= fsl_lbc.o
+ obj-$(CONFIG_FSL_GTM)		+= fsl_gtm.o
++obj-$(CONFIG_RBPPC_PCI)		+= rbppc_pci.o
+ obj-$(CONFIG_FSL_85XX_CACHE_SRAM)	+= fsl_85xx_l2ctlr.o fsl_85xx_cache_sram.o
+ obj-$(CONFIG_SIMPLE_GPIO)	+= simple_gpio.o
+ obj-$(CONFIG_FSL_RIO)		+= fsl_rio.o fsl_rmu.o
+diff -Nur linux-4.9.287.orig/arch/powerpc/sysdev/rbppc_pci.c linux-4.9.287/arch/powerpc/sysdev/rbppc_pci.c
+--- linux-4.9.287.orig/arch/powerpc/sysdev/rbppc_pci.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/arch/powerpc/sysdev/rbppc_pci.c	2026-04-25 21:34:31.758388531 +0200
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2008-2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) Mikrotik 2007
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or (at your
++ * option) any later version.
++ */
++
++#include <linux/kernel.h>
++#include <linux/pci.h>
++
++static void fixup_pci(struct pci_dev *dev)
++{
++	if ((dev->class >> 8) == PCI_CLASS_BRIDGE_PCI) {
++		/*
++		 * Let the kernel itself set right memory windows.
++		 */
++		pci_write_config_word(dev, PCI_MEMORY_BASE, 0);
++		pci_write_config_word(dev, PCI_MEMORY_LIMIT, 0);
++		pci_write_config_word(dev, PCI_PREF_MEMORY_BASE, 0);
++		pci_write_config_word(dev, PCI_PREF_MEMORY_LIMIT, 0);
++		pci_write_config_byte(dev, PCI_IO_BASE, 0);
++		pci_write_config_byte(dev, PCI_IO_LIMIT, 4 << 4);
++
++		pci_write_config_byte(dev, PCI_COMMAND, PCI_COMMAND_MASTER |
++				      PCI_COMMAND_MEMORY | PCI_COMMAND_IO);
++		pci_write_config_byte(dev, PCI_CACHE_LINE_SIZE, 8);
++	} else if (dev->vendor == 0x1957 &&
++		   (dev->device == 0x32 || dev->device == 0x33)) {
++		u16 val;
++		pci_read_config_word(dev, 0x44, &val);
++		pci_write_config_word(dev, 0x44, val | (1 << 10));
++		pci_write_config_word(dev, PCI_LATENCY_TIMER, 0x00);
++	} else
++		pci_write_config_byte(dev, PCI_LATENCY_TIMER, 0x40);
++}
++DECLARE_PCI_FIXUP_HEADER(PCI_ANY_ID, PCI_ANY_ID, fixup_pci)
++
++static void fixup_secondary_bridge(struct pci_dev *dev)
++{
++	pci_write_config_byte(dev, PCI_COMMAND, PCI_COMMAND_MASTER |
++			      PCI_COMMAND_MEMORY | PCI_COMMAND_IO);
++
++	/*
++	 * Disable prefetched memory range.
++	 */
++	pci_write_config_word(dev, PCI_PREF_MEMORY_LIMIT, 0);
++	pci_write_config_word(dev, PCI_PREF_MEMORY_BASE, 0x10);
++
++	pci_write_config_word(dev, PCI_BASE_ADDRESS_0, 0);
++	pci_write_config_word(dev, PCI_BASE_ADDRESS_1, 0);
++
++	pci_write_config_byte(dev, PCI_CACHE_LINE_SIZE, 8);
++
++	pci_write_config_byte(dev, 0xc0, 0x01);
++}
++DECLARE_PCI_FIXUP_HEADER(0x3388, 0x0021, fixup_secondary_bridge)
+diff -Nur linux-4.9.287.orig/drivers/ata/Kconfig linux-4.9.287/drivers/ata/Kconfig
+--- linux-4.9.287.orig/drivers/ata/Kconfig	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/drivers/ata/Kconfig	2026-04-25 21:34:31.758388531 +0200
+@@ -1023,6 +1023,14 @@
+ 	  Support for the Winbond W83759A controller on Vesa Local Bus
+ 	  systems.
+ 
++config PATA_RBPPC_UPM
++	tristate "MikroTik RouterBOARD PATA support for Freescale MPC83xx/MPC85xx-based platforms"
++	depends on FSL_LBC && PPC_OF
++	help
++	  This option enables support for PATA devices on MikroTik RouterBOARD
++	  Freescale MPC83xx/MPC85xx-based platforms, such as RB333, RB600, and
++	  RB800.
++
+ comment "Generic fallback / legacy drivers"
+ 
+ config PATA_ACPI
+diff -Nur linux-4.9.287.orig/drivers/ata/Makefile linux-4.9.287/drivers/ata/Makefile
+--- linux-4.9.287.orig/drivers/ata/Makefile	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/drivers/ata/Makefile	2026-04-25 21:34:31.758388531 +0200
+@@ -103,6 +103,7 @@
+ obj-$(CONFIG_PATA_PLATFORM)	+= pata_platform.o
+ obj-$(CONFIG_PATA_OF_PLATFORM)	+= pata_of_platform.o
+ obj-$(CONFIG_PATA_RB532)	+= pata_rb532_cf.o
++obj-$(CONFIG_PATA_RBPPC_UPM)	+= pata_rbppc_upm.o
+ obj-$(CONFIG_PATA_RZ1000)	+= pata_rz1000.o
+ obj-$(CONFIG_PATA_SAMSUNG_CF)	+= pata_samsung_cf.o
+ 
+diff -Nur linux-4.9.287.orig/drivers/ata/pata_rbppc_upm.c linux-4.9.287/drivers/ata/pata_rbppc_upm.c
+--- linux-4.9.287.orig/drivers/ata/pata_rbppc_upm.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/drivers/ata/pata_rbppc_upm.c	2026-04-25 21:34:31.758388531 +0200
+@@ -0,0 +1,866 @@
++/*
++ * Copyright (C) 2008-2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) Mikrotik 2007
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or (at your
++ * option) any later version.
++ */
++
++#include <linux/kernel.h>
++#include <linux/slab.h>
++#include <linux/module.h>
++#include <linux/libata.h>
++#include <linux/of_platform.h>
++#include <linux/of_address.h>
++#include <linux/of_irq.h>
++
++#include <asm/fsl_lbc.h>
++
++#define DRV_NAME	"pata_rbppc_upm"
++#define DRV_VERSION	"0.1.0"
++
++/*
++ * Constants related to M[ABC]MR UPM operation.
++ *
++ * These might belong in fsl_upm.h.
++ */
++#define MxMR_OP			0x30000000	/* Operation mask */
++#define MxMR_RLF_SHIFT		14		/* Read loop field */
++#define MxMR_WLF_SHIFT		10		/* Write loop field */
++
++/*
++ * UPM programming constants.
++ *
++ * Some of these also probably belong in fsl_upm.h (aliased to more suitable
++ * names, like those found in the MPC83xx documentation).
++ */
++#define INST_N_BASE		0x00f00000 /* G0L, LGPL0 negated, first half
++					      phase */
++#define INST_N_CS		0xf0000000 /* Chip-select timing (LCSn) mask */
++#define INST_N_CS_H1		0xc0000000 /* CST1/2, first half phase */
++#define INST_N_CS_H2		0x30000000 /* CST3/4, second half phase */
++#define INST_N_WE		0x0f000000 /* Byte-select timing (LBSn) mask */
++#define INST_N_WE_H1		0x0c000000 /* BST1/2, first half phase */
++#define INST_N_WE_H2		0x03000000 /* BST3/4, second half phase */
++#define INST_N_OE		0x00030000 /* G2 (LGPL2) mask */
++#define INST_N_OE_H1		0x00020000 /* G2T1, first half phase */
++#define INST_N_OE_H2		0x00010000 /* G2T3, second half phase */
++#define INST_WAEN		0x00001000 /* Enable LUPWAIT */
++#define INST_REDO_2		0x00000100 /* REDO 2x */
++#define INST_REDO_3		0x00000200 /* REDO 3x */
++#define INST_REDO_4		0x00000300 /* REDO 4x */
++#define INST_LOOP		0x00000080 /* First time LOOP is set starts,
++					      next ends */
++#define INST_NA			0x00000008 /* Next burst address */
++#define INST_UTA		0x00000004 /* Transfer acknowledge */
++#define INST_LAST		0x00000001 /* End of pattern */
++
++#define INST_READ_BASE		(INST_N_BASE | INST_N_WE)
++#define INST_WRITE_BASE		(INST_N_BASE | INST_N_OE)
++#define INST_EMPTY		(INST_N_BASE | INST_N_CS | INST_N_OE | INST_N_WE | INST_LAST)
++
++#define X_INST_TABLE_END	0
++#define X_INST_ANOTHER_TIMING	1
++
++#define OA_CPUIN_MIN		(1 << 0)
++#define OA_CPUOUT_MAX		(1 << 1)
++#define OD_CPUOUT_MIN		(1 << 2)
++#define OA_CPUOUT_DELTA		(OD_CPUOUT_MIN | OA_CPUOUT_MAX)
++#define OA_EXTDEL_MAX		(1 << 3)
++#define OD_EXTDEL_MIN		(1 << 4)
++#define OA_EXTDEL_DELTA		(OD_EXTDEL_MIN | OA_EXTDEL_MAX)
++#define O_MIN_CYCLE_TIME	(1 << 5)
++#define O_MINUS_PREV		(1 << 6)
++#define O_HALF_CYCLE		(1 << 7)
++
++#define REDOS(mult)		(INST_REDO_2 * ((mult) - 1))
++#define REDO_MAX_MULT		4
++
++#define LOOPS			4
++
++/*
++ * This is extremely convoluted code that does some sort of alignment with what
++ * appears to be arbitrary memory offsets. It used to be part of rb_iomap.c, but
++ * it was only used for ATA operations so it's been migrated here instead (where
++ * it might actually make some small amount of sense).
++ */
++#define REG_OFFSET(base, reg) ((base) + (((reg) << 16) | ((((reg) ^ 8) & 8) << 17)))
++
++/*
++ * Since multiple ATA hosts use the same UPM, we need to make sure we only
++ * program a UPM to operate in a higher PIO mode when all hosts registered on
++ * that UPM are ready to use that mode. Otherwise, we have to pick the lowest
++ * mode that all of them support and generate timings from there.
++ */
++struct pata_rbppc_upm_pio_status {
++	int configured_mode;
++	int actual_mode;
++	struct pata_rbppc_upm_prv *prv;
++
++	struct pata_rbppc_upm_pio_status *next;
++};
++
++static DEFINE_MUTEX(pio_status_mutex);
++
++static struct pata_rbppc_upm_pio_status *pio_statuses = NULL;
++
++/*
++ * These represent custom additional board-specific timings specified in the
++ * device tree.
++ */
++struct pata_rbppc_upm_localbus_timing {
++	u32 cpuin_min;
++	u32 cpuout_min;
++	u32 cpuout_max;
++	u32 extdel_min;
++	u32 extdel_max;
++};
++
++struct pata_rbppc_upm_prv {
++	struct fsl_upm upm;
++	u32 timing;
++	struct pata_rbppc_upm_localbus_timing localbus_timings;
++	int irq;
++	struct pata_rbppc_upm_pio_status pio_status;
++
++	struct fsl_lbc_ctrl *ctrl;
++	struct ata_host *host;
++
++	struct device *dev;
++};
++
++#define UPM_P_RSS	0x00 /* Read single-beat */
++#define UPM_P_RBS	0x08 /* Read burst */
++#define UPM_P_WSS 	0x18 /* Write single-beat */
++#define UPM_P_WBS	0x20 /* Write burst */
++#define UPM_P_RTS	0x30 /* Refresh timer */
++#define UPM_P_EXS	0x3c /* Exception condition */
++#define UPM_P_SIZE	0x40 /* UPM program RAM is 64 32-bit words */
++
++struct pata_rbppc_upm_program {
++	u32 program[UPM_P_SIZE];
++	void __iomem *io_addr;
++};
++
++struct pata_rbppc_upm_cfg {
++	unsigned value;
++	unsigned timings[7]; /* PIO modes 0 - 6, in nanoseconds */
++	unsigned clk_minus;
++	unsigned group_size;
++	unsigned options;
++};
++
++static const struct pata_rbppc_upm_cfg pata_rbppc_upm_read_table[] = {
++	{ INST_READ_BASE | INST_N_OE,
++	  /* t1 - ADDR setup time */
++		{  70,  50,  30,  30,  25,  15,  10 }, 0, 0, (OA_CPUOUT_DELTA |
++							      OA_EXTDEL_MAX) },
++	{ INST_READ_BASE | INST_N_OE_H1,
++		{   0,   0,   0,   0,   0,   0,   0 }, 0, 0, O_HALF_CYCLE },
++	{ INST_READ_BASE,
++	  /* t2 - OE0 time */
++		{ 290, 290, 290,  80,  70,  65,  55 }, 0, 2, (OA_CPUOUT_MAX |
++							      OA_CPUIN_MIN) },
++	{ INST_READ_BASE | INST_WAEN,
++		{   1,   1,   1,   1,   1,   0,   0 }, 0, 0, 0 },
++	{ INST_READ_BASE | INST_UTA,
++		{   1,   1,   1,   1,   1,   1,   1 }, 0, 0, 0 },
++	{ INST_READ_BASE | INST_N_OE,
++	  /* t9 - ADDR hold time */
++		{  20,  15,  10,  10,  10,  10,  10 }, 0, 0, (OA_CPUOUT_DELTA |
++							      OD_EXTDEL_MIN) },
++	{ INST_READ_BASE | INST_N_OE | INST_N_CS_H2,
++		{   0,   0,   0,   0,   0,   0,   0 }, 0, 0, O_HALF_CYCLE },
++	{ INST_READ_BASE | INST_N_OE | INST_N_CS,
++	  /* t6Z -IORD data tristate */
++		{  30,  30,  30,  30,  30,  20,  20 }, 1, 1, O_MINUS_PREV },
++	{ X_INST_ANOTHER_TIMING,
++	  /* t2i -IORD recovery time */
++		{   0,   0,   0,  70,  25,  25,  20 }, 2, 0, 0 },
++	{ X_INST_ANOTHER_TIMING,
++	  /* CS 0 -> 1 MAX */
++		{   0,   0,   0,   0,   0,   0,   0 }, 1, 0, (OA_CPUOUT_DELTA |
++							      OA_EXTDEL_MAX) },
++	{ INST_READ_BASE | INST_N_OE | INST_N_CS | INST_LAST,
++		{   1,   1,   1,   1,   1,   1,   1 }, 0, 0, 0 },
++	{ X_INST_TABLE_END,
++	  /* min total cycle time - includes turnaround and ALE cycle */
++		{ 600, 383, 240, 180, 120, 100,  80 }, 2, 0, O_MIN_CYCLE_TIME },
++};
++
++static const struct pata_rbppc_upm_cfg pata_rbppc_upm_write_table[] = {
++	{ INST_WRITE_BASE | INST_N_WE,
++	  /* t1 - ADDR setup time */
++		{  70,  50,  30,  30,  25,  15,  10 }, 0, 0, (OA_CPUOUT_DELTA |
++							      OA_EXTDEL_MAX) },
++	{ INST_WRITE_BASE | INST_N_WE_H1,
++		{   0,   0,   0,   0,   0,   0,   0 }, 0, 0, O_HALF_CYCLE },
++	{ INST_WRITE_BASE,
++	  /* t2 - WE0 time */
++		{ 290, 290, 290,  80,  70,  65,  55 }, 0, 1, OA_CPUOUT_DELTA },
++	{ INST_WRITE_BASE | INST_WAEN,
++		{   1,   1,   1,   1,   1,   0,   0 }, 0, 0, 0 },
++	{ INST_WRITE_BASE | INST_N_WE,
++	  /* t9 - ADDR hold time */
++		{  20,  15,  10,  10,  10,  10,  10 }, 0, 0, (OA_CPUOUT_DELTA |
++							      OD_EXTDEL_MIN) },
++	{ INST_WRITE_BASE | INST_N_WE | INST_N_CS_H2,
++		{   0,   0,   0,   0,   0,   0,   0 }, 0, 0, O_HALF_CYCLE },
++	{ INST_WRITE_BASE | INST_N_WE | INST_N_CS,
++	  /* t4 - DATA hold time */
++		{  30,  20,  15,  10,  10,  10,  10 }, 0, 1, O_MINUS_PREV },
++	{ X_INST_ANOTHER_TIMING,
++	  /* t2i -IOWR recovery time */
++		{   0,   0,   0,  70,  25,  25,  20 }, 1, 0, 0 },
++	{ X_INST_ANOTHER_TIMING,
++	  /* CS 0 -> 1 MAX */
++		{   0,   0,   0,   0,   0,   0,   0 }, 0, 0, (OA_CPUOUT_DELTA |
++							      OA_EXTDEL_MAX) },
++	{ INST_WRITE_BASE | INST_N_WE | INST_N_CS | INST_UTA | INST_LAST,
++		{   1,   1,   1,   1,   1,   1,   1 }, 0, 0, 0 },
++	/* min total cycle time - includes ALE cycle */
++	{ X_INST_TABLE_END,
++		{ 600, 383, 240, 180, 120, 100,  80 }, 1, 0, O_MIN_CYCLE_TIME },
++};
++
++struct __upm_timing {
++	int clk, ps;
++	const struct pata_rbppc_upm_cfg *cfg;
++};
++
++static int __ps_to_clk(int ps, u32 bus_timing) {
++	int ps_over;
++	if (ps <= 0)
++		return 0;
++
++	/* Round down if we're less than 2% over clk border, but no more than
++	 * 1/4 clk cycle. */
++	ps_over = ps * 2 / 100;
++	if (4 * ps_over > bus_timing)
++		ps_over = bus_timing / 4;
++
++	return (ps + bus_timing - 1 - ps_over) / bus_timing;
++}
++
++static void __upm_table_populate_times(struct __upm_timing *timings, int mode,
++				       u32 bus_timing,
++				       struct pata_rbppc_upm_localbus_timing *localbus_timings)
++{
++	int i = 0, group_i = 0;
++	struct __upm_timing *last = NULL, *group = NULL;
++
++	do {
++		const struct pata_rbppc_upm_cfg *cfg = timings[i].cfg;
++
++		int ps = cfg->timings[mode] * 1000
++			- cfg->clk_minus * bus_timing;
++
++		if (cfg->options & OA_CPUIN_MIN)
++			ps += localbus_timings->cpuin_min;
++		if (cfg->options & OD_CPUOUT_MIN)
++			ps -= localbus_timings->cpuout_min;
++		if (cfg->options & OA_CPUOUT_MAX)
++			ps += localbus_timings->cpuout_max;
++		if (cfg->options & OD_EXTDEL_MIN)
++			ps -= localbus_timings->extdel_min;
++		if (cfg->options & OA_EXTDEL_MAX)
++			ps += localbus_timings->extdel_max;
++
++		if (last && cfg->value == X_INST_ANOTHER_TIMING) {
++			if (last->ps < ps)
++				last->ps = ps;
++
++			timings[i].ps = 0;
++		} else {
++			if (cfg->group_size) {
++				group = &timings[i];
++				group_i = cfg->group_size;
++			} else if (group && group_i > 0) {
++				int clk = __ps_to_clk(ps, bus_timing);
++				group->ps -= clk * bus_timing;
++				group_i--;
++			}
++
++			if (cfg->options & O_MINUS_PREV) {
++				int clk = __ps_to_clk(last->ps, bus_timing);
++				ps -= clk * bus_timing;
++			}
++
++			timings[i].ps = ps;
++			last = &timings[i];
++		}
++	} while (timings[i++].cfg->value != X_INST_TABLE_END);
++}
++
++static inline int __free_half(struct __upm_timing *timing, u32 bus_timing)
++{
++	return timing->clk < 2
++		? 0
++		: (timing->clk * bus_timing - timing->ps) * 2 >= bus_timing;
++}
++
++static void __upm_table_populate_clks(struct __upm_timing *timings,
++				      u32 bus_timing)
++{
++	int i;
++	int clk_total = 0;
++
++	/*
++	 * Convert picoseconds determined from table/local bus timings to actual
++	 * clock cycles.
++	 */
++	for (i = 0; timings[i].cfg->value != X_INST_TABLE_END; i++) {
++		timings[i].clk = __ps_to_clk(timings[i].ps, bus_timing);
++		clk_total += timings[i].clk;
++	}
++
++	/*
++	 * Check whether we have free half cycles surrounding an operation.
++	 *
++	 * We need at least three operations in the table for this to make
++	 * sense.
++	 */
++	if (i >= 2) {
++		int j;
++
++		for (j = 1; timings[j + 1].cfg->value != X_INST_TABLE_END;
++		     j++) {
++			if (timings[j].cfg->options & O_HALF_CYCLE &&
++			    __free_half(&timings[j - 1], bus_timing) &&
++			    __free_half(&timings[j + 1], bus_timing)) {
++				timings[j].clk++;
++				timings[j - 1].clk--;
++				timings[j + 1].clk--;
++			}
++		}
++	}
++
++	/*
++	 * Finally see if we need to adjust any timings to meet the minimum
++	 * requirements for standards.
++	 */
++	if (timings[i].cfg->options & O_MIN_CYCLE_TIME) {
++		int j = 0;
++
++		timings[i].clk = __ps_to_clk(timings[i].ps, bus_timing);
++
++		while (clk_total < timings[i].clk) {
++			if (timings[j].cfg->value == X_INST_TABLE_END)
++				j = 0;
++
++			if (timings[j].clk > 0) {
++				timings[j].clk++;
++				clk_total++;
++			}
++
++			j++;
++		}
++	}
++}
++
++static void __upm_table_populate_value(u32 value, int *clk, u32 **program)
++{
++	if (*clk == 0)
++		/* Nothing to do. */;
++	else if (*clk >= LOOPS * 2) {
++		int times, times_r1, times_r2;
++
++		times = *clk / LOOPS;
++		if (times > REDO_MAX_MULT * 2)
++			times = REDO_MAX_MULT * 2;
++
++		times_r1 = times / 2;
++		times_r2 = times - times_r1;
++
++		value |= INST_LOOP;
++		**program = value | REDOS(times_r1);
++		(*program)++;
++		**program = value | REDOS(times_r2);
++		(*program)++;
++
++		*clk -= times * LOOPS;
++	} else {
++		int clk_for_value = *clk < REDO_MAX_MULT ? *clk : REDO_MAX_MULT;
++
++		value |= REDOS(clk_for_value);
++		*clk -= clk_for_value;
++
++		**program = value;
++		(*program)++;
++	}
++}
++
++static void __upm_table_populate_values(struct __upm_timing *timings,
++					struct pata_rbppc_upm_program *program,
++					int offset)
++{
++	int i;
++
++	u32 *wr = &program->program[offset];
++	for (i = 0; timings[i].cfg->value != X_INST_TABLE_END; i++) {
++		int clk = timings[i].clk;
++		while (clk > 0)
++			__upm_table_populate_value(timings[i].cfg->value, &clk,
++						   &wr);
++	}
++}
++
++static int __upm_table_to_program(struct pata_rbppc_upm_prv *prv,
++				  struct __upm_timing *timings, int mode,
++				  struct pata_rbppc_upm_program *program,
++				  int offset)
++{
++	__upm_table_populate_times(timings, mode, prv->timing,
++				   &prv->localbus_timings);
++	__upm_table_populate_clks(timings, prv->timing);
++	__upm_table_populate_values(timings, program, offset);
++
++	return 0;
++}
++
++static int pata_rbppc_upm_get_program(struct pata_rbppc_upm_prv *prv, int mode,
++				      struct pata_rbppc_upm_program *program)
++{
++	int i;
++	int retval;
++	struct __upm_timing read_timings[ARRAY_SIZE(pata_rbppc_upm_read_table)];
++	struct __upm_timing write_timings[ARRAY_SIZE(pata_rbppc_upm_write_table)];
++
++	/*
++	 * Initialize program to empty values.
++	 */
++	for (i = 0; i < UPM_P_SIZE; i++) {
++		program->program[i] = INST_EMPTY;
++	}
++
++	/*
++	 * Initialize the timing data and map it to our table.
++	 */
++#define INITIALIZE_TIMINGS(timings, table)				\
++	do {								\
++		int i = 0;						\
++		do {							\
++			(timings)[i].clk = 0;				\
++			(timings)[i].ps = 0;				\
++			(timings)[i].cfg = &(table)[i];			\
++		} while ((table)[i++].value != X_INST_TABLE_END);	\
++	} while(0)
++	INITIALIZE_TIMINGS(read_timings, pata_rbppc_upm_read_table);
++	INITIALIZE_TIMINGS(write_timings, pata_rbppc_upm_write_table);
++
++	/*
++	 * Build read/write programs from our table structures.
++	 */
++	retval = __upm_table_to_program(prv, read_timings, mode, program,
++				        UPM_P_RSS);
++	if (retval) {
++		dev_err(prv->dev, "Could not generate read program for PIO "
++			"mode %u\n", mode);
++		return retval;
++	}
++
++	retval = __upm_table_to_program(prv, write_timings, mode, program,
++					UPM_P_WSS);
++	if (retval) {
++		dev_err(prv->dev, "Could not generate write program for PIO "
++			"mode %u\n", mode);
++	}
++
++	return 0;
++}
++
++static void pata_rbppc_upm_program(struct pata_rbppc_upm_prv *prv,
++				   struct pata_rbppc_upm_program *program)
++{
++	u32 i;
++
++	clrsetbits_be32(prv->upm.mxmr, MxMR_MAD, MxMR_OP_WA);
++	in_be32(prv->upm.mxmr);
++
++	for (i = 0; i < UPM_P_SIZE; i++) {
++		out_be32(&prv->ctrl->regs->mdr, program->program[i]);
++		in_be32(&prv->ctrl->regs->mdr);
++
++		out_8(program->io_addr, 0x0);
++
++		while ((in_be32(prv->upm.mxmr) ^ (i + 1)) & MxMR_MAD)
++			cpu_relax();
++	}
++
++	clrsetbits_be32(prv->upm.mxmr, MxMR_MAD | MxMR_OP,
++			MxMR_OP_NO | (LOOPS << MxMR_RLF_SHIFT) |
++			(LOOPS << MxMR_WLF_SHIFT));
++	in_be32(prv->upm.mxmr);
++}
++
++static int pata_rbppc_upm_program_for_piomode(struct pata_rbppc_upm_prv *prv,
++					      int mode)
++{
++	struct pata_rbppc_upm_program program;
++	int retval;
++
++	retval = pata_rbppc_upm_get_program(prv, mode, &program);
++	if (retval)
++		return retval;
++
++	program.io_addr = prv->host->ports[0]->ioaddr.cmd_addr;
++	pata_rbppc_upm_program(prv, &program);
++
++	return 0;
++}
++
++static void pata_rbppc_upm_set_piomode(struct ata_port *ap, struct ata_device *adev)
++{
++	struct pata_rbppc_upm_prv *prv = ap->host->private_data;
++	struct pata_rbppc_upm_pio_status *pio_status;
++	int requested_mode = adev->pio_mode - XFER_PIO_0;
++	int actual_mode = requested_mode;
++	int retval;
++
++	if (requested_mode < 0 || requested_mode > 6) {
++		dev_err(prv->dev, "Illegal PIO mode %u\n", requested_mode);
++		return;
++	}
++
++	prv->pio_status.configured_mode = requested_mode;
++
++	mutex_lock(&pio_status_mutex);
++
++	/*
++	 * Find other hosts that are on the same UPM as this one, and make sure
++	 * they're all configured for the PIO mode we want.
++	 */
++	for (pio_status = pio_statuses; pio_status != NULL;
++	     pio_status = pio_status->next) {
++		if (pio_status->prv == prv)
++			continue;
++		else if (pio_status->prv->upm.mxmr == prv->upm.mxmr &&
++			 pio_status->configured_mode < actual_mode)
++			actual_mode = pio_status->configured_mode;
++	}
++
++	if (actual_mode < 0) {
++		dev_info(prv->dev, "Waiting until another device comes up to "
++			 "program UPM for new PIO mode\n");
++		goto out;
++	} else if (actual_mode < requested_mode) {
++		dev_info(prv->dev, "Requested PIO mode %u, but UPM can only be "
++			 "configured at PIO mode %u\n", requested_mode,
++			 actual_mode);
++	}
++
++	retval = pata_rbppc_upm_program_for_piomode(prv, actual_mode);
++	if (retval) {
++		dev_err(prv->dev, "Could not update PIO mode: %d\n", retval);
++		goto out;
++	}
++
++	/*
++	 * Now update everything on the UPM to have the new actual mode.
++	 */
++	for (pio_status = pio_statuses; pio_status != NULL;
++	     pio_status = pio_status->next) {
++		if (pio_status->prv->upm.mxmr == prv->upm.mxmr) {
++			pio_status->actual_mode = actual_mode;
++			dev_info(pio_status->prv->dev,
++				 "PIO mode changed to %u\n", actual_mode);
++		}
++	}
++
++out:
++	mutex_unlock(&pio_status_mutex);
++}
++
++static u8 pata_rbppc_upm_check_status(struct ata_port *ap) {
++	u8 val = ioread8(ap->ioaddr.status_addr);
++	if (val == 0xF9)
++		val = 0x7F;
++	return val;
++}
++
++static u8 pata_rbppc_upm_check_altstatus(struct ata_port *ap) {
++	u8 val = ioread8(ap->ioaddr.altstatus_addr);
++	if (val == 0xF9)
++		val = 0x7F;
++	return val;
++}
++
++static irqreturn_t pata_rbppc_upm_interrupt(int irq, void *dev_instance)
++{
++	irqreturn_t retval = ata_sff_interrupt(irq, dev_instance);
++	if (retval == IRQ_RETVAL(0)) {
++		struct ata_host *host = dev_instance;
++		struct ata_port *ap = host->ports[0];
++
++		/* Clear interrupt. */
++		ap->ops->sff_check_status(ap);
++
++		ata_port_printk(ap, KERN_WARNING, "IRQ %d not handled\n", irq);
++	}
++
++	return retval;
++}
++
++static struct scsi_host_template pata_rbppc_upm_sht = {
++	ATA_BASE_SHT(DRV_NAME),
++	.dma_boundary		= ATA_DMA_BOUNDARY,
++};
++
++static struct ata_port_operations pata_rbppc_upm_port_ops = {
++	.inherits		= &ata_sff_port_ops,
++
++	.set_piomode		= pata_rbppc_upm_set_piomode,
++
++	.sff_check_status	= pata_rbppc_upm_check_status,
++	.sff_check_altstatus	= pata_rbppc_upm_check_altstatus,
++};
++
++static int pata_rbppc_upm_probe_timings(struct pata_rbppc_upm_prv *prv)
++{
++	struct device *dev = prv->dev;
++	struct device_node *dn_soc;
++	const u32 *prop;
++	int prop_size;
++	u32 bus_frequency, lcrr_clkdiv;
++	int retval = 0;
++
++	dn_soc = of_find_node_by_type(NULL, "soc");
++	if (!dn_soc) {
++		dev_err(dev, "Could not find SoC node\n");
++		return -EINVAL;
++	}
++
++	prop = of_get_property(dn_soc, "bus-frequency", NULL);
++	if (!prop || !*prop) {
++		dev_err(dev, "Could not determine bus frequency\n");
++		retval = -EINVAL;
++		goto out;
++	}
++
++	bus_frequency = *prop;
++
++	/*
++	 * The actual speed is determined by the ratio between the bus frequency
++	 * and the CLKDIV register.
++	 */
++	lcrr_clkdiv = (in_be32(&prv->ctrl->regs->lcrr) & LCRR_CLKDIV)
++		>> LCRR_CLKDIV_SHIFT;
++	bus_frequency /= lcrr_clkdiv;
++
++	/* (picoseconds / kHz) */
++	prv->timing = 1000000000 / (bus_frequency / 1000);
++
++	/*
++	 * Additional timings are set up in the device node itself, also in
++	 * picoseconds.
++	 */
++	prop = of_get_property(dev->of_node, "rb,pata-upm-localbus-timings",
++			       &prop_size);
++	if (prop && prop_size == 5 * sizeof(u32)) {
++		prv->localbus_timings.cpuin_min = prop[0];
++		prv->localbus_timings.cpuout_min = prop[1];
++		prv->localbus_timings.cpuout_max = prop[2];
++		prv->localbus_timings.extdel_min = prop[3];
++		prv->localbus_timings.extdel_max = prop[4];
++	}
++
++out:
++	of_node_put(dn_soc);
++	return retval;
++}
++
++static int pata_rbppc_upm_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct pata_rbppc_upm_prv *prv;
++	struct ata_host *host;
++	struct ata_port *ap;
++	struct ata_ioports *aio;
++	struct device_node *dn = dev->of_node;
++	struct resource res;
++	void __iomem *io_addr;
++	int retval;
++
++	printk(KERN_INFO "MikroTik RouterBOARD UPM PATA driver for "
++	       "MPC83xx/MPC85xx-based platforms, version " DRV_VERSION "\n");
++
++	if (!fsl_lbc_ctrl_dev || !fsl_lbc_ctrl_dev->regs)
++		return -ENODEV;
++
++	prv = devm_kzalloc(dev, sizeof(*prv), GFP_KERNEL);
++	if (!prv) {
++		dev_err(dev, "Can't allocate memory!\n");
++		return -ENOMEM;
++	}
++
++	prv->ctrl = fsl_lbc_ctrl_dev;
++	prv->dev = dev;
++
++	retval = pata_rbppc_upm_probe_timings(prv);
++	if (retval) {
++		dev_err(dev, "Could not initialize timing data from SoC\n");
++		return retval;
++	}
++
++	retval = of_address_to_resource(dn, 0, &res);
++	if (retval) {
++		dev_err(dev, "No reg property found\n");
++		return retval;
++	}
++
++	retval = fsl_upm_find(res.start, &prv->upm);
++	if (retval) {
++		dev_err(dev, "Could not find UPM\n");
++		return retval;
++	}
++
++	if (!devm_request_mem_region(dev, res.start, res.end - res.start + 1,
++				     DRV_NAME)) {
++		dev_err(dev, "Could not request region\n");
++		return -EBUSY;
++	}
++
++	io_addr = devm_ioremap(dev, res.start, res.end - res.start + 1);
++	if (!io_addr) {
++		dev_err(dev, "Could not map IO region\n");
++		return -ENOMEM;
++	}
++
++	host = ata_host_alloc(dev, 1);
++	if (!host) {
++		dev_err(dev, "Can't allocate memory!\n");
++		return -ENOMEM;
++	}
++
++	host->private_data = prv;
++
++	ap = host->ports[0];
++	ap->ops = &pata_rbppc_upm_port_ops;
++	ap->pio_mask = ATA_PIO6;
++	ap->udma_mask = 0;
++	ap->mwdma_mask = 0;
++
++	/*
++	 * This is sort of halfheartedly based on the extremely strange logic in
++	 * rb_iomap.c. I think setting these to the values they eventually get
++	 * mapped to (look at localbus_regoff() if you're curious) should
++	 * eliminate the need for RouterBOARD-specific iomapping.
++	 */
++	aio = &ap->ioaddr;
++	aio->cmd_addr = REG_OFFSET(io_addr, 0);
++	aio->data_addr = REG_OFFSET(io_addr, ATA_REG_DATA);
++	aio->error_addr = REG_OFFSET(io_addr, ATA_REG_ERR);
++	aio->feature_addr = REG_OFFSET(io_addr, ATA_REG_FEATURE);
++	aio->nsect_addr = REG_OFFSET(io_addr, ATA_REG_NSECT);
++	aio->lbal_addr = REG_OFFSET(io_addr, ATA_REG_LBAL);
++	aio->lbam_addr = REG_OFFSET(io_addr, ATA_REG_LBAM);
++	aio->lbah_addr = REG_OFFSET(io_addr, ATA_REG_LBAH);
++	aio->device_addr = REG_OFFSET(io_addr, ATA_REG_DEVICE);
++	aio->status_addr = REG_OFFSET(io_addr, ATA_REG_STATUS);
++	aio->command_addr = REG_OFFSET(io_addr, ATA_REG_CMD);
++	aio->ctl_addr = REG_OFFSET(io_addr, 14);
++	aio->altstatus_addr = aio->ctl_addr;
++
++	prv->irq = irq_of_parse_and_map(dev->of_node, 0);
++	if (prv->irq == NO_IRQ) {
++		dev_err(dev, "Could not acquire IRQ\n");
++		return -EINVAL;
++	}
++
++	retval = ata_host_activate(host, prv->irq, pata_rbppc_upm_interrupt,
++				   IRQF_TRIGGER_LOW, &pata_rbppc_upm_sht);
++	if (retval) {
++		irq_dispose_mapping(prv->irq);
++		dev_err(dev, "Could not activate ATA host\n");
++		return retval;
++	}
++
++	prv->host = host;
++
++	/*
++	 * Set up the PIO mode tracking mechanism.
++	 */
++	prv->pio_status.configured_mode = -1;
++	prv->pio_status.actual_mode = -1;
++	prv->pio_status.prv = prv;
++
++	mutex_lock(&pio_status_mutex);
++
++	prv->pio_status.next = pio_statuses;
++	pio_statuses = &prv->pio_status;
++
++	mutex_unlock(&pio_status_mutex);
++
++	return 0;
++}
++
++static int pata_rbppc_upm_remove(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct ata_host *host = dev_get_drvdata(dev);
++	struct pata_rbppc_upm_prv *prv = host->private_data;
++	struct pata_rbppc_upm_pio_status *pio_status;
++
++	/*
++	 * Remove PIO mode tracking.
++	 */
++	mutex_lock(&pio_status_mutex);
++
++	if (!pio_statuses->next)
++		pio_statuses = NULL;
++	else {
++		for (pio_status = pio_statuses; pio_status != NULL;
++		     pio_status = pio_status->next) {
++			if (pio_status->next && pio_status->next->prv == prv) {
++				pio_status->next = pio_status->next->next;
++				break;
++			}
++		}
++	}
++
++	mutex_unlock(&pio_status_mutex);
++
++	/*
++	 * And clean up all the things we allocated. ALL THE THINGS.
++	 */
++	ata_host_detach(host);
++	irq_dispose_mapping(prv->irq);
++
++	return 0;
++}
++
++static struct of_device_id pata_rbppc_upm_ids[] = {
++	{ .compatible = "rb,pata-upm", },
++	{ },
++};
++
++static struct platform_driver pata_rbppc_upm_driver = {
++	.probe = pata_rbppc_upm_probe,
++	.remove = pata_rbppc_upm_remove,
++	.driver	= {
++		.name = "rbppc-upm",
++		.owner = THIS_MODULE,
++		.of_match_table = pata_rbppc_upm_ids,
++	},
++};
++
++static int __init pata_rbppc_upm_init(void)
++{
++	return platform_driver_register(&pata_rbppc_upm_driver);
++}
++
++static void __exit pata_rbppc_upm_exit(void)
++{
++	platform_driver_unregister(&pata_rbppc_upm_driver);
++}
++
++MODULE_AUTHOR("Mikrotikls SIA");
++MODULE_AUTHOR("Noah Fontes");
++MODULE_DESCRIPTION("MikroTik RouterBOARD UPM PATA driver for MPC83xx/MPC85xx-based platforms");
++MODULE_LICENSE("GPL");
++MODULE_VERSION(DRV_VERSION);
++
++module_init(pata_rbppc_upm_init);
++module_exit(pata_rbppc_upm_exit);
+diff -Nur linux-4.9.287.orig/drivers/input/misc/Kconfig linux-4.9.287/drivers/input/misc/Kconfig
+--- linux-4.9.287.orig/drivers/input/misc/Kconfig	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/drivers/input/misc/Kconfig	2026-04-25 21:34:31.758388531 +0200
+@@ -831,4 +831,12 @@
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called hisi_powerkey.
+ 
++config INPUT_RBPPC_GTM_BEEPER
++	tristate "MikroTik RouterBOARD GTM speaker support for Freescale MPC83xx/MPC85xx-based platforms"
++	depends on FSL_GTM && PPC_OF && (GPIOLIB || !RB333)
++	help
++	  This option enables support for the on-board speaker device on
++	  MikroTik RouterBOARD Freescale MPC83xx/MPC85xx-based platforms, such
++	  as RB333, RB600, and RB800.
++
+ endif
+diff -Nur linux-4.9.287.orig/drivers/input/misc/Makefile linux-4.9.287/drivers/input/misc/Makefile
+--- linux-4.9.287.orig/drivers/input/misc/Makefile	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/drivers/input/misc/Makefile	2026-04-25 21:34:31.758388531 +0200
+@@ -78,3 +78,4 @@
+ obj-$(CONFIG_INPUT_XEN_KBDDEV_FRONTEND)	+= xen-kbdfront.o
+ obj-$(CONFIG_INPUT_YEALINK)		+= yealink.o
+ obj-$(CONFIG_INPUT_IDEAPAD_SLIDEBAR)	+= ideapad_slidebar.o
++obj-$(CONFIG_INPUT_RBPPC_GTM_BEEPER)	+= rbppc_gtm_beeper.o
+diff -Nur linux-4.9.287.orig/drivers/input/misc/rbppc_gtm_beeper.c linux-4.9.287/drivers/input/misc/rbppc_gtm_beeper.c
+--- linux-4.9.287.orig/drivers/input/misc/rbppc_gtm_beeper.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/drivers/input/misc/rbppc_gtm_beeper.c	2026-04-25 21:34:31.758388531 +0200
+@@ -0,0 +1,260 @@
++/*
++ * Copyright (C) 2008-2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) Mikrotik 2007
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or (at your
++ * option) any later version.
++ */
++
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/init.h>
++#include <linux/input.h>
++#include <linux/interrupt.h>
++#include <linux/gpio.h>
++#include <linux/of_platform.h>
++#include <linux/of_gpio.h>
++
++#include <asm/fsl_gtm.h>
++
++#define DRV_NAME "rbppc_gtm_beeper"
++#define DRV_VERSION "0.1.0"
++
++struct rbppc_gtm_beeper_prv {
++	int gpio, gpio_toggle;
++	int irq;
++
++	struct gtm_timer *timer;
++	struct input_dev *input;
++
++	struct device *dev;
++};
++
++static irqreturn_t rbppc_gtm_beeper_interrupt(int irq, void *data)
++{
++	struct rbppc_gtm_beeper_prv *prv = data;
++
++	if (gpio_is_valid(prv->gpio)) {
++		gpio_set_value(prv->gpio, prv->gpio_toggle);
++		prv->gpio_toggle ^= 1;
++	}
++
++	if (prv->timer)
++		gtm_ack_timer16(prv->timer, 0xFFFF);
++
++	return IRQ_HANDLED;
++}
++
++static int rbppc_gtm_beeper_event(struct input_dev *input, unsigned int type,
++				  unsigned int code, int value)
++{
++	struct rbppc_gtm_beeper_prv *prv = input_get_drvdata(input);
++
++	if (type != EV_SND || value < 0)
++		return -EINVAL;
++
++	switch (code) {
++	case SND_BELL:
++		value = value ? 1000 : 0;
++		break;
++	case SND_TONE:
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	if (value == 0)
++		gtm_stop_timer16(prv->timer);
++	else
++		/*
++		 * "reload" is actually "free run", despite what the API
++		 * documentation claims.
++		 */
++		gtm_set_timer16(prv->timer, value, true);
++
++	return 0;
++}
++
++static int rbppc_gtm_beeper_probe_input(struct rbppc_gtm_beeper_prv *prv)
++{
++	int retval = 0;
++
++	prv->input = input_allocate_device();
++	if (!prv->input) {
++		dev_err(prv->dev, "Can't allocate memory!\n");
++		return -ENOMEM;
++	}
++
++	prv->input->name = "rbppc-gtm-beeper";
++	prv->input->phys = "rbppc/input0";
++	prv->input->id.bustype = BUS_HOST;
++	prv->input->id.vendor = 0x001f;
++	prv->input->id.product = 0x0001;
++	prv->input->id.version = 0x0100;
++
++	prv->input->evbit[0] = BIT_MASK(EV_SND);
++	prv->input->sndbit[0] = BIT_MASK(SND_TONE) | BIT_MASK(SND_BELL);
++
++	prv->input->event = rbppc_gtm_beeper_event;
++
++	input_set_drvdata(prv->input, prv);
++
++	retval = input_register_device(prv->input);
++	if (retval) {
++		dev_err(prv->dev, "Could not register input device\n");
++		input_free_device(prv->input);
++	}
++
++	return retval;
++}
++
++static int rbppc_gtm_beeper_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct device_node *dn_timer, *dn = dev->of_node;
++	struct gtm *gtm;
++	struct rbppc_gtm_beeper_prv *prv;
++	const __be32 *prop;
++	int size, retval;
++
++	printk(KERN_INFO "MikroTik RouterBOARD GTM speaker driver for "
++	       "MPC83xx/MPC85xx-based platforms, version " DRV_VERSION "\n");
++
++	prv = devm_kzalloc(dev, sizeof(*prv), GFP_KERNEL);
++	if (!prv) {
++		dev_err(dev, "Can't allocate memory!\n");
++		return -ENOMEM;
++	}
++
++	prv->dev = dev;
++
++	prop = of_get_property(dn, "timer", &size);
++	if (size != 2 * sizeof(*prop)) {
++		dev_err(dev, "Invalid timer property\n");
++		return -EINVAL;
++	}
++
++	dn_timer = of_find_node_by_phandle(be32_to_cpu(prop[0]));
++	if (!dn_timer) {
++		dev_err(dev, "No GTM found\n");
++		return -EINVAL;
++	} else if (!dn_timer->data) {
++		/*
++		 * The FSL GTM initialization routines map the GTM to the ->data
++		 * property of the OF node.
++		 */
++		dev_err(dev, "GTM node has not been initialized\n");
++		of_node_put(dn_timer);
++		return -EINVAL;
++	}
++
++	gtm = dn_timer->data;
++
++	of_node_put(dn_timer);
++
++	prv->timer = gtm_get_specific_timer16(gtm, be32_to_cpu(prop[1]));
++	if (IS_ERR(prv->timer)) {
++		dev_err(dev, "Could not request specific timer on GTM\n");
++		return PTR_ERR(prv->timer);
++	}
++
++	/*
++	 * On the RB333, we need to toggle some GPIO pins every time we get an
++	 * interrupt.
++	 */
++	prv->gpio = -1;
++	if (of_device_is_compatible(dn, "rb,rb333-gtm-beeper")) {
++		int gpio;
++		gpio = of_get_gpio(dn, 0);
++		if (!gpio_is_valid(gpio)) {
++			dev_err(dev, "No GPIO found\n");
++			retval = gpio;
++			goto err_after_get_timer;
++		}
++
++		retval = gpio_request(gpio, "RouterBOARD Speaker");
++		if (retval) {
++			dev_err(dev, "Couldn't request GPIO for speaker\n");
++			goto err_after_get_timer;
++		}
++		gpio_direction_output(gpio, 0);
++		prv->gpio = gpio;
++		prv->gpio_toggle = 0;
++	}
++
++	retval = devm_request_irq(dev, prv->timer->irq,
++				  rbppc_gtm_beeper_interrupt, 0, DRV_NAME, prv);
++	if (retval) {
++		dev_err(dev, "Could not request IRQ for speaker\n");
++		goto err_after_request_gpio;
++	}
++
++	retval = rbppc_gtm_beeper_probe_input(prv);
++	if (retval) {
++		dev_err(dev, "Could not create input device for speaker\n");
++		goto err_after_request_gpio;
++	}
++
++	dev_set_drvdata(dev, prv);
++
++	return 0;
++
++err_after_request_gpio:
++	if (gpio_is_valid(prv->gpio))
++		gpio_free(prv->gpio);
++err_after_get_timer:
++	gtm_put_timer16(prv->timer);
++	return retval;
++}
++
++static int rbppc_gtm_beeper_remove(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct rbppc_gtm_beeper_prv *prv = dev_get_drvdata(dev);
++
++	input_unregister_device(prv->input);
++	gtm_put_timer16(prv->timer);
++
++	if (gpio_is_valid(prv->gpio))
++		gpio_free(prv->gpio);
++
++	dev_set_drvdata(dev, NULL);
++
++	return 0;
++}
++
++static struct of_device_id rbppc_gtm_beeper_ids[] = {
++	{ .compatible = "rb,gtm-beeper", },
++	{ },
++};
++
++static struct platform_driver rbppc_gtm_beeper_driver = {
++	.probe = rbppc_gtm_beeper_probe,
++	.remove = rbppc_gtm_beeper_remove,
++	.driver = {
++		.name = "rbppc-gtm-beeper",
++		.owner = THIS_MODULE,
++		.of_match_table = rbppc_gtm_beeper_ids,
++	},
++};
++
++static int __init rbppc_gtm_beeper_init(void)
++{
++	return platform_driver_register(&rbppc_gtm_beeper_driver);
++}
++
++static void __exit rbppc_gtm_beeper_exit(void)
++{
++	platform_driver_unregister(&rbppc_gtm_beeper_driver);
++}
++
++MODULE_AUTHOR("Mikrotikls SIA");
++MODULE_AUTHOR("Noah Fontes");
++MODULE_DESCRIPTION("MikroTik RouterBOARD GTM speaker driver for MPC83xx/MPC85xx-based platforms");
++MODULE_LICENSE("GPL");
++MODULE_VERSION(DRV_VERSION);
++
++module_init(rbppc_gtm_beeper_init);
++module_exit(rbppc_gtm_beeper_exit);
+diff -Nur linux-4.9.287.orig/drivers/mtd/nand/Kconfig linux-4.9.287/drivers/mtd/nand/Kconfig
+--- linux-4.9.287.orig/drivers/mtd/nand/Kconfig	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/drivers/mtd/nand/Kconfig	2026-04-25 21:34:31.758388531 +0200
+@@ -417,6 +417,14 @@
+ 	  devices. You will need to provide platform-specific functions
+ 	  via platform_data.
+ 
++config MTD_NAND_RBPPC
++	tristate "MikroTik RouterBOARD NAND support for Freescale MPC83xx/MPC85xx-based platforms"
++	depends on PPC_OF && GPIOLIB
++	help
++	  This option enables support for the NAND device on MikroTik
++	  RouterBOARD Freescale MPC83xx/MPC85xx-based platforms, such as RB333,
++	  RB600, and RB800.
++
+ config MTD_NAND_ORION
+ 	tristate "NAND Flash support for Marvell Orion SoC"
+ 	depends on PLAT_ORION
+diff -Nur linux-4.9.287.orig/drivers/mtd/nand/Makefile linux-4.9.287/drivers/mtd/nand/Makefile
+--- linux-4.9.287.orig/drivers/mtd/nand/Makefile	2021-10-17 10:05:40.000000000 +0200
++++ linux-4.9.287/drivers/mtd/nand/Makefile	2026-04-25 21:34:31.758388531 +0200
+@@ -33,6 +33,7 @@
+ obj-$(CONFIG_MTD_NAND_PXA3xx)		+= pxa3xx_nand.o
+ obj-$(CONFIG_MTD_NAND_TMIO)		+= tmio_nand.o
+ obj-$(CONFIG_MTD_NAND_PLATFORM)		+= plat_nand.o
++obj-$(CONFIG_MTD_NAND_RBPPC)		+= rbppc_nand.o
+ obj-$(CONFIG_MTD_NAND_PASEMI)		+= pasemi_nand.o
+ obj-$(CONFIG_MTD_NAND_ORION)		+= orion_nand.o
+ obj-$(CONFIG_MTD_NAND_FSL_ELBC)		+= fsl_elbc_nand.o
+diff -Nur linux-4.9.287.orig/drivers/mtd/nand/rbppc_nand.c linux-4.9.287/drivers/mtd/nand/rbppc_nand.c
+--- linux-4.9.287.orig/drivers/mtd/nand/rbppc_nand.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-4.9.287/drivers/mtd/nand/rbppc_nand.c	2026-04-25 21:34:31.758388531 +0200
+@@ -0,0 +1,367 @@
++/*
++ * Copyright (C) 2008-2011 Noah Fontes <nfontes@invectorate.com>
++ * Copyright (C) 2009 Michael Guntsche <mike@it-loops.com>
++ * Copyright (C) Mikrotik 2007
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or (at your
++ * option) any later version.
++ *
++ * This is a strange driver indeed. Instead of using a rational layout for
++ * handling NAND operations (like, say, the fsl_upm driver), this driver uses
++ * two separate UPMs plus four pins on GPIO_1. One of the UPMs is responsible
++ * for actual read/write operations; the other one seems to be for ensuring
++ * commands are executed serially (i.e., a sync buffer). It's referred to as as
++ * either "localbus" or "nnand" in MikroTik's own code -- neither name makes
++ * much sense to me. The GPIO is used for R/B and CLE/ALE/nCE.
++ */
++
++#include <linux/init.h>
++#include <linux/slab.h>
++#include <linux/module.h>
++#include <linux/gpio.h>
++#include <linux/io.h>
++#include <linux/mtd/nand.h>
++#include <linux/mtd/mtd.h>
++#include <linux/mtd/partitions.h>
++#include <linux/of_platform.h>
++#include <linux/of_address.h>
++#include <linux/of_gpio.h>
++
++#define DRV_NAME "rbppc_nand"
++#define DRV_VERSION "0.1.1"
++
++struct rbppc_nand_prv {
++	struct mtd_info mtd;
++	struct nand_chip chip;
++
++	int rnb_gpio;
++
++	int nce_gpio;
++	int cle_gpio;
++	int ale_gpio;
++
++	void __iomem *cmd_sync;
++
++	struct device *dev;
++};
++
++/*
++ * We must use the OOB layout from yaffs 1 if we want this to be recognized
++ * properly. Borrowed from the OpenWRT patches for the RB532.
++ *
++ * See <https://dev.openwrt.org/browser/trunk/target/linux/rb532/
++ * patches-2.6.28/025-rb532_nand_fixup.patch> for more details.
++ */
++static struct nand_ecclayout rbppc_nand_oob_16 = {
++	.eccbytes = 6,
++	.eccpos = { 8, 9, 10, 13, 14, 15 },
++	.oobavail = 9,
++	.oobfree = { { 0, 4 }, { 6, 2 }, { 11, 2 }, { 4, 1 } },
++};
++
++static inline void rbppc_nand_sync(struct rbppc_nand_prv *prv) {
++	/*
++	 * My understanding from reading the GPIO NAND driver (gpio.c) is that
++	 * this enforces a MEMBAR that the CPU itself can't provide; in other
++	 * words, it forces commands to be executed synchronously.
++	 */
++	readb(prv->cmd_sync);
++}
++
++static int rbppc_nand_dev_ready(struct mtd_info *mtd) {
++	struct nand_chip *chip = mtd->priv;
++	struct rbppc_nand_prv *prv = chip->priv;
++
++	return gpio_get_value(prv->rnb_gpio);
++}
++
++static void rbppc_nand_cmd_ctrl(struct mtd_info *mtd, int cmd, unsigned int ctrl) {
++	struct nand_chip *chip = mtd->priv;
++	struct rbppc_nand_prv *prv = chip->priv;
++
++	rbppc_nand_sync(prv);
++
++	if (ctrl & NAND_CTRL_CHANGE) {
++		gpio_set_value(prv->nce_gpio, !(ctrl & NAND_NCE));
++		gpio_set_value(prv->cle_gpio, !!(ctrl & NAND_CLE));
++		gpio_set_value(prv->ale_gpio, !!(ctrl & NAND_ALE));
++
++		rbppc_nand_sync(prv);
++	}
++	if (cmd == NAND_CMD_NONE)
++		return;
++
++	writeb(cmd, chip->IO_ADDR_W);
++	rbppc_nand_sync(prv);
++}
++
++static void rbppc_nand_read_buf(struct mtd_info *mtd, uint8_t *buf, int len)
++{
++	struct nand_chip *chip = mtd->priv;
++
++	readsb(chip->IO_ADDR_R, buf, len);
++}
++
++static void rbppc_nand_write_buf(struct mtd_info *mtd, const uint8_t *buf, int len)
++{
++	struct nand_chip *chip = mtd->priv;
++
++	writesb(chip->IO_ADDR_W, buf, len);
++}
++
++static void rbppc_nand_free_gpio(struct rbppc_nand_prv *prv)
++{
++	if (gpio_is_valid(prv->rnb_gpio))
++		gpio_free(prv->rnb_gpio);
++	if (gpio_is_valid(prv->nce_gpio))
++		gpio_free(prv->nce_gpio);
++	if (gpio_is_valid(prv->cle_gpio))
++		gpio_free(prv->cle_gpio);
++	if (gpio_is_valid(prv->ale_gpio))
++		gpio_free(prv->ale_gpio);
++}
++
++static int rbppc_nand_probe_gpio(struct rbppc_nand_prv *prv, int rnb_gpio, int nce_gpio, int cle_gpio, int ale_gpio)
++{
++	struct device *dev = prv->dev;
++	int retval = 0;
++
++	prv->rnb_gpio = -1;
++	prv->nce_gpio = -1;
++	prv->cle_gpio = -1;
++	prv->ale_gpio = -1;
++
++	retval = gpio_request(rnb_gpio, "RouterBOARD NAND R/B");
++	if (retval) {
++		dev_err(dev, "Couldn't request R/B GPIO\n");
++		goto err;
++	}
++	gpio_direction_input(rnb_gpio);
++	prv->rnb_gpio = rnb_gpio;
++
++	retval = gpio_request(nce_gpio, "RouterBOARD NAND nCE");
++	if (retval) {
++		dev_err(dev, "Couldn't request nCE GPIO\n");
++		goto err;
++	}
++	gpio_direction_output(nce_gpio, 1);
++	prv->nce_gpio = nce_gpio;
++
++	retval = gpio_request(cle_gpio, "RouterBOARD NAND CLE");
++	if (retval) {
++		dev_err(dev, "Couldn't request CLE GPIO\n");
++		goto err;
++	}
++	gpio_direction_output(cle_gpio, 0);
++	prv->cle_gpio = cle_gpio;
++
++	retval = gpio_request(ale_gpio, "RouterBOARD NAND ALE");
++	if (retval) {
++		dev_err(dev, "Couldn't request ALE GPIO\n");
++		goto err;
++	}
++	gpio_direction_output(ale_gpio, 0);
++	prv->ale_gpio = ale_gpio;
++
++	return 0;
++
++err:
++	rbppc_nand_free_gpio(prv);
++	return retval;
++}
++
++static int rbppc_nand_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct rbppc_nand_prv *prv;
++	struct mtd_info *mtd;
++	struct nand_chip *chip;
++	struct device_node *dn = dev->of_node;
++	struct device_node *dn_partitions;
++	struct resource res;
++	int rnb_gpio, nce_gpio, cle_gpio, ale_gpio;
++	void __iomem *io_addr;
++	void __iomem *sync_addr;
++	struct mtd_part_parser_data pp_data;
++	int retval;
++
++	printk(KERN_INFO "MikroTik RouterBOARD NAND driver for "
++		"MPC83xx/MPC85xx-based platforms, version " DRV_VERSION "\n");
++
++	prv = devm_kzalloc(dev, sizeof(*prv), GFP_KERNEL);
++	if (!prv) {
++		dev_err(dev, "Can't allocate memory!\n");
++		return -ENOMEM;
++	}
++
++	prv->dev = dev;
++
++	chip = &prv->chip;
++	chip->priv = prv;
++
++	mtd = &prv->mtd;
++	mtd->name = DRV_NAME;
++	mtd->priv = chip;
++	mtd->owner = THIS_MODULE;
++
++	rnb_gpio = of_get_gpio(dn, 0);
++	if (!gpio_is_valid(rnb_gpio)) {
++		dev_err(dev, "No R/B GPIO (0) found\n");
++		return rnb_gpio;
++	}
++
++	nce_gpio = of_get_gpio(dn, 1);
++	if (!gpio_is_valid(nce_gpio)) {
++		dev_err(dev, "No nCE GPIO (1) found\n");
++		return nce_gpio;
++	}
++
++	cle_gpio = of_get_gpio(dn, 2);
++	if (!gpio_is_valid(cle_gpio)) {
++		dev_err(dev, "No CLE GPIO (2) found\n");
++		return cle_gpio;
++	}
++
++	ale_gpio = of_get_gpio(dn, 3);
++	if (!gpio_is_valid(ale_gpio)) {
++		dev_err(dev, "No ALE GPIO (3) found\n");
++		return ale_gpio;
++	}
++
++	retval = rbppc_nand_probe_gpio(prv, rnb_gpio, nce_gpio, cle_gpio, ale_gpio);
++	if (retval)
++		return retval;
++
++	/*
++	 * Allocate IO resource.
++	 */
++	retval = of_address_to_resource(dn, 0, &res);
++	if (retval) {
++		dev_err(dev, "No reg property found for IO (0)\n");
++		goto err_after_probe_gpio;
++	}
++
++	if (!devm_request_mem_region(dev, res.start, res.end - res.start + 1, DRV_NAME)) {
++		dev_err(dev, "Could not reserve NAND memory\n");
++		retval = -EBUSY;
++		goto err_after_probe_gpio;
++	}
++
++	io_addr = devm_ioremap_nocache(dev, res.start, res.end - res.start + 1);
++	if (!io_addr) {
++		dev_err(dev, "Could not map NAND memory\n");
++		retval = -ENOMEM;
++		goto err_after_probe_gpio;
++	}
++
++	/*
++	 * Allocate sync resource.
++	 */
++	retval = of_address_to_resource(dn, 1, &res);
++	if (retval) {
++		dev_err(dev, "No reg property found for sync (1)\n");
++		goto err_after_probe_gpio;
++	}
++
++	if (!devm_request_mem_region(dev, res.start, res.end - res.start + 1, DRV_NAME)) {
++		dev_err(dev, "Could not reserve sync memory\n");
++		retval = -EBUSY;
++		goto err_after_probe_gpio;
++	}
++
++	sync_addr = devm_ioremap_nocache(dev, res.start, res.end - res.start + 1);
++	if (!sync_addr) {
++		dev_err(dev, "Could not map sync memory\n");
++		retval = -ENOMEM;
++		goto err_after_probe_gpio;
++	}
++
++	chip->dev_ready = rbppc_nand_dev_ready;
++	chip->cmd_ctrl = rbppc_nand_cmd_ctrl;
++	chip->read_buf = rbppc_nand_read_buf;
++	chip->write_buf = rbppc_nand_write_buf;
++	chip->IO_ADDR_W = io_addr;
++	chip->IO_ADDR_R = io_addr;
++	chip->chip_delay = 25;
++	chip->ecc.mode = NAND_ECC_SOFT;
++	chip->ecc.layout = &rbppc_nand_oob_16;
++
++	prv->cmd_sync = sync_addr;
++
++	retval = nand_scan(mtd, 1);
++	if (retval) {
++		dev_err(dev, "RouterBOARD NAND device not found\n");
++		goto err_after_probe_gpio;
++	}
++
++	/*
++	 * Parse partitions and register device.
++	 */
++	dn_partitions = of_get_next_child(dn, NULL);
++
++	pp_data.of_node = dn_partitions;
++	retval = mtd_device_parse_register(&prv->mtd, NULL, &pp_data, NULL, 0);
++	of_node_put(dn_partitions);
++	if (retval) {
++		dev_err(dev, "Could not register new MTD device\n");
++		goto err_after_probe_gpio;
++	}
++
++	dev_set_drvdata(dev, prv);
++
++	return 0;
++
++err_after_probe_gpio:
++	rbppc_nand_free_gpio(prv);
++	return retval;
++}
++
++static int rbppc_nand_remove(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct rbppc_nand_prv *prv = dev_get_drvdata(dev);
++
++	nand_release(&prv->mtd);
++	rbppc_nand_free_gpio(prv);
++
++	dev_set_drvdata(dev, NULL);
++
++	return 0;
++}
++
++static struct of_device_id rbppc_nand_ids[] = {
++	{ .compatible = "rb,nand", },
++	{},
++};
++
++static struct platform_driver rbppc_nand_driver = {
++	.probe	= rbppc_nand_probe,
++	.remove = rbppc_nand_remove,
++	.driver	= {
++		.name = "rbppc-nand",
++		.owner = THIS_MODULE,
++		.of_match_table = rbppc_nand_ids,
++	},
++};
++
++static int __init rbppc_nand_init(void)
++{
++	return platform_driver_register(&rbppc_nand_driver);
++}
++
++static void __exit rbppc_nand_exit(void)
++{
++	platform_driver_unregister(&rbppc_nand_driver);
++}
++
++MODULE_AUTHOR("Mikrotikls SIA");
++MODULE_AUTHOR("Noah Fontes");
++MODULE_AUTHOR("Michael Guntsche");
++MODULE_DESCRIPTION("MikroTik RouterBOARD NAND driver for MPC83xx/MPC85xx-based platforms");
++MODULE_LICENSE("GPL");
++MODULE_VERSION(DRV_VERSION);
++
++module_init(rbppc_nand_init);
++module_exit(rbppc_nand_exit);

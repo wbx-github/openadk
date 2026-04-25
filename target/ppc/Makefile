@@ -70,7 +70,11 @@ kernel-strip:
 	$(TARGET_CROSS)objcopy $(OSTRIP) -S $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
 
 kernel-install: kernel-strip
+ifeq ($(ADK_TARGET_SYSTEM_MIKROTIK_RB333),y)
+	@cp $(BUILD_DIR)/linux/arch/powerpc/boot/dtbImage.rb333.elf $(FW_DIR)/$(TARGET_KERNEL)
+else
 	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/${TARGET_KERNEL}
+endif
 
 dtb-install:
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_PPC_VIRTEX_ML507),y)

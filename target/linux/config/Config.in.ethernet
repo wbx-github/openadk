@@ -198,7 +198,6 @@ config ADK_LINUX_KERNEL_FEC
 	help
 	  FEC ethernet driver
 
-
 config ADK_LINUX_KERNEL_IXP4XX_ETH
 	tristate "IXP4XX ethernet driver"
 	select ADK_LINUX_KERNEL_NET_VENDOR_XSCALE
@@ -298,6 +297,29 @@ config ADK_LINUX_KERNEL_VIA_RHINE
 	default n
 	help
 	  VIA Rhine ethernet driver
+
+config ADK_LINUX_KERNEL_VIA_VELOCITY
+	tristate "VIA velocity ethernet driver"
+	select ADK_LINUX_KERNEL_NET_VENDOR_VIA
+	default n
+	help
+	  VIA velocity ethernet driver
+
+config ADK_LINUX_KERNEL_GIANFAR
+	tristate "Gianfar ethernet driver"
+	select ADK_LINUX_KERNEL_NET_VENDOR_FREESCALE
+	default n
+	help
+	  Gianfar ethernet driver
+
+config ADK_LINUX_KERNEL_UCC_GETH
+	tristate "ucc_geth ethernet driver"
+	select ADK_LINUX_KERNEL_NET_VENDOR_FREESCALE
+	depends on ADK_TARGET_SYSTEM_MIKROTIK_RB333
+	default y if ADK_TARGET_SYSTEM_MIKROTIK_RB333
+	default n
+	help
+	  UCC_GETH ethernet driver
 
 config ADK_LINUX_KERNEL_XILINX_AXI_EMAC
 	tristate "Xilinx AXI ethernet driver"
