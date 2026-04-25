@@ -265,6 +265,10 @@ ifeq ($(ADK_TOOLCHAIN_GCC_NDS32),y)
 EXTRA_CXXFLAGS:=	--std=c++03
 endif
 
+ifeq ($(ADK_TOOLCHAIN_GCC_4),y)
+EXTRA_CXXFLAGS:=	-std=gnu++14
+endif
+
 ifeq ($(ADK_TOOLCHAIN_GCC_5),y)
 EXTRA_CXXFLAGS:=	-std=gnu++14
 endif
