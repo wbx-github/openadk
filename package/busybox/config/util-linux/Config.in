@@ -95,13 +95,13 @@ config BUSYBOX_FEATURE_DMESG_PRETTY
 		<6> BIOS-e820: 0000000000000000 - 000000000009f000 (usable)
 config BUSYBOX_EJECT
 	bool "eject (4 kb)"
-	default y
+	default n
 	help
 	Used to eject cdroms. (defaults to /dev/cdrom)
 
 config BUSYBOX_FEATURE_EJECT_SCSI
 	bool "SCSI support"
-	default y
+	default n
 	depends on BUSYBOX_EJECT
 	help
 	Add the -s option to eject, this allows to eject SCSI-Devices and
