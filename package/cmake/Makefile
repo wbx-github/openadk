@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		cmake
-PKG_VERSION:=		4.1.2
+PKG_VERSION:=		4.3.2
 PKG_RELEASE:=		1
-PKG_HASH:=		643f04182b7ba323ab31f526f785134fb79cba3188a852206ef0473fee282a15
+PKG_HASH:=		b0231eb39b3c3cabdc568c619df78208a7bd95ea10c9b2236d61218bac1b367d
 PKG_DESCR:=		build utility
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		curl-host
