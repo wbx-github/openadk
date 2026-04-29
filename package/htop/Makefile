@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		htop
-PKG_VERSION:=		3.2.2
+PKG_VERSION:=		3.5.0
 PKG_RELEASE:=		1
-PKG_HASH:=		bac9e9ab7198256b8802d2e3b327a54804dc2a19b77a5f103645b11c12473dc8
+PKG_HASH:=		b6586e405c5223ebe5ac7828df21edad45cbf90288088bd1b18ad8fa700ffa05
 PKG_DESCR:=		graphical process manager
 PKG_SECTION:=		sys/utils
 PKG_DEPENDS:=		libncurses
