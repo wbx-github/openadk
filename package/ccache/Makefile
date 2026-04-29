@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ccache
-PKG_VERSION:=		4.11.3
+PKG_VERSION:=		4.13.4
 PKG_RELEASE:=		1
-PKG_HASH:=		d5a340e199977b7b1e89c0add794132c977fdc2ecc7ca5451e03d43627a1b1be
+PKG_HASH:=		4a7ef278b39d031b9ec524c0778d24bdb3e761940ed368060b54594f15559537
 PKG_DESCR:=		compiler cache utility
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		cmake-host
