@@ -4,15 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libpng
-PKG_VERSION:=		1.6.55
+PKG_VERSION:=		1.6.58
 PKG_RELEASE:=		1
-PKG_HASH:=		d925722864837ad5ae2a82070d4b2e0603dc72af44bd457c3962298258b8e82d
+PKG_HASH:=		28eb403f51f0f7405249132cecfe82ea5c0ef97f1b32c5a65828814ae0d34775
 PKG_DESCR:=		library for reading/writing png images
 PKG_SECTION:=		libs/image
 PKG_DEPENDS:=		zlib
 PKG_BUILDDEP:=		zlib
 PKG_URL:=		http://www.libpng.org/pub/png/libpng.html
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=libpng/}
+PKG_SITES:=		https://downloads.sourceforge.net/project/libpng/libpng16/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 include ${ADK_TOPDIR}/mk/host.mk
