@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libksba
-PKG_VERSION:=		1.6.5
+PKG_VERSION:=		1.6.8
 PKG_RELEASE:=		1
-PKG_HASH:=		a564628c574c99287998753f98d750babd91a4e9db451f46ad140466ef2a6d16
+PKG_HASH:=		0f4510f1c7a679c3545990a31479f391ad45d84e039176309d42f80cf41743f5
 PKG_DESCR:=		working with X.509 certificates
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgpg-error
