@@ -145,8 +145,10 @@ ifneq ($(ADK_TARGET_INSTRUCTION_SET),)
 GCC_CONFOPTS+=		--with-mode=$(ADK_TARGET_INSTRUCTION_SET)
 endif
 
+ifneq ($(ADK_TOOLCHAIN_GCC_4),y)
 ifneq ($(ADK_TARGET_NAN_MODE),)
 GCC_CONFOPTS+=		--with-nan=$(ADK_TARGET_NAN_MODE)
+endif
 endif
 
 # .symver is broken for Blackfin, simple C++ apps fail to link
