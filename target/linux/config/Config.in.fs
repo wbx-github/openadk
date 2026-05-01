@@ -257,6 +257,11 @@ config ADK_LINUX_KERNEL_SQUASHFS
 	help
 	  Squashfs compressed read-only filesystem
 
+config ADK_LINUX_KERNEL_YAFFS_FS
+	tristate "YAFFS2 filesystem"
+	help
+	  YAFFS2 filesystem for NAND devices
+
 config ADK_LINUX_KERNEL_MTD_UBI_GLUEBI
 	bool
 
