@@ -1,0 +1,12 @@
+diff -Nur linux-4.14.334.orig/arch/mips/vdso/Makefile linux-4.14.334/arch/mips/vdso/Makefile
+--- linux-4.14.334.orig/arch/mips/vdso/Makefile	2023-12-20 15:32:39.000000000 +0100
++++ linux-4.14.334/arch/mips/vdso/Makefile	2026-04-21 10:30:47.368235145 +0200
+@@ -16,7 +16,7 @@
+ 	-O2 -g -fPIC -fno-strict-aliasing -fno-common -fno-builtin -G 0 \
+ 	-DDISABLE_BRANCH_PROFILING \
+ 	$(call cc-option, -fno-asynchronous-unwind-tables) \
+-	$(call cc-option, -fno-stack-protector)
++	$(call cc-option, -fno-stack-protector) -std=gnu11
+ aflags-vdso := $(ccflags-vdso) \
+ 	-D__ASSEMBLY__ -Wa,-gdwarf-2
+ 

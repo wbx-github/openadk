@@ -1,0 +1,12 @@
+diff -Nur linux-3.16.85.orig/arch/mips/rb532/devices.c linux-3.16.85/arch/mips/rb532/devices.c
+--- linux-3.16.85.orig/arch/mips/rb532/devices.c	2020-06-11 20:06:00.000000000 +0200
++++ linux-3.16.85/arch/mips/rb532/devices.c	2026-04-23 21:45:44.576281207 +0200
+@@ -187,7 +187,7 @@
+ 	{
+ 		.name = "Routerboard NAND boot",
+ 		.offset = 0,
+-		.size = 4 * 1024 * 1024,
++		.size = 8 * 1024 * 1024,
+ 	}, {
+ 		.name = "rootfs",
+ 		.offset = MTDPART_OFS_NXTBLK,
