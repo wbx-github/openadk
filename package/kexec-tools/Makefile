@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kexec-tools
-PKG_VERSION:=		2.0.31
+PKG_VERSION:=		2.0.32
 PKG_RELEASE:=		1
-PKG_HASH:=		8a8f350ddc66e1c905a3ab525a7e9ba96c81e04e70ef69397b0155b67b922c31
+PKG_HASH:=		8f81422a5fd2362cf6cb001b511e535565ed0f32c2f4451fb5eb68fed6710a5d
 PKG_DESCR:=		kernel exec tools
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		zlib
