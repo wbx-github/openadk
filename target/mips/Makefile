@@ -139,5 +139,5 @@ ifeq ($(ADK_TARGET_FS),nfsroot)
 imageinstall: dtb-install kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),ubifs)
-imageinstall: $(FW_DIR)/$(ROOTFSUBIFS) targethelp
+imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUBIFS) targethelp
 endif
