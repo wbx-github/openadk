@@ -3,15 +3,13 @@
 
 config ADK_LINUX_KERNEL_NF_CONNTRACK
 	tristate 'Netfilter connection tracking support'
-	select ADK_LINUX_KERNEL_NETFILTER_XTABLES
+	select ADK_LINUX_KERNEL_NF_DEFRAG_IPV4
+	select ADK_LINUX_KERNEL_NF_DEFRAG_IPV6
 	default n
 	help
 	  Connection tracking keeps a record of what packets have passed
 	  through your machine, in order to figure out how they are related
 	  into connections.
-
-	  Layer 3 independent connection tracking is experimental scheme
-	  which generalize ip_conntrack to support other layer 3 protocols.
 
 menu "Netfilter connection tracking support for special protocols"
 depends on ADK_LINUX_KERNEL_NF_CONNTRACK
@@ -126,6 +124,19 @@ config ADK_LINUX_KERNEL_NF_CONNTRACK_SIP
 	  tracking/NATing firewall.
 
 endmenu
+
+config ADK_LINUX_KERNEL_NF_TABLES
+	tristate "Netfilter nf_tables support"
+	select ADK_LINUX_KERNEL_NETFILTER_NETLINK
+	help
+	  nftables is the new packet classification framework that intends to
+	  replace the existing {ip,ip6,arp,eb}_tables infrastructure. It
+	  provides a pseudo-state machine with an extensible instruction-set
+	  (also known as expressions) that the userspace 'nft' utility
+	  (https://www.netfilter.org/projects/nftables) uses to build the
+	  rule-set. It also comes with the generic set infrastructure that
+	  allows you to construct mappings between matchings and actions
+	  for performance lookups.
 
 config ADK_LINUX_KERNEL_NETFILTER_NETLINK_LOG
 	tristate 'Netfilter LOG over NFNETLINK interface'
