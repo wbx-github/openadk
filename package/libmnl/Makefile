@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libmnl
-PKG_VERSION:=		1.0.3
-PKG_RELEASE:=		2
-PKG_HASH:=		6f14336e9acdbc62c2dc71bbb59ce162e54e9af5c80153e92476c5443fe784de
+PKG_VERSION:=		1.0.5
+PKG_RELEASE:=		1
+PKG_HASH:=		274b9b919ef3152bfb3da3a13c950dd60d6e2bcd54230ffeca298d03b40d0525
 PKG_DESCR:=		minimalistic user-space library oriented to netlink developers
 PKG_SECTION:=		libs/net
 PKG_URL:=		http://www.netfilter.org/projects/libmnl/
