@@ -1,0 +1,11 @@
+--- openocd-0.12.0.orig/src/flash/nor/stellaris.c	2022-09-18 15:46:15.000000000 +0200
++++ openocd-0.12.0/src/flash/nor/stellaris.c	2026-05-05 04:09:32.323998209 +0200
+@@ -453,7 +453,7 @@ FLASH_BANK_COMMAND_HANDLER(stellaris_fla
+ 	if (CMD_ARGC < 6)
+ 		return ERROR_COMMAND_SYNTAX_ERROR;
+ 
+-	stellaris_info = calloc(sizeof(struct stellaris_flash_bank), 1);
++	stellaris_info = calloc(1, sizeof(struct stellaris_flash_bank));
+ 	bank->base = 0x0;
+ 	bank->driver_priv = stellaris_info;
+ 

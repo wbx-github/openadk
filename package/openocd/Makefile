@@ -11,7 +11,7 @@ PKG_DESCR:=		jtag flash and debugging utility
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		libusb-host
 PKG_URL:=		http://openocd.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=openocd/}
+PKG_SITES:=		https://sourceforge.net/projects/openocd/files/openocd/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 

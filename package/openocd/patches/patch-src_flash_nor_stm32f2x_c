@@ -1,0 +1,11 @@
+--- openocd-0.12.0.orig/src/flash/nor/stm32f2x.c	2022-09-18 15:46:15.000000000 +0200
++++ openocd-0.12.0/src/flash/nor/stm32f2x.c	2026-05-05 04:18:36.362135854 +0200
+@@ -1018,7 +1018,7 @@ static int stm32x_probe(struct flash_ban
+ 		assert(num_sectors > 0);
+ 
+ 		bank->num_sectors = num_sectors;
+-		bank->sectors = calloc(sizeof(struct flash_sector), num_sectors);
++		bank->sectors = calloc(num_sectors, sizeof(struct flash_sector));
+ 
+ 		if (stm32x_otp_is_f7(bank))
+ 			bank->size = STM32F7_OTP_SIZE;

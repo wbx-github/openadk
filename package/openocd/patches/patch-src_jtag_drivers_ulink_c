@@ -1,0 +1,11 @@
+--- openocd-0.12.0.orig/src/jtag/drivers/ulink.c	2022-09-18 15:46:16.000000000 +0200
++++ openocd-0.12.0/src/jtag/drivers/ulink.c	2026-05-05 03:57:01.919144261 +0200
+@@ -1473,7 +1473,7 @@ static int ulink_queue_scan(struct ulink
+ 
+ 	/* Allocate TDO buffer if required */
+ 	if ((type == SCAN_IN) || (type == SCAN_IO)) {
+-		tdo_buffer_start = calloc(sizeof(uint8_t), scan_size_bytes);
++		tdo_buffer_start = calloc(scan_size_bytes, sizeof(uint8_t));
+ 
+ 		if (!tdo_buffer_start)
+ 			return ERROR_FAIL;

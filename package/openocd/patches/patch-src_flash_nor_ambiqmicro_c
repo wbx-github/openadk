@@ -1,0 +1,11 @@
+--- openocd-0.12.0.orig/src/flash/nor/ambiqmicro.c	2022-09-18 15:46:15.000000000 +0200
++++ openocd-0.12.0/src/flash/nor/ambiqmicro.c	2026-05-05 04:06:15.239041473 +0200
+@@ -124,7 +124,7 @@ FLASH_BANK_COMMAND_HANDLER(ambiqmicro_fl
+ 	if (CMD_ARGC < 6)
+ 		return ERROR_COMMAND_SYNTAX_ERROR;
+ 
+-	ambiqmicro_info = calloc(sizeof(struct ambiqmicro_flash_bank), 1);
++	ambiqmicro_info = calloc(1, sizeof(struct ambiqmicro_flash_bank));
+ 
+ 	bank->driver_priv = ambiqmicro_info;
+ 
