@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		util-linux
-PKG_VERSION:=		2.41.3
+PKG_VERSION:=		2.41.4
 PKG_RELEASE:=		1
-PKG_HASH:=		3330d873f0fceb5560b89a7dc14e4f3288bbd880e96903ed9b50ec2b5799e58b
+PKG_HASH:=		a8c213cc06048862602a42b2d299b340001f6d05c4407b549f3e03521df83688
 PKG_DESCR:=		basic utilities
 PKG_SECTION:=		base/apps
 PKG_BUILDDEP:=		ncurses
@@ -39,7 +39,7 @@ PKGSC_SFDISK:=		sys/fs
 PKGSS_SFDISK:=		libfdisk libreadline libsmartcols
 PKGSD_CFDISK:=		partition table manipulation utility
 PKGSC_CFDISK:=		sys/fs
-PKGSS_CFDISK:=		libfdisk
+PKGSS_CFDISK:=		libfdisk libsmartcols libuuid libmount libncurses
 PKGSD_SWAP_UTILS:=	swap space management utilities
 PKGSS_SWAP_UTILS:=	libblkid
 PKGSC_SWAP_UTILS:=	sys/fs
