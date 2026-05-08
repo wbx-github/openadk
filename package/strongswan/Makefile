@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		strongswan
-PKG_VERSION:=		6.0.4
+PKG_VERSION:=		6.0.6
 PKG_RELEASE:=		1
-PKG_HASH:=		7e1e7be46393477f908d82968162d409a28c47c1ba7d60e17122670a129a79f8
+PKG_HASH:=		2858aa8257951488a5abfed56dfe15b294e978ea5e69adef73309a70352451ce
 PKG_DESCR:=		ipsec based vpn software
 PKG_SECTION:=		net/security
 PKG_KDEPENDS:=		net-key inet-esp xfrm-user inet-xfrm-mode-transport
@@ -68,7 +68,6 @@ strongswan-install:
 	$(INSTALL_DIR) $(IDIR_STRONGSWAN)/usr/sbin
 	$(INSTALL_DIR) $(IDIR_STRONGSWAN)/usr/libexec/ipsec
 	$(INSTALL_DIR) $(IDIR_STRONGSWAN)/usr/lib/ipsec/plugins
-	touch $(IDIR_STRONGSWAN)/etc/ipsec.secrets
 	$(CP) $(WRKINST)/usr/lib/ipsec/plugins/*.so \
 		$(IDIR_STRONGSWAN)/usr/lib/ipsec/plugins
 	$(CP) $(WRKINST)/etc/* $(IDIR_STRONGSWAN)/etc

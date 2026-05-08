@@ -11,10 +11,10 @@ autostart)
 	exec sh $0 start
 	;;
 start)
-	ipsec start
+	/usr/libexec/ipsec/charon &
 	;;
 stop)
-	ipsec stop
+	killall charon
 	;;
 restart)
 	sh $0 stop
