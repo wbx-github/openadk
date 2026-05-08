@@ -1,4 +1,4 @@
-BASE=http://www.openadk.org/distfiles
+BASE=https://www.openadk.org/distfiles
 TARGET=$1
 CONTROL=$2
 VERSION=$3

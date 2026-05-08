@@ -8,9 +8,9 @@ PKG_VERSION:=		0.6.3
 PKG_RELEASE:=		1
 PKG_HASH:=		f3938e359646b406c40d5d442a1467c7e72357f91ab822e442697529641e06de
 PKG_DESCR:=		embedded package manager
-PKG_DEPENDS:=		libcurl libarchive gpgme libressl bzip2
-PKG_BUILDDEP:=		curl libarchive gpgme bzip2 libressl
-HOST_BUILDDEP:=		libarchive-host curl-host cpio-host
+PKG_DEPENDS:=		libcurl libarchive gpgme libopenssl bzip2
+PKG_BUILDDEP:=		curl libarchive gpgme bzip2 openssl
+HOST_BUILDDEP:=		libarchive-host cpio-host
 PKG_NEEDS:=		threads
 PKG_SECTION:=		sys/misc
 PKG_URL:=		http://git.yoctoproject.org/cgit/cgit.cgi/opkg/
@@ -25,6 +25,7 @@ $(eval $(call HOST_template,OPKG,opkg,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,OPKG,opkg,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 HOST_CONFIGURE_ARGS+=	--disable-openssl \
+			--disable-curl \
 			--disable-gpg \
 			--disable-xz \
 			--disable-ssl-curl
@@ -35,6 +36,8 @@ CONFIGURE_ARGS+=	--enable-bzip2 \
 			--enable-gpg
 
 opkg-install:
+	$(INSTALL_DIR) $(IDIR_OPKG)/etc/opkg
+	$(CP) ./files/opkg.conf $(IDIR_OPKG)/etc/opkg
 	$(INSTALL_DIR) $(IDIR_OPKG)/usr/bin
 	$(INSTALL_DIR) $(IDIR_OPKG)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libopkg.so* \
