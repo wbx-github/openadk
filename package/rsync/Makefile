@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		ff10aa2c151cd4b2dbbe6135126dbc854046113d2dfb49572a348233267eb315
 PKG_DESCR:=		utility that provides fast incremental file transfer
 PKG_SECTION:=		net/misc
-PKG_DEPENDS:=		libpopt libopenssl
-PKG_BUILDDEP:=		popt openssl
+PKG_DEPENDS:=		libpopt libopenssl zstd
+PKG_BUILDDEP:=		popt openssl zstd
 HOST_BUILDDEP:=		openssl-host
 PKG_URL:=		http://rsync.samba.org/
 PKG_SITES:=		http://rsync.samba.org/ftp/rsync/
@@ -27,7 +27,7 @@ HOST_CONFIGURE_ARGS:=	--disable-xxhash \
 			--disable-zstd \
 			--disable-lz4
 CONFIGURE_ARGS:=	--disable-xxhash \
-			--disable-zstd \
+			--enable-zstd \
 			--disable-lz4
 
 rsync-install:
