@@ -1,0 +1,10 @@
+--- readline-8.3.orig/readline.pc.in	2019-04-08 20:22:47.000000000 +0200
++++ readline-8.3/readline.pc.in	2026-05-10 16:36:58.738214156 +0200
+@@ -7,6 +7,6 @@ Name: Readline
+ Description: Gnu Readline library for command line editing
+ URL: http://tiswww.cwru.edu/php/chet/readline/rltop.html
+ Version: @LIBVERSION@
+-Requires.private: @TERMCAP_PKG_CONFIG_LIB@
++Requires.private: ncursesw
+ Libs: -L${libdir} -lreadline
+ Cflags: -I${includedir}
