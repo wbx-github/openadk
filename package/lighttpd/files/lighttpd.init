@@ -12,7 +12,7 @@ autostart)
 	;;
 start)
 	[ ! -d /srv/www ] && echo "You need to create /srv/www/htdocs" && exit 1
-	mkdir -p /var/log/lighttpd && chown lighttpd.lighttpd /var/log/lighttpd
+	mkdir -p /var/log/lighttpd && chown lighttpd:lighttpd /var/log/lighttpd
 	/usr/sbin/lighttpd $lighttpd_flags
 	;;
 stop)
