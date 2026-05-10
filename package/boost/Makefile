@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		boost
-PKG_VERSION:=		1.84.0
-PKG_EXTRAVER:=		1_84
+PKG_VERSION:=		1.91.0
+PKG_EXTRAVER:=		1_91
 PKG_RELEASE:=		1
-PKG_HASH:=		a5800f405508f5df8114558ca9855d2640a2de8f0445f051fa1c7c3383045724
+PKG_HASH:=		5734305f40a76c30f951c9abd409a45a2a19fb546efe4162119250bbe4d3a463
 PKG_DESCR:=		portable c++ library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		python3-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.boost.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=boost/}
+PKG_SITES:=		https://archives.boost.io/release/$(PKG_VERSION)/source/
 PKG_OPTS:=		dev
 
 DISTFILES:=		boost_$(PKG_EXTRAVER)_0.tar.gz
@@ -55,6 +55,7 @@ CONFIGURE_ARGS+=	--target=$(GNU_TARGET_NAME) \
 			--without-mpi \
 			--without-context \
 			--without-coroutine \
+			--without-charconv \
 			--without-locale
 
 ifneq (${ADK_PACKAGE_BOOST_IOSTREAMS},)
