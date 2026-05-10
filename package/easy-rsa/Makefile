@@ -9,7 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		3e41c0dfebe04332cdc07f13bf48a69e25dfc31d059e94071a9cfb9f3bba6f9a
 PKG_DESCR:=		x509 ca scripts
 PKG_SECTION:=		app/crypto
-PKG_DEPENDS:=		libressl-util
+PKG_DEPENDS:=		openssl-util
 PKG_URL:=		https://github.com/OpenVPN/easy-rsa
 PKG_SITES:=		https://github.com/OpenVPN/easy-rsa/archive/
 

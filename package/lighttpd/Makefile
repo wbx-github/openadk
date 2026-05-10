@@ -15,10 +15,10 @@ PKG_SITES:=		http://download.lighttpd.net/lighttpd/releases-1.4.x/
 PKG_FLAVOURS_LIGHTTPD:=	WITH_IPV6
 PKGFD_WITH_IPV6:=	enable ipv6 support
 
-PKG_CHOICES_LIGHTTPD:=	WITH_LIBRESSL WITHOUT_SSL
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
+PKG_CHOICES_LIGHTTPD:=	WITH_OPENSSL WITHOUT_SSL
+PKGCD_WITH_OPENSSL:=	use libopenssl for crypto
+PKGCB_WITH_OPENSSL:=	openssl
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 PKG_SUBPKGS:=		LIGHTTPD LIGHTTPD_MOD_ALIAS LIGHTTPD_MOD_AUTH
@@ -125,7 +125,7 @@ else
 CONFIGURE_ARGS+=	--disable-ipv6
 endif
 
-ifeq ($(ADK_PACKAGE_LIGHTTPD_WITH_LIBRESSL),y)
+ifeq ($(ADK_PACKAGE_LIGHTTPD_WITH_OPENSSL),y)
 CONFIGURE_ARGS+=	--with-openssl
 endif
 ifeq ($(ADK_PACKAGE_LIGHTTPD_WITHOUT_SSL),y)

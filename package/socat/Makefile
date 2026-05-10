@@ -15,10 +15,10 @@ PKG_SITES:=		http://www.dest-unreach.org/socat/download/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
-PKG_CHOICES_SOCAT:=	WITH_LIBRESSL WITHOUT_SSL
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl
+PKG_CHOICES_SOCAT:=	WITH_OPENSSL WITHOUT_SSL
+PKGCD_WITH_OPENSSL:=	use libopenssl for crypto
+PKGCB_WITH_OPENSSL:=	openssl
+PKGCS_WITH_OPENSSL:=	libopenssl
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 include ${ADK_TOPDIR}/mk/package.mk
@@ -33,7 +33,7 @@ CONFIGURE_ENV+=		sc_cv_termios_ispeed=no \
 CONFIGURE_ARGS+=	--disable-libwrap \
 			--disable-readline
 
-ifeq (${ADK_PACKAGE_SOCAT_WITH_LIBRESSL},y)
+ifeq (${ADK_PACKAGE_SOCAT_WITH_OPENSSL},y)
 CONFIGURE_ARGS+=	--enable-openssl
 endif
 ifeq (${ADK_PACKAGE_SOCAT_WITHOUT_SSL},y)

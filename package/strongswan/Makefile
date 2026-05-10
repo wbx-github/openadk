@@ -17,16 +17,13 @@ PKG_SITES:=		http://download.strongswan.org/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
-PKG_CHOICES_STRONGSWAN:=WITH_OPENSSL WITH_LIBRESSL WITH_GNUTLS WITH_GMP
+PKG_CHOICES_STRONGSWAN:=WITH_OPENSSL WITH_GNUTLS WITH_GMP
 PKGCD_WITH_OPENSSL:=	use openssl for crypto
 PKGCS_WITH_OPENSSL:=	libopenssl
 PKGCB_WITH_OPENSSL:=	openssl
 PKGCD_WITH_GMP:=	use gmp for crypto
 PKGCS_WITH_GMP:=	libgmp
 PKGCB_WITH_GMP:=	gmp
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCS_WITH_LIBRESSL:=	libressl
-PKGCB_WITH_LIBRESSL:=	libressl
 PKGCD_WITH_GNUTLS:=	use gnutls for crypto
 PKGCS_WITH_GNUTLS:=	libgnutls
 PKGCB_WITH_GNUTLS:=	gnutls
@@ -36,11 +33,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,STRONGSWAN,strongswan,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 ifeq (${ADK_PACKAGE_STRONGSWAN_WITH_OPENSSL},y)
-CONFIGURE_ARGS+=	--enable-openssl \
-			--disable-gcrypt \
-			--disable-gmp
-endif
-ifeq (${ADK_PACKAGE_STRONGSWAN_WITH_LIBRESSL},y)
 CONFIGURE_ARGS+=	--enable-openssl \
 			--disable-gcrypt \
 			--disable-gmp

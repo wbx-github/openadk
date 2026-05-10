@@ -23,8 +23,8 @@ scripts.
 09: PKG_HASH:=		62333167b79afb0b25a843513288c67b59547acf653e8fbe62ee64e71ebd1587
 10: PKG_DESCR:=		foo library
 11: PKG_SECTION:=	libs
-12: PKG_BUILDDEP:=	libressl
-13: PKG_DEPENDS:=	libressl
+12: PKG_BUILDDEP:=	openssl
+13: PKG_DEPENDS:=	libopenssl
 14: PKG_URL:=		http://www.libfoo.org/
 15: PKG_SITES:=		http://download.libfoo.org/
 16:

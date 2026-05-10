@@ -9,8 +9,8 @@ PKG_RELEASE:=		2
 PKG_HASH:=		478bfb7ec00789af150acf6a231bc9b0731d06353c7fe36a8fd6d4d83e42a07f
 PKG_DESCR:=		radius client
 PKG_SECTION:=		net/radius
-PKG_DEPENDS:=		libfreeradius-client libressl
-PKG_BUILDDEP:=		libressl
+PKG_DEPENDS:=		libfreeradius-client libopenssl
+PKG_BUILDDEP:=		openssl
 PKG_URL:=		http://www.freeradius.org/
 PKG_SITES:=		ftp://ftp.freeradius.org/pub/radius/
 

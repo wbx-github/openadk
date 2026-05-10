@@ -14,13 +14,10 @@ PKG_BUILDDEP:=		ncurses
 PKG_URL:=		http://www.mutt.org/
 PKG_SITES:=		ftp://ftp.mutt.org/pub/mutt/
 
-PKG_CHOICES_MUTT:=	WITH_OPENSSL WITH_LIBRESSL WITHOUT_SSL
+PKG_CHOICES_MUTT:=	WITH_OPENSSL WITHOUT_SSL
 PKGCD_WITH_OPENSSL:=	use openssl for crypto
 PKGCB_WITH_OPENSSL:=	openssl
 PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
@@ -29,7 +26,7 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,MUTT,mutt,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfo
+TARGET_LDFLAGS+=	-ltinfow
 CONFIGURE_ARGS+=	--with-homespool="~/Maildir" \
 			--with-curses="$(STAGING_TARGET_DIR)/usr" \
 			--enable-pop \

@@ -28,10 +28,7 @@ PKGSS_CURL:=		zlib libcurl
 PKG_FLAVOURS_LIBCURL:=	WITH_IPV6
 PKGFD_WITH_IPV6:=	enable ipv6 support
 
-PKG_CHOICES_LIBCURL:=	WITH_OPENSSL WITH_LIBRESSL WITH_GNUTLS WITH_WOLFSSL WITHOUT_SSL
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
-PKGCB_WITH_LIBRESSL:=	libressl
+PKG_CHOICES_LIBCURL:=	WITH_OPENSSL WITH_GNUTLS WITH_WOLFSSL WITHOUT_SSL
 PKGCD_WITH_OPENSSL:=	use libopenssl for crypto
 PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
 PKGCB_WITH_OPENSSL:=	openssl
@@ -53,11 +50,6 @@ $(eval $(call PKG_template,CURL,curl,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS
 HOST_CONFIGURE_ARGS+=	--with-openssl="$(STAGING_HOST_DIR)/usr" \
 			--without-libpsl
 
-ifeq (${ADK_PACKAGE_LIBCURL_WITH_LIBRESSL},y)
-CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
-			--without-gnutls \
-			--without-wolfssl
-endif
 ifeq (${ADK_PACKAGE_LIBCURL_WITH_OPENSSL},y)
 CONFIGURE_ARGS+=	--with-openssl="${STAGING_TARGET_DIR}/usr" \
 			--without-gnutls \

@@ -36,20 +36,20 @@ PKG_SITES:=		add download url without package name
 # flavour description
 #PKGFD_WITH_SSL:=	enable SSL support
 # flavour runtime dependency, package name
-#PKGFS_WITH_SSL:=	libressl
+#PKGFS_WITH_SSL:=	libopenssl
 # flavour build time dependency, package dir
-#PKGFB_WITH_SSL:=	libressl
+#PKGFB_WITH_SSL:=	openssl
 
 # define your choices for your package here, f.e. different SSL implementations
-#PKG_CHOICES_PKGNAME:=	WITH_LIBRESSL WITH_GNUTLS
+#PKG_CHOICES_PKGNAME:=	WITH_OPENSSL WITH_GNUTLS
 # package description for each choice
-#PKGCD_WITH_LIBRESSL:=	ssl support via libressl library
+#PKGCD_WITH_OPENSSL:=	ssl support via libopenssl library
 #PKGCD_WITH_GNUTLS:=	ssl support via gnutls library
 # package build time dependencies
-#PKGCB_WITH_LIBRESSL:=	libressl
+#PKGCB_WITH_OPENSSL:=	openssl
 #PKGCB_WITH_GNUTLS:=	gnutls
 # package runtime dependencies
-#PKGCS_WITH_LIBRESSL:=	libressl
+#PKGCS_WITH_OPENSSL:=	libopenssl
 #PKGCS_WITH_GNUTLS:=	libgnutls
 
 # if downloaded package is not ending with .tar.xz use following

@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		eab3608a464884fc40f33cc639a5b124dc838799bd4a9701b7a8af49fb937fc7
 PKG_DESCR:=		high-performance, configurable, free sip server
 PKG_SECTION:=		net/voip
-PKG_DEPENDS:=		libressl
-PKG_BUILDDEP:=		libressl flex-host bison-host
+PKG_DEPENDS:=		libopenssl
+PKG_BUILDDEP:=		openssl flex-host bison-host
 PKG_URL:=		http://opensips.org/
 PKG_SITES:=		http://opensips.org/pub/opensips/$(PKG_VERSION)/
 

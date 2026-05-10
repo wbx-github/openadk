@@ -9,18 +9,10 @@ PKG_RELEASE:=		1
 PKG_HASH:=		72a951cb0ad622785a8962801f005a3a412736c7e7e3ce152f176287c52fe062
 PKG_DESCR:=		irc text client
 PKG_SECTION:=		app/chat
-PKG_DEPENDS:=		glib libncurses
-PKG_BUILDDEP:=		glib ncurses
+PKG_DEPENDS:=		glib libncurses libopenssl
+PKG_BUILDDEP:=		glib ncurses openssl
 PKG_URL:=		http://www.irssi.org/
 PKG_SITES:=		https://github.com/irssi/irssi/releases/download/$(PKG_VERSION)/
-
-PKG_CHOICES_IRSSI:=	WITH_OPENSSL WITH_LIBRESSL
-PKGCD_WITH_OPENSSL:=	use openssl for crypto
-PKGCB_WITH_OPENSSL:=	openssl
-PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 
 include ${ADK_TOPDIR}/mk/package.mk
 

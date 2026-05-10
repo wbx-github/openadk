@@ -37,8 +37,8 @@ PKGCD_WITH_NETTLE:=		use libnettle crypto backend
 PKGCS_WITH_NETTLE:=		libnettle
 PKGCB_WITH_NETTLE:=		libnettle
 PKGCD_WITH_OPENSSL:=		use OpenSSL crypto backend
-PKGCS_WITH_OPENSSL:=		libressl
-PKGCB_WITH_OPENSSL:=		libressl
+PKGCS_WITH_OPENSSL:=		libopenssl
+PKGCB_WITH_OPENSSL:=		openssl
 
 include ${ADK_TOPDIR}/mk/package.mk
 

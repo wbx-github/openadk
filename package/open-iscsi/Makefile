@@ -8,8 +8,8 @@ PKG_VERSION:=		2.1.9
 PKG_RELEASE:=		1
 PKG_HASH:=		60e2a1e3058a8af7f702e86a5a0511b05b8754d29d3d2df4e0e301399b5cf70a
 PKG_DESCR:=		iscsi utilities
-PKG_DEPENDS:=		libkmod libressl
-PKG_BUILDDEP:=		cmake-host kmod libressl
+PKG_DEPENDS:=		libkmod libopenssl
+PKG_BUILDDEP:=		cmake-host kmod openssl
 PKG_SECTION:=		sys/fs
 PKG_SITES:=		https://github.com/open-iscsi/open-iscsi/archive/refs/tags/
 

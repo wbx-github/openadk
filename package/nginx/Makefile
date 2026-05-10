@@ -17,13 +17,10 @@ PKG_SITES:=		http://nginx.org/download/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
-PKG_CHOICES_NGINX:=	WITH_OPENSSL WITH_LIBRESSL WITHOUT_SSL
+PKG_CHOICES_NGINX:=	WITH_OPENSSL WITHOUT_SSL
 PKGCD_WITH_OPENSSL:=	use openssl for crypto
 PKGCB_WITH_OPENSSL:=	openssl
 PKGCS_WITH_OPENSSL:=	openssl ca-certificates
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 include $(ADK_TOPDIR)/mk/package.mk
@@ -53,9 +50,6 @@ CONFIGURE_ARGS:=        --prefix=/srv/www \
 			--http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
 			--without-http_upstream_zone_module
 
-ifeq ($(ADK_PACKAGE_NGINX_WITH_LIBRESSL),y)
-CONFIGURE_ARGS+=	--with-http_ssl_module
-endif
 ifeq ($(ADK_PACKAGE_NGINX_WITH_OPENSSL),y)
 CONFIGURE_ARGS+=	--with-http_ssl_module
 endif

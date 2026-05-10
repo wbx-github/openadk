@@ -10,21 +10,12 @@ PKG_HASH:=		5eb62f529114778333b7eb0381cb16e2b8725ce2ae081d07b1082effe22b12e9
 PKG_DESCR:=		record, convert and stream audio & video
 PKG_SECTION:=		libs/video
 PKG_NEEDS:=		threads
-PKG_DEPENDS:=		libncurses
-PKG_BUILDDEP:=		ncurses
+PKG_DEPENDS:=		libncurses libopenssl
+PKG_BUILDDEP:=		ncurses openssl
 PKG_URL:=		http://www.ffmpeg.org/
 PKG_SITES:=		http://www.ffmpeg.org/releases/
 PKG_LIBNAME:=		libffmpeg
 PKG_OPTS:=		dev
-
-PKG_CHOICES_LIBFFMPEG:=	WITH_OPENSSL WITH_LIBRESSL
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCD_WITH_OPENSSL:=	use libopenssl for crypto
-PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
-PKGCB_WITH_OPENSSL:=	openssl
-
 
 PKG_SUBPKGS:=		LIBFFMPEG FFPROBE FFMPEG
 PKGSD_FFMPEG:=		video converter

@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		d665fe7d0032881b1371a47f34169ee4edab67903b2cd2b4c083822823f4448a
 PKG_DESCR:=		mqtt broker
 PKG_SECTION:=		net/misc
-PKG_DEPENDS:=		c-ares libressl
-PKG_BUILDDEP:=		cmake-host c-ares libressl
+PKG_DEPENDS:=		c-ares libopenssl
+PKG_BUILDDEP:=		cmake-host c-ares openssl
 PKG_NEEDS:=		threads
 PKG_URL:=		http://mosquitto.org
 PKG_SITES:=		http://mosquitto.org/files/source/
@@ -37,7 +37,5 @@ mosquitto-install:
 		$(IDIR_MOSQUITTO)/etc/mosquitto
 	$(CP) $(WRKINST)/usr/lib/*.so* \
 		$(IDIR_MOSQUITTO)/usr/lib
-
-
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

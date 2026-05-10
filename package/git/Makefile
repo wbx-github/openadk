@@ -9,19 +9,11 @@ PKG_RELEASE:=		1
 PKG_HASH:=		f689162364c10de79ef89aa8dbf48731eb057e34edbbd20aca510ce0154681a3
 PKG_DESCR:=		fast version control system
 PKG_SECTION:=		dev/scm
-PKG_BUILDDEP:=		zlib curl expat
-PKG_DEPENDS:=		zlib curl libexpat
+PKG_BUILDDEP:=		zlib curl expat openssl
+PKG_DEPENDS:=		zlib curl libexpat libopenssl
 PKG_NEEDS:=		threads
 PKG_URL:=		http://git-scm.com/
 PKG_SITES:=		https://www.kernel.org/pub/software/scm/git/
-
-PKG_CHOICES_GIT:=	WITH_OPENSSL WITH_LIBRESSL
-PKGCD_WITH_OPENSSL:=	use openssl for crypto
-PKGCB_WITH_OPENSSL:=	openssl
-PKGCS_WITH_OPENSSL:=	libopenssl
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl
 
 include $(ADK_TOPDIR)/mk/package.mk
 

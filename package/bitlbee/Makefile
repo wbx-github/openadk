@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		9f15de46f29b46bf1e39fc50bdf4515e71b17f551f3955094c5da792d962107e
 PKG_DESCR:=		irc gateway to im chat networks
 PKG_SECTION:=		app/chat
-PKG_DEPENDS:=		glib libressl
-PKG_BUILDDEP:=		glib libressl
+PKG_DEPENDS:=		glib libopenssl
+PKG_BUILDDEP:=		glib openssl
 PKG_URL:=		http://www.bitlbee.org/
 PKG_SITES:=		http://get.bitlbee.org/src/
 

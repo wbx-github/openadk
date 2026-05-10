@@ -22,10 +22,10 @@ PKGFD_WITH_USB:=	enable usb support
 PKGFS_WITH_USB:=	libusb libusb-compat
 PKGFB_WITH_USB:=	libusb libusb-compat
 
-PKG_CHOICES_NUT:=	WITH_LIBRESSL WITHOUT_SSL
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
+PKG_CHOICES_NUT:=	WITH_OPENSSL WITHOUT_SSL
+PKGCD_WITH_OPENSSL:=	use libopenssl for crypto
+PKGCB_WITH_OPENSSL:=	openssl
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 include ${ADK_TOPDIR}/mk/package.mk
@@ -84,7 +84,7 @@ CONFIGURE_ARGS+=	--with-linux-hiddev=${LINUX_DIR}/include/linux/hiddev.h \
 			--with-group=0 \
 			--with-user=0
 
-ifeq (${ADK_PACKAGE_NUT_WITH_LIBRESSL},y)
+ifeq (${ADK_PACKAGE_NUT_WITH_OPENSSL},y)
 CONFIGURE_ARGS+=	--with-ssl
 CONFIGURE_ENV+=		CPPFLAGS="${TARGET_CPPFLAGS} ${TARGET_LDFLAGS}"
 MAKE_FLAGS+=		SSL_CFLAGS="${TARGET_CPPFLAGS}" SSL_LDFLAGS="${TARGET_LDFLAGS} -lssl -lcrypto"

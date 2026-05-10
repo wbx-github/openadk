@@ -9,8 +9,8 @@ PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_DESCR:=		tv streaming server
 PKG_SECTION:=		mm/video
-PKG_DEPENDS:=		libressl
-PKG_BUILDDEP:=		libressl yasm-host ffmpeg
+PKG_DEPENDS:=		libopenssl
+PKG_BUILDDEP:=		openssl yasm-host ffmpeg
 PKG_URL:=		https://tvheadend.org/projects/tvheadend
 PKG_SITES:=		https://github.com/tvheadend/tvheadend.git
 

@@ -13,10 +13,10 @@ PKG_SITES:=		https://github.com/nils-ohlmeier/sipsak/releases/download/$(PKG_VER
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
-PKG_CHOICES_SIPSAK:=	WITH_LIBRESSL WITHOUT_SSL
-PKGCD_WITH_LIBRESSL:=	use libressl for crypto
-PKGCB_WITH_LIBRESSL:=	libressl
-PKGCS_WITH_LIBRESSL:=	libressl ca-certificates
+PKG_CHOICES_SIPSAK:=	WITH_OPENSSL WITHOUT_SSL
+PKGCD_WITH_OPENSSL:=	use libopenssl for crypto
+PKGCB_WITH_OPENSSL:=	openssl
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 include ${ADK_TOPDIR}/mk/package.mk
