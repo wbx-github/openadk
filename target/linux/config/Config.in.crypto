@@ -202,6 +202,15 @@ config ADK_LINUX_KERNEL_CRYPTO_XTS
 	default n
 	help
 
+config ADK_LINUX_KERNEL_CRYPTO_CMAC
+	tristate "CMAC support"
+	select ADK_LINUX_KERNEL_CRYPTO_HASH
+	select ADK_LINUX_KERNEL_CRYPTO_MANAGER
+	default n
+	help
+	  CMAC (Cipher-based Message Authentication Code) authentication
+	  mode (NIST SP800-38B and IETF RFC4493)
+	  
 config ADK_LINUX_KERNEL_CRYPTO_HMAC
 	tristate "HMAC support"
 	select ADK_LINUX_KERNEL_CRYPTO_HASH
@@ -295,7 +304,7 @@ config ADK_LINUX_KERNEL_CRYPTO_TGR192
 	  <http://www.cs.technion.ac.il/~biham/Reports/Tiger/>.
 endmenu
 
-menu "Cipher algoritms"
+menu "Cipher algorithms"
 
 config ADK_LINUX_KERNEL_CRYPTO_AES
 	tristate "AES cipher algorithms"
