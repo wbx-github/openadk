@@ -1,8 +1,8 @@
 #!/bin/sh
 . $IPKG_INSTROOT/etc/functions.sh
 gid=$(get_next_gid)
-add_group dbus $gid
-add_user dbus $(get_next_uid) $gid /var/run/dbus
+add_group messagebus $gid
+add_user messagebus $(get_next_uid) $gid /var/run/dbus
 add_rcconf dbus NO
 if [ -z $IPKG_INSTROOT ];then 
   echo Generating UUID

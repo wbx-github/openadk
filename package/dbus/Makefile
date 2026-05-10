@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		dbus
-PKG_VERSION:=		1.10.20
-PKG_RELEASE:=		3
-PKG_HASH:=		e574b9780b5425fde4d973bb596e7ea0f09e00fe2edd662da9016e976c460b48
+PKG_VERSION:=		1.16.2
+PKG_RELEASE:=		1
+PKG_HASH:=		0ba2a1a4b16afe7bceb2c07e9ce99a8c2c3508e5dec290dbb643384bd6beb7e2
 PKG_DESCR:=		desktop bus daemon
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		libdbus libexpat
@@ -16,8 +16,6 @@ PKG_URL:=		http://dbus.freedesktop.org/
 PKG_SITES:=		https://dbus.freedesktop.org/releases/dbus/
 PKG_LIBNAME:=		libdbus
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 PKG_SUBPKGS:=		DBUS LIBDBUS
 PKGSD_LIBDBUS:=		DBUS library
@@ -29,29 +27,18 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call PKG_template,DBUS,dbus,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,LIBDBUS,libdbus,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_LIBDBUS},${PKGSD_LIBDBUS},${PKGSC_LIBDBUS},${PKG_OPTS}))
 
-TARGET_LDFLAGS+=	-luuid
+CONFIG_STYLE:=		cmake
+CMAKE_FLAGS+=		-DCMAKE_INSTALL_RUNSTATEDIR="/var/run" \
+			-DCMAKE_INSTALL_SYSCONFDIR="/etc" \
+			-DCMAKE_INSTALL_DATADIR="/usr/share" \
+			-DDBUS_SESSION_SOCKET_DIR="/var/run/dbus/session_bus_socket" \
+			-DDBUS_BUILD_TESTS=OFF \
+			-DDBUS_ENABLE_DOXYGEN_DOCS=OFF \
+			-DDBUS_ENABLE_QTHELP_DOCS=OFF \
+			-DDBUS_ENABLE_XML_DOCS=OFF \
+			-DENABLE_SYSTEMD=OFF \
+			-DDBUS_WITH_GLIB=OFF
 
-AUTOTOOL_STYLE:=	autoreconf
-CONFIGURE_ARGS+=	--disable-systemd \
-			--disable-tests \
-			--disable-asserts \
-			--enable-abstract-sockets \
-			--with-dbus-user=dbus \
-			--with-system-socket=/run/dbus/system_bus_socket \
-			--with-system-pid-file=/run/dbus/dbus.pid \
-			--disable-verbose-mode \
-			--disable-apparmor \
-			--disable-kqueue \
-			--disable-selinux \
-			--disable-libaudit \
-			--disable-doxygen-docs \
-			--disable-xml-docs \
-			--without-x
-
-pre-install:
-	${INSTALL_DIR} $(STAGING_TARGET_DIR)/usr/include/dbus-1.0/dbus
-	$(CP) $(WRKBUILD)/dbus/dbus-arch-deps.h \
-		$(STAGING_TARGET_DIR)/usr/include/dbus-1.0/dbus
 
 libdbus-install:
 	${INSTALL_DIR} ${IDIR_LIBDBUS}/usr/lib
