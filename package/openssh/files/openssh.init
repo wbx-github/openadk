@@ -28,6 +28,30 @@ start)
 		echo openssh: key generation exited with code $rv
 		[[ $rv = 0 && -s /etc/ssh/ssh_host_rsa_key ]] || exit 1
 	fi
+	if [[ ! -s /etc/ssh/ssh_host_ecdsa_key ]]; then
+		mkdir -p /etc/ssh
+		if [[ ! -x /usr/bin/ssh-keygen ]]; then
+			echo "openssh not starting: SSH private key missing"
+			exit 0
+		fi
+		echo "openssh: generating SSH private key (ECDSA)"
+		/usr/bin/ssh-keygen -N '' -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key
+		rv=$?
+		echo openssh: key generation exited with code $rv
+		[[ $rv = 0 && -s /etc/ssh/ssh_host_ecdsa_key ]] || exit 1
+	fi
+	if [[ ! -s /etc/ssh/ssh_host_ed25519_key ]]; then
+		mkdir -p /etc/ssh
+		if [[ ! -x /usr/bin/ssh-keygen ]]; then
+			echo "openssh not starting: SSH private key missing"
+			exit 0
+		fi
+		echo "openssh: generating SSH private key (ED25519)"
+		/usr/bin/ssh-keygen -N '' -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+		rv=$?
+		echo openssh: key generation exited with code $rv
+		[[ $rv = 0 && -s /etc/ssh/ssh_host_ed25519_key ]] || exit 1
+	fi
 	mkdir -p /var/run/sshd
 	mkdir -p /var/empty
 	touch /var/log/btmp && chmod 600 /var/log/btmp
