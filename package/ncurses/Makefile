@@ -41,6 +41,7 @@ CONFIGURE_ENV+=		ac_cv_linux_vers=2
 CONFIGURE_ARGS+=	--without-cxx \
 			--without-cxx-binding \
 			--with-build-cc="${HOST_CC}" \
+			--enable-pc-files \
 			--with-pkg-config-libdir=/usr/lib/pkgconfig \
 			--without-progs \
 			--enable-pc-files \
@@ -48,8 +49,7 @@ CONFIGURE_ARGS+=	--without-cxx \
 			--disable-termcap \
 			--without-ada \
 			--without-normal \
-			--enable-pc-files \
-			--with-termlib \
+			--without-termlib \
 			--without-debug \
 			--without-profile \
 			--without-gpm \
@@ -93,7 +93,7 @@ libncurses-install:
 	echo 'GROUP(-lncurses)' >${WRKINST}/usr/lib/libcurses.so
 	# libcurses will not show up in the IPKG, only in STAGING_TARGET_DIR
 	${INSTALL_DIR} ${IDIR_LIBNCURSES}/usr/lib
-	${CP} ${WRKINST}/usr/lib/lib{tinfo,form,menu,ncurses,panel}w.so* \
+	${CP} ${WRKINST}/usr/lib/lib{form,menu,ncurses,panel}w.so* \
 	    ${IDIR_LIBNCURSES}/usr/lib
 ifeq (${ADK_PACKAGE_LIBNCURSES_FULL_TERMINFO},y)
 	${INSTALL_DIR} ${IDIR_LIBNCURSES}/usr/share

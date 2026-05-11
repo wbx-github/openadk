@@ -27,8 +27,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,LAME,lame,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,LIBMP3LAME,libmp3lame,$(PKG_VERSION)-${PKG_RELEASE},,${PKGSD_LIBMP3LAME},${PKGSC_LIBMP3LAME},${PKG_OPTS}))
 
-TARGET_LDFLAGS+=	-ltinfow
-
 lame-install:
 	$(INSTALL_DIR) $(IDIR_LAME)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/lame $(IDIR_LAME)/usr/bin

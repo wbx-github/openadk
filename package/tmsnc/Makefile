@@ -20,8 +20,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,TMSNC,tmsnc,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfow
-
 CONFIGURE_ARGS+=	--with-libiconv-prefix=${STAGING_TARGET_DIR}/usr \
 			--with-openssl=${STAGING_TARGET_DIR}/usr \
 			--with-ncurses=${STAGING_TARGET_DIR}

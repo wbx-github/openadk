@@ -31,7 +31,6 @@ CONFIGURE_ARGS+=	--enable-nanorc \
 			--disable-speller \
 			--disable-operatingdir \
 			--enable-multibuffer
-TARGET_LDFLAGS+=	-ltinfow
 
 nano-install:
 	${INSTALL_DIR} ${IDIR_NANO}/usr/bin

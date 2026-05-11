@@ -21,7 +21,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,XTERM,xterm,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfow
 CONFIGURE_ARGS+=	--with-app-defaults=/usr/lib/X11/app-defaults \
 			--x-includes="$(STAGING_TARGET_DIR)/usr/include" \
 			--x-libraries="$(STAGING_TARGET_DIR)/usr/lib" \

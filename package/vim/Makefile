@@ -28,7 +28,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,VIM,vim,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfow
 CONFIGURE_ENV+=		vim_cv_toupper_broken=no \
 			vim_cv_getcwd_broken=no \
 			vim_cv_stat_ignores_slash=yes \

@@ -23,7 +23,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,IWD,iwd,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-TARGET_LDFLAGS+=	-lncursesw -ltinfow
 CONFIGURE_ARGS+=	--disable-manual-pages \
 		  	--disable-monitor \
 		  	--disable-systemd-service \

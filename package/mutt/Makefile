@@ -26,7 +26,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,MUTT,mutt,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfow
 CONFIGURE_ARGS+=	--with-homespool="~/Maildir" \
 			--with-curses="$(STAGING_TARGET_DIR)/usr" \
 			--enable-pop \

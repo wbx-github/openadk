@@ -18,7 +18,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,HTOP,htop,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfow
 CONFIGURE_ENV+= 	ac_cv_file__proc_stat=yes \
 		  	ac_cv_file__proc_meminfo=yes
 
