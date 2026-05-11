@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ffmpeg
-PKG_VERSION:=		7.1.2
+PKG_VERSION:=		8.1
 PKG_RELEASE:=		1
-PKG_HASH:=		5eb62f529114778333b7eb0381cb16e2b8725ce2ae081d07b1082effe22b12e9
+PKG_HASH:=		c07039598df7d64d3c8b42c4e25b1959fc908621c6f6c2946881133f3b27eda2
 PKG_DESCR:=		record, convert and stream audio & video
 PKG_SECTION:=		libs/video
 PKG_NEEDS:=		threads
@@ -187,7 +187,6 @@ CONFIGURE_ARGS:=	--prefix=/usr \
 			--enable-gpl \
 			--enable-nonfree \
 			--enable-swscale \
-			--enable-postproc \
 			--enable-openssl \
 			--disable-x86asm \
 			$(CONFIGURE_CPU_OPTS)
@@ -232,7 +231,6 @@ libffmpeg-install:
 	$(CP) $(WRKINST)/usr/lib/libavfilter.so* $(IDIR_LIBFFMPEG)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libavcodec.so* $(IDIR_LIBFFMPEG)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libavutil.so* $(IDIR_LIBFFMPEG)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/libpostproc.so* $(IDIR_LIBFFMPEG)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libswscale.so* $(IDIR_LIBFFMPEG)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libswresample.so* $(IDIR_LIBFFMPEG)/usr/lib
 
