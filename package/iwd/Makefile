@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		iwd
-PKG_VERSION:=		3.9
+PKG_VERSION:=		3.12
 PKG_RELEASE:=		1
-PKG_HASH:=		988469a702ecf6edd85c6593d0aeb2c99f1d021b1956d2055c4ece6300edcebf
+PKG_HASH:=		81a12fd4a03dd8e3d60c72b19767507c913f4b0fa4e5fc4ef5ed3f5ffae178dd
 PKG_DESCR:=		daemon for wpa/wpa2/wpa3 client access
 PKG_SECTION:=		net/wifi
 PKG_KDEPENDS:=		crypto-aes crypto-des crypto-md5 crypto-sha1
@@ -23,6 +23,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,IWD,iwd,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
+TARGET_LDFLAGS+=	-lncursesw
 CONFIGURE_ARGS+=	--disable-manual-pages \
 		  	--disable-monitor \
 		  	--disable-systemd-service \
