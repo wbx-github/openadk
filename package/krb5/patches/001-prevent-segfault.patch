@@ -1,0 +1,22 @@
+diff -Nur krb5-1.22.1.orig/src/util/support/fake-addrinfo.c krb5-1.22.1/src/util/support/fake-addrinfo.c
+--- krb5-1.22.1.orig/src/util/support/fake-addrinfo.c	2025-08-20 21:44:32.000000000 +0200
++++ krb5-1.22.1/src/util/support/fake-addrinfo.c	2026-01-12 04:28:27.178723873 +0100
+@@ -141,18 +141,6 @@
+ #  define WRAP_GETADDRINFO
+ #endif
+ 
+-#if defined (__linux__) && defined(HAVE_GETADDRINFO)
+-/* Define COPY_FIRST_CANONNAME for glibc 2.3 and prior. */
+-#include <features.h>
+-# ifdef __GLIBC_PREREQ
+-#  if ! __GLIBC_PREREQ(2, 4)
+-#   define COPY_FIRST_CANONNAME
+-#  endif
+-# else
+-#   define COPY_FIRST_CANONNAME
+-# endif
+-#endif
+-
+ #ifdef _AIX
+ # define NUMERIC_SERVICE_BROKEN
+ # define COPY_FIRST_CANONNAME

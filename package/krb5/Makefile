@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		krb5
-PKG_VERSION:=		1.22.1
+PKG_VERSION:=		1.22.2
 PKG_RELEASE:=		1
-PKG_HASH:=		1a8832b8cad923ebbf1394f67e2efcf41e3a49f460285a66e35adec8fa0053af
+PKG_HASH:=		3243ffbc8ea4d4ac22ddc7dd2a1dc54c57874c40648b60ff97009763554eaf13
 PKG_DESCR:=		kerberos server
 PKG_SECTION:=		app/crypto
 PKG_DEPENDS:=		libkrb5 libncurses keyutils
@@ -35,6 +35,7 @@ $(eval $(call PKG_template,KRB5_CLIENT,krb5-client,$(PKG_VERSION)-${PKG_RELEASE}
 $(eval $(call PKG_template,LIBKRB5,libkrb5,$(PKG_VERSION)-${PKG_RELEASE},,${PKGSD_LIBKRB5},${PKGSC_LIBKRB5},${PKG_OPTS}))
 
 CONFIGURE_ARGS+=	--disable-static \
+			--localstatedir=/etc \
 			--disable-profiled \
 			--disable-pkinit \
 			--without-system-et \
