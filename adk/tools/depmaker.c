@@ -1,7 +1,7 @@
 /*
  * depmaker - create package/Depends.mk for OpenADK buildsystem
  *
- * Copyright (C) 2010-2015 Waldemar Brodkorb <wbx@openadk.org>
+ * Copyright (C) 2010-2026 Waldemar Brodkorb <wbx@openadk.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include <string.h>
 #include <sys/types.h>
 
-#define MAXLINE 1024
+#define MAXLINE 2048
 #define MAXPATH 128
 
 static int prefix = 0;
