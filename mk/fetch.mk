@@ -1,12 +1,7 @@
 # This file is part of the OpenADK project. OpenADK is copyrighted
 # material, please see the LICENCE file in the top-level directory.
 
-ifneq ($(strip ${DIST_SUBDIR}),)
-FULLDISTDIR?=		${DL_DIR}/${DIST_SUBDIR}
-else
-FULLDISTDIR?=		${DL_DIR}
-endif
-
+FULLDISTDIR?=		${DL_DIR}/${PKG_NAME}
 FULLDISTFILES=		$(patsubst %,${FULLDISTDIR}/%,${DISTFILES})
 
 FETCH_STYLE?=		auto
