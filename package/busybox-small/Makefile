@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		busybox-small
-PKG_VERSION:=		1.37.0
+PKG_VERSION:=		1.38.0
 PKG_RELEASE:=		1
-PKG_HASH:=		3311dff32e746499f4df0d5df04d7eb396382d7e108bb9250e7b519b837043a4
+PKG_HASH:=		34f9ea6ff8636f2c9241153b9114eefa9e65674a45318ae1ef95bb5f31c53bb2
 PKG_DESCR:=		core utilities for embedded systems (extra small for noMMU)
 PKG_SECTION:=		base/apps
 PKG_URL:=		http://www.busybox.net/
