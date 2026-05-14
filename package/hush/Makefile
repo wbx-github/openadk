@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		hush
-PKG_VERSION:=		1.36.1
+PKG_VERSION:=		1.38.0
 PKG_RELEASE:=		1
-PKG_HASH:=		b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314
+PKG_HASH:=		34f9ea6ff8636f2c9241153b9114eefa9e65674a45318ae1ef95bb5f31c53bb2
 PKG_DESCR:=		hush standalone shell
 PKG_SECTION:=		base/shells
 PKG_URL:=		http://www.busybox.net/
