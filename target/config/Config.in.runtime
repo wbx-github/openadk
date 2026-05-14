@@ -453,12 +453,6 @@ config ADK_ROOTSH_TOYSH
 	help
 	  ToyBox shell.
 
-config ADK_ROOTSH_SASH
-	bool "sash (Shell compatible with non-MMU systems)"
-	select ADK_PACKAGE_SASH if !ADK_APPLIANCE_TOOLCHAIN
-	help
-	  standalone shell.
-
 config ADK_ROOTSH_ASH
 	bool "ash (busybox shell)"
 	select BUSYBOX_ASH
@@ -516,13 +510,7 @@ config ADK_BINSH_TOYSH
 	bool "toysh (toybox Shell)"
 	select ADK_PACKAGE_TOYBOX if !ADK_APPLIANCE_TOOLCHAIN
 	help
-	  sash shell.
-
-config ADK_BINSH_SASH
-	bool "sash (Standalone Shell)"
-	select ADK_PACKAGE_SASH if !ADK_APPLIANCE_TOOLCHAIN
-	help
-	  sash shell.
+	  toysh shell.
 
 config ADK_BINSH_ASH
 	bool "ash (busybox)"
