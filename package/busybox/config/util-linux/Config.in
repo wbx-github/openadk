@@ -163,6 +163,11 @@ config BUSYBOX_FDISK_SUPPORT_LARGE_DISKS
 	depends on BUSYBOX_FDISK
 	depends on !BUSYBOX_LFS   # with BUSYBOX_LFS no special code is needed
 
+config BUSYBOX_FEATURE_FDISK_BLKSIZE
+	bool "Support -s option to list sizes"
+	default y
+	depends on BUSYBOX_FDISK
+
 config BUSYBOX_FEATURE_FDISK_WRITABLE
 	bool "Write support"
 	default y
@@ -363,6 +368,7 @@ config BUSYBOX_FEATURE_LAST_FANCY
 	help
 	'last' displays detailed information about the last users that
 	logged into the system (mimics sysvinit last). +900 bytes.
+
 config BUSYBOX_LOSETUP
 	bool "losetup (5.5 kb)"
 	default y
@@ -370,6 +376,13 @@ config BUSYBOX_LOSETUP
 	losetup is used to associate or detach a loop device with a regular
 	file or block device, and to query the status of a loop device. This
 	version does not currently support enabling data encryption.
+
+config BUSYBOX_LSBLK
+	bool "lsblk (2.5 kb)"
+	default y
+	help
+	List information about all available or specified block devices.
+
 config BUSYBOX_LSPCI
 	bool "lspci (6.3 kb)"
 	default y
@@ -880,6 +893,7 @@ config BUSYBOX_FEATURE_UMOUNT_ALL
 	depends on BUSYBOX_UMOUNT
 	help
 	Support -a option to unmount all currently mounted filesystems.
+
 config BUSYBOX_UNSHARE
 	bool "unshare (7.2 kb)"
 	default y
@@ -887,6 +901,13 @@ config BUSYBOX_UNSHARE
 	select BUSYBOX_LONG_OPTS
 	help
 	Run program with some namespaces unshared from parent.
+
+config BUSYBOX_UUIDGEN
+	bool "uuidgen (1.1 kb)"
+	default y
+	help
+	Generate a UUID (Universally Unique Identifier) in RFC 4122 format.
+
 config BUSYBOX_WALL
 	bool "wall (2.6 kb)"
 	default y

@@ -485,6 +485,12 @@ config BUSYBOX_SHA256SUM
 	help
 	Compute and check SHA256 message digest
 
+config BUSYBOX_SHA384SUM
+	bool "sha384sum (7.3 kb)"
+	default y
+	help
+	Compute and check SHA384 message digest
+
 config BUSYBOX_SHA512SUM
 	bool "sha512sum (7.4 kb)"
 	default y
@@ -519,69 +525,82 @@ config BUSYBOX_MKFIFO
 	help
 	mkfifo is used to create FIFOs (named pipes).
 	The 'mknod' program can also create FIFOs.
+
 config BUSYBOX_MKNOD
 	bool "mknod (4.5 kb)"
 	default y
 	help
 	mknod is used to create FIFOs or block/character special
 	files with the specified names.
+
 config BUSYBOX_MKTEMP
 	bool "mktemp (4.2 kb)"
 	default y
 	help
 	mktemp is used to create unique temporary files
+
 config BUSYBOX_MV
 	bool "mv (10 kb)"
 	default y
 	help
 	mv is used to move or rename files or directories.
+
 config BUSYBOX_NICE
 	bool "nice (2.1 kb)"
 	default y
 	help
 	nice runs a program with modified scheduling priority.
+
 config BUSYBOX_NL
 	bool "nl (4.6 kb)"
 	default y
 	help
 	nl is used to number lines of files.
+
 config BUSYBOX_NOHUP
 	bool "nohup (2 kb)"
 	default y
 	help
 	run a command immune to hangups, with output to a non-tty.
+
 config BUSYBOX_NPROC
 	bool "nproc (3.7 kb)"
 	default y
 	help
 	Print number of CPUs
+
 config BUSYBOX_OD
 	bool "od (11 kb)"
 	default y
 	help
 	od is used to dump binary files in octal and other formats.
+
 config BUSYBOX_PASTE
 	bool "paste (4.9 kb)"
 	default y
 	help
 	paste is used to paste lines of different files together
 	and write the result to stdout
+
 config BUSYBOX_PRINTENV
 	bool "printenv (1.3 kb)"
 	default y
 	help
 	printenv is used to print all or part of environment.
+
 config BUSYBOX_PRINTF
 	bool "printf (3.8 kb)"
 	default y
 	help
 	printf is used to format and print specified strings.
 	It's similar to 'echo' except it has more options.
+
 config BUSYBOX_PWD
 	bool "pwd (3.7 kb)"
 	default y
 	help
 	pwd is used to print the current directory.
+
 config BUSYBOX_READLINK
 	bool "readlink (4 kb)"
 	default y
@@ -595,37 +614,44 @@ config BUSYBOX_FEATURE_READLINK_FOLLOW
 	depends on BUSYBOX_READLINK
 	help
 	Enable the readlink option (-f).
+
 config BUSYBOX_REALPATH
 	bool "realpath (1.6 kb)"
 	default y
 	help
 	Return the canonicalized absolute pathname.
 	This isn't provided by GNU shellutils, but where else does it belong.
+
 config BUSYBOX_RM
 	bool "rm (5.4 kb)"
 	default y
 	help
 	rm is used to remove files or directories.
+
 config BUSYBOX_RMDIR
 	bool "rmdir (3.5 kb)"
 	default y
 	help
 	rmdir is used to remove empty directories.
+
 config BUSYBOX_SEQ
 	bool "seq (3.8 kb)"
 	default y
 	help
 	print a sequence of numbers
+
 config BUSYBOX_SHRED
 	bool "shred (4.9 kb)"
 	default y
 	help
 	Overwrite a file to hide its contents, and optionally delete it
+
 config BUSYBOX_SHUF
 	bool "shuf (5.4 kb)"
 	default y
 	help
 	Generate random permutations
+
 config BUSYBOX_SLEEP
 	bool "sleep (2 kb)"
 	default y
@@ -646,6 +672,7 @@ config BUSYBOX_FEATURE_FANCY_SLEEP
 	depends on BUSYBOX_SLEEP
 	help
 	Allow sleep to pause for specified minutes, hours, and days.
+
 config BUSYBOX_SORT
 	bool "sort (7.7 kb)"
 	default y
@@ -671,6 +698,7 @@ config BUSYBOX_FEATURE_SORT_OPTIMIZE_MEMORY
 	help
 	Attempt to use less memory (by storing only one copy
 	of duplicated lines, and such). Useful if you work on huge files.
+
 config BUSYBOX_SPLIT
 	bool "split (5 kb)"
 	default y
@@ -685,6 +713,7 @@ config BUSYBOX_FEATURE_SPLIT_FANCY
 	Add support for features not required by SUSv3.
 	Supports additional suffixes 'b' for 512 bytes,
 	'g' for 1GiB for the -b option.
+
 config BUSYBOX_STAT
 	bool "stat (11 kb)"
 	default y
@@ -707,21 +736,25 @@ config BUSYBOX_FEATURE_STAT_FILESYSTEM
 	help
 	Without this, stat will not support the '-f' option to display
 	information about filesystem status.
+
 config BUSYBOX_STTY
 	bool "stty (8.9 kb)"
 	default y
 	help
 	stty is used to change and print terminal line settings.
+
 config BUSYBOX_SUM
 	bool "sum (4 kb)"
 	default y
 	help
 	checksum and count the blocks in a file
+
 config BUSYBOX_SYNC
 	bool "sync (3.8 kb)"
 	default n
 	help
 	sync is used to flush filesystem buffers.
+
 config BUSYBOX_FEATURE_SYNC_FANCY
 	bool "Enable -d and -f flags (requires syncfs(2) in libc)"
 	default n
@@ -729,16 +762,19 @@ config BUSYBOX_FEATURE_SYNC_FANCY
 	help
 	sync -d FILE... executes fdatasync() on each FILE.
 	sync -f FILE... executes syncfs() on each FILE.
+
 config BUSYBOX_FSYNC
 	bool "fsync (3.6 kb)"
 	default y
 	help
 	fsync is used to flush file-related cached blocks to disk.
+
 config BUSYBOX_TAC
 	bool "tac (3.9 kb)"
 	default y
 	help
 	tac is used to concatenate and print files in reverse.
+
 config BUSYBOX_TAIL
 	bool "tail (6.8 kb)"
 	default y
@@ -757,6 +793,7 @@ config BUSYBOX_FEATURE_FANCY_TAIL
 		-s SEC  Wait SEC seconds between reads with -f
 		-v      Always output headers giving file names
 		-F      Same as -f, but keep retrying
+
 config BUSYBOX_TEE
 	bool "tee (4.2 kb)"
 	default y
@@ -770,6 +807,7 @@ config BUSYBOX_FEATURE_TEE_USE_BLOCK_IO
 	depends on BUSYBOX_TEE
 	help
 	Enable this option for a faster tee, at expense of size.
+
 config BUSYBOX_TEST
 	bool "test (4.1 kb)"
 	default y
@@ -796,12 +834,14 @@ config BUSYBOX_FEATURE_TEST_64
 	depends on BUSYBOX_TEST || BUSYBOX_TEST1 || BUSYBOX_TEST2 || BUSYBOX_ASH_TEST || BUSYBOX_HUSH_TEST
 	help
 	Enable 64-bit support in test.
+
 config BUSYBOX_TIMEOUT
 	bool "timeout (6 kb)"
 	default y
 	help
 	Runs a program and watches it. If it does not terminate in
 	specified number of seconds, it is sent a signal.
+
 config BUSYBOX_TOUCH
 	bool "touch (5.9 kb)"
 	default y
@@ -815,6 +855,7 @@ config BUSYBOX_FEATURE_TOUCH_SUSV3
 	depends on BUSYBOX_TOUCH
 	help
 	Enable touch to use a reference file or a given date/time argument.
+
 config BUSYBOX_TR
 	bool "tr (5.1 kb)"
 	default y
@@ -840,28 +881,33 @@ config BUSYBOX_FEATURE_TR_EQUIV
 	replace all instances of 'a' with 'xyz'. This option is mainly
 	useful for cases when no other way of expressing a character
 	is possible.
+
 config BUSYBOX_TRUE
 	bool "true (tiny)"
 	default y
 	help
 	true returns an exit code of TRUE (0).
+
 config BUSYBOX_TRUNCATE
 	bool "truncate (4.2 kb)"
 	default y
 	help
 	truncate truncates files to a given size. If a file does
 	not exist, it is created unless told otherwise.
+
 config BUSYBOX_TSORT
 	bool "tsort (0.7 kb)"
 	default y
 	help
 	tsort performs a topological sort.
+
 config BUSYBOX_TTY
 	bool "tty (3.6 kb)"
 	default y
 	help
 	tty is used to print the name of the current terminal to
 	standard output.
+
 config BUSYBOX_UNAME
 	bool "uname (3.9 kb)"
 	default y
@@ -881,41 +927,49 @@ config BUSYBOX_BB_ARCH
 	default y
 	help
 	Same as uname -m.
+
 config BUSYBOX_UNIQ
 	bool "uniq (4.9 kb)"
 	default y
 	help
 	uniq is used to remove duplicate lines from a sorted file.
+
 config BUSYBOX_UNLINK
 	bool "unlink (3.2 kb)"
 	default y
 	help
 	unlink deletes a file by calling unlink()
+
 config BUSYBOX_USLEEP
 	bool "usleep (1.3 kb)"
 	default y
 	help
 	usleep is used to pause for a specified number of microseconds.
+
 config BUSYBOX_UUDECODE
 	bool "uudecode (5.8 kb)"
 	default y
 	help
 	uudecode is used to decode a uuencoded file.
+
 config BUSYBOX_BASE32
 	bool "base32 (4.9 kb)"
 	default y
 	help
 	Base32 encode and decode
+
 config BUSYBOX_BASE64
 	bool "base64 (4.9 kb)"
 	default y
 	help
 	Base64 encode and decode
+
 config BUSYBOX_UUENCODE
 	bool "uuencode (4.4 kb)"
 	default y
 	help
 	uuencode is used to uuencode a file.
+
 config BUSYBOX_WC
 	bool "wc (4.5 kb)"
 	default y
@@ -929,6 +983,7 @@ config BUSYBOX_FEATURE_WC_LARGE
 	depends on BUSYBOX_WC
 	help
 	Use "unsigned long long" for counter variables.
+
 config BUSYBOX_WHO
 	bool "who (3.9 kb)"
 	default y
@@ -949,12 +1004,14 @@ config BUSYBOX_USERS
 	depends on BUSYBOX_FEATURE_UTMP
 	help
 	Print users currently logged on.
+
 config BUSYBOX_WHOAMI
 	bool "whoami (3.2 kb)"
 	default y
 	help
 	whoami is used to print the username of the current
 	user id (same as id -un).
+
 config BUSYBOX_YES
 	bool "yes (1.2 kb)"
 	default y

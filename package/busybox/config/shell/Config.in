@@ -287,6 +287,11 @@ config BUSYBOX_SHELL_HUSH
 # It's only needed to get "nice" menuconfig indenting.
 if BUSYBOX_SHELL_HUSH || BUSYBOX_HUSH || BUSYBOX_SH_IS_HUSH || BUSYBOX_BASH_IS_HUSH
 
+config BUSYBOX_HUSH_NEED_FOR_SPEED
+	bool "Faster, but larger code"
+	default n
+	depends on BUSYBOX_SHELL_HUSH
+
 config BUSYBOX_HUSH_BASH_COMPAT
 	bool "bash-compatible extensions"
 	default y
@@ -361,12 +366,26 @@ config BUSYBOX_HUSH_CASE
 	help
 	Enable case ... esac statement. +400 bytes.
 
+config BUSYBOX_HUSH_ALIAS
+	bool "Support aliases"
+	default y
+	depends on BUSYBOX_SHELL_HUSH
+	help
+	Enable aliases.
+
 config BUSYBOX_HUSH_FUNCTIONS
 	bool "Support funcname() { commands; } syntax"
 	default y
 	depends on BUSYBOX_SHELL_HUSH
 	help
 	Enable support for shell functions. +800 bytes.
+
+config BUSYBOX_HUSH_FUNCTION_KEYWORD
+	bool "Support function keyword"
+	default y
+	depends on BUSYBOX_HUSH_FUNCTIONS
+	help
+	Support "function FUNCNAME { CMD; }" syntax.
 
 config BUSYBOX_HUSH_LOCAL
 	bool "local builtin"
