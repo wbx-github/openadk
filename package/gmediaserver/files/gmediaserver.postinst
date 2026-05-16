@@ -1,4 +1,0 @@
-#!/bin/sh
-. $IPKG_INSTROOT/etc/functions.sh
-add_rcconf gmediaserver NO
-add_rcconf gmediaserver_flags "--background --interface=eth0"
