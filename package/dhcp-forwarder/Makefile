@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		dhcp-forwarder
-PKG_VERSION:=		0.10
+PKG_VERSION:=		0.11
 PKG_RELEASE:=		1
-PKG_HASH:=		a1d01bea1d768212f5d78e5f5aa7d433a53df7ff29cb3d1d924967581d00d7a1
+PKG_HASH:=		72dc290ac1d228b450ddab0a61c308b8ebeff806f00e6b1c0828da3a8e97aa6e
 PKG_DESCR:=		dhcp relay agent
 PKG_SECTION:=		net/dns
 PKG_URL:=		http://www.nongnu.org/dhcp-fwd/
-PKG_SITES:=		http://savannah.nongnu.org/download/dhcp-fwd/
+PKG_SITES:=		https://download.savannah.gnu.org/releases/dhcp-fwd/
 
 include ${ADK_TOPDIR}/mk/package.mk
 
