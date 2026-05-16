@@ -4,17 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		ImageMagick
-PKG_VERSION:=		7.1.1
-PKG_EXTRAVER:=		29
+PKG_VERSION:=		7.1.2
+PKG_EXTRAVER:=		22
 PKG_RELEASE:=		1
-PKG_HASH:=		f140465fbeb0b4724cba4394bc6f6fb32715731c1c62572d586f4f1c8b9b0685
+PKG_HASH:=		78de50d00e3e7b6cce5e5751460d43feda626a778904438ab83a6b51449f9452
 PKG_DESCR:=		image processing and converting utility
 PKG_SECTION:=		mm/image
 PKG_BUILDDEP:=		libpng libjpeg-turbo libtiff fontconfig
 PKG_BUILDDEP+=		pango libtool e2fsprogs
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.imagemagick.org/
-PKG_SITES:=		http://www.imagemagick.org/download/releases/
+PKG_SITES:=		https://github.com/ImageMagick/ImageMagick/archive/refs/tags/
 PKG_LIBNAME:=		libimagemagick
 PKG_OPTS:=		dev
 
@@ -32,8 +32,8 @@ PKGSC_DISPLAY:=		mm/image
 PKGSS_DISPLAY:=		libimagemagick libX11 libXau libXdmcp libICE libSM fontconfig libXt zlib libpng libltdl
 PKGSB_DISPLAY:=		libX11
 
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}-${PKG_EXTRAVER}.tar.xz
-WRKDIST=		${WRKDIR}/${PKG_NAME}-${PKG_VERSION}-${PKG_EXTRAVER}
+DISTFILES:=             ${PKG_VERSION}-${PKG_EXTRAVER}.tar.gz
+WRKDIST=		${WRKDIR}/${PKG_NAME}-${PKG_VERSION}-$(PKG_EXTRAVER)
 
 include $(ADK_TOPDIR)/mk/package.mk
 
