@@ -1,6 +1,6 @@
 $Id: update-patches 24 2008-08-31 14:56:13Z wbx $
 --- cutter-1.03.orig/cutter.c	2005-04-30 09:01:03.000000000 +0200
-+++ cutter-1.03/cutter.c	2013-12-24 12:14:44.000000000 +0100
++++ cutter-1.03/cutter.c	2026-05-14 20:45:28.023059596 +0200
 @@ -35,6 +35,10 @@
   * 		improvment.
   */
@@ -12,7 +12,7 @@ $Id: update-patches 24 2008-08-31 14:56:13Z wbx $
  #include <string.h>
  #include <stdio.h>
  #include <unistd.h>
-@@ -50,7 +54,9 @@
+@@ -50,13 +54,16 @@
  #include <linux/if_ether.h>
  #include <fcntl.h>
  #include <netpacket/packet.h>
@@ -22,7 +22,14 @@ $Id: update-patches 24 2008-08-31 14:56:13Z wbx $
  #include <linux/sockios.h>
  #include <sys/ioctl.h>
  #include <netinet/in.h>
-@@ -297,7 +303,7 @@ int send_rst(
+ #include <arpa/inet.h>
+ #include <net/if.h>
+ #include <errno.h>
++#include <time.h>
+ 
+ #define ETHHDR	 sizeof(struct ethhdr)
+ #define TCPHDR	 sizeof(struct tcphdr)
+@@ -297,7 +304,7 @@ int send_rst(
  	pheader.placeholder=0;
  	pheader.protocol=IPPROTO_TCP;
  	pheader.tcp_length=htons(TCPHDR);
@@ -31,7 +38,7 @@ $Id: update-patches 24 2008-08-31 14:56:13Z wbx $
  	tpack.tcp.check=in_cksum((unsigned short *)&pheader,TCPHDR+12);
  
  	/*
-@@ -419,7 +425,7 @@ int send_rst(
+@@ -419,7 +426,7 @@ int send_rst(
  			pheader.placeholder=0;
  			pheader.protocol=IPPROTO_TCP;
  			pheader.tcp_length=htons(TCPHDR);
