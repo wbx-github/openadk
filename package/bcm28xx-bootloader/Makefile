@@ -118,6 +118,10 @@ ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI4),y)
 	printf "enable_uart=1\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
 endif
+ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI5),y)
+	printf "enable_uart=1\n" >> \
+		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
+endif
 ifeq ($(ADK_TARGET_SYSTEM_RASPBERRY_PI3_64)$(ADK_TARGET_SYSTEM_RASPBERRY_PI4_64),y)
 	printf "arm_64bit=1\n" >> \
 		$(IDIR_BCM28XX_BOOTLOADER)/boot/config.txt
