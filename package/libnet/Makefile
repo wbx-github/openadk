@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libnet
-PKG_VERSION:=		1.1.6
+PKG_VERSION:=		1.3
 PKG_RELEASE:=		1
-PKG_HASH:=		d392bb5825c4b6b672fc93a0268433c86dc964e1500c279dc6d0711ea6ec467a
+PKG_HASH:=		ad1e2dd9b500c58ee462acd839d0a0ea9a2b9248a1287840bc601e774fb6b28f
 PKG_DESCR:=		low-level packet creation library
 PKG_SECTION:=		libs/net
 PKG_DEPENDS:=		libpcap
 PKG_BUILDDEP:=		libpcap
 PKG_NEEDS:=		c++
-PKG_URL:=		http://sourceforge.net/projects/libnet-dev/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=libnet-dev/}
+PKG_URL:=		https://github.com/libnet/libnet
+PKG_SITES:=		https://github.com/libnet/libnet/releases/download/v$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
@@ -22,7 +22,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,LIBNET,libnet,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-AUTOTOOL_STYLE:=	autoreconf
 ENDIAN:=lil
 ifeq (${ADK_TARGET_CPU_ARCH},mips)
 ENDIAN:=big
