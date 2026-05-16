@@ -1,0 +1,11 @@
+--- jack2-1.9.22.orig/waflib/ConfigSet.py	2023-02-02 12:04:10.000000000 +0100
++++ jack2-1.9.22/waflib/ConfigSet.py	2026-05-14 18:36:34.596872137 +0200
+@@ -11,7 +11,7 @@ The values put in :py:class:`ConfigSet`
+ 
+ import copy, re, os
+ from waflib import Logs, Utils
+-re_imp = re.compile('^(#)*?([^#=]*?)\ =\ (.*?)$', re.M)
++re_imp = re.compile(r'^(#)*?([^#=]*?)\ =\ (.*?)$', re.M)
+ 
+ class ConfigSet(object):
+ 	"""

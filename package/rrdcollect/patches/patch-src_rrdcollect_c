@@ -1,0 +1,11 @@
+--- rrdcollect-0.2.10.orig/src/rrdcollect.c	2012-03-20 03:07:58.000000000 +0100
++++ rrdcollect-0.2.10/src/rrdcollect.c	2026-05-12 21:39:28.731099925 +0200
+@@ -115,7 +115,7 @@ int rrdlib_update(int argc, char **argv)
+ 		send_log(LOG_DEBUG,"Incomplete update in log");
+ 	send_log(LOG_DEBUG,"rrdlib_update(%i,'%s')",argc,logbuffer);
+ 
+-	rrd_update(argc, argv);
++	rrd_update(argc, (const char * const *)argv);
+ 
+ 	if (rrd_test_error()) {
+ 		send_log(LOG_ERR, "rrd_update: %s\n", rrd_get_error());

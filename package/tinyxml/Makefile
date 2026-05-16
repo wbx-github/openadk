@@ -9,7 +9,6 @@ PKG_RELEASE:=		1
 PKG_HASH:=		8164c9ad48b9028667768a584d62f7760cfbfb90d0dd6214ad174403058da10c
 PKG_DESCR:=		simple, small, minimal, c++ xml parser
 PKG_SECTION:=		libs/data
-PKG_BUILDDEP:=		unzip-host
 PKG_SITES:=		http://mirrors.xbmc.org/build-deps/sources/
 PKG_OPTS:=		dev
 

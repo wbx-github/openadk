@@ -1,0 +1,19 @@
+--- jack2-1.9.22.orig/waflib/Node.py	2023-02-02 12:04:10.000000000 +0100
++++ jack2-1.9.22/waflib/Node.py	2026-05-14 18:36:34.596872137 +0200
+@@ -73,7 +73,7 @@ def ant_matcher(s, ignorecase):
+ 			if k == '**':
+ 				accu.append(k)
+ 			else:
+-				k = k.replace('.', '[.]').replace('*','.*').replace('?', '.').replace('+', '\\+')
++				k = k.replace('.', '[.]').replace('*', '.*').replace('?', '.').replace('+', '\\+')
+ 				k = '^%s$' % k
+ 				try:
+ 					exp = re.compile(k, flags=reflags)
+@@ -595,7 +595,6 @@ class Node(object):
+ 		:rtype: iterator
+ 		"""
+ 		dircont = self.listdir()
+-		dircont.sort()
+ 
+ 		try:
+ 			lst = set(self.children.keys())

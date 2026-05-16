@@ -1,0 +1,11 @@
+--- rdesktop-1.9.0.orig/utils.c	2019-09-20 09:03:48.000000000 +0200
++++ rdesktop-1.9.0/utils.c	2026-05-15 12:59:18.067807229 +0200
+@@ -192,7 +192,7 @@ utils_mkdir_p(const char *path, int mask
+ int
+ utils_locale_to_utf8(const char *src, size_t is, char *dest, size_t os)
+ {
+-	static iconv_t *iconv_h = (iconv_t) - 1;
++	static iconv_t iconv_h = (iconv_t) - 1;
+ 	if (strncmp(g_codepage, "UTF-8", strlen("UTF-8")) == 0)
+ 		goto pass_trough_as_is;
+ 

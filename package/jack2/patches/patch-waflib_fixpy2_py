@@ -1,0 +1,11 @@
+--- jack2-1.9.22.orig/waflib/fixpy2.py	2023-02-02 12:04:10.000000000 +0100
++++ jack2-1.9.22/waflib/fixpy2.py	2026-05-14 18:36:34.596872137 +0200
+@@ -56,7 +56,7 @@ def r1(code):
+ @subst('Runner.py')
+ def r4(code):
+ 	"generator syntax"
+-	return code.replace('next(self.biter)', 'self.biter.next()')
++	return code.replace('next(self.biter)', 'self.biter.next()').replace('self.daemon = True', 'self.setDaemon(1)')
+ 
+ @subst('Context.py')
+ def r5(code):

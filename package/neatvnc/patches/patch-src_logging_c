@@ -1,0 +1,14 @@
+--- neatvnc-1.0.0.orig/src/logging.c	2026-04-26 20:02:51.000000000 +0200
++++ neatvnc-1.0.0/src/logging.c	2026-05-13 10:21:11.596058923 +0200
+@@ -24,11 +24,7 @@
+ #include <stdarg.h>
+ #include <string.h>
+ #include <ctype.h>
+-#ifdef __STDC_NO_THREADS__
+ #define thread_local _Thread_local
+-#else
+-#include <threads.h>
+-#endif
+ #include <sys/param.h>
+ 
+ #ifdef HAVE_LIBAVUTIL

@@ -1,0 +1,34 @@
+--- jack2-1.9.22.orig/waflib/Tools/compiler_cxx.py	2023-02-02 12:04:10.000000000 +0100
++++ jack2-1.9.22/waflib/Tools/compiler_cxx.py	2026-05-14 18:36:34.596872137 +0200
+@@ -37,18 +37,19 @@ from waflib import Utils
+ from waflib.Logs import debug
+ 
+ cxx_compiler = {
+-'win32':  ['msvc', 'g++', 'clang++'],
+-'cygwin': ['g++'],
+-'darwin': ['clang++', 'g++'],
+-'aix':    ['xlc++', 'g++', 'clang++'],
+-'linux':  ['g++', 'clang++', 'icpc'],
+-'sunos':  ['sunc++', 'g++'],
+-'irix':   ['g++'],
+-'hpux':   ['g++'],
+-'osf1V':  ['g++'],
+-'gnu':    ['g++', 'clang++'],
+-'java':   ['g++', 'msvc', 'clang++', 'icpc'],
+-'default': ['clang++', 'g++']
++'win32':       ['msvc', 'g++', 'clang++'],
++'cygwin':      ['g++', 'clang++'],
++'darwin':      ['clang++', 'g++'],
++'aix':         ['xlc++', 'g++', 'clang++'],
++'linux':       ['g++', 'clang++', 'icpc'],
++'sunos':       ['sunc++', 'g++'],
++'irix':        ['g++'],
++'hpux':        ['g++'],
++'osf1V':       ['g++'],
++'gnu':         ['g++', 'clang++'],
++'java':        ['g++', 'msvc', 'clang++', 'icpc'],
++'gnukfreebsd': ['g++', 'clang++'],
++'default':     ['clang++', 'g++']
+ }
+ """
+ Dict mapping the platform names to Waf tools finding specific C++ compilers::

@@ -1,0 +1,27 @@
+--- jack2-1.9.22.orig/waflib/Tools/c_preproc.py	2023-02-02 12:04:10.000000000 +0100
++++ jack2-1.9.22/waflib/Tools/c_preproc.py	2026-05-14 18:36:34.596872137 +0200
+@@ -75,13 +75,13 @@ re_lines = re.compile(
+ 	re.IGNORECASE | re.MULTILINE)
+ """Match #include lines"""
+ 
+-re_mac = re.compile("^[a-zA-Z_]\w*")
++re_mac = re.compile(r"^[a-zA-Z_]\w*")
+ """Match macro definitions"""
+ 
+ re_fun = re.compile('^[a-zA-Z_][a-zA-Z0-9_]*[(]')
+ """Match macro functions"""
+ 
+-re_pragma_once = re.compile('^\s*once\s*', re.IGNORECASE)
++re_pragma_once = re.compile(r'^\s*once\s*', re.IGNORECASE)
+ """Match #pragma once statements"""
+ 
+ re_nl = re.compile('\\\\\r*\n', re.MULTILINE)
+@@ -660,7 +660,7 @@ def extract_macro(txt):
+ 			# empty define, assign an empty token
+ 			return (v, [[], [('T','')]])
+ 
+-re_include = re.compile('^\s*(<(?:.*)>|"(?:.*)")')
++re_include = re.compile(r'^\s*(<(?:.*)>|"(?:.*)")')
+ def extract_include(txt, defs):
+ 	"""
+ 	Process a line in the form::

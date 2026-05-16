@@ -1,0 +1,13 @@
+--- jack2-1.9.22.orig/waflib/processor.py	2023-02-02 12:04:10.000000000 +0100
++++ jack2-1.9.22/waflib/processor.py	2026-05-14 18:36:34.596872137 +0200
+@@ -27,6 +27,10 @@ def run():
+ 	[cmd, kwargs, cargs] = cPickle.loads(base64.b64decode(txt))
+ 	cargs = cargs or {}
+ 
++	if not 'close_fds' in kwargs:
++		# workers have no fds
++		kwargs['close_fds'] = False
++
+ 	ret = 1
+ 	out, err, ex, trace = (None, None, None, None)
+ 	try:

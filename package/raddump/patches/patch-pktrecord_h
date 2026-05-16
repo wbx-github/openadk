@@ -1,0 +1,11 @@
+--- raddump-0.3.1.orig/pktrecord.h	2004-09-22 20:01:05.000000000 +0200
++++ raddump-0.3.1/pktrecord.h	2026-05-13 18:28:52.845088387 +0200
+@@ -25,7 +25,7 @@ struct pktrecord {
+   unsigned int included_len;   /* how much of it we actually have here */
+   unsigned int ts_secs;	       /* timestamp, seconds component */
+   unsigned int ts_usecs;       /* timestamp, microseconds component */
+-  unsigned char *pkt_data;     /* pointer to the actual packet data */
++  const unsigned char *pkt_data;     /* pointer to the actual packet data */
+ };
+ 
+ struct prec_handle;
