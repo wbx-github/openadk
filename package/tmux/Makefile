@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		tmux
-PKG_VERSION:=		3.2a
+PKG_VERSION:=		3.6a
 PKG_RELEASE:=		1
-PKG_HASH:=		551553a4f82beaa8dadc9256800bcc284d7c000081e47aa6ecbb6ff36eacd05f
+PKG_HASH:=		b6d8d9c76585db8ef5fa00d4931902fa4b8cbe8166f528f44fc403961a3f3759
 PKG_DESCR:=		terminal multiplexer
 PKG_SECTION:=		sys/utils
 PKG_BUILDDEP:=		libevent ncurses
@@ -21,9 +21,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,TMUX,tmux,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-AUTOTOOL_STYLE:=	autoreconf
-TARGET_LDFLAGS+=	-ltinfo
-CONFIGURE_ARGS+=	--disable-static
+#AUTOTOOL_STYLE:=	autoreconf
 
 tmux-install:
 	$(INSTALL_DIR) $(IDIR_TMUX)/usr/bin
