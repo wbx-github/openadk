@@ -17,6 +17,9 @@ PKG_SITES:=		http://download.aircrack-ng.org/
 # do not build parallel, otherwise libosdep.a may not be ready when compiling airtun-ng
 PKG_NOPARALLEL:=	1
 
+# for wep it needs rc4 in openssl, which is disabled at the moment
+PKG_CFLINE_AIRCRACK_NG:=depends on ADK_BROKEN
+
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
