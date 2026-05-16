@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		6tunnel
-PKG_VERSION:=		0.11rc2
+PKG_VERSION:=		0.14
 PKG_RELEASE:=		1
-PKG_HASH:=		58a6e274a46f04dce158be0e071bf076af0dc7b92bc3d8212dc827ab43e1db07
+PKG_HASH:=		6945312793079408f1ab40071cee68e70158a23560145f1d424a3eb16227f235
 PKG_DESCR:=		ipv4/ipv6 tunnel proxy
 PKG_SECTION:=		net/ipv6
-PKG_URL:=		http://toxygen.net/6tunnel/
-PKG_SITES:=		http://toxygen.net/6tunnel/
+PKG_URL:=		https://github.com/wojtekka/6tunnel
+PKG_SITES:=		https://github.com/wojtekka/6tunnel/releases/download/0.14/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
