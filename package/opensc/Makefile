@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		24d03c69287291da32a30c4c38a304ad827f56cb85d83619e1f5403ab6480ef8
 PKG_DESCR:=		utilities to access smart cards
 PKG_SECTION:=		app/crypto
-PKG_BUILDDEP:=		openct pcsc-lite readline openssl
-PKG_DEPENDS:=		libopensc libopenct pcsc-lite libreadline libopenssl
+PKG_BUILDDEP:=		pcsc-lite readline openssl
+PKG_DEPENDS:=		libopensc pcsc-lite libreadline libopenssl
 PKG_URL:=		https://github.com/OpenSC/OpenSC/wiki
 PKG_SITES:=		https://github.com/OpenSC/OpenSC/releases/download/$(PKG_VERSION)/
 PKG_LIBNAME:=		libopensc
@@ -31,10 +31,11 @@ $(eval $(call PKG_template,LIBOPENSC,libopensc,${PKG_VERSION}-${PKG_RELEASE},${P
 
 CONFIGURE_ARGS+=	--disable-man \
 			--disable-iconv \
-			--disable-pcsc \
 			--disable-silent-rules \
 			--disable-strict \
-			--enable-openct
+			--disable-openct \
+			--disable-ctapi \
+			--enable-pcsc
 
 opensc-install:
 	${INSTALL_DIR} ${IDIR_OPENSC}/usr/bin
