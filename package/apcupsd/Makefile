@@ -7,13 +7,14 @@ PKG_NAME:=		apcupsd
 PKG_VERSION:=		3.14.14
 PKG_RELEASE:=		1
 PKG_HASH:=		db7748559b6b4c3784f9856561ef6ac6199ef7bd019b3edcd7e0a647bf8f9867
-PKG_DESCR:=		APC UPS daemon with integrated tcp/ip remote shutdown
+PKG_DESCR:=		apc ups daemon with integrated tcp/ip remote shutdown
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		libusb
 PKG_BUILDDEP:=		libusb
 PKG_KDEPENDS:=		usb-hid usb-hiddev
 PKG_URL:=		http://www.apcupsd.org
-PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=apcupsd/)
+PKG_SITES:=		https://sourceforge.net/projects/apcupsd/files/apcupsd%20-%20Stable/$(PKG_VERSION)/
+
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_CFLINE_APCUPSD:=	select BUSYBOX_WALL@
