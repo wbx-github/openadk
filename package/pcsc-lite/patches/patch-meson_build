@@ -1,0 +1,14 @@
+--- pcsc-lite-2.4.1.orig/meson.build	2026-01-01 18:37:00.000000000 +0100
++++ pcsc-lite-2.4.1/meson.build	2026-05-15 16:16:56.546198998 +0200
+@@ -217,11 +217,6 @@ if get_option('default_library') != 'sta
+   install_data('src/spy/setup_spy.sh',
+     install_dir : 'share/doc/pcsc-lite')
+ 
+-  run_command('pod2man',
+-    ['--date=2024-01-01', 'src/spy/pcsc-spy.pod', 'pcsc-spy.1'],
+-    check : true)
+-  install_data('pcsc-spy.1',
+-    install_dir : join_paths(get_option('mandir'), 'man1'))
+ endif
+ 
+ # static library
