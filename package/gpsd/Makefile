@@ -31,7 +31,7 @@ INSTALL_STYLE:=		manual
 
 do-install:
 	(cd $(WRKBUILD); env PATH='$(TARGET_PATH)' CCFLAGS='' DESTDIR='$(WRKINST)' \
-		$(STAGING_HOST_DIR)/usr/bin/python3 $(STAGING_HOST_DIR)/usr/bin/scons install prefix=/usr platform=linux python=no chrpath=no bluez=no usb=no libgpsmm=no)
+		$(STAGING_HOST_DIR)/usr/bin/python3 $(STAGING_HOST_DIR)/usr/local/bin/scons install prefix=/usr platform=linux python=no chrpath=no bluez=no usb=no libgpsmm=no)
 
 gpsd-install:
 	${INSTALL_DIR} ${IDIR_GPSD}/usr/lib ${IDIR_GPSD}/usr/sbin
