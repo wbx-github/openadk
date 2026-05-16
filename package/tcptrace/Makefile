@@ -22,6 +22,7 @@ $(eval $(call PKG_template,TCPTRACE,tcptrace,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG
 
 FAKE_FLAGS:=		BINDIR="$(WRKINST)/usr/bin" MANDIR="$(WRKINST)/usr/man" INSTALL="install -D"
 TARGET_CPPFLAGS+=	-D_BSD_SOURCE
+TARGET_CFLAGS+=		-std=gnu99
 
 tcptrace-install:
 	$(INSTALL_DIR) $(IDIR_TCPTRACE)/usr/bin
