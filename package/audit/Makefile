@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		audit
-PKG_VERSION:=		2.6.7
+PKG_VERSION:=		4.0.2
 PKG_RELEASE:=		1
-PKG_HASH:=		8923917332daa7833bbc0c1d9eb012167093fbad000da4a9630fb3356aff8cdc
+PKG_HASH:=		d5d1b5d50ee4a2d0d17875bc6ae6bd6a7d5b34d9557ea847a39faec531faaa0a
 PKG_DESCR:=		audit library
 PKG_SECTION:=		libs/misc
-PKG_URL:=		http://people.redhat.com/sgrubb/audit
-PKG_SITES:=		http://people.redhat.com/sgrubb/audit/
+PKG_URL:=		https://people.redhat.com/sgrubb/audit
+PKG_SITES:=		https://people.redhat.com/sgrubb/audit/
 PKG_OPTS:=		dev
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
