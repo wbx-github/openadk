@@ -9,9 +9,10 @@ PKG_RELEASE:=		1
 PKG_HASH:=		39026c6d4a139b9180192d1c37225aa3376fdf4f1a74d7debbdbb693d996afa4
 PKG_DESCR:=		DLNA/UPnP-AV compliant media server
 PKG_SECTION:=		mm/video
-PKG_DEPENDS:=		libffmpeg libjpeg-turbo libexif libid3tag libogg libflac libvorbis libsqlite libiconv
-PKG_BUILDDEP:=		ffmpeg libjpeg-turbo libexif libid3tag libogg flac libvorbis sqlite libiconv
+PKG_DEPENDS:=		libffmpeg libjpeg-turbo libexif libid3tag libogg libflac libvorbis libsqlite
+PKG_BUILDDEP:=		ffmpeg libjpeg-turbo libexif libid3tag libogg flac libvorbis sqlite
 PKG_URL:=		http://sourceforge.net/projects/minidlna/
+PKG_NEEDS:=		iconv
 PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=minidlna/)
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
