@@ -4,15 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		shairport-sync
-PKG_VERSION:=		3.3.8
+PKG_VERSION:=		5.0.4
 PKG_RELEASE:=		1
-PKG_GIT:=		tag
+PKG_HASH:=		b89d4af74cffadd83d1be6eaf4e967180aa5a6aed32f561c937ae1d787909c25
 PKG_DESCR:=		airplay daemon	
 PKG_SECTION:=		mm/audio	
 PKG_DEPENDS:=		libopenssl libpopt libdaemon libconfig mosquitto libavahi
 PKG_BUILDDEP:=		openssl popt libdaemon libconfig mosquitto avahi
 PKG_URL:=		https://github.com/mikebrady/shairport-sync
-PKG_SITES:=		https://github.com/mikebrady/shairport-sync.git
+PKG_SITES:=		https://github.com/mikebrady/shairport-sync/archive/refs/tags/
+
+DISTFILES:=		$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
