@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libp11
-PKG_VERSION:=		0.4.12
+PKG_VERSION:=		0.4.18
 PKG_RELEASE:=		1
-PKG_HASH:=		1e1a2533b3fcc45fde4da64c9c00261b1047f14c3f911377ebd1b147b3321cfd
+PKG_HASH:=		9292de67ca73aba1deacf577c9086b595765f36ef47712cfeb49fa31f6e772fb
 PKG_DESCR:=		library implementing a small layer on top of pkcs11 api
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libltdl libopenssl
