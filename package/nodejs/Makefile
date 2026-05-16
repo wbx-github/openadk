@@ -4,16 +4,18 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nodejs
-PKG_VERSION:=		20.11.1
+PKG_VERSION:=		24.15.0
 PKG_RELEASE:=		1
-PKG_HASH:=		4af1ba6ea848cc05908b8a62b02fb27684dd52b2a7988ee82b0cfa72deb90b94
+PKG_HASH:=		729de494dd2872e5a3a6c32a1cd156a5413d4aca2772b2d873ee86bb5531bcd9
 PKG_DESCR:=		asynchronous event driven framework
 PKG_SECTION:=		net/http
-PKG_DEPENDS:=		zlib
-PKG_BUILDDEP:=		python3-host nodejs-host zlib
+PKG_DEPENDS:=		zlib libopenssl
+PKG_BUILDDEP:=		python3-host nodejs-host zlib openssl
 PKG_NEEDS:=		threads c++
 PKG_URL:=		https://nodejs.org/
 PKG_SITES:=		https://nodejs.org/dist/v$(PKG_VERSION)/
+
+PKG_CFLINE_NODEJS:=	depends on ADK_BROKEN
 
 DISTFILES:=             node-v$(PKG_VERSION).tar.gz
 WRKDIST=		$(WRKDIR)/node-v$(PKG_VERSION)
@@ -56,6 +58,7 @@ do-configure:
 			--prefix=/usr \
 			--cross-compiling \
 			--without-intl \
+			--shared-openssl \
                 	--shared-zlib \
 		)
 #		$(SED) "s#<(mkpeephole_exec)#$(STAGING_HOST_DIR)/usr/bin/mkpeephole#g" $(WRKSRC)/deps/v8/src/v8.gyp
