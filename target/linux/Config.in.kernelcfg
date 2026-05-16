@@ -31,7 +31,7 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "bcmrpi_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI0
 	default "bcm2709_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI2
 	default "bcm2709_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI3
-	default "bcm2711_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI4
+	default "bcm2709_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI4
 	default "bcmrpi3_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI3_64
 	default "bcm2711_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI4_64
 	default "bcm2712_defconfig" if ADK_TARGET_SYSTEM_RASPBERRY_PI5

@@ -210,6 +210,9 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_ORANGE_PI0),y)
 VENDOR:=allwinner/
 endif
+ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
+VENDOR:=broadcom/
+endif
 endif
 
 dtb-install:
