@@ -10,6 +10,8 @@ PKG_DESCR:=		firmware for broadcom bluetooth chips
 PKG_SECTION:=		sys/firmware
 PKG_DEPENDS:=		bluez
 
+PKG_CFLINE_BRCM_BLUETOOTH:=	depends on ADK_BROKEN
+
 NO_DISTFILES:=		1
 
 include ${ADK_TOPDIR}/mk/package.mk
