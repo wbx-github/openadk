@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		swig
-PKG_VERSION:=		4.0.2
+PKG_VERSION:=		4.4.1
 PKG_RELEASE:=		1
-PKG_HASH:=		d53be9730d8d58a16bf0cbd1f8ac0c0c3e1090573168bfa151b01eb47fa906fc
+PKG_HASH:=		40162a706c56f7592d08fd52ef5511cb7ac191f3593cf07306a0a554c6281fcf
 PKG_DESCR:=		swig utility
 PKG_SECTION:=		dev/tools
 PKG_URL:=		http://www.swig.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=swig/}
+PKG_SITES:=		https://sourceforge.net/projects/swig/files/swig/$(PKG_NAME)-$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
