@@ -1,0 +1,11 @@
+--- libcap-ng-0.9.3.orig/bindings/python3/Makefile.am	2026-04-09 18:16:37.000000000 +0200
++++ libcap-ng-0.9.3/bindings/python3/Makefile.am	2026-05-15 18:53:58.284204707 +0200
+@@ -20,7 +20,7 @@
+ # Authors:
+ #   Steve Grubb <sgrubb@redhat.com>
+ #
+-SUBDIRS = test
++SUBDIRS =
+ CONFIG_CLEAN_FILES = *.loT *.rej *.orig
+ AM_CFLAGS = -fPIC -DPIC $(PYTHON3_CFLAGS)
+ AM_CPPFLAGS = -I. -I$(top_builddir) $(PYTHON3_INCLUDES)

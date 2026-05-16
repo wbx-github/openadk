@@ -1,0 +1,10 @@
+--- libcap-ng-0.9.3.orig/bindings/Makefile.am	2026-04-09 18:16:37.000000000 +0200
++++ libcap-ng-0.9.3/bindings/Makefile.am	2026-05-15 18:52:42.635900616 +0200
+@@ -25,6 +25,6 @@ CONFIG_CLEAN_FILES = *.loT *.rej *.orig
+ SUBDIRS = src
+ 
+ if USE_PYTHON3
+-SUBDIRS += python3 test
++SUBDIRS += python3
+ endif
+ 
