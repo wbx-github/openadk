@@ -4,23 +4,23 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		iptraf-ng
-PKG_GIT:=		tag
-PKG_HASH:=		cf385d3a0d2344f0159be0ab859651de2f750b661d88d1f22f96b82a7cd4ae13
-PKG_VERSION:=		v1.2.1
+PKG_VERSION:=		1.2.2
 PKG_RELEASE:=		1
+PKG_HASH:=		75fd653745ea0705995c25e6c07b34252ecc2563c6a91b007a3a8c26f29cc252
 PKG_DESCR:=		a console-based network monitoring program
 PKG_SECTION:=		net/perf
 PKG_DEPENDS:=		libncurses
 PKG_BUILDDEP:=		ncurses
 PKG_URL:=		https://github.com/iptraf-ng/iptraf-ng
-PKG_SITES:=		https://github.com/iptraf-ng/iptraf-ng.git
+PKG_SITES:=		https://github.com/iptraf-ng/iptraf-ng/archive/refs/tags/
+
+DISTFILES:=		v$(PKG_VERSION).tar.gz
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,IPTRAF_NG,iptraf-ng,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 CONFIG_STYLE:=		manual
-TARGET_LDFLAGS+=	-ltinfo -lncurses -lpanel
 XAKE_FLAGS+=		PLATFORM="-DPLATFORM=\\\"Linux/${ARCH}\\\"" \
 			TARGET="/usr/bin" \
 			WORKDIR="/var/lib/iptraf-ng" V=1
