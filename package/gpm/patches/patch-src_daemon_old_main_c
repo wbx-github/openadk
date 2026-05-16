@@ -1,0 +1,10 @@
+--- gpm-1.20.7.orig/src/daemon/old_main.c	2012-10-26 23:21:38.000000000 +0200
++++ gpm-1.20.7/src/daemon/old_main.c	2026-05-13 18:43:13.466675802 +0200
+@@ -25,6 +25,7 @@
+ #include <signal.h>                 /* guess again       */
+ #include <errno.h>                  /* guess again       */
+ #include <unistd.h>                 /* unlink            */
++#include <string.h>                 /* strcpy, bzero     */
+ #include <sys/stat.h>               /* chmod             */
+ 
+ #include <linux/kd.h>               /* linux hd*         */

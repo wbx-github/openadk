@@ -1,0 +1,13 @@
+--- gpm-1.20.7.orig/src/headers/gpm.h	2012-10-26 23:21:38.000000000 +0200
++++ gpm-1.20.7/src/headers/gpm.h	2026-05-13 18:39:35.317416886 +0200
+@@ -268,7 +268,9 @@ Gpm_Roi * Gpm_LowerRoi(Gpm_Roi *which, G
+ /* libcurses.c */
+ /* #include <curses.h>  Hmm... seems risky */
+ 
+-extern int Gpm_Wgetch();
++struct _win_st;
++	
++extern int Gpm_Wgetch(struct _win_st *);
+ #define Gpm_Getch() (Gpm_Wgetch(NULL))
+ 
+ /* libxtra.c */

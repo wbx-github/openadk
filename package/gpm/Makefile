@@ -9,7 +9,7 @@ PKG_RELEASE:=		2
 PKG_HASH:=		c7e4661c24e05ae13547176b649bac8e3a0db2575f7dd57559f9e0b509f90f49
 PKG_DESCR:=		console mouse support
 PKG_SECTION:=		sys/hw
-PKG_URL:=		http://launchpad.net/gpm
+PKG_URL:=		https://www.nico.schottelius.org/software/gpm/
 PKG_SITES:=		http://www.nico.schottelius.org/software/gpm/archives/
 PKG_NOPARALLEL:=	1
 PKG_OPTS:=		dev
@@ -22,6 +22,7 @@ $(eval $(call PKG_template,GPM,gpm,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},
 
 AUTOTOOL_STYLE:=	autogen
 TARGET_CPPFLAGS+=	-I${WRKSRC}/src/headers
+TARGET_LDFLAGS+=	-lncursesw
 
 gpm-install:
 	${INSTALL_DIR} ${IDIR_GPM}/usr/sbin ${IDIR_GPM}/usr/lib
