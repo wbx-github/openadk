@@ -9,7 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		9d240c7e9fcc3f6cb1d32410ca2dee10d359c53f1a5a30d8f3ec49b18b73f1d0
 PKG_DESCR:=		update dynamic dns services
 PKG_SECTION:=		net/dns
-PKG_SITES:=		http://savannah.nongnu.org/download/updatedd/
+PKG_SITES:=		https://download.savannah.gnu.org/releases/updatedd/
 
 PKG_SUBPKGS:=		UPDATEDD UPDATEDD_MOD_CHANGEIP UPDATEDD_MOD_DYNDNS UPDATEDD_MOD_EURODYNDNS
 PKG_SUBPKGS+=		UPDATEDD_MOD_HN UPDATEDD_MOD_NOIP UPDATEDD_MOD_ODS UPDATEDD_MOD_OVH
