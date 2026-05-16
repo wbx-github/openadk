@@ -41,7 +41,7 @@ INSTALL_TARGET:=	install-nodoc
 HOST_CONFIGURE_ARGS+=	--disable-install-doc \
 			--disable-yjit \
 			--disable-shared \
-			--with-out-ext=curses,readline,openssl \
+			--with-out-ext=curses,readline \
 			--disable-rubygems
 HOST_ALL_TARGET:=	main
 HOST_INSTALL_TARGET:=	install-nodoc
