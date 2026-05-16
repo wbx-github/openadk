@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		rsyslog
-PKG_VERSION:=		8.2010.0
+PKG_VERSION:=		8.2604.0
 PKG_RELEASE:=		1
-PKG_HASH:=		19b232f765c4ba7a35b91ef1f5f9af775f6ff78ef56bb7737a2ce79ccbb32b98
+PKG_HASH:=		2a04b1cd6f0a5e2b60eec231acce3cf9927c4ed02bc5fbbe5dc4c35fcf887b64
 PKG_DESCR:=		syslog daemon
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		libestr liblogging libfastjson libuuid zlib libncurses libgcrypt
@@ -23,10 +23,9 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,RSYSLOG,rsyslog,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-lm
-
 CONFIGURE_ENV+=		ac_cv_func_malloc_0_nonnull=yes \
 			ac_cv_func_realloc_0_nonnull=yes
+CONFIGURE_ARGS+=	--disable-impstats-push
 
 rsyslog-install:
 	$(INSTALL_DIR) $(IDIR_RSYSLOG)/etc
