@@ -13,8 +13,9 @@ HOST_BUILDDEP:=		python3-host python-markupsafe-host
 PKG_SITES:=		https://files.pythonhosted.org/packages/05/5f/2ba6e026d33a0e6ddc1dddf9958677f76f5f80c236bd65309d280b166d3e/
 
 DISTFILES:=             Mako-$(PKG_VERSION).tar.gz
-
 WRKDIST=		$(WRKDIR)/Mako-$(PKG_VERSION)
+
+PKG_CFLINE_PYTHON_MAKO:=	depends on ADK_HOST_ONLY
 
 include ${ADK_TOPDIR}/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
