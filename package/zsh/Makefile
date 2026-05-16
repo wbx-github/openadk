@@ -12,12 +12,13 @@ PKG_SECTION:=		base/shells
 PKG_DEPENDS:=		libncurses
 PKG_BUILDDEP:=		ncurses
 PKG_URL:=		http://www.zsh.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=zsh/}
+PKG_SITES:=		https://www.zsh.org/pub/
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,ZSH,zsh,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--disable-gdbm \
 			--disable-pcre \
 			--disable-cap \
