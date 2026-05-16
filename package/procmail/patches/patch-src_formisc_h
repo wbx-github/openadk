@@ -1,9 +1,0 @@
-$Id: update-patches 24 2008-08-31 14:56:13Z wbx $
---- procmail-3.22.orig/src/formisc.h	1999-04-19 08:42:15.000000000 +0200
-+++ procmail-3.22/src/formisc.h	2009-06-02 00:22:16.000000000 +0200
-@@ -17,4 +17,4 @@ void
- char*
-  skipwords P((char*start));
- int
-- getline P((void));
-+ getline2 P((void));
