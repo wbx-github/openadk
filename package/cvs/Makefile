@@ -12,6 +12,8 @@ PKG_SECTION:=		dev/scm
 PKG_URL:=		http://www.nongnu.org/cvs/
 PKG_SITES:=		http://ftp.gnu.org/non-gnu/cvs/source/stable/${PKG_VERSION}/
 
+PKG_CFLINE_CVS:=	depends on ADK_BROKEN
+
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
