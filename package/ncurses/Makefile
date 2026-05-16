@@ -90,7 +90,7 @@ libncurses-install:
 	rm -rf ${WRKINST}/usr/lib/terminfo
 	# this is installed as libncurses - make libcurses a "link"
 	rm -f ${WRKINST}/usr/lib/libcurses.so*
-	echo 'GROUP(-lncurses)' >${WRKINST}/usr/lib/libcurses.so
+	echo 'GROUP(-lncursesw)' >${WRKINST}/usr/lib/libcurses.so
 	# libcurses will not show up in the IPKG, only in STAGING_TARGET_DIR
 	${INSTALL_DIR} ${IDIR_LIBNCURSES}/usr/lib
 	${CP} ${WRKINST}/usr/lib/lib{form,menu,ncurses,panel}w.so* \
