@@ -1,6 +1,6 @@
 --- brutefir-1.1.2.orig/Makefile	2026-01-20 19:11:21.000000000 +0100
-+++ brutefir-1.1.2/Makefile	2026-05-16 11:26:24.233177385 +0200
-@@ -8,17 +8,13 @@ LDFLAGS +=
++++ brutefir-1.1.2/Makefile	2026-05-16 11:25:22.289049837 +0200
+@@ -8,12 +8,12 @@ LDFLAGS +=
  
  ###################################
  # Where to install
@@ -8,18 +8,15 @@
 +INSTALL_PREFIX	= $(DESTDIR)/usr
  
  ###################################
--# Where to find libraries, and their header files.
+ # Where to find libraries, and their header files.
 -LIBPATHS	= -L/usr/local/lib
 -INCLUDE		= -I/usr/local/include
++LIBPATHS	= -L/usr/lib
++INCLUDE		= -I/usr/include
  ifdef FFTW_PATH
  LIBPATHS	+= -L$(FFTW_PATH)/lib
  INCLUDE		+= -I$(FFTW_PATH)/include
- endif
--INCLUDE		+= -I/usr/include/pipewire-0.3 -I/usr/include/spa-0.2
- INCLUDE 	+= -I$(SRCDIR)
- 
- ###################################
-@@ -36,8 +32,8 @@ FFTW_LIB	= -lfftw3 -lfftw3f
+@@ -36,8 +36,8 @@ FFTW_LIB	= -lfftw3 -lfftw3f
  ###################################
  # Binaries
  FLEX	= flex
@@ -30,7 +27,7 @@
  CHMOD	= chmod
  
  ###################################
-@@ -88,25 +84,11 @@ BFLOGIC_EQ_OBJS = $(BUILDDIR)/bflogic_eq
+@@ -88,25 +88,11 @@ BFLOGIC_EQ_OBJS = $(BUILDDIR)/bflogic_eq
  BIN_TARGETS	= $(BUILDDIR)/brutefir
  LIB_TARGETS	= $(BUILDDIR)/cli.bflogic $(BUILDDIR)/eq.bflogic $(BUILDDIR)/file.bfio
  # These targets requires libs that are less portable
@@ -57,7 +54,7 @@
  BRUTEFIR_LIBS	+= -ldl
  LDMULTIPLEDEFS	= -Xlinker --allow-multiple-definition
  
-@@ -137,27 +119,27 @@ $(BUILDDIR)/brutefir: $(BRUTEFIR_OBJS)
+@@ -137,27 +123,27 @@ $(BUILDDIR)/brutefir: $(BRUTEFIR_OBJS)
  	$(CC) $(LDFLAGS) $(LIBPATHS) $(LDMULTIPLEDEFS) -o $@ $(BRUTEFIR_OBJS) $(BRUTEFIR_LIBS)
  
  $(BUILDDIR)/alsa.bfio: $(BFIO_ALSA_OBJS)

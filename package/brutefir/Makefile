@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		brutefir
-PKG_VERSION:=		1.0o
-PKG_RELEASE:=		3
-PKG_HASH:=		caae4a933b53b55b29d6cb7e2803e20819f31def6d0e4e12f9a48351e6dbbe9f
+PKG_VERSION:=		1.1.2
+PKG_RELEASE:=		1
+PKG_HASH:=		9b2f0220dfcd24345ee023b2a2ea4ca85cfd040c7cc6d54674353914f1055eef
 PKG_DESCR:=		convolution engine
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		fftw alsa-lib
 PKG_BUILDDEP:=		flex-host fftw alsa-lib
-PKG_URL:=		https://www.ludd.ltu.se/~torger/brutefir.html
-PKG_SITES:=		https://www.ludd.ltu.se/~torger/files/
+PKG_URL:=		https://torger.se/anders/brutefir.html
+PKG_SITES:=		https://torger.se/anders/files/
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
@@ -24,6 +24,8 @@ PKGCS_WITH_JACK2:=	jack2
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,BRUTEFIR,brutefir,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
+
+TARGET_CPPFLAGS+=	-D_XOPEN_SOURCE -D_GNU_SOURCE
 
 CONFIG_STYLE=		manual
 ifeq ($(ADK_TARGET_CPU_WITH_SSE2),y)
