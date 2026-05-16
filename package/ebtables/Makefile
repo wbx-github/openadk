@@ -4,28 +4,24 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ebtables
-PKG_VERSION:=		2.0.10
+PKG_VERSION:=		2.0.11
 PKG_RELEASE:=		1
-PKG_HASH:=		dc6f7b484f207dc712bfca81645f45120cb6aee3380e77a1771e9c34a9a4455d
+PKG_HASH:=		b71f654784a726329f88b412ef7b96b4e5d786ed2bd28193ed7b4c0d677dfd2a
 PKG_DESCR:=		ethernet bridging firewall tool
 PKG_SECTION:=		net/route
-PKG_URL:=		http://ebtables.sourceforge.net
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=ebtables/}
+PKG_SITES:=		https://www.netfilter.org/pub/ebtables/
 
-DISTFILES:=		${PKG_NAME}-v${PKG_VERSION}-4.tar.gz
-WRKDIST=		${WRKDIR}/${PKG_NAME}-v${PKG_VERSION}-4
+DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,EBTABLES,ebtables,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-CONFIG_STYLE:=		manual
-
 ebtables-install:
 	${INSTALL_DIR} ${IDIR_EBTABLES}/etc
 	${INSTALL_DIR} ${IDIR_EBTABLES}/usr/sbin ${IDIR_EBTABLES}/usr/lib
 	${INSTALL_DATA} ${WRKINST}/etc/ethertypes ${IDIR_EBTABLES}/etc
-	${INSTALL_BIN} ${WRKINST}/usr/sbin/ebtables ${IDIR_EBTABLES}/usr/sbin
+	${INSTALL_BIN} ${WRKINST}/usr/sbin/ebtables-legacy ${IDIR_EBTABLES}/usr/sbin/ebtables
 	${CP} ${WRKINST}/usr/lib/*.so ${IDIR_EBTABLES}/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
