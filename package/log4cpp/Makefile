@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		log4cpp
-PKG_VERSION:=		1.1.1
+PKG_VERSION:=		1.1.6
 PKG_RELEASE:=		1
-PKG_HASH:=		35abf332630a6809c969276b1d60b90c81a95daf24c86cfd7866ffef72f9bed0
+PKG_HASH:=		a036bc6bd6044479e6c456de7edd042b060ea5c843e47beb75f59baea9b20e3a
 PKG_DESCR:=		logging framework for c++
 PKG_SECTION:=		libs/misc
 PKG_NEEDS:=		threads
 PKG_URL:=		http://log4cpp.sourceforge.net/
-PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=log4cpp/log4cpp-1.1.x%20%28new%29/log4cpp-1.1/)
+PKG_SITES:=		https://sourceforge.net/projects/log4cpp/files/log4cpp-1.1.x%20%28new%29/log4cpp-1.1/
 PKG_OPTS:=		dev
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
