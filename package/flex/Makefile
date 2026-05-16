@@ -28,6 +28,8 @@ AUTOTOOL_STYLE:=	autoreconf
 HOST_MAKE_FLAGS+=	STAGE1FLEX=$(WRKSRC)/src/stage1flex 
 MAKE_FLAGS+=		STAGE1FLEX=$(STAGING_HOST_DIR)/usr/bin/stage1flex
 CONFIGURE_ENV+=		ac_cv_path_HELP2MAN=true
+CONFIGURE_ENV+=         ac_cv_func_malloc_0_nonnull=yes \
+			ac_cv_func_realloc_0_nonnull=yes
 
 hostpost-install:
 	(cd $(STAGING_HOST_DIR)/usr/bin; ln -sf flex lex)
