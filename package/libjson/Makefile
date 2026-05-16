@@ -22,6 +22,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBJSON,libjson,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+TARGET_CXXFLAGS+=	-std=c++11
 MAKE_FILE:=		makefile
 FAKE_FLAGS+=		prefix=${WRKINST}/usr
 CONFIG_STYLE:=		manual
