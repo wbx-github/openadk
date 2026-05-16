@@ -1,6 +1,6 @@
 --- setserial-2.17.orig/setserial.c	2000-01-27 16:40:52.000000000 +0100
-+++ setserial-2.17/setserial.c	2010-03-12 17:34:40.961901844 +0100
-@@ -11,6 +11,7 @@
++++ setserial-2.17/setserial.c	2026-05-14 04:19:26.521989444 +0200
+@@ -11,17 +11,17 @@
   */
  
  #include <stdio.h>
@@ -8,7 +8,10 @@
  #include <fcntl.h>
  #include <termios.h>
  #include <string.h>
-@@ -19,9 +20,6 @@
+ #include <errno.h>
++#include <sys/ioctl.h>
++#include <unistd.h>
+ 
  #ifdef HAVE_ASM_IOCTLS_H
  #include <asm/ioctls.h>
  #endif
@@ -18,7 +21,7 @@
  #include <linux/serial.h>
  
  #include "version.h"
-@@ -118,14 +116,6 @@ struct flag_type_table {
+@@ -118,14 +118,6 @@ struct flag_type_table {
  	CMD_CONFIG,	"autoconfigure",0,		0,		0, 0,
  	CMD_GETMULTI,	"get_multiport",0,		0,		0, 0,
  	CMD_SETMULTI,	"set_multiport",0,		0,		0, 0,
@@ -33,7 +36,7 @@
  	0,		0,		0,		0,		0, 0,
  };
  	
-@@ -356,62 +346,6 @@ void set_multiport(char *device, int fd,
+@@ -356,62 +348,6 @@ void set_multiport(char *device, int fd,
  }
  #endif
  
@@ -96,7 +99,7 @@
  void get_serial(char *device)
  {
  	struct serial_struct serinfo;
-@@ -453,9 +387,6 @@ void get_serial(char *device)
+@@ -453,9 +389,6 @@ void get_serial(char *device)
  		print_flags(&serinfo, "\tFlags: ", "");
  		printf("\n\n");
  
@@ -106,7 +109,7 @@
  	} else if (verbosity==0) {
  		if (serinfo.type) {
  			printf("%s at 0x%.4x (irq = %d) is a %s",
-@@ -593,16 +524,6 @@ void set_serial(char *device, char ** ar
+@@ -593,16 +526,6 @@ void set_serial(char *device, char ** ar
  			}
  			set_multiport(device, fd, &arg);
  			break;
@@ -123,7 +126,7 @@
  		default:
  			fprintf(stderr, "Internal error: unhandled cmd #%d\n", p->cmd);
  			exit(1);
-@@ -692,14 +613,6 @@ fprintf(stderr, "\t* port\t\tset the I/O
+@@ -692,14 +615,6 @@ fprintf(stderr, "\t* port\t\tset the I/O
  	fprintf(stderr, "\t  get_multiport\tDisplay the multiport configuration\n");
  	fprintf(stderr, "\t  set_multiport\tSet the multiport configuration\n");
  	fprintf(stderr, "\n");
@@ -138,3 +141,12 @@
  	fprintf(stderr, "\n");
  	fprintf(stderr, "\t  spd_hi\tuse 56kb instead of 38.4kb\n");
  	fprintf(stderr, "\t  spd_vhi\tuse 115kb instead of 38.4kb\n");
+@@ -714,7 +629,7 @@ fprintf(stderr, "\t* port\t\tset the I/O
+ 	exit(1);
+ }
+ 
+-main(int argc, char **argv)
++int main(int argc, char **argv)
+ {
+ 	int	get_flag = 0, wild_intr_flag = 0;
+ 	int	c;
