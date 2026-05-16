@@ -12,6 +12,8 @@ PKG_SECTION:=		net/misc
 PKG_URL:=		http://www.joachim-breitner.de/udp-broadcast-relay/
 PKG_SITES:=		https://github.com/nomeata/udp-broadcast-relay.git
 
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
+
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,UDP_BROADCAST_RELAY,udp-broadcast-relay,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
