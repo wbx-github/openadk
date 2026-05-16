@@ -12,7 +12,7 @@ PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		libuuid libpopt libgnutls libtirpc
 PKG_DEPENDS+=		libtalloc libkrb5
 PKG_BUILDDEP:=		util-linux talloc p5-parse-yapp-host gnutls krb5
-PKG_NEEDS:=		threads intl
+PKG_NEEDS:=		threads intl iconv
 PKG_URL:=		http://www.samba.org/
 PKG_SITES:=		http://samba.org/samba/ftp/stable/
 
@@ -49,6 +49,7 @@ CONFIGURE_ARGS+=	--enable-fhs \
 			--without-json \
 			--without-libarchive \
 			--without-iconv \
+			--without-regedit \
 			--disable-glusterfs \
 			--disable-iprint \
 			--disable-cups \
