@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		openntpd
-PKG_VERSION:=		6.0p1
+PKG_VERSION:=		6.8p1
 PKG_RELEASE:=		1
-PKG_HASH:=		b1ab80094788912adb12b33cb1f251cc58db39294c1b5c6376972f5f7ba577e8
+PKG_HASH:=		8582db838a399153d4a17f2a76518b638cc3020f58028575bf54127518f55a46
 PKG_DESCR:=		ntp server daemon
 PKG_SECTION:=		net/ntp
 PKG_URL:=		http://www.openntpd.org/
