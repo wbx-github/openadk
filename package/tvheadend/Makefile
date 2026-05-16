@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		tvheadend
-PKG_VERSION:=		a9c6db8acbd85297238771b8b4430435b7994928
+PKG_VERSION:=		b162cce2760631f0d38f25dd09188b70c2b11223
 PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_DESCR:=		tv streaming server
@@ -13,6 +13,8 @@ PKG_DEPENDS:=		libopenssl
 PKG_BUILDDEP:=		openssl yasm-host ffmpeg
 PKG_URL:=		https://tvheadend.org/projects/tvheadend
 PKG_SITES:=		https://github.com/tvheadend/tvheadend.git
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
