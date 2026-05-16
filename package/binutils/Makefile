@@ -38,6 +38,7 @@ CONFIGURE_ARGS+=	--disable-werror \
 			--disable-gdb \
 			--disable-sim \
 			--disable-install-libiberty \
+			--without-zstd \
 			--host=$(GNU_TARGET_NAME) \
 			--target=$(GNU_TARGET_NAME)
 
