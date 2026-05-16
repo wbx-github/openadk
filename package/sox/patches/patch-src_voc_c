@@ -1,0 +1,25 @@
+--- sox-f3094754a7c2a7e55c35621d20fa9945736e72df.orig/src/voc.c	2026-05-15 13:54:15.000000000 +0200
++++ sox-f3094754a7c2a7e55c35621d20fa9945736e72df/src/voc.c	2026-05-15 13:57:35.534681392 +0200
+@@ -353,6 +353,11 @@ static size_t read_samples(sox_format_t
+             v->block_remaining = 0;
+             return done;
+           }
++          if(uc == 0) {
++            lsx_fail_errno(ft, EINVAL, "invalid rate value");
++            v->block_remaining = 0;
++            return done;
++          }
+           *buf = SOX_UNSIGNED_8BIT_TO_SAMPLE(uc,);
+           lsx_adpcm_init(&v->adpcm, 6 - v->size, SOX_SAMPLE_TO_SIGNED_16BIT(*buf, ft->clips));
+           ++buf;
+@@ -625,6 +630,10 @@ static int getblock(sox_format_t * ft)
+         v->rate = new_rate_32;
+         ft->signal.rate = new_rate_32;
+         lsx_readb(ft, &uc);
++        if (uc <= 1) {
++          lsx_fail_errno(ft, SOX_EFMT, "2 bits per word required");
++          return (SOX_EOF);
++        }
+         v->size = uc;
+         lsx_readb(ft, &uc);
+         if (v->channels != -1 && uc != v->channels) {

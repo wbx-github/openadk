@@ -4,7 +4,8 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		sox
-PKG_VERSION:=		14.4.2
+PKG_VERSION:=		f3094754a7c2a7e55c35621d20fa9945736e72df
+PKG_GIT:=		hash
 PKG_RELEASE:=		1
 PKG_HASH:=		b45f598643ffbd8e363ff24d61166ccec4836fea6d3888881b8df53e3bb55f6c
 PKG_DESCR:=		swiss army knife of sound processing programs
@@ -13,7 +14,7 @@ PKG_DEPENDS:=		zlib libncurses
 PKG_BUILDDEP:=		zlib ncurses
 PKG_NEEDS:=		threads
 PKG_URL:=		http://sox.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=sox/}
+PKG_SITES:=		https://git.code.sf.net/p/sox/code.git
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -41,6 +42,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,SOX,sox,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--disable-openmp \
 			--without-magic \
 			--without-ladspa \

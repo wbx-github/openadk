@@ -1,0 +1,70 @@
+--- sox-f3094754a7c2a7e55c35621d20fa9945736e72df.orig/src/soxconfig.h.in	2026-05-15 15:55:40.360695601 +0200
++++ sox-f3094754a7c2a7e55c35621d20fa9945736e72df/src/soxconfig.h.in	2026-05-15 15:53:15.299245834 +0200
+@@ -9,9 +9,6 @@
+ /* Define to dlopen() lame */
+ #undef DL_LAME
+ 
+-/* Define to dlopen() libsndfile */
+-#undef DL_LIBSNDFILE
+-
+ /* Define to dlopen() mad */
+ #undef DL_MAD
+ 
+@@ -87,7 +84,7 @@
+ /* Define to 1 if you have the <gsm.h> header file. */
+ #undef HAVE_GSM_H
+ 
+-/* Define if id3_file_open exists in -l$sox_wl */
++/* Define if id3_file_open exists in -l$sox_wl $ZLIB_LIBS */
+ #undef HAVE_ID3TAG
+ 
+ /* Define to 1 if you have the <id3tag.h> header file. */
+@@ -129,7 +126,7 @@
+ /* Define if pa_simple_new exists in -lpulse -lpulse-simple */
+ #undef HAVE_LIBPULSEAUDIO
+ 
+-/* Define if sf_open_virtual exists in -l$sox_wl */
++/* Define if libsndfile is enabled */
+ #undef HAVE_LIBSNDFILE
+ 
+ /* Define if sio_open exists in -lsndio */
+@@ -159,12 +156,9 @@
+ /* Define to 1 if you have the <mad.h> header file. */
+ #undef HAVE_MAD_H
+ 
+-/* Define if magic_open exists in -l$sox_wl */
++/* Define if magic is enabled */
+ #undef HAVE_MAGIC
+ 
+-/* Define to 1 if you have the <magic.h> header file. */
+-#undef HAVE_MAGIC_H
+-
+ /* Define to 1 if you have the 'mkstemp' function. */
+ #undef HAVE_MKSTEMP
+ 
+@@ -216,9 +210,6 @@
+ /* Define if sndfile is enabled */
+ #undef HAVE_SNDFILE
+ 
+-/* Define to 1 if you have the <sndfile.h> header file. */
+-#undef HAVE_SNDFILE_H
+-
+ /* Define if sndio is enabled */
+ #undef HAVE_SNDIO
+ 
+@@ -357,9 +348,15 @@
+ /* Define if gsm is linked in */
+ #undef STATIC_GSM
+ 
++/* Define if libsndfile is linked in */
++#undef STATIC_LIBSNDFILE
++
+ /* Define if lpc10 is linked in */
+ #undef STATIC_LPC10
+ 
++/* Define if magic is linked in */
++#undef STATIC_MAGIC
++
+ /* Define if mp3 is linked in */
+ #undef STATIC_MP3
+ 

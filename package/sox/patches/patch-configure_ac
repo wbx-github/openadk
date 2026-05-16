@@ -1,0 +1,35 @@
+--- sox-f3094754a7c2a7e55c35621d20fa9945736e72df.orig/configure.ac	2026-05-15 13:54:15.000000000 +0200
++++ sox-f3094754a7c2a7e55c35621d20fa9945736e72df/configure.ac	2026-05-15 15:53:00.571091052 +0200
+@@ -32,10 +32,6 @@ AC_PROG_LN_S
+ PKG_PROG_PKG_CONFIG
+ PKG_INSTALLDIR
+ 
+-AX_APPEND_COMPILE_FLAGS([-fstack-protector-strong])
+-AX_APPEND_COMPILE_FLAGS([-Wall -Wmissing-prototypes -Wstrict-prototypes])
+-AX_APPEND_LINK_FLAGS([-Wl,--as-needed])
+-
+ dnl Check for system dependent features.
+ AC_C_BIGENDIAN
+ AC_C_INLINE
+@@ -80,10 +76,10 @@ SOX_REPORT([other], [LADSPA effect plugi
+ 
+ dnl Various libraries
+ 
+-SOX_WITH_LIB([magic], [magic.h], [magic], [magic_open])
++SOX_FMT_PKG([magic], [libmagic])
+ SOX_CHECK_LIB([ZLIB], [zlib.h], [z], [uncompress])
+ SOX_WITH_LIB([png], [png.h], [png], [png_set_rows], [], [], [], [$ZLIB_LIBS])
+-SOX_WITH_LIB([id3tag], [id3tag.h], [id3tag], [id3_file_open])
++SOX_WITH_LIB([id3tag], [id3tag.h], [id3tag], [id3_file_open], [], [], [], [$ZLIB_LIBS])
+ SOX_WITH_LIB([libgsm], [gsm/gsm.h gsm.h], [gsm], [gsm_create])
+ 
+ dnl Optional formats
+@@ -117,7 +113,7 @@ SOX_FMT_REQ([mp3], [MAD LAME TWOLAME])
+ SOX_FMT_PKG([oggvorbis], [ogg vorbis vorbisenc vorbisfile])
+ SOX_FMT_PKG([opus], [opusfile])
+ 
+-SOX_DL_LIB([libsndfile], [sndfile.h], [sndfile], [sf_open_virtual])
++SOX_FMT_PKG([libsndfile], [sndfile])
+ SOX_FMT_REQ([sndfile], [LIBSNDFILE])
+ 
+ SOX_FMT_LIB([wavpack], [wavpack/wavpack.h], [wavpack], [WavpackGetSampleRate])
