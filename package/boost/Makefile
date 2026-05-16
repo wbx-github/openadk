@@ -56,6 +56,8 @@ CONFIGURE_ARGS+=	--target=$(GNU_TARGET_NAME) \
 			--without-context \
 			--without-coroutine \
 			--without-charconv \
+			--without-log \
+			--without-json \
 			--without-locale
 
 ifneq (${ADK_PACKAGE_BOOST_IOSTREAMS},)
@@ -66,17 +68,11 @@ endif
 ifeq (${ADK_PACKAGE_BOOST_DATE_TIME},)
 CONFIGURE_ARGS+=	--without-date_time
 endif
-ifeq (${ADK_PACKAGE_BOOST_JSON},)
-CONFIGURE_ARGS+=	--without-json
-endif
 ifeq (${ADK_PACKAGE_BOOST_PYTHON},)
 CONFIGURE_ARGS+=	--without-python
 endif
 ifeq (${ADK_PACKAGE_BOOST_GRAPH},)
 CONFIGURE_ARGS+=	--without-graph
-endif
-ifeq (${ADK_PACKAGE_BOOST_LOG},)
-CONFIGURE_ARGS+=	--without-log
 endif
 ifeq (${ADK_PACKAGE_BOOST_MATH},)
 CONFIGURE_ARGS+=	--without-math
