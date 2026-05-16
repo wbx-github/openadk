@@ -12,7 +12,6 @@ PKG_SECTION:=		net/route
 PKG_BUILDDEP:=		readline ncurses c-ares
 PKG_DEPENDS:=		c-ares
 PKG_NEEDS:=		threads
-PKG_URL:=		http://www.quagga.net/
 PKG_SITES:=		https://github.com/Quagga/quagga/releases/download/$(PKG_NAME)-$(PKG_VERSION)/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
