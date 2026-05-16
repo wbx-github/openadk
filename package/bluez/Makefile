@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		39fea64b590c9492984a0c27a89fc203e1cdc74866086efb8f4698677ab2b574
 PKG_DESCR:=		bluetooth applications
 PKG_SECTION:=		net/wifi
-PKG_DEPENDS:=		glib dbus libreadline libudev
-PKG_BUILDDEP:=		glib dbus readline eudev
+PKG_DEPENDS:=		glib dbus libncurses libreadline libudev
+PKG_BUILDDEP:=		glib dbus ncurses readline eudev
 PKG_KDEPENDS:=		bt bt-l2cap bt-sco bt-rfcomm bt-hidp bt-bnep
 PKG_URL:=		http://www.bluez.org/
 PKG_SITES:=		http://www.kernel.org/pub/linux/bluetooth/
@@ -19,7 +19,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,BLUEZ,bluez,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-TARGET_LDFLAGS+=	-lncurses
+TARGET_LDFLAGS+=	-lncursesw
 
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 XAKE_FLAGS+=		CCLD="$(TARGET_CC) -all-static -pthread"
