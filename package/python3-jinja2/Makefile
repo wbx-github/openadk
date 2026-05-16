@@ -13,6 +13,8 @@ PKG_BUILDDEP:=		python3-host
 PKG_URL:=		https://pypi.org/project/Jinja2/
 PKG_SITES:=		https://files.pythonhosted.org/packages/f8/86/7c0eb6e8b05385d1ce682abc0f994abd1668e148fb52603fa86e15d4c110/
 
+PKG_CFLINE_PYTHON3_JINJA2:=	depends on ADK_HOST_ONLY
+
 DISTFILES:=             Jinja2-$(PKG_VERSION).tar.gz
 
 WRKDIST=		$(WRKDIR)/Jinja2-$(PKG_VERSION)
