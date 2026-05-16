@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		mdadm
-PKG_VERSION:=		4.4
+PKG_VERSION:=		4.6
 PKG_RELEASE:=		1
-PKG_HASH:=		556266fb8322de465eff2aa7e0f7d2b1056153770c70971834833f571dbc02a2
+PKG_HASH:=		202a7525e6f2b44395a9ef2c561082c7d6d8204e9addfe3f6268bfb141efc093
 PKG_DESCR:=		tool for managing software raid arrays
 PKG_DEPENDS:=		libudev
 PKG_BUILDDEP:=		eudev
