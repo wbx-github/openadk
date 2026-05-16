@@ -754,18 +754,6 @@ else
   if [ -n "$ADK_TARGET_ARCH_X86_64" ]; then
     NEED_LIBELF="$NEED_LIBELF x86_64 arch"
   fi
-  if [ -n "$ADK_PACKAGE_FIREFOX" ]; then
-    NEED_RUST="$NEED_RUST firefox"
-  fi
-  if [ -n "$ADK_PACKAGE_FIREFOX" ]; then
-    NEED_CARGO="$NEED_CARGO firefox"
-  fi
-  if [ -n "$ADK_PACKAGE_FIREFOX" ]; then
-    NEED_CLANG="$NEED_CLANG firefox"
-  fi
-  if [ -n "$ADK_PACKAGE_FIREFOX" ]; then
-    NEED_CBINDGEN="$NEED_CBINDGEN firefox"
-  fi
   if [ -n "$ADK_PACKAGE_KODI" ]; then
     NEED_JAVA="$NEED_JAVA kodi"
   fi
@@ -847,34 +835,6 @@ else
   if [ -n "$NEED_JAVA" ]; then
     if ! which java >/dev/null 2>&1; then
       printf "You need java to build $NEED_JAVA \n"
-      out=1
-    fi
-  fi
-
-  if [ -n "$NEED_RUST" ]; then
-    if ! which rustc >/dev/null 2>&1; then
-      printf "You need rustc to build $NEED_RUST \n"
-      out=1
-    fi
-  fi
-
-  if [ -n "$NEED_CARGO" ]; then
-    if ! which cargo >/dev/null 2>&1; then
-      printf "You need cargo to build $NEED_CARGO \n"
-      out=1
-    fi
-  fi
-
-  if [ -n "$NEED_CLANG" ]; then
-    if ! which clang-18 >/dev/null 2>&1; then
-      printf "You need clang-13 to build $NEED_CLANG \n"
-      out=1
-    fi
-  fi
-
-  if [ -n "$NEED_CBINDGEN" ]; then
-    if ! which cbindgen >/dev/null 2>&1; then
-      printf "You need cbindgen to build $NEED_CBINDGEN \n"
       out=1
     fi
   fi
