@@ -1,0 +1,12 @@
+--- enchant-2.8.16.orig/lib/Makefile.am	2025-07-29 13:38:09.000000000 +0200
++++ enchant-2.8.16/lib/Makefile.am	2026-05-12 20:20:48.809351381 +0200
+@@ -42,9 +42,6 @@ libenchant_include_HEADERS = enchant.h e
+ libenchant_datadir = $(pkgdatadir)-@ENCHANT_MAJOR_VERSION@
+ libenchant_data_DATA = enchant.ordering
+ 
+-dist_man_MANS = enchant.5
+-nodist_doc_DATA = enchant.html
+-
+ edit = sed \
+ 	-e 's|@PKGDATADIR[@]|$(pkgdatadir)|g' \
+ 	-e 's|@SYSCONFDIR[@]|$(sysconfdir)|g'

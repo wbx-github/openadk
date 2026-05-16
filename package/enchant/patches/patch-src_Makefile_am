@@ -1,12 +1,17 @@
---- enchant-2.8.2.orig/src/Makefile.am	2024-04-25 14:23:39.000000000 +0200
-+++ enchant-2.8.2/src/Makefile.am	2025-03-30 13:10:04.475913008 +0200
-@@ -13,9 +13,6 @@
+--- enchant-2.8.16.orig/src/Makefile.am	2025-07-29 13:42:14.000000000 +0200
++++ enchant-2.8.16/src/Makefile.am	2026-05-12 20:18:10.421695428 +0200
+@@ -25,14 +25,8 @@ BUILT_VAPIS = util.vapi
  
- AM_CPPFLAGS = -I$(top_srcdir) $(ISYSTEM)$(top_builddir)/libgnu $(ISYSTEM)$(top_srcdir)/libgnu -I$(top_srcdir)/lib $(GLIB_CFLAGS) $(WARN_CFLAGS) -DG_LOG_DOMAIN='"libenchant"'
+ util.h util.vapi: libutil.la
  
 -dist_man_MANS = enchant-@ENCHANT_MAJOR_VERSION@.1 enchant-lsmod-@ENCHANT_MAJOR_VERSION@.1
 -nodist_doc_DATA = enchant-@ENCHANT_MAJOR_VERSION@.html enchant-lsmod-@ENCHANT_MAJOR_VERSION@.html
 -
- edit = sed \
- 	-e 's|@PKGDATADIR[@]|$(pkgdatadir)|g' \
- 	-e 's|@SYSCONFDIR[@]|$(sysconfdir)|g'
+ DISTCLEANFILES = $(dist_man_MANS) $(nodist_doc_DATA) dummy.vala
+ 
+-.1.html:
+-	groff -mandoc -Thtml $< > $@
+-
+ enchant-@ENCHANT_MAJOR_VERSION@.1: $(builddir)/enchant.1 Makefile.am $(top_builddir)/config.status
+ 	cp $(abs_builddir)/enchant.1 $@
+ 
