@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		net-snmp
-PKG_VERSION:=		5.8
+PKG_VERSION:=		5.9.5.2
 PKG_RELEASE:=		1
-PKG_HASH:=		b2fc3500840ebe532734c4786b0da4ef0a5f67e51ef4c86b3345d697e4976adf
+PKG_HASH:=		16707719f833184a4b72835dac359ae188123b06b5e42817c00790d7dc1384bf
 PKG_DESCR:=		snmp agent
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libnetsnmp elfutils libnl
 PKG_BUILDDEP:=		elfutils libnl
 PKG_URL:=		http://www.net-snmp.org/
-PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=net-snmp/)
-PKG_NOPARALLEL:=	1
+PKG_SITES:=		https://sourceforge.net/projects/net-snmp/files/net-snmp/$(PKG_VERSION)/
+#PKG_NOPARALLEL:=	1
 PKG_LIBNAME:=		libnetsnmp
 PKG_OPTS:=		dev
 
@@ -43,7 +43,7 @@ else
 SNMP_TRANSPORTS_EXCLUDED:=	TCPIPv6 UDPIPv6
 endif
 
-TARGET_LDFLAGS+=	-pthread
+TARGET_LDFLAGS+=	-lncursesw
 CONFIGURE_ARGS+=	--with-defaults \
 			--with-persistent-directory=/etc/snmp \
 			--with-default-snmp-version=3 \
