@@ -4,21 +4,23 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		arpwatch
-PKG_VERSION:=		2.1a15
+PKG_VERSION:=		3.9
 PKG_RELEASE:=		1
-PKG_HASH:=		c1df9737e208a96a61fa92ddad83f4b4d9be66f8992f3c917e9edf4b05ff5898
+PKG_HASH:=		832d20a5a508d9694a84a17e2627de3b3aa8b42b19ebdd97e264c511168f6eb4
 PKG_DESCR:=		ethernet monitor program
 PKG_SECTION:=		net/debug
 PKG_DEPENDS:=		libpcap
 PKG_BUILDDEP:=		libpcap
 PKG_URL:=		http://www-nrg.ee.lbl.gov/
-PKG_SITES:=		ftp://ftp.ee.lbl.gov/
+PKG_SITES:=		https://ee.lbl.gov/downloads/arpwatch/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,ARPWATCH,${PKG_NAME},${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
+
+CONFIGURE_ARGS+=	--with-sendmail=/dev/null
 
 INSTALL_STYLE:=		manual
 

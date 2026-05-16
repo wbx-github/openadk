@@ -1,0 +1,10 @@
+--- arpwatch-3.9.orig/report.c	2023-09-05 19:50:56.000000000 +0200
++++ arpwatch-3.9/report.c	2026-05-13 07:37:39.650674968 +0200
+@@ -39,6 +39,7 @@ static const char rcsid[] __attribute__(
+ #include <sys/socket.h>
+ #include <sys/time.h>
+ #include <sys/wait.h>
++#include <time.h>
+ 
+ #if __STDC__
+ struct mbuf;
