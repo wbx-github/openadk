@@ -21,8 +21,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBCDIO,libcdio,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-TARGET_LDFLAGS+=	-ltinfo
-
 libcdio-install:
 	$(INSTALL_DIR) $(IDIR_LIBCDIO)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/lib*.so* \
