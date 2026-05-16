@@ -53,6 +53,7 @@ $(eval $(call PKG_template,BIND_HOST,bind-host,${PKG_VERSION}-${PKG_RELEASE},${P
 $(eval $(call PKG_template,BIND_DIG,bind-dig,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_BIND_DIG},${PKGSD_BIND_DIG},${PKGSC_BIND_DIG}))
 $(eval $(call PKG_template,LIBBIND,libbind,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_LIBBIND},${PKGSC_LIBBIND},${PKG_OPTS}))
 
+TARGET_LDFLAGS+=	-lncursesw
 AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ENV+=		BUILD_CC="${HOST_CC}" BUILD_CFLAGS='${HOST_CFLAGS}' BUILD_LDFLAGS='${HOST_LDFLAGS}'
 CONFIGURE_ARGS+=	--with-gssapi=no \
