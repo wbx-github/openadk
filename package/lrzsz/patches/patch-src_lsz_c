@@ -1,0 +1,23 @@
+--- lrzsz-0.12.20.orig/src/lsz.c	1998-12-29 23:07:59.000000000 +0100
++++ lrzsz-0.12.20/src/lsz.c	2026-05-12 20:52:09.921381958 +0200
+@@ -28,6 +28,7 @@
+ #define SS_NORMAL 0
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
+ #include <signal.h>
+ #include <setjmp.h>
+ #include <ctype.h>
+@@ -50,12 +51,6 @@ void *mm_addr=NULL;
+ #include "xstrtoul.h"
+ #include "error.h"
+ 
+-#ifndef STRICT_PROTOTYPES
+-extern time_t time();
+-extern char *strerror();
+-extern char *strstr();
+-#endif
+-
+ #ifndef HAVE_ERRNO_DECLARATION
+ extern int errno;
+ #endif

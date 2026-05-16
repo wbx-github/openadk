@@ -1,0 +1,17 @@
+--- lrzsz-0.12.20.orig/src/lsyslog.c	1998-12-29 18:27:46.000000000 +0100
++++ lrzsz-0.12.20/src/lsyslog.c	2026-05-12 20:50:34.361582055 +0200
+@@ -18,12 +18,14 @@
+   02111-1307, USA.
+ 
+ */
++#define _GNU_SOURCE
+ #include "config.h"
+ #ifdef ENABLE_SYSLOG
+ #include "zglobal.h"
+ #include <pwd.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <stdio.h>
+ #endif
+ 
+ #if __STDC__

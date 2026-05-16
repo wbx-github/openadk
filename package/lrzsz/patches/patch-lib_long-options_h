@@ -1,0 +1,9 @@
+--- lrzsz-0.12.20.orig/lib/long-options.h	1998-04-26 15:22:35.000000000 +0200
++++ lrzsz-0.12.20/lib/long-options.h	2026-05-12 20:50:39.653570973 +0200
+@@ -6,5 +6,5 @@
+ #endif
+ 
+ void parse_long_options __P ((int _argc, char **_argv, 
+-							  void (*_version) (void), 
++							  void (*_version) (), 
+ 							  void (*_usage) (int)));

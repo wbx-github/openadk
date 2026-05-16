@@ -1,0 +1,11 @@
+--- lrzsz-0.12.20.orig/configure	1998-12-30 08:50:18.000000000 +0100
++++ lrzsz-0.12.20/configure	2026-05-12 20:47:30.677966799 +0200
+@@ -1008,7 +1008,7 @@ cross_compiling=$ac_cv_prog_cc_cross
+ cat > conftest.$ac_ext <<EOF
+ #line 1010 "configure"
+ #include "confdefs.h"
+-main(){return(0);}
++int main(){return(0);}
+ EOF
+ if { (eval echo configure:1014: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
+   ac_cv_prog_cc_works=yes

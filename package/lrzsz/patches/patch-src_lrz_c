@@ -1,0 +1,27 @@
+--- lrzsz-0.12.20.orig/src/lrz.c	1998-12-30 08:49:24.000000000 +0100
++++ lrzsz-0.12.20/src/lrz.c	2026-05-12 20:52:05.805390576 +0200
+@@ -27,10 +27,12 @@
+ #define SS_NORMAL 0
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
+ #include <signal.h>
+ #include <ctype.h>
+ #include <errno.h>
+ #include <getopt.h>
++#include <time.h>
+ 
+ #ifdef HAVE_UTIME_H
+ #include <utime.h>
+@@ -41,11 +43,6 @@
+ #include "xstrtoul.h"
+ #include "error.h"
+ 
+-#ifndef STRICT_PROTOTYPES
+-extern time_t time();
+-extern char *strerror();
+-extern char *strstr();
+-#endif
+ 
+ #ifndef HAVE_ERRNO_DECLARATION
+ extern int errno;

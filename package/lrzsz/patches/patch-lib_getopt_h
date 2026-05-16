@@ -1,0 +1,11 @@
+--- lrzsz-0.12.20.orig/lib/getopt.h	1998-04-26 15:20:52.000000000 +0200
++++ lrzsz-0.12.20/lib/getopt.h	2026-05-12 20:50:39.653570973 +0200
+@@ -101,7 +101,7 @@ struct option
+    errors, only prototype getopt for the GNU C library.  */
+ extern int getopt (int argc, char *const *argv, const char *shortopts);
+ #else /* not __GNU_LIBRARY__ */
+-extern int getopt ();
++extern int getopt (int, char * const [], const char *);
+ #endif /* __GNU_LIBRARY__ */
+ extern int getopt_long (int argc, char *const *argv, const char *shortopts,
+ 		        const struct option *longopts, int *longind);

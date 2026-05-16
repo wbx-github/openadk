@@ -1,0 +1,11 @@
+--- lrzsz-0.12.20.orig/lib/xstrtol.c	1998-04-26 15:20:52.000000000 +0200
++++ lrzsz-0.12.20/lib/xstrtol.c	2026-05-12 20:50:39.653570973 +0200
+@@ -65,8 +65,6 @@ extern int errno;
+ 	}								\
+       while (0)
+ 
+-__unsigned long int __strtol ();
+-
+ /* FIXME: comment.  */
+ 
+ strtol_error

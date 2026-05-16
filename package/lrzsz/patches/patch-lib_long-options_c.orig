@@ -1,0 +1,21 @@
+--- lrzsz-0.12.20.orig/lib/long-options.c	1998-04-26 15:22:35.000000000 +0200
++++ lrzsz-0.12.20/lib/long-options.c	2026-05-12 20:54:04.477142123 +0200
+@@ -22,6 +22,7 @@
+ #endif
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <getopt.h>
+ #include "long-options.h"
+ 
+@@ -38,8 +39,8 @@ void
+ parse_long_options (argc, argv,version, usage)
+      int argc;
+      char **argv;
+-     void (*version)();
+-     void (*usage)();
++     void (*version)(int);
++     void (*usage)(int);
+ {
+   int c;
+   int saved_opterr;

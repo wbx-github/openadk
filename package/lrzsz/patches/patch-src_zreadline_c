@@ -1,0 +1,10 @@
+--- lrzsz-0.12.20.orig/src/zreadline.c	1998-12-24 00:57:32.000000000 +0100
++++ lrzsz-0.12.20/src/zreadline.c	2026-05-12 20:50:34.361582055 +0200
+@@ -27,6 +27,7 @@
+ 
+ #include <stdlib.h>
+ #include <stdio.h>
++#include <string.h>
+ #include <signal.h>
+ #include <ctype.h>
+ #include <errno.h>

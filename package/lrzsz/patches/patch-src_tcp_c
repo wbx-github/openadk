@@ -1,0 +1,10 @@
+--- lrzsz-0.12.20.orig/src/tcp.c	1998-12-28 11:41:38.000000000 +0100
++++ lrzsz-0.12.20/src/tcp.c	2026-05-12 20:50:34.361582055 +0200
+@@ -33,6 +33,7 @@
+ #include <ctype.h>
+ #include <stdio.h>
+ #include <signal.h>
++#include <string.h>
+ 
+ #include "zglobal.h"
+ #include <stdlib.h>
