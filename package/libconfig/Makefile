@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libconfig
-PKG_VERSION:=		1.7.2
+PKG_VERSION:=		1.8.2
 PKG_RELEASE:=		1
-PKG_HASH:=		7c3c7a9c73ff3302084386e96f903eb62ce06953bb1666235fac74363a16fad9
+PKG_HASH:=		e59ffb902dd5731d5d4e4fb81d3b989697615feab72dfd7c30618167b91a42ee
 PKG_DESCR:=		configuration library	
 PKG_SECTION:=		libs/misc
 PKG_URL:=		https://github.com/hyperrealm/libconfig
