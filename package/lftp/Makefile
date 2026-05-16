@@ -29,6 +29,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LFTP,lftp,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+TARGET_LDFLAGS+=	-lncursesw
+
 CONFIGURE_ARGS+=	--with-readline="$(STAGING_TARGET_DIR)/usr" \
 			--with-zlib="$(STAGING_TARGET_DIR)/usr" \
 			--with-expat="$(STAGING_TARGET_DIR)/usr"
