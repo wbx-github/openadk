@@ -1,4 +1,0 @@
---- tcp_wrappers_7.6.orig/cflags	1970-01-01 00:00:00.000000000 +0100
-+++ tcp_wrappers_7.6/cflags	2013-12-22 16:30:36.000000000 +0100
-@@ -0,0 +1 @@
-+-march=armv6 -mtune=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard -fwrapv -fno-ident -fhonour-copts -fomit-frame-pointer -Os -pipe -fno-unwind-tables -fno-asynchronous-unwind-tables -g3 -DFACILITY=LOG_DAEMON -DHOSTS_ACCESS -DDAEMON_UMASK=022 -DREAL_DAEMON_DIR="/usr/sbin" -DPROCESS_OPTIONS -DKILL_IP_OPTIONS -DSEVERITY=LOG_INFO -DRFC931_TIMEOUT=10 -DHOSTS_DENY="/etc/hosts.deny" -DHOSTS_ALLOW="/etc/hosts.allow" -DSYS_ERRLIST_DEFINED -DHAVE_STRERROR -DHAVE_WEAKSYMS -D_REENTRANT -DINET6=1 -Dss_family=__ss_family -Dss_len=__ss_len
