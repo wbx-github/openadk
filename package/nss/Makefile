@@ -4,11 +4,11 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nss
-PKG_VERSION:=		3.27.1
+PKG_VERSION:=		3.123.1
 PKG_RELEASE:=		1
 PKG_MAJ_VERSION:=	3
-PKG_MIN_VERSION:=	27_1
-PKG_HASH:=		fd3637a1930cd838239a89633a7ed9a18859ae9b599043f3a18f726dc4ec2a6b
+PKG_MIN_VERSION:=	123_1
+PKG_HASH:=		42065a3ff780a9710a3dddcd1cee9b9be2aa40628883cea851d562eb58b178b0
 PKG_DESCR:=		network security services library
 PKG_SECTION:=		libs/crypto
 PKG_BUILDDEP:=		nspr zlib sqlite
@@ -16,6 +16,8 @@ PKG_DEPENDS:=		nspr zlib libsqlite
 PKG_URL:=		http://www.mozilla.org/projects/security/pki/nss/
 PKG_SITES:=		https://ftp.mozilla.org/pub/security/nss/releases/NSS_${PKG_MAJ_VERSION}_${PKG_MIN_VERSION}_RTM/src/
 PKG_NOPARALLEL:=	1
+
+PKG_CFLINE_NSS:=	depends on ADK_BROKEN
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 WRKSRC=			${WRKDIST}/nss
@@ -36,7 +38,7 @@ endif
 
 MAKE_FLAGS+=		NATIVE_CC="${HOST_CC}" NATIVE_FLAGS="${HOST_CFLAGS}"
 TARGET_CPPFLAGS+=	-I${STAGING_TARGET_DIR}/usr/include/nspr
-TARGET_CFLAGS+=		-I${STAGING_TARGET_DIR}/usr/include/nspr
+TARGET_CFLAGS+=		-I${STAGING_TARGET_DIR}/usr/include/nspr -Wno-implicit-function-declaration
 
 XAKE_FLAGS+=		SOURCE_MD_DIR=${WRKDIST}/dist DIST=${WRKDIST}/dist
 XAKE_FLAGS+=		ARCHFLAG="${TARGET_CFLAGS} ${TARGET_CPPFLAGS} ${TARGET_LDFLAGS}"

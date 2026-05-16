@@ -1,8 +1,0 @@
---- nss-3.23.orig/nss/manifest.mn	2016-02-26 21:51:11.000000000 +0100
-+++ nss-3.23/nss/manifest.mn	2016-03-12 19:42:48.660823505 +0100
-@@ -10,4 +10,4 @@ IMPORTS =	nspr20/v4.8 \
- 
- RELEASE = nss
- 
--DIRS = coreconf lib cmd external_tests
-+DIRS = coreconf lib cmd config
