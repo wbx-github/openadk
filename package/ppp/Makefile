@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ppp
-PKG_VERSION:=		2.4.7
+PKG_VERSION:=		2.5.2
 PKG_RELEASE:=		1
-PKG_HASH:=		02e0a3dd3e4799e33103f70ec7df75348c8540966ee7c948e4ed8a42bbccfb30
+PKG_HASH:=		47da358de54a10cb10bf6ff2cf9b1c03c0d3555518f6182e8f701b8e55733cb2
 PKG_DESCR:=		point-to-point protocol software
 PKG_SECTION:=		net/ppp
 PKG_BUILDDEP:=		libpcap
@@ -46,14 +46,6 @@ $(eval $(call PKG_template,PPP_MOD_PPPDUMP,ppp-mod-pppdump,${PKG_VERSION}-${PKG_
 $(eval $(call PKG_template,PPP_MOD_PPPSTATS,ppp-mod-pppstats,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_PPP_MOD_PPPSTATS},${PKG_SECTION}))
 $(eval $(call PKG_template,PPP_MOD_PPPUMTS,ppp-mod-pppumts,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_PPP_MOD_PPPUMTS},${PKGSD_PPP_MOD_PPPUMTS},${PKG_SECTION}))
 
-CONFIG_STYLE:=		minimal
-CONFIGURE_ARGS+=	--system=Linux --prefix="/usr"
-CONFIGURE_ENV+=		UNAME_S="Linux"
-TARGET_LDFLAGS+=	-lcrypt
-XAKE_FLAGS+=		STAGING_TARGET_DIR=${STAGING_TARGET_DIR} \
-			DESTDIR="${WRKINST}/usr" STRIP='' \
-			TARGET_AR='${TARGET_CROSS}ar'
-
 ppp-install:
 	${INSTALL_DIR} ${IDIR_PPP}/etc/ppp
 	install -m0600 ./files/etc/ppp/chap-secrets ${IDIR_PPP}/etc/ppp/
@@ -87,7 +79,7 @@ ppp-mod-radius-install:
 
 ppp-mod-pppoe-install:
 	${INSTALL_DIR} ${IDIR_PPP_MOD_PPPOE}/usr/lib/pppd/$(PKG_VERSION)
-	${INSTALL_BIN} $(WRKINST)/usr/lib/pppd/$(PKG_VERSION)/rp-pppoe.so \
+	${INSTALL_BIN} $(WRKINST)/usr/lib/pppd/$(PKG_VERSION)/pppoe.so \
 		${IDIR_PPP_MOD_PPPOE}/usr/lib/pppd/$(PKG_VERSION)
 	${INSTALL_DIR} ${IDIR_PPP_MOD_PPPOE}/etc/ppp/templates
 	${INSTALL_DATA} ./files/etc/ppp/templates/pppoe \

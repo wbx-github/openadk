@@ -1,0 +1,27 @@
+--- ppp-2.5.2.orig/pppd/pppdconf.h	2024-12-31 05:24:33.000000000 +0100
++++ ppp-2.5.2/pppd/pppdconf.h	2026-05-14 19:32:30.528438295 +0200
+@@ -45,7 +45,7 @@
+ #define PPP_WITH_MPPE 1
+ 
+ /* Have multilink support */
+-#define PPP_WITH_MULTILINK 1
++/* #undef PPP_WITH_MULTILINK */
+ 
+ /* Have packet activity filter support */
+ #define PPP_WITH_FILTER 1
+@@ -57,13 +57,13 @@
+ /* #undef PPP_WITH_CBCP */
+ 
+ /* Include TDB support */
+-#define PPP_WITH_TDB 1
++/* #undef PPP_WITH_TDB */
+ 
+ /* Have IPv6 Control Protocol */
+ #define PPP_WITH_IPV6CP 1
+ 
+ /* Support for Pluggable Authentication Modules */
+-/* #undef PPP_WITH_PAM */
++#define PPP_WITH_PAM 1
+ 
+ /* Have EAP-SRP authentication support */
+ /* #undef PPP_WITH_SRP */

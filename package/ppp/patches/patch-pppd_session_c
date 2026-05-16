@@ -1,0 +1,10 @@
+--- ppp-2.5.2.orig/pppd/session.c	2023-11-09 02:16:48.000000000 +0100
++++ ppp-2.5.2/pppd/session.c	2026-05-14 19:33:37.712561744 +0200
+@@ -182,7 +182,6 @@ session_start(const int flags, const cha
+     char *cbuf;
+ #ifdef HAVE_SHADOW_H
+     struct spwd *spwd;
+-    struct spwd *getspnam();
+     long now = 0;
+ #endif /* #ifdef HAVE_SHADOW_H */
+ #endif /* #ifdef PPP_WITH_PAM */
