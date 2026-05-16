@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		squashfs-tools
-PKG_VERSION:=		4.7.4
+PKG_VERSION:=		4.7.5
 PKG_RELEASE:=		1
-PKG_HASH:=		91c49f9a1ed972ad00688a38222119e2baf49ba74cf5fda05729a79d7d59d335
+PKG_HASH:=		547b7b7f4d2e44bf91b6fc554664850c69563701deab9fd9cd7e21f694c88ea6
 PKG_DESCR:=		squashfs filesystem utilities
 HOST_BUILDDEP:=		liblzo-host lz4-host
 PKG_SECTION:=		sys/fs
@@ -15,7 +15,7 @@ PKG_SITES:=		https://github.com/plougher/squashfs-tools/archive/refs/tags/
 DISTFILES:=		${PKG_VERSION}.tar.gz
 WRKDIST=		${WRKDIR}/$(PKG_NAME)-${PKG_VERSION}
 
-PKG_CFLINE_SQUASHFS:=	depends on ADK_HOST_ONLY
+PKG_CFLINE_SQUASHFS_TOOLS:=	depends on ADK_HOST_ONLY
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
