@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		sngrep
-PKG_VERSION:=		1.4.10
+PKG_VERSION:=		1.8.3
 PKG_RELEASE:=		1
-PKG_HASH:=		cedbe521c9730deda004bff71e88c8c56ae66d3d147ddc6f5f965df2ca67a8df
+PKG_HASH:=		794224f4cd08978a6115a767e9945f756fdf7cbc7c1a34eabca293e0293b21b8
 PKG_DESCR:=		displaying sip calls message flows from terminal 
 PKG_SECTION:=		net/debug
 PKG_BUILDDEP:=		libpcap ncurses
@@ -20,9 +20,10 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,SNGREP,sngrep,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-TARGET_LDFLAGS+=	-ltinfo
+TARGET_CFLAGS+=		-Wno-implicit-function-declaration
 
 AUTOTOOL_STYLE:=	bootstrap
+CONFIGURE_ARGS+=	--enable-unicode
 
 sngrep-install:
 	$(INSTALL_DIR) $(IDIR_SNGREP)/usr/bin
