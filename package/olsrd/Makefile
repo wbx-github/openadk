@@ -51,7 +51,7 @@ $(eval $(call PKG_mod_template,OLSRD_MOD_NAMESERVICE,nameservice))
 
 CONFIG_STYLE:=          manual
 
-TARGET_CFLAGS+=		-fPIC -D_GNU_SOURCE
+TARGET_CFLAGS+=		-fPIC -D_GNU_SOURCE -std=gnu11
 ALL_TARGET+=		libs
 INSTALL_TARGET+=	install_libs
 MAKE_ENV+=		OS="linux" DEBUG=0 STRIP="true" VERBOSE=1 OFLAGS="${TARGET_CFLAGS}" prefix="/usr"
