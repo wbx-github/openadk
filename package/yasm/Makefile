@@ -10,8 +10,9 @@ PKG_HASH:=		3dce6601b495f5b3d45b59f7d2492a340ee7e84b5beca17e48f862502bd5603f
 PKG_DESCR:=		modular assembler
 PKG_SECTION:=		dev/lang
 PKG_BUILDDEP:=		yasm-host
-PKG_URL:=		http://www.tortall.net/projects/yasm/
-PKG_SITES:=		http://www.tortall.net/projects/yasm/releases/
+PKG_SITES:=		https://github.com/yasm/yasm/releases/download/v$(PKG_VERSION)/
+
+PKG_CFLINE_YASM:=	depends on ADK_HOST_ONLY
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
