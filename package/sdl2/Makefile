@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		sdl2
-PKG_VERSION:=		2.28.5
+PKG_VERSION:=		2.32.10
 PKG_RELEASE:=		1
-PKG_HASH:=		9f0556e4a24ef5b267010038ad9e9948b62f236d5bcc4b22179f95ef62d84023
+PKG_HASH:=		03f9d7c191a837525c9cda6406af2f2e48be02b5e7eb03d949cc9f1e9ca41c8b
 PKG_DESCR:=		simple directmedia layer 2
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.libsdl.org/
@@ -23,7 +23,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBSDL2,libsdl2,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
-CONFIGURE_ARGS+=	--enable-video-directfb
+CONFIGURE_ARGS+=	--disable-video-directfb
 
 libsdl2-install:
 	$(INSTALL_DIR) $(IDIR_LIBSDL2)/usr/lib
