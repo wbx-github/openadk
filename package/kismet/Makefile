@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		kismet
-PKG_VERSION:=		2023-07-R1
+PKG_VERSION:=		2025-09-R1
 PKG_RELEASE:=		1
-PKG_HASH:=		f08548e26ca65fa1e567b1debbea1ca4d0e7206bddb96a4f639c90171873e8f7
+PKG_HASH:=		4703a58ad11b777af04019a4f1b114ec4591c05aa1ca6b9c7ff5743ff3d14ae1
 PKG_DESCR:=		wireless network detector, sniffer, and intrusion detection system
 PKG_SECTION:=		net/wifi
 PKG_BUILDDEP:=		libpcap ncurses libwebsockets protobuf protobuf-c sqlite
@@ -19,9 +19,10 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,KISMET,kismet,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-lpthread -ltinfo
 CONFIGURE_ARGS+=	--sysconfdir=/etc/kismet \
 			--disable-libusb \
+			--disable-librtlsdr \
+			--disable-lmsensors \
 			--disable-python-tools \
 			--disable-wifi-coconut
 
