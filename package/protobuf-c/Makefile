@@ -9,7 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		d4cb022d55f49796959b07a9d83040822e39129bc0eb28f4e8301da17d758f62
 PKG_DESCR:=		protocol buffers implementation in c
 PKG_SECTION:=		libs/misc
-PKG_BUILDDEP:=		protobuf-c-host
+PKG_BUILDDEP:=		protobuf-c-host protobuf
+HOST_BUILDDEP:=		protobuf-host
 PKG_SITES:=		https://github.com/protobuf-c/protobuf-c/archive/refs/tags/
 PKG_OPTS:=		dev
 
