@@ -14,7 +14,7 @@ PKG_DEPENDS+=		libxau libxdmcp
 PKG_BUILDDEP:=		libmpdclient boost ncurses expat sqlite fmt libxcb
 PKG_BUILDDEP+=		libXau libXdmcp
 PKG_FDEPENDS:=		libmpdclient
-PKG_NEEDS:=		threads c++ data
+PKG_NEEDS:=		threads c++ iconv data
 PKG_URL:=		http://www.musicpd.org/
 PKG_SITES:=		http://www.musicpd.org/download/mpd/0.24/
 
