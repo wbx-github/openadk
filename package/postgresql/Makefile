@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		postgresql
-PKG_VERSION:=		9.6.3
+PKG_VERSION:=		18.4
 PKG_RELEASE:=		1
-PKG_HASH:=		df088372230b1dd21d87bb81686471508f4c42094d4f4f32b5d8e686fea69fa6
+PKG_HASH:=		450aa8f2da06c46f8221916e82ae06b04fb1040f8f00643dbf8b7d663caac0b9
 PKG_DESCR:=		postgresql database library
 PKG_SECTION:=		libs/db
 PKG_URL:=		http://www.postgresql.org/
@@ -22,8 +22,7 @@ $(eval $(call PKG_template,LIBPQ,libpq,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPEN
 
 TARGET_CFLAGS:=		$(filter-out -ffast-math,$(TARGET_CFLAGS))
 
-CONFIGURE_ARGS+=	--disable-integer-datetimes \
-			--without-openssl \
+CONFIGURE_ARGS+=	--without-openssl \
 			--without-pam \
 			--without-perl \
 			--without-python \
