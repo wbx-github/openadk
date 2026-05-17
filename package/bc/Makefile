@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		bc
-PKG_VERSION:=		1.06
+PKG_VERSION:=		1.08.2
 PKG_RELEASE:=		1
-PKG_HASH:=		4ef6d9f17c3c0d92d8798e35666175ecd3d8efac4009d6457b5c99cea72c0e33
+PKG_HASH:=		ae470fec429775653e042015edc928d07c8c3b2fc59765172a330d3d87785f86
 PKG_DESCR:=		arbitrary precision calculator language
 PKG_SECTION:=		sys/utils
 PKG_BUILDDEP:=		m4-host flex-host
