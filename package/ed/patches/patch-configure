@@ -1,25 +1,14 @@
---- ed-1.13.orig/configure	2016-01-24 18:54:47.000000000 +0100
-+++ ed-1.13/configure	2016-04-08 23:14:47.326189488 +0200
-@@ -14,17 +14,17 @@ srctrigger=doc/${pkgname}.texi
- LC_ALL=C
- export LC_ALL
- srcdir=
--prefix=/usr/local
-+prefix=/usr
- exec_prefix='$(prefix)'
- bindir='$(exec_prefix)/bin'
- datarootdir='$(prefix)/share'
+--- ed-1.22.5.orig/configure	2026-02-06 22:08:05.000000000 +0100
++++ ed-1.22.5/configure	2026-05-17 13:40:19.635717072 +0200
+@@ -21,9 +21,9 @@ datarootdir='$(prefix)/share'
  infodir='$(datarootdir)/info'
  mandir='$(datarootdir)/man'
  program_prefix=
 -CC=gcc
--CPPFLAGS=
--CFLAGS='-Wall -W -O2'
--LDFLAGS=
 +CC?=gcc
-+CPPFLAGS?=
+ CPPFLAGS=
+-CFLAGS='-Wall -W -O2'
 +CFLAGS?='-Wall -W -O2'
-+LDFLAGS?=
+ LDFLAGS=
+ MAKEINFO=makeinfo
  
- # checking whether we are using GNU C.
- ${CC} --version > /dev/null 2>&1
