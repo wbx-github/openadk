@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		asterisk
-PKG_VERSION:=		22.7.0
+PKG_VERSION:=		22.9.0
 PKG_RELEASE:=		1
-PKG_HASH:=		5b0e5d276aeb014bf8a08a94d1055a9e97b9dce3375846eea70da5221bf9efe7
+PKG_HASH:=		5fd0e623d7415faa5999c1d5797721a3ab8992cbe33d49faac7d948635df94cc
 PKG_DESCR:=		open source pbx
 PKG_SECTION:=		net/voip
 PKG_DEPENDS:=		libncurses libcurl libopenssl libedit libuuid libjansson
@@ -91,7 +91,6 @@ endif
 
 INSTALL_STYLE:=		manual
 
-TARGET_LDFLAGS+=	-lm -ltinfo -ldl -lpthread
 MAKE_ENV:=		PATH="$(HOST_PATH)" \
 			ASTCFLAGS="${TARGET_CPPFLAGS} -DHAVE_STRTOQ" \
 			ASTLDFLAGS="${TARGET_LDFLAGS} -z muldefs"
