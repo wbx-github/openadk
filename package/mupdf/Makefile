@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		553867b135303dc4c25ab67c5f234d8e900a0e36e66e8484d99adc05fe1e8737
 PKG_DESCR:=		pdf reader
 PKG_SECTION:=		x11/apps
-PKG_DEPENDS:=		brotli openjpeg jbig2dec gumbo-parser
-PKG_BUILDDEP:=		brotli openjpeg jbig2dec gumbo-parser
+PKG_DEPENDS:=		brotli openjpeg jbig2dec gumbo-parser freeglut
+PKG_BUILDDEP:=		brotli openjpeg jbig2dec gumbo-parser freeglut
 PKG_URL:=		https://mupdf.com/
 PKG_SITES:=		https://casper.mupdf.com/downloads/archive/
 
