@@ -14,6 +14,8 @@ HOST_BUILDDEP:=		glib-host libffi-host
 PKG_URL:=		https://wiki.gnome.org/Vala
 PKG_SITES:=		http://download.gnome.org/sources/vala/0.56/
 
+PKG_CFLINE_VALA:=	depends on ADK_HOST
+
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
 
