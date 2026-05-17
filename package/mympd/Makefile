@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mympd
-PKG_VERSION:=		14.0.2
+PKG_VERSION:=		25.0.2
 PKG_RELEASE:=		1
-PKG_HASH:=		309476bcc352f5b9ddc365412cb636e41b3a9e675c0ef94c17b982af2dfc3aa8
+PKG_HASH:=		5e482074eb36a7fc6047ecd5bc1cfa707850a4ae936c36bbf0faebd6ed00cfef
 PKG_DESCR:=		standalone music player daemon web gui
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		mpd libopenssl pcre2
@@ -23,7 +23,8 @@ $(eval $(call PKG_template,MYMPD,mympd,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPEN
 
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 CONFIG_STYLE:=		cmake
-CMAKE_FLAGS:=		-DMYMPD_EMBEDDED_ASSETS=ON
+CMAKE_FLAGS:=		-DMYMPD_EMBEDDED_ASSETS=ON \
+			-DMYMPD_ENABLE_LUA=OFF
 
 mympd-install:
 	$(INSTALL_DIR) $(IDIR_MYMPD)/usr/bin
