@@ -1,18 +1,5 @@
-From 989841a0c4e83b0ac1b9d276be3797bcfa83bcb1 Mon Sep 17 00:00:00 2001
-From: Phil Sutter <phil@nwl.cc>
-Date: Sun, 27 Nov 2022 23:45:41 +0100
-Subject: [PATCH] log: Try syslog if no log path was given
-
-Signed-off-by: Phil Sutter <phil@nwl.cc>
----
- log.c      | 44 ++++++++++++++++++++++++++++++++++++++++++--
- minidlna.c |  2 --
- 2 files changed, 42 insertions(+), 4 deletions(-)
-
-diff --git a/log.c b/log.c
-index a989904a24d93..840a8c02e678b 100644
---- a/log.c
-+++ b/log.c
+--- minidlna-1.3.3.orig/log.c	2023-05-31 10:25:59.000000000 +0200
++++ minidlna-1.3.3/log.c	2026-05-17 09:32:57.423533699 +0200
 @@ -23,6 +23,7 @@
  #include <stdio.h>
  #include <stdarg.h>
@@ -62,7 +49,7 @@ index a989904a24d93..840a8c02e678b 100644
  void
  log_err(int level, enum _log_facility facility, char *fname, int lineno, char *fmt, ...)
  {
-@@ -155,8 +190,14 @@ log_err(int level, enum _log_facility facility, char *fname, int lineno, char *f
+@@ -155,8 +190,14 @@ log_err(int level, enum _log_facility fa
  	if (level && level>log_level[facility] && level>E_FATAL)
  		return;
  
@@ -78,7 +65,7 @@ index a989904a24d93..840a8c02e678b 100644
  
  	// timestamp
  	if (!GETFLAG(SYSTEMD_MASK))
-@@ -176,7 +217,6 @@ log_err(int level, enum _log_facility facility, char *fname, int lineno, char *f
+@@ -176,7 +217,6 @@ log_err(int level, enum _log_facility fa
  		fprintf(log_fp, "%s:%d: ", fname, lineno);
  
  	// user log
@@ -86,19 +73,3 @@ index a989904a24d93..840a8c02e678b 100644
  	if (vfprintf(log_fp, fmt, ap) == -1)
  	{
  		va_end(ap);
-diff --git a/minidlna.c b/minidlna.c
-index 999adee977353..db29d603d1e28 100644
---- a/minidlna.c
-+++ b/minidlna.c
-@@ -817,8 +817,6 @@ init(int argc, char **argv)
- 				optionsfile);
- 		}
- 	}
--	if (!log_path[0])
--		strncpyt(log_path, DEFAULT_LOG_PATH, sizeof(log_path));
- 	if (!db_path[0])
- 		strncpyt(db_path, DEFAULT_DB_PATH, sizeof(db_path));
- 
--- 
-2.38.1
-
