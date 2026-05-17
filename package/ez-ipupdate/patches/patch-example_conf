@@ -1,9 +1,0 @@
-$Id$
---- ez-ipupdate-3.0.11b8.orig/example.conf	Sat Jul  7 21:15:15 2001
-+++ ez-ipupdate-3.0.11b8/example.conf	Tue Jul 31 12:33:09 2007
-@@ -1,4 +1,4 @@
--#!/usr/local/bin/ez-ipupdate -c
-+#!/usr/sbin/ez-ipupdate -c
- #
- # example config file for ez-ipupdate
- #
