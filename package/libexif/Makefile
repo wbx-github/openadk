@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libexif
-PKG_VERSION:=		0.6.24
+PKG_VERSION:=		0.6.26
 PKG_RELEASE:=		1
-PKG_HASH:=		d47564c433b733d83b6704c70477e0a4067811d184ec565258ac563d8223f6ae
-PKG_DESCR:=		Library for parsing, editing, and saving EXIF data
+PKG_HASH:=		0830ed253fceeb60444fb309598bc8a9491d3007dc054aad3a50a347c5597c57
+PKG_DESCR:=		library for parsing, editing, and saving exif data
 PKG_SECTION:=		libs/image
 PKG_URL:=		https://libexif.github.io/
 PKG_SITES:=		https://github.com/libexif/libexif/releases/download/v${PKG_VERSION}/
