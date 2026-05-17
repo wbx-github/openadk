@@ -1,0 +1,13 @@
+--- cpio-2.15.orig/src/extern.h	2024-01-14 12:42:18.000000000 +0100
++++ cpio-2.15/src/extern.h	2026-05-17 20:01:27.138191106 +0200
+@@ -97,8 +97,8 @@ extern char input_is_special;
+ extern char output_is_special;
+ extern char input_is_seekable;
+ extern char output_is_seekable;
+-extern int (*xstat) ();
+-extern void (*copy_function) ();
++extern int (*xstat) (const char *, struct stat *);
++extern void (*copy_function) (void);
+ extern char *change_directory_option;
+ 
+ #define STRINGIFY_BIGINT(i, b) umaxtostr (i, b)
