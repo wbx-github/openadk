@@ -1,0 +1,11 @@
+--- myMPD-25.0.2.orig/CMakeLists.txt	2026-05-03 13:33:07.000000000 +0200
++++ myMPD-25.0.2/CMakeLists.txt	2026-05-17 12:21:40.744310964 +0200
+@@ -330,8 +330,6 @@ if(CMAKE_BUILD_TYPE MATCHES "(Debug|Rele
+     "-fno-plt"
+     "-fno-strict-aliasing"
+     "-fno-strict-overflow"
+-    "-fstack-clash-protection"
+-    "-fstack-protector-strong"
+     "-fstrict-flex-arrays=3"
+     "-ftrivial-auto-var-init=zero"
+     "-mbranch-protection=standard"
