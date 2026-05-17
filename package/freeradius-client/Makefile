@@ -4,17 +4,19 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		freeradius-client
-PKG_VERSION:=		1.1.6
-PKG_RELEASE:=		2
-PKG_HASH:=		478bfb7ec00789af150acf6a231bc9b0731d06353c7fe36a8fd6d4d83e42a07f
+PKG_VERSION:=		1.1.8
+PKG_RELEASE:=		1
+PKG_HASH:=		6ac0ad2dfbba01ebfe829472b0709afc22f810b86c005f5abc9db7b609eb6beb
 PKG_DESCR:=		radius client
 PKG_SECTION:=		net/radius
 PKG_DEPENDS:=		libfreeradius-client libopenssl
 PKG_BUILDDEP:=		openssl
 PKG_URL:=		http://www.freeradius.org/
-PKG_SITES:=		ftp://ftp.freeradius.org/pub/radius/
+PKG_SITES:=		https://github.com/FreeRADIUS/freeradius-client/archive/refs/tags/
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+DISTFILES:=		release_1_1_8.tar.gz
+
+WRKDIST=		$(WRKDIR)/$(PKG_NAME)-release_1_1_8
 
 PKG_SUBPKGS:=		FREERADIUS_CLIENT LIBFREERADIUS_CLIENT
 PKGSC_LIBFREERADIUS_CLIENT:=	libs/net
