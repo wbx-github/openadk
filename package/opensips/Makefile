@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		opensips
-PKG_VERSION:=		3.4.4
+PKG_VERSION:=		3.6.5
 PKG_RELEASE:=		1
-PKG_HASH:=		eab3608a464884fc40f33cc639a5b124dc838799bd4a9701b7a8af49fb937fc7
+PKG_HASH:=		d73cb0b2b387ecaa046e3c831da439ba87b97c9658581b8c7f904fe35dd6200e
 PKG_DESCR:=		high-performance, configurable, free sip server
 PKG_SECTION:=		net/voip
 PKG_DEPENDS:=		libopenssl
@@ -17,7 +17,7 @@ PKG_SITES:=		http://opensips.org/pub/opensips/$(PKG_VERSION)/
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_SUBPKGS:=		OPENSIPS OPENSIPS_MOD_ACCOUNTING OPENSIPS_MOD_AUTH
-PKG_SUBPKGS+=		OPENSIPS_MOD_AUTH_DB OPENSIPS_MOD_AVPOPS OPENSIPS_MOD_DISPATCHER
+PKG_SUBPKGS+=		OPENSIPS_MOD_AUTH_DB OPENSIPS_MOD_DISPATCHER
 PKG_SUBPKGS+=		OPENSIPS_MOD_DIVERSION OPENSIPS_MOD_FLATSTORE OPENSIPS_MOD_GFLAGS
 PKG_SUBPKGS+=		OPENSIPS_MOD_GROUP OPENSIPS_MOD_MEDIAPROXY OPENSIPS_MOD_MSILO
 PKG_SUBPKGS+=		OPENSIPS_MOD_NATHELPER OPENSIPS_MOD_OPTIONS
@@ -30,8 +30,6 @@ PKGSD_OPENSIPS_MOD_AUTH:=		authentication support
 PKGSN_OPENSIPS_MOD_AUTH:=		opensips
 PKGSD_OPENSIPS_MOD_AUTH_DB:=		authentication database support
 PKGSN_OPENSIPS_MOD_AUTH_DB:=		opensips
-PKGSD_OPENSIPS_MOD_AVPOPS:=		avpops support
-PKGSN_OPENSIPS_MOD_AVPOPS:=		opensips
 PKGSD_OPENSIPS_MOD_DISPATCHER:=		dispatcher support
 PKGSN_OPENSIPS_MOD_DISPATCHER:=		opensips
 PKGSD_OPENSIPS_MOD_DIVERSION:=		diversion support
@@ -76,7 +74,6 @@ $(eval $(call PKG_template,OPENSIPS,opensips,$(PKG_VERSION)-${PKG_RELEASE},${PKG
 $(eval $(call PKG_template,OPENSIPS_MOD_ACCOUNTING,opensips-mod-acc,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_AUTH,opensips-mod-auth,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_AUTH_DB,opensips-mod-auth-db,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
-$(eval $(call PKG_template,OPENSIPS_MOD_AVPOPS,opensips-mod-avpops,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_DISPATCHER,opensips-mod-dispatcher,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_DIVERSION,opensips-mod-diversion,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,OPENSIPS_MOD_FLATSTORE,opensips-mod-flatstore,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
@@ -94,7 +91,6 @@ $(eval $(call PKG_template,OPENSIPS_MOD_UAC_REDIRECT,opensips-mod-uac-redirect,$
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_ACCOUNTING,acc))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_AUTH,auth))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_AUTH_DB,auth_db))
-$(eval $(call PKG_mod_template,OPENSIPS_MOD_AVPOPS,avpops))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_DISPATCHER,dispatcher))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_DIVERSION,diversion))
 $(eval $(call PKG_mod_template,OPENSIPS_MOD_FLATSTORE,db_flatstore))
