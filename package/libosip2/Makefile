@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libosip2
-PKG_VERSION:=		3.3.0
-PKG_RELEASE:=		2
-PKG_HASH:=		d45e28deaa596b2d7457edefe916b4761adbd53d543180f4ff30f9c310a5f821
+PKG_VERSION:=		5.3.1
+PKG_RELEASE:=		1
+PKG_HASH:=		fe82fe841608266ac15a5c1118216da00c554d5006e2875a8ac3752b1e6adc79
 PKG_DESCR:=		session initiation protocol implementation
 PKG_SECTION:=		libs/net
 PKG_NEEDS:=		threads
