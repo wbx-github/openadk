@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		links
-PKG_VERSION:=		2.14
+PKG_VERSION:=		2.30
 PKG_RELEASE:=		1
-PKG_HASH:=		22fa8dcb5a60b8ffd611de31ebd4c79edce472637a3554bab401795da91d4387
+PKG_HASH:=		7f0d54f4f7d1f094c25c9cbd657f98bc998311122563b1d757c9aeb1d3423b9e
 PKG_DESCR:=		web browser for console
 PKG_SECTION:=		app/browser
 PKG_DEPENDS:=		libpng libjpeg-turbo libtiff gpm
