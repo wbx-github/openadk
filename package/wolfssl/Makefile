@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		wolfssl
-PKG_VERSION:=		5.7.6
+PKG_VERSION:=		5.9.1
 PKG_RELEASE:=		1
-PKG_HASH:=		52b1e439e30d1ed8162a16308a8525a862183b67aa30373b11166ecbab000d63
+PKG_HASH:=		d5ca7af48cd2d9a91d539e9baedeba55a0605a28d7ac8b01dc3d5254a13ca341
 PKG_DESCR:=		portable embedded ssl library
 PKG_SECTION:=		libs/crypto
 PKG_BUILDDEP:=		cmake-host
