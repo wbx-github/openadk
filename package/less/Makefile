@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		less
-PKG_VERSION:=		481
+PKG_VERSION:=		692
 PKG_RELEASE:=		1
-PKG_HASH:=		3fa38f2cf5e9e040bb44fffaa6c76a84506e379e47f5a04686ab78102090dda5
+PKG_HASH:=		61300f603798ecf1d7786570789f0ff3f5a1acf075a6fb9f756837d166e37d14
 PKG_DESCR:=		text mode pager
 PKG_SECTION:=		app/editor
 PKG_DEPENDS:=		libncurses
