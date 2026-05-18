@@ -18,7 +18,7 @@ PKG_SITES:=		https://github.com/FreeRADIUS/freeradius-server/releases/download/r
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 PKG_SUBPKGS:=		FREERADIUS_SERVER FREERADIUS_DEMOCERTS FREERADIUS_MOD_CHAP FREERADIUS_MOD_DETAIL
-PKG_SUBPKGS+=		FREERADIUS_MOD_DIGEST FREERADIUS_MOD_FILES FREERADIUS_MOD_LDAP FREERADIUS_MOD_MSCHAP
+PKG_SUBPKGS+=		FREERADIUS_MOD_DIGEST FREERADIUS_MOD_FILES FREERADIUS_MOD_LDAP
 PKG_SUBPKGS+=		FREERADIUS_MOD_PAP FREERADIUS_MOD_PREPROCESS FREERADIUS_MOD_REALM FREERADIUS_MOD_SQL
 PKG_SUBPKGS+=		FREERADIUS_MOD_SQL_MYSQL FREERADIUS_MOD_SQL_PGSQL FREERADIUS_UTILS
 
@@ -42,8 +42,6 @@ PKGSD_FREERADIUS_MOD_FILES:=		Module using local files for authorization
 PKGSN_FREERADIUS_MOD_FILES:=		freeradius-server
 PKGSD_FREERADIUS_MOD_LDAP:=		LDAP module
 PKGSN_FREERADIUS_MOD_LDAP:=		freeradius-server
-PKGSD_FREERADIUS_MOD_MSCHAP:=		MS-CHAP and MS-CHAPv2 module
-PKGSN_FREERADIUS_MOD_MSCHAP:=		freeradius-server
 PKGSD_FREERADIUS_MOD_PAP:=		PAP authentication module
 PKGSN_FREERADIUS_MOD_PAP:=		freeradius-server
 PKGSD_FREERADIUS_MOD_PREPROCESS:=	Request pre-processing module
@@ -112,7 +110,6 @@ $(eval $(call PKG_template,FREERADIUS_MOD_DETAIL,freeradius-mod-detail,${PKG_VER
 $(eval $(call PKG_template,FREERADIUS_MOD_DIGEST,freeradius-mod-digest,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FREERADIUS_MOD_DIGEST},${PKG_SECTION}))
 $(eval $(call PKG_template,FREERADIUS_MOD_FILES,freeradius-mod-files,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FREERADIUS_MOD_FILES},${PKG_SECTION}))
 $(eval $(call PKG_template,FREERADIUS_MOD_LDAP,freeradius-mod-ldap,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS_LDAP},${PKGSD_FREERADIUS_MOD_LDAP},${PKG_SECTION}))
-$(eval $(call PKG_template,FREERADIUS_MOD_MSCHAP,freeradius-mod-mschap,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FREERADIUS_MOD_MSCHAP},${PKG_SECTION}))
 $(eval $(call PKG_template,FREERADIUS_MOD_PAP,freeradius-mod-pap,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FREERADIUS_MOD_PAP},${PKG_SECTION}))
 $(eval $(call PKG_template,FREERADIUS_MOD_PREPROCESS,freeradius-mod-preprocess,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FREERADIUS_MOD_PREPROCESS},${PKG_SECTION}))
 $(eval $(call PKG_template,FREERADIUS_MOD_REALM,freeradius-mod-realm,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FREERADIUS_MOD_REALM},${PKG_SECTION}))
@@ -125,7 +122,6 @@ $(eval $(call PKG_mod_template,FREERADIUS_MOD_CHAP,rlm_chap,))
 $(eval $(call PKG_mod_template,FREERADIUS_MOD_DETAIL,rlm_detail,))
 $(eval $(call PKG_mod_template,FREERADIUS_MOD_DIGEST,rlm_digest,))
 $(eval $(call PKG_mod_template,FREERADIUS_MOD_FILES,rlm_files,acct_users preproxy_users users))
-$(eval $(call PKG_mod_template,FREERADIUS_MOD_MSCHAP,rlm_mschap,))
 $(eval $(call PKG_mod_template,FREERADIUS_MOD_LDAP,rlm_ldap,))
 $(eval $(call PKG_mod_template,FREERADIUS_MOD_PAP,rlm_pap,))
 $(eval $(call PKG_mod_template,FREERADIUS_MOD_PREPROCESS,rlm_preprocess,hints huntgroups))
