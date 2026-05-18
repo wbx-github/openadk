@@ -40,8 +40,8 @@ fuse3-utils-install:
 	${CP} ${WRKINST}/usr/bin/fusermount3 ${IDIR_FUSE_UTILS}/usr/bin
 
 libfuse3-install:
-	${INSTALL_DIR} ${IDIR_LIBFUSE}/usr/lib
+	${INSTALL_DIR} ${IDIR_LIBFUSE3}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libfuse3.so* \
-		${IDIR_LIBFUSE}/usr/lib
+		${IDIR_LIBFUSE3}/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
