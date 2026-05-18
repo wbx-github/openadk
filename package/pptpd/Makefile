@@ -4,15 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		pptpd
-PKG_VERSION:=		1.3.4
-PKG_RELEASE:=		2
-PKG_HASH:=		c23a9bdd219a0a36ae7ca20e7c9749f2efdcdbf108aabeeeb5066ba442ec88b6
+PKG_VERSION:=		1.5.0
+PKG_RELEASE:=		1
+PKG_HASH:=		6a724284b1ce00ea23f7d7608d081843a10c8a8d87d951cb2ea86e70aa1b4e77
 PKG_DESCR:=		point-to-point tunneling protocol server
 PKG_SECTION:=		net/ppp
 PKG_DEPENDS:=		ppp
 PKG_KDEPENDS:=		ppp ppp-mppe net-ipgre
-PKG_URL:=		http://www.poptop.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=poptop/}
+PKG_SITES:=		https://sourceforge.net/projects/poptop/files/pptpd/$(PKG_NAME)-$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
