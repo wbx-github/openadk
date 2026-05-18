@@ -4,17 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xdotool
-PKG_VERSION:=		2.20110530.1
+PKG_VERSION:=		4.20260303.1
 PKG_RELEASE:=		1
-PKG_HASH:=		e7b42c8b1d391970e1c1009b256033f30e57d8e0a2a3de229fd61ecfc27baf67
+PKG_HASH:=		c1f971a384da588eb99ca0755fc4300316d49c1e612537e3f1de52215e104fa3
 PKG_DESCR:=		tool lets you simulate keyboard input and mouse activity, move and resize windows
 PKG_SECTION:=		x11/misc
 PKG_DEPENDS:=		libxtst libxinerama libxi
 PKG_BUILDDEP:=		libXtst libXinerama libXi
-PKG_URL:=		http://www.semicomplete.com/projects/xdotool/
-PKG_SITES:=		http://semicomplete.googlecode.com/files/
+PKG_URL:=		https://www.semicomplete.com/projects/xdotool/
+PKG_SITES:=		https://github.com/jordansissel/xdotool/archive/refs/tags/
 
-DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
+DISTFILES:=		v$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
