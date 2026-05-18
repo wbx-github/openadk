@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		iproute2
-PKG_VERSION:=		6.14.0
+PKG_VERSION:=		6.19.0
 PKG_RELEASE:=		1
-PKG_HASH:=		a6d23588150096591c3d00fc27a324a82ee71d7a1a9eea78df5df17ad9b8461f
+PKG_HASH:=		9332213d35480b647086a70c302de8568de83455a98774d35de216c4ce191006
 PKG_DESCR:=		routing control utility
 PKG_SECTION:=		net/route
 PKG_BUILDDEP:=		iptables libnl
@@ -18,9 +18,6 @@ PKG_SUBPKGS:=		IP TC TC_IPT IFSTAT LNSTAT ROUTEL RTMON SS
 PKGSS_IP:=		libmnl
 PKGSD_TC:=		traffic control utility
 PKGSB_TC:=		iptables
-PKGSD_TC_IPT:=		traffic control iptables support library
-PKGSS_TC_IPT:=		tc iptables
-PKGSB_TC_IPT:=		iptables
 PKGSD_IFSTAT:=		interface statistics utility
 PKGSD_LNSTAT:=		network statistics utilities
 PKGSD_ROUTEL:=		route list and flush utilities
@@ -31,7 +28,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,IP,ip,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,TC,tc,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_TC},${PKGSD_TC},${PKG_SECTION}))
-$(eval $(call PKG_template,TC_IPT,tc-iptables,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_TC_IPT},${PKGSD_TC_IPT},${PKG_SECTION}))
 $(eval $(call PKG_template,IFSTAT,ifstat,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_IFSTAT},${PKG_SECTION}))
 $(eval $(call PKG_template,LNSTAT,lnstat,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_LNSTAT},${PKG_SECTION}))
 $(eval $(call PKG_template,ROUTEL,routel,${PKG_VERSION}-${PKG_RELEASE},,${PKGSD_ROUTEL},${PKG_SECTION}))
@@ -52,11 +48,6 @@ tc-install:
 	${CP} ${WRKINST}/usr/lib/tc/*.dist ${IDIR_TC}/usr/lib/tc/
 	${INSTALL_BIN} ${WRKINST}/sbin/tc ${IDIR_TC}/usr/sbin/
 
-tc-iptables-install:
-	${INSTALL_DIR} ${IDIR_TC_IPT}/usr/lib/tc
-	# use ${CP} here, since m_ipt.so is a symlink to m_xt.so
-	${CP} ${WRKINST}/usr/lib/tc/m_*.so ${IDIR_TC}/usr/lib/tc/
-
 ifstat-install:
 	${INSTALL_DIR} ${IDIR_IFSTAT}/usr/sbin
 	${INSTALL_BIN} ${WRKINST}/sbin/ifstat ${IDIR_IFSTAT}/usr/sbin
@@ -70,7 +61,7 @@ lnstat-install:
 
 routel-install:
 	${INSTALL_DIR} ${IDIR_ROUTEL}/usr/sbin
-	${INSTALL_BIN} ${WRKINST}/sbin/route{l,f} ${IDIR_ROUTEL}/usr/sbin
+	${INSTALL_BIN} ${WRKINST}/sbin/routel ${IDIR_ROUTEL}/usr/sbin
 
 rtmon-install:
 	${INSTALL_DIR} ${IDIR_RTMON}/usr/sbin
