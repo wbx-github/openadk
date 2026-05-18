@@ -17,7 +17,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,AUTOFS,autofs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-CONFIGURE_ARGS+=	--with-libtirpc
+CONFIGURE_ARGS+=	--with-libtirpc \
+			--without-sasl
 
 autofs-install:
 	$(INSTALL_DIR) $(IDIR_AUTOFS)/usr/lib/autofs
