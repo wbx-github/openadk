@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		mc
-PKG_VERSION:=		4.8.31
+PKG_VERSION:=		4.8.33
 PKG_RELEASE:=		1
-PKG_HASH:=		24191cf8667675b8e31fc4a9d18a0a65bdc0598c2c5c4ea092494cd13ab4ab1a
+PKG_HASH:=		cae149d42f844e5185d8c81d7db3913a8fa214c65f852200a9d896b468af164c
 PKG_DESCR:=		norton commander clone
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		glib libncurses libssh2
@@ -19,7 +19,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,MC,mc,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-ltinfo -lncurses
 CONFIGURE_ARGS+=	--enable-charset \
 			--disable-background \
 			--disable-glibtest \
