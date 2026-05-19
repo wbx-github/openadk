@@ -1,0 +1,10 @@
+--- libESMTP-1.1.0.orig/smtp-tls.c	2021-06-04 18:18:50.000000000 +0200
++++ libESMTP-1.1.0/smtp-tls.c	2026-05-19 21:31:51.235036745 +0200
+@@ -20,6 +20,7 @@
+  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  */
+ 
++#define _BSD_SOURCE
+ #include <config.h>
+ 
+ /* Support for the SMTP STARTTLS verb.
