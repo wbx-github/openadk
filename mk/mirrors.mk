@@ -26,16 +26,3 @@ MASTER_SITE_GNU?=	\
 	https://ftp.halifax.rwth-aachen.de/gnu/ \
 	https://ftp.gnu.org/gnu/ \
 	http://ftp.gnu.org/gnu/ \
-
-MASTER_SITE_SOURCEFORGE?=	\
-	https://downloads.sourceforge.net/projects/ \
-	http://nchc.dl.sourceforge.net/sourceforge/ \
-
-MASTER_SITE_MYSQL?=		\
-	http://sunsite.informatik.rwth-aachen.de/mysql/ \
-	ftp://ftp.fu-berlin.de/unix/databases/mysql/ \
-	http://mysql.easynet.be/ \
-
-MASTER_SITE_GNOME?=	\
-	https://download.gnome.org/sources/ \
-
