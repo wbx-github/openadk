@@ -1,0 +1,17 @@
+--- asterisk-22.9.0.orig/main/asterisk.c	2026-04-09 18:24:26.000000000 +0200
++++ asterisk-22.9.0/main/asterisk.c	2026-05-19 03:28:55.318454145 +0200
+@@ -3629,14 +3629,6 @@ int main(int argc, char *argv[])
+ 	struct rlimit l;
+ 	static const char *getopt_settings = "BC:cde:FfG:ghIiL:M:mnpqRrs:TtU:VvWXx:";
+ 
+-	/* Try to explicitly set a UTF-8 locale. This is needed for
+-	   libedit, as the LC_CTYPE category of the locale impacts the the
+-	   multi-byte character functions provided by libc. If it fails,
+-	   so be it. */
+-	if (!setlocale(LC_ALL, "C.UTF-8")) {
+-		ast_debug(1, "Tried to set locale to C.UTF-8 but it failed\n");
+-	}
+-
+ 	/* Remember original args for restart */
+ 	if (argc > ARRAY_LEN(_argv) - 1) {
+ 		fprintf(stderr, "Truncating argument size to %d\n", (int)ARRAY_LEN(_argv) - 1);
