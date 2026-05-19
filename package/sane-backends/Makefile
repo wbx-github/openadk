@@ -4,15 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		sane-backends
-PKG_VERSION:=		1.2.1
+PKG_VERSION:=		1.4.0
 PKG_RELEASE:=		1
-PKG_HASH:=		f832395efcb90bb5ea8acd367a820c393dda7e0dd578b16f48928b8f5bdd0524
+PKG_HASH:=		f99205c903dfe2fb8990f0c531232c9a00ec9c2c66ac7cb0ce50b4af9f407a72
 PKG_DESCR:=		scanner access now easy
 PKG_SECTION:=		sys/misc
 PKG_BUILDDEP:=		libusb libusb-compat
 PKG_NEEDS:=		threads
 PKG_URL:=		http://www.sane-project.org/
-PKG_SITES:=		https://gitlab.com/sane-project/backends/uploads/110fc43336d0fb5e514f1fdc7360dd87/
+PKG_SITES:=		https://gitlab.com/-/project/429008/uploads/843c156420e211859e974f78f64c3ea3/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
