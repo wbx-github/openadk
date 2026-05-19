@@ -4,15 +4,17 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		mini-httpd
-PKG_VERSION:=		1.19
-PKG_RELEASE:=		10
-PKG_HASH:=		f7f36533b1338ea16d916ea525ea7006ab38fdd3544ac7df93a4688a8e270241
+PKG_VERSION:=		1.30
+PKG_RELEASE:=		1
+PKG_HASH:=		9c4481802af8dde2e164062185c279e9274525c3af93d014fdc0b80cf30bca6e
 PKG_DESCR:=		small webserver with ssl support
 PKG_DEPENDS:=		libopenssl
 PKG_BUILDDEP:=		openssl
 PKG_SECTION:=		net/http
 PKG_URL:=		http://www.acme.com/software/mini_httpd/
 PKG_SITES:=		http://www.acme.com/software/mini_httpd/
+
+PKG_CFLINE_MINI_HTTPD:=	depends on ADK_BROKEN
 
 DISTFILES:=		mini_httpd-${PKG_VERSION}.tar.gz
 WRKDIST=		${WRKDIR}/mini_httpd-${PKG_VERSION}

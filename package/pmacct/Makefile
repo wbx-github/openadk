@@ -4,15 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pmacct
-PKG_VERSION:=		1.7.8
+PKG_VERSION:=		1.7.9
 PKG_RELEASE:=		1
-PKG_HASH:=		4df50a3c6c7bdace3345bbf3bd4f6fa7a6722ec1fb45dfd266ad956b327da98a
+PKG_HASH:=		94185c33d659772035c63be0a82601bb9eb064fb4be1d68ba279b47204b2750a
 PKG_DESCR:=		ip accounting tools
 PKG_SECTION:=		net/acct
 PKG_DEPENDS:=		libpcap libcdada
 PKG_BUILDDEP:=		libpcap libcdada
 PKG_URL:=		http://www.pmacct.net/
 PKG_SITES:=		http://www.pmacct.net/
+
+PKG_LIBC_DEPENDS:=	glibc musl
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 

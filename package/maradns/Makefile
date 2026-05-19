@@ -4,18 +4,17 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		maradns
-PKG_VERSION:=		2.0.13
+PKG_VERSION:=		3.5.0036
 PKG_RELEASE:=		1
-PKG_HASH:=		661ea06fb18df6d2469b2bf824ffd93545a091af185362cbc738d1aa408210c3
+PKG_HASH:=		6cdbeb588c636ca2c19511af49ce56c8903ac264fcfed5fd759fdbedfea1b3a0
 PKG_DESCR:=		small and secure DNS server
 PKG_SECTION:=		net/dns
 PKG_DEPENDS:=		duende
 PKG_NEEDS:=		threads
-PKG_URL:=		http://www.maradns.org
-PKG_SITES:=		http://maradns.samiam.org/download/2.0/${PKG_VERSION}/
-PKG_NOPARALLEL:=	1
+PKG_URL:=		https://samboy.github.io/MaraDNS/webpage/
+PKG_SITES:=		https://maradns.samiam.org/download/3.5/$(PKG_VERSION)/
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
+PKG_CFLINE_MARADNS:=	depends on ADK_BROKEN
 
 PKG_SUBPKGS:=		MARADNS DUENDE DEADWOOD ZONESERVER ASKMARA FETCHZONE
 PKGSD_DUENDE:=		maradns deamonising tool

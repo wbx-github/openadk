@@ -1,0 +1,10 @@
+--- transproxy-1.6.orig/tproxy.c	2005-05-24 15:26:46.000000000 +0200
++++ transproxy-1.6/tproxy.c	2026-05-17 19:47:09.596837241 +0200
+@@ -33,6 +33,7 @@
+ #include <string.h>
+ #include <ctype.h>
+ #include <errno.h>
++#include <time.h>
+ 
+ #ifdef HAVE_GETOPT_H
+ # include <getopt.h>

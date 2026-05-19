@@ -12,6 +12,8 @@ PKG_SECTION:=		app/archive
 PKG_URL:=		http://www.info-zip.org/Zip.html
 PKG_SITES:=		ftp://ftp.info-zip.org/pub/infozip/src/
 
+PKG_CFLINE_ZIP:=	depends on ADK_HOST_ONLY
+
 WRKDIST=		$(WRKDIR)/$(PKG_NAME)30
 DISTFILES:=		$(PKG_NAME)30.tgz
 

@@ -13,6 +13,8 @@ PKG_DEPENDS:=		kodi
 PKG_BUILDDEP:=		kodi
 PKG_SITES:=		https://github.com/xbmc/audioencoder.wav.git
 
+PKG_CFLINE_KODI_AUDIOENCODER_WAV:=	depends on ADK_BROKEN
+
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,KODI_AUDIOENCODER_WAV,kodi-audioencoder-wav,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))

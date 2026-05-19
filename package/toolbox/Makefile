@@ -9,6 +9,8 @@ PKG_RELEASE:=		1
 PKG_DESCR:=		openadk toolbox for very small systems
 PKG_SECTION:=		base/apps
 
+PKG_DEPENDS_TOOLBOX:=	depends on ADK_BROKEN
+
 NO_DISTFILES:=		1
 
 include ${ADK_TOPDIR}/mk/package.mk

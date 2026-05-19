@@ -12,6 +12,8 @@ PKG_SECTION:=		dev/tools
 PKG_BUILDDEP:=		python3-host
 PKG_SITES:=		https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/
 
+PKG_CFLINE_PYTHON3_YAML:=	depends on ADK_HOST_ONLY
+
 DISTFILES:=             pyyaml-$(PKG_VERSION).tar.gz
 
 WRKDIST=		$(WRKDIR)/pyyaml-$(PKG_VERSION)

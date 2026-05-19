@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		tigervnc
-PKG_VERSION:=		1.7.0
+PKG_VERSION:=		1.16.2
 PKG_RELEASE:=		1
-PKG_HASH:=		4aa704747b4f8f1d59768b663c488fa937e6783db2a46ae407cd2a599cfbf8b1
+PKG_HASH:=		b107c0c8b8a962594281690366c24186e95c2ea4a169acbc0076aa62ed01f467
 PKG_DESCR:=		x11 vnc server
 PKG_SECTION:=		x11/apps
 PKG_DEPENDS:=		libfltk libjpeg-turbo libsm libice libxtst libx11 zlib
@@ -16,6 +16,9 @@ PKG_BUILDDEP+=		libXext libXdamage cmake-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://tigervnc.org
 PKG_SITES:=		https://github.com/TigerVNC/tigervnc/archive/
+
+# not comaptible with fltk 1.4.x
+PKG_CFLINE_TIGERVNC:=	depends on ADK_BROKEN
 
 DISTFILES:=             v$(PKG_VERSION).tar.gz
 

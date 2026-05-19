@@ -12,8 +12,9 @@ PKG_SECTION:=		libs/misc
 HOST_BUILDDEP:=		ruby-host
 PKG_SITES:=		https://github.com/ruby/getoptlong/archive/refs/tags/
 
-DISTFILES:=             v$(PKG_VERSION).tar.gz
+PKG_CFLINE_RUBY_GETOPTLONG:=	depends on ADK_HOST_ONLY
 
+DISTFILES:=             v$(PKG_VERSION).tar.gz
 WRKDIST=		$(WRKDIR)/getoptlong-$(PKG_VERSION)
 
 include $(ADK_TOPDIR)/mk/host.mk

@@ -19,9 +19,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call HOST_template,TAR,tar,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,TAR,tar,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-CONFIGURE_ENV+=		gl_cv_func_mbrtowc_incomplete_state=no \
-			gl_cv_func_wcrtomb_retval=no
-
 tar-install:
 	${INSTALL_DIR} ${IDIR_TAR}/bin
 	${INSTALL_BIN} ${WRKINST}/usr/bin/tar ${IDIR_TAR}/bin

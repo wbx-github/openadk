@@ -14,6 +14,8 @@ PKG_BUILDDEP:=		libgssglue libtirpc
 PKG_SITES:=		http://www.citi.umich.edu/projects/nfsv4/linux/librpcsecgss/
 PKG_OPTS:=		dev
 
+PKG_CFLINE_LIBRPCSECGSS:=	depends on ADK_BROKEN
+
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 PKG_LIBC_DEPENDS:=	uclibc-ng glibc

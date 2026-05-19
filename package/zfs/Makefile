@@ -12,6 +12,10 @@ PKG_SECTION:=		sys/fs
 PKG_DEPENDS:=		libcurl
 PKG_URL:=		https://openzfs.org
 PKG_SITES:=		https://github.com/openzfs/zfs/releases/download/${PKG_NAME}-${PKG_VERSION}/
+
+# needs a older kernel then 6.10
+PKG_CFLINE_ZFS:=	depends on ADK_BROKEN
+
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_SUBPKGS:=		ZFS ZFS_TESTS

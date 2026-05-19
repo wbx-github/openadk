@@ -4,19 +4,23 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mailutils
-PKG_VERSION:=		2.2
+PKG_VERSION:=		3.21
 PKG_RELEASE:=		1
-PKG_HASH:=		7b1508935050684a4df4f4d343a3b3acc25abdf6d072460d43f22e88e10b6269
+PKG_HASH:=		e47c1edc699b8d6675fdbc77db3a84ae837f18e1f2094fe29d48bb58a97ef5e9
 PKG_DESCR:=		mail program
 PKG_SECTION:=		net/mail
 PKG_BUILDDEP:=		readline
 PKG_DEPENDS:=		libreadline
 PKG_URL:=		http://mailutils.org/
-PKG_SITES:=		ftp://ftp.gnu.org/gnu/mailutils/
+PKG_SITES:=		https://ftp.gnu.org/gnu/mailutils/
+
+PKG_LIBC_DEPENDS:=	glibc musl
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,MAILUTILS,mailutils,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
+
+CONFIGURE_ARGS+=	--without-fribidi
 
 mailutils-install:
 	$(INSTALL_DIR) $(IDIR_MAILUTILS)/usr/bin

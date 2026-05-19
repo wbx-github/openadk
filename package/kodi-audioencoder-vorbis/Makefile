@@ -13,6 +13,8 @@ PKG_DEPENDS:=		kodi libogg libvorbis
 PKG_BUILDDEP:=		kodi libogg libvorbis
 PKG_SITES:=		https://github.com/xbmc/audioencoder.vorbis.git
 
+PKG_CFLINE_KODI_AUDIOENCODER_VORBIS:=	depends on ADK_BROKEN
+
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,KODI_AUDIOENCODER_VORBIS,kodi-audioencoder-vorbis,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))

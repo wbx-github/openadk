@@ -9,9 +9,11 @@ PKG_RELEASE:=		1
 PKG_HASH:=		3d44ec8274881cf262f160805641f0827ffcc20ade0d85e7e6f3b90e0d3d222a
 PKG_DESCR:=		decode and send infra-red signals
 PKG_SECTION:=		sys/hw
-PKG_BUILDDEP:=		libxml2-host libxslt-host
+PKG_BUILDDEP:=		libxml2-host libxslt-host python3-host python3-setuptools-host
 PKG_URL:=		http://www.lirc.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=lirc/}
+PKG_SITES:=		https://sourceforge.net/projects/lirc/files/LIRC/$(PKG_VERSION)/
+
+PKG_CFLINE_LIRC:=	depends on ADK_BROKEN
 
 DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
 

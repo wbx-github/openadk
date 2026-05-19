@@ -13,6 +13,8 @@ PKG_NEEDS:=		c++
 PKG_URL:=		http://tukaani.org/lzma/
 PKG_SITES:=		http://tukaani.org/lzma/
 
+PKG_CFLINE_LZMA:=	depends on ADK_HOST_ONLY
+
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
 include $(ADK_TOPDIR)/mk/host.mk

@@ -15,6 +15,9 @@ PKG_NEEDS:=		c++
 PKG_URL:=		https://mosh.org/
 PKG_SITES:=		https://github.com/mobile-shell/mosh/archive/refs/tags/
 
+# libprotobuf.so: undefined reference to `std::__once_call@GLIBCXX_3.4.11'
+PKG_LIBC_DEPENDS:=	glibc musl
+
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 WRKDIST=		${WRKDIR}/$(PKG_NAME)-$(PKG_NAME)-$(PKG_VERSION)

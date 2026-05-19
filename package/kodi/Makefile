@@ -32,6 +32,8 @@ PKG_NEEDS:=		threads c++ data iconv
 PKG_URL:=		http://kodi.tv/
 PKG_SITES:=		https://github.com/xbmc/xbmc/archive/
 
+PKG_CFLINE_KODI:=	depends on ADK_BROKEN
+
 DISTFILES:=		$(PKG_VERSION)-Piers.tar.gz
 WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Piers
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj

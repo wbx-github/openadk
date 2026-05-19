@@ -4,14 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		jupp
-PKG_VERSION:=		38
+PKG_VERSION:=		41
 PKG_RELEASE:=		1
-PKG_HASH:=		c5cbe3f97683f6e513f611a60531feefb9b877f8cea4c6e9087b48631f69ed40
+PKG_HASH:=		7bb8ea8af519befefff93ec3c9e32108d7f2b83216c9bc7b01aef5098861c82f
 PKG_DESCR:=		wordstar-inspired text editor
 PKG_SECTION:=		app/editor
 PKG_URL:=		https://www.mirbsd.org/jupp.htm
 PKG_SITES:=		${MASTER_SITE_MIRBSD:distfiles/=dist/jupp/}
 DISTFILES:=		joe-3.1jupp${PKG_VERSION}.tgz
+
+PKG_CFLINE_JUPP:=	depends on ADK_BROKEN
 
 WRKDIST=		${WRKDIR}/jupp
 

@@ -15,6 +15,8 @@ PKG_NEEDS:=		c++
 PKG_URL:=		http://ltrace.org/
 PKG_SITES:=		http://www.ltrace.org/
 
+PKG_ARCH_DEPENDS:=	!aarch64
+
 DISTFILES:=		$(PKG_NAME)_$(PKG_VERSION).orig.tar.bz2
 
 include $(ADK_TOPDIR)/mk/package.mk
