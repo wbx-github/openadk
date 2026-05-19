@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		irqbalance
-PKG_VERSION:=		1.4.0
+PKG_VERSION:=		1.9.5
 PKG_RELEASE:=		1
-PKG_HASH:=		62de71510a2496fcf027efb0b288dd48e53e9efc931fa573c95580cad6264d07
+PKG_HASH:=		c5fc3b1880136437d297afe9a7833781e7849939e104d0780888ffcafc37e339
 PKG_DESCR:=		irq balancing for smp systems
 PKG_SECTION:=		sys/utils
 PKG_DEPENDS:=		glib
@@ -20,7 +20,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,IRQBALANCE,irqbalance,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-TARGET_LDFLAGS+=	-ltinfo
 AUTOTOOL_STYLE:=	autogen
 
 irqbalance-install:
