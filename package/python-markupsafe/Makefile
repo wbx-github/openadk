@@ -12,8 +12,9 @@ PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		python3-host
 PKG_SITES:=		https://files.pythonhosted.org/packages/b2/97/5d42485e71dfc078108a86d6de8fa46db44a1a9295e89c5d6d4a06e23a62/
 
-DISTFILES:=             markupsafe-$(PKG_VERSION).tar.gz
+PKG_CFLINE_PYTHON_MARKUPSAFE:=	depends on ADK_HOST_ONLY
 
+DISTFILES:=             markupsafe-$(PKG_VERSION).tar.gz
 WRKDIST=		$(WRKDIR)/markupsafe-$(PKG_VERSION)
 
 include ${ADK_TOPDIR}/mk/host.mk
