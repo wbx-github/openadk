@@ -4,15 +4,18 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libva
-PKG_VERSION:=		1.7.3
+PKG_VERSION:=		1.8.2
 PKG_RELEASE:=		1
-PKG_HASH:=		22bc139498065a7950d966dbdb000cad04905cbd3dc8f3541f80d36c4670b9d9
+PKG_HASH:=		9ed3e3ddc8f47a715d4c6ec366beb21c83fc4e8a3d4d39a811baff76f0a0cede
 PKG_DESCR:=		video acceleration api library
 PKG_SECTION:=		libs/video
 PKG_BUILDDEP:=		libdrm
 PKG_URL:=		https://www.freedesktop.org/wiki/Software/vaapi/
 PKG_SITES:=		https://www.freedesktop.org/software/vaapi/releases/libva/
 PKG_OPTS:=		dev
+
+# package moved to github, find there a newer version
+PKG_CFLINE_LIBVA:=	depends on ADK_BROKEN
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
