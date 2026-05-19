@@ -19,6 +19,8 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,WDFS,wdfs,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
+TARGET_CFLAGS+=		-std=c17
+
 wdfs-install:
 	${INSTALL_DIR} ${IDIR_WDFS}/usr/bin
 	${CP} ${WRKINST}/usr/bin/wdfs ${IDIR_WDFS}/usr/bin
