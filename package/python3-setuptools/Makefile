@@ -12,8 +12,9 @@ PKG_SECTION:=		dev/tools
 PKG_BUILDDEP:=		python3-host
 PKG_SITES:=		https://files.pythonhosted.org/packages/a9/5a/0db4da3bc908df06e5efae42b44e75c81dd52716e10192ff36d0c1c8e379/
 
-DISTFILES:=             setuptools-$(PKG_VERSION).tar.gz
+PKG_CFLINE_PYTHON3_SETUPTOOLS:=	depends on ADK_HOST_ONLY
 
+DISTFILES:=             setuptools-$(PKG_VERSION).tar.gz
 WRKDIST=		$(WRKDIR)/setuptools-$(PKG_VERSION)
 
 include ${ADK_TOPDIR}/mk/host.mk
