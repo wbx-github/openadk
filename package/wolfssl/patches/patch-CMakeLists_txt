@@ -1,0 +1,11 @@
+--- wolfssl-5.9.1-stable.orig/CMakeLists.txt	2026-04-08 19:40:06.000000000 +0200
++++ wolfssl-5.9.1-stable/CMakeLists.txt	2026-05-18 11:32:09.750291109 +0200
+@@ -224,7 +224,7 @@ elseif(WIN32)
+     # Windows cl.exe does not support the -Wextra, -Wno-unused and -Werror flags.
+     set(CMAKE_C_FLAGS "-Wall ${CMAKE_C_FLAGS}")
+ else()
+-    set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused -Werror ${CMAKE_C_FLAGS}")
++    set(CMAKE_C_FLAGS "-Wall -Wextra -Wno-unused ${CMAKE_C_FLAGS}")
+ endif()
+ 
+ ####################################################
