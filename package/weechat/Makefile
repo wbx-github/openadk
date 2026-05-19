@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		weechat
-PKG_VERSION:=		4.2.1
+PKG_VERSION:=		4.9.0
 PKG_RELEASE:=		1
-PKG_HASH:=		253ddf086f6c845031a2dd294b1552851d6b04cc08a2f9da4aedfb3e2f91bdcd
+PKG_HASH:=		7cbb9b27f25a7d2f1d8c426a08f8e625eefbc1d3e59bbf775925444f72394b6f
 PKG_DESCR:=		lightweight irc client
 PKG_SECTION:=		app/chat
 PKG_DEPENDS:=		libncurses zlib libcurl libgcrypt libgnutls
 PKG_BUILDDEP:=		cmake-host ncurses zlib curl libgcrypt gnutls
-PKG_URL:=		http://www.weechat.org/
+PKG_URL:=		https://www.weechat.org/
 PKG_SITES:=		https://weechat.org/files/src/
 
 include ${ADK_TOPDIR}/mk/package.mk
@@ -28,7 +28,8 @@ CMAKE_FLAGS+=		-DENABLE_PERL=OFF \
 			-DENABLE_GUILE=OFF \
 			-DENABLE_SPELL=OFF \
 			-DENABLE_NLS=OFF \
-			-DGCRYPT_LDFLAGS="-L$(STAGING_TARGET_DIR)/usr/lib -ltinfo -lgcrypt" \
+			-DENABLE_CJSON=OFF \
+			-DGCRYPT_LDFLAGS="-L$(STAGING_TARGET_DIR)/usr/lib -lgcrypt" \
 			-DGCRYPT_CFLAGS="-I$(STAGING_TARGET_DIR)/usr/include" \
 
 weechat-install:
