@@ -6,11 +6,14 @@ include $(ADK_TOPDIR)/rules.mk
 PKG_NAME:=		luajit
 PKG_VERSION:=		0d313b243194a0b8d2399d8b549ca5a0ff234db5
 PKG_GIT:=		hash
+PKG_HASH:=		41f1df8f35543b8511f84af85775d999595c0532967cbbf1e9092075b211ec19
 PKG_RELEASE:=		1
 PKG_DESCR:=		just in time compiler for lua
 PKG_SECTION:=		dev/lang
 PKG_URL:=		http://luajit.org/download/
 PKG_SITES:=		https://luajit.org/git/luajit.git
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
