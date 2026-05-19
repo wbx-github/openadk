@@ -1,6 +1,0 @@
-#!/bin/sh
-. $IPKG_INSTROOT/etc/functions.sh
-add_rcconf scanlogd NO
-gid=$(get_next_gid)
-add_group scanlogd $gid
-add_user scanlogd $(get_next_uid) $gid /tmp/
