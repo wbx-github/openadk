@@ -9,8 +9,6 @@ PKG_RELEASE:=		1
 PKG_HASH:=		d2f2598d1300307209b7b1905cc0637d2d053c0a4701a8d44383867299578471
 PKG_DESCR:=		mail filter software
 PKG_SECTION:=		net/mail
-PKG_BUILDDEP:=		db
-PKG_DEPENDS:=		libdb
 PKG_NEEDS:=		c++
 PKG_URL:=		http://bogofilter.sourceforge.net/
 PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=bogofilter/}
@@ -22,12 +20,12 @@ include ${ADK_TOPDIR}/mk/package.mk
 $(eval $(call PKG_template,BOGOFILTER,bogofilter,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 CONFIGURE_ENV+=		ac_cv_func_memcmp_working=yes
-CONFIGURE_ARGS+=	--without-libsqlite3-prefix \
-			--without-libqdbm-prefix \
+CONFIGURE_ARGS+=	--without-libqdbm-prefix \
 			--without-libiconv-prefix \
+			--without-libdb-prefix \
 			--with-included-gsl \
+			--with-database=sqlite3 \
 			--disable-static \
-			--with-libdb-prefix=${STAGING_TARGET_DIR}/usr \
 			--disable-transactions
 
 bogofilter-install:
