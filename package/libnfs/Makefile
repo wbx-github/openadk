@@ -4,16 +4,17 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libnfs
-PKG_VERSION:=		2.0.0
+PKG_VERSION:=		6.0.2
 PKG_RELEASE:=		1
-PKG_HASH:=		6eaeb85559bb3e378284688f06fc56b018d324a5fc69f3f5259d24593ad113cf
+PKG_HASH:=		4e5459cc3e0242447879004e9ad28286d4d27daa42cbdcde423248fad911e747
 PKG_DESCR:=		nfs client library
 PKG_SECTION:=		libs/net
 PKG_URL:=		https://github.com/sahlberg/libnfs
-PKG_SITES:=		https://sites.google.com/site/libnfstarballs/li/
+PKG_SITES:=		https://github.com/sahlberg/libnfs/archive/refs/tags/
 PKG_OPTS:=		dev
 
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.gz
+DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
+WRKDIST=             	$(WRKDIR)/$(PKG_NAME)-$(PKG_NAME)-$(PKG_VERSION)
 
 include $(ADK_TOPDIR)/mk/package.mk
 
