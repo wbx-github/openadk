@@ -4,7 +4,7 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		boringssl
-PKG_VERSION:=		2b56981b6415dc3fa70432649c2f289c77707a69
+PKG_VERSION:=		beddb582d9e8786a07d79f1cf054d4792b3dd81f
 PKG_RELEASE:=		1
 PKG_GIT:=		hash
 PKG_DESCR:=		ssl library
@@ -14,6 +14,8 @@ PKG_NEEDS:=		c++
 PKG_URL:=		https://boringssl.googlesource.com/
 PKG_SITES:=		https://boringssl.googlesource.com/boringssl.git
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -26,7 +28,7 @@ INSTALL_STYLE:=		manual
 
 boringssl-install:
 	$(INSTALL_DIR) $(IDIR_BORINGSSL)/usr/lib
-	$(CP) $(WRKBUILD)/ssl/libssl.so \
+	$(CP) $(WRKBUILD)/libssl.so \
 		$(IDIR_BORINGSSL)/usr/lib
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
