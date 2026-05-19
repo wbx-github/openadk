@@ -12,7 +12,7 @@ PKG_SECTION:=		sys/serial
 PKG_DEPENDS:=		libusb-compat
 PKG_BUILDDEP:=		libgd libusb-compat
 PKG_URL:=		http://serdisplib.sourceforge.net
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=serdisplib/}
+PKG_SITES:=		https://sourceforge.net/projects/serdisplib/files/serdisplib/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
