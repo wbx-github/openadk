@@ -18,6 +18,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,PINENTRY,pinentry,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
+CONFIGURE_ARGS+=	--disable-pinentry-qt5
+
 pinentry-install:
 	$(INSTALL_DIR) $(IDIR_PINENTRY)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/pinentry \
