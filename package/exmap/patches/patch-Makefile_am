@@ -1,8 +1,0 @@
---- exmap-console-0.4.1.orig/Makefile.am	2006-11-06 18:05:01.000000000 +0100
-+++ exmap-console-0.4.1/Makefile.am	2013-10-24 19:00:50.000000000 +0200
-@@ -1,4 +1,4 @@
--SUBDIRS=kernel src doc
-+SUBDIRS=src
- 
- DISTCLEANFILES = *~ Makefile.in install-sh missing depcomp *.m4 config.log config.status Makefile
- 
