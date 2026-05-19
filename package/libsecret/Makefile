@@ -4,25 +4,32 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libsecret
-PKG_VERSION:=		0.18
-PKG_RELEASE:=		2
-PKG_HASH:=		0c73aa762dbd1e38ba7b03de350e23ce818cb810b0784375e95ef61e004b02e3
+PKG_VERSION:=		0.21.7
+PKG_RELEASE:=		1
+PKG_HASH:=		944d8a6072b6f285db40b8e9927dbe4dde81dcc7d177f84271fb167ccc297f65
 PKG_DESCR:=		library for storing and retrieving passwords
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgcrypt glib
 PKG_BUILDDEP:=		intltool-host libgcrypt glib
 PKG_NEEDS:=		intl
-PKG_URL:=		https://wiki.gnome.org/Libsecret
-PKG_SITES:=		http://ftp.gnome.org/pub/gnome/sources/libsecret/${PKG_VERSION}/
+PKG_SITES:=		https://gitlab.gnome.org/GNOME/libsecret/-/archive/$(PKG_VERSION)/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBSECRET,libsecret,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-CONFIGURE_ARGS+=	--enable-vala=no \
-			--disable-manpages \
-			--enable-gcrypt
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
+
+MESON_FLAGS+=		-Dintrospection=false \
+			-Dmanpage=false \
+			-Dgtk_doc=false
 
 libsecret-install:
 	$(INSTALL_DIR) $(IDIR_LIBSECRET)/usr/lib
