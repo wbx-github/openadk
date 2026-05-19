@@ -4,24 +4,22 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		siproxd
-PKG_VERSION:=		0.8.3
+PKG_VERSION:=		0.8.4
 PKG_RELEASE:=		1
-PKG_HASH:=		9a6d7a6bb6fff162775b1e1fb7018de9c69642cbf8626185dc6ffceeeba07736
+PKG_HASH:=		ad5b9bf24713aed02906507a503ed0c85e26921c9bea63c72adac4a5ee39e416
 PKG_DESCR:=		session initiation protocol proxy
 PKG_SECTION:=		net/voip
 PKG_DEPENDS:=		libosip2
 PKG_BUILDDEP:=		libosip2
 PKG_NEEDS:=		threads
 PKG_URL:=		http://siproxd.sourceforge.net
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=siproxd/}
+PKG_SITES:=		https://sourceforge.net/projects/siproxd/files/siproxd/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,SIPROXD,siproxd,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
-
-AUTOTOOL_STYLE:=	autoreconf
 
 siproxd-install:
 	${INSTALL_DIR} ${IDIR_SIPROXD}/usr/sbin ${IDIR_SIPROXD}/etc
