@@ -4,10 +4,10 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		chocolate-doom
-PKG_VERSION:=		3.0.1
+PKG_VERSION:=		3.1.1
 PKG_RELEASE:=		1
-PKG_HASH:=		a54383beef6a52babc5b00d58fcf53a454f012ced7b1936ba359b13f1f10ac66
-PKG_DESCR:=		doom
+PKG_HASH:=		1edcc41254bdc194beb0d33e267fae306556c4d24110a1d3d3f865717f25da23
+PKG_DESCR:=		doom game
 PKG_SECTION:=		app/games
 PKG_DEPENDS:=		libsdl2 libsdl2-mixer libsdl2-net
 PKG_BUILDDEP:=		sdl2 sdl2-mixer sdl2-net
@@ -22,7 +22,6 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,CHOCOLATE_DOOM,chocolate-doom,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
 AUTOTOOL_STYLE:=	autogen
-TARGET_CFLAGS+=		-fcommon
 
 chocolate-doom-install:
 	$(INSTALL_DIR) $(IDIR_CHOCOLATE_DOOM)/usr/bin
