@@ -1,0 +1,14 @@
+--- procps-v4.0.6-4dafddf4c3f4646caa517f039a2307e92657ec93.orig/Makefile.am	2026-01-29 10:10:29.000000000 +0100
++++ procps-v4.0.6-4dafddf4c3f4646caa517f039a2307e92657ec93/Makefile.am	2026-05-18 10:42:13.569572592 +0200
+@@ -18,10 +18,7 @@ PACKAGE_VERSION = @PACKAGE_VERSION@
+ 
+ ACLOCAL_AMFLAGS = -I m4
+ SUBDIRS = \
+-	local \
+-	po-man \
+-	po \
+-	testsuite
++	local
+ 
+ AM_CFLAGS = -Ilibrary/include
+ LDADD = ./library/libproc2.la $(CYGWINFLAGS)
