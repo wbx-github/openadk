@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gcr
-PKG_VERSION:=		3.40.0
-PKG_EXTRAVER:=		3.40
+PKG_VERSION:=		4.4.0.1
 PKG_RELEASE:=		1
-PKG_HASH:=		b9d3645a5fd953a54285cc64d4fc046736463dbd4dcc25caf5c7b59bed3027f5
+PKG_HASH:=		be1fd6ec369ed4eb42e309ef7933a6fb925b08296e0a04a21bb979954d5586e3
 PKG_DESCR:=		gnome keyring library
 PKG_SECTION:=		libs/crypto
 PKG_BUILDDEP:=		p11-kit intltool-host libgtk3 meson-host
-PKG_URL:=		https://wiki.gnome.org/action/show/Projects/GnomeKeyring
-PKG_SITES:=		http://ftp.acc.umu.se/pub/gnome/sources/gcr/$(PKG_EXTRAVER)/
+PKG_SITES:=		https://gitlab.gnome.org/GNOME/gcr/-/archive/$(PKG_VERSION)/
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
@@ -25,6 +25,9 @@ BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
 MESON_FLAGS+=		-Dintrospection=false \
+			-Dgtk4=false \
+			-Dvapi=false \
+			-Dsystemd=disabled \
 			-Dgtk_doc=false
 
 gcr-install:
