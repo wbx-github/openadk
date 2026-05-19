@@ -12,8 +12,9 @@ PKG_SECTION:=		dev/tools
 PKG_BUILDDEP:=		python3-host
 PKG_SITES:=		https://files.pythonhosted.org/packages/b9/ab/33968940b2deb3d92f5b146bc6d4009a5f95d1d06c148ea2f9ee965071af/
 
-DISTFILES:=             pyelftools-$(PKG_VERSION).tar.gz
+PKG_CFLINE_PYTHON3_PYELFTOOLS:=	depends on ADK_HOST_ONLY
 
+DISTFILES:=             pyelftools-$(PKG_VERSION).tar.gz
 WRKDIST=		$(WRKDIR)/pyelftools-$(PKG_VERSION)
 
 include ${ADK_TOPDIR}/mk/host.mk
