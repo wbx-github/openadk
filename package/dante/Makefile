@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		dante
-PKG_VERSION:=		1.4.1
+PKG_VERSION:=		1.4.4
 PKG_RELEASE:=		1
-PKG_HASH:=		b6d232bd6fefc87d14bf97e447e4fcdeef4b28b16b048d804b50b48f261c4f53
+PKG_HASH:=		1973c7732f1f9f0a4c0ccf2c1ce462c7c25060b25643ea90f9b98f53a813faec
 PKG_DESCR:=		socks proxy
 PKG_SECTION:=		net/proxy
 PKG_URL:=		https://www.inet.no/dante/
