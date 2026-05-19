@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ssmtp
-PKG_VERSION:=		2.61
+PKG_VERSION:=		2.66
 PKG_RELEASE:=		1
-PKG_HASH:=		2151ad18cb73f9a254f796dde2b48be7318b45410b59fedbb258db5a41044fb5
+PKG_HASH:=		6e639eafce4c8a3b7782c2a8a2d467be097c5896eae86fcde0f608666ea88249
 PKG_DESCR:=		minimal and secure mail sender
 PKG_SECTION:=		net/mail
 PKG_SITES:=		http://ftp.debian.org/debian/pool/main/s/ssmtp/
