@@ -21,6 +21,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBSSH2,libssh2,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+CONFIGURE_ARGS+=	--disable-rpath
+
 libssh2-install:
 	$(INSTALL_DIR) $(IDIR_LIBSSH2)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libssh2*.so* \
