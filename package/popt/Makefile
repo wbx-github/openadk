@@ -13,6 +13,7 @@ PKG_URL:=		http://rpm5.org/
 PKG_BUILDDEP:=		gettext-host
 HOST_BUILDDEP:=		gettext-host libtool-host
 PKG_SITES:=		https://github.com/rpm-software-management/popt/archive/refs/tags/
+PKG_NEEDS:=		iconv
 PKG_LIBNAME:=		libpopt
 PKG_OPTS:=		dev
 
