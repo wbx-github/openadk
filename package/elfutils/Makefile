@@ -4,13 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		elfutils
-PKG_VERSION:=		0.189
+PKG_VERSION:=		0.195
 PKG_RELEASE:=		1
-PKG_HASH:=		39bd8f1a338e2b7cd4abc3ff11a0eddc6e690f69578a57478d8179b4148708c8
+PKG_HASH:=		37629fdf7f1f3dc2818e138fca2b8094177d6c2d0f701d3bb650a561218dc026
 PKG_DESCR:=		libraries/utilities to handle elf objects (drop in replacement for libelf)
 PKG_SECTION:=		base/libs
 PKG_DEPENDS:=		zlib
 PKG_BUILDDEP:=		zlib
+PKG_BUILDDEP_UCLIBC_NG:=musl-obstack
 PKG_NEEDS:=		intl
 PKG_SITES:=		https://sourceware.org/elfutils/ftp/$(PKG_VERSION)/
 
@@ -26,16 +27,17 @@ $(eval $(call PKG_template,ELFUTILS,elfutils,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG
 # not only because we pass -DNDEBUG, this package won't build with -Werror
 TARGET_CFLAGS+=		-Wno-error
 
-AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--disable-symbol-versioning \
 			--disable-debuginfod \
 			--disable-libdebuginfod \
-			--disable-demangler \
-			--disable-progs
+			--disable-demangler
 
 elfutils-install:
-	$(INSTALL_DIR) $(IDIR_ELFUTILS)/usr/lib/elfutils
+	$(INSTALL_DIR) $(IDIR_ELFUTILS)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/lib{asm,dw,elf}*.so* \
 		$(IDIR_ELFUTILS)/usr/lib
+	$(INSTALL_DIR) $(IDIR_ELFUTILS)/usr/bin
+	$(CP) $(WRKINST)/usr/bin/* \
+		$(IDIR_ELFUTILS)/usr/bin
 
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
