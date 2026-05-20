@@ -1,0 +1,116 @@
+From: Ramin Moussavi <ramin.moussavi@yacoub.de>
+Date: Sat May 16 16:00:00 2026 +0000
+Subject: [PATCH] builtins: fix __builtin_iseqsig dropping FE_INVALID under -O2
+
+`__builtin_iseqsig` (added in r14-... by commit
+34cf27a64e7af949538e65bc266963c24f8da458) silently fails to raise
+FE_INVALID on a quiet-NaN operand under -O2 on ARM and other targets
+where signaling and quiet IEEE 754 comparisons map to different machine
+instructions (ARM VCMPE vs VCMP, x86 UCOMISS vs COMISS).
+
+The tests added by that commit -- gcc.dg/torture/builtin-iseqsig-{1,2,3}.c --
+have been observed FAILing on:
+
+  * arm-linux-gnueabihf, GCC 14.2 native (Debian), -Os
+    https://lists.debian.org/debian-gcc/2024/08/msg00143.html
+  * arm-bbs-linux-uclibcgnueabihf, GCC 15.2 cross,
+    -O2 and the LTO torture iterations
+
+Two interacting issues:
+
+1. BUILT_IN_ISEQSIG was registered with ATTR_CONST_NOTHROW_TYPEGENERIC_LEAF.
+   That matches the other IS* predicates (isgreater, isless, ...), which
+   are *quiet* per IEEE 754.  But iseqsig is the *signaling* equality:
+   per IEEE 754 it must raise FE_INVALID on any NaN operand, both quiet
+   and signaling.  Marking it CONST tells the middle-end it has no side
+   effect.
+
+2. fold_builtin_iseqsig folds the call to
+   "(a >= b) && (a <= b)" using TRUTH_AND_EXPR (non-short-circuit).
+   That is gimplified to BIT_AND_EXPR, producing a linear "compute both
+   comparison flags then AND" sequence.  The RTL scheduler is then free
+   to reorder the signaling VCMPE compares around fenv reads -- e.g.
+   fetestexcept(FE_INVALID) -- silently dropping the FE_INVALID side
+   effect that the comparisons raise on NaN.
+
+   The same source-level expression "(a >= b) && (a <= b)" written by
+   the user works correctly: && is parsed as TRUTH_ANDIF_EXPR, which
+   gimplifies to a branched if-then-else where the first comparison
+   stays anchored as a branch condition and cannot move across other
+   side-effecting calls.
+
+Fix:
+
+  - Drop ATTR_CONST_NOTHROW_TYPEGENERIC_LEAF, use
+    ATTR_NOTHROW_TYPEGENERIC_LEAF (already defined in builtin-attrs.def,
+    previously unused).
+
+  - Fold using TRUTH_ANDIF_EXPR rather than TRUTH_AND_EXPR.
+
+After this patch, gcc.dg/torture/builtin-iseqsig-{1,2,3}.c PASS on
+arm-bbs-linux-uclibcgnueabihf (cortex-a5, neon-vfpv4, hard float,
+uClibc-ng) at every torture option:
+
+  -O0, -O1, -O2, -O3, -Os, -O2 -flto -fno-fat-lto-objects,
+  -O2 -flto -fuse-linker-plugin -fno-fat-lto-objects
+
+The same harness reproduces the FAIL on stock 15.2.0 sources and PASSes
+with this patch applied.
+
+Related: PR middle-end/34678, PR middle-end/38960.
+
+gcc/
+	* builtins.def (BUILT_IN_ISEQSIG): Drop ATTR_CONST; iseqsig has
+	an observable fenv side effect (FE_INVALID), unlike the other IS*
+	predicates which are quiet per IEEE 754.
+	* builtins.cc (fold_builtin_iseqsig): Fold using TRUTH_ANDIF_EXPR
+	rather than TRUTH_AND_EXPR.  The former gimplifies to a branched
+	if-then-else where the leading signaling comparison is anchored
+	as a branch condition; the latter gimplifies to BIT_AND_EXPR,
+	which the RTL scheduler may reorder around fenv reads, dropping
+	the FE_INVALID side effect.
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+ gcc/builtins.cc  | 12 +++++++++++-
+ gcc/builtins.def |  6 +++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/gcc/builtins.cc b/gcc/builtins.cc
+--- a/gcc/builtins.cc
++++ b/gcc/builtins.cc
+@@ -10098,7 +10098,17 @@ fold_builtin_iseqsig (location_t loc, tree arg0, tree arg1)
+   cmp1 = fold_build2_loc (loc, GE_EXPR, integer_type_node, arg0, arg1);
+   cmp2 = fold_build2_loc (loc, LE_EXPR, integer_type_node, arg0, arg1);
+
+-  return fold_build2_loc (loc, TRUTH_AND_EXPR, integer_type_node, cmp1, cmp2);
++  /* Use short-circuit && (TRUTH_ANDIF_EXPR) rather than & (TRUTH_AND_EXPR).
++     TRUTH_AND_EXPR is gimplified to BIT_AND_EXPR, producing a linear
++     "compute both flags then AND" sequence that the RTL scheduler may
++     reorder around fenv reads (fetestexcept) - silently dropping the
++     FE_INVALID side effect that the signaling GE/LE comparisons must
++     raise on NaN operands.  TRUTH_ANDIF_EXPR gimplifies to a branched
++     if-then-else where the first comparison stays anchored as a
++     branch condition, so the signaling VCMPE (ARM) / UCOMISS (x86)
++     cannot move across other side-effecting calls.  */
++  return fold_build2_loc (loc, TRUTH_ANDIF_EXPR, integer_type_node,
++			  cmp1, cmp2);
+ }
+
+ /* Fold __builtin_{,s,u}{add,sub,mul}{,l,ll}_overflow, either into normal
+diff --git a/gcc/builtins.def b/gcc/builtins.def
+--- a/gcc/builtins.def
++++ b/gcc/builtins.def
+@@ -1072,7 +1072,11 @@ DEF_GCC_BUILTIN        (BUILT_IN_ISLESS, "isless", BT_FN_INT_VAR, ATTR_CONST_NOT
+ DEF_GCC_BUILTIN        (BUILT_IN_ISLESSEQUAL, "islessequal", BT_FN_INT_VAR, ATTR_CONST_NOTHROW_TYPEGENERIC_LEAF)
+ DEF_GCC_BUILTIN        (BUILT_IN_ISLESSGREATER, "islessgreater", BT_FN_INT_VAR, ATTR_CONST_NOTHROW_TYPEGENERIC_LEAF)
+ DEF_GCC_BUILTIN        (BUILT_IN_ISUNORDERED, "isunordered", BT_FN_INT_VAR, ATTR_CONST_NOTHROW_TYPEGENERIC_LEAF)
+-DEF_GCC_BUILTIN        (BUILT_IN_ISEQSIG, "iseqsig", BT_FN_INT_VAR, ATTR_CONST_NOTHROW_TYPEGENERIC_LEAF)
++/* iseqsig is the SIGNALING variant of equality: per IEEE 754 it must
++   raise FE_INVALID on any NaN operand (both quiet and signaling NaNs).
++   Unlike the other IS* predicates (which are quiet) it has an observable
++   fenv side effect, so it must NOT carry the const attribute.  */
++DEF_GCC_BUILTIN        (BUILT_IN_ISEQSIG, "iseqsig", BT_FN_INT_VAR, ATTR_NOTHROW_TYPEGENERIC_LEAF)
+ DEF_GCC_BUILTIN        (BUILT_IN_ISSIGNALING, "issignaling", BT_FN_INT_VAR, ATTR_CONST_NOTHROW_TYPEGENERIC_LEAF)
+ DEF_LIB_BUILTIN        (BUILT_IN_LABS, "labs", BT_FN_LONG_LONG, ATTR_CONST_NOTHROW_LEAF_LIST)
+ DEF_C99_BUILTIN        (BUILT_IN_LLABS, "llabs", BT_FN_LONGLONG_LONGLONG, ATTR_CONST_NOTHROW_LEAF_LIST)

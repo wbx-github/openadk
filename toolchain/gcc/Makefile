@@ -52,7 +52,6 @@ GCC_CONFOPTS:=		--prefix=$(TOOLCHAIN_DIR)/usr \
 			--with-system-zlib \
 			--with-gnu-ld \
 			--with-gnu-as \
-			--disable-libsanitizer \
 			--disable-install-libiberty \
 			--disable-libitm \
 			--disable-libmudflap \
@@ -118,6 +117,12 @@ ifeq ($(ADK_TOOLCHAIN_WITH_LTO),y)
 GCC_CONFOPTS+=		--enable-lto
 else
 GCC_CONFOPTS+=		--disable-lto
+endif
+
+ifeq ($(ADK_TOOLCHAIN_WITH_SANITIZER),y)
+GCC_CONFOPTS+=		--enable-libsanitizer
+else
+GCC_CONFOPTS+=		--disable-libsanitizer
 endif
 
 #

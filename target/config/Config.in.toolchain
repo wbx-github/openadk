@@ -59,6 +59,14 @@ endmenu
 
 menu "Advanced Toolchain options"
 
+config ADK_TOOLCHAIN_WITH_SANITIZER
+	bool "Enable libsanitizer in GCC"
+	select ADK_TOOLCHAIN_WITH_CXX
+	depends on ADK_TOOLCHAIN_GCC_15
+	help
+	  You have to add TARGET_CFLAGS/TARGET_LDFLAGS/TARGET_CXXFLAGS on
+	  your own to the packages you want to check.
+
 config ADK_TOOLCHAIN_WITH_SSP
 	bool
 

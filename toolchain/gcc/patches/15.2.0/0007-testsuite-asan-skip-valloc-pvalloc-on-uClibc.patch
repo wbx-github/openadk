@@ -1,0 +1,91 @@
+testsuite asan: skip Valloc/PvallocTest on uClibc-ng
+
+g++.dg/asan/asan_test.C -O2 fails on uClibc-based targets with:
+
+    error: 'valloc' was not declared in this scope
+    error: 'pvalloc' was not declared in this scope
+
+uClibc-ng intentionally does not export valloc()/pvalloc(): neither
+the symbols nor the <malloc.h>/<stdlib.h> declarations.  Both functions
+are legacy:
+
+  - valloc():   POSIX.1-2001 marked OBSOLESCENT, POSIX.1-2008 removed
+                it entirely.  Linux manpage says "deprecated".
+  - pvalloc():  never POSIX, glibc-only extension.
+
+musl follows the same policy, which is why upstream LLVM compiler-rt
+already addressed PVALLOC in commit 0b56e3c (Dec 2020,
+"[sanitizer] Defined SANITIZER_TEST_HAS_PVALLOC only on glibc").  That
+patch was never picked up by GCC's libsanitizer mirror, so the GCC
+testsuite copy of sanitizer_test_utils.h still uses the old
+"!APPLE && !FreeBSD && !_WIN32" exclusion list.  We follow the LLVM
+patch's spirit but with two adjustments:
+
+  1. uClibc-ng defines __GLIBC__ for source-level compatibility (see
+     also our 0001-libsanitizer-do-not-treat-uClibc-ng-as-glibc.patch),
+     so a plain "#if defined(__GLIBC__)" is not enough; we use
+     "defined(__GLIBC__) && !defined(__UCLIBC__)", matching the
+     discriminator already in sanitizer_platform.h after patch 0001.
+
+  2. Upstream LLVM still leaves the VallocTest gated only on
+     "!defined(_WIN32)", which also breaks on musl/uClibc.  We
+     introduce SANITIZER_TEST_HAS_VALLOC analogous to the existing
+     SANITIZER_TEST_HAS_PVALLOC and switch the VallocTest body to it.
+
+libsanitizer itself is consistent with this gating:
+ASAN_INTERCEPT_PVALLOC is defined as (SI_GLIBC || SI_ANDROID) in
+sanitizer_platform_interceptors.h, both 0 on our build, so there is no
+interceptor to test on uClibc anyway.
+
+Memalign / posix_memalign / malloc_usable_size remain enabled --
+uClibc-ng exports those (verified in libuClibc-1.0.54.so).
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+Cf. https://github.com/llvm/llvm-project/commit/0b56e3cdda501b19bbfee6ee3899f72d9bce121c
+---
+--- a/gcc/testsuite/g++.dg/asan/sanitizer_test_utils.h	2025-08-08 06:51:41.558367288 +0000
++++ b/gcc/testsuite/g++.dg/asan/sanitizer_test_utils.h	2026-05-11 18:28:20.144978738 +0000
+@@ -101,14 +101,30 @@
+ 
+ #if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(_WIN32)
+ # define SANITIZER_TEST_HAS_MEMALIGN 1
+-# define SANITIZER_TEST_HAS_PVALLOC 1
+ # define SANITIZER_TEST_HAS_MALLOC_USABLE_SIZE 1
+ #else
+ # define SANITIZER_TEST_HAS_MEMALIGN 0
+-# define SANITIZER_TEST_HAS_PVALLOC 0
+ # define SANITIZER_TEST_HAS_MALLOC_USABLE_SIZE 0
+ #endif
+ 
++/*
++ * valloc()/pvalloc() are legacy glibc-isms not provided by musl or
++ * uClibc-ng.  Follow upstream LLVM compiler-rt commit 0b56e3c (2020)
++ * which gates PVALLOC on __GLIBC__, but use the
++ * "__GLIBC__ && !__UCLIBC__" discriminator from our libsanitizer
++ * patch 0001 because uClibc-ng falsely advertises __GLIBC__ for
++ * source-level compatibility.  Also introduce SANITIZER_TEST_HAS_VALLOC
++ * (not present upstream) so the VallocTest body in asan_test.cc can be
++ * compiled out cleanly.
++ */
++#if defined(__GLIBC__) && !defined(__UCLIBC__)
++# define SANITIZER_TEST_HAS_PVALLOC 1
++# define SANITIZER_TEST_HAS_VALLOC 1
++#else
++# define SANITIZER_TEST_HAS_PVALLOC 0
++# define SANITIZER_TEST_HAS_VALLOC 0
++#endif
++
+ #if !defined(__APPLE__)
+ # define SANITIZER_TEST_HAS_STRNLEN 1
+ #else
+--- a/gcc/testsuite/g++.dg/asan/asan_test.cc	2025-08-08 06:51:41.558367288 +0000
++++ b/gcc/testsuite/g++.dg/asan/asan_test.cc	2026-05-11 18:28:25.382228300 +0000
+@@ -114,7 +114,7 @@
+   }
+ }
+ 
+-#if !defined(_WIN32)  // No valloc on Windows.
++#if SANITIZER_TEST_HAS_VALLOC
+ TEST(AddressSanitizer, VallocTest) {
+   void *a = valloc(100);
+   EXPECT_EQ(0U, (uintptr_t)a % kPageSize);

@@ -1,0 +1,50 @@
+libsanitizer: do not treat uClibc-ng as glibc; introduce SANITIZER_UCLIBC
+
+uClibc-ng defines __GLIBC__ to 2 in features.h for source-level
+compatibility, but it is not glibc.  Until now SANITIZER_GLIBC
+would evaluate to 1 on uClibc-ng, causing the glibc-only path of
+libsanitizer to pull in headers like fstab.h, obstack.h,
+netrom/netrom.h, rpc/xdr.h, scsi/scsi.h, and to reference
+glibc-internal symbols (struct __res_state layout, __libc_stack_end,
+NPTL internals, dlinfo flags, etc.) that uClibc-ng does not provide.
+
+uClibc-ng advertises itself honestly via __UCLIBC__ (features.h:200).
+Add a !defined(__UCLIBC__) guard so libsanitizer falls through to
+the non-glibc Linux path, which uses kernel headers directly.
+
+Also introduce SANITIZER_UCLIBC (1 on uClibc-ng, 0 elsewhere) so
+subsequent patches can use a consistent SANITIZER_* macro instead of
+sprinkling defined(__UCLIBC__) checks across the codebase.
+
+This is the same approach used by other distributions to ship
+libsanitizer on uClibc / musl based toolchains.
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+--- a/libsanitizer/sanitizer_common/sanitizer_platform.h
++++ b/libsanitizer/sanitizer_common/sanitizer_platform.h
+@@ -31,12 +31,23 @@
+ #  define SANITIZER_LINUX 0
+ #endif
+
+-#if defined(__GLIBC__)
++/* uClibc-ng defines __GLIBC__ for glibc compatibility but is not glibc;
++   it advertises itself honestly with __UCLIBC__.  Without this guard
++   libsanitizer pulls glibc-only headers (fstab.h, obstack.h, netrom/...)
++   and tries to read glibc-internal symbols, which uClibc-ng does not
++   provide.  */
++#if defined(__GLIBC__) && !defined(__UCLIBC__)
+ #  define SANITIZER_GLIBC 1
+ #else
+ #  define SANITIZER_GLIBC 0
+ #endif
+
++#if defined(__UCLIBC__)
++#  define SANITIZER_UCLIBC 1
++#else
++#  define SANITIZER_UCLIBC 0
++#endif
++
+ #if defined(__FreeBSD__)
+ #  define SANITIZER_FREEBSD 1
+ #else

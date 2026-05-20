@@ -1,0 +1,102 @@
+libsanitizer: fix OFF_T ABI mismatch on uClibc-ng
+
+On 32-bit ARM with uClibc-ng, AddressSanitizer's mmap interceptor was
+silently corrupting the offset argument, making every internal mmap()
+call from libuClibc.so fail with EINVAL.  The most visible casualty was
+pthread_create(): allocate_stack() in libpthread/nptl/allocatestack.c
+mmap()s the new thread stack, the syscall returned EINVAL, and the
+caller saw "Invalid argument" before the thread ever started.
+
+Two GCC testsuite tests were observed to fail because of this:
+
+  - g++.dg/asan/deep-thread-stack-1.C  (any subsequent thread create)
+  - c-c++-common/asan/pr98920.c
+
+but in practice _every_ ASan-instrumented program that calls
+pthread_create (including indirectly via std::thread, OpenMP, libc
+routines, ...) was broken on uClibc-ng/ARM.
+
+Root cause
+==========
+
+libsanitizer/sanitizer_common/sanitizer_internal_defs.h selects the
+type used for off_t in interceptor signatures:
+
+    #if SANITIZER_FREEBSD || SANITIZER_NETBSD || SANITIZER_APPLE ||
+        (SANITIZER_SOLARIS && (defined(_LP64) || _FILE_OFFSET_BITS == 64)) ||
+        (SANITIZER_LINUX && !SANITIZER_GLIBC && !SANITIZER_ANDROID) ||  <-- HERE
+        (SANITIZER_LINUX && (defined(__x86_64__) || defined(__hexagon__)))
+    typedef u64 OFF_T;
+    #else
+    typedef uptr OFF_T;
+    #endif
+
+The "Linux && !glibc && !Android" branch is meant for musl, which
+indeed uses 64-bit off_t on all architectures.  But after our patch
+0001-libsanitizer-do-not-treat-uClibc-ng-as-glibc.patch SANITIZER_GLIBC
+is also 0 on uClibc-ng builds, so uClibc-ng falls through this branch
+too, and OFF_T is set to u64.
+
+uClibc-ng on 32-bit ARM, however, keeps __off_t = long = 32 bit.
+libuClibc.so calls its own mmap() wrapper with a 32-bit offset.
+Once ASan inserts itself between the caller and the wrapper, its
+interceptor reads "OFF_T offset" off the stack/registers as 64 bit,
+picks up garbage in the upper word, and forwards that to the mmap2
+syscall.  The kernel's mmap2 expects (offset >> PAGE_SHIFT) to fit in
+unsigned long, so any non-zero upper word -> EINVAL.
+
+This was also confirmed empirically: a syscall(192, ...) issued from
+the same call site succeeded under ASan, while the libc wrapper
+failed.  Bypassing the interceptor entirely fixed the symptom.
+
+Verification
+============
+
+Direct trigger:
+
+  asan: pthread_create(stack=16M) -> r=22 errno=22 (Invalid argument)
+              ^^^ before patch (silent thread-create failure)
+
+  asan: pthread_create(stack=16M) -> r=0 errno=0 (Success)
+              ^^^ after patch
+
+deep-thread-stack-1.C now produces the expected
+"AddressSanitizer: heap-use-after-free" report; pr98920.c exits 0.
+
+The fix
+=======
+
+Exclude SANITIZER_UCLIBC from the "Linux && !glibc && !Android"
+fallthrough so OFF_T defaults to uptr on 32-bit uClibc-ng targets,
+matching the host ABI.  No effect on glibc/Android/musl/BSD/macOS.
+
+A static "sizeof(::OFF_T) == sizeof(off_t)" check exists in
+interception/interception_type_test.cpp and would have caught this if
+SANITIZER_UCLIBC had been distinguished from SANITIZER_GLIBC earlier;
+patch 0001 introduced that discriminator and this patch puts it to
+work where it actually matters at runtime.
+
+Other OFF_T users were audited
+(sanitizer_common_interceptors.inc: pread/pwrite/preadv/pwritev/
+ftello/fseeko/funopen/SHA1FileChunk/RMD160FileChunk/mmap and
+sanitizer_linux.cpp / sanitizer_posix.cpp: internal_lseek,
+MapWritableFileToMemory, internal_syscall(SYS_mmap, SYS_ftruncate)).
+All of them benefit from the same one-line change because they all
+share the same OFF_T typedef, and uClibc-ng uses a 32-bit __off_t for
+all of them on 32-bit ARM (the *64 variants take OFF64_T which is
+unaffected).
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+--- a/libsanitizer/sanitizer_common/sanitizer_internal_defs.h	2025-08-08 06:51:41.000000000 +0000
++++ b/libsanitizer/sanitizer_common/sanitizer_internal_defs.h	2026-05-16 00:30:00.000000000 +0000
+@@ -189,7 +189,8 @@
+ 
+ #if SANITIZER_FREEBSD || SANITIZER_NETBSD || SANITIZER_APPLE ||             \
+     (SANITIZER_SOLARIS && (defined(_LP64) || _FILE_OFFSET_BITS == 64)) || \
+-    (SANITIZER_LINUX && !SANITIZER_GLIBC && !SANITIZER_ANDROID) ||        \
++    (SANITIZER_LINUX && !SANITIZER_GLIBC && !SANITIZER_ANDROID &&         \
++     !SANITIZER_UCLIBC) ||                                                \
+     (SANITIZER_LINUX && (defined(__x86_64__) || defined(__hexagon__)))
+ typedef u64 OFF_T;
+ #else

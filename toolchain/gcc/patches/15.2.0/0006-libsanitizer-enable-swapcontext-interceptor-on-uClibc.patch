@@ -1,0 +1,52 @@
+libsanitizer: enable swapcontext/makecontext interceptor on uClibc-ng
+
+The swapcontext/makecontext ASan interceptor is gated on
+ASAN_INTERCEPT_SWAPCONTEXT, which until now was only enabled for
+SANITIZER_GLIBC || SANITIZER_SOLARIS.  Since 0001-libsanitizer-do-not-
+treat-uClibc-ng-as-glibc.patch forces SANITIZER_GLIBC=0 on uClibc-ng,
+the interceptor is silently dropped on our toolchain.  Two consequences:
+
+  1. asan_interceptors.cpp:399 (INTERCEPTOR(swapcontext, ...)) is not
+     compiled, so the runtime never emits the documented
+       "WARNING: ASan doesn't fully support makecontext/swapcontext
+        functions and may produce false positives in some cases!"
+     and the GCC testsuite case c-c++-common/asan/swapcontext-test-1.c
+     hits "output pattern test FAIL" for the first dg-output regex.
+
+  2. ClearShadowMemoryForContextStack() is never called around a
+     ucontext switch, so stack bytes that were poisoned by ASan in
+     one context stay poisoned after we resume on another stack.
+     This is a real runtime bug, not just a missing print:
+     coroutine code that touches a previously-poisoned region will
+     trip false-positive use-after-scope / stack-use-after-return
+     reports.
+
+The gated code in asan_interceptors.cpp:339-428 and asan_linux.cpp:
+201-226 only uses the POSIX surface (stack_t::ss_sp, ss_size, ss_flags,
+swapcontext(), makecontext()) plus the libsanitizer-internal INTERCEPTOR
+machinery, none of which is glibc-specific.  uClibc-ng provides all of
+these (ss_flags has existed in uClibc since the initial ucontext port,
+swapcontext()/makecontext() are now correct after the 0004-arm-ucontext-
+fix-vfp-save-restore-area.patch in patches/uClibc-ng/), so it is safe
+to flip the gate on for SANITIZER_UCLIBC as well.
+
+This is the natural follow-up to 0001 once swapcontext on uClibc-ng
+actually works.
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+--- a/libsanitizer/asan/asan_interceptors.h
++++ b/libsanitizer/asan/asan_interceptors.h
+@@ -50,7 +50,11 @@
+ # define ASAN_USE_ALIAS_ATTRIBUTE_FOR_INDEX 0
+ #endif
+ 
+-#if SANITIZER_GLIBC || SANITIZER_SOLARIS
++/* uClibc-ng provides swapcontext()/makecontext() and the standard
++   stack_t layout, and our 0004-arm-ucontext-fix-vfp-save-restore-area
++   patch in patches/uClibc-ng/ makes context switching actually work,
++   so enable the swapcontext interceptor on uClibc as well.  */
++#if SANITIZER_GLIBC || SANITIZER_SOLARIS || SANITIZER_UCLIBC
+ # define ASAN_INTERCEPT_SWAPCONTEXT 1
+ #else
+ # define ASAN_INTERCEPT_SWAPCONTEXT 0

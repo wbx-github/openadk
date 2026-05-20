@@ -1,0 +1,45 @@
+libsanitizer: __sanitizer_sigset_t for uClibc-ng matches kernel size
+
+libsanitizer assumes Linux sigset_t is glibc-sized (128 bytes / 1024
+bits).  uClibc-ng deliberately keeps sigset_t the same size as the
+kernel sigset (8 bytes / 64 bits, except 16 bytes / 128 bits on MIPS)
+so its syscall wrappers can pass userspace sigset directly without
+translation.  See libc/sysdeps/linux/common/bits/sigset.h.
+
+Without an override here, CHECK_TYPE_SIZE(sigset_t) and
+CHECK_STRUCT_SIZE_AND_OFFSET(sigaction, sa_mask) static asserts
+would fail.  An earlier attempt bumped uClibc-ng's _SIGSET_NWORDS to
+the glibc value, which made the asserts pass at compile time but
+caused all sigaction()/sigprocmask() syscalls to return EINVAL at
+runtime, because the kernel rejects an over-sized sigsetsize argument
+("runsvdir: Failed to ignore SIGCHLD: Invalid argument").
+
+Right thing: uClibc-ng's design is correct, libsanitizer just has to
+learn its actual layout.  Add a SANITIZER_UCLIBC branch above the
+SANITIZER_LINUX fallback that produces the smaller sigset_t (16 bytes
+on MIPS, 8 bytes elsewhere).
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+--- a/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h
++++ b/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h
+@@ -570,6 +570,19 @@
+ # endif
+ #elif SANITIZER_APPLE
+ typedef unsigned __sanitizer_sigset_t;
++#elif SANITIZER_UCLIBC
++// uClibc-ng deliberately keeps sigset_t the same size as the kernel's
++// sigset_t to avoid translation in syscall wrappers (see uClibc-ng
++// libc/sysdeps/linux/common/bits/sigset.h).  Mirror that size here so
++// CHECK_TYPE_SIZE(sigset_t) and the sigaction sa_mask offset checks
++// agree with the actual uClibc-ng layout.
++struct __sanitizer_sigset_t {
++# if defined(__mips__)
++  unsigned long val[128 / (sizeof(unsigned long) * 8)];
++# else
++  unsigned long val[64 / (sizeof(unsigned long) * 8)];
++# endif
++};
+ #elif SANITIZER_LINUX
+ struct __sanitizer_sigset_t {
+   // The size is determined by looking at sizeof of real sigset_t on linux.

@@ -1,0 +1,43 @@
+libsanitizer: add SANITIZER_UCLIBC branch for struct sigaction layout
+
+uClibc-ng's struct sigaction has fields in the kernel order
+(sa_handler, sa_flags, sa_restorer, sa_mask) so that the sigaction()
+syscall wrapper can pass the struct to rt_sigaction without
+translation -- see uClibc-ng's bits/sigaction.h.
+
+libsanitizer's __sanitizer_sigaction assumed glibc's userspace order
+(sa_handler, sa_mask, sa_flags, sa_restorer) which does not match,
+causing CHECK_STRUCT_SIZE_AND_OFFSET(sigaction, sa_mask/sa_flags/
+sa_restorer) to fire with comparisons reducing to '(4 == 12)',
+'(132 == 4)' and '(136 == 8)'.
+
+Add a dedicated SANITIZER_UCLIBC branch that mirrors the kernel layout.
+This is consistent with the existing per-libc/per-arch variants
+(Android 32-bit, MIPS, FreeBSD, s390x, sparc) already in the same
+struct.  No effect on glibc or musl builds.
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+--- a/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h
++++ b/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h
+@@ -642,6 +642,20 @@
+   uptr sa_flags;
+   void (*sa_restorer)();
+ };
++#elif SANITIZER_UCLIBC
++// uClibc-ng's struct sigaction mirrors the Linux kernel's layout
++// (sa_flags / sa_restorer before sa_mask) so that the sigaction()
++// syscall wrapper passes the struct to the kernel without translation.
++// See uClibc-ng's libc/sysdeps/linux/common/bits/sigaction.h.
++struct __sanitizer_sigaction {
++  union {
++    __sanitizer_sigactionhandler_ptr sigaction;
++    __sanitizer_sighandler_ptr handler;
++  };
++  unsigned long sa_flags;
++  void (*sa_restorer)(void);
++  __sanitizer_sigset_t sa_mask;
++};
+ #else // !SANITIZER_ANDROID
+ struct __sanitizer_sigaction {
+ #if defined(__mips__) && !SANITIZER_FREEBSD

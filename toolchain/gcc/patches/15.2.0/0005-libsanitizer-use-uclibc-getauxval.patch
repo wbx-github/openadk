@@ -1,0 +1,41 @@
+libsanitizer: enable getauxval() on uClibc-ng
+
+uClibc-ng has provided getauxval() since 1.0.41 (commit d869bb1, 2022-12)
+but cannot satisfy __GLIBC_PREREQ(2, 16) because it deliberately reports
+__GLIBC__=2 / __GLIBC_MINOR__=2 for source compatibility.  As a result
+SANITIZER_USE_GETAUXVAL evaluates to 0 on uClibc-ng and GetPageSize()
+falls back to sysconf(_SC_PAGESIZE).
+
+That sysconf() call is not safe to make from libsanitizer's .init_array
+constructor (runs before libc is fully initialized) and can return 0,
+which makes ReadFileToBuffer compute kMinFileLen = 0 and call
+MmapOrDie(0) -- the kernel rejects mmap(NULL, 0, ...) with EINVAL:
+
+  ==NN==ERROR: AddressSanitizer failed to allocate 0x0 (0) bytes of
+               ReadFileToBuffer (error code: 22)
+  ERROR: Failed to mmap
+
+Add SANITIZER_UCLIBC to the SANITIZER_USE_GETAUXVAL activation predicate
+so libsanitizer uses uClibc-ng's getauxval() directly.  This also gives
+correct AT_EXECFN (symbolizer) and AT_BASE (LSan) values via the
+auxiliary vector instead of the unsafe sysconf()/proc-based fallbacks.
+
+SANITIZER_UCLIBC is provided by the earlier
+0001-libsanitizer-do-not-treat-uClibc-ng-as-glibc.patch and
+sanitizer_getauxval.h already includes sanitizer_platform.h, so the
+macro is in scope here.
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+--- a/libsanitizer/sanitizer_common/sanitizer_getauxval.h
++++ b/libsanitizer/sanitizer_common/sanitizer_getauxval.h
+@@ -21,7 +21,8 @@
+ #if SANITIZER_LINUX || SANITIZER_FUCHSIA
+ 
+ # if (__GLIBC_PREREQ(2, 16) || (SANITIZER_ANDROID && __ANDROID_API__ >= 21) || \
+-      SANITIZER_FUCHSIA) &&                                                    \
++      SANITIZER_FUCHSIA ||                                                     \
++      SANITIZER_UCLIBC) &&                                                     \
+      !SANITIZER_GO
+ #  define SANITIZER_USE_GETAUXVAL 1
+ # else

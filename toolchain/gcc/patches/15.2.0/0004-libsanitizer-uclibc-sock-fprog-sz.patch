@@ -1,0 +1,39 @@
+libsanitizer: define struct_sock_fprog_sz for SANITIZER_UCLIBC
+
+struct_sock_fprog_sz is declared unconditionally for SANITIZER_LINUX in
+sanitizer_platform_limits_posix.h, but its definition in the .cpp is
+guarded by #if SANITIZER_GLIBC.  With uClibc-ng (SANITIZER_GLIBC=0,
+SANITIZER_UCLIBC=1) the symbol is left undefined and linking any
+-fsanitize=address binary fails:
+
+  libasan.so: undefined reference to `__sanitizer::struct_sock_fprog_sz'
+
+Fix:
+  1. Include <linux/filter.h> in the non-glibc Linux branch so that
+     struct sock_fprog is available regardless of SANITIZER_GLIBC.
+  2. Provide the definition of struct_sock_fprog_sz guarded by
+     SANITIZER_UCLIBC to match the unconditional header declaration.
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+--- a/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cpp
++++ b/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cpp
+@@ -129,6 +129,7 @@
+ #      endif
+ #      include <scsi/scsi.h>
+ #else
++#include <linux/filter.h>
+ #include <linux/if_ppp.h>
+ #include <linux/kd.h>
+ #include <linux/ppp_defs.h>
+@@ -537,6 +538,10 @@
+   unsigned struct_sock_fprog_sz = sizeof(struct sock_fprog);
+ #  endif  // SANITIZER_GLIBC
+
++#if SANITIZER_UCLIBC
++  unsigned struct_sock_fprog_sz = sizeof(struct sock_fprog);
++#endif
++
+ #  if !SANITIZER_ANDROID && !SANITIZER_APPLE
+   unsigned struct_sioc_sg_req_sz = sizeof(struct sioc_sg_req);
+   unsigned struct_sioc_vif_req_sz = sizeof(struct sioc_vif_req);
