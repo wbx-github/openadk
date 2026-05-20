@@ -39,12 +39,6 @@
 #include <features.h>
 #include <sys/types.h>
 
-/* The fts interface is incompatible with the LFS interface which
-   transparently uses the 64-bit file access functions on GNU OS.  */
-#ifdef __USE_FILE_OFFSET64
-# error "<fts.h> cannot be used with -D_FILE_OFFSET_BITS==64"
-#endif
-
 struct _fts_private;			/* implementation data */
 
 typedef struct {
