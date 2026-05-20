@@ -25,11 +25,7 @@
 #include <sys/stat.h>
 #include <err.h>
 #include <errno.h>
-#if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__APPLE__)
-#include "fts_gnu.h"
-#else
 #include <fts.h>
-#endif
 #include <stdlib.h>
 #include <string.h>
 

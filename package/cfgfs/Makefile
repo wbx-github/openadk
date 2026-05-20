@@ -4,7 +4,7 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		cfgfs
-PKG_VERSION:=		1.0.12
+PKG_VERSION:=		1.0.13
 PKG_RELEASE:=		1
 PKG_DESCR:=		compressed config filesystem
 PKG_SECTION:=		base/adk
@@ -29,7 +29,6 @@ $(eval $(call PKG_template,CFGFS,cfgfs,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPEN
 
 # runtime problems on x86_64 with O3
 TARGET_CFLAGS:=         $(subst O3,Os,$(TARGET_CFLAGS))
-TARGET_CFLAGS+=		-Wno-incompatible-pointer-types
 
 CONFIG_STYLE:=		manual
 INSTALL_STYLE:=		manual

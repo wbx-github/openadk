@@ -24,10 +24,6 @@ OBJS=		${SRCS:.c=.o}
 # build for the target
 CPPFLAGS+=	-DSMALL -D__USE_GNU
 
-# missing in uClibc
-SRCS+=		fts.c
-CPPFLAGS+=	-I.
-
 all: fwcf.helper.out
 
 fwcf.helper.out: ${OBJS}
