@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		atftp
-PKG_VERSION:=		0.7.1
+PKG_VERSION:=		0.8.1
 PKG_RELEASE:=		1
-PKG_HASH:=		ae4c6f09cadb8d2150c3ce32d88f19036a54e8211f22d723e97864bb5e18f92d
+PKG_HASH:=		96cbdbd2f16615c89c9db36be9b306de176d9a1c03dcb8cb777625bfe068bc2b
 PKG_DESCR:=		tftp client
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libreadline libncurses
 PKG_BUILDDEP:=		readline ncurses
 PKG_URL:=		http://sourceforge.net/projects/atftp/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=atftp/}
+PKG_SITES:=		https://sourceforge.net/projects/atftp/files/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -25,8 +25,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,ATFTP,atftp,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 $(eval $(call PKG_template,ATFTPD,atftpd,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_ATFTPD},${PKG_SECTION}))
 
+AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--disable-libpcre
-MAKE_FLAGS+=		CFLAGS="${TARGET_CFLAGS} -Wall -D_REENTRANT -fno-inline -std=gnu89"
 
 atftp-install:
 	$(INSTALL_DIR) $(IDIR_ATFTP)/usr/bin
