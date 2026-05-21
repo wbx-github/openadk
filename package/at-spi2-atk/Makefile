@@ -13,8 +13,10 @@ PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		glib libxtst
 PKG_BUILDDEP:=		meson-host glib libXtst
 PKG_URL:=		http://www.gnome.org/
-PKG_SITES:=		$(MASTER_SITE_GNOME:=at-spi2-atk/$(PKG_EXTRAVER)/)
+PKG_SITES:=		https://distfiles.openadk.org/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
