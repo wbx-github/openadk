@@ -4,18 +4,19 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gdk-pixbuf
-PKG_VERSION:=		2.42.12
-PKG_EXTRAVER:=		2.42
+PKG_VERSION:=		2.44.6
 PKG_RELEASE:=		1
-PKG_HASH:=		b9505b3445b9a7e48ced34760c3bcb73e966df3ac94c95a148cb669ab748e3c7
+PKG_HASH:=		2e4deb685ca0406a046abed13cca56f336ea0764313209817367d00e26de2cbb
 PKG_DESCR:=		image loading and pixel buffer manipulation library
 PKG_SECTION:=		libs/image
 PKG_DEPENDS:=		libjpeg-turbo libtiff glib libpng
 PKG_BUILDDEP:=		libjpeg-turbo libtiff glib libpng gdk-pixbuf-host
 HOST_BUILDDEP:=		glib-host libffi-host libpng-host libjpeg-turbo-host
 PKG_NEEDS:=		c++
-PKG_SITES:=		$(MASTER_SITE_GNOME:=gdk-pixbuf/$(PKG_EXTRAVER)/)
+PKG_SITES:=		https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/archive/$(PKG_VERSION)/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -35,12 +36,14 @@ INSTALL_STYLE:=		meson
 
 HOST_MESON_FLAGS:=	-Dgio_sniffing=false \
 			-Dtests=false \
+			-Dglycin=disabled \
 			-Dinstalled_tests=false \
 			-Dintrospection=disabled \
 			-Dman=false \
 			--default-library=static
 MESON_FLAGS:=		-Dgio_sniffing=false \
 			-Dtests=false \
+			-Dglycin=disabled \
 			-Dinstalled_tests=false \
 			-Dman=false
 
