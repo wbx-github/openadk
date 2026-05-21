@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		giflib
-PKG_VERSION:=		5.1.4
+PKG_VERSION:=		6.1.3
 PKG_RELEASE:=		1
-PKG_HASH:=		34a7377ba834397db019e8eb122e551a49c98f49df75ec3fcc92b9a794a4f6d1
+PKG_HASH:=		b65b66b99f0424b93525f987386f22fc5efb9da2bfc92ad4a532249aaffbab0e
 PKG_DESCR:=		gif graphics library
 PKG_SECTION:=		libs/image
 PKG_URL:=		http://sourceforge.net/projects/giflib/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=giflib/}
+PKG_SITES:=		https://sourceforge.net/projects/giflib/files/giflib-6.x/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
@@ -20,6 +20,9 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call HOST_template,GIFLIB,giflib,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,GIFLIB,giflib,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
+
+XAKE_FLAGS:=		PREFIX="/usr"
+CONFIG_STYLE:=		manual
 
 giflib-install:
 	$(INSTALL_DIR) $(IDIR_GIFLIB)/usr/lib
