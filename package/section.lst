@@ -58,7 +58,6 @@ libs/fonts	Font Libraries
 libs/image	Image Libraries
 libs/misc	Misc Libraries
 libs/net	Networking Libraries
-libs/qt		QT libraries
 libs/video	Video Libraries
 dev/lang	Programming Languages
 dev/perl	Perl modules
