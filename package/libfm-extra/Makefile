@@ -10,7 +10,7 @@ PKG_HASH:=		a5042630304cf8e5d8cff9d565c6bd546f228b48c960153ed366a34e87cad1e5
 PKG_DESCR:=		lxde fm extra library
 PKG_SECTION:=		x11/lxde
 PKG_URL:=		https://lxde.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=pcmanfm/files/}
+PKG_SITES:=		https://sourceforge.net/projects/pcmanfm/files/PCManFM%20%2B%20Libfm%20%28tarball%20release%29/LibFM/
 PKG_OPTS:=		dev
 
 DISTFILES:=		libfm-$(PKG_VERSION).tar.xz
