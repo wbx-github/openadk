@@ -1,21 +1,13 @@
---- glew-1.13.0.orig/Makefile	2015-08-10 13:47:22.000000000 +0200
-+++ glew-1.13.0/Makefile	2016-01-03 21:31:43.903657870 +0100
-@@ -31,7 +31,7 @@
- include config/version
- 
- SHELL = /bin/sh
--SYSTEM ?= $(shell config/config.guess | cut -d - -f 3 | sed -e 's/[0-9\.]//g;')
-+SYSTEM ?= $(shell sh config/config.guess | cut -d - -f 3 | sed -e 's/[0-9\.]//g;')
- SYSTEM.SUPPORTED = $(shell test -f config/Makefile.$(SYSTEM) && echo 1)
- 
- ifeq ($(SYSTEM.SUPPORTED), 1)
-@@ -77,7 +77,8 @@ else
- OPT = $(POPT)
+--- glew-2.3.1.orig/Makefile	2026-01-24 00:00:13.000000000 +0100
++++ glew-2.3.1/Makefile	2026-05-21 09:11:21.288757525 +0200
+@@ -40,8 +40,8 @@ else
+ $(error "Platform '$(SYSTEM)' not supported")
  endif
- INCLUDE = -Iinclude
--CFLAGS = $(OPT) $(WARN) $(INCLUDE) $(CFLAGS.EXTRA)
-+CFLAGS ?= 
-+CFLAGS += $(INCLUDE) $(CFLAGS.EXTRA)
  
- all debug: glew.lib glew.lib.mx glew.bin
- 
+-GLEW_PREFIX ?= /usr/local
+-GLEW_DEST ?= /usr/local
++GLEW_PREFIX ?= /usr
++GLEW_DEST ?= /usr
+ BINDIR    ?= $(GLEW_DEST)/bin
+ LIBDIR    ?= $(GLEW_DEST)/lib
+ INCDIR    ?= $(GLEW_DEST)/include/GL
