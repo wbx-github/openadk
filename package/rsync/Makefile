@@ -4,16 +4,16 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		rsync
-PKG_VERSION:=		3.4.2
+PKG_VERSION:=		3.4.3
 PKG_RELEASE:=		1
-PKG_HASH:=		ff10aa2c151cd4b2dbbe6135126dbc854046113d2dfb49572a348233267eb315
+PKG_HASH:=		c72e63ca3021cbc80ba86ec30102773f4c5631fbc492b52e773b3958f82a53d3
 PKG_DESCR:=		utility that provides fast incremental file transfer
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libpopt libopenssl zstd
 PKG_BUILDDEP:=		popt openssl zstd
 HOST_BUILDDEP:=		openssl-host
-PKG_URL:=		http://rsync.samba.org/
-PKG_SITES:=		http://rsync.samba.org/ftp/rsync/
+PKG_URL:=		https://rsync.samba.org/
+PKG_SITES:=		https://rsync.samba.org/ftp/rsync/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
