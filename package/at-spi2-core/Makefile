@@ -4,18 +4,19 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		at-spi2-core
-PKG_VERSION:=		2.56.0
-PKG_EXTRAVER:=		2.56
+PKG_VERSION:=		2.60.3
 PKG_RELEASE:=		1
-PKG_HASH:=		80d7e8ea0be924e045525367f909d6668dfdd3e87cd40792c6cfd08e6b58e95c
+PKG_HASH:=		1ce9adb87dd4a54f70119d9639a2398d9e60befc542be59b7fa6161946a97d05
 PKG_DESCR:=		d-bus based accessibility framework
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		glib libxtst
 PKG_BUILDDEP:=		meson-host glib libXtst libSM intltool-host
 PKG_NEEDS:=		intl
 PKG_URL:=		http://www.gnome.org/
-PKG_SITES:=		$(MASTER_SITE_GNOME:=at-spi2-core/$(PKG_EXTRAVER)/)
+PKG_SITES:=		https://gitlab.gnome.org/GNOME/at-spi2-core/-/archive/$(PKG_VERSION)/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
