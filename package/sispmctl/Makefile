@@ -4,15 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		sispmctl
-PKG_VERSION:=		4.0
+PKG_VERSION:=		4.12
 PKG_RELEASE:=		1
-PKG_HASH:=		442d9bb9774da7214c222144035ac68ad5d25171040ce2731cfdf49b3365cfd5
+PKG_HASH:=		e757863a4838da6e1ca72a57adc5aca6fc47ffbddc72a69052d8abd743d57082
 PKG_DESCR:=		control application for power sockets
 PKG_SECTION:=		sys/hw
 PKG_DEPENDS:=		libusb libusb-compat
 PKG_BUILDDEP:=		libusb libusb-compat
 PKG_URL:=		http://sispmctl.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=sispmctl/}
+PKG_SITES:=		https://sourceforge.net/projects/sispmctl/files/sispmctl/sispmctl-$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
