@@ -4,27 +4,27 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libgtk3
-PKG_VERSION:=		3.24.43
+PKG_VERSION:=		3.24.52
 PKG_EXTRAVER:=		3.24
 PKG_RELEASE:=		1
-PKG_HASH:=		7e04f0648515034b806b74ae5d774d87cffb1a2a96c468cb5be476d51bf2f3c7
+PKG_HASH:=		80931fa472a77b9a164f6740e3c0b444fac6770054632d35a7ff9d679e5e7b9f
 PKG_DESCR:=		multi-platform toolkit for creating graphical user interfaces
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		glib cairo libxi libepoxy pango at-spi2-core
-PKG_DEPENDS+=		at-spi2-atk libxext libxrender libx11
+PKG_DEPENDS+=		libxext libxrender libx11
 PKG_DEPENDS+=		libxcomposite libxdamage fribidi libxkbcommon
 PKG_BUILDDEP:=		cairo pango libXext renderproto libXrender
 PKG_BUILDDEP+=		gdk-pixbuf libXcomposite libXdamage libX11 libXi
-PKG_BUILDDEP+=		at-spi2-core at-spi2-atk gdk-pixbuf-host libepoxy
+PKG_BUILDDEP+=		at-spi2-core gdk-pixbuf-host libepoxy
 PKG_BUILDDEP+=		fribidi libxkbcommon
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.gtk.org/
-PKG_SITES:=		$(MASTER_SITE_GNOME:=gtk+/$(PKG_EXTRAVER)/)
+PKG_SITES:=		https://download.gnome.org/sources/gtk/$(PKG_EXTRAVER)/
 PKG_LIBNAME:=		libgtk3
 PKG_OPTS:=		dev
 
-DISTFILES:=		gtk+-$(PKG_VERSION).tar.xz
-WRKDIST=		$(WRKDIR)/gtk+-$(PKG_VERSION)
+DISTFILES:=		gtk-$(PKG_VERSION).tar.xz
+WRKDIST=		$(WRKDIR)/gtk-$(PKG_VERSION)
 
 PKG_CFLINE_LIBGTK3:=	select ADK_PACKAGE_CAIRO_WITH_PDF@
 PKG_CFLINE_LIBGTK3+=	select ADK_PACKAGE_CAIRO_WITH_PS@
