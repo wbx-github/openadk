@@ -10,7 +10,7 @@ PKG_HASH:=		4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09
 PKG_DESCR:=		perl compatible regular expression library
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://www.pcre.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=pcre/}
+PKG_SITES:=		https://sourceforge.net/projects/pcre/files/pcre/$(PKG_VERSION)/
 PKG_LIBNAME:=		libpcre
 PKG_OPTS:=		dev
 
