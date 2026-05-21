@@ -10,7 +10,7 @@ PKG_HASH:=		0cedb2a5aa608510da66a99aab74df3db363df495032e57e791a2ff55f1d7913
 PKG_DESCR:=		3g/gprs datacard control tool
 PKG_SECTION:=		sys/hw
 PKG_URL:=		http://sourceforge.net/projects/comgt
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=comgt/}
+PKG_SITES:=		https://sourceforge.net/projects/comgt/files/comgt/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}.${PKG_VERSION}.tgz
 WRKDIST=		${WRKDIR}/${PKG_NAME}.${PKG_VERSION}
