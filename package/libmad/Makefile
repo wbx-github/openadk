@@ -10,7 +10,7 @@ PKG_HASH:=		bbfac3ed6bfbc2823d3775ebb931087371e142bb0e9bb1bee51a76a6e0078690
 PKG_DESCR:=		high-quality mpeg audio decoding library
 PKG_SECTION:=		libs/audio
 PKG_URL:=		http://sourceforge.net/projects/mad
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=mad/}
+PKG_SITES:=		https://sourceforge.net/projects/mad/files/libmad/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
