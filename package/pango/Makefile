@@ -4,18 +4,19 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		pango
-PKG_VERSION:=		1.50.4
-PKG_EXTRAVER:=		1.50
+PKG_VERSION:=		1.57.1
 PKG_RELEASE:=		1
-PKG_HASH:=		f4ad63e87dc2b145300542a4fb004d07a9f91b34152fae0ddbe50ecdd851c162
+PKG_HASH:=		fefa79f2a6a37f744aefc1782b7241218b9f50bc1084415c1c73561150ca6665
 PKG_DESCR:=		library for laying out and rendering of text
 PKG_SECTION:=		libs/fonts
 PKG_BUILDDEP:=		libXft glib cairo harfbuzz fontconfig fribidi
 HOST_BUILDDEP:=		cairo-host harfbuzz-host glib-host meson-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.pango.org/
-PKG_SITES:=		$(MASTER_SITE_GNOME:=pango/$(PKG_EXTRAVER)/)
+PKG_SITES:=		https://gitlab.gnome.org/GNOME/pango/-/archive/1.57.1/
 PKG_OPTS:=		dev
+
+DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
