@@ -1,0 +1,11 @@
+--- rarpd-1.1.orig/configure	1999-11-17 01:51:51.000000000 +0100
++++ rarpd-1.1/configure	2026-05-21 10:15:09.160728753 +0200
+@@ -922,7 +922,7 @@ cat > conftest.$ac_ext << EOF
+ #line 923 "configure"
+ #include "confdefs.h"
+ 
+-main(){return(0);}
++int main(){return(0);}
+ EOF
+ if { (eval echo configure:928: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+   ac_cv_prog_cc_works=yes
