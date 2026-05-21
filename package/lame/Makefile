@@ -12,7 +12,7 @@ PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		libncurses
 PKG_BUILDDEP:=		ncurses
 PKG_URL:=		http://lame.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=lame/}
+PKG_SITES:=		https://sourceforge.net/projects/lame/files/lame/$(PKG_VERSION)/
 PKG_LIBNAME:=		libmp3lame
 PKG_OPTS:=		dev
 
