@@ -10,7 +10,7 @@ PKG_HASH:=		f5f50766aa6f8fe5a2df752666ca01a950add45079aa06416b83765b1cf71052
 PKG_DESCR:=		unit testing framework for c
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://check.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=check/}
+PKG_SITES:=		https://sourceforge.net/projects/check/files/check/$(PKG_VERSION)/
 PKG_LIBNAME:=		libcheck
 PKG_OPTS:=		dev
 
