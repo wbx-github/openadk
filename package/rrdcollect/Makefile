@@ -11,7 +11,7 @@ PKG_DESCR:=		round-robin database collecting daemon
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		librrd
 PKG_BUILDDEP:=		rrdtool
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=rrdcollect/}
+PKG_SITES:=		https://sourceforge.net/projects/rrdcollect/files/current/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
