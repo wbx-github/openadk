@@ -12,7 +12,7 @@ PKG_SECTION:=		net/radius
 PKG_DEPENDS:=		libpcap libopenssl
 PKG_BUILDDEP:=		libpcap openssl
 PKG_URL:=		http://sourceforge.net/projects/raddump
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=raddump/}
+PKG_SITES:=		https://sourceforge.net/projects/raddump/files/raddump/raddump-$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
