@@ -11,7 +11,7 @@ PKG_DESCR:=		id3 tag manipulation library
 PKG_SECTION:=		libs/audio
 PKG_DEPENDS:=		zlib
 PKG_BUILDDEP:=		zlib
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=mad/}
+PKG_SITES:=		https://sourceforge.net/projects/mad/files/libid3tag/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
