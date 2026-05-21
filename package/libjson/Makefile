@@ -10,7 +10,7 @@ PKG_HASH:=		07267a3951038ee2e02d26cc41bf8e275668c38f751240d3e78dc979182e7376
 PKG_DESCR:=		json library
 PKG_SECTION:=		libs/data
 PKG_URL:=		http://sourceforge.net/projects/libjson/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=libjson/}
+PKG_SITES:=		https://sourceforge.net/projects/libjson/files/
 PKG_OPTS:=		dev
 
 PKG_NOPARALLEL:=	1
