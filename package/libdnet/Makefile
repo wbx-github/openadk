@@ -10,7 +10,7 @@ PKG_HASH:=		0eb78415c8f2564c2f1e8ad36e98473348d9c94852f796a226360c716cc7ca53
 PKG_DESCR:=		low-level networking library
 PKG_SECTION:=		libs/net
 PKG_URL:=		http://libdnet.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=$(PKG_NAME)/}
+PKG_SITES:=		https://sourceforge.net/projects/libdnet/files/libdnet/libdnet-1.11/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
