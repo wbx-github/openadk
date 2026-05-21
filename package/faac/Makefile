@@ -4,22 +4,24 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		faac
-PKG_VERSION:=		1.28
+PKG_VERSION:=		1.30
 PKG_RELEASE:=		1
-PKG_HASH:=		c5141199f4cfb17d749c36ba8cfe4b25f838da67c22f0fec40228b6b9c3d19df
+PKG_HASH:=		adc387ce588cca16d98c03b6ec1e58f0ffd9fc6eadb00e254157d6b16203b2d2
 PKG_DESCR:=		aac encoder library
 PKG_SECTION:=		libs/audio
 PKG_URL:=		http://www.audiocoding.com/faac.html
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=faac/}
+PKG_SITES:=		https://sourceforge.net/projects/faac/files/faac-src/faac-$(PKG_VERSION)/
 PKG_LIBNAME:=		libfaac
 PKG_OPTS:=		dev
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+DISTFILES:=		${PKG_NAME}-1_30.tar.gz
+WRKDIST=		$(WRKDIR)/$(PKG_NAME)-1_30
 
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBFAAC,libfaac,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ARGS+=	--without-mp4v2
 
 libfaac-install:
