@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libusb
-PKG_VERSION:=		1.0.19
+PKG_VERSION:=		1.0.30
 PKG_RELEASE:=		1
-PKG_HASH:=		6c502c816002f90d4f76050a6429c3a7e0d84204222cbff2dce95dd773ba6840
+PKG_HASH:=		fea36f34f9156400209595e300840767ab1a385ede1dc7ee893015aea9c6dbaf
 PKG_DESCR:=		library for accessing usb devices
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://libusb.wiki.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=libusb/}
+PKG_SITES:=		https://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-$(PKG_VERSION)/
 PKG_LIBNAME:=		libusb
 PKG_OPTS:=		dev
 
