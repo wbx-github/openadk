@@ -20,6 +20,8 @@ PKG_URL:=		http://www.freedesktop.org/wiki/Software/PulseAudio/
 PKG_SITES:=		http://freedesktop.org/software/pulseaudio/releases/
 PKG_OPTS:=		dev
 
+PKG_LIBC_DEPENDS:=	glibc musl
+
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,PULSEAUDIO,pulseaudio,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
