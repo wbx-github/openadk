@@ -77,7 +77,6 @@ source package/Config.in.auto.libs.fonts
 source package/Config.in.auto.libs.image
 source package/Config.in.auto.libs.misc
 source package/Config.in.auto.libs.net
-source package/Config.in.auto.libs.qt
 source package/Config.in.auto.libs.video
 endmenu
 
