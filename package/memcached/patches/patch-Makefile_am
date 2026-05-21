@@ -1,0 +1,10 @@
+--- memcached-1.6.42.orig/Makefile.am	2026-03-05 00:05:05.000000000 +0100
++++ memcached-1.6.42/Makefile.am	2026-05-21 19:38:39.900837257 +0200
+@@ -1,6 +1,6 @@
+ bin_PROGRAMS = memcached
+ pkginclude_HEADERS = protocol_binary.h xxhash.h
+-noinst_PROGRAMS = memcached-debug sizes testapp timedrun
++noinst_PROGRAMS = memcached-debug sizes
+ 
+ BUILT_SOURCES=
+ 
