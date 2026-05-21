@@ -29,7 +29,7 @@ host-configure:
 
 ruby-getoptlong-hostinstall:
 	cd ${WRKBUILD} && PATH="$(HOST_PATH)" rake install
-	$(CP) lib/getoptlong.rb $(STAGING_HOST_DIR)/usr/lib/ruby/site_ruby/4.0.0/
+	$(CP) $(WRKBUILD)/lib/getoptlong.rb $(STAGING_HOST_DIR)/usr/lib/ruby/site_ruby/4.0.0/
 
 include $(ADK_TOPDIR)/mk/host-bottom.mk
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
