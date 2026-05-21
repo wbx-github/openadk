@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mpd
-PKG_VERSION:=		0.24.10
+PKG_VERSION:=		0.24.12
 PKG_RELEASE:=		1
-PKG_HASH:=		867f10fd83cde20c240617222b38fbf6885f902015d0da424a28fbafc675e1dd
+PKG_HASH:=		14223ca883c35fbf711994bcf745726cecc9d898e3d3964265cf3a2c7519a360
 PKG_DESCR:=		music player daemon
 PKG_SECTION:=		mm/audio
 PKG_DEPENDS:=		libmpdclient boost libncurses libexpat libsqlite libfmt libxcb
@@ -21,7 +21,7 @@ PKG_SITES:=		http://www.musicpd.org/download/mpd/0.24/
 PKG_FLAVOURS_MPD:=	WITH_ALSA WITH_AO WITH_MP3 WITH_MP4
 PKG_FLAVOURS_MPD+=	WITH_OGG WITH_FLAC WITH_WAV WITH_MMS WITH_FFMPEG
 PKG_FLAVOURS_MPD+=	WITH_SHOUT WITH_CURL WITH_SAMPLERATE WITH_HTTPD
-PKG_FLAVOURS_MPD+=	WITH_SNDFILE WITH_OPUS WITH_PULSE WITH_AVAHI
+PKG_FLAVOURS_MPD+=	WITH_SNDFILE WITH_OPUS WITH_AVAHI
 
 PKGFD_WITH_ALSA:=	enable ALSA output
 PKGFS_WITH_ALSA:=	alsa-lib
@@ -111,13 +111,6 @@ ifeq ($(ADK_PACKAGE_MPD_WITH_SNDFILE),y)
 PKG_FDEPENDS+=		libsndfile
 endif
 
-PKGFD_WITH_PULSE:=	enable pulse support
-PKGFS_WITH_PULSE:=	pulseaudio
-PKGFB_WITH_PULSE:=	pulseaudio
-ifeq ($(ADK_PACKAGE_MPD_WITH_PULSE),y)
-PKG_FDEPENDS+=		pulseaudio
-endif
-
 PKGFD_WITH_AVAHI:=	enable avahi/zeroconf support
 PKGFS_WITH_AVAHI:=	libavahi libdbus
 PKGFB_WITH_AVAHI:=	avahi
@@ -160,12 +153,6 @@ ifneq ($(ADK_PACKAGE_MPD_WITH_AVAHI),)
 MESON_FLAGS+=	-Dzeroconf=avahi
 else
 MESON_FLAGS+=	-Dzeroconf=disabled
-endif
-
-ifneq ($(ADK_PACKAGE_MPD_WITH_PULSE),)
-MESON_FLAGS+=	-Dpulse=enabled
-else
-MESON_FLAGS+=	-Dpulse=disabled
 endif
 
 ifneq ($(ADK_PACKAGE_MPD_WITH_ALSA),)
