@@ -9,7 +9,7 @@ PKG_RELEASE:=		2
 PKG_HASH:=		7e4487d320ac31558563424189435d396ddf77953bb23111a17a3d1487b5794a
 PKG_DESCR:=		configuration utility for serial ports
 PKG_SECTION:=		sys/serial
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=setserial/}
+PKG_SITES:=		https://sourceforge.net/projects/setserial/files/setserial/$(PKG_VERSION)/
 PKG_BB:=		1
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
