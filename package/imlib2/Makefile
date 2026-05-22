@@ -12,7 +12,7 @@ PKG_SECTION:=		libs/image
 PKG_DEPENDS:=		libfreetype zlib libpng libtiff libx11 libxext
 PKG_BUILDDEP:=		freetype zlib libpng libtiff libX11 libXext
 PKG_URL:=		http://www.enlightenment.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=enlightenment/}
+PKG_SITES:=		https://sourceforge.net/projects/enlightenment/files/imlib2-src/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
