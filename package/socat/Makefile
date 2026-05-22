@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		socat
-PKG_VERSION:=		1.7.4.3
+PKG_VERSION:=		1.8.1.1
 PKG_RELEASE:=		1
-PKG_HASH:=		d697245144731423ddbbceacabbd29447089ea223e9a439b28f9ff90d0dd216e
+PKG_HASH:=		f68b602c80e94b4b7498d74ec408785536fe33534b39467977a82ab2f7f01ddb
 PKG_DESCR:=		multipurpose relay
 PKG_SECTION:=		net/misc
 PKG_NEEDS:=		threads
@@ -25,7 +25,6 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,SOCAT,socat,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-AUTOTOOL_STYLE:=	autoconf
 CONFIGURE_ENV+=		sc_cv_termios_ispeed=no \
 			sc_cv_sys_crdly_shift=9 \
 			sc_cv_sys_tabdly_shift=11 \
