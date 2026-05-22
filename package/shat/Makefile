@@ -9,7 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		88eb26863e2637c739892af44b3476f494cbcad6ba00fb91721c85ac77adb0ee
 PKG_DESCR:=		tool for nomadic routing
 PKG_SECTION:=		net/misc
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=shat/}
+PKG_SITES:=		https://sourceforge.net/projects/shat/files/shat/shat-$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
