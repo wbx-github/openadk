@@ -12,7 +12,7 @@ PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libtirpc
 PKG_BUILDDEP:=		libtirpc
 PKG_URL:=		http://sourceforge.net/projects/rpcbind/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=rpcbind/}
+PKG_SITES:=		https://sourceforge.net/projects/rpcbind/files/rpcbind/$(PKG_VERSION)/
 
 DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
