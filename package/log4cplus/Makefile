@@ -4,17 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		log4cplus
-PKG_VERSION:=		1.0.4
-PKG_RELEASE:=		2
-PKG_HASH:=		c2bb01b5f4bff5fa768700e98ead4a79dfd556096c9f3f0401849da7ab80fbef
+PKG_VERSION:=		2.1.2
+PKG_RELEASE:=		1
+PKG_HASH:=		fbdabb4ef734fe1cc62169b23f0b480cc39127ac7b09b810a9c1229490d67e9e
 PKG_DESCR:=		logging framework for c++
 PKG_SECTION:=		libs/misc
 PKG_NEEDS:=		threads
 PKG_URL:=		http://log4cplus.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=log4cplus/log4cplus-stable/${PKG_VERSION}/}
+PKG_SITES:=		https://sourceforge.net/projects/log4cplus/files/log4cplus-stable/$(PKG_VERSION)/
 PKG_OPTS:=		dev
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
 include ${ADK_TOPDIR}/mk/package.mk
 
