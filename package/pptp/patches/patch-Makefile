@@ -1,6 +1,6 @@
---- pptp-1.8.0.orig/Makefile	2013-10-23 10:10:46.000000000 +0200
-+++ pptp-1.8.0/Makefile	2013-12-22 11:35:12.000000000 +0100
-@@ -14,12 +14,13 @@ BINDIR=$(DESTDIR)/usr/sbin
+--- pptp-1.10.0.orig/Makefile	2018-01-18 01:12:00.000000000 +0100
++++ pptp-1.10.0/Makefile	2026-05-22 11:32:40.595530190 +0200
+@@ -14,7 +14,7 @@ BINDIR=$(DESTDIR)/usr/sbin
  MANDIR=$(DESTDIR)/usr/share/man/man8
  PPPDIR=$(DESTDIR)/etc/ppp
  
@@ -9,10 +9,3 @@
  RM	= rm -f
  OPTIMIZE= -O -Wuninitialized
  DEBUG	= -g
- INCLUDE =
--CFLAGS  = -Wall $(OPTIMIZE) $(DEBUG) $(INCLUDE)
-+CFLAGS  ?=
-+CFLAGS  += -Wall $(INCLUDE)
- # Solaris
- # CFLAGS +=  -D_XPG4_2 -D__EXTENSIONS__
- LIBS	= -lutil

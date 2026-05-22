@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		pptp
-PKG_VERSION:=		1.8.0
+PKG_VERSION:=		1.10.0
 PKG_RELEASE:=		1
-PKG_HASH:=		e39c42d933242a8a6dd8600a0fa7f0a5ec8f066d10c4149d8e81a5c68fe4bbda
+PKG_HASH:=		82492db8e487ce73b182ee7f444251d20c44f5c26d6e96c553ec7093aefb5af4
 PKG_DESCR:=		point-to-point tunneling protocol client
 PKG_SECTION:=		net/ppp
 PKG_DEPENDS:=		ppp
 PKG_KDEPENDS:=		ppp net-ipgre
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=pptpclient/}
+PKG_SITES:=		https://sourceforge.net/projects/pptpclient/files/pptp/pptp-$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
