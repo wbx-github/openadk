@@ -4,23 +4,26 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		libsigc++
-PKG_VERSION:=		2.2.10
-PKG_RELEASE:=		2
-PKG_HASH:=		d3d810c2ad469edfb2d4db29643bef189b7613019eadbd4a72823af3c73c959c
+PKG_VERSION:=		3.6.0
+PKG_RELEASE:=		1
+PKG_HASH:=		c3d23b37dfd6e39f2e09f091b77b1541fbfa17c4f0b6bf5c89baef7229080e17
 PKG_DESCR:=		callback framework for c++
 PKG_SECTION:=		libs/misc
-PKG_URL:=		http://libsigc.sourceforge.net
-PKG_SITES:=		${MASTER_SITE_GNOME:=libsigc++/2.2/}
+PKG_SITES:=		https://download.gnome.org/sources/libsigc++/3.6/
 PKG_OPTS:=		dev
-
-DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
 include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,LIBSIGCXX,libsigc++,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
+
+CONFIG_STYLE:=		meson
+BUILD_STYLE:=		meson
+INSTALL_STYLE:=		meson
+
 libsigc++-install:
 	${INSTALL_DIR} ${IDIR_LIBSIGCXX}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libsigc-2.0.so* ${IDIR_LIBSIGCXX}/usr/lib/
+	${CP} ${WRKINST}/usr/lib/libsigc-3.0.so.* ${IDIR_LIBSIGCXX}/usr/lib/
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
