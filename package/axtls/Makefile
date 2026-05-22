@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		axtls
-PKG_VERSION:=		1.4.9
-PKG_RELEASE:=		2
-PKG_HASH:=		9bc08f4c7a6bda3079af8e3f5ceee6b2ee92af34e8efbc9acfeee6c27b1f7cc3
+PKG_VERSION:=		2.1.5
+PKG_RELEASE:=		1
+PKG_HASH:=		cf00b07617bfbf903cbe60821b54dc000415fae737f1db84b7f8da69537a2910
 PKG_DESCR:=		small embedded webserver with tls
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		libaxtls
 PKG_URL:=		http://axtls.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=axtls/}
+PKG_SITES:=		https://sourceforge.net/projects/axtls/files/$(PKG_VERSION)/
 PKG_LIBNAME:=		libaxtls
 PKG_OPTS:=		dev
 
@@ -20,7 +20,7 @@ PKGSD_LIBAXTLS:=	small tls library
 PKGSC_LIBAXTLS:=	libs/crypto
 
 DISTFILES:=		axTLS-${PKG_VERSION}.tar.gz
-WRKDIST=		${WRKDIR}/axTLS
+WRKDIST=		${WRKDIR}/axtls-code
 
 include ${ADK_TOPDIR}/mk/package.mk
 
