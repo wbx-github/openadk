@@ -12,7 +12,7 @@ PKG_SECTION:=		net/acct
 PKG_DEPENDS:=		libpcap
 PKG_BUILDDEP:=		libpcap
 PKG_NEEDS:=		threads
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=fprobe/}
+PKG_SITES:=		https://sourceforge.net/projects/fprobe/files/fprobe/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
