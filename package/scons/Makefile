@@ -11,7 +11,7 @@ PKG_DESCR:=		software construction tool
 PKG_SECTION:=		dev/tools
 HOST_BUILDDEP:=		python3-host
 PKG_URL:=		http://www.scons.org
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=scons/}
+PKG_SITES:=		https://sourceforge.net/projects/scons/files/scons/$(PKG_VERSION)/
 
 DISTFILES:=		$(PKG_NAME)-${PKG_VERSION}.tar.gz
 
