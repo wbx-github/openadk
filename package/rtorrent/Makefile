@@ -4,25 +4,20 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		rtorrent
-PKG_VERSION:=		0.9.6
+PKG_VERSION:=		0.16.11
 PKG_RELEASE:=		1
-PKG_HASH:=		1e69c24f1f26f8f07d58d673480dc392bfc4317818c1115265b08a7813ff5b0e
+PKG_HASH:=		bed2fefd69a01dbe95a02b330dd8c257d1aae2b4ee2ba4a9c4859da2fa404f65
 PKG_DESCR:=		console torrent application
 PKG_SECTION:=		app/p2p
 PKG_DEPENDS:=		libncurses libtorrent libcurl
 PKG_BUILDDEP:=		ncurses libtorrent curl
 PKG_NEEDS:=		c++
-PKG_URL:=		https://rakshasa.github.io/rtorrent/
-PKG_SITES:=		http://rtorrent.net/downloads/
-
-PKG_CFLINE_RTORRENT:=	depends on ADK_BROKEN
+PKG_URL:=		https://rtorrent.net/
+PKG_SITES:=		https://github.com/rakshasa/rtorrent-archive/raw/master/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include ${ADK_TOPDIR}/mk/package.mk
-
-AUTOTOOL_STYLE:=	autoreconf
-TARGET_LDFLAGS+=	-lpthread -ltinfo
 
 $(eval $(call PKG_template,RTORRENT,rtorrent,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
