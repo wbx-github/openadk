@@ -11,7 +11,7 @@ PKG_DESCR:=		transparent http proxy
 PKG_SECTION:=		net/proxy
 PKG_DEPENDS:=		iptables
 PKG_URL:=		http://sourceforge.net/projects/transproxy/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=transproxy/1.6/}
+PKG_SITES:=		https://sourceforge.net/projects/transproxy/files/transproxy/$(PKG_VERSION)/
 
 DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tgz
 
