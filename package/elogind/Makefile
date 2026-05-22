@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		elogind
-PKG_VERSION:=		255.22
+PKG_VERSION:=		255.25
 PKG_RELEASE:=		1
-PKG_HASH:=		79b5eb96bccf3a6101b35e62d0f80b2d0a47077a1507a6edc705f8cb7bdb0619
+PKG_HASH:=		103d5b5fac8dca30535573c5067c730ed8518a40ac0616442de29f74747778f1
 PKG_DESCR:=		login and session manager
 PKG_SECTION:=		x11/misc
 PKG_DEPENDS:=		libcap
@@ -14,7 +14,7 @@ PKG_BUILDDEP:=		libcap python3-jinja2-host
 PKG_SITES:=		https://github.com/elogind/elogind/archive/refs/tags/
 PKG_OPTS:=		dev
 
-DISTFILES:=             V$(PKG_VERSION).tar.gz
+DISTFILES:=             v$(PKG_VERSION).tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
