@@ -10,7 +10,7 @@ PKG_HASH:=		db39257b3ee6408a575e16804975df1e68f52270537cc3e7505897b777f7994d
 PKG_DESCR:=		internet bandwidth tester
 PKG_SECTION:=		net/perf
 PKG_URL:=		http://tptest.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=tptest/}
+PKG_SITES:=		https://sourceforge.net/projects/tptest/files/tptest%20source/tptest%203.1/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
