@@ -10,7 +10,7 @@ PKG_HASH:=		dd1edcfcf2d9db7b5722de4f1da36ae45703bf05917af657ab6f7491be7fa52e
 PKG_DESCR:=		software for protection against port scans
 PKG_SECTION:=		net/security
 PKG_URL:=		http://sourceforge.net/projects/sentrytools
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=sentrytools/}
+PKG_SITES:=		https://sourceforge.net/projects/sentrytools/files/portsentry%201.x/portsentry-1.2/
 
 PKG_LIBC_DEPENDS:=	uclibc-ng glibc
 
