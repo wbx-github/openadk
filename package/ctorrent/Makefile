@@ -13,7 +13,7 @@ PKG_DEPENDS:=		libopenssl
 PKG_BUILDDEP:=		openssl
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.rahul.net/dholmes/ctorrent
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=dtorrent/}
+PKG_SITES:=		https://sourceforge.net/projects/dtorrent/files/dtorrent/3.3.2/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
