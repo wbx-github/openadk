@@ -10,7 +10,7 @@ PKG_HASH:=		b47d3ac19d3549e54a05d0019a6c400674da716123858cfdb6d3bdd70a66c702
 PKG_DESCR:=		transport independent rpc library
 PKG_SECTION:=		libs/net
 PKG_URL:=		http://sourceforge.net/projects/libtirpc/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=libtirpc/}
+PKG_SITES:=		https://sourceforge.net/projects/libtirpc/files/libtirpc/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 PKG_FLAVOURS_LIBTIRPC:=	WITH_IPV6 WITH_GSS
