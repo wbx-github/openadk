@@ -1,0 +1,11 @@
+--- kismet-2025-09-R1.orig/backward.h	2025-09-04 17:41:46.000000000 +0200
++++ kismet-2025-09-R1/backward.h	2026-05-22 08:27:00.123444934 +0200
+@@ -2052,7 +2052,7 @@ private:
+ 		printer.address = true;
+ 		printer.print(st, stderr);
+ 
+-#if _XOPEN_SOURCE >= 700 || _POSIX_C_SOURCE >= 200809L
++#if defined(__GLIBC__) && !defined(__UCLIBC__)
+ 		psiginfo(info, 0);
+ #endif
+ 
