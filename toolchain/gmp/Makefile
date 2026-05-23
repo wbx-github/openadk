@@ -22,6 +22,7 @@ $(WRKBUILD)/.configured:
 		--with-pic \
 		--disable-shared \
 		--enable-static \
+		CFLAGS="-std=gnu17" \
 	)
 	touch $@
 
