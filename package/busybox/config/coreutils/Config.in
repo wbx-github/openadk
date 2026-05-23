@@ -751,7 +751,7 @@ config BUSYBOX_SUM
 
 config BUSYBOX_SYNC
 	bool "sync (3.8 kb)"
-	default n
+	default y
 	help
 	sync is used to flush filesystem buffers.
 
