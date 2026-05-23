@@ -6,13 +6,13 @@ include ${ADK_TOPDIR}/rules.mk
 PKG_NAME:=		p910nd
 PKG_VERSION:=		0.97
 PKG_RELEASE:=		1
-PKG_HASH:=		4ac980a3ae24babae6f70f0a692625ece03a4a92c357fbb10d2e368386c3c26f
+PKG_HASH:=		a1bcc2dd75bad4e00a9de5098dbd970e8380f978fc09292bcfa15852af6a6964
 PKG_DESCR:=		small non-spooling printer server
 PKG_SECTION:=		net/misc
-PKG_URL:=		http://p910nd.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=p910nd/}
+PKG_URL:=		https://github.com/kenyapcomau/p910nd
+PKG_SITES:=		https://github.com/kenyapcomau/p910nd/archive/refs/tags/
 
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.bz2
+DISTFILES:=		${PKG_VERSION}.tar.gz
 
 include ${ADK_TOPDIR}/mk/package.mk
 
