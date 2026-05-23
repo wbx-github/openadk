@@ -4,16 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		bogofilter
-PKG_VERSION:=		1.2.4
+PKG_VERSION:=		1.3.0.rc1
 PKG_RELEASE:=		1
-PKG_HASH:=		d2f2598d1300307209b7b1905cc0637d2d053c0a4701a8d44383867299578471
+PKG_HASH:=		0bc4b8300a106e7c5a4110c052272cfe64bb096ec5e7f552a44c3f41b574b29b
 PKG_DESCR:=		mail filter software
 PKG_SECTION:=		net/mail
 PKG_NEEDS:=		c++
 PKG_URL:=		http://bogofilter.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=bogofilter/}
-
-DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
+PKG_SITES:=		https://sourceforge.net/projects/bogofilter/files/bogofilter-current/bogofilter-1.3.0.beta/
 
 include ${ADK_TOPDIR}/mk/package.mk
 
