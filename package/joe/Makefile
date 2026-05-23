@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		joe
-PKG_VERSION:=		4.4
+PKG_VERSION:=		4.8
 PKG_RELEASE:=		1
-PKG_HASH:=		a5704828bbca29acb9e200414fef522c66cdf9ce28150f402d6767da43460979
+PKG_HASH:=		6995b28ee20dcdbbcb5a45a4c110642dc96d67748aea27450c74cdb4dd07cc20
 PKG_DESCR:=		small editor
 PKG_SECTION:=		app/editor
 PKG_URL:=		http://joe-editor.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=joe-editor/}
+PKG_SITES:=		https://sourceforge.net/projects/joe-editor/files/JOE%20sources/joe-$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
