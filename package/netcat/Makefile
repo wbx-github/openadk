@@ -10,7 +10,7 @@ PKG_HASH:=		30719c9a4ffbcf15676b8f528233ccc54ee6cba96cb4590975f5fd60c68a066f
 PKG_DESCR:=		network swiss army knife
 PKG_SECTION:=		net/misc
 PKG_URL:=		http://netcat.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=netcat/}
+PKG_SITES:=		https://sourceforge.net/projects/netcat/files/netcat/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
