@@ -4,14 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		igmpproxy
-PKG_VERSION:=		0.1
-PKG_RELEASE:=		3
-PKG_HASH:=		ee18ff3d8c3ae3a29dccb7e5eedf332337330020168bd95a11cece8d7d7ee6ae
+PKG_VERSION:=		0.4
+PKG_RELEASE:=		1
+PKG_HASH:=		afa4b75a823b82f71ce99f33eae4e8136b906ae8a5ede5caaad93bac38cdae24
 PKG_DESCR:=		simple dynamic multicast routing daemon
 PKG_SECTION:=		net/route
 PKG_KDEPENDS:=		ip-multicast ip-mroute
-PKG_URL:=		http://sourceforge.net/projects/igmpproxy/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=igmpproxy/}
+PKG_SITES:=		https://github.com/pali/igmpproxy/releases/download/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
