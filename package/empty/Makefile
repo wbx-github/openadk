@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		empty
-PKG_VERSION:=		0.6.19b
+PKG_VERSION:=		0.6.23d
 PKG_RELEASE:=		1
-PKG_HASH:=		05b7cb361ef815774abda325c09c573f8c9039ccbb71eedc743439e4637c314a
+PKG_HASH:=		9ad495d52b942e3fd858643536d8d12e282568214300954d4518d8c22b893585
 PKG_DESCR:=		similar to expect for interactive console apps
 PKG_SECTION:=		sys/misc
 PKG_URL:=		http://empty.sourceforge.net
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=empty/}
+PKG_SITES:=		https://sourceforge.net/projects/empty/files/empty/empty-$(PKG_VERSION)/
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tgz
 

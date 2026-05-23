@@ -1,15 +1,15 @@
---- empty-0.6.19b.orig/Makefile	2012-09-19 13:22:42.000000000 +0200
-+++ empty-0.6.19b/Makefile	2015-07-09 00:19:44.000000000 +0200
+--- empty-0.6.23d.orig/Makefile	2025-08-11 10:02:18.000000000 +0200
++++ empty-0.6.23d/Makefile	2026-05-23 05:54:47.812768900 +0200
 @@ -10,10 +10,10 @@
  #
  
  
--CC =	gcc
-+CC ?=	gcc
+-CC =	cc
++CC ?=	cc
  LIBS =	-lutil
  
 -PREFIX = /usr/local
-+PREFIX = /usr
++PREFIX ?= /usr/local
+ BINDIR = $(PREFIX)/bin
+ MANDIR = $(PREFIX)/man/man1
  
- all:
- 	${CC} ${CFLAGS} -Wall ${LIBS} -o empty empty.c
