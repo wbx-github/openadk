@@ -12,7 +12,7 @@ PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		openobex libobexftp
 PKG_BUILDDEP:=		openobex
 PKG_URL:=		http://dev.zuckschwerdt.org/openobex/wiki/ObexFtp
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=openobex/}
+PKG_SITES:=		https://sourceforge.net/projects/openobex/files/obexftp/$(PKG_VERSION)/
 PKG_LIBNAME:=		libobexftp
 PKG_OPTS:=		dev
 
