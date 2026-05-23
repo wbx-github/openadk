@@ -13,7 +13,7 @@ PKG_DEPENDS:=		zlib
 PKG_BUILDDEP:=		zlib
 PKG_NEEDS:=		c++
 PKG_URL:=		http://id3lib.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=id3lib/}
+PKG_SITES:=		https://sourceforge.net/projects/id3lib/files/id3lib/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
