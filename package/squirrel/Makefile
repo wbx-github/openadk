@@ -3,7 +3,6 @@
 
 include $(ADK_TOPDIR)/rules.mk
 
-# always use tab spaces as separator, no spaces
 PKG_NAME:=		squirrel
 PKG_VERSION:=		3.1
 PKG_RELEASE:=		1
@@ -13,7 +12,7 @@ PKG_SECTION:=		dev/lang
 PKG_BUILDDEP:=		cmake-host
 PKG_NEEDS:=		c++
 PKG_URL:=		squirrel-lang.org
-PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=squirrel/)
+PKG_SITES:=		https://sourceforge.net/projects/squirrel/files/squirrel3/squirrel%203.1%20stable/
 DISTFILES:=             $(PKG_NAME)_3_1_stable.tar.gz
 WRKDIST=		$(WRKDIR)/$(PKG_NAME)3
 
