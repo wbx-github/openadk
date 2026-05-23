@@ -9,7 +9,7 @@ PKG_RELEASE:=		9
 PKG_HASH:=		5d49eee9ecb3ceba3a35182930d3d740f771c8f7950b2327502a79c66bca2fd6
 PKG_DESCR:=		virtual router redundancy protocol daemon
 PKG_SECTION:=		net/route
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=vrrpd/}
+PKG_SITES:=		https://sourceforge.net/projects/vrrpd/files/vrrpd/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
