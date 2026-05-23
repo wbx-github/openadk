@@ -12,7 +12,7 @@ PKG_SECTION:=		x11/apps
 PKG_BUILDDEP:=		libXpm libXft
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.fluxbox.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=fluxbox/}
+PKG_SITES:=		https://sourceforge.net/projects/fluxbox/files/fluxbox/$(PKG_VERSION)/
 
 PKG_FLAVOURS_FLUXBOX:=	WITH_IMLIB2
 PKGFD_WITH_IMLIB2:=	enable imlib2 support
