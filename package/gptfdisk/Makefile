@@ -14,7 +14,7 @@ PKG_BUILDDEP:=		util-linux popt ncurses
 HOST_BUILDDEP:=		util-linux-host popt-host
 PKG_NEEDS:=		c++
 PKG_URL:=		http://www.rodsbooks.com/gdisk/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=gptfdisk/}
+PKG_SITES:=		https://sourceforge.net/projects/gptfdisk/files/gptfdisk/$(PKG_VERSION)/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
