@@ -1,0 +1,10 @@
+--- v4l-utils-1.32.0.orig/lib/meson.build	2025-10-05 11:51:26.000000000 +0200
++++ v4l-utils-1.32.0/lib/meson.build	2026-05-23 04:36:17.701948991 +0200
+@@ -3,7 +3,6 @@ libv4l2plugindir = get_option('prefix')
+ subdir('libdvbv5')
+ subdir('libv4lconvert')
+ subdir('libv4l2')
+-subdir('libv4l1')
+ subdir('libv4l2rds')
+ 
+ if get_option('v4l-plugins')

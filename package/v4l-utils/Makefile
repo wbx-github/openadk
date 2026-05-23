@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		v4l-utils
-PKG_VERSION:=		1.26.1
+PKG_VERSION:=		1.32.0
 PKG_RELEASE:=		1
-PKG_HASH:=		4a71608c0ef7df2931176989e6d32b445c0bdc1030a2376d929c8ca6e550ec4e
+PKG_HASH:=		6828828a17775526eb93fb258a9294d1d1073d633c344dd71ecd4e7a1ffb7dfc
 PKG_DESCR:=		video4linux utilities
 PKG_SECTION:=		mm/video
 PKG_BUILDDEP:=		libjpeg-turbo
@@ -27,7 +27,8 @@ $(eval $(call PKG_template,LIBV4L,libv4l,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEP
 TARGET_CPPFLAGS+=	-DLINUX_I2C_DEV_H
 WRKBUILD=               $(WRKDIR)/$(PKG_NAME)-obj
 
-MESON_FLAGS+=		-Dgconv=disabled
+MESON_FLAGS+=		-Dgconv=disabled \
+			-Dv4l-wrappers=false
 
 CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
@@ -42,7 +43,5 @@ libv4l-install:
 	$(INSTALL_DIR) $(IDIR_LIBV4L)/usr/lib/libv4l
 	$(CP) $(WRKINST)/usr/lib/libv4l*so* \
 		$(IDIR_LIBV4L)/usr/lib
-	$(CP) $(WRKINST)/usr/lib/libv4l/v4l{1compat,2convert}.so \
-		$(IDIR_LIBV4L)/usr/lib/libv4l
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
