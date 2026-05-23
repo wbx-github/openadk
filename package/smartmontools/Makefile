@@ -3,15 +3,14 @@
 
 include $(ADK_TOPDIR)/rules.mk
 
-# always use tab spaces as separator, no spaces
 PKG_NAME:=		smartmontools
-PKG_VERSION:=		7.1
+PKG_VERSION:=		7.5
 PKG_RELEASE:=		1
-PKG_HASH:=		3f734d2c99deb1e4af62b25d944c6252de70ca64d766c4c7294545a2e659b846
-PKG_DESCR:=		Tools to provide advanced warning of disk degradation
+PKG_HASH:=		690b83ca331378da9ea0d9d61008c4b22dde391387b9bbad7f29387f2595f76e
+PKG_DESCR:=		tools to provide advanced warning of disk degradation
 PKG_SECTION:=		sys/hw
 PKG_URL:=		www.smartmontools.org
-PKG_SITES:=		$(MASTER_SITE_SOURCEFORGE:=smartmontools/)
+PKG_SITES:=		https://github.com/smartmontools/smartmontools/releases/download/RELEASE_7_5/
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
