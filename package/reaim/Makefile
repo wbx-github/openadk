@@ -11,7 +11,7 @@ PKG_DESCR:=		transparent aim / msn proxy
 PKG_SECTION:=		app/chat
 PKG_DEPENDS:=		iptables
 PKG_URL:=		http://reaim.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=reaim/}
+PKG_SITES:=		https://sourceforge.net/projects/reaim/files/reaim/$(PKG_VERSION)/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
