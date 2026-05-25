@@ -101,7 +101,6 @@ CONFIGURE_ARGS+=	--exec-prefix=/usr \
 			--enable-libuuid \
 			--enable-libblkid \
 			--enable-libmount \
-			--enable-login \
 			--enable-all-programs
 
 TARGET_CFLAGS+=		-fPIC
