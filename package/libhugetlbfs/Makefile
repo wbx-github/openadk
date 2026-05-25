@@ -4,16 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libhugetlbfs
-PKG_VERSION:=		2.11
-PKG_RELEASE:=		2
-PKG_HASH:=		e02a612eb64386d16270ad4f8ea0196f941f35eba3f651683564d149195ad0bb
+PKG_VERSION:=		2.24
+PKG_RELEASE:=		1
+PKG_HASH:=		d501dfa91c8ead1106967a3d3829f2ba738c3fac0a65cb358ed2ab3870ddc5ef
 PKG_DESCR:=		easy hugepage access
 PKG_SECTION:=		libs/misc
 PKG_URL:=		http://libhugetlbfs.ozlabs.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=libhugetlbfs/}
+PKG_SITES:=		https://github.com/libhugetlbfs/libhugetlbfs/releases/download/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
-PKG_LIBC_DEPENDS:=	glibc musl
 PKG_ARCH_DEPENDS:=	x86 x86_64
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
@@ -21,15 +20,16 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBHUGETLBFS,libhugetlbfs,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
-CONFIG_STYLE:=		manual
-XAKE_FLAGS+=		PREFIX=/usr DESTDIR=${WRKINST} ADK_ARCH=${ADK_TARGET_CPU_ARCH}
+AUTOTOOL_STYLE:=	autoreconf
+
+XAKE_FLAGS+=		V=1 PREFIX=/usr DESTDIR=${WRKINST} ARCH=${ADK_TARGET_CPU_ARCH} BUILDTYPE=NATIVEONLY
 ALL_TARGET:=		libs tools
 
 libhugetlbfs-install:
 	$(INSTALL_DIR) $(IDIR_LIBHUGETLBFS)/usr/{bin,lib,share/libhugetlbfs/ldscripts}
-	$(INSTALL_BIN) $(WRKINST)/usr/bin/{cpupcstat,huge{adm,ctl,edit},pagesize} \
+	$(INSTALL_BIN) $(WRKINST)/usr/bin/{huge{adm,ctl,edit},pagesize} \
 		$(IDIR_LIBHUGETLBFS)/usr/bin
-	${INSTALL_DATA} ${WRKINST}/usr/lib/libhugetlbfs* \
+	${INSTALL_DATA} ${WRKINST}/usr/lib*/libhugetlbfs* \
 		${IDIR_LIBHUGETLBFS}/usr/lib
 	${INSTALL_BIN} ${WRKINST}/usr/share/libhugetlbfs/ld.hugetlbfs \
 		${IDIR_LIBHUGETLBFS}/usr/share/libhugetlbfs

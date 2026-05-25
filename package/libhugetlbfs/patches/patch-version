@@ -1,5 +1,0 @@
---- libhugetlbfs-2.11.orig/version	2010-12-16 19:14:12.000000000 +0100
-+++ libhugetlbfs-2.11/version	2011-02-27 18:53:06.000000000 +0100
-@@ -1 +1 @@
--2.11
-+commit<83deab600c0eb6c022ebb82052f621d5c4be2b1c>
