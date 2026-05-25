@@ -13,8 +13,6 @@ PKG_URL:=		http://www.gnu.org/software/gawk/
 PKG_SITES:=		${MASTER_SITE_GNU:=gawk/}
 PKG_BB:=		1
 
-PKG_LIBC_DEPENDS:=	glibc musl
-
 include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
 
@@ -26,6 +24,7 @@ HOST_CONFIGURE_ARGS+=	--disable-shared
 gawk-install:
 	${INSTALL_DIR} ${IDIR_GAWK}/usr/bin
 	${INSTALL_BIN} ${WRKINST}/usr/bin/gawk ${IDIR_GAWK}/usr/bin
+	(cd $(IDIR_GAWK)/usr/bin && ln -sf gawk awk)
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
