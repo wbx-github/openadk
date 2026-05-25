@@ -1,0 +1,12 @@
+id:2:initdefault:
+mp::sysinit:/usr/bin/mount -t proc proc /proc
+ms::sysinit:/usr/bin/mount -t sysfs sys /sys
+md::sysinit:/usr/bin/mount -t devtmpfs devtmpfs /dev
+mkp::sysinit:/usr/bin/mkdir -p /dev/pts
+mks::sysinit:/usr/bin/mkdir -p /dev/shm
+ma::sysinit:/usr/bin/mount -a -t devpts
+mt::sysinit:/usr/bin/mount -a -t tmpfs
+si::sysinit:/etc/init.d/rcS
+1:234:respawn:/sbin/agetty -l /usr/bin/login  115200 tty1
+AMA0:2:respawn:/sbin/agetty -l /usr/bin/login -L 9600 ttyAMA0 vt100
+S0:2:respawn:/sbin/agetty -l /usr/bin/login -L 9600 ttyS0 vt100
