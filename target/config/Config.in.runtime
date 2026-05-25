@@ -246,6 +246,7 @@ config ADK_RUNTIME_VERBOSE_KERNEL_VGA_SERIAL
 	bool "output via VGA and serial console"
 	depends on ADK_TARGET_WITH_SERIAL && \
 		   ADK_TARGET_WITH_VGA || \
+		   ADK_TARGET_QEMU || \
 		   ADK_TARGET_GENERIC
 	help
 	  Output is via VGA and serial console. 
@@ -255,6 +256,7 @@ config ADK_RUNTIME_VERBOSE_KERNEL_SERIAL_VGA
 	bool "output via serial console and VGA"
 	depends on ADK_TARGET_WITH_SERIAL && \
 		   ADK_TARGET_WITH_VGA || \
+		   ADK_TARGET_QEMU || \
 		   ADK_TARGET_GENERIC
 	help
 	  Output is via serial console and VGA. 
