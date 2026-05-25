@@ -1,0 +1,9 @@
+--- knxd-0.14.75.orig/src/client/lua/Makefile.am	2026-01-08 17:37:44.000000000 +0100
++++ knxd-0.14.75/src/client/lua/Makefile.am	2026-05-25 04:06:42.884220630 +0200
+@@ -1,4 +1,6 @@
+ CC = $(CC_FOR_BUILD)
++CFLAGS = $(CFLAGS_FOR_BUILD)
++LDFLAGS = $(LDFLAGS_FOR_BUILD)
+ LIBS = $(LIBS_FOR_BUILD)
+ EXEEXT = $(EXEEXT_FOR_BUILD)
+ 

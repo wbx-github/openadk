@@ -1,0 +1,11 @@
+--- knxd-0.14.75.orig/configure.ac	2026-01-08 17:37:44.000000000 +0100
++++ knxd-0.14.75/configure.ac	2026-05-25 03:11:10.593766258 +0200
+@@ -26,7 +26,7 @@ dnl ##    SUCH DAMAGE.
+ AC_PREREQ([2.69])
+ LT_PREREQ([2.2.0])
+ 
+-AC_INIT([knxd],m4_esyscmd_s([./tools/version.sh]))
++AC_INIT([knxd],[0.14.75])
+ AC_CONFIG_SRCDIR([src/server/knxd.cpp])
+ AM_INIT_AUTOMAKE
+ LT_INIT

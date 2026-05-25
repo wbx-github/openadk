@@ -4,17 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		knxd
-PKG_VERSION:=		0.14.61
+PKG_VERSION:=		0.14.75
 PKG_RELEASE:=		1
-PKG_HASH:=		b5284c89a55a2c53e0ff769ec4f736fc1ad4b55afdd2a18b9258fa95f708d798
+PKG_HASH:=		9d326bb0b8c16d49805c74ed3b25dd8ba0dfcc50e38797ac6037cd42191cecad
 PKG_DESCR:=		knx daemon
 PKG_SECTION:=		sys/hw
-PKG_DEPENDS:=		libev
-PKG_BUILDDEP:=		libev cmake-host
+PKG_DEPENDS:=		libev libfmt
+PKG_BUILDDEP:=		libev fmt cmake-host
+PKG_NEEDS:=		c++
 PKG_URL:=		https://github.com/knxd/knxd
 PKG_SITES:=		https://github.com/knxd/knxd/archive/refs/tags/
-
-PKG_CFLINE_KNXD:=	depends on ADK_BROKEN
 
 DISTFILES:=		$(PKG_VERSION).tar.gz
 
