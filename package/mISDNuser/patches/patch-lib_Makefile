@@ -1,9 +1,0 @@
-	allow CC override
---- mISDNuser-1_1_9.orig/lib/Makefile	2008-11-18 12:35:09.000000000 +0100
-+++ mISDNuser-1_1_9/lib/Makefile	2011-07-11 17:12:25.341001554 +0200
-@@ -1,4 +1,4 @@
--CC = gcc
-+CC ?= gcc
- AR = ar
- RANLIB = ranlib
- 
