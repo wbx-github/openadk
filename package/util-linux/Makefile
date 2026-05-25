@@ -4,19 +4,19 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		util-linux
-PKG_VERSION:=		2.41.4
+PKG_VERSION:=		2.42
 PKG_RELEASE:=		1
-PKG_HASH:=		a8c213cc06048862602a42b2d299b340001f6d05c4407b549f3e03521df83688
+PKG_HASH:=		3452b260bbaa775d6e749ac3bb22111785003fc1f444970025c8da26dfa758e9
 PKG_DESCR:=		basic utilities
 PKG_SECTION:=		base/apps
 PKG_BUILDDEP:=		ncurses
 PKG_NEEDS:=		threads
-PKG_SITES:=		http://www.kernel.org/pub/linux/utils/util-linux/v2.41/
+PKG_SITES:=		http://www.kernel.org/pub/linux/utils/util-linux/v2.42/
 PKG_OPTS:=		dev
 
 PKG_SUBPKGS:=		FDISK AGETTY SFDISK SWAP_UTILS LOSETUP LSFD MCOOKIE MOUNT
 PKG_SUBPKGS+=		LIBFDISK LIBUUID LIBBLKID LIBMOUNT LIBSMARTCOLS CFDISK MKFS
-PKG_SUBPKGS+=		SWITCHROOT
+PKG_SUBPKGS+=		SWITCHROOT UTIL_LINUX
 PKGSD_LIBUUID:=		uuid library
 PKGSC_LIBUUID:=		libs/misc
 PKGSD_LIBBLKID:=	blkid library
@@ -58,6 +58,10 @@ PKGSC_SWITCHROOT:=	sys/utils
 PKGSD_MCOOKIE:=		generate magic cookies for xauth
 PKGSC_MCOOKIE:=		x11/utils
 PKGSS_MCOOKIE:=		libncurses
+PKGSD_UTIL_LINUX:=	all util-linux apps
+PKGSC_UTIL_LINUX:=	sys/utils
+PKGSS_UTIL_LINUX:=	libncurses libsmartcols libmount libfdisk libblkid libuuid pam
+PKGSB_UTIL_LINUX:=	ncurses pam
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -79,9 +83,9 @@ $(eval $(call PKG_template,LIBBLKID,libblkid,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG
 $(eval $(call PKG_template,LIBFDISK,libfdisk,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_LIBFDISK),$(PKGSC_LIBFDISK),$(PKG_OPTS)))
 $(eval $(call PKG_template,LIBMOUNT,libmount,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_LIBMOUNT),$(PKGSC_LIBMOUNT),$(PKG_OPTS)))
 $(eval $(call PKG_template,LIBSMARTCOLS,libsmartcols,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_LIBSMARTCOLS),$(PKGSC_LIBSMARTCOLS),$(PKG_OPTS)))
+$(eval $(call PKG_template,UTIL_LINUX,util-linux,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKGSD_UTIL_LINUX),$(PKGSC_UTIL_LINUX),$(PKG_OPTS)))
 
 TARGET_CFLAGS+=		-DSWAPON_HAS_TWO_ARGS -DHAVE_LLSEEK
-#TARGET_LDFLAGS+=	-ltinfo
 
 CONFIGURE_ARGS+=	--exec-prefix=/usr \
 			--libdir=/usr/lib \
@@ -90,34 +94,15 @@ CONFIGURE_ARGS+=	--exec-prefix=/usr \
 			--disable-makeinstall-chown \
 			--disable-makeinstall-setuid \
 			--disable-use-tty-group \
-			--disable-chfn-chsh \
-			--disable-more \
-			--disable-su \
-			--disable-runuser \
-			--disable-schedutils \
-			--disable-setpriv \
-			--disable-setterm \
-			--disable-cramfs \
-			--disable-login \
-			--disable-eject \
-			--disable-nsenter \
-			--disable-unshare \
-			--disable-wall \
-			--disable-liblastlog2 \
 			--disable-symvers \
 			--without-python \
 			--without-systemd \
-			--without-user \
-			--enable-switch_root \
 			--enable-libfdisk \
 			--enable-libuuid \
 			--enable-libblkid \
-			--enable-libmount
-ifneq (${ADK_PACKAGE_LSFD},)
-CONFIGURE_ARGS+=	--enable-lsfd
-else
-CONFIGURE_ARGS+=	--disable-lsfd
-endif
+			--enable-libmount \
+			--enable-login \
+			--enable-all-programs
 
 TARGET_CFLAGS+=		-fPIC
 FAKE_FLAGS+=		INSTALLSUID="install -m 4755"
@@ -193,6 +178,13 @@ libsmartcols-install:
 	$(INSTALL_DIR) $(IDIR_LIBSMARTCOLS)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libsmartcols.so* $(IDIR_LIBSMARTCOLS)/usr/lib
 
+util-linux-install:
+	$(INSTALL_DIR) $(IDIR_UTIL_LINUX)/sbin
+	$(INSTALL_DIR) $(IDIR_UTIL_LINUX)/usr/bin
+	$(INSTALL_DIR) $(IDIR_UTIL_LINUX)/usr/sbin
+	$(INSTALL_BIN) $(WRKINST)/sbin/* $(IDIR_UTIL_LINUX)/sbin
+	$(INSTALL_BIN) $(WRKINST)/usr/sbin/* $(IDIR_UTIL_LINUX)/usr/sbin
+	$(INSTALL_BIN) $(WRKINST)/usr/bin/* $(IDIR_UTIL_LINUX)/usr/bin
 
 include $(ADK_TOPDIR)/mk/host-bottom.mk
 include $(ADK_TOPDIR)/mk/pkg-bottom.mk
