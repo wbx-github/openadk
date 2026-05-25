@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		alsa-lib
 PKG_VERSION:=		1.2.15.2
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		637eefd4966ce738da44464494df2b2894e19778fac2f9e7c47277e2af9297f4
 PKG_DESCR:=		sound library
 PKG_SECTION:=		libs/audio
@@ -28,13 +28,16 @@ CONFIGURE_ARGS+=	--disable-python \
 			--disable-topology
 
 alsa-lib-install:
-	${INSTALL_DIR} ${IDIR_ALSA_LIB}/usr/lib 
+	${INSTALL_DIR} ${IDIR_ALSA_LIB}/etc
+	${INSTALL_DIR} ${IDIR_ALSA_LIB}/usr/lib
 	${INSTALL_DIR} ${IDIR_ALSA_LIB}/usr/share/alsa
 	${CP} ${WRKINST}/usr/lib/libasound.so* ${IDIR_ALSA_LIB}/usr/lib
 	${CP} ${WRKINST}//usr/share/alsa/* \
 		${IDIR_ALSA_LIB}/usr/share/alsa
 	$(CP) ./files/imx-{hdmi-soc,spdif}.conf \
 		${IDIR_ALSA_LIB}/usr/share/alsa/cards
+	$(CP) ./files/asound.conf \
+		${IDIR_ALSA_LIB}/etc
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
