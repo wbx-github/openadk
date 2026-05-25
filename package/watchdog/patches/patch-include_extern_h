@@ -1,9 +1,0 @@
---- watchdog-5.13.orig/include/extern.h	2013-02-01 12:15:44.000000000 +0100
-+++ watchdog-5.13/include/extern.h	2014-03-22 15:41:57.000000000 +0100
-@@ -1,5 +1,6 @@
- #include <netinet/in.h>
- #include <stdio.h>
-+#include <time.h>
- 
- /* external variables */
- extern int softboot, watchdog, temp, maxtemp, tint, lastts, nrts;

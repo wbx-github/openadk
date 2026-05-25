@@ -4,14 +4,14 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		watchdog
-PKG_VERSION:=		5.13
+PKG_VERSION:=		5.16
 PKG_RELEASE:=		1
-PKG_HASH:=		141e0faf3ee4d8187a6ff4e00b18ef7b7a4ce432a2d4c8a6e6fdc62507fc6eb0
+PKG_HASH:=		b8e7c070e1b72aee2663bdc13b5cc39f76c9232669cfbb1ac0adc7275a3b019d
 PKG_DESCR:=		watchdog daemon
 PKG_SECTION:=		sys/hw
 PKG_DEPENDS:=		libtirpc
 PKG_BUILDDEP:=		libtirpc
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=watchdog/}
+PKG_SITES:=		https://sourceforge.net/projects/watchdog/files/watchdog/$(PKG_VERSION)/
 PKG_BB:=		1
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
