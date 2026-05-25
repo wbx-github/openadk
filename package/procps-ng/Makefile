@@ -11,6 +11,7 @@ PKG_DESCR:=		/proc file system utilities
 PKG_SECTION:=		base/tools
 PKG_DEPENDS:=		libncurses
 PKG_BUILDDEP:=		ncurses
+PKG_NEEDS:=		locale
 PKG_URL:=		http://procps-ng.sourceforge.net/
 PKG_SITES:=		https://gitlab.com/procps-ng/procps/-/archive/v$(PKG_VERSION)/
 PKG_BB:=		1
@@ -28,7 +29,8 @@ CONFIGURE_ENV+=		ac_cv_func_malloc_0_nonnull=yes \
 			ac_cv_func_realloc_0_nonnull=yes
 
 procps-ng-install:
-	${INSTALL_DIR} ${IDIR_PROCPS_NG}/{bin,sbin,usr/bin}
+	${INSTALL_DIR} ${IDIR_PROCPS_NG}/{bin,sbin,usr/bin,usr/lib}
+	$(CP) $(WRKINST)/usr/lib/libproc2.so.* $(IDIR_PROCPS_NG)/usr/lib
 	${INSTALL_BIN} ${WRKINST}/usr/bin/uptime ${IDIR_PROCPS_NG}/usr/bin
 	${INSTALL_BIN} ${WRKINST}/usr/bin/tload ${IDIR_PROCPS_NG}/usr/bin
 	${INSTALL_BIN} ${WRKINST}/usr/bin/free ${IDIR_PROCPS_NG}/usr/bin
