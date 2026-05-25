@@ -4,7 +4,7 @@ CPPFLAGS+=	-I.
 #CPPFLAGS+=	-D_FILE_OFFSET_BITS=64
 CPPFLAGS+=	-isystem ../lib
 CPPFLAGS+=	-D'__COPYRIGHT(x)=' -D'__RCSID(x)='
-CPPFLAGS+=	-D'__unused=__attribute__((__unused__))'
+#CPPFLAGS+=	-D'__unused=__attribute__((__unused__))'
 CPPFLAGS+=	-D'__dead=__attribute__((__noreturn__))'
 CLEANFILES+=	${OBJS} ${PROG}
 
