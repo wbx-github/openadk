@@ -4,17 +4,19 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		zfs
-PKG_VERSION:=		2.2.6
+PKG_VERSION:=		2.4.2
 PKG_RELEASE:=		1
-PKG_HASH:=		c92e02103ac5dd77bf01d7209eabdca55c7b3356aa747bb2357ec4222652a2a7
-PKG_DESCR:=		Advanced file system and volume manager
+PKG_HASH:=		7e260d0e6af295bea4c5e241cac0a1aef07b58d8dd8035f7898ade3b1bbec78f
+PKG_DESCR:=		advanced file system and volume manager
 PKG_SECTION:=		sys/fs
-PKG_DEPENDS:=		libcurl
+PKG_DEPENDS:=		libcurl libuuid libblkid libtirpc
+PKG_BUILDDEP:=		util-linux curl libtirpc
+# needs zlib-deflate and zlib-enflate which are otherwise optimized out by miniconfig procedure
+# use crpyto-deflate instead
+PKG_KDEPENDS:=		crypto-deflate
+PKG_NEEDS:=		intl
 PKG_URL:=		https://openzfs.org
 PKG_SITES:=		https://github.com/openzfs/zfs/releases/download/${PKG_NAME}-${PKG_VERSION}/
-
-# needs a older kernel then 6.10
-PKG_CFLINE_ZFS:=	depends on ADK_BROKEN
 
 DISTFILES:=             $(PKG_NAME)-$(PKG_VERSION).tar.gz
 
@@ -30,8 +32,8 @@ include ${ADK_TOPDIR}/mk/kernel-vars.mk
 $(eval $(call PKG_template,ZFS,zfs,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 $(eval $(call PKG_template,ZFS_TESTS,zfs-tests,$(PKG_VERSION)-$(PKG_RELEASE),$(PKGSS_ZFS_TESTS),$(PKGSD_ZFS_TESTS),$(PKGSC_ZFS_TESTS)))
 
-AUTOTOOL_STYLE:=	autoreconf
-CONFIGURE_ARGS+=	--with-linux=${LINUX_DIR} --without-python
+CONFIGURE_ARGS+=	--with-linux=${LINUX_DIR} \
+			--without-python
 CONFIGURE_ENV+=		KERNEL_CC="${TARGET_CC}" \
 			KERNEL_CROSS_COMPILE="${TARGET_CROSS}" \
 			KERNEL_ARCH="${ADK_TARGET_KARCH}"
