@@ -1,0 +1,13 @@
+--- net-tools-1.60.orig/lib/interface.c	2001-02-10 20:31:15.000000000 +0100
++++ net-tools-1.60/lib/interface.c	2011-11-15 11:18:11.955750067 +0100
+@@ -663,8 +663,10 @@ void ife_print_long(struct interface *pt
+ 
+     hf = ptr->type;
+ 
++#if 0
+     if (hf == ARPHRD_CSLIP || hf == ARPHRD_CSLIP6)
+ 	can_compress = 1;
++#endif
+ 
+     hw = get_hwntype(hf);
+     if (hw == NULL)

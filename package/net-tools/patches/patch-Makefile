@@ -1,0 +1,36 @@
+--- net-tools-1.60.orig/Makefile	2001-04-15 16:34:31.000000000 +0200
++++ net-tools-1.60/Makefile	2011-11-15 11:30:52.379769328 +0100
+@@ -76,7 +76,7 @@
+ NET_LIB_PATH = lib
+ NET_LIB_NAME = net-tools
+ 
+-PROGS	:= ifconfig hostname arp netstat route rarp slattach plipconfig nameif
++PROGS	:= arp 
+ 
+ -include config.make
+ ifeq ($(HAVE_IP_TOOLS),1)
+@@ -113,8 +113,10 @@ endif
+ 
+ NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
+ 
+-CFLAGS	= $(COPTS) -I. -idirafter ./include/ -I$(NET_LIB_PATH)
+-LDFLAGS	= $(LOPTS) -L$(NET_LIB_PATH)
++CFLAGS ?=
++CFLAGS	+= $(COPTS) -I. -idirafter ./include/ -I$(NET_LIB_PATH)
++LDFLAGS ?=
++LDFLAGS	+= $(LOPTS) -L$(NET_LIB_PATH) 
+ 
+ SUBDIRS	= man/ $(NET_LIB_PATH)/
+ 
+@@ -160,11 +162,6 @@ dist: 		clobber
+ 
+ 
+ config.h: 	config.in Makefile 
+-		@echo "Configuring the Linux net-tools (NET-3 Base Utilities)..." ; echo
+-		@if [ config.status -nt config.in ]; \
+-			then ./configure.sh config.status; \
+-		   else ./configure.sh config.in; \
+-		 fi
+ 
+ 
+ version.h:	Makefile
