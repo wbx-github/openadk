@@ -24,6 +24,10 @@ config ADK_RUNTIME_INIT_BUSYBOX
 	bool "Use busybox init (small)"
 	select ADK_PACKAGE_BUSYBOX_SMALL
 
+config ADK_RUNTIME_INIT_SYSVINIT
+	bool "Use sysvinit"
+	select ADK_PACKAGE_SYSVINIT
+
 config ADK_RUNTIME_INIT_TOYBOX
 	bool "Use toybox init"
 	select ADK_PACKAGE_TOYBOX
@@ -95,10 +99,14 @@ config ADK_RUNTIME_BASE_TOOLBOX
 	select ADK_PACKAGE_TOOLBOX
 
 config ADK_RUNTIME_BASE_COREUTILS
-	bool "Use coreutils"
+	bool "Use standard linux tools"
 	select ADK_PACKAGE_COREUTILS
+	select ADK_PACKAGE_GAWK
 	select ADK_PACKAGE_GREP
 	select ADK_PACKAGE_FIND
+	select ADK_PACKAGE_UTIL_LINUX
+	select ADK_PACKAGE_PROCPS_NG
+	select ADK_PACKAGE_IP
 
 config ADK_RUNTIME_BASE_NONE
 	bool "Use no base tools"
