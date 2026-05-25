@@ -4,15 +4,15 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		freetype
-PKG_VERSION:=		2.14.1
+PKG_VERSION:=		2.14.3
 PKG_RELEASE:=		1
-PKG_HASH:=		174d9e53402e1bf9ec7277e22ec199ba3e55a6be2c0740cb18c0ee9850fc8c34
+PKG_HASH:=		e61b31ab26358b946e767ed7eb7f4bb2e507da1cfefeb7a8861ace7fd5c899a1
 PKG_DESCR:=		free, high-quality and portable font engine
 PKG_SECTION:=		libs/fonts
 PKG_DEPENDS:=		zlib
 PKG_BUILDDEP:=		zlib
 PKG_URL:=		http://www.freetype.org/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=freetype/}
+PKG_SITES:=		https://sourceforge.net/projects/freetype/files/freetype2/$(PKG_VERSION)/
 PKG_LIBNAME:=		libfreetype
 PKG_OPTS:=		dev
 
