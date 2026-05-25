@@ -1,14 +1,6 @@
---- traceroute-2.0.19.orig/Make.rules	2012-03-27 15:49:04.000000000 +0200
-+++ traceroute-2.0.19/Make.rules	2013-12-29 20:01:35.000000000 +0100
-@@ -46,14 +46,14 @@ $(call set, INSTALL, cp)
- $(call set, INDENT, true)
- 
- gcc = $(findstring gcc,$(CC))
--$(call set, CFLAGS, $(if $(gcc), -O2 -Wall, -O))
-+$(call set, CFLAGS, )
- $(call set, CPPFLAGS, )
- $(call set, LDFLAGS, -s)
- $(call set, LIBS, )
+--- traceroute-2.1.6.orig/Make.rules	2023-12-09 03:50:30.000000000 +0100
++++ traceroute-2.1.6/Make.rules	2026-05-25 18:19:28.289883532 +0200
+@@ -53,7 +53,7 @@ $(call set, LIBS, )
  
  
  #  install stuff
@@ -17,12 +9,3 @@
  
  ifneq ($(wildcard /lib64/libc.* /usr/lib64/libc.*),)
  lib := lib64
-@@ -131,7 +131,7 @@ _libs = $(strip $(foreach _lib,$(LIBDIRS
- 			$(wildcard $(srcdir)/$(_lib)/$(_lib).so \
- 					$(srcdir)/$(_lib)/$(_lib).a))))
- 
--override LIBS := $(_libs) -lm $(LIBS)
-+override LIBS := $(_libs) $(LIBS)
- 
- ifneq ($(gcc),)
- CPATH = $(subst $(empty) ,:,$(includes))

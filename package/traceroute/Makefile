@@ -4,15 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		traceroute
-PKG_VERSION:=		2.0.19
+PKG_VERSION:=		2.1.6
 PKG_RELEASE:=		1
-PKG_HASH:=		082be58ec3e6fe9717a52160150e2f6d52fa90f8ecb82abf3b363c8150b0607e
+PKG_HASH:=		9ccef9cdb9d7a98ff7fbf93f79ebd0e48881664b525c4b232a0fcec7dcb9db5e
 PKG_DESCR:=		utility to trace the route of ip packets
 PKG_SECTION:=		net/debug
 PKG_URL:=		http://traceroute.sourceforge.net/
-PKG_SITES:=		${MASTER_SITE_SOURCEFORGE:=traceroute/}
+PKG_SITES:=		https://sourceforge.net/projects/traceroute/files/traceroute/traceroute-$(PKG_VERSION)/
 
-PKG_LIBC_DEPENDS:=	glibc musl
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
