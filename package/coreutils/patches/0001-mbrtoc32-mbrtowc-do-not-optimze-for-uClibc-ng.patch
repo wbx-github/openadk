@@ -1,0 +1,81 @@
+From 17dc60e624cd6fc3491f9cb002f760d60e66ce8b Mon Sep 17 00:00:00 2001
+From: Paul Eggert <eggert@cs.ucla.edu>
+Date: Mon, 25 May 2026 20:37:32 +0200
+Subject: [PATCH] mbrtoc32, mbrtowc: do not optimze for uClibc-ng
+
+Problem reported by Waldemar Brodkorb in:
+https://lists.gnu.org/r/bug-gnulib/2026-05/msg00145.html
+* lib/mbrtoc32.c (mbrtoc32):
+* lib/mbrtowc.c (rpl_mbrtowc):
+Treat uClibc-ng as non-glibc.
+
+Signed-off-by: Waldemar Brodkorb <wbx@openadk.org>
+---
+ lib/mbrtoc32.c | 7 ++++---
+ lib/mbrtowc.c  | 7 ++++---
+ 3 files changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/lib/mbrtoc32.c b/lib/mbrtoc32.c
+index 7d691b8b2f..5f89e05460 100644
+--- a/lib/mbrtoc32.c
++++ b/lib/mbrtoc32.c
+@@ -97,7 +97,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
+ #  include <locale.h>
+ # endif
+ 
+-# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
++# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__)
+ 
+ /* Returns 1 if the current locale is an UTF-8 locale, 0 otherwise.  */
+ static inline int
+@@ -134,7 +134,8 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
+       n = 1;
+     }
+ 
+-# if MBRTOC32_EMPTY_INPUT_BUG || _GL_SMALL_WCHAR_T || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
++# if (MBRTOC32_EMPTY_INPUT_BUG || _GL_SMALL_WCHAR_T \
++      || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__))
+   if (n == 0)
+     return (size_t) -2;
+ # endif
+@@ -142,7 +143,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
+   if (ps == NULL)
+     ps = &internal_state;
+ 
+-# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
++# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__)
+   /* Optimize the frequent case of an UTF-8 locale.
+      Since here we are in the !GNULIB_defined_mbstate_t case, i.e. we use
+      the system's mbstate_t type and have to provide interoperability with
+diff --git a/lib/mbrtowc.c b/lib/mbrtowc.c
+index 59320cd51c..f533b554f3 100644
+--- a/lib/mbrtowc.c
++++ b/lib/mbrtowc.c
+@@ -83,7 +83,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
+ #  include <locale.h>
+ # endif
+ 
+-# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
++# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__)
+ 
+ /* Returns 1 if the current locale is an UTF-8 locale, 0 otherwise.  */
+ static inline int
+@@ -119,12 +119,13 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
+     }
+ # endif
+ 
+-# if MBRTOWC_EMPTY_INPUT_BUG || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
++# if (MBRTOC32_EMPTY_INPUT_BUG || _GL_SMALL_WCHAR_T \
++      || (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__))
+   if (n == 0)
+     return (size_t) -2;
+ # endif
+ 
+-# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2)
++# if (GNULIB_WCHAR_SINGLE_LOCALE && __GLIBC__ >= 2 && !__UCLIBC__)
+   /* Optimize the frequent case of an UTF-8 locale.
+      Since here we are in the !GNULIB_defined_mbstate_t case, i.e. we use
+      the system's mbstate_t type and have to provide interoperability with
+-- 
+2.47.3
+
