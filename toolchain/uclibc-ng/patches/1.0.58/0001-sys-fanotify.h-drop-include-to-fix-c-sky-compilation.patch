@@ -1,0 +1,25 @@
+From c172f40f65478bc4a344a3abb45a031250c97153 Mon Sep 17 00:00:00 2001
+From: Waldemar Brodkorb <wbx@openadk.org>
+Date: Tue, 26 May 2026 20:38:01 +0200
+Subject: [PATCH 4/4] sys/fanotify.h: drop include to fix c-sky compilation
+
+Signed-off-by: Waldemar Brodkorb <wbx@openadk.org>
+---
+ libc/sysdeps/linux/common/sys/fanotify.h | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/libc/sysdeps/linux/common/sys/fanotify.h b/libc/sysdeps/linux/common/sys/fanotify.h
+index 88916720c..9774ba3ea 100644
+--- a/libc/sysdeps/linux/common/sys/fanotify.h
++++ b/libc/sysdeps/linux/common/sys/fanotify.h
+@@ -18,7 +18,6 @@
+ #ifndef	_SYS_FANOTIFY_H
+ #define	_SYS_FANOTIFY_H	1
+ 
+-#include <linux/types.h>
+ #include <stdint.h>
+ #include <sys/statfs.h>
+ 
+-- 
+2.47.3
+
