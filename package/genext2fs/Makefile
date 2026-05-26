@@ -9,6 +9,7 @@ PKG_RELEASE:=		1
 PKG_HASH:=		b8aba9af48e664fa60134af696a57b3bb4ebd2b2878533d7611734e90b883ecc
 PKG_DESCR:=		generate ext2 filesystem utility
 PKG_SECTION:=		sys/fs
+HOST_BUILDDEP:=		autoconf-host automake-host
 PKG_SITES:=		https://github.com/bestouff/genext2fs/archive/refs/tags/
 
 DISTFILES:=		v${PKG_VERSION}.tar.gz
