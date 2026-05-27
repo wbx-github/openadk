@@ -1,0 +1,12 @@
+diff -Nur linux-5.15.208.orig/arch/nds32/kernel/ex-entry.S linux-5.15.208/arch/nds32/kernel/ex-entry.S
+--- linux-5.15.208.orig/arch/nds32/kernel/ex-entry.S	2026-05-23 13:40:45.000000000 +0200
++++ linux-5.15.208/arch/nds32/kernel/ex-entry.S	2026-05-27 07:23:32.556876633 +0200
+@@ -162,7 +162,7 @@
+ 	jral.ton $p0, $p0
+ 	.endm
+ 
+-	.section	".text.init", #alloc, #execinstr
++	.section	".text.init", "ax"
+ 	.global	exception_vector
+ exception_vector:
+ .rept 6
