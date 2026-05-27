@@ -1,0 +1,6 @@
+#!/bin/sh
+. $IPKG_INSTROOT/etc/functions.sh
+add_rcconf unbound NO
+gid=$(get_next_gid)
+add_group unbound $gid
+add_user unbound $(get_next_uid) $gid /etc/unbound
