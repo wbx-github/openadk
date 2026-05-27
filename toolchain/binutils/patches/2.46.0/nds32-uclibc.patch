@@ -1,0 +1,15 @@
+diff -Nur binutils-2.37.orig/ld/configure.tgt binutils-2.37/ld/configure.tgt
+--- binutils-2.37.orig/ld/configure.tgt	2021-07-08 13:37:20.000000000 +0200
++++ binutils-2.37/ld/configure.tgt	2022-01-21 03:23:49.296011413 +0100
+@@ -594,9 +594,9 @@
+ nds32*be-*-elf*)	targ_emul=nds32belf
+ 			targ_extra_emuls="nds32elf nds32elf16m nds32belf16m"
+ 			;;
+-nds32*le-*-linux-gnu*)	targ_emul=nds32elf_linux
++nds32*le-*-linux-*)	targ_emul=nds32elf_linux
+ 			;;
+-nds32*be-*-linux-gnu*)	targ_emul=nds32belf_linux
++nds32*be-*-linux-*)	targ_emul=nds32belf_linux
+ 			;;
+ nios2*-*-linux*)	targ_emul=nios2linux
+ 			;;
