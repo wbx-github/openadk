@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		samba
-PKG_VERSION:=		4.19.4
-PKG_RELEASE:=		2
-PKG_HASH:=		4026d93b866db198c8ca1685b0f5d52793f65c6e63cb364163af661fdff0968c
+PKG_VERSION:=		4.24.3
+PKG_RELEASE:=		1
+PKG_HASH:=		4a5e0ed1ea192b798c873d9957c50a5767c10c2767cccb00d56ecc427e94f8e9
 PKG_DESCR:=		file and print server
 PKG_SECTION:=		net/fs
 PKG_DEPENDS:=		libuuid libpopt libgnutls libtirpc
@@ -82,7 +82,7 @@ samba-install:
 	$(INSTALL_DATA) ./files/smb.conf $(IDIR_SAMBA)/etc/samba
 	$(INSTALL_BIN) $(WRKINST)/usr/sbin/{nmbd,smbd} \
 		$(IDIR_SAMBA)/usr/sbin
-	$(INSTALL_BIN) $(WRKINST)/usr/bin/{smbpasswd,smbclient} \
+	$(INSTALL_BIN) $(WRKINST)/usr/bin/{smbpasswd,smbclient,testparm} \
 		$(IDIR_SAMBA)/usr/bin
 	$(CP) $(WRKINST)/usr/lib/lib*.so* \
 		$(IDIR_SAMBA)/usr/lib
