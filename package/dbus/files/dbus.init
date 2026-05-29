@@ -11,7 +11,7 @@ autostart)
 	exec sh $0 start
 	;;
 start)
-	mkdir -p /run/dbus /var/lib
+	mkdir -p /run/dbus /var/lib /var/run/dbus
 	ln -sf /lib/dbus /var/lib/dbus
 	/usr/bin/dbus-daemon --system
 	;;
