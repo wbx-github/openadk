@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xorg-server
-PKG_VERSION:=		21.1.21
+PKG_VERSION:=		21.1.22
 PKG_RELEASE:=		1
-PKG_HASH:=		c0cbe5545b3f645bae6024b830d1d1154a956350683a4e52b2fff5b0fa1ab519
+PKG_HASH:=		1a242c8917c49ba29ccc1f6021613d8a2b9805dd0d271a66ae9d09f4b0bb06b3
 PKG_DESCR:=		xorg server
 PKG_SECTION:=		x11/drivers
 PKG_DEPENDS:=		libxfont2 pixman libpciaccess libxkbfile libxcvt
