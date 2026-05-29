@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		feh
-PKG_VERSION:=		2.14.2
+PKG_VERSION:=		3.12.2
 PKG_RELEASE:=		1
-PKG_HASH:=		c80f3d3297b3b6ee4898572d19692f5e19eb3066a9ca078c3099d39004a7e0cf
+PKG_HASH:=		a988c387a8800dddc43d1736c6a475f630e9de032ff11dd1162b8805110d5dd1
 PKG_DESCR:=		image viewer
 PKG_SECTION:=		mm/image
-PKG_BUILDDEP:=		imlib2 giblib libXt
-PKG_DEPENDS:=		imlib2 giblib
-PKG_SITES:=		http://feh.finalrewind.org/
+PKG_BUILDDEP:=		imlib2 libXt
+PKG_DEPENDS:=		imlib2
+PKG_SITES:=		https://github.com/derf/feh/archive/refs/tags/
 
-DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
+DISTFILES:=             ${PKG_VERSION}.tar.gz
 
 include $(ADK_TOPDIR)/mk/package.mk
 
