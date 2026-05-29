@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nginx
-PKG_VERSION:=		1.30.0
+PKG_VERSION:=		1.30.2
 PKG_RELEASE:=		1
-PKG_HASH:=		058188c64bf22baecaa72b809a6318a4f9ba623889c554feab03f7cb853ab31b
+PKG_HASH:=		7df3090907fca3cc0e456d6dc00ceb230da74ea88026ceff0affc29dbbd9ac4c
 PKG_DESCR:=		powerful http reverse proxy and webserver
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		pcre2 zlib
@@ -20,7 +20,7 @@ DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_CHOICES_NGINX:=	WITH_OPENSSL WITHOUT_SSL
 PKGCD_WITH_OPENSSL:=	use openssl for crypto
 PKGCB_WITH_OPENSSL:=	openssl
-PKGCS_WITH_OPENSSL:=	openssl ca-certificates
+PKGCS_WITH_OPENSSL:=	libopenssl ca-certificates
 PKGCD_WITHOUT_SSL:=	use no ssl
 
 include $(ADK_TOPDIR)/mk/package.mk
