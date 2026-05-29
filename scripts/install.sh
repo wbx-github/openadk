@@ -661,6 +661,8 @@ case $target {
 	;;
 (olpc-xo-1)
         cp $ADK_TOPDIR/target/x86/olpc-xo-1/olpc.fth "$R/boot/"
+	mkdir -p "$R/lib/firmware/libertas"
+        cp $ADK_TOPDIR/target/x86/olpc-xo-1/usb8388.bin "$R/lib/firmware/libertas/"
 	;;
 }
 

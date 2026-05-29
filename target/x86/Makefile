@@ -42,6 +42,10 @@ endif
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSTARBALL)"
+ifeq ($(ADK_TARGET_SYSTEM_OLPC_XO_1),y)
+	@echo "Use following command to install it on SD card:"
+	@echo "sudo ./scripts/install.sh $(ADK_TARGET_SYSTEM) /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
+endif
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
 	@echo "Use following command to create a QEMU Image:"
