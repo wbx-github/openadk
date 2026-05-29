@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		harfbuzz
-PKG_VERSION:=		11.0.0
+PKG_VERSION:=		14.2.0
 PKG_RELEASE:=		1
-PKG_HASH:=		85178b78f0e405269bbc0c17a55545708d86dae63a85f04cd29f71dd422879a8
+PKG_HASH:=		c652d5d94971031654ab3989891a490a895d3e3f2b71171c62692b28e94b1b93
 PKG_DESCR:=		opentype text shaping engine
 PKG_SECTION:=		libs/fonts
 PKG_SITES:=		https://github.com/harfbuzz/harfbuzz/archive/refs/tags/
