@@ -11,7 +11,7 @@ PKG_DESCR:=		desktop bus daemon
 PKG_SECTION:=		sys/misc
 PKG_DEPENDS:=		libdbus libexpat
 PKG_BUILDDEP:=		expat util-linux
-PKG_NEEDS:=		threads
+PKG_NEEDS:=		threads c++
 PKG_URL:=		http://dbus.freedesktop.org/
 PKG_SITES:=		https://dbus.freedesktop.org/releases/dbus/
 PKG_LIBNAME:=		libdbus
@@ -37,7 +37,8 @@ CMAKE_FLAGS+=		-DCMAKE_INSTALL_RUNSTATEDIR="/var/run" \
 			-DDBUS_ENABLE_QTHELP_DOCS=OFF \
 			-DDBUS_ENABLE_XML_DOCS=OFF \
 			-DENABLE_SYSTEMD=OFF \
-			-DDBUS_WITH_GLIB=OFF
+			-DDBUS_WITH_GLIB=OFF \
+			-DDBUS_DISABLE_ASSERT=ON
 
 
 libdbus-install:
