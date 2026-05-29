@@ -1,0 +1,11 @@
+diff -Nur linux-3.4.112.orig/scripts/mod/sumversion.c linux-3.4.112/scripts/mod/sumversion.c
+--- linux-3.4.112.orig/scripts/mod/sumversion.c	2016-04-27 12:55:30.000000000 +0200
++++ linux-3.4.112/scripts/mod/sumversion.c	2026-05-27 12:34:21.378600677 +0200
+@@ -8,6 +8,7 @@
+ #include <errno.h>
+ #include <string.h>
+ #include <limits.h>
++#include <arpa/inet.h>
+ #include "modpost.h"
+ 
+ /*
