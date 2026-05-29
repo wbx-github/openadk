@@ -9,8 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		b1d1db9ba7fd96d50e0b6cf743be2b9ff954f7969a7a9b74d1951b89ec15ca9c
 PKG_DESCR:=		display manager
 PKG_SECTION:=		x11/apps
-PKG_BUILDDEP:=		libXaw libXmu libXt libSM libICE libXft
-PKG_DEPENDS:=		xconsole xsm libxaw libxmu libxt libsm libice libxft
+PKG_BUILDDEP:=		libXaw libXmu libXt libSM libICE libXft pam
+PKG_DEPENDS:=		xconsole xsm libxaw libxmu libxt libsm libice libxft pam
 PKG_URL:=		http://xorg.freedesktop.org/
 PKG_SITES:=		http://www.x.org/releases/individual/app/
 
