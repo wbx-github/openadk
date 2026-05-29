@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		xterm
-PKG_VERSION:=		401
+PKG_VERSION:=		410
 PKG_RELEASE:=		1
-PKG_HASH:=		3da2b5e64cb49b03aa13057d85e62e1f2e64f7c744719c00d338d11cd3e6ca1a
+PKG_HASH:=		7ba9fbb303dd3d95d06ca24360d019048d84e5822dc6fe722cd77369bdbf231f
 PKG_DESCR:=		terminal emulator
 PKG_SECTION:=		x11/apps
 PKG_DEPENDS:=		libxaw libxt libncurses libxft fontconfig libuuid
@@ -26,7 +26,7 @@ CONFIGURE_ARGS+=	--with-app-defaults=/usr/lib/X11/app-defaults \
 			--x-libraries="$(STAGING_TARGET_DIR)/usr/lib" \
 			--with-freetype-cflags="-I$(STAGING_TARGET_DIR)/usr/include/freetype2" \
 			--disable-regex \
-			--disable-wide-chars \
+			--enable-wide-chars \
 			--disable-pty-handshake
 
 xterm-install:
