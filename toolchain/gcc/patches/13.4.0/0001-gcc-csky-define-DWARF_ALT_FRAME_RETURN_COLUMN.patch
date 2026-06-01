@@ -1,0 +1,46 @@
+From: Ramin Moussavi <lordrasmus@gmail.com>
+Subject: [PATCH] gcc: csky: define DWARF_ALT_FRAME_RETURN_COLUMN for signal-frame unwinding
+
+The csky signal-frame unwinder (gcc/config/csky/linux-unwind.h) restores
+the interrupted PC into DWARF column 32. That column is not a hard
+register, so init_dwarf_reg_size_table() leaves its size as 0 in
+dwarf_reg_size_table. When the unwinder later walks through a signal
+frame, _Unwind_GetGR() reads the size of column 32, finds 0 and aborts.
+
+In practice this makes any forced unwind through a signal frame abort
+with SIGABRT. The most visible case is pthread cancellation: a thread
+cancelled while blocked in a syscall is resumed via a signal frame, and
+the cleanup unwind dies in _Unwind_GetGR() instead of running the
+cancellation handlers. All NPTL cancellation tests of the uClibc-ng test
+suite fail this way on csky.
+
+Declare column 32 as the alternate return column so
+init_dwarf_reg_size_table() sizes it. This is the same mechanism arm,
+aarch64, riscv and others already use for their signal return address
+column. With this patch the 8 cancellation tests pass on csky.
+
+The macro has never been defined for csky, so this affects every gcc
+version; the patch applies cleanly to 13.x/14.x/15.x. Reproduced and
+verified with gcc 15.2.0 (uclibcabiv2, soft-float) on qemu-system-cskyv2.
+
+Signed-off-by: Ramin Moussavi <lordrasmus@gmail.com>
+---
+ gcc/config/csky/csky.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+--- a/gcc/config/csky/csky.h
++++ b/gcc/config/csky/csky.h
+@@ -1007,6 +1007,13 @@
+    define DWARF_FRAME_RETURN_COLUMN to DWARF_FRAME_REGNUM.  */
+ #define DWARF_FRAME_RETURN_COLUMN DWARF_FRAME_REGNUM (CSKY_LR_REGNUM)
+ 
++/* Signal frames (config/csky/linux-unwind.h) put the interrupted PC in
++   DWARF column 32, which is not a hard register and thus is left unsized
++   in dwarf_reg_size_table.  Declare it as the alternate return column so
++   init_dwarf_reg_size_table sizes it; otherwise _Unwind_GetGR aborts when
++   unwinding through a signal frame (e.g. pthread cancellation).  */
++#define DWARF_ALT_FRAME_RETURN_COLUMN 32
++
+ /* Use r0 and r1 to pass exception handling information.  */
+ #define EH_RETURN_DATA_REGNO(N) ((N) < 2 ? N : INVALID_REGNUM)
+ 
