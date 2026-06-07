@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		php
-PKG_VERSION:=		8.5.6
+PKG_VERSION:=		8.5.7
 PKG_RELEASE:=		1
-PKG_HASH:=		826c600b7c6f956bd335558ca3bdbcab23b22126c1cc8d9348be2280a2204bb7
+PKG_HASH:=		01ba2ed1c2658dacf91bebc8be6a4885f69b811c7993831fc48e26107ab29985
 PKG_DESCR:=		php language interpreter
 PKG_SECTION:=		dev/lang
 PKG_NEEDS:=		threads
@@ -90,7 +90,6 @@ PKG_CONFIGURE_OPTS:=	\
 	--enable-cli \
 	--enable-cgi \
 	--enable-fpm \
-	--enable-opcache=no \
 	--disable-mbstring \
 	--disable-mbregex \
 	--disable-phar \
@@ -102,12 +101,13 @@ PKG_CONFIGURE_OPTS:=	\
 	--disable-filter \
 	--disable-xmlreader \
 	--disable-xmlwriter \
+	--without-libxml \
 	--disable-dom \
 	--without-pear \
 	--without-gettext \
 	--without-pgsql \
-	--without-iconv \
-	--with-kerberos=no
+	--without-pcre-jit \
+	--without-iconv
 
 ifneq ($(ADK_PACKAGE_PHP_MOD_BZ2),)
 PKG_CONFIGURE_OPTS+=	--with-bz2=shared,"$(STAGING_TARGET_DIR)/usr"
