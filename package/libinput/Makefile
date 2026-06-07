@@ -4,12 +4,12 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libinput
-PKG_VERSION:=		1.30.2
+PKG_VERSION:=		1.31.3
 PKG_RELEASE:=		1
-PKG_HASH:=		76130ec033ae0359d9e0288fd6576da70d7bfc682464c394551841f3a3e08e08
+PKG_HASH:=		b6749bf6f1890f6631c0a70a027c35fec9d2e096a39f720548896e41474a9854
 PKG_DESCR:=		input library
 PKG_DEPENDS:=		mtdev libevdev libudev
-PKG_BUILDDEP:=		mtdev libevdev eudev
+PKG_BUILDDEP:=		meson-host mtdev libevdev eudev
 PKG_SECTION:=		libs/misc
 PKG_SITES:=		https://gitlab.freedesktop.org/libinput/libinput/-/archive/$(PKG_VERSION)/
 PKG_OPTS:=		dev
