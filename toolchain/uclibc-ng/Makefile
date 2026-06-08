@@ -400,8 +400,9 @@ $(WRKBUILD)/.installed: $(WRKBUILD)/.compiled
 		UCLIBC_EXTRA_LDFLAGS="$(TARGET_LDFLAGS)" \
 		VERBOSE=1 \
 		install_runtime install_dev
-	ln -f ${STAGING_TARGET_DIR}/usr/lib/crt1.o \
-		${STAGING_TARGET_DIR}/usr/lib/Scrt1.o
+	test -e ${STAGING_TARGET_DIR}/usr/lib/Scrt1.o || \
+		ln -f ${STAGING_TARGET_DIR}/usr/lib/crt1.o \
+			${STAGING_TARGET_DIR}/usr/lib/Scrt1.o
 ifeq ($(ADK_TARGET_LIBC_UTILS),y)
 	PATH='$(HOST_PATH)' $(MAKE) -C $(WRKBUILD) \
 		ARCH="$(ADK_TARGET_ARCH)" \
