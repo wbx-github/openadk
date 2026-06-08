@@ -1,0 +1,81 @@
+From 9e3e6ceb3b18c0dd57f49ef7eb28c9462575a282 Mon Sep 17 00:00:00 2001
+From: Gopi Kumar Bulusu <gopi@sankhya.com>
+Date: Thu, 2 Apr 2026 12:02:59 +0530
+Subject: [PATCH] Fix incorrect length for __builtin_bswap16
+
+The bswaphi pattern generates 2 assembly instructions with a length
+of 8 bytes. The bswaphi pattern missed the length attribute, as a
+result the default of 8 bytes was assumed. This allowed the "8 byte"
+bswaphi pattern to be scheduled into the delay slot of a branch
+instruction where only a 4 byte instruction can be placed. This
+patch addresses the problem.
+
+2026-04-18  Michael Eager <eager@eagercon.com>
+
+gcc/ChangeLog:
+	PR target/103383
+	* config/microblaze/microblaze.md: bswaphi2: (set_attr length 8)
+
+gcc/testsuite/ChangeLog:
+	PR target/103383
+	* gcc.target/microblaze/isa/pr103383.c: New test.
+
+Signed-off-by: Nagaraju Mekala <nmekala@xilix.com>
+Signed-off-by: Gopi Kumar Bulusu <gopi@sankhya.com>
+Signed-off-by: Michael J. Eager <eager@eagercon.com>
+---
+ gcc/config/microblaze/microblaze.md           |  6 ++++++
+ .../gcc.target/microblaze/isa/pr103383.c      | 20 +++++++++++++++++++
+ 2 files changed, 26 insertions(+)
+ create mode 100644 gcc/testsuite/gcc.target/microblaze/isa/pr103383.c
+
+diff --git a/gcc/config/microblaze/microblaze.md b/gcc/config/microblaze/microblaze.md
+index 7d60c6ca3b235..906d4572dc080 100644
+--- a/gcc/config/microblaze/microblaze.md
++++ b/gcc/config/microblaze/microblaze.md
+@@ -369,6 +369,9 @@
+         (bswap:SI (match_operand:SI 1 "register_operand" "r")))]
+   "TARGET_REORDER"
+   "swapb %0, %1"
++  [(set_attr "type"	"no_delay_arith")
++   (set_attr "mode"	"SI")
++   (set_attr "length"	"4")]
+ )
+ 
+ (define_insn "bswaphi2"
+@@ -377,6 +380,9 @@
+   "TARGET_REORDER"
+   "swapb %0, %1
+    swaph %0, %0"
++  [(set_attr "type"	"no_delay_arith")
++   (set_attr "mode"	"SI")
++   (set_attr "length"	"8")]
+ )
+ 
+ ;;----------------------------------------------------------------
+diff --git a/gcc/testsuite/gcc.target/microblaze/isa/pr103383.c b/gcc/testsuite/gcc.target/microblaze/isa/pr103383.c
+new file mode 100644
+index 0000000000000..ab6fd4b6885ec
+--- /dev/null
++++ b/gcc/testsuite/gcc.target/microblaze/isa/pr103383.c
+@@ -0,0 +1,20 @@
++/* { dg-do compile } */
++/* { dg-options "-O2 -mcpu=v10.0 -mxl-barrel-shift -S" } */
++ 
++unsigned short t = 0x1234;
++
++extern unsigned short int g();
++
++int f()
++{
++  unsigned short s = t;
++
++/* { dg-final { scan-assembler-not "brlid\tr(\[0-9]\|\[1-2]\[0-9]\|3\[0-1]),g\n\[ \t\n\]*swap" } } */
++  if (__builtin_bswap16(s) != g()) {
++	  return -1;
++  }
++
++  return 0;
++}
++
++
