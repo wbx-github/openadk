@@ -1,0 +1,55 @@
+From: Ramin Moussavi <ramin.moussavi@yacoub.de>
+Subject: [PATCH] microblaze: don't clobber r3/r4 restored by rt_sigreturn
+
+ret_from_trap stores the system call return values r3 and r4 back into
+the saved user pt_regs (swi r3, PT_R3 / swi r4, PT_R4) before restoring
+the register file and returning to userspace.  That is correct for an
+ordinary system call, where r3 (and r4 for a 64-bit result) holds the
+return value and the caller-clobbered registers need not be preserved.
+
+sys_rt_sigreturn() also returns to userspace through this path, but it
+has to be transparent: restore_sigcontext() has already populated the
+whole pt_regs from the saved signal context, and every register must be
+restored exactly so the interrupted code resumes unchanged.  The
+unconditional stores in ret_from_trap instead overwrite the
+just-restored r3/r4.  r3 survives by luck, because sys_rt_sigreturn()
+returns the restored r3 as its value, but r4 is left holding scratch
+from the C function, so the restored r4 is lost.
+
+A signal can interrupt any instruction, so a register that is live
+across the signal - e.g. r4 holding the address operand of an lwx/swx
+compare-and-swap loop - comes back corrupted, surfacing as seemingly
+random NULL dereferences or heap corruption in multithreaded programs
+under signal load.  Found with the uClibc-ng NPTL tst-eintr1 test, where
+__sync_val_compare_and_swap() keeps the counter address in r4 while
+SIGUSR1 storms the worker threads: rt_sigreturn returns r4 == 0 and the
+next lwx faults on address 0.
+
+The interrupt and exception return paths (ret_from_irq, ret_from_exc)
+already restore the full register set and do not perform these stores;
+only the trap/syscall path does.  Make the rt_sigreturn wrapper return
+to ret_from_trap + 8, past the two stores, so the registers restored
+from the signal context survive.  Ordinary system calls are unaffected.
+
+Tested on qemu-system-microblazeel (petalogix-s3adsp1800) with the
+uClibc-ng NPTL tst-eintr1 stress loop: the unpatched kernel faults at
+the compare-and-swap with a zeroed address operand within one iteration;
+with this change it runs 60+ iterations cleanly.
+
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+
+--- a/arch/microblaze/kernel/entry.S
++++ b/arch/microblaze/kernel/entry.S
+@@ -518,6 +518,13 @@ C_ENTRY(ret_from_kernel_thread):
+ 
+ C_ENTRY(sys_rt_sigreturn_wrapper):
+ 	addik	r30, r0, 0		/* no restarts */
++	/*
++	 * rt_sigreturn restores the full register set from the signal
++	 * context, so it must skip the r3/r4 syscall-return stores at the
++	 * head of ret_from_trap which would otherwise overwrite the
++	 * just-restored r3/r4.  Return to ret_from_trap + 8 (past them).
++	 */
++	addik	r15, r0, ret_from_trap
+ 	brid	sys_rt_sigreturn	/* Do real work */
+ 	addik	r5, r1, 0;		/* add user context as 1st arg */
