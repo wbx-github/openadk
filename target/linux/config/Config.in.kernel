@@ -237,7 +237,7 @@ config ADK_TARGET_NO_CMDLINE
 
 config ADK_LINUX_KERNEL_SMP
 	bool "Enable symmetric multi processing"
-	depends on ADK_TARGET_WITH_SMP
+	depends on ADK_TARGET_WITH_SMP || ADK_TARGET_QEMU
 	default y if ADK_TARGET_WITH_SMP
 	default n
 	help
