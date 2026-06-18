@@ -1,0 +1,220 @@
+diff -Nur linux-5.10.257.orig/arch/nds32/include/asm/fixmap.h linux-5.10.257/arch/nds32/include/asm/fixmap.h
+--- linux-5.10.257.orig/arch/nds32/include/asm/fixmap.h	2026-05-23 13:40:03.000000000 +0200
++++ linux-5.10.257/arch/nds32/include/asm/fixmap.h	2026-06-14 19:54:35.522285109 +0200
+@@ -16,6 +16,9 @@
+ #ifdef CONFIG_HIGHMEM
+ 	FIX_KMAP_END = FIX_KMAP_BEGIN + (KM_TYPE_NR * NR_CPUS),
+ #endif
++#ifdef CONFIG_EARLY_PRINTK
++	FIX_EARLY_DEBUG,
++#endif
+ 	FIX_EARLYCON_MEM_BASE,
+ 	__end_of_fixed_addresses
+ };
+diff -Nur linux-5.10.257.orig/arch/nds32/Kconfig.debug linux-5.10.257/arch/nds32/Kconfig.debug
+--- linux-5.10.257.orig/arch/nds32/Kconfig.debug	2026-05-23 13:40:03.000000000 +0200
++++ linux-5.10.257/arch/nds32/Kconfig.debug	2026-06-14 18:52:53.595799176 +0200
+@@ -1,2 +1,11 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ # dummy file, do not delete
++
++config EARLY_PRINTK
++        bool "Early printk support"
++        default y
++        help
++          Say Y here if you want to have an early console using the
++          earlyprintk=<name>[,<addr>][,<options>] kernel parameter. It
++          is assumed that the early console device has been initialised
++          by the boot loader prior to starting the Linux kernel.
+diff -Nur linux-5.10.257.orig/arch/nds32/kernel/early_printk.c linux-5.10.257/arch/nds32/kernel/early_printk.c
+--- linux-5.10.257.orig/arch/nds32/kernel/early_printk.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-5.10.257/arch/nds32/kernel/early_printk.c	2026-06-14 18:55:22.649111388 +0200
+@@ -0,0 +1,126 @@
++/*
++ * Earlyprintk support.
++ *
++ * Copyright (C) 2012 ARM Ltd.
++ * Author: Catalin Marinas <catalin.marinas@arm.com>
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++#include <linux/kernel.h>
++#include <linux/console.h>
++#include <linux/init.h>
++#include <linux/string.h>
++#include <linux/mm.h>
++#include <linux/io.h>
++
++#include <linux/serial_reg.h>
++#include <asm/setup.h>
++
++extern void __iomem *early_io_map(phys_addr_t phys);
++static void __iomem *early_base;
++static void (*printch) (char ch);
++
++/*
++ * 8250/16550 (8-bit aligned registers) single character TX.
++ */
++static void uart8250_8bit_printch(char ch)
++{
++	while (!(readb(early_base + UART_LSR) & UART_LSR_THRE)) ;
++	writeb(ch, early_base + UART_TX);
++}
++
++/*
++ * 8250/16550 (32-bit aligned registers) single character TX.
++ */
++static void uart8250_32bit_printch(char ch)
++{
++	while (!(readl(early_base + (UART_LSR << 2)) & UART_LSR_THRE)) ;
++	writel(ch, early_base + (UART_TX << 2));
++}
++
++struct earlycon_match {
++	const char *name;
++	void (*printch) (char ch);
++};
++
++static const struct earlycon_match earlycon_match[] __initconst = {
++	{.name = "uart8250-8bit",.printch = uart8250_8bit_printch,},
++	{.name = "uart8250-32bit",.printch = uart8250_32bit_printch,},
++	{}
++};
++
++static void early_write(struct console *con, const char *s, unsigned n)
++{
++	while (n-- > 0) {
++		if (*s == '\n')
++			printch('\r');
++		printch(*s);
++		s++;
++	}
++}
++
++static struct console early_console_dev = {
++	.name = "earlycon",
++	.write = early_write,
++	.flags = CON_PRINTBUFFER | CON_BOOT,
++	.index = -1,
++};
++
++/*
++ * Parse earlyprintk=... parameter in the format:
++ *
++ *   <name>[,<addr>][,<options>]
++ *
++ * and register the early console. It is assumed that the UART has been
++ * initialised by the bootloader already.
++ */
++static int __init setup_early_printk(char *buf)
++{
++	const struct earlycon_match *match = earlycon_match;
++	phys_addr_t paddr = 0;
++
++	if (!buf) {
++		pr_warn("No earlyprintk arguments passed.\n");
++		return 0;
++	}
++
++	while (match->name) {
++		size_t len = strlen(match->name);
++		if (!strncmp(buf, match->name, len)) {
++			buf += len;
++			break;
++		}
++		match++;
++	}
++	if (!match->name) {
++		pr_warn("Unknown earlyprintk arguments: %s\n", buf);
++		return 0;
++	}
++
++	/* I/O address */
++	if (!strncmp(buf, ",0x", 3)) {
++		char *e;
++		paddr = simple_strtoul(buf + 1, &e, 16);
++		buf = e;
++	}
++
++	if (paddr)
++		early_base = early_io_map(paddr);
++	printch = match->printch;
++	//early_console = &early_console_dev;
++	register_console(&early_console_dev);
++
++	return 0;
++}
++
++early_param("earlyprintk", setup_early_printk);
+diff -Nur linux-5.10.257.orig/arch/nds32/kernel/ex-entry.S linux-5.10.257/arch/nds32/kernel/ex-entry.S
+--- linux-5.10.257.orig/arch/nds32/kernel/ex-entry.S	2026-05-23 13:40:03.000000000 +0200
++++ linux-5.10.257/arch/nds32/kernel/ex-entry.S	2026-06-14 16:40:51.574298067 +0200
+@@ -162,7 +162,7 @@
+ 	jral.ton $p0, $p0
+ 	.endm
+ 
+-	.section	".text.init", #alloc, #execinstr
++	.section	".text.init", "ax"
+ 	.global	exception_vector
+ exception_vector:
+ .rept 6
+diff -Nur linux-5.10.257.orig/arch/nds32/kernel/Makefile linux-5.10.257/arch/nds32/kernel/Makefile
+--- linux-5.10.257.orig/arch/nds32/kernel/Makefile	2026-05-23 13:40:03.000000000 +0200
++++ linux-5.10.257/arch/nds32/kernel/Makefile	2026-06-14 18:12:54.765210343 +0200
+@@ -19,6 +19,8 @@
+ obj-$(CONFIG_CACHE_L2)		+= atl2c.o
+ obj-$(CONFIG_PERF_EVENTS) += perf_event_cpu.o
+ obj-$(CONFIG_PM)		+= pm.o sleep.o
++obj-$(CONFIG_EARLY_PRINTK)	+= early_printk.o
++
+ extra-y := head.o vmlinux.lds
+ 
+ CFLAGS_fpu.o += -mext-fpu-sp -mext-fpu-dp
+diff -Nur linux-5.10.257.orig/arch/nds32/mm/init.c linux-5.10.257/arch/nds32/mm/init.c
+--- linux-5.10.257.orig/arch/nds32/mm/init.c	2026-05-23 13:40:03.000000000 +0200
++++ linux-5.10.257/arch/nds32/mm/init.c	2026-06-14 19:28:16.484988055 +0200
+@@ -262,3 +262,34 @@
+ 		flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+ 	}
+ }
++
++#ifdef CONFIG_EARLY_PRINTK
++#include <asm/fixmap.h>
++
++/*
++ * Using tlbop to create an early I/O mapping
++ */
++void __iomem *__init early_io_map(phys_addr_t pa)
++{
++	unsigned long va;
++	pa &= PAGE_MASK;
++	pa += pgprot_val(PAGE_DEVICE);
++	va = fix_to_virt(FIX_EARLY_DEBUG);
++	/* insert and lock this page to tlb entry directly */
++	asm volatile ("mtsr   %0, $TLB_VPN\n\t"
++		      "dsb\n\t"
++		      "tlbop  %1, RWLK\n\t" "isb\n\t"::"r" (va), "r"(pa));
++	return (void __iomem *)va;
++}
++
++int __init early_io_unmap(void)
++{
++	unsigned long va;
++	va = fix_to_virt(FIX_EARLY_DEBUG);
++	asm volatile ("tlbop  %0, UNLK\n\t"
++		      "tlbop  %0, INV\n\t" "isb\n\t"::"r" (va));
++	return 0;
++}
++
++late_initcall(early_io_unmap);
++#endif

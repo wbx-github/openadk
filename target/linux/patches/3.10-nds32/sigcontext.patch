@@ -1,0 +1,33 @@
+diff -Nur linux-3.10-nds32.orig/arch/nds32/include/uapi/asm/sigcontext.h linux-3.10-nds32/arch/nds32/include/uapi/asm/sigcontext.h
+--- linux-3.10-nds32.orig/arch/nds32/include/uapi/asm/sigcontext.h	2016-09-06 11:38:18.000000000 +0200
++++ linux-3.10-nds32/arch/nds32/include/uapi/asm/sigcontext.h	2026-06-18 04:54:13.353977605 +0200
+@@ -55,7 +55,7 @@
+         unsigned long nds32_r25;
+         unsigned long nds32_fp;	/* $r28 */
+         unsigned long nds32_gp;	/* $r29 */
+-        unsigned long nds32_lp;	/* $r30 */
++        unsigned long nds32_lr;	/* $r30 */
+         unsigned long nds32_sp;	/* $r31 */
+         unsigned long nds32_ipc;
+         unsigned long fault_address;
+diff -Nur linux-3.10-nds32.orig/arch/nds32/kernel/signal.c linux-3.10-nds32/arch/nds32/kernel/signal.c
+--- linux-3.10-nds32.orig/arch/nds32/kernel/signal.c	2016-09-06 11:38:18.000000000 +0200
++++ linux-3.10-nds32/arch/nds32/kernel/signal.c	2026-06-18 04:59:18.044804646 +0200
+@@ -197,7 +197,7 @@
+ 	__get_user_error(regs->NDS32_r25, &sf->uc.uc_mcontext.nds32_r25, err);
+ 	__get_user_error(regs->NDS32_fp, &sf->uc.uc_mcontext.nds32_fp, err);
+ 	__get_user_error(regs->NDS32_gp, &sf->uc.uc_mcontext.nds32_gp, err);
+-	__get_user_error(regs->NDS32_lp, &sf->uc.uc_mcontext.nds32_lp, err);
++	__get_user_error(regs->NDS32_lp, &sf->uc.uc_mcontext.nds32_lr, err);
+ 	__get_user_error(regs->NDS32_sp, &sf->uc.uc_mcontext.nds32_sp, err);
+ 	__get_user_error(regs->NDS32_ipc, &sf->uc.uc_mcontext.nds32_ipc, err);
+ #if defined(CONFIG_HWZOL)
+@@ -312,7 +312,7 @@
+ 	__put_user_error(regs->NDS32_r25, &sf->uc.uc_mcontext.nds32_r25, err);
+ 	__put_user_error(regs->NDS32_fp, &sf->uc.uc_mcontext.nds32_fp, err);
+ 	__put_user_error(regs->NDS32_gp, &sf->uc.uc_mcontext.nds32_gp, err);
+-	__put_user_error(regs->NDS32_lp, &sf->uc.uc_mcontext.nds32_lp, err);
++	__put_user_error(regs->NDS32_lp, &sf->uc.uc_mcontext.nds32_lr, err);
+ 	__put_user_error(regs->NDS32_sp, &sf->uc.uc_mcontext.nds32_sp, err);
+ 	__put_user_error(regs->NDS32_ipc, &sf->uc.uc_mcontext.nds32_ipc, err);
+ #if defined(CONFIG_HWZOL)
