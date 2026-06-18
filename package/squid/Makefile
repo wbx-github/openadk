@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		squid
-PKG_VERSION:=		7.5
+PKG_VERSION:=		7.6
 PKG_RELEASE:=		1
-PKG_HASH:=		1ad20bd49425ca9d57c7f710c87a8dc1c1e559076a98dd63f45d84477474ad68
+PKG_HASH:=		57a385d0435768da1f6a469a251f3c951bb79f0ea6d3f04c569d5a50c20e678a
 PKG_DESCR:=		web and cache proxy
 PKG_SECTION:=		net/proxy
 PKG_DEPENDS:=		libltdl libxcrypt
@@ -14,7 +14,7 @@ PKG_BUILDDEP:=		libtool
 PKG_BUILDDEP_GLIBC:=	libxcrypt
 PKG_NEEDS:=		threads c++
 PKG_URL:=		http://www.squid-cache.org/
-PKG_SITES:=		https://github.com/squid-cache/squid/releases/download/SQUID_7_5/
+PKG_SITES:=		https://github.com/squid-cache/squid/releases/download/SQUID_7_6/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
