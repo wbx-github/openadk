@@ -4,11 +4,12 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ppp
-PKG_VERSION:=		2.5.2
+PKG_VERSION:=		2.5.3
 PKG_RELEASE:=		1
-PKG_HASH:=		47da358de54a10cb10bf6ff2cf9b1c03c0d3555518f6182e8f701b8e55733cb2
+PKG_HASH:=		ddda28dec8aca99a403ab6070d94ffd2b17d63e9a4c5509158e99e148f572d4f
 PKG_DESCR:=		point-to-point protocol software
 PKG_SECTION:=		net/ppp
+PKG_DEPENDS:=		libpcap
 PKG_BUILDDEP:=		libpcap
 PKG_KDEPENDS:=		ppp
 PKG_URL:=		http://ppp.samba.org/
