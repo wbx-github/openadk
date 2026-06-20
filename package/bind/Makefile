@@ -4,13 +4,13 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		bind
-PKG_VERSION:=		9.18.49
+PKG_VERSION:=		9.20.24
 PKG_RELEASE:=		1
-PKG_HASH:=		c43ce4548ebed788cd9df63658a7de105ceafba43fcd63fa352b1093e525cd24
+PKG_HASH:=		989fef1fc88ea59d04cd86f854dca5a4616a20a9968bcdde3c1a3668ab36be08
 PKG_DESCR:=		dns server
 PKG_SECTION:=		net/dns
-PKG_DEPENDS:=		libxml2 libopenssl libuv openssl-util
-PKG_BUILDDEP:=		libxml2 openssl libuv
+PKG_DEPENDS:=		libxml2 libopenssl libuv liburcu libncurses libcap openssl-util
+PKG_BUILDDEP:=		libxml2 openssl libuv liburcu ncurses libcap
 PKG_NEEDS:=		c++
 PKG_URL:=		https://www.isc.org/software/bind/
 PKG_SITES:=		https://ftp.isc.org/isc/bind9/${PKG_VERSION}/
@@ -58,7 +58,6 @@ AUTOTOOL_STYLE:=	autoreconf
 CONFIGURE_ENV+=		BUILD_CC="${HOST_CC}" BUILD_CFLAGS='${HOST_CFLAGS}' BUILD_LDFLAGS='${HOST_LDFLAGS}'
 CONFIGURE_ARGS+=	--with-gssapi=no \
 			--with-openssl=${STAGING_TARGET_DIR}/usr \
-			--disable-linux-caps \
 			--disable-doh
 
 bind-server-install:
@@ -100,12 +99,10 @@ bind-dig-install:
 
 libbind-install:
 	${INSTALL_DIR} ${IDIR_LIBBIND}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libbind9*.so ${IDIR_LIBBIND}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libdns*.so ${IDIR_LIBBIND}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libisccc*.so ${IDIR_LIBBIND}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libisccfg*.so ${IDIR_LIBBIND}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libisc*.so ${IDIR_LIBBIND}/usr/lib
-	${CP} ${WRKINST}/usr/lib/libirs*.so ${IDIR_LIBBIND}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libns*.so ${IDIR_LIBBIND}/usr/lib
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
