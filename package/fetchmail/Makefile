@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		fetchmail
-PKG_VERSION:=		6.6.4
+PKG_VERSION:=		6.6.5
 PKG_RELEASE:=		1
-PKG_HASH:=		efe01690d22bda359a579c77e2b0072658a092bff490ec0478a212c6b7d0eb70
+PKG_HASH:=		ab0320fe4df0b5ee8659189e66590d9de96aadbf929fe59f353ae7a317e9ef1e
 PKG_DESCR:=		fetch mail from a pop3 or imap server
 PKG_SECTION:=		net/mail
 PKG_URL:=		http://www.fetchmail.info
