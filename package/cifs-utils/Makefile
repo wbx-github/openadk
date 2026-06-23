@@ -4,12 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		cifs-utils
-PKG_VERSION:=		7.0
+PKG_VERSION:=		7.6
 PKG_RELEASE:=		1
-PKG_HASH:=		0defaab85bd3ea46ffc45ab41fb0d0ad54d05ae2cfaa7e503de86d4f12bc8161
+PKG_HASH:=		7db875ff2868e5fa4e445ada0bd23ea70b9161b96188c7e276321e061ed51dd6
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
 PKG_KDEPENDS:=		cifs
+PKG_BUILDDEP:=		talloc
+PKG_DEPENDS:=		libtalloc
 PKG_URL:=		https://wiki.samba.org/index.php/LinuxCIFS_utils
 PKG_SITES:=		https://ftp.samba.org/pub/linux-cifs/cifs-utils/
 
