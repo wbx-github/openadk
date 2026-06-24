@@ -1,0 +1,15 @@
+#!/bin/sh
+. $IPKG_INSTROOT/etc/functions.sh
+gid=$(get_next_gid)
+add_group frr $gid
+add_user frr $(get_next_uid) $gid /tmp
+add_rcconf frr NO
+add_service zebrasrv 2600/tcp
+add_service zebra 2601/tcp
+add_service ripd 2602/tcp
+add_service ripngd 2603/tcp
+add_service ospfd 2604/tcp
+add_service bgpd 2605/tcp
+add_service ospf6d 2606/tcp
+add_service ospfapi 2607/tcp
+add_service isisd 2608/tcp
