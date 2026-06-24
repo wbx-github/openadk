@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libxcrypt
-PKG_VERSION:=		4.4.36
+PKG_VERSION:=		4.5.2
 PKG_RELEASE:=		1
-PKG_HASH:=		b979838d5f1f238869d467484793b72b8bca64c4eae696fdbba0a9e0b6c28453
+PKG_HASH:=		d99b548636894641e6b29b58ef592cab692e75672155a938c3209c187a872e1e
 PKG_DESCR:=		crypt library
 PKG_SECTION:=		libs/crypto
 PKG_SITES:=		https://github.com/besser82/libxcrypt/archive/refs/tags/
