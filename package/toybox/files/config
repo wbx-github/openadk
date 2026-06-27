@@ -1,10 +1,10 @@
 #
 # Automatically generated make config: don't edit
 # ToyBox version: KCONFIG_VERSION
-# Tue Apr  8 13:12:22 2025
+# Sun Jun 28 00:43:59 2026
 #
-# CONFIG_TOYBOX_ON_ANDROID is not set
-# CONFIG_TOYBOX_FORK is not set
+# CONFIG_IS_ANDROID is not set
+# CONFIG_IS_FDPIC is not set
 
 #
 # Posix commands
@@ -43,7 +43,6 @@ CONFIG_ENV=y
 # CONFIG_HEAD is not set
 # CONFIG_ICONV is not set
 # CONFIG_ID is not set
-# CONFIG_ID_Z is not set
 # CONFIG_GROUPS is not set
 # CONFIG_LOGNAME is not set
 # CONFIG_WHOAMI is not set
@@ -54,9 +53,7 @@ CONFIG_LN=y
 # CONFIG_LOGGER is not set
 CONFIG_LS=y
 CONFIG_MKDIR=y
-# CONFIG_MKDIR_Z is not set
 # CONFIG_MKFIFO is not set
-# CONFIG_MKFIFO_Z is not set
 # CONFIG_NICE is not set
 # CONFIG_NL is not set
 # CONFIG_NOHUP is not set
@@ -76,7 +73,6 @@ CONFIG_RMDIR=y
 # CONFIG_SED is not set
 # CONFIG_SLEEP is not set
 # CONFIG_SORT is not set
-CONFIG_SORT_FLOAT=y
 # CONFIG_SPLIT is not set
 # CONFIG_STRINGS is not set
 # CONFIG_TAIL is not set
@@ -133,8 +129,7 @@ CONFIG_GETTY=y
 # CONFIG_GROUPADD is not set
 # CONFIG_GROUPDEL is not set
 # CONFIG_HEXDUMP is not set
-# CONFIG_HD is not set
-# CONFIG_INIT is not set
+CONFIG_INIT=y
 # CONFIG_IP is not set
 # CONFIG_IPCRM is not set
 # CONFIG_IPCS is not set
@@ -148,6 +143,7 @@ CONFIG_GETTY=y
 # CONFIG_MORE is not set
 # CONFIG_ROUTE is not set
 CONFIG_SH=y
+# CONFIG_ALIAS is not set
 # CONFIG_BREAK is not set
 # CONFIG_CD is not set
 # CONFIG_CONTINUE is not set
@@ -163,6 +159,8 @@ CONFIG_SH=y
 # CONFIG_RETURN is not set
 # CONFIG_SHIFT is not set
 # CONFIG_SOURCE is not set
+# CONFIG_TRAP is not set
+# CONFIG_UNALIAS is not set
 # CONFIG_WAIT is not set
 # CONFIG_STRACE is not set
 # CONFIG_STTY is not set
@@ -217,6 +215,7 @@ CONFIG_FREE=y
 # CONFIG_GPIOINFO is not set
 # CONFIG_GPIOGET is not set
 # CONFIG_GPIOSET is not set
+# CONFIG_HD is not set
 # CONFIG_HELP is not set
 # CONFIG_HEXEDIT is not set
 # CONFIG_HWCLOCK is not set
@@ -247,6 +246,7 @@ CONFIG_FREE=y
 # CONFIG_MOUNTPOINT is not set
 # CONFIG_NBD_CLIENT is not set
 # CONFIG_NBD_SERVER is not set
+CONFIG_NOLOGIN=y
 # CONFIG_UNSHARE is not set
 # CONFIG_NSENTER is not set
 # CONFIG_ONEIT is not set
@@ -332,7 +332,6 @@ CONFIG_HOSTNAME=y
 # CONFIG_SHA384SUM is not set
 # CONFIG_SHA512SUM is not set
 # CONFIG_MKNOD is not set
-# CONFIG_MKNOD_Z is not set
 # CONFIG_MKTEMP is not set
 CONFIG_MOUNT=y
 # CONFIG_PASSWD is not set
@@ -391,3 +390,4 @@ CONFIG_TOYBOX_ZHELP=y
 CONFIG_TOYBOX_UID_SYS=100
 CONFIG_TOYBOX_UID_USR=500
 CONFIG_TOYBOX_FORCE_NOMMU=y
+# CONFIG_TOYBOX_FORK is not set

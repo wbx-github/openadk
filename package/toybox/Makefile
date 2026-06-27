@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		toybox
-PKG_VERSION:=		0.8.12
+PKG_VERSION:=		0.8.14
 PKG_RELEASE:=		1
-PKG_HASH:=		ad88a921133ae2231d9f2df875ec0bd42af4429145caea7d7db9e02208a6fd2e
+PKG_HASH:=		827e4cdfd69f5da973e00e2a59b30b3c9857fb7fae74c362fd0b4f96be7929b0
 PKG_DESCR:=		linux tools collection
 PKG_SECTION:=		base/apps
 PKG_URL:=		http://landley.net/toybox/
