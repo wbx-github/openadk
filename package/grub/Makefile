@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		grub
-PKG_VERSION:=		2.12
+PKG_VERSION:=		2.14
 PKG_RELEASE:=		1
-PKG_HASH:=		f3c97391f7c4eaa677a78e090c7e97e6dc47b16f655f04683ebd37bef7fe0faa
+PKG_HASH:=		bc8d3c73535b8838d8c8e2654d73edc4e6ae8c8acdb45d5df5dc9a1547446d43
 PKG_DESCR:=		multiboot boot loader
 PKG_SECTION:=		base/boot
 PKG_BUILDDEP:=		bison-host grub-host
@@ -15,17 +15,18 @@ PKG_URL:=		http://www.gnu.org/software/grub
 PKG_SITES:=		https://ftp.gnu.org/gnu/grub/
 PKG_NOPARALLEL:=	1
 
-PKG_ARCH_DEPENDS:=	x86 x86_64 mips mips64 ppc ppc64
+PKG_ARCH_DEPENDS:=	x86 x86_64 mips mips64 ppc ppc64 loongarch
 
 PKG_SUBPKGS:=		GRUB GRUB_TOOLS
 PKGSD_GRUB_TOOLS:=	grub2 tools
 
-PKG_CHOICES_GRUB:=	PC EFI_X86 EFI_X86_64 ARC IEEE1275
+PKG_CHOICES_GRUB:=	PC EFI_X86 EFI_X86_64 ARC IEEE1275 EFI_LOONGARCH
 PKGCD_PC:=		build for PC BIOS
 PKGCD_EFI_X86:=		build for EFI x86
 PKGCD_EFI_X86_64:=	build for EFI x86_64
 PKGCD_ARC:=		build for MIPS/MIPS64 ARC
 PKGCD_IEEE1275:=	build for OpenFirmware
+PKGCD_EFI_LOONGARCH:=	build for EFI Loongarch
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -105,6 +106,22 @@ GRUB_CFG=		grub-efi-serial.cfg
 endif
 endif
 
+ifeq ($(ADK_PACKAGE_GRUB_EFI_LOONGARCH),y)
+HOST_CONFIGURE_ARGS+=	--with-platform=efi
+GRUB_ARCH=		loongarch64-efi
+GRUB_IMAGE=		efi-part/EFI/BOOT/bootloongarch64.efi
+GRUB_DIR=		efi-part/EFI/BOOT
+GRUB_PREFIX=		/EFI/BOOT
+GRUB_TARGET=		loongarch64
+GRUB_PLATFORM=		efi
+GRUB_MODULES=		boot linux ext2 fat part_msdos part_gpt normal efi_gop
+ifeq ($(ADK_TARGET_DUAL_BOOT),y)
+GRUB_CFG=		grub-efi-dual-serial.cfg
+else
+GRUB_CFG=		grub-efi-serial.cfg
+endif
+endif
+
 HOST_CONFIGURE_ARGS+=	--enable-efiemu=no \
 			--disable-grub-mkfont \
 			--enable-device-mapper=no \
@@ -119,7 +136,7 @@ CONFIGURE_ARGS+=	--disable-grub-mkfont \
 			--with-platform=$(GRUB_PLATFORM) \
 			--disable-werror
 
-ifeq ($(ADK_PACKAGE_GRUB_EFI_X86)$(ADK_PACKAGE_GRUB_EFI_X86_64),y)
+ifeq ($(ADK_PACKAGE_GRUB_EFI_X86)$(ADK_PACKAGE_GRUB_EFI_X86_64)$(ADK_PACKAGE_GRUB_EFI_LOONGARCH),y)
 CONFIGURE_ARGS+=	--with-bootdir=/boot/EFI/boot \
 			--with-grubdir=/
 endif
@@ -137,7 +154,7 @@ ifeq ($(ADK_PACKAGE_GRUB_PC),y)
 	$(CP) $(WRKINST)/usr/lib/grub/i386-pc/boot.img \
 		$(FW_DIR)/
 endif
-ifeq ($(ADK_PACKAGE_GRUB_EFI_X86)$(ADK_PACKAGE_GRUB_EFI_X86_64),y)
+ifeq ($(ADK_PACKAGE_GRUB_EFI_X86)$(ADK_PACKAGE_GRUB_EFI_X86_64)$(ADK_PACKAGE_GRUB_EFI_LOONGARCH),y)
 	${CP} ${WRKINST}/usr/lib/grub/$(GRUB_ARCH) \
 		$(FW_DIR)/$(GRUB_DIR)
 	$(CP) ./files/$(GRUB_CFG) $(FW_DIR)/$(GRUB_DIR)/grub.cfg
