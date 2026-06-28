@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		lighttpd
-PKG_VERSION:=		1.4.82
+PKG_VERSION:=		1.4.84
 PKG_RELEASE:=		1
-PKG_HASH:=		abfe74391f9cbd66ab154ea07e64f194dbe7e906ef4ed47eb3b0f3b46246c962
+PKG_HASH:=		076dd43bec8f2ba9ce6db7e7ca7e8ad72271cd529805ead2400b56efaa026f70
 PKG_DESCR:=		lightweight web server
 PKG_SECTION:=		net/http
 PKG_DEPENDS:=		pcre2
