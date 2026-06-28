@@ -350,8 +350,10 @@ ${FW_DIR}/${GENIMAGE}: ${TARGET_DIR} kernel-package
 	$(CP) $(EXTLINUX) $(FW_DIR)/extlinux
 	mkdir -p $(TARGET_DIR)/boot/extlinux
 	$(CP) $(EXTLINUX) $(TARGET_DIR)/boot/extlinux
+ifeq ($(ADK_TARGET_LINUX_KERNEL_IN_VFAT),)
 	$(CP) $(FW_DIR)/kernel $(TARGET_DIR)/boot
 	-$(CP) $(FW_DIR)/*.dtb $(TARGET_DIR)/boot 2>/dev/null
+endif
 ifeq ($(ADK_RUNTIME_FIX_PERMISSION),y)
 	echo '#!/bin/sh' > $(ADK_TOPDIR)/scripts/fakeroot.sh
 	echo "chown -R 0:0 $(TARGET_DIR)" >> $(ADK_TOPDIR)/scripts/fakeroot.sh
@@ -386,7 +388,7 @@ else
 	PATH='${HOST_PATH}' $(FAKEROOT) mkfs.ext2 \
 		-d "$(TARGET_DIR)" \
 		-r 1 -N 0 -m 5 -L "rootfs" \
-		$(FW_DIR)/rootfs.ext "64M" $(MAKE_TRACE)
+		$(FW_DIR)/rootfs.ext "128M" $(MAKE_TRACE)
 	PATH='${HOST_PATH}' genimage \
 		--config "$(GENCFG)" \
 		--tmppath "${FW_DIR}/temp" \

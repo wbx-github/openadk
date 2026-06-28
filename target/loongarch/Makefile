@@ -7,9 +7,9 @@ include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/arch/loongarch/boot/vmlinux.efi
 
-QEMU_ARGS:=-M virt -bios target/loongarch/QEMU_EFI.fd -append "console=ttyS0,115200"
+QEMU_ARGS:=-M virt -m 512 -bios target/loongarch/QEMU_EFI.fd
 QEMU_ARGS+=-nographic
-#
+
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
@@ -44,11 +44,23 @@ ifeq ($(ADK_TARGET_QEMU),y)
 	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
+ifeq ($(ADK_TARGET_FS),genimage)
+targethelp:
+	@echo "The disk image is: $(FW_DIR)/disk.img"
+ifeq ($(ADK_TARGET_QEMU),y)
+	@echo "Start qemu with following command line:"
+	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} $(FW_DIR)/disk.img'
+else
+	@echo "Use following command to install it on SD card:"
+	@echo 'sudo dd if=$(FW_DIR)/disk.img of=/dev/sdX bs=2048k'
+endif
+endif
 
 kernel-strip:
+	@cp $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
 
 kernel-install: kernel-strip
-	@cp $(KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
+	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),initramfs)
@@ -59,4 +71,7 @@ imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
 imageinstall: createinitramfs targethelp
+endif
+ifeq ($(ADK_TARGET_FS),genimage)
+imageinstall: kernel-install $(FW_DIR)/$(GENIMAGE) targethelp
 endif
