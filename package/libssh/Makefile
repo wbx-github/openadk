@@ -4,15 +4,15 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libssh
-PKG_VERSION:=		0.11.1
+PKG_VERSION:=		0.12.0
 PKG_RELEASE:=		1
-PKG_HASH:=		14b7dcc72e91e08151c58b981a7b570ab2663f630e7d2837645d5a9c612c1b79
+PKG_HASH:=		1a6af424d8327e5eedef4e5fe7f5b924226dd617ac9f3de80f217d82a36a7121
 PKG_DESCR:=		secure shell library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		zlib libopenssl
 PKG_BUILDDEP:=		cmake-host zlib openssl
 PKG_URL:=		http://www.libssh.org/
-PKG_SITES:=		https://www.libssh.org/files/0.11/
+PKG_SITES:=		https://www.libssh.org/files/0.12/
 PKG_OPTS:=		dev
 
 include $(ADK_TOPDIR)/mk/package.mk
