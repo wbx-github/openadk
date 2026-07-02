@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		jq
-PKG_VERSION:=		1.5
-PKG_RELEASE:=		2
-PKG_HASH:=		c4d2bfec6436341113419debf479d833692cc5cdab7eb0326b5a4d4fbe9f493c
+PKG_VERSION:=		1.8.2
+PKG_RELEASE:=		1
+PKG_HASH:=		71b8d6e8f5fe81f6c6d0d110e3892251f6ce76ed095abd315e26e6e1193af3af
 PKG_DESCR:=		command-line json processor
 PKG_SECTION:=		sys/misc
 PKG_URL:=		http://stedolan.github.io/jq/
@@ -21,6 +21,8 @@ $(eval $(call PKG_template,JQ,jq,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(
 jq-install:
 	$(INSTALL_DIR) $(IDIR_JQ)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libjq.so* \
+		$(IDIR_JQ)/usr/lib
+	$(CP) $(WRKINST)/usr/lib/libonig.so* \
 		$(IDIR_JQ)/usr/lib
 	$(INSTALL_DIR) $(IDIR_JQ)/usr/bin
 	$(INSTALL_BIN) $(WRKINST)/usr/bin/jq \
