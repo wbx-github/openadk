@@ -31,7 +31,7 @@ $(eval $(call HOST_template,OPENSSL,openssl,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBOPENSSL,libopenssl,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},$(PKG_OPTS)))
 $(eval $(call PKG_template,OPENSSL_UTIL,openssl-util,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_OPENSSL_UTIL},${PKGSD_OPENSSL_UTIL},${PKGSC_OPENSSL_UTIL}))
 
-ifeq ($(ADK_TARGET_USE_STATIC_LIBS),y)
+ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 OPENSSL_OPTIONS:=	no-shared zlib no-dso
 else
 OPENSSL_OPTIONS:=	shared zlib-dynamic
