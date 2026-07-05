@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libjpeg-turbo
-PKG_VERSION:=		3.1.2
+PKG_VERSION:=		3.2.0
 PKG_RELEASE:=		1
-PKG_HASH:=		560f6338b547544c4f9721b18d8b87685d433ec78b3c644c70d77adad22c55e6
+PKG_HASH:=		980dd81f425082aa6d7c9e47fef27554ce7a9ffc8e2f6e863b97d263c5c50858
 PKG_DESCR:=		jpeg image library
 PKG_SECTION:=		libs/image
 PKG_BUILDDEP:=		cmake-host yasm-host
