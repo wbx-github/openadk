@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libjansson
-PKG_VERSION:=		2.14
+PKG_VERSION:=		2.15.1
 PKG_RELEASE:=		1
-PKG_HASH:=		fba956f27c6ae56ce6dfd52fbf9d20254aad42821f74fa52f83957625294afb9
+PKG_HASH:=		f9aa4b3ec8496fee69db94f06f3d76fd4a26b012ee9bf1e917078c2cd2841881
 PKG_DESCR:=		json library
 PKG_SECTION:=		libs/data
 PKG_URL:=		http://www.digip.org/jansson/
@@ -19,8 +19,6 @@ WRKDIST=		${WRKDIR}/jansson-${PKG_VERSION}
 include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBJANSSON,libjansson,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
-
-TARGET_LDFLAGS+=	-lm
 
 libjansson-install:
 	$(INSTALL_DIR) $(IDIR_LIBJANSSON)/usr/lib
