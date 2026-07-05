@@ -1,0 +1,10 @@
+--- atop-2.12.1.orig/atop.c	2025-09-23 19:16:03.000000000 +0200
++++ atop-2.12.1/atop.c	2026-07-05 18:32:23.673180289 +0200
+@@ -118,7 +118,6 @@
+ ** can be linked with 'atop'; the one to use can eventually be chosen
+ ** at runtime. 
+ */
+-#define _POSIX_C_SOURCE	
+ #define _XOPEN_SOURCE
+ #define _GNU_SOURCE
+ #define _DEFAULT_SOURCE

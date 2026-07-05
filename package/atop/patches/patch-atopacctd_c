@@ -1,0 +1,10 @@
+--- atop-2.12.1.orig/atopacctd.c	2025-09-23 19:16:03.000000000 +0200
++++ atop-2.12.1/atopacctd.c	2026-07-05 18:35:28.463214341 +0200
+@@ -36,7 +36,6 @@
+ ** it under the terms of the GNU General Public License version 2 as
+ ** published by the Free Software Foundation.
+ */
+-#define _POSIX_C_SOURCE
+ #define _XOPEN_SOURCE
+ #define _GNU_SOURCE
+ #define _DEFAULT_SOURCE
