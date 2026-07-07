@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		dropbear
-PKG_VERSION:=		2026.91
+PKG_VERSION:=		2026.92
 PKG_RELEASE:=		1
-PKG_HASH:=		defa924475abf6bc1e74abc00173e46bfdc804bd47caafa14f5a4ef0cc76da34
+PKG_HASH:=		91dcb5234de8dea68dd82c55411c9fc986b457ab58372a780ee8a870419c2f7e
 PKG_DESCR:=		ssh server/client designed for embedded systems
 PKG_SECTION:=		net/security
 PKG_URL:=		http://matt.ucc.asn.au/dropbear/
