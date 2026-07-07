@@ -1,10 +1,11 @@
 --- atop-2.12.1.orig/drawbar.c	2025-09-23 19:16:03.000000000 +0200
-+++ atop-2.12.1/drawbar.c	2026-07-05 18:34:24.802513502 +0200
-@@ -103,7 +103,6 @@
++++ atop-2.12.1/drawbar.c	2026-07-07 02:04:43.594438374 +0200
+@@ -103,7 +103,7 @@
  // horizontally scaled by the user, atop might switch from one model to
  // the other.
  /////////////////////////////////////////////////////////////////////////////
 -#define _POSIX_C_SOURCE
++#define _POSIX_C_SOURCE 200809L
  #define _XOPEN_SOURCE
  #define _GNU_SOURCE
  #define _DEFAULT_SOURCE

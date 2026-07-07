@@ -1,10 +1,11 @@
 --- atop-2.12.1.orig/various.c	2025-09-23 19:16:03.000000000 +0200
-+++ atop-2.12.1/various.c	2026-07-05 18:32:43.541398939 +0200
-@@ -29,7 +29,6 @@
++++ atop-2.12.1/various.c	2026-07-07 02:04:00.215992737 +0200
+@@ -29,7 +29,7 @@
  ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ** --------------------------------------------------------------------------
  */
 -#define _POSIX_C_SOURCE
++#define _POSIX_C_SOURCE 200809L
  #define _XOPEN_SOURCE
  #define _GNU_SOURCE
  #define _DEFAULT_SOURCE
