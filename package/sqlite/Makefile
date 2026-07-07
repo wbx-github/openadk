@@ -4,21 +4,21 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		sqlite
-PKG_VERSION:=		3.37.1
+PKG_VERSION:=		3.53.3
 PKG_RELEASE:=		1
-PKG_HASH:=		40f22a13bf38bbcd4c7ac79bcfb42a72d5aa40930c1f3f822e30ccce295f0f2e
+PKG_HASH:=		c917d7db16648ec95f714974ace5e5dcf46b7dc70e26600a0a102a3141125db0
 PKG_DESCR:=		embeddable sql database cli
 PKG_SECTION:=		sys/misc
 PKG_BUILDDEP:=		ncurses readline
 PKG_DEPENDS:=		libsqlite libreadline libncurses
 PKG_URL:=		http://www.sqlite.org/
-PKG_SITES:=		http://www.sqlite.org/2021/
+PKG_SITES:=		http://www.sqlite.org/2026/
+PKG_NEEDS:=		c++
 PKG_LIBNAME:=		libsqlite
 PKG_OPTS:=		dev
-PKG_NOPARALLEL:=	1
 
-DISTFILES:=		sqlite-autoconf-3370100.tar.gz
-WRKDIST=		${WRKDIR}/sqlite-autoconf-3370100
+DISTFILES:=		sqlite-autoconf-3530300.tar.gz
+WRKDIST=		${WRKDIR}/sqlite-autoconf-3530300
 
 PKG_SUBPKGS:=		SQLITE_CLI LIBSQLITE
 PKGSD_LIBSQLITE:=	emeddable sql library
@@ -32,6 +32,11 @@ $(eval $(call PKG_template,LIBSQLITE,libsqlite,${PKG_VERSION}-${PKG_RELEASE},${P
 $(eval $(call PKG_template,SQLITE_CLI,sqlite-cli,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 TARGET_CFLAGS:=		$(filter-out -ffast-math,$(TARGET_CFLAGS))
+
+CONFIG_STYLE:=		minimal
+CONFIGURE_ARGS+=	--prefix=/usr \
+			--host="$(GNU_TARGET_NAME)" \
+			--build="$(GNU_HOST_NAME)"
 
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
 CONFIGURE_ARGS+=	--enable-dynamic-extensions=no
