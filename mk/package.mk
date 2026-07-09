@@ -248,7 +248,7 @@ ifeq (,$(filter nostaging,$(7)))
 	    fi; \
 	    find usr ! -type d 2>/dev/null | \
 	    grep -E -v -e '^usr/lib/pkgconfig' -e '^usr/share' -e '^usr/doc' -e '^usr/src' -e '^usr/man' \
-		       -e '^usr/info' -e '^usr/lib/libc.so' -e '^usr/bin/[a-z0-9-]+-config' -e '^usr/lib/.*\.la$$$$' | \
+		       -e '^usr/info' -e '^usr/lib/libc.so$$$$' -e '^usr/bin/[a-z0-9-]+-config' -e '^usr/lib/.*\.la$$$$' | \
 	    tee '$${STAGING_PKG_DIR}/$(1)' | \
 	    $(CPIO) -padlmu --quiet '$${STAGING_TARGET_DIR}'
 endif

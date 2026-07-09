@@ -216,7 +216,7 @@ ifeq (,$(filter nostaging,${PKG_OPTS}))
 	@-cd ${WRKINST}; \
 	    find usr ! -type d 2>/dev/null | \
 	    grep -E -v -e '^usr/src' -e '^usr/doc' -e '^usr/local' -e '^usr/man' -e '^usr/info' \
-			-e '^usr/lib/libc.so' -e '^usr/bin/[a-z0-9-]+-config*' -e '^usr/lib/.*\.la$$' \
+			-e '^usr/lib/libc.so$$' -e '^usr/bin/[a-z0-9-]+-config*' -e '^usr/lib/.*\.la$$' \
 			-e '^/usr/lib/libpthread_nonshared.a' | \
 	    tee '${STAGING_PKG_DIR}/${PKG_NAME}' | \
 	    $(CPIO) -padlmu --quiet '${STAGING_TARGET_DIR}'
