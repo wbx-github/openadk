@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mosquitto
-PKG_VERSION:=		2.0.18
+PKG_VERSION:=		2.1.2
 PKG_RELEASE:=		1
-PKG_HASH:=		d665fe7d0032881b1371a47f34169ee4edab67903b2cd2b4c083822823f4448a
+PKG_HASH:=		fd905380691ac65ea5a93779e8214941829e3d6e038d5edff9eac5fd74cbed02
 PKG_DESCR:=		mqtt broker
 PKG_SECTION:=		net/misc
-PKG_DEPENDS:=		c-ares libopenssl
-PKG_BUILDDEP:=		cmake-host c-ares openssl
+PKG_DEPENDS:=		c-ares libopenssl cjson
+PKG_BUILDDEP:=		cmake-host c-ares openssl cjson
 PKG_NEEDS:=		threads
 PKG_URL:=		http://mosquitto.org
 PKG_SITES:=		http://mosquitto.org/files/source/
@@ -22,7 +22,13 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,MOSQUITTO,mosquitto,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
 CONFIG_STYLE:=          cmake
-CMAKE_FLAGS+=		-DINC_MEMTRACK=OFF -DWITH_TLS_PSK=OFF
+MAKE_FLAGS+=		VERBOSE=1
+CMAKE_FLAGS+=		-DINC_MEMTRACK=OFF \
+			-DWITH_TLS_PSK=OFF \
+			-DWITH_DOCS=OFF \
+			-DWITH_TESTS=OFF \
+			-DWITH_APPS=OFF \
+			-DWITH_CTRL_SHELL=OFF
 
 mosquitto-install:
 	$(INSTALL_DIR) $(IDIR_MOSQUITTO)/usr/bin
