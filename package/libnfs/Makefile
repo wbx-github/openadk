@@ -21,6 +21,7 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,LIBNFS,libnfs,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 AUTOTOOL_STYLE:=	autoreconf
+CONFIGURE_ARGS+=	--without-libkrb5
 
 libnfs-install:
 	$(INSTALL_DIR) $(IDIR_LIBNFS)/usr/lib
