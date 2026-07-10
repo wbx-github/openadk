@@ -9,10 +9,10 @@ PKG_RELEASE:=		1
 PKG_HASH:=		14223ca883c35fbf711994bcf745726cecc9d898e3d3964265cf3a2c7519a360
 PKG_DESCR:=		music player daemon
 PKG_SECTION:=		mm/audio
-PKG_DEPENDS:=		libmpdclient boost libncurses libexpat libsqlite libfmt libxcb
-PKG_DEPENDS+=		libxau libxdmcp
-PKG_BUILDDEP:=		libmpdclient boost ncurses expat sqlite fmt libxcb
-PKG_BUILDDEP+=		libXau libXdmcp
+PKG_DEPENDS:=		libmpdclient libncurses libexpat libsqlite libfmt libxcb
+PKG_DEPENDS+=		libxau libxdmcp zlib
+PKG_BUILDDEP:=		libmpdclient ncurses expat sqlite fmt libxcb
+PKG_BUILDDEP+=		libXau libXdmcp zlib
 PKG_FDEPENDS:=		libmpdclient
 PKG_NEEDS:=		threads c++ iconv data
 PKG_URL:=		http://www.musicpd.org/
@@ -21,7 +21,7 @@ PKG_SITES:=		http://www.musicpd.org/download/mpd/0.24/
 PKG_FLAVOURS_MPD:=	WITH_ALSA WITH_AO WITH_MP3 WITH_MP4
 PKG_FLAVOURS_MPD+=	WITH_OGG WITH_FLAC WITH_WAV WITH_MMS WITH_FFMPEG
 PKG_FLAVOURS_MPD+=	WITH_SHOUT WITH_CURL WITH_SAMPLERATE WITH_HTTPD
-PKG_FLAVOURS_MPD+=	WITH_SNDFILE WITH_OPUS WITH_AVAHI
+PKG_FLAVOURS_MPD+=	WITH_SNDFILE WITH_OPUS WITH_AVAHI WITH_NFS
 
 PKGFD_WITH_ALSA:=	enable ALSA output
 PKGFS_WITH_ALSA:=	alsa-lib
@@ -116,6 +116,13 @@ PKGFS_WITH_AVAHI:=	libavahi libdbus
 PKGFB_WITH_AVAHI:=	avahi
 ifeq ($(ADK_PACKAGE_MPD_WITH_AVAHI),y)
 PKG_FDEPENDS+=		libavahi
+endif
+
+PKGFD_WITH_NFS:=	enable NFS support
+PKGFS_WITH_NFS:=	libnfs
+PKGFB_WITH_NFS:=	libnfs
+ifeq ($(ADK_PACKAGE_MPD_WITH_NFS),y)
+PKG_FDEPENDS+=		libnfs
 endif
 
 PKGFD_WITH_HTTPD:=	enable http output
@@ -235,6 +242,12 @@ ifneq ($(ADK_PACKAGE_MPD_WITH_OPUS),)
 MESON_FLAGS+=	-Dopus=enabled
 else
 MESON_FLAGS+=	-Dopus=disabled
+endif
+
+ifneq ($(ADK_PACKAGE_MPD_WITH_NFS),)
+MESON_FLAGS+=	-Dnfs=enabled
+else
+MESON_FLAGS+=	-Dnfs=disabled
 endif
 
 mpd-install:
