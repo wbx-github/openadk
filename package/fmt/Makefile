@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		fmt
-PKG_VERSION:=		11.2.0
+PKG_VERSION:=		12.1.0
 PKG_RELEASE:=		1
-PKG_HASH:=		bc23066d87ab3168f27cef3e97d545fa63314f5c79df5ea444d41d56f962c6af
+PKG_HASH:=		ea7de4299689e12b6dddd392f9896f08fb0777ac7168897a244a6d6085043fea
 PKG_DESCR:=		modern formatting library
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		cmake-host
