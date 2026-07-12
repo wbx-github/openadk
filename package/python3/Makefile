@@ -100,7 +100,7 @@ python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.14
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.14
-	${INSTALL_BIN} ${WRKINST}/usr/bin/python3 ${IDIR_PYTHON3}/usr/bin
+	${CP} ${WRKINST}/usr/bin/python3* ${IDIR_PYTHON3}/usr/bin
 	${CP} ${WRKINST}/usr/lib/libpython*.so* ${IDIR_PYTHON3}/usr/lib
 	${CP} ${WRKINST}/usr/lib/python3.14/* ${IDIR_PYTHON3}/usr/lib/python3.14
 	${CP} ${WRKINST}/usr/include/python3.14/pyconfig.h \
