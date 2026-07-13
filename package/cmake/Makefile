@@ -29,7 +29,7 @@ host-configure:
 
 host-build:
 	(cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -j${ADK_MAKE_JOBS} -f ${MAKE_FILE} \
-		${HOST_MAKE_FLAGS} ${HOST_ALL_TARGET}) $(MAKE_TRACE)
+		${HOST_MAKE_FLAGS} ${HOST_ALL_TARGET} VERBOSE=1) $(MAKE_TRACE)
 
 cmake-hostinstall:
 	cd ${WRKBUILD} && env ${HOST_MAKE_ENV} ${MAKE} -j${ADK_MAKE_JOBS} -f ${MAKE_FILE} \
