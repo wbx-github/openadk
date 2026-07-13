@@ -1,0 +1,14 @@
+	Upstream commit 987be66915100 ("include/json_print.h: add includes for `__u32` and `timeval` declarations")
+--- iproute2-6.19.0.orig/include/json_print.h	2026-02-18 16:36:13.000000000 +0100
++++ iproute2-6.19.0/include/json_print.h	2026-07-13 17:02:38.437621118 +0200
+@@ -8,6 +8,10 @@
+ #ifndef _JSON_PRINT_H_
+ #define _JSON_PRINT_H_
+ 
++#include <sys/time.h> /* struct timeval typedef */
++
++#include <asm/types.h> /* __u32 typedef */
++
+ #include "json_writer.h"
+ #include "color.h"
+ 
