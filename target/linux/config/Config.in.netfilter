@@ -123,6 +123,81 @@ config ADK_LINUX_KERNEL_IP_NF_MATCH_UNCLEAN
 config ADK_LINUX_KERNEL_IP_NF_MATCH_STRING
 	tristate
 
+config ADK_LINUX_KERNEL_NF_TABLES_INET
+	bool
+
+config ADK_LINUX_KERNEL_NF_TABLES_NETDEV
+	bool
+
+config ADK_LINUX_KERNEL_NFT_NUMGEN
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_CT
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_EXTHDR_DCCP
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_CONNLIMIT
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_LOG
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_LIMIT
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_MASQ
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_REDIR
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_NAT
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_TUNNEL
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_QUOTA
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_REJECT
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_HASH
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_SOCKET
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_OSF
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_TPROXY
+	tristate
+
+config ADK_LINUX_KERNEL_NFT_SYNPROXY
+	tristate
+
+config ADK_LINUX_KERNEL_NF_TABLES_IPV4
+	bool
+
+config ADK_LINUX_KERNEL_NFT_FIB_IPV4
+	tristate
+
+config ADK_LINUX_KERNEL_NF_TABLES_ARP
+	bool
+
+config ADK_LINUX_KERNEL_NF_TABLES_IPV6
+	bool
+
+config ADK_LINUX_KERNEL_NFT_FIB_IPV6
+	tristate
+
+config ADK_LINUX_KERNEL_NF_TABLES_BRIDGE
+	tristate
+
 menu "Core Netfilter Configuration"
 source target/linux/config/Config.in.netfilter.core
 endmenu

@@ -128,6 +128,19 @@ endmenu
 config ADK_LINUX_KERNEL_NF_TABLES
 	tristate "Netfilter nf_tables support"
 	select ADK_LINUX_KERNEL_NETFILTER_NETLINK
+	select ADK_LINUX_KERNEL_NF_TABLES_INET
+	select ADK_LINUX_KERNEL_NFT_CT
+	select ADK_LINUX_KERNEL_NFT_LOG
+	select ADK_LINUX_KERNEL_NFT_LIMIT
+	select ADK_LINUX_KERNEL_NFT_MASQ
+	select ADK_LINUX_KERNEL_NFT_REDIR
+	select ADK_LINUX_KERNEL_NFT_NAT
+	select ADK_LINUX_KERNEL_NFT_QUOTA
+	select ADK_LINUX_KERNEL_NFT_REJECT
+	select ADK_LINUX_KERNEL_NF_TABLES_IPV4
+	select ADK_LINUX_KERNEL_NFT_FIB_IPV4
+	select ADK_LINUX_KERNEL_NF_TABLES_IPV6
+	select ADK_LINUX_KERNEL_NFT_FIB_IPV6
 	help
 	  nftables is the new packet classification framework that intends to
 	  replace the existing {ip,ip6,arp,eb}_tables infrastructure. It
