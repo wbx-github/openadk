@@ -5,7 +5,7 @@ include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		screen
 PKG_VERSION:=		5.0.2
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		ca9a2c7e240919bc7ac12124593ae4529bb4eb5f7349d8857829b7e3f0b3b332
 PKG_DESCR:=		window manager for the terminal session
 PKG_SECTION:=		sys/utils
@@ -21,7 +21,8 @@ include ${ADK_TOPDIR}/mk/package.mk
 
 $(eval $(call PKG_template,SCREEN,screen,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-CONFIGURE_ARGS+=	--disable-pam
+CONFIGURE_ARGS+=	--disable-pam \
+			--enable-socket-dir
 
 screen-install:
 	${INSTALL_DIR} ${IDIR_SCREEN}/usr/bin
