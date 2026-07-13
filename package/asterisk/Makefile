@@ -13,7 +13,7 @@ PKG_DEPENDS:=		libncurses libcurl libopenssl libedit libuuid libjansson
 PKG_DEPENDS+=		libxml2 libsqlite libxslt
 PKG_BUILDDEP:=		ncurses zlib curl popt openssl libedit util-linux libjansson
 PKG_BUILDDEP+=		libxml2 sqlite libxslt
-PKG_NEEDS:=		threads c++
+PKG_NEEDS:=		threads c++ locale
 PKG_URL:=		http://www.asterisk.org/
 PKG_SITES:=		http://downloads.asterisk.org/pub/telephony/asterisk/releases/
 
