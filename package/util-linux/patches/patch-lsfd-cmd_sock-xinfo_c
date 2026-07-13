@@ -1,0 +1,26 @@
+	Newer kernels dropped these
+
+--- util-linux-2.42.2.orig/lsfd-cmd/sock-xinfo.c	2026-06-16 13:39:44.438424423 +0200
++++ util-linux-2.42.2/lsfd-cmd/sock-xinfo.c	2026-07-05 21:54:27.224797003 +0200
+@@ -1453,8 +1453,10 @@ static const char *raw_decode_protocol(u
+ 		return "ah";
+ 	case IPPROTO_MTP:
+ 		return "mtp";
++#ifdef IPPROTO_BEETPH
+ 	case IPPROTO_BEETPH:
+ 		return "beetph";
++#endif
+ 	case IPPROTO_ENCAP:
+ 		return "encap";
+ 	case IPPROTO_PIM:
+@@ -1469,8 +1471,10 @@ static const char *raw_decode_protocol(u
+ 		return "sctp";
+ 	case IPPROTO_UDPLITE:
+ 		return "udplite";
++#ifdef IPPROTO_MPLS
+ 	case IPPROTO_MPLS:
+ 		return "mpls";
++#endif
+ #ifdef IPPROTO_ETHERNET
+ 	case IPPROTO_ETHERNET:
+ 		return "ethernet";
