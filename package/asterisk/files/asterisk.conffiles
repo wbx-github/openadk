@@ -12,7 +12,5 @@
 /etc/asterisk/manager.conf
 /etc/asterisk/modules.conf
 /etc/asterisk/musiconhold.conf
-/etc/asterisk/osp.conf
 /etc/asterisk/queues.conf
 /etc/asterisk/rtp.conf
-/etc/asterisk/sip.conf
