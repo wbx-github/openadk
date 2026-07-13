@@ -12,6 +12,7 @@ cd "$wrkdist"
 top="HEAD"
 git log --grep='^OpenADK patch marker:' --format='%H %s'$logopt | \
 		while read hash o p m series; do
+	[ -n "$(git log --oneline ${hash}..${top})" ] || continue
 	patchdir=$(<.git/patch_tmp/${series}/__patchdir__)
 	while read patchfile; do
 		rm ${patchdir}/$patchfile

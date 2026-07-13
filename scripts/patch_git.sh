@@ -14,16 +14,19 @@
 
 # Set directories from arguments, or use defaults.
 targetdir=${1-.}
-patchdir=${2-../patches}
+patchdir=$(realpath ${2-../patches})
 patchpattern=${3-*}
+
+git_commit_marker() { # (num)
+	git commit --allow-empty --no-signoff --no-gpg-sign \
+		--author="OpenADK <wbx@openadk.org>" \
+		-m "OpenADK patch marker: $1"
+}
+
 
 if [ ! -d "${targetdir}" ] ; then
     echo "Aborting.  '${targetdir}' is not a directory."
     exit 1
-fi
-if [ ! -d "${patchdir}" ] ; then
-    echo "Aborting.  '${patchdir}' is not a directory."
-    exit 0
 fi
 
 wd=$(pwd)
@@ -36,6 +39,7 @@ if [ ! -d .git ]; then
     find . -name .gitignore -delete
     git init
     git add .
+    git_commit_marker $(printf "%04d" 0)
 elif [ -e .git/rebase-apply ]; then
     git am --abort
 fi
@@ -49,9 +53,16 @@ done
 mkdir -p $patch_tmp
 patch_series=$(printf "%04d" $i)
 
-git commit --allow-empty --no-signoff --no-gpg-sign \
-    --author="OpenADK <wbx@openadk.org>" \
-    -m "OpenADK patch marker: $patch_series"
+if [ $i -gt 0 ]; then
+	git_commit_marker $patch_series
+fi
+
+echo "$patchdir" >${targetdir}/${patch_tmp}/__patchdir__
+
+if [ ! -d "${patchdir}" ] ; then
+    echo "Aborting.  '${patchdir}' is not a directory."
+    exit 0
+fi
 
 cd $wd
 cd $patchdir
@@ -97,8 +108,6 @@ done
 # XXX: this is unsafe and should be dropped at some point
 am_opts="-C1"
 
-cd ${wd}
-realpath $patchdir >${targetdir}/${patch_tmp}/__patchdir__
 cd ${targetdir}
 git am $am_opts ${patch_tmp}/*.patch
 if [ $? != 0 ] ; then

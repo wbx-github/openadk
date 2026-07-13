@@ -78,7 +78,7 @@ ${WRKDIST}/.prepared: ${WRKDIST}/.extract_done
 	@find $(WRKDIST)/ -name \*.rej -delete
 	[ ! -d ./patches/${PKG_VERSION} ] || ${PREVENT_PATCH} ${PATCH} ${WRKDIST} ./patches/${PKG_VERSION} \
 	    '{patch-!(*.orig),*.patch,*.${ADK_TARGET_ARCH},*.${ADK_TARGET_LIBC}}' $(MAKE_TRACE)
-	[ ! -d ./patches ] || ${PREVENT_PATCH} ${PATCH} ${WRKDIST} ./patches \
+	${PREVENT_PATCH} ${PATCH} ${WRKDIST} ./patches \
 	    '{patch-!(*.orig),*.patch,*.${ADK_TARGET_ARCH},*.${ADK_TARGET_LIBC}}' $(MAKE_TRACE)
 	[ ! -d ./src ] || (cd src; $(PREVENT_PATCH) cp -Rp . ${WRKDIST}/) \
 		$(MAKE_TRACE)
