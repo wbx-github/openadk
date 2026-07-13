@@ -80,11 +80,8 @@ $(1):
 			;; \
 		  esac ;\
 		else \
-		  git clone --progress --depth 1 $${PKG_SITES} $${PKG_NAME}-$${PKG_VERSION} $(DL_TRACE); \
+		  git clone --progress --depth 1 --recurse-submodules $${PKG_SITES} $${PKG_NAME}-$${PKG_VERSION} $(DL_TRACE); \
 		  if [ $$$$? -ne 0 ]; then echo "git clone error"; exit 1; fi; \
-		fi; \
-		if [ ! -z "$${PKG_GIT_SUBMODULE}" ]; then \
-			(cd $${PKG_NAME}-$${PKG_VERSION}; git submodule update --init --recursive) $(DL_TRACE); \
 		fi; \
 		rm -rf $${PKG_NAME}-$${PKG_VERSION}/.git; \
 		PATH='$(HOST_PATH)' tar czf $${PKG_NAME}-$${PKG_VERSION}.tar.gz $${PKG_NAME}-$${PKG_VERSION}; \
