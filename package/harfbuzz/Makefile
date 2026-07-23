@@ -31,7 +31,7 @@ CONFIG_STYLE:=		meson
 BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
-MESON_FLAGS+=		-Dtests=disabled
+MESON_FLAGS+=		-Dtests=disabled -Ddocs=disabled
 
 host-postinstall:
 	$(CP) $(WRKBUILD)/meson-private/harfbuzz.pc \
