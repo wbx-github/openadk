@@ -21,7 +21,9 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call HOST_template,GIFLIB,giflib,$(PKG_VERSION)-${PKG_RELEASE}))
 $(eval $(call PKG_template,GIFLIB,giflib,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
+HOST_XAKE_FLAGS:=	PREFIX="$(STAGING_HOST_DIR)/usr"
 XAKE_FLAGS:=		PREFIX="/usr"
+HOST_CONFIG_STYLE:=	manual
 CONFIG_STYLE:=		manual
 
 giflib-install:
