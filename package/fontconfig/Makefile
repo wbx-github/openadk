@@ -12,8 +12,9 @@ PKG_SECTION:=		libs/fonts
 PKG_DEPENDS:=		libfreetype libxml2
 PKG_BUILDDEP:=		freetype libxml2 gperf-host util-linux
 HOST_BUILDDEP:=		expat-host
+PKG_NEEDS:=		locale
 PKG_URL:=		http://fontconfig.org/
-PKG_SITES:=		http://fontconfig.org/release/
+PKG_SITES:=		https://gitlab.freedesktop.org/api/v4/projects/890/packages/generic/$(PKG_NAME)/$(PKG_VERSION)/
 PKG_OPTS:=		dev
 
 include ${ADK_TOPDIR}/mk/host.mk
