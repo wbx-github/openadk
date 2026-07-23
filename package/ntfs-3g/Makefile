@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ntfs-3g
-PKG_VERSION:=		2016.2.22
+PKG_VERSION:=		2026.7.7
 PKG_RELEASE:=		1
-PKG_HASH:=		d7b72c05e4b3493e6095be789a760c9f5f2b141812d5b885f3190c98802f1ea0
+PKG_HASH:=		d67b769025d32860549d35c2147e45024d172f81c540d750390ce3602c059dab
 PKG_DESCR:=		ntfs filesystem driver using fuse
 PKG_SECTION:=		sys/fs
 PKG_KDEPENDS:=		fuse-fs
@@ -14,7 +14,6 @@ PKG_URL:=		http://tuxera.com
 PKG_SITES:=		http://tuxera.com/opensource/
 
 DISTFILES:=		${PKG_NAME}_ntfsprogs-${PKG_VERSION}.tgz
-WRKDIST=		${WRKDIR}/${PKG_NAME}_ntfsprogs-${PKG_VERSION}
 
 include ${ADK_TOPDIR}/mk/package.mk
 
