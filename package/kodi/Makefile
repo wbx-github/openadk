@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kodi
-PKG_VERSION:=		22.0a1
+PKG_VERSION:=		22.0b1
 PKG_RELEASE:=		1
-PKG_HASH:=		da88f6aee01995caadfc6e194b8e3b51dfd193164a6c8d559d2443dd7f58f9f8
+PKG_HASH:=		05cb0d19c1716b1121e7e69d4ac7f9a2d0c7228b2122510a8cb3adc47e609c73
 PKG_DESCR:=		software media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		python3 libsquish libopenssl libfmt rapidjson libpcre
@@ -28,11 +28,10 @@ PKG_BUILDDEP+=		swig-host liblzo-host libpng-host libjpeg-turbo-host
 PKG_BUILDDEP+=		zip-host giflib-host libsquish libdcadec
 PKG_BUILDDEP+=		openssl bzip2 liblzo harfbuzz pcre json
 PKG_BUILDDEP+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
+PKG_BUILDDEP+=		kodi-texturepacker-host
 PKG_NEEDS:=		threads c++ data iconv
 PKG_URL:=		http://kodi.tv/
 PKG_SITES:=		https://github.com/xbmc/xbmc/archive/
-
-PKG_CFLINE_KODI:=	depends on ADK_BROKEN
 
 DISTFILES:=		$(PKG_VERSION)-Piers.tar.gz
 WRKDIST=		${WRKDIR}/xbmc-$(PKG_VERSION)-Piers
@@ -75,13 +74,12 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DCMAKE_BUILD_TYPE=Release \
 			-DVERBOSE=ON \
 			-DENABLE_DVDCSS=ON \
-			-DENABLE_INTERNAL_FFMPEG=OFF \
+			-DENABLE_INTERNAL_FFMPEG=ON \
 			-DENABLE_INTERNAL_RapidJSON=OFF \
-			-DWITH_FFMPEG=$(STAGING_TARGET_DIR)/usr \
 			-DPYTHON_EXECUTABLE=$(STAGING_HOST_DIR)/usr/bin/python3 \
-			-DPYTHON_INCLUDE_DIRS=$(STAGING_TARGET_DIR)/usr/include/python3.13 \
-			-DPYTHON_PATH=$(STAGING_TARGET_DIR)/usr/lib/python3.13 \
-			-DPYTHON_VER=3.13 \
+			-DPYTHON_INCLUDE_DIRS=$(STAGING_TARGET_DIR)/usr/include/python3.14 \
+			-DPYTHON_PATH=$(STAGING_TARGET_DIR)/usr/lib/python3.14 \
+			-DPYTHON_VER=3.14 \
 			-DKODI_DEPENDSBUILD=OFF \
 			-DENABLE_OPENSSL=ON \
 			-DENABLE_MYSQLCLIENT=OFF \
@@ -181,13 +179,6 @@ pre-configure:
 	PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src
 	cp $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src/JsonSchemaBuilder \
 		$(STAGING_HOST_DIR)/usr/bin/JsonSchemaBuilder
-	(cd $(WRKSRC)/tools/depends/native/TexturePacker/src && PATH='$(HOST_PATH)' cmake \
-		-DKODI_SOURCE_DIR=$(WRKSRC) \
-		-DCMAKE_MODULE_PATH=$(WRKSRC)/cmake/modules \
-		-DCMAKE_CXX_FLAGS="$(HOST_CXXFLAGS)" .)
-	PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/TexturePacker/src
-	cp $(WRKSRC)/tools/depends/native/TexturePacker/src/TexturePacker \
-		$(STAGING_HOST_DIR)/usr/bin
 	(cd $(DL_DIR) && wget -O libdvdcss-$(KODI_LIBDVDCSS_VERSION).tar.gz https://github.com/xbmc/libdvdcss/archive/refs/tags/$(KODI_LIBDVDCSS_VERSION).tar.gz)
 	(cd $(DL_DIR) && wget -O libdvdnav-$(KODI_LIBDVDNAV_VERSION).tar.gz https://github.com/xbmc/libdvdnav/archive/refs/tags/$(KODI_LIBDVDNAV_VERSION).tar.gz)
 	(cd $(DL_DIR) && wget -O libdvdread-$(KODI_LIBDVDREAD_VERSION).tar.gz https://github.com/xbmc/libdvdread/archive/refs/tags/$(KODI_LIBDVDREAD_VERSION).tar.gz)
