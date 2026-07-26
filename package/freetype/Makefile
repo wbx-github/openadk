@@ -30,6 +30,14 @@ HOST_CONFIGURE_ARGS+=	--with-zlib \
 			--without-png \
 			--without-bzip2 \
 			--enable-freetype-config
+
+# disable mmap for uCLibc-ng aarch64, otherwise segfaults
+ifeq ($(ADK_TARGET_LIB_UCLIBC_NG),y)
+ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
+CONFIGURE_ARGS+=	--disable-mmap
+endif
+endif
+
 CONFIGURE_ARGS+=	--with-zlib \
 			--without-png \
 			--with-harfbuzz=no \
