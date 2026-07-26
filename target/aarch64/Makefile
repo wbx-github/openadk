@@ -18,11 +18,7 @@ endif
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSTARBALL)"
-ifeq ($(ADK_TARGET_BOARD_BCM28XX),y)
-	@echo "Use following command to install it on SD card:"
-	@echo "sudo ./scripts/install.sh $(ADK_TARGET_SYSTEM) /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
-endif
-ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS)$(ADK_TARGET_SYSTEM_RASPBERRY_PI5),y)
+ifeq ($(ADK_TARGET_SYSTEM_ROCKPI4_PLUS)$(ADK_TARGET_BOARD_BCM28XX),y)
 ifeq ($(ADK_RUNTIME_DATA_PARTITION),y)
 	@echo "Use following command to install with a writable data partition"
 	@echo "sudo ./scripts/install.sh -d 256 $(ADK_TARGET_SYSTEM) /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
