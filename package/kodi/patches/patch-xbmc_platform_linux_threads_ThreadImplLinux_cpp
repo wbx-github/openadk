@@ -1,0 +1,33 @@
+uclibc-ng has gettid()
+
+--- xbmc-22.0b1-Piers.orig/xbmc/platform/linux/threads/ThreadImplLinux.cpp	2026-06-21 09:53:12.000000000 +0200
++++ xbmc-22.0b1-Piers/xbmc/platform/linux/threads/ThreadImplLinux.cpp	2026-07-26 01:19:27.442381623 +0200
+@@ -18,12 +18,6 @@
+ #include <sys/resource.h>
+ #include <unistd.h>
+ 
+-#if !defined(TARGET_ANDROID) && (defined(__GLIBC__) || defined(__UCLIBC__))
+-#if defined(__UCLIBC__) || !__GLIBC_PREREQ(2, 30)
+-#include <sys/syscall.h>
+-#endif
+-#endif
+-
+ namespace
+ {
+ 
+@@ -52,15 +46,6 @@ constexpr int ThreadPriorityToNativePrio
+   }
+ }
+ 
+-#if !defined(TARGET_ANDROID) && (defined(__GLIBC__) || defined(__UCLIBC__))
+-#if defined(__UCLIBC__) || !__GLIBC_PREREQ(2, 30)
+-static pid_t gettid()
+-{
+-  return syscall(__NR_gettid);
+-}
+-#endif
+-#endif
+-
+ std::once_flag flag;
+ 
+ } // namespace
