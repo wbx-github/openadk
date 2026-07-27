@@ -6,12 +6,6 @@ include ../rules.mk
 include Makefile.inc
 include ${ADK_TOPDIR}/mk/buildhlp.mk
 
-# glibc does not boot with Os and CPU specific FLAGS for nios2
-ifeq ($(ADK_TARGET_ARCH_NIOS2),y)
-TARGET_CFLAGS:=		-O2
-TARGET_CXXFLAGS:=	-O2
-endif
-
 # glibc does not compile with NEON suggested CFLAGS/CXXFLAGS
 TARGET_CFLAGS:=		$(filter-out -ffast-math,$(TARGET_CFLAGS))
 TARGET_CXXFLAGS:=	$(filter-out -ffast-math,$(TARGET_CXXFLAGS))
@@ -56,7 +50,6 @@ GLIBC_MAKEOPTS+=	cross-compiling=yes
 ifeq (${ADK_MAKE_PARALLEL},y)
 GLIBC_MAKEOPTS+=	PARALLELMFLAGS="-j$(ADK_MAKE_JOBS)"
 endif
-
 
 GLIBC_BUILD_DIR_FINAL:=		${WRKDIR}/$(PKG_NAME)-$(PKG_VERSION)-final
 
