@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		mesa
-PKG_VERSION:=		25.0.2
+PKG_VERSION:=		26.1.5
 PKG_RELEASE:=		1
-PKG_HASH:=		adf904d083b308df95898600ffed435f4b5c600d95fb6ec6d4c45638627fdc97
+PKG_HASH:=		79e421c7ce18cd9e790b8375920325779f10798630bf30e0b22f1a21c8617122
 PKG_DESCR:=		3d graphics library
 PKG_SECTION:=		libs/video
 PKG_DEPENDS:=		libxdamage libxfixes libdrm libxxf86vm libexpat
@@ -38,7 +38,8 @@ BUILD_STYLE:=		meson
 INSTALL_STYLE:=		meson
 
 MESON_FLAGS+=		-Dllvm=disabled \
-			-Dgallium-drivers=panfrost,vc4,v3d,virgl \
+			-Dmicrosoft-clc=disabled \
+			-Dgallium-drivers=vc4,v3d,virgl \
 			-Dvulkan-drivers= \
 			-Dgbm=enabled \
 			-Dglx=dri
