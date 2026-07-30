@@ -1,0 +1,16 @@
+diff -Nur elf2flt-v2024.02.orig/elf2flt.c elf2flt-v2024.02/elf2flt.c
+--- elf2flt-v2024.02.orig/elf2flt.c	2024-05-08 20:49:03.000000000 +0200
++++ elf2flt-v2024.02/elf2flt.c	2026-07-30 14:50:59.491137400 +0200
+@@ -296,10 +296,10 @@
+ #ifdef DEBUG_BFIN
+ 	    fprintf(stderr, "found weak undefined symbol %s\n", symbol->name);
+ #endif
+-	    return TRUE;
++	    return 1;
+ 	}
+     }
+-    return FALSE;
++    return 0;
+ }
+ 
+ static int
