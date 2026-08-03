@@ -287,6 +287,7 @@ endif
 
 # sparc
 ifeq ($(ADK_TARGET_CPU_SPARC_LEON3),y)
+	$(SED) 's/.*\(CONFIG_SPARC_V7\).*/# \1 is not set/' ${WRKBUILD}/.config
 	$(SED) 's/.*\(CONFIG_SPARC_V8\).*/# \1 is not set/' ${WRKBUILD}/.config
 	$(SED) 's/.*\(CONFIG_SPARC_LEON3\).*/\1=y/' ${WRKBUILD}/.config
 endif
