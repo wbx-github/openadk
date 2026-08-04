@@ -178,8 +178,14 @@ config ADK_TARGET_ROOTDEV
 	default "vda" if ADK_TARGET_SYSTEM_QEMU_LOONGARCH
 	default "sda"
 	help
-	  If you have a embedded device with multiple block devices and want to
+	  If you have an embedded device with multiple block devices and want to
 	  set the root device name.
+
+config ADK_TARGET_ROOTSIZE
+	int "Root filesystem size"
+	default 128
+	help
+	  Size of the rootfs image.
 
 config ADK_TARGET_DUAL_BOOT
 	bool "Activate dual-boot partition layout"

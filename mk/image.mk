@@ -388,7 +388,7 @@ else
 	PATH='${HOST_PATH}' $(FAKEROOT) mkfs.ext2 \
 		-d "$(TARGET_DIR)" \
 		-r 1 -N 0 -m 5 -L "rootfs" \
-		$(FW_DIR)/rootfs.ext "128M" $(MAKE_TRACE)
+		$(FW_DIR)/rootfs.ext "$(ADK_TARGET_ROOTSIZE)M" $(MAKE_TRACE)
 	PATH='${HOST_PATH}' genimage \
 		--config "$(GENCFG)" \
 		--tmppath "${FW_DIR}/temp" \
