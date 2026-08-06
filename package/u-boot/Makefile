@@ -4,17 +4,18 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		u-boot
-PKG_VERSION:=		2026.01
+PKG_VERSION:=		2026.07
 PKG_RELEASE:=		1
-PKG_HASH:=		b60d5865cefdbc75da8da4156c56c458e00de75a49b80c1a2e58a96e30ad0d54
+PKG_HASH:=		5be3cddfd5e6ac023dbdc62b2a117231de2c180dcc598f3788e5b482c21fa28c
 PKG_DESCR:=		portable bootloader
 PKG_SECTION:=		base/boot
-HOST_BUILDDEP:=		gnutls-host openssl-host dtc-host swig-host python3-host python3-setuptools-host
+HOST_BUILDDEP:=		dtc-host swig-host python3-host python3-setuptools-host
 PKG_BUILDDEP:=		python3-host python3-setuptools-host python3-pyelftools-host swig-host u-boot-host
-PKG_URL:=		http://www.denx.de/wiki/U-Boot	
-PKG_SITES:=		ftp://ftp.denx.de/pub/u-boot/
+PKG_URL:=		https://u-boot-project.org/
+PKG_SITES:=		https://git.u-boot-project.org/u-boot/u-boot/-/archive/v$(PKG_VERSION)/
 
-DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+DISTFILES:=		$(PKG_NAME)-v$(PKG_VERSION).tar.bz2
+WRKDIST=		$(WRKDIR)/$(PKG_NAME)-v$(PKG_VERSION)
 
 PKG_SYSTEM_DEPENDS:=	banana-p2-zero beaglebone-black orange-pi0 raspberry-pi raspberry-pi2 raspberry-pi3 banana-pro solidrun-imx6 solidrun-clearfog raspberry-pi3-64 raspberry-pi3p raspberry-pi3p-64 rockpi4-plus phytec-imx6 pcduino-3b imgtec-ci20 st-stm32f746g starfive-visionfive2 microchip-pic32 sheevaplug
 
@@ -102,8 +103,6 @@ endif
 
 MAKE_FLAGS+=		HOSTCFLAGS="-I$(STAGING_HOST_DIR)/usr/include" \
 			HOSTLDFLAGS="$(HOST_LDFLAGS)"
-HOST_MAKE_FLAGS+=	HOSTCFLAGS="$(HOST_CPPFLAGS) $(HOST_CFLAGS)" \
-			HOSTLDFLAGS="$(HOST_LDFLAGS) -ldl"
 HOST_STYLE:=		manual
 CONFIG_STYLE:=		manual
 BUILD_STYLE:=		manual
