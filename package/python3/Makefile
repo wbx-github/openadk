@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		python3
-PKG_VERSION:=		3.14.6
+PKG_VERSION:=		3.14.7
 PKG_RELEASE:=		1
-PKG_HASH:=		143b1dddefaec3bd2e21e3b839b34a2b7fb9842272883c576420d605e9f30c63
+PKG_HASH:=		3b48dac8fb59f62eaa67ac83c1eb12bda1b7a08406dd286e252c11a66be27f81
 PKG_DESCR:=		python scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libffi zlib libexpat
