@@ -16,6 +16,11 @@ QEMU_ARGS+=-M kc705
 QEMU_ARGS+=-cpu dc232b
 KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/uImage
 endif
+ifeq ($(ADK_TARGET_CPU_XTENSA_DE233_FPU),y)
+QEMU_ARGS+=-M kc705
+QEMU_ARGS+=-cpu de233_fpu -m 128
+KERNEL:=$(LINUX_DIR)/arch/xtensa/boot/Image.elf
+endif
 ifeq ($(ADK_TARGET_CPU_XTENSA_DE212),y)
 QEMU_ARGS+=-M kc705-nommu
 QEMU_ARGS+=-cpu de212 -m 256
