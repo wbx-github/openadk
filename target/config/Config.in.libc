@@ -149,8 +149,8 @@ choice
 prompt "Target C library version"
 depends on !ADK_TARGET_CHOOSE_ARCH
 
-config ADK_TARGET_LIB_UCLIBC_NG_1_0_58
-	bool "1.0.58"
+config ADK_TARGET_LIB_UCLIBC_NG_1_0_59
+	bool "1.0.59"
 	depends on ADK_TARGET_LIB_UCLIBC_NG
 
 config ADK_TARGET_LIB_UCLIBC_NG_GIT
@@ -199,7 +199,7 @@ config ADK_TARGET_LIBC
 
 config ADK_LIBC_VERSION
 	string
-	default "1.0.58" if ADK_TARGET_LIB_UCLIBC_NG_1_0_58
+	default "1.0.59" if ADK_TARGET_LIB_UCLIBC_NG_1_0_59
 	default "1.2.6" if ADK_TARGET_LIB_MUSL_1_2_6
 	default "2.44" if ADK_TARGET_LIB_GLIBC_2_44
 	default "4.4.0" if ADK_TARGET_LIB_NEWLIB_4_4_0
