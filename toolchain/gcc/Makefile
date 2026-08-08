@@ -362,6 +362,7 @@ endif
 			--with-newlib \
 			--disable-shared \
 			--disable-threads \
+			--disable-libatomic \
 			--without-headers
 	touch $@
 
