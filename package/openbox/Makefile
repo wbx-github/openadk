@@ -9,6 +9,8 @@ PKG_RELEASE:=		1
 PKG_HASH:=		abe75855cc5616554ffd47134ad15291fe37ebbebf1a80b69cbde9d670f0e26d
 PKG_DESCR:=		small windowmanager
 PKG_SECTION:=		x11/lxde
+PKG_DEPENDS:=		pango
+PKG_BUILDDEP:=		pango
 PKG_URL:=		https://openbox.org/
 PKG_SITES:=		https://openbox.org/dist/openbox/
 
