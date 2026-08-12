@@ -4,10 +4,10 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		vim
-PKG_VERSION:=		9.1
-PKG_EXTRAVER:=		0041
+PKG_VERSION:=		9.2
+PKG_EXTRAVER:=		0943
 PKG_RELEASE:=		1
-PKG_HASH:=		1531eb2f9a42e3e5a0c5579e26d9a376bd85f7062701c727af482d8597c59592
+PKG_HASH:=		9b90b23241007b20ba89b7b00e6202008f4ff5b5278974d42aa199867c2eada5
 PKG_DESCR:=		very popular text editor
 PKG_SECTION:=		app/editor
 PKG_DEPENDS:=		libncurses
@@ -68,9 +68,9 @@ vim-install:
 	${INSTALL_DIR} ${IDIR_VIM}/usr/bin
 	${INSTALL_DIR} ${IDIR_VIM}/usr/share/vim
 	${CP} ${WRKINST}/usr/bin/{ex,vim,view} ${IDIR_VIM}/usr/bin
-	${CP} ${WRKINST}/usr/share/vim/vim91/defaults.vim \
+	${CP} ${WRKINST}/usr/share/vim/vim92/defaults.vim \
 		${IDIR_VIM}/usr/share/vim/
-	${CP} ${WRKINST}/usr/share/vim/vim91/vimrc_example.vim \
+	${CP} ${WRKINST}/usr/share/vim/vim92/vimrc_example.vim \
 		${IDIR_VIM}/usr/share/vim/vimrc
 ifeq ($(ADK_PACKAGE_VIM_WITH_X),y)
 	${CP} ${WRKINST}/usr/bin/gvim ${IDIR_VIM}/usr/bin
