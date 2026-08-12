@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		wpa_supplicant
-PKG_VERSION:=		2.10
-PKG_RELEASE:=		2
-PKG_HASH:=		20df7ae5154b3830355f8ab4269123a87affdea59fe74fe9292a91d0d7e17b2f
+PKG_VERSION:=		2.12
+PKG_RELEASE:=		1
+PKG_HASH:=		08e23937e16d0155e55cab2b51f51fbe10d80a1aa91c4e15442645059b737ef6
 PKG_DESCR:=		wpa supplicant
 PKG_SECTION:=		net/wifi
 PKG_DEPENDS:=		libnl
