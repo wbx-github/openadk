@@ -18,6 +18,7 @@ source target/linux/config/Config.in.netfilter
 source target/linux/config/Config.in.audio
 source target/linux/config/Config.in.multimedia
 source target/linux/config/Config.in.crypto
+source target/linux/config/Config.in.security
 source target/linux/config/Config.in.misc
 source target/linux/config/Config.in.arc
 source target/linux/config/Config.in.arm
