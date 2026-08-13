@@ -4,12 +4,12 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		expat
-PKG_VERSION:=		2.8.2
+PKG_VERSION:=		2.8.3
 PKG_RELEASE:=		1
-PKG_HASH:=		3ad89b8588e6644bd4e49981480d48b21289eebbcd4f0a1a4afb1c29f99b6ab4
+PKG_HASH:=		f6256df90c906773d344da084402b7d3e4f22ed41b1a59c989098a83d3ea0c85
 PKG_DESCR:=		xml parsing library
 PKG_SECTION:=		libs/data
-PKG_SITES:=		https://github.com/libexpat/libexpat/releases/download/R_2_8_2/
+PKG_SITES:=		https://github.com/libexpat/libexpat/releases/download/R_2_8_3/
 PKG_LIBNAME:=		libexpat
 PKG_OPTS:=		dev
 
