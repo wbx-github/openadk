@@ -54,6 +54,9 @@ ifneq (${ADK_PACKAGE_WPA_SUPPLICANT_WITH_INTERNAL},)
 endif
 
 do-install:
+	$(INSTALL_DIR) $(IDIR_WPA_SUPPLICANT)/etc/dbus-1/system.d
+	$(CP) $(WRKBUILD)/dbus/dbus-wpa_supplicant.conf \
+		$(IDIR_WPA_SUPPLICANT)/etc/dbus-1/system.d
 	${INSTALL_DIR} ${IDIR_WPA_SUPPLICANT}/usr/sbin
 	${INSTALL_BIN} ${WRKBUILD}/wpa_cli \
 		${IDIR_WPA_SUPPLICANT}/usr/sbin/
