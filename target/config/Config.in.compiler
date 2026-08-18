@@ -33,6 +33,7 @@ config ADK_TOOLCHAIN_GCC_GIT
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_NDS32
 	depends on !ADK_TARGET_ARCH_PPC_WITH_SPE
+	depends on !ADK_TARGET_ARCH_TILE
 
 config ADK_TOOLCHAIN_GCC_16
 	bool "16.2.0"
@@ -40,6 +41,7 @@ config ADK_TOOLCHAIN_GCC_16
 	depends on !ADK_TARGET_ARCH_CRIS
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_PPC_WITH_SPE
+	depends on !ADK_TARGET_ARCH_TILE
 
 config ADK_TOOLCHAIN_GCC_15
 	bool "15.3.0"
@@ -47,6 +49,7 @@ config ADK_TOOLCHAIN_GCC_15
 	depends on !ADK_TARGET_ARCH_CRIS
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_PPC_WITH_SPE
+	depends on !ADK_TARGET_ARCH_TILE
 
 config ADK_TOOLCHAIN_GCC_14
 	bool "14.4.0"
@@ -54,6 +57,7 @@ config ADK_TOOLCHAIN_GCC_14
 	depends on !ADK_TARGET_ARCH_CRIS
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_PPC_WITH_SPE
+	depends on !ADK_TARGET_ARCH_TILE
 
 config ADK_TOOLCHAIN_GCC_13
 	bool "13.4.0"
@@ -61,6 +65,7 @@ config ADK_TOOLCHAIN_GCC_13
 	depends on !ADK_TARGET_ARCH_CRIS
 	depends on !ADK_TARGET_ARCH_METAG
 	depends on !ADK_TARGET_ARCH_PPC_WITH_SPE
+	depends on !ADK_TARGET_ARCH_TILE
 
 config ADK_TOOLCHAIN_GCC_12
 	bool "12.5.0"
