@@ -22,18 +22,17 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,CHAWAN,chawan,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION)))
 
-ifeq ($(ADK_TARGET_LIBC),glibc)
-LIBC=			gnu
-else
-LIBC=			uclibc
-endif
 ifeq ($(ADK_TARGET_ARCH),aarch64)
 ARCH=			arm64
 else
+ifeq ($(ADK_TARGET_ARCH),ppc)
+ARCH=			powerpc
+else
 ARCH=			$(ADK_TARGET_ARCH)
 endif
+endif
 
-XAKE_FLAGS:=		FLAGS="--os:linux --cpu:$(ARCH) --gcc.exe:$(ADK_TARGET_CPU_ARCH)-$(ADK_VENDOR)-linux-$(LIBC)-gcc --gcc.linkerexe:$(ADK_TARGET_CPU_ARCH)-$(ADK_VENDOR)-linux-$(LIBC)-gcc"
+XAKE_FLAGS:=		FLAGS="--os:linux --cpu:$(ARCH) --gcc.exe:$(ADK_TARGET_CPU_ARCH)-$(ADK_VENDOR)-linux-$(ADK_TARGET_SUFFIX)-gcc --gcc.linkerexe:$(ADK_TARGET_CPU_ARCH)-$(ADK_VENDOR)-linux-$(ADK_TARGET_SUFFIX)-gcc"
 XAKE_FLAGS+=		PREFIX="/usr" FORCE_POLL_MODE=2
 CONFIG_STYLE:=		manual
 
