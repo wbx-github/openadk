@@ -10,5 +10,7 @@ CONFIG_LIBNL32=y
 # default
 CONFIG_EAP_PSK=y
 CONFIG_EAP_MD5=y
+# WPA3
+CONFIG_SAE=y
 # tls implementation
 CONFIG_TLS=openssl
