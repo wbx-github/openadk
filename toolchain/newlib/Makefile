@@ -16,7 +16,7 @@ $(WRKBUILD)/.configured:
 		CFLAGS='' \
 		LDFLAGS='' \
 		CFLAGS_FOR_TARGET='$(TARGET_CFLAGS)' \
-		./configure --prefix=/usr \
+		./configure --prefix=/usr --with-tooldir=/usr \
 		--target=$(GNU_TARGET_NAME) \
 		--disable-nls \
 		$(NEWLIB_CONFIGURE_ARGS) \
