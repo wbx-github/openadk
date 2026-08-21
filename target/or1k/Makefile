@@ -31,6 +31,9 @@ ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Start qemu with following command line:"
 	@echo 'qemu-system-or1k ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
+ifeq ($(ADK_TARGET_SYSTEM_DE0_NANO),y)
+	@echo "See here for a tutorial: https://openrisc.io/tutorials/docs/linux-on-de0nano.html"
+endif
 endif
 
 kernel-strip:

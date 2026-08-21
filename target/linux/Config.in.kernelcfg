@@ -77,6 +77,7 @@ config ADK_TARGET_LINUX_KERNEL_DEFCONFIG
 	default "pic32mzda_defconfig" if ADK_TARGET_SYSTEM_MICROCHIP_PIC32
 	default "mvebu_v5_defconfig" if ADK_TARGET_SYSTEM_SHEEVAPLUG
 	default "rb532_defconfig" if ADK_TARGET_SYSTEM_MIKROTIK_RB532
+	default "de0_nano_defconfig" if ADK_TARGET_SYSTEM_DE0_NANO
 	default ""
 
 config ADK_TARGET_LINUX_KERNEL_CUSTOMCONFIG_PATH
