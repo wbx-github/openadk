@@ -184,6 +184,7 @@ config ADK_TARGET_ROOTDEV
 
 config ADK_TARGET_ROOTSIZE
 	int "Root filesystem size"
+	depends on ADK_TARGET_ROOTFS_GENIMAGE
 	default 128
 	help
 	  Size of the rootfs image.
