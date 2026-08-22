@@ -1,0 +1,21 @@
+# nios2: gate syscall restart on the error flag (r7), not the stale r1.
+# do_signal() used regs->r1 (the user's 'at' register, an arbitrary value) to
+# decide whether to do syscall-restart processing.  That both missed real
+# restarts (ERESTARTNOHAND leaked as errno 514 out of pselect6) and restarted
+# SUCCESSFUL syscalls whose return value collides with a restart code
+# (waitpid -> child pid 512..516, read -> 512..516 bytes -> exit 255).
+# Restart codes are only ever error returns, which nios2 flags in r7.
+# Not upstream yet; the submittable version lives in the uclibc-ng workspace
+# under git/kernel-submit/.
+diff -Nur linux-6.5.10.orig/arch/nios2/kernel/signal.c linux-6.5.10/arch/nios2/kernel/signal.c
+--- linux-6.5.10.orig/arch/nios2/kernel/signal.c
++++ linux-6.5.10/arch/nios2/kernel/signal.c
+@@ -242,7 +242,7 @@
+ 	/*
+ 	 * If we were from a system call, check for system call restarting...
+ 	 */
+-	if (regs->orig_r2 >= 0 && regs->r1) {
++	if (regs->orig_r2 >= 0 && regs->r7) {
+ 		continue_addr = regs->ea;
+ 		restart_addr = continue_addr - 4;
+ 		retval = regs->r2;
