@@ -69,7 +69,7 @@ do-build:
 do-install:
 	PATH='$(HOST_PATH)' $(MAKE) ${BB_MAKE_FLAGS} -C ${WRKBUILD} install $(MAKE_TRACE)
 	$(CP) $(WRKINST)/* $(IDIR_BUSYBOX)/
-ifeq ($(BUSYBOX_IFUP),y)
+ifeq ($(BUSYBOX_IFUP)$(ADK_TARGET_WITH_NETDEVICE),yy)
 	$(INSTALL_DIR) $(IDIR_BUSYBOX)/etc/init.d
 ifeq ($(ADK_RUNTIME_WAIT_FOR_ETHERNET),y)
 	$(INSTALL_BIN) ./files/network.wait $(IDIR_BUSYBOX)/etc/init.d/network
