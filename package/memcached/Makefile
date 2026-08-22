@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		memcached
-PKG_VERSION:=		1.6.43
+PKG_VERSION:=		1.6.45
 PKG_RELEASE:=		1
-PKG_HASH:=		8042ee26e004efa0db41ca4a7c713f759c3280c2f8bee438579f13de1e509435
+PKG_HASH:=		d362c64e6d8d5287153501eabf7c85b4a761432fbf53f5d7b085d0bb1653c1dd
 PKG_DESCR:=		high-performance distributed memory caching system
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libevent
