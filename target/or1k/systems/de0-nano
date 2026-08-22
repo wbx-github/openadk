@@ -2,5 +2,6 @@ config ADK_TARGET_SYSTEM_DE0_NANO
 	bool "DE0 Nano"
 	select ADK_TARGET_CPU_OR1K
 	select ADK_TARGET_WITH_SERIAL
+	select ADK_TARGET_KERNEL_WITH_COMPRESSION
 	help
 	  FPGA board DE0 Nano with OR1K bitstream.
