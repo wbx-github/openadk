@@ -1,6 +1,14 @@
 # This file is part of the OpenADK project. OpenADK is copyrighted
 # material, please see the LICENCE file in the top-level directory.
 
+config ADK_LINUX_KERNEL_NET
+	bool
+	default y
+
+config ADK_LINUX_KERNEL_UNIX
+	bool
+	default y
+
 menu "Network support"
 depends on ADK_TARGET_WITH_NET \
 	|| ADK_TARGET_GENERIC
@@ -11,13 +19,7 @@ config ADK_LINUX_KERNEL_NETDEVICES
 config ADK_LINUX_KERNEL_ETHERNET
 	bool
 
-config ADK_LINUX_KERNEL_NET
-	bool
-
 config ADK_LINUX_KERNEL_PACKET
-	bool
-
-config ADK_LINUX_KERNEL_UNIX
 	bool
 
 config ADK_LINUX_KERNEL_NET_CORE
@@ -25,8 +27,6 @@ config ADK_LINUX_KERNEL_NET_CORE
 
 config ADK_LINUX_KERNEL_INET
 	bool "Enable TCP/IP support"
-	select ADK_LINUX_KERNEL_NET
-	select ADK_LINUX_KERNEL_UNIX
 	select ADK_LINUX_KERNEL_PACKET
 	select ADK_LINUX_KERNEL_NET_CORE
 	select ADK_LINUX_KERNEL_NETDEVICES
