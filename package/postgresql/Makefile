@@ -4,11 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		postgresql
-PKG_VERSION:=		18.4
+PKG_VERSION:=		18.6
 PKG_RELEASE:=		1
-PKG_HASH:=		450aa8f2da06c46f8221916e82ae06b04fb1040f8f00643dbf8b7d663caac0b9
+PKG_HASH:=		983ee554ec53dbeb9b70797bef9fcf4e67e117e7e48ca1463cc80b3ff8e8ff3f
 PKG_DESCR:=		postgresql database library
 PKG_SECTION:=		libs/db
+PKG_DEPENDS:=		icu4c
+PKG_BUILDDEP:=		icu4c
+PKG_NEEDS:=		locale
 PKG_URL:=		http://www.postgresql.org/
 PKG_SITES:=		http://ftp.postgresql.org/pub/source/v$(PKG_VERSION)/
 PKG_LIBNAME:=		libpq
