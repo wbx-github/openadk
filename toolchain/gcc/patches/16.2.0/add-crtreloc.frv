@@ -1,0 +1,12 @@
+diff -Nur gcc-8.3.0.orig/gcc/config/frv/linux.h gcc-8.3.0/gcc/config/frv/linux.h
+--- gcc-8.3.0.orig/gcc/config/frv/linux.h	2018-01-03 11:03:58.000000000 +0100
++++ gcc-8.3.0/gcc/config/frv/linux.h	2019-10-08 10:52:00.176295821 +0200
+@@ -27,7 +27,7 @@
+ 
+ #undef STARTFILE_SPEC
+ #define STARTFILE_SPEC \
+-  "%{!shared: %{pg|p|profile:gcrt1.o%s;pie:Scrt1.o%s;:crt1.o%s}} \
++  "%{!shared: %{pg|p|profile:gcrt1.o%s;pie:Scrt1.o%s;:crt1.o%s}} crtreloc.o%s \
+    crti.o%s %{static:crtbeginT.o%s;shared|pie:crtbeginS.o%s;:crtbegin.o%s}"
+ 
+ #undef ENDFILE_SPEC
