@@ -1,5 +1,7 @@
+From 600d06cb443526020efa411053b83fc1697f27dc Mon Sep 17 00:00:00 2001
 From: Ramin Moussavi <ramin.moussavi@yacoub.de>
-Subject: [PATCH] microblaze: wire up sigaltstack
+Date: Fri, 21 Aug 2026 17:18:05 +0200
+Subject: [PATCH 2/6] microblaze: wire up sigaltstack
 
 sigaltstack is wired to sys_ni_syscall - microblaze is the only
 architecture without it - although the microblaze signal delivery code
@@ -9,14 +11,19 @@ sys_rt_sigreturn() calls restore_altstack().
 
 Wire it up to sys_sigaltstack.
 
-Tested on qemu petalogix-s3adsp1800 (microblazeel, kernel 6.5.10 and
-syscall table unchanged in current mainline) with the uClibc-ng test
-suite: the five sigaltstack-dependent NPTL tests (tst-cancel20/21,
+Tested on qemu petalogix-s3adsp1800 (microblazeel) with the uClibc-ng
+test suite: the five sigaltstack-dependent NPTL tests (tst-cancel20/21,
 tst-cancelx20/21, tst-signal6) pass; before this change sigaltstack()
 returned ENOSYS.
 
+Assisted-by: Claude:claude-opus-5
 Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+---
+ arch/microblaze/kernel/syscalls/syscall.tbl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/arch/microblaze/kernel/syscalls/syscall.tbl b/arch/microblaze/kernel/syscalls/syscall.tbl
+index c55a5c96f49b..76d7cbe2a133 100644
 --- a/arch/microblaze/kernel/syscalls/syscall.tbl
 +++ b/arch/microblaze/kernel/syscalls/syscall.tbl
 @@ -193,7 +193,7 @@
@@ -28,3 +35,6 @@ Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
  187	common	sendfile			sys_sendfile
  188	common	getpmsg				sys_ni_syscall
  189	common	putpmsg				sys_ni_syscall
+-- 
+2.47.3
+
