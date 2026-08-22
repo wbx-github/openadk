@@ -209,6 +209,15 @@ ifeq ($(ADK_TARGET_ARCH_RISCV64)$(ADK_TARGET_ARCH_RISCV32),y)
 ifeq ($(ADK_TARGET_BINFMT_FLAT),y)
 TARGET_CFLAGS+=		-fPIC
 TARGET_CXXFLAGS+=	-fPIC
+# ld relaxes position independent sequences into absolute ones as soon as the
+# target address fits a 12 bit immediate, which only happens in small images.
+# A bFLT is loaded at an arbitrary base, so those addresses are wrong: it hits
+# the register_tm_clones pair that .init_array runs before main, and every
+# small binary dies with SIGSEGV. binutils 2.46 does this exactly like 2.39 --
+# for ld the link is a fixed address executable, so saying no is our job.
+TARGET_LDFLAGS+=	-Wl,--no-relax
+TARGET_CFLAGS+=		-Wl,--no-relax
+TARGET_CXXFLAGS+=	-Wl,--no-relax
 endif
 endif
 
