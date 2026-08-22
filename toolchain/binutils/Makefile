@@ -48,7 +48,7 @@ endif
 		$(WRKBUILD)/configure \
 		--prefix=$(TOOLCHAIN_DIR)/usr \
 		--target=$(GNU_TARGET_NAME) \
-		--with-sysroot=$(STAGING_TARGET_DIR) \
+		--with-sysroot='$${prefix}/${STAGING_HOST2TARGET}' \
 		--disable-dependency-tracking \
 		--disable-libtool-lock \
 		--disable-nls \
