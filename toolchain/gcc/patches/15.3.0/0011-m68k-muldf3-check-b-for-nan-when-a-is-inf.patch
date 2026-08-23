@@ -1,0 +1,22 @@
+--- a/libgcc/config/m68k/lb1sf68.S
++++ libgcc/config/m68k/lb1sf68.S
+@@ -1742,9 +1742,18 @@
+ 
+ Lmuldf$a$nf:
+ 	moveq	IMM (MULTIPLY),d5
+-	movel	a0,d7		| get sign bit back into d7
+ 	tstl	d1		| we know d0 == 0x7ff00000, so check d1
+ 	bne	Ld$inop		| if d1 <> 0 a is NaN
++| a is INFINITY, but b has not been looked at yet, and INFINITY * NaN is NaN.
++| d7 still holds the +INFINITY pattern needed for that test, so the sign is
++| restored only on the overflow path; Ld$inop builds its own result.
++	cmpl	d7,d2		| compare b with INFINITY
++	bhi	Ld$inop		| b's fraction has a high bit set: b is NaN
++	bne	Lmuldf$a$inf	| b is below INFINITY, hence finite
++	tstl	d3		| b's high word is INFINITY's: check the low one
++	bne	Ld$inop		| if that is nonzero b is NaN
++Lmuldf$a$inf:
++	movel	a0,d7		| get sign bit back into d7
+ 	bra	Ld$overflow	| else signal overflow
+ 
+ | If either number is zero return zero, unless the other is +/-INFINITY or
