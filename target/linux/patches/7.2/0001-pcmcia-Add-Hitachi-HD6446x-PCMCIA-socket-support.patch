@@ -1,0 +1,720 @@
+From b6ffbcb525539139a9b2255b992622f92757ea37 Mon Sep 17 00:00:00 2001
+From: Artur Rojek <contact@artur-rojek.eu>
+Date: Fri, 1 Aug 2025 22:52:22 +0200
+Subject: [PATCH] pcmcia: Add Hitachi HD6446x PCMCIA socket support
+
+Introduce support for the PC Card Controller part of the Hitachi HD6446x
+series of Intelligent Peripheral Controllers.
+
+WIP code. DO NOT UPSTREAM!
+---
+ arch/sh/boards/mach-hp6xx/setup.c |  45 ++-
+ arch/sh/cchips/hd6446x/hd64461.c  |  56 +++-
+ arch/sh/include/asm/hd64461.h     |   6 +-
+ drivers/pcmcia/Kconfig            |   7 +
+ drivers/pcmcia/Makefile           |   1 +
+ drivers/pcmcia/hd6446x_pcc.c      | 453 ++++++++++++++++++++++++++++++
+ include/pcmcia/hd6446x_pcc.h      |   9 +
+ 7 files changed, 569 insertions(+), 8 deletions(-)
+ create mode 100644 drivers/pcmcia/hd6446x_pcc.c
+ create mode 100644 include/pcmcia/hd6446x_pcc.h
+
+diff --git a/arch/sh/boards/mach-hp6xx/setup.c b/arch/sh/boards/mach-hp6xx/setup.c
+index 2ceead68d7bf..c697b8e1f5ac 100644
+--- a/arch/sh/boards/mach-hp6xx/setup.c
++++ b/arch/sh/boards/mach-hp6xx/setup.c
+@@ -18,19 +18,23 @@
+ #include <mach/hp6xx.h>
+ #include <cpu/dac.h>
+ 
++#include <pcmcia/hd6446x_pcc.h>
++
+ #define	SCPCR	0xa4000116
+ #define	SCPDR	0xa4000136
+ 
++#define CF_MEM_ATTR (0x15000000 - 0)
++
+ /* CF Slot */
+ static struct resource cf_ide_resources[] = {
+ 	[0] = {
+-		.start = 0x15000000 + 0x1f0,
+-		.end   = 0x15000000 + 0x1f0 + 0x08 - 0x01,
++		.start = CF_MEM_ATTR + 0x1f0,
++		.end   = CF_MEM_ATTR + 0x1f0 + 0x08 - 0x01,
+ 		.flags = IORESOURCE_MEM,
+ 	},
+ 	[1] = {
+-		.start = 0x15000000 + 0x1fe,
+-		.end   = 0x15000000 + 0x1fe + 0x01,
++		.start = CF_MEM_ATTR + 0x1fe,
++		.end   = CF_MEM_ATTR + 0x1fe + 0x01,
+ 		.flags = IORESOURCE_MEM,
+ 	},
+ 	[2] = {
+@@ -51,6 +55,36 @@ static struct platform_device jornadakbd_device = {
+ 	.id		= -1,
+ };
+ 
++static struct resource hd6446x_pcc_resources[] = {
++	[0] = {
++		.start = HD64461_PCC0ISR,
++		.end   = HD64461_PCC0ISR + 0x10,
++		.flags = IORESOURCE_MEM,
++	},
++	[1] = {
++		.start = HD64461_PCC0_BASE,
++		.end   = HD64461_PCC0_BASE + 0x4000000,
++		.flags = IORESOURCE_MEM,
++	},
++	[2] = {
++		.start = HD64461_IRQ_PCC0,
++		.flags = IORESOURCE_IRQ,
++	},
++};
++
++static struct hd6446x_pcc_plat_data hd6446x_pcc_platform_data = {
++	.slot_id = 1,
++	.io_support = true,
++};
++
++static struct platform_device hp6446x_pcc_device = {
++	.name			= "hd6446x_pcc",
++	.id			= -1,
++	.num_resources		= ARRAY_SIZE(hd6446x_pcc_resources),
++	.resource		= hd6446x_pcc_resources,
++	.dev.platform_data	= &hd6446x_pcc_platform_data,
++};
++
+ static void dac_audio_start(struct dac_audio_pdata *pdata)
+ {
+ 	u16 v;
+@@ -108,6 +142,7 @@ static struct platform_device *hp6xx_devices[] __initdata = {
+ 	&cf_ide_device,
+ 	&jornadakbd_device,
+ 	&dac_audio_device,
++	&hp6446x_pcc_device,
+ };
+ 
+ static void __init hp6xx_init_irq(void)
+@@ -126,6 +161,8 @@ static void __init hp6xx_setup(char **cmdline_p)
+ 	u8 v8;
+ 	u16 v;
+ 
++	__set_io_port_base(0);
++
+ 	v = inw(HD64461_STBCR);
+ 	v |=	HD64461_STBCR_SURTST | HD64461_STBCR_SIRST	|
+ 		HD64461_STBCR_STM1ST | HD64461_STBCR_STM0ST	|
+diff --git a/arch/sh/cchips/hd6446x/hd64461.c b/arch/sh/cchips/hd6446x/hd64461.c
+index 81764882d87d..965486584ee5 100644
+--- a/arch/sh/cchips/hd6446x/hd64461.c
++++ b/arch/sh/cchips/hd6446x/hd64461.c
+@@ -4,7 +4,9 @@
+  *	Hitachi HD64461 companion chip support
+  */
+ 
++#include <linux/clkdev.h>
+ #include <linux/sched.h>
++#include <linux/sh_clk.h>
+ #include <linux/module.h>
+ #include <linux/kernel.h>
+ #include <linux/param.h>
+@@ -45,7 +47,7 @@ static void hd64461_mask_and_ack_irq(struct irq_data *data)
+ 	hd64461_mask_irq(data);
+ 
+ #ifdef CONFIG_HD64461_ENABLER
+-	if (data->irq == HD64461_IRQBASE + 13)
++	if (data->irq == HD64461_IRQ_PCC1)
+ 		__raw_writeb(0x00, HD64461_PCC1CSCR);
+ #endif
+ }
+@@ -72,6 +74,51 @@ static void hd64461_irq_demux(struct irq_desc *desc)
+ 	}
+ }
+ 
++static int hd64461_clk_enable(struct clk *clk)
++{
++	u16 reg = __raw_readw(HD64461_STBCR);
++
++	printk("clk enable: %d\n", clk->enable_bit);
++
++	__raw_writew(reg & ~(1 << clk->enable_bit), HD64461_STBCR);
++
++	return 0;
++}
++
++static void hd64461_clk_disable(struct clk *clk)
++{
++	u16 reg = __raw_readw(HD64461_STBCR);
++
++	printk("clk disable: %d\n", clk->enable_bit);
++	//panic("clk disable: %d\n", clk->enable_bit);
++
++
++	__raw_writew(reg | (1 << clk->enable_bit), HD64461_STBCR);
++}
++
++static struct sh_clk_ops hd64461_clk_ops = {
++	.enable = hd64461_clk_enable,
++	.disable = hd64461_clk_disable,
++};
++
++static struct clk hd64461_clk[] = {
++	{
++		.enable_bit = 5,
++		.ops = &hd64461_clk_ops,
++		.flags = CLK_ENABLE_ON_INIT,
++	},
++	{
++		.enable_bit = 6,
++		.ops = &hd64461_clk_ops,
++		.flags = CLK_ENABLE_ON_INIT,
++	},
++};
++
++static struct clk_lookup hd64461_clk_lookup[] = {
++	CLKDEV_CON_ID("pcc1", &hd64461_clk[0]),
++	CLKDEV_CON_ID("pcc0", &hd64461_clk[1]),
++};
++
+ static int __init setup_hd64461(void)
+ {
+ 	int irq_base, i;
+@@ -106,6 +153,13 @@ static int __init setup_hd64461(void)
+ 	__raw_writeb(0x00, HD64461_PCC1CSCR);
+ #endif
+ 
++//	for (i = 0; i < ARRAY_SIZE(hd64461_clk); i++)
++//		clk_register(&hd64461_clk[i]);
++		clk_register(&hd64461_clk[1]);
++	clkdev_add_table(hd64461_clk_lookup, ARRAY_SIZE(hd64461_clk_lookup));
++
++	printk("done with clk setup\n");
++
+ 	return 0;
+ }
+ 
+diff --git a/arch/sh/include/asm/hd64461.h b/arch/sh/include/asm/hd64461.h
+index d2c485fa333b..91823ec07f79 100644
+--- a/arch/sh/include/asm/hd64461.h
++++ b/arch/sh/include/asm/hd64461.h
+@@ -17,9 +17,9 @@
+ #define HD64461_IOBASE		0xb0000000
+ #define HD64461_IO_OFFSET(x)	(HD64461_IOBASE + (x))
+ #define	HD64461_PCC0_BASE	HD64461_IO_OFFSET(0x8000000)
+-#define	HD64461_PCC0_ATTR	(HD64461_PCC0_BASE)				/* 0xb80000000 */
+-#define	HD64461_PCC0_COMM	(HD64461_PCC0_BASE+HD64461_PCC_WINDOW)		/* 0xb90000000 */
+-#define	HD64461_PCC0_IO		(HD64461_PCC0_BASE+2*HD64461_PCC_WINDOW)	/* 0xba0000000 */
++#define	HD64461_PCC0_ATTR	(HD64461_PCC0_BASE)				/* 0xb8000000 */
++#define	HD64461_PCC0_COMM	(HD64461_PCC0_BASE+HD64461_PCC_WINDOW)		/* 0xb9000000 */
++#define	HD64461_PCC0_IO		(HD64461_PCC0_BASE+2*HD64461_PCC_WINDOW)	/* 0xba000000 */
+ 
+ /* Area 5 - Slot 1 - memory card only */
+ #define	HD64461_PCC1_BASE	HD64461_IO_OFFSET(0x4000000)
+diff --git a/drivers/pcmcia/Kconfig b/drivers/pcmcia/Kconfig
+index dddb235dd020..f2434ca15c8e 100644
+--- a/drivers/pcmcia/Kconfig
++++ b/drivers/pcmcia/Kconfig
+@@ -159,6 +159,13 @@ config PCMCIA_ALCHEMY_DEVBOARD
+ 
+ 	  This driver is also available as a module called db1xxx_ss.ko
+ 
++config PCMCIA_HD6446X_PCC
++	tristate "Hitachi HD6446x PCMCIA socket support"
++	depends on PCMCIA && HD6446X_SERIES
++	help
++	  Say Y here to include support for the PC Card Controller part of
++	  the Hitachi HD6446x series of Intelligent Peripheral Controllers.
++
+ config PCMCIA_XXS1500
+ 	tristate "MyCable XXS1500 PCMCIA socket support"
+ 	depends on PCMCIA && MIPS_XXS1500
+diff --git a/drivers/pcmcia/Makefile b/drivers/pcmcia/Makefile
+index c9d51b150682..764df19be544 100644
+--- a/drivers/pcmcia/Makefile
++++ b/drivers/pcmcia/Makefile
+@@ -33,6 +33,7 @@ obj-$(CONFIG_OMAP_CF)				+= omap_cf.o
+ obj-$(CONFIG_ELECTRA_CF)			+= electra_cf.o
+ obj-$(CONFIG_PCMCIA_ALCHEMY_DEVBOARD)		+= db1xxx_ss.o
+ obj-$(CONFIG_PCMCIA_MAX1600)			+= max1600.o
++obj-$(CONFIG_PCMCIA_HD6446X_PCC)		+= hd6446x_pcc.o
+ 
+ sa1111_cs-y					+= sa1111_generic.o
+ sa1111_cs-$(CONFIG_ASSABET_NEPONSET)		+= sa1111_neponset.o
+diff --git a/drivers/pcmcia/hd6446x_pcc.c b/drivers/pcmcia/hd6446x_pcc.c
+new file mode 100644
+index 000000000000..31074f93b55b
+--- /dev/null
++++ b/drivers/pcmcia/hd6446x_pcc.c
+@@ -0,0 +1,453 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * PC Card Controller driver for the Hitachi HD6446x series of Intelligent
++ * Peripheral Controllers.
++ *
++ * Copyright (c) 2023 - 2024 Artur Rojek <contact@artur-rojek.eu>
++ */
++
++#include <linux/clk.h>
++#include <linux/interrupt.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <pcmcia/hd6446x_pcc.h>
++#include <pcmcia/ss.h>
++#include <asm/hd64461.h>
++
++#include "mach-common/mach/hp6xx.h"
++
++#define	HD6446X_PCC_ISR				0x00
++#define	HD6446X_PCC_GCR				0x02
++#define	HD6446X_PCC_CSCR			0x04
++#define	HD6446X_PCC_CSCIER			0x06
++#define	HD6446X_PCC_SCR				0x08
++
++#define	HD6446X_PCC_ISR_CD			(BIT(2) | BIT(3))
++#define	HD6446X_PCC_ISR_VS1			BIT(4)
++#define	HD6446X_PCC_ISR_VS2			BIT(5)
++#define	HD6446X_PCC_ISR_MWP			BIT(6)
++#define	HD6446X_PCC_ISR_READY			BIT(7)
++
++#define	HD6446X_PCC_GCR_PMMOD			BIT(3)
++#define	HD6446X_PCC_GCR_VCC0			BIT(4)
++#define	HD6446X_PCC_GCR_PCCT			BIT(5)
++#define	HD6446X_PCC_GCR_PCCR			BIT(6)
++#define	HD6446X_PCC_GCR_DRV			BIT(7)
++
++#define HD6446X_PCC_CSCR_BD			BIT(0)
++#define HD6446X_PCC_CSCR_BW			BIT(1)
++#define HD6446X_PCC_CSCR_RC			BIT(2)
++#define HD6446X_PCC_CSCR_CDC			BIT(3)
++#define HD6446X_PCC_CSCR_SC			BIT(4)
++#define HD6446X_PCC_CSCR_IREQ			BIT(5)
++#define HD6446X_PCC_CSCR_SCDI			BIT(7)
++
++#define	HD6446X_PCC_CSCIER_BDE			BIT(0)
++#define	HD6446X_PCC_CSCIER_BWE			BIT(1)
++#define	HD6446X_PCC_CSCIER_RE			BIT(2)
++#define	HD6446X_PCC_CSCIER_CDE			BIT(3)
++#define	HD6446X_PCC_CSCIER_SCE			BIT(4)
++#define	HD6446X_PCC_CSCIER_IREQE_FALLING	BIT(6)
++
++#define	HD6446X_PCC_SCR_VCC1			BIT(1)
++
++#define	HD6446X_PCC_WINDOW			0x1000000 /* 16 MiB */
++
++struct hd6446x_pcc {
++	const struct hd6446x_pcc_plat_data *pdata;
++	void __iomem *reg;
++	void __iomem *base;
++	struct clk *clk;
++	struct pcmcia_socket socket;
++	struct socket_state_t state;
++	bool memory_card;
++};
++
++static int hd64461_pcmcia_socket_set_voltage(struct hd6446x_pcc *pcc, int Vcc)
++{
++	int gcr, scr, stbcr;
++
++	gcr = readb(pcc->reg + HD6446X_PCC_GCR);
++	scr = readb(pcc->reg + HD6446X_PCC_SCR);
++
++	switch (Vcc) {
++	case 0:
++		gcr |= HD6446X_PCC_GCR_VCC0;
++		scr |= HD6446X_PCC_SCR_VCC1;
++		break;
++	case 33:
++		gcr |= HD6446X_PCC_GCR_VCC0;
++		scr &= ~HD6446X_PCC_SCR_VCC1;
++		break;
++	case 50:
++		gcr &= ~HD6446X_PCC_GCR_VCC0;
++		scr &= ~HD6446X_PCC_SCR_VCC1;
++		break;
++	default:
++		printk("Unsupported voltage: %d\n", Vcc);
++		return -EINVAL;
++	}
++
++	writeb(gcr, pcc->reg + HD6446X_PCC_GCR);
++	writeb(scr, pcc->reg + HD6446X_PCC_SCR);
++
++//	stbcr = readw(HD64461_STBCR);
++
++	if (Vcc > 0)
++		clk_enable(pcc->clk);
++//		stbcr &= ~HD64461_STBCR_SPC0ST;
++	else
++		clk_disable(pcc->clk);
++//		stbcr |= HD64461_STBCR_SPC0ST;
++
++//	writew(stbcr, HD64461_STBCR);
++
++	return 0;
++}
++
++static int hd64461_pcmcia_socket_init(struct pcmcia_socket *sock)
++{
++	struct hd6446x_pcc *pcc = sock->driver_data;
++	int reg;
++
++	printk("socket_init\n");
++
++//	printk("init BCR1: %04x\n", readw(0xffffff60));
++
++	(void)hd64461_pcmcia_socket_set_voltage(pcc, 0);
++
++	reg = readb(HD64461_GPADR);
++	reg &= ~HD64461_GPADR_PCMCIA0;
++	writeb(reg, HD64461_GPADR);
++
++	return 0;
++}
++
++static int hd64461_pcmcia_socket_get_status(struct pcmcia_socket *sock,
++					    unsigned int *value)
++{
++//	struct hd64461_pcmcia_socket *socket = sock->driver_data;
++	struct hd6446x_pcc *pcc = sock->driver_data;
++	unsigned int status = 0;
++	int reg;
++
++	printk("get_status\n");
++
++	reg = readb(pcc->reg + HD6446X_PCC_ISR);
++
++//	printk("PCC0ISR: %02x\n", reg);
++
++	if (reg & HD6446X_PCC_ISR_CD)
++		goto end; /* No card detected. */
++	status |= SS_DETECT;
++
++	if (pcc->memory_card) {
++		if (reg & HD6446X_PCC_ISR_READY)
++			status |= SS_READY;
++
++		if (reg & HD6446X_PCC_ISR_MWP)
++			status |= SS_WRPROT;
++	} else
++		status |= SS_STSCHG;
++
++	if (!(reg & HD6446X_PCC_ISR_VS1)) {
++		status |= SS_3VCARD;
++		printk("3v3 card\n");
++	}
++
++	if (!(reg & HD6446X_PCC_ISR_VS2)) {
++		status |= SS_XVCARD;
++		printk("X.Xv card\n");
++	}
++
++	if (pcc->state.Vcc || pcc->state.Vpp)
++		status |= SS_POWERON;
++
++end:
++	*value = status;
++//	printk("status: %x, memory: %d\n", status, socket->memory_card);
++
++	return 0;
++}
++
++static int hd64461_pcmcia_socket_configure(struct pcmcia_socket *sock,
++					   struct socket_state_t *state)
++{
++//	struct hd64461_pcmcia_socket *socket = sock->driver_data;
++	struct hd6446x_pcc *pcc = sock->driver_data;
++	int reg = 0;
++//	unsigned long flags;
++
++	writeb(0x0, pcc->reg + HD6446X_PCC_CSCIER);
++
++//	local_irq_save(flags);
++
++//	printk("socket_configure, flags: %x, csc_mask: %x, Vcc: %d, Vpp: %d, io_irq: %x\n",
++//	       state->flags, state->csc_mask, state->Vcc, state->Vpp, state->io_irq);
++
++	if (state->Vcc != pcc->state.Vcc || state->Vpp != pcc->state.Vpp)
++		if (hd64461_pcmcia_socket_set_voltage(pcc, state->Vcc)) {
++//			local_irq_restore(flags);
++			return -EINVAL;
++		}
++
++	//reg = readb(HD64461_PCC0CSCIER) & HD64461_PCCCSCIER_IREQE_MASK;
++	reg = HD6446X_PCC_CSCIER_IREQE_FALLING;
++//	reg = 0;
++
++	if (state->csc_mask & SS_DETECT)
++		reg |= HD6446X_PCC_CSCIER_CDE;
++	if (state->csc_mask & SS_READY)
++		reg |= HD6446X_PCC_CSCIER_RE;
++	if (state->csc_mask & SS_BATDEAD)
++		reg |= HD6446X_PCC_CSCIER_BDE;
++	if (state->csc_mask & SS_BATWARN)
++		reg |= HD6446X_PCC_CSCIER_BWE;
++	if (state->csc_mask & SS_STSCHG)
++		reg |= HD6446X_PCC_CSCIER_SCE;
++//	if (state->flags & SS_IOCARD)
++//		reg = HD64461_PCCCSCIER_IREQE_FALLING;
++
++
++	writeb(reg, pcc->reg + HD6446X_PCC_CSCIER);
++
++//	reg = readb(HD64461_PCC0GCR);
++//	reg = 0;
++//	reg = HD6446X_PCC_GCR_PMMOD;
++	reg = readb(pcc->reg + HD6446X_PCC_GCR) & ~(HD6446X_PCC_GCR_PCCT |
++						    HD6446X_PCC_GCR_PCCR |
++						    HD6446X_PCC_GCR_DRV);
++
++	pcc->memory_card = !(state->flags & SS_IOCARD);
++	if (!pcc->memory_card)
++		reg |= HD6446X_PCC_GCR_PCCT;
++	if (state->flags & SS_RESET)
++		reg |= HD6446X_PCC_GCR_PCCR;
++	if (state->flags & SS_OUTPUT_ENA)
++		reg |= HD6446X_PCC_GCR_DRV;
++
++#if 0
++	if (socket->memory_card)
++		reg &= ~HD64461_PCCGCR_PCCT;
++	else
++		reg |= HD64461_PCCGCR_PCCT;
++	if (state->flags & SS_RESET)
++		reg |= HD64461_PCCGCR_PCCR;
++	else
++		reg &= ~HD64461_PCCGCR_PCCR;
++	if (state->flags & SS_OUTPUT_ENA)
++		reg |= HD64461_PCCGCR_DRVE;
++	else
++		reg &= ~HD64461_PCCGCR_DRVE;
++#endif
++
++	writeb(reg, pcc->reg + HD6446X_PCC_GCR);
++
++	pcc->state = *state;
++
++//	local_irq_restore(flags);
++
++//	printk("Configured: %x\n", state->flags);
++//	printk("config BCR1: %04x\n", readw(0xffffff60));
++
++	return 0;
++}
++
++static int hd6446x_pcc_set_io_map(struct pcmcia_socket *socket,
++				  struct pccard_io_map *io)
++{
++	/* We use a static map. */
++	printk("hd6446x_pcc_set_io_map\n");
++	return 0;
++}
++
++static int hd64461_pcmcia_socket_set_mem_map(struct pcmcia_socket *sock,
++					     struct pccard_mem_map *map)
++{
++	struct hd6446x_pcc *pcc = sock->driver_data;
++//	printk("set_mem_map\n");
++
++	if (map->map >= MAX_WIN)
++		return -EINVAL;
++
++	map->static_start = (uintptr_t)pcc->base + map->card_start;
++//	map->static_start = HD64461_PCC0_BASE + map->card_start;
++//	map->static_start = 0x8000000 + map->card_start;
++
++//	printk("map->flags %d: %x\n", map->map, map->flags);
++
++	if (!(map->flags & MAP_ATTRIB))
++		map->static_start += HD6446X_PCC_WINDOW;
++
++	return 0;
++}
++
++static struct pccard_operations hd64461_pcmcia_socket_ops = {
++	.init = hd64461_pcmcia_socket_init,
++	.get_status = hd64461_pcmcia_socket_get_status,
++	.set_socket = hd64461_pcmcia_socket_configure,
++	.set_io_map = hd6446x_pcc_set_io_map,
++	.set_mem_map = hd64461_pcmcia_socket_set_mem_map,
++};
++
++static irqreturn_t hd64461_pcmcia_socket_irq(int irq, void *data)
++{
++	struct hd6446x_pcc *pcc = data;
++	int reg = readb(pcc->reg + HD6446X_PCC_CSCR) & ~HD6446X_PCC_CSCR_SCDI;
++	unsigned int events = 0;
++
++	if (reg & HD6446X_PCC_CSCR_IREQ) {
++		reg &= ~HD6446X_PCC_CSCR_IREQ;
++		writeb(reg, pcc->reg + HD6446X_PCC_CSCR);
++
++		return IRQ_NONE;
++	}
++
++	if (reg & HD6446X_PCC_CSCR_CDC) {
++		reg &= ~HD6446X_PCC_CSCR_CDC;
++		events |= SS_DETECT;
++
++		/* Card has been ejected. */
++		if (readb(pcc->reg + HD6446X_PCC_ISR) & HD6446X_PCC_ISR_CD)
++			reg &= ~(HD6446X_PCC_CSCR_RC | HD6446X_PCC_CSCR_BW |
++				 HD6446X_PCC_CSCR_BD | HD6446X_PCC_CSCR_SC);
++	}
++
++	if (pcc->memory_card) {
++		if (reg & HD6446X_PCC_CSCR_RC) {
++			reg &= ~HD6446X_PCC_CSCR_RC;
++			events |= SS_READY;
++		}
++
++		if (reg & HD6446X_PCC_CSCR_BW) {
++			reg &= ~HD6446X_PCC_CSCR_BW;
++			events |= SS_BATWARN;
++		}
++
++		if (reg & HD6446X_PCC_CSCR_BD) {
++			reg &= ~HD6446X_PCC_CSCR_BD;
++			events |= SS_BATDEAD;
++		}
++	} else if (reg & HD6446X_PCC_CSCR_SC) {
++		reg &= ~HD6446X_PCC_CSCR_SC;
++		events |= SS_STSCHG;
++	}
++
++	writeb(reg, pcc->reg + HD6446X_PCC_CSCR);
++
++	if (events)
++		pcmcia_parse_events(&pcc->socket, events);
++
++//	writeb(reg, HD64461_PCC0CSCR);
++
++	return IRQ_HANDLED;
++}
++
++static int hd64461_pcmcia_socket_probe(struct platform_device *pdev)
++{
++	struct hd6446x_pcc *pcc;
++	struct device *dev = &pdev->dev;
++	struct pcmcia_socket *sock;
++	int irq;
++	int reg, ret;
++
++	printk("pcc probe\n");
++
++//	pcc = dev.platform_data;
++//	socket = platform_get_drvdata(pdev);
++
++	pcc = devm_kzalloc(dev, sizeof(*pcc), GFP_KERNEL);
++	if (!pcc)
++		return -ENOMEM;
++
++	pcc->pdata = dev_get_platdata(dev);
++	if (!pcc->pdata) {
++		dev_err(dev, "Unable to get platform data\n");
++		return -EINVAL;
++	}
++
++	pcc->memory_card = true;
++	irq = platform_get_irq(pdev, 0);
++
++	pcc->reg = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(pcc->reg)) {
++		return PTR_ERR(pcc->reg);
++	}
++
++	pcc->base = devm_platform_ioremap_resource(pdev, 1);
++	if (IS_ERR(pcc->base)) {
++		return PTR_ERR(pcc->base);
++	}
++
++//	pcc->reg = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++//	pcc->base = platform_get_resource(pdev, IORESOURCE_MEM, 1);
++
++	sock = &pcc->socket;
++	sock->driver_data = pcc;
++	sock->resource_ops = &pccard_static_ops;
++	sock->ops = &hd64461_pcmcia_socket_ops;
++	sock->owner = THIS_MODULE;
++	sock->dev.parent = &pdev->dev;
++	sock->features = SS_CAP_STATIC_MAP | SS_CAP_PCCARD | SS_CAP_PAGE_REGS;
++	sock->pci_irq = irq;
++	sock->irq_mask = 0xffde;
++
++	sock->map_size = HD6446X_PCC_WINDOW;
++	sock->io_offset = (uintptr_t)pcc->base + sock->map_size * 2;
++//	sock->io_offset = HD6446X_PCC_IO;
++//	sock->io_offset = 0x8000000 + HD64461_PCC_WINDOW * 2;
++
++	printk("sh_io_port_base: %lx\n", sh_io_port_base);
++
++	ret = pcmcia_register_socket(sock);
++	if (ret) {
++		dev_err(dev, "Unable to register socket\n");
++		return ret;
++	}
++
++	/* Put the hardware in a known state. */
++//	printk("CSCIER: %x\n", readb(pcc->reg + HD6446X_PCC_CSCIER));
++	writeb(HD6446X_PCC_CSCIER_IREQE_FALLING | HD6446X_PCC_CSCIER_CDE,
++	       pcc->reg + HD6446X_PCC_CSCIER);
++	writeb(0x0, pcc->reg + HD6446X_PCC_CSCR);
++	writeb(HD6446X_PCC_GCR_PMMOD | HD6446X_PCC_GCR_DRV, pcc->reg + HD6446X_PCC_GCR);
++
++	ret = devm_request_irq(dev, irq, hd64461_pcmcia_socket_irq,
++			       IRQF_SHARED, dev_name(dev), pcc);
++	if (ret < 0) {
++		dev_err(dev, "Failed to request irq: %d\n", ret);
++		return ret;
++	}
++
++	pcc->clk = devm_clk_get_prepared(dev,
++					 pcc->pdata->slot_id ? "pcc0" : "pcc1");
++	if (IS_ERR(pcc->clk)) {
++		dev_err(dev, "Unable to get clock\n");
++		return PTR_ERR(pcc->clk);
++	}
++//	clk_disable(pcc->clk);
++
++	printk("reg: %lx, base: %lx, basep: %lx\n",
++	       (uintptr_t)pcc->reg,
++	       (uintptr_t)pcc->base,
++	       virt_to_phys(pcc->base));
++
++	return 0;
++}
++
++static void hd64461_pcmcia_socket_remove(struct platform_device *pdev)
++{
++	struct hd6446x_pcc *pcc = platform_get_drvdata(pdev);
++
++	pcmcia_unregister_socket(&pcc->socket);
++}
++
++static struct platform_driver hd64461_pcmcia_socket_driver = {
++	.driver = {
++		.name = "hd6446x_pcc",
++	},
++	.probe = hd64461_pcmcia_socket_probe,
++	.remove = hd64461_pcmcia_socket_remove,
++};
++
++module_platform_driver(hd64461_pcmcia_socket_driver);
+diff --git a/include/pcmcia/hd6446x_pcc.h b/include/pcmcia/hd6446x_pcc.h
+new file mode 100644
+index 000000000000..d1fe98f0a701
+--- /dev/null
++++ b/include/pcmcia/hd6446x_pcc.h
+@@ -0,0 +1,9 @@
++#ifndef _HD6446X_PCC_
++#define _HD6446X_PCC_
++
++struct hd6446x_pcc_plat_data {
++	int slot_id;
++	bool io_support;
++};
++
++#endif /* _HD6446X_PCC_ */
+-- 
+2.50.1
+
