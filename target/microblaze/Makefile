@@ -15,7 +15,11 @@ ifeq ($(ADK_TARGET_SYSTEM_QEMU_MICROBLAZE_ML605),y)
 QEMU_ARGS+=-M petalogix-ml605 -dtb target/microblaze/ml605.dtb
 endif
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_MICROBLAZE_S3ADSP1800),y)
+ifeq ($(ADK_TARGET_LITTLE_ENDIAN),y)
+QEMU_ARGS+=-M petalogix-s3adsp1800,endianness=little
+else
 QEMU_ARGS+=-M petalogix-s3adsp1800
+endif
 endif
 
 # target helper text
@@ -29,7 +33,7 @@ targethelp:
 	@echo 'The initramfs image is: ${FW_DIR}/${INITRAMFS}'
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Start qemu with following command line:"
-	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) -initrd ${FW_DIR}/${INITRAMFS}'
+	@echo 'qemu-system-microblaze ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) -initrd ${FW_DIR}/${INITRAMFS}'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfsarchive)
@@ -42,7 +46,7 @@ targethelp:
 	@echo 'The kernel+initramfs file is: $(FW_DIR)/${TARGET_KERNEL}'
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Start qemu with following command line:"
-	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+	@echo 'qemu-system-microblaze ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),squashfs)
@@ -51,7 +55,7 @@ targethelp:
 	@echo "The RootFS image is: $(FW_DIR)/$(ROOTFSSQUASHFS)"
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Start qemu with following options:"
-	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} $(QEMU_ARGS) -nographic -kernel $(FW_DIR)/$(TARGET_KERNEL) -pflash $(FW_DIR)/$(ROOTFSSQUASHFS)'
+	@echo 'qemu-system-microblaze $(QEMU_ARGS) -nographic -kernel $(FW_DIR)/$(TARGET_KERNEL) -pflash $(FW_DIR)/$(ROOTFSSQUASHFS)'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),jffs2)
@@ -60,7 +64,7 @@ targethelp:
 	@echo "The RootFS image is: $(FW_DIR)/$(ROOTFSJFFS2)"
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Start qemu with following options:"
-	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} $(QEMU_ARGS) -nographic -kernel $(FW_DIR)/$(TARGET_KERNEL) -pflash $(FW_DIR)/$(ROOTFSJFFS2)'
+	@echo 'qemu-system-microblaze $(QEMU_ARGS) -nographic -kernel $(FW_DIR)/$(TARGET_KERNEL) -pflash $(FW_DIR)/$(ROOTFSJFFS2)'
 endif
 endif
 
