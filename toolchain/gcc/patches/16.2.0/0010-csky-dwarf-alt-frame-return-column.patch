@@ -1,0 +1,16 @@
+--- a/gcc/config/csky/csky.h	2026-05-31 20:55:03.197855806 +0000
++++ gcc/config/csky/csky.h	2026-05-31 20:55:03.204856192 +0000
+@@ -1007,6 +1007,13 @@
+    define DWARF_FRAME_RETURN_COLUMN to DWARF_FRAME_REGNUM.  */
+ #define DWARF_FRAME_RETURN_COLUMN DWARF_FRAME_REGNUM (CSKY_LR_REGNUM)
+ 
++/* Signal frames (config/csky/linux-unwind.h) put the interrupted PC in
++   DWARF column 32, which is not a hard register and thus is left unsized
++   in dwarf_reg_size_table.  Declare it as the alternate return column so
++   init_dwarf_reg_size_table sizes it; otherwise _Unwind_GetGR aborts when
++   unwinding through a signal frame (e.g. pthread cancellation).  */
++#define DWARF_ALT_FRAME_RETURN_COLUMN 32
++
+ /* Use r0 and r1 to pass exception handling information.  */
+ #define EH_RETURN_DATA_REGNO(N) ((N) < 2 ? N : INVALID_REGNUM)
+ 
