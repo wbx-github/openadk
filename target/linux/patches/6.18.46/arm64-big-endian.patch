@@ -1,0 +1,11 @@
+diff -Nur linux-6.18.46.orig/arch/arm64/Kconfig linux-6.18.46/arch/arm64/Kconfig
+--- linux-6.18.46.orig/arch/arm64/Kconfig	2026-08-23 14:27:10.000000000 +0200
++++ linux-6.18.46/arch/arm64/Kconfig	2026-08-25 02:38:38.351986108 +0200
+@@ -1545,7 +1545,6 @@
+ 
+ config CPU_BIG_ENDIAN
+ 	bool "Build big-endian kernel"
+-	depends on BROKEN
+ 	help
+ 	  Say Y if you plan on running a kernel with a big-endian userspace.
+ 

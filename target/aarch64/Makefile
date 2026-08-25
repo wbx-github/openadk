@@ -10,6 +10,7 @@ KERNEL:=${LINUX_DIR}/arch/arm64/boot/Image
 QEMU_ARGS:=${ADK_QEMU_ARGS}
 QEMU_ARGS+=-M virt -cpu cortex-a57 -smp 1
 QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
+QEMU_ARGS+=-append "console=ttyAMA0 earlycon"
 ifeq ($(ADK_TARGET_FS),archive)
 QEMU_ARGS+=-device virtio-blk-device,drive=vda -drive file=qemu-${ADK_TARGET_CPU_ARCH}.img,if=none,id=vda,format=raw
 endif
@@ -35,7 +36,7 @@ ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Use following command to create a QEMU Image:"
 	@echo "./scripts/create.sh qemu-${ADK_TARGET_CPU_ARCH}.img $(FW_DIR)/$(ROOTFSTARBALL)"
 	@echo "Start qemu with following options:"
-	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+	@echo 'qemu-system-aarch64 ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)
@@ -44,7 +45,7 @@ targethelp:
 	@echo 'The initramfs image is: ${FW_DIR}/${INITRAMFS}'
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Start qemu with following command line:"
-	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) -initrd ${FW_DIR}/${INITRAMFS}'
+	@echo 'qemu-system-aarch64 ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) -initrd ${FW_DIR}/${INITRAMFS}'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfsarchive)
@@ -57,7 +58,7 @@ targethelp:
 	@echo 'The kernel+initramfs file is: $(FW_DIR)/${TARGET_KERNEL}'
 ifeq ($(ADK_TARGET_QEMU),y)
 	@echo "Start qemu with following command line:"
-	@echo 'qemu-system-${ADK_TARGET_CPU_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+	@echo 'qemu-system-aarch64 ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)
