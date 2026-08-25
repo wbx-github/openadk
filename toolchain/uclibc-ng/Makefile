@@ -243,6 +243,17 @@ ifeq ($(ADK_TARGET_CPU_H8S),y)
 endif
 endif
 
+# powerpc
+ifeq ($(ADK_TARGET_ARCH_PPC),y)
+ifeq ($(ADK_TARGET_ARCH_PPC_WITH_SPE),y)
+	$(SED) 's/.*\(CONFIG_E500\).*/\1=y/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(CONFIG_CLASSIC\).*/# \1 is not set/' ${WRKBUILD}/.config
+else
+	$(SED) 's/.*\(CONFIG_CLASSIC\).*/\1=y/' ${WRKBUILD}/.config
+	$(SED) 's/.*\(CONFIG_E500\).*/# \1 is not set/' ${WRKBUILD}/.config
+endif
+endif
+
 # sh
 ifeq ($(ADK_TARGET_ARCH_SH),y)
 ifeq ($(ADK_TARGET_CPU_SH_SH4A),y)
