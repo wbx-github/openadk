@@ -16,7 +16,7 @@ diff -Nur linux-6.18.18.orig/arch/microblaze/boot/dts/mimasa7_mini.dts linux-6.1
 +	model = "Xilinx MicroBlaze";
 +
 +	chosen {
-+		bootargs = "earlycon";
++		bootargs = "earlycon clocksource=jiffies clk_ignore_unused";
 +		stdout-path = "serial0:115200n8";
 +	};
 +	aliases {
