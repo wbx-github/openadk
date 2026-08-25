@@ -1,0 +1,32 @@
+diff -Nur gcc-13.4.0.orig/gcc/config/sh/sh.cc gcc-13.4.0/gcc/config/sh/sh.cc
+--- gcc-13.4.0.orig/gcc/config/sh/sh.cc	2026-08-25 11:48:19.356289134 +0200
++++ gcc-13.4.0/gcc/config/sh/sh.cc	2026-08-25 11:48:19.497292738 +0200
+@@ -12543,7 +12543,27 @@
+ static int
+ sh_mode_needed (int entity ATTRIBUTE_UNUSED, rtx_insn *insn)
+ {
+-  return recog_memoized (insn) >= 0  ? get_attr_fp_mode (insn) : FP_MODE_NONE;
++  if (recog_memoized (insn) < 0)
++    return FP_MODE_NONE;
++
++  int mode = get_attr_fp_mode (insn);
++
++  /* Mode switching runs before ira and reload, and reload can rematerialise
++     a REG_EQUAL constant into a move after the mode sets are placed.  For
++     SFmode 0.0 and 1.0 that turns an fmov, which needs no particular mode,
++     into fldi0 or fldi1, which are only valid with FPSCR.PR clear.  Ask for
++     single precision now, while there is still someone to ask.  */
++  if (mode == FP_MODE_NONE)
++    {
++      rtx note = find_reg_note (insn, REG_EQUAL, NULL_RTX);
++
++      if (note != NULL_RTX && CONST_DOUBLE_P (XEXP (note, 0))
++	  && (fp_zero_operand (XEXP (note, 0))
++	      || fp_one_operand (XEXP (note, 0))))
++	return FP_MODE_SINGLE;
++    }
++
++  return mode;
+ }
+ 
+ static int
