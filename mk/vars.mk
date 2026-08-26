@@ -219,6 +219,7 @@ TARGET_LDFLAGS+=	-Wl,--secure-plt
 endif
 endif
 
+ifeq ($(ADK_TARGET_LIB_NEWLIB),)
 ifneq ($(ADK_TARGET_BINFMT_ELF)$(ADK_TARGET_WITH_MMU),y)
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY)$(ADK_TARGET_USE_STATIC_AND_SHARED_LIBS),y)
 TARGET_CFLAGS+=		-static
@@ -229,6 +230,7 @@ else
 TARGET_CFLAGS+=		-fpie
 TARGET_CXXFLAGS+=	-fpie
 TARGET_LDFLAGS+=	-fpie -pie
+endif
 endif
 
 ifneq ($(ADK_TARGET_USE_SSP),)
