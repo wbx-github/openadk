@@ -388,6 +388,7 @@ defconfig: .menu $(CONFIG)/conf
 	@if [ ! -z "$(ADK_TEST_UCLIBC_NG_TEST)" ];then \
 		echo "ADK_PACKAGE_ADKTEST=y" >> $(ADK_TOPDIR)/.defconfig; \
 		echo "ADK_PACKAGE_UCLIBC_NG_TEST=y" >> $(ADK_TOPDIR)/.defconfig; \
+		echo "ADK_PACKAGE_UCLIBC_NG_TEST_ALL=y" >> $(ADK_TOPDIR)/.defconfig; \
 	fi
 	@if [ ! -z "$(ADK_TEST_LIBC_TEST)" ];then \
 		echo "ADK_PACKAGE_ADKTEST=y" >> $(ADK_TOPDIR)/.defconfig; \
