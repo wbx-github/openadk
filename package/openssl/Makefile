@@ -69,10 +69,10 @@ host-configure:
 	(cd $(WRKBUILD); ./config --prefix='$(STAGING_HOST_DIR)/usr' -fPIC -ldl no-docs no-tests)
 
 host-build:
-	(cd $(WRKBUILD); $(MAKE))
+	(cd $(WRKBUILD); $(MAKE) -j$(ADK_MAKE_JOBS))
 
 openssl-hostinstall:
-	(cd $(WRKBUILD); $(MAKE) install)
+	(cd $(WRKBUILD); $(MAKE) -j$(ADK_MAKE_JOBS) install)
 
 do-configure:
 	(cd $(WRKBUILD); \
