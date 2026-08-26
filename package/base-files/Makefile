@@ -43,6 +43,11 @@ do-install:
 	echo $(ADK_RUNTIME_TMPFS_SIZE) > $(IDIR_BASE_FILES)/etc/tmpfs
 	mkdir -p $(IDIR_BASE_FILES)/etc/init.d
 	cp ./files/init.d/* $(IDIR_BASE_FILES)/etc/init.d
+	# workaround for c-sky/nios2 uClibc-ng bug
+	# tee: /dev/stderr: Too many levels of symbolic links
+ifeq ($(ADK_TARGET_ARCH_CSKY)$(ADK_TARGET_ARCH_NIOS2),y)
+	$(SED) 's#tee /dev/stderr#tee /dev/$(ADK_RUNTIME_CONSOLE_SERIAL_DEVICE)#g' $(IDIR_BASE_FILES)/etc/init.d/rcS
+endif
 	mkdir -p $(IDIR_BASE_FILES)/etc/network/{if-pre-up.d,if-up.d,if-down.d,if-post-down.d}
 	cp ./files/fstab $(IDIR_BASE_FILES)/etc
 	cp ./files/modules $(IDIR_BASE_FILES)/etc
