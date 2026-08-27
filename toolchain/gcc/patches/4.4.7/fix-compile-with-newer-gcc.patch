@@ -40,3 +40,41 @@ diff -Nur gcc-4.4.7.orig/gcc/toplev.h gcc-4.4.7/gcc/toplev.h
  /* Functions used to get and set GCC's notion of in what directory
     compilation was started.  */
  
+diff -Nur gcc-4.4.7.orig/libiberty/md5.c gcc-4.4.7/libiberty/md5.c
+--- gcc-4.4.7.orig/libiberty/md5.c	2008-03-11 15:08:53.000000000 +0100
++++ gcc-4.4.7/libiberty/md5.c	2026-08-27 03:22:17.849165305 +0200
+@@ -26,15 +26,8 @@
+ #endif
+ 
+ #include <sys/types.h>
+-
+-#if STDC_HEADERS || defined _LIBC
+-# include <stdlib.h>
+-# include <string.h>
+-#else
+-# ifndef HAVE_MEMCPY
+-#  define memcpy(d, s, n) bcopy ((s), (d), (n))
+-# endif
+-#endif
++#include <stdlib.h>
++#include <string.h>
+ 
+ #include "ansidecl.h"
+ #include "md5.h"
+diff -Nur gcc-4.4.7.orig/libiberty/regex.c gcc-4.4.7/libiberty/regex.c
+--- gcc-4.4.7.orig/libiberty/regex.c	2005-07-22 05:55:44.000000000 +0200
++++ gcc-4.4.7/libiberty/regex.c	2026-08-27 03:22:00.273088220 +0200
+@@ -124,12 +124,7 @@
+    even if config.h says that we can.  */
+ #  undef REL_ALLOC
+ 
+-#  if defined STDC_HEADERS || defined _LIBC
+-#   include <stdlib.h>
+-#  else
+-char *malloc ();
+-char *realloc ();
+-#  endif
++#  include <stdlib.h>
+ 
+ /* When used in Emacs's lib-src, we need to get bzero and bcopy somehow.
+    If nothing else has been done, use the method below.  */

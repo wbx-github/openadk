@@ -156,6 +156,11 @@ GCC_CONFOPTS+=		--with-nan=$(ADK_TARGET_NAN_MODE)
 endif
 endif
 
+# very old gcc compiler
+ifeq ($(ADK_TARGET_ARCH_AVR32),y)
+GCC_MAKEOPTS+=		CFLAGS="-std=gnu89 -fcommon"
+endif
+
 # .symver is broken for Blackfin, simple C++ apps fail to link
 ifeq ($(ADK_TARGET_ARCH_BFIN),y)
 GCC_CONFOPTS+=		--disable-symvers
