@@ -1,0 +1,40 @@
+arc: do not fold the GOT slot into the addend of R_ARC_TLS_TPOFF
+
+The dynamic loader computes the thread pointer offset as
+l_tls_offset + st_value + r_addend -- uClibc-ng and glibc do it the same way,
+see glibc's sysdeps/arc/dl-machine.h.  Passing the GOT slot as the addend on
+top of a relocation that names the symbol makes the loader count the symbol's
+offset twice, because for a symbol that is not preemptible -- in a PIE, say --
+the linker has already resolved that offset into the slot.
+
+Every TLS variable except the one at offset 0 then reads from the wrong place:
+uClibc-ng's tst-tls1-pie and tst-tls2-pie fail on arc for exactly that reason,
+"bar" being four bytes into the block.  Synopsys' own toolchain (binutils
+2.38.50) emits addend 0 here and is unaffected; mainline has read the slot
+since 08759e0fc8b in 2016.
+
+A relocation without a symbol still needs the value, because the loader then
+has nothing to look up, so keep it for that case.
+
+diff --git a/bfd/arc-got.h b/bfd/arc-got.h
+index 5e9e48f7eb5..17be7a20122 100644
+--- a/bfd/arc-got.h
++++ b/bfd/arc-got.h
+@@ -514,8 +514,16 @@ GOT_OFFSET = %#lx, GOT_VMA = %#lx, INDEX = %ld, ADDEND = 0x0\n",
+       if (e == TLS_GOT_MOD_AND_OFF || e == TLS_GOT_OFF)
+ 	{
+ 	  bfd_vma addend = 0;
+-	  if (list->type == GOT_TLS_IE)
++	  if (list->type == GOT_TLS_IE && dynindx == 0)
+ 	  {
++	    /* The dynamic loader computes the thread pointer offset as
++	       l_tls_offset + st_value + r_addend (uClibc-ng and glibc both do,
++	       see sysdeps/arc/dl-machine.h).  Passing the GOT slot -- which
++	       holds the link time resolved offset whenever the symbol is not
++	       preemptible, as in a PIE -- as the addend on top of a relocation
++	       that names the symbol makes it count that offset twice.  Only a
++	       relocation without a symbol needs the value here, because then
++	       the loader has nothing to look up.  */
+ 	    addend = bfd_get_32 (output_bfd,
+ 				 htab->sgot->contents + got_offset);
+ 	  }
