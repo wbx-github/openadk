@@ -1,0 +1,12 @@
+--- busybox-1.38.0.orig/include/libbb.h	2026-05-13 04:10:19.000000000 +0200
++++ busybox-1.38.0/include/libbb.h	2026-08-27 12:35:27.956561822 +0200
+@@ -335,9 +335,6 @@ typedef unsigned long uoff_t;
+  * On musl, !ENABLE_LFS on 32-bit arches thinks that off_t is 32-bit.
+  * We misdetected that. Don't let it build:
+  */
+-struct BUG_off_t_size_is_misdetected {
+-	char BUG_off_t_size_is_misdetected[sizeof(off_t) == sizeof(uoff_t) ? 1 : -1];
+-};
+ 
+ /* Some useful definitions */
+ #undef FALSE

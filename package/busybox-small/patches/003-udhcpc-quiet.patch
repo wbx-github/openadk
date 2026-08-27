@@ -1,7 +1,7 @@
 diff -Nur busybox-1.25.0.orig/networking/ifupdown.c busybox-1.25.0/networking/ifupdown.c
---- busybox-1.25.0.orig/networking/ifupdown.c	2016-05-26 19:42:44.000000000 +0200
-+++ busybox-1.25.0/networking/ifupdown.c	2016-06-25 01:14:51.656598262 +0200
-@@ -537,7 +537,7 @@
+--- busybox-1.38.0.orig/networking/ifupdown.c	2026-04-17 17:44:06.000000000 +0200
++++ busybox-1.38.0/networking/ifupdown.c	2026-08-27 12:32:06.228513824 +0200
+@@ -636,7 +636,7 @@ static const struct dhcp_client_t ext_dh
  	},
  	{ "udhcpc",
  		"udhcpc " UDHCPC_CMD_OPTIONS " -p /var/run/udhcpc.%iface%.pid -i %iface%[[ -x hostname:%hostname%]][[ -c %client%]]"
@@ -10,7 +10,7 @@ diff -Nur busybox-1.25.0.orig/networking/ifupdown.c busybox-1.25.0/networking/if
  		"kill `cat /var/run/udhcpc.%iface%.pid` 2>/dev/null",
  	},
  };
-@@ -576,7 +576,7 @@
+@@ -675,7 +675,7 @@ static int FAST_FUNC dhcp_up(struct inte
  		return 0;
  #  endif
  	return execute("udhcpc " UDHCPC_CMD_OPTIONS " -p /var/run/udhcpc.%iface%.pid "
