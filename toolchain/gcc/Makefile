@@ -171,6 +171,7 @@ endif
 endif
 
 ifeq ($(ADK_TARGET_ARCH_METAG),y)
+GCC_MAKEOPTS+=		CFLAGS="-std=gnu89"
 GCC_CONFOPTS+=		--with-cpu=2.1 --enable-meta-default --disable-symvers
 endif
 

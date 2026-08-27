@@ -40,3 +40,53 @@ diff -Nur gcc-4.2.4.orig/gcc/toplev.h gcc-4.2.4/gcc/toplev.h
  /* Functions used to get and set GCC's notion of in what directory
     compilation was started.  */
  
+diff -Nur gcc-4.2.4.orig/configure gcc-4.2.4/configure
+--- gcc-4.2.4.orig/configure	2007-09-15 02:42:24.000000000 +0200
++++ gcc-4.2.4/configure	2026-08-27 01:40:41.561032892 +0200
+@@ -1989,7 +1989,7 @@
+ #line 1990 "configure"
+ #include "confdefs.h"
+ 
+-main(){return(0);}
++int main(){return(0);}
+ EOF
+ if { (eval echo configure:1995: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+   ac_cv_prog_cc_works=yes
+diff -Nur gcc-4.2.4.orig/libiberty/md5.c gcc-4.2.4/libiberty/md5.c
+--- gcc-4.2.4.orig/libiberty/md5.c	2005-07-03 17:40:29.000000000 +0200
++++ gcc-4.2.4/libiberty/md5.c	2026-08-27 01:59:18.976772767 +0200
+@@ -26,15 +26,8 @@
+ #endif
+ 
+ #include <sys/types.h>
+-
+-#if STDC_HEADERS || defined _LIBC
+-# include <stdlib.h>
+-# include <string.h>
+-#else
+-# ifndef HAVE_MEMCPY
+-#  define memcpy(d, s, n) bcopy ((s), (d), (n))
+-# endif
+-#endif
++#include <stdlib.h>
++#include <string.h>
+ 
+ #include "ansidecl.h"
+ #include "md5.h"
+diff -Nur gcc-4.2.4.orig/libiberty/regex.c gcc-4.2.4/libiberty/regex.c
+--- gcc-4.2.4.orig/libiberty/regex.c	2005-07-22 05:55:44.000000000 +0200
++++ gcc-4.2.4/libiberty/regex.c	2026-08-27 01:58:56.976930785 +0200
+@@ -124,12 +124,7 @@
+    even if config.h says that we can.  */
+ #  undef REL_ALLOC
+ 
+-#  if defined STDC_HEADERS || defined _LIBC
+-#   include <stdlib.h>
+-#  else
+-char *malloc ();
+-char *realloc ();
+-#  endif
++#  include <stdlib.h>
+ 
+ /* When used in Emacs's lib-src, we need to get bzero and bcopy somehow.
+    If nothing else has been done, use the method below.  */
