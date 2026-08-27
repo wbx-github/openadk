@@ -18,6 +18,15 @@ endif
 ifeq ($(ADK_TARGET_KERNEL_VMLINUX_SREC),y)
 KERNEL:=$(LINUX_DIR)/arch/h8300/boot/vmlinux.srec
 endif
+ifeq ($(ADK_TARGET_KERNEL_VMLINUX_BIN),y)
+KERNEL:=$(LINUX_DIR)/arch/h8300/boot/vmlinux.bin
+OSTRIP:=
+endif
+
+QEMU_ARGS:=${ADK_QEMU_ARGS}
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_H8300),y)
+QEMU_ARGS+=-M edosk2674 -append "console=ttySC2,38400"
+endif
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
@@ -53,6 +62,15 @@ targethelp:
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSUSERTARBALL)"
 endif
+ifeq ($(ADK_TARGET_FS),squashfs)
+targethelp:
+	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
+	@echo "The RootFS image is: $(FW_DIR)/$(ROOTFSSQUASHFS)"
+ifeq ($(ADK_TARGET_QEMU),y)
+	@echo "Start qemu with following options:"
+	@echo 'qemu-system-h8300 $(QEMU_ARGS) -nographic -kernel $(FW_DIR)/$(TARGET_KERNEL) -pflash $(FW_DIR)/$(ROOTFSSQUASHFS)'
+endif
+endif
 
 kernel-strip:
 ifneq ($(OSTRIP),)
@@ -63,6 +81,10 @@ endif
 
 kernel-install: kernel-strip
 	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
+ifeq ($(ADK_TARGET_FS),squashfs)
+	env PATH=$(HOST_PATH) qemu-img create -f raw $(FW_DIR)/$(ROOTFSSQUASHFS) 4M
+	dd conv=notrunc if=$(BUILD_DIR)/root.squashfs of=$(FW_DIR)/$(ROOTFSSQUASHFS)
+endif
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)
@@ -79,4 +101,7 @@ imageinstall: createinitramfs targethelp
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)
 imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
+endif
+ifeq ($(ADK_TARGET_FS),squashfs)
+imageinstall: $(BUILD_DIR)/root.squashfs kernel-install targethelp
 endif
