@@ -1,0 +1,174 @@
+From: Ramin Moussavi <lordrasmus@gmail.com>
+Date: Fri, 28 Aug 2026 00:00:00 +0200
+Subject: [PATCH] microblaze: fix the hand-written 64-bit signed modulo
+
+libgcc/config/microblaze/moddi3.S has been in the tree unchanged since the
+port landed in 2010 (809201325afb); the only commits touching it since are
+copyright-year bumps and the two libgcc reorganizations.  It is wrong for
+almost every input.  Measured against an independent reference over 40420
+values -- all sign combinations, the word boundaries, LLONG_MIN/MAX and
+40000 random pairs -- big-endian got 30079 of them wrong and little-endian
+hung.  Only "positive dividend, positive divisor, both inside 32 bits"
+came out right.
+
+Four defects:
+
+1. The register pair order is hard-coded for big-endian.  A 64-bit value
+   passed in a register pair keeps its high word in the lower-numbered
+   register on big-endian and in the higher-numbered one on little-endian,
+   but the file treats r5 as the dividend's high word and r7 as the
+   divisor's unconditionally.  On microblazeel it therefore operates on
+   both operands with their halves swapped.  microblazeel support arrived
+   in 4.8 (76ef61fbd9ed) and this file was never adjusted.
+
+2. "Make Divisor Positive" negated the high word into r9 instead of r7,
+   so a negative divisor kept its high word.  r9 had just been used as the
+   scratch for the zero test.
+
+3. The result sign came from the dividend XOR the divisor; a remainder
+   takes the sign of the dividend alone.  Worse, both the sign fix-up and
+   the "result is zero" paths wrote r29:r30 -- the quotient, which this
+   function does not return -- while the return value is r3:r4.  The zero
+   paths also branched in before r3:r4 were cleared, so 0 % v returned
+   whatever the caller happened to leave in those registers.
+
+4. The normalization loop looks for a set MSB after shifting, so a
+   dividend of LLONG_MIN -- whose negation stays negative -- shifts its
+   only set bit out on the first pass and the loop never terminates.
+   LLONG_MIN % 1 hangs on both endiannesses.
+
+Name the halves with macros picked by __MICROBLAZEEL__ so one file serves
+both, clear the remainder before the early exits, take the sign from the
+dividend, negate the divisor's own high word, and skip normalization when
+the dividend is already normalized.  The dead comparison into r18 (whose
+result was never tested, and which compared against the dividend's low
+word rather than the divisor's) is dropped.
+
+With this, both endiannesses answer all 40420 values and the LLONG_MIN
+cases correctly, built with gcc 12.5.0, 15.3.0 and 16.2.0.
+
+The visible symptom that led here: uClibc-ng's gmtime() reduces a 64-bit
+time_t with a signed modulo, so on microblazeel every timestamp past 2^31
+came back with the wrong seconds field, and some year boundaries were a
+day early.
+---
+--- a/libgcc/config/microblaze/moddi3.S
++++ b/libgcc/config/microblaze/moddi3.S
+@@ -36,6 +36,26 @@
+ .previous
+ #endif
+ 
++/* A 64-bit value held in a register pair keeps its high word in the
++   lower-numbered register on big-endian and in the higher-numbered one on
++   little-endian.  Name the halves so that the body below reads the same
++   either way.  */
++#ifdef __MICROBLAZEEL__
++# define OP1_L	r5
++# define OP1_H	r6
++# define OP2_L	r7
++# define OP2_H	r8
++# define RES_L	r3
++# define RES_H	r4
++#else
++# define OP1_H	r5
++# define OP1_L	r6
++# define OP2_H	r7
++# define OP2_L	r8
++# define RES_H	r3
++# define RES_L	r4
++#endif
++
+ 	.globl	__moddi3
+ 	.ent	__moddi3
+ __moddi3:
+@@ -50,45 +70,47 @@
+ 	swi	r29,r1,16	# Used for div value High
+ 	swi	r30,r1,20	# Used for div value Low
+ 
++	ADDIK	RES_L,r0,0			# Clear mod low
++	ADDIK	RES_H,r0,0			# Clear mod high
++
+ #Check for Zero Value in the divisor/dividend
+-	OR	r9,r5,r6			# Check for the op1 being zero
+-	BEQID	r9,$LaResult_Is_Zero		# Result is zero
+-	OR	r9,r7,r8			# Check for the dividend being zero
++	OR	r9,OP1_H,OP1_L			# Check for the dividend being zero
++	BEQI	r9,$LaRETURN_HERE		# Result is zero
++	OR	r9,OP2_H,OP2_L			# Check for the divisor being zero
+ 	BEQI	r9,$LaDiv_By_Zero	        # Div_by_Zero   # Division Error
+-	BGEId	r5,$La1_Pos 
+-	XOR	r27,r5,r7			# Get the sign of the result
+-	RSUBI	r6,r6,0				# Make dividend positive
+-	RSUBIC	r5,r5,0				# Make dividend positive
++	BGEId	OP1_H,$La1_Pos
++	OR	r27,r0,OP1_H			# Result takes the dividend's sign alone
++	RSUBI	OP1_L,OP1_L,0			# Make dividend positive
++	RSUBIC	OP1_H,OP1_H,0			# Make dividend positive
+ $La1_Pos:
+-	BGEI	r7,$La2_Pos
+-	RSUBI	r8,r8,0				# Make Divisor Positive
+-	RSUBIC	r9,r9,0				# Make Divisor Positive
++	BGEI	OP2_H,$La2_Pos
++	RSUBI	OP2_L,OP2_L,0			# Make Divisor Positive
++	RSUBIC	OP2_H,OP2_H,0			# Make Divisor Positive
+ $La2_Pos:
+-	ADDIK	r4,r0,0				# Clear mod low
+-	ADDIK	r3,r0,0                	        # Clear mod high
+ 	ADDIK	r29,r0,0			# clear div high
+ 	ADDIK	r30,r0,0			# clear div low
+ 	ADDIK	r28,r0,64			# Initialize the loop count
++	BLTi	OP1_H,$LaDIV2		# Already normalised: all 64 bits count.
++					# Without this a dividend of LLONG_MIN,
++					# whose negation stays negative, shifts
++					# its only set bit out below and the
++					# loop never ends.
+    # First part try to find the first '1' in the r5/r6
+ $LaDIV1:
+-	ADD	r6,r6,r6
+-	ADDC	r5,r5,r5			# left shift logical r5
+-	BGEID	r5,$LaDIV1			
++	ADD	OP1_L,OP1_L,OP1_L
++	ADDC	OP1_H,OP1_H,OP1_H			# left shift logical
++	BGEID	OP1_H,$LaDIV1			
+ 	ADDIK	r28,r28,-1
+ $LaDIV2:
+-	ADD	r6,r6,r6
+-	ADDC	r5,r5,r5	# left shift logical r5/r6 get the '1' into the Carry
+-	ADDC	r4,r4,r4	# Move that bit into the Mod register
+-	ADDC	r3,r3,r3	# Move carry into high mod register
+-	rsub	r18,r7,r3	# Compare the High Parts of Mod and Divisor
+-	bnei	r18,$L_High_EQ
+-	rsub	r18,r6,r4	# Compare Low Parts only if Mod[h] == Divisor[h]
+-$L_High_EQ:	
+-	rSUB	r26,r8,r4	# Subtract divisor[L] from Mod[L]
+-	rsubc	r25,r7,r3	# Subtract divisor[H] from Mod[H]
++	ADD	OP1_L,OP1_L,OP1_L
++	ADDC	OP1_H,OP1_H,OP1_H	# left shift, get the '1' into the Carry
++	ADDC	RES_L,RES_L,RES_L	# Move that bit into the Mod register
++	ADDC	RES_H,RES_H,RES_H	# Move carry into high mod register
++	rSUB	r26,OP2_L,RES_L	# Subtract divisor[L] from Mod[L]
++	rsubc	r25,OP2_H,RES_H	# Subtract divisor[H] from Mod[H]
+ 	BLTi	r25,$LaMOD_TOO_SMALL
+-	OR	r3,r0,r25	# move r25 to mod [h]
+-	OR	r4,r0,r26	# move r26 to mod [l]
++	OR	RES_H,r0,r25	# move r25 to mod [h]
++	OR	RES_L,r0,r26	# move r26 to mod [l]
+ 	ADDI	r30,r30,1
+ 	ADDC	r29,r29,r0
+ $LaMOD_TOO_SMALL:
+@@ -99,13 +121,11 @@
+ 	BRI	$LaDIV2   # Div2
+ $LaLOOP_END:
+ 	BGEI	r27,$LaRETURN_HERE
+-	rsubi	r30,r30,0
+-	rsubc	r29,r29,r0
++	RSUBI	RES_L,RES_L,0		# Give the remainder the dividend's sign
++	RSUBIC	RES_H,RES_H,0
+ 	BRI	$LaRETURN_HERE
+ $LaDiv_By_Zero:
+ $LaResult_Is_Zero:
+-	or	r29,r0,r0	# set result to 0 [High]
+-	or	r30,r0,r0	# set result to 0 [Low]
+ $LaRETURN_HERE:
+ # Restore values of CSRs and that of r29 and the divisor and the dividend
+ 	
