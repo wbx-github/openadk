@@ -1,0 +1,108 @@
+--- linux-4.4.302.orig/drivers/clocksource/h8300_tpu.c
++++ linux-4.4.302/drivers/clocksource/h8300_tpu.c
+@@ -31,12 +31,17 @@
+ #define TGRC	12
+ #define TGRD	14
+ 
++/* Common registers */
++#define TSTR	0
++
+ struct tpu_priv {
+ 	struct platform_device *pdev;
+ 	struct clocksource cs;
+ 	struct clk *clk;
+ 	unsigned long mapbase1;
+ 	unsigned long mapbase2;
++	unsigned long mapcommon;
++	unsigned char enb;
+ 	raw_spinlock_t lock;
+ 	unsigned int cs_enabled;
+ };
+@@ -100,6 +105,8 @@
+ 	ctrl_outw(0, p->mapbase2 + TCNT);
+ 	ctrl_outb(0x0f, p->mapbase1 + TCR);
+ 	ctrl_outb(0x03, p->mapbase2 + TCR);
++	ctrl_outb(ctrl_inb(p->mapcommon + TSTR) | p->enb,
++		  p->mapcommon + TSTR);
+ 
+ 	p->cs_enabled = true;
+ 	return 0;
+@@ -111,6 +118,8 @@
+ 
+ 	WARN_ON(!p->cs_enabled);
+ 
++	ctrl_outb(ctrl_inb(p->mapcommon + TSTR) & ~p->enb,
++		  p->mapcommon + TSTR);
+ 	ctrl_outb(0, p->mapbase1 + TCR);
+ 	ctrl_outb(0, p->mapbase2 + TCR);
+ 	p->cs_enabled = false;
+@@ -118,20 +127,34 @@
+ 
+ #define CH_L 0
+ #define CH_H 1
++#define REG_COMM 2
+ 
+ static int __init tpu_setup(struct tpu_priv *p, struct platform_device *pdev)
+ {
+-	struct resource *res[2];
++	struct resource *res[3];
++	u32 ch[2];
++	int i;
+ 
+ 	p->pdev = pdev;
+ 
+ 	res[CH_L] = platform_get_resource(p->pdev, IORESOURCE_MEM, CH_L);
+ 	res[CH_H] = platform_get_resource(p->pdev, IORESOURCE_MEM, CH_H);
+-	if (!res[CH_L] || !res[CH_H]) {
++	res[REG_COMM] = platform_get_resource(p->pdev, IORESOURCE_MEM,
++					      REG_COMM);
++	if (!res[CH_L] || !res[CH_H] || !res[REG_COMM]) {
+ 		dev_err(&p->pdev->dev, "failed to get I/O memory\n");
+ 		return -ENXIO;
+ 	}
+ 
++	for (i = 0; i < 2; i++) {
++		if (of_property_read_u32_index(p->pdev->dev.of_node,
++					       "renesas,channel", i, &ch[i]) ||
++		    ch[i] > 5) {
++			dev_err(&p->pdev->dev, "renesas,channel missing\n");
++			return -EINVAL;
++		}
++	}
++
+ 	p->clk = clk_get(&p->pdev->dev, "fck");
+ 	if (IS_ERR(p->clk)) {
+ 		dev_err(&p->pdev->dev, "can't get clk\n");
+@@ -140,6 +163,8 @@
+ 
+ 	p->mapbase1 = res[CH_L]->start;
+ 	p->mapbase2 = res[CH_H]->start;
++	p->mapcommon = res[REG_COMM]->start;
++	p->enb = BIT(ch[CH_L]) | BIT(ch[CH_H]);
+ 
+ 	p->cs.name = pdev->name;
+ 	p->cs.rating = 200;
+--- linux-4.4.302.orig/arch/h8300/boot/dts/edosk2674.dts
++++ linux-4.4.302/arch/h8300/boot/dts/edosk2674.dts
+@@ -70,7 +70,8 @@
+ 
+ 	tpu: timer@ffffe0 {
+ 		compatible = "renesas,tpu";
+-		reg = <0xffffe0 16>, <0xfffff0 12>;
++		reg = <0xffffe0 16>, <0xfffff0 12>, <0xffffc0 8>;
++		renesas,channel = <1 2>;
+ 		clocks = <&fclk>;
+ 		clock-names = "fck";
+ 	};
+--- linux-4.4.302.orig/arch/h8300/boot/dts/h8s_sim.dts
++++ linux-4.4.302/arch/h8300/boot/dts/h8s_sim.dts
+@@ -69,7 +69,8 @@
+ 
+ 	tpu: timer@ffffe0 {
+ 		compatible = "renesas,tpu";
+-		reg = <0xffffe0 16>, <0xfffff0 12>;
++		reg = <0xffffe0 16>, <0xfffff0 12>, <0xffffc0 8>;
++		renesas,channel = <1 2>;
+ 		clocks = <&fclk>;
+ 		clock-names = "fck";
+ 	};
