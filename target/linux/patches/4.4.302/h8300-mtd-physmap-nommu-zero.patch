@@ -1,0 +1,30 @@
+diff -Nur linux-4.4.302.orig/drivers/mtd/maps/physmap_of.c linux-4.4.302/drivers/mtd/maps/physmap_of.c
+--- linux-4.4.302.orig/drivers/mtd/maps/physmap_of.c	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/drivers/mtd/maps/physmap_of.c	2026-08-31 00:23:11.785855166 +0200
+@@ -214,9 +214,23 @@
+ 
+ 		err = -EBUSY;
+ 		res_size = resource_size(&res);
+-		info->list[i].map.virt = devm_ioremap_resource(&dev->dev, &res);
+-		if (IS_ERR(info->list[i].map.virt)) {
+-			err = PTR_ERR(info->list[i].map.virt);
++		if (!devm_request_mem_region(&dev->dev, res.start, res_size,
++					     dev_name(&dev->dev)))
++			goto err_out;
++
++		info->list[i].map.virt = devm_ioremap(&dev->dev, res.start,
++						      res_size);
++		/*
++		 * Without an MMU ioremap() hands the physical address back
++		 * unchanged, so a flash based at 0 maps to NULL -- a valid
++		 * address here, not a failure.  Only treat NULL as an error
++		 * where it cannot be the mapping we asked for.
++		 */
++		if (!info->list[i].map.virt &&
++		    (IS_ENABLED(CONFIG_MMU) || res.start != 0)) {
++			dev_err(&dev->dev, "ioremap failed for resource %pR\n",
++				&res);
++			err = -ENOMEM;
+ 			goto err_out;
+ 		}
+ 
