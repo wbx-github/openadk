@@ -1,0 +1,37 @@
+h8300: length of the flag-setting add/sub must account for the long form
+
+adds/subs #1,#2,#4 are two bytes but do not set the condition flags, so
+when the result is branched on, output_plussi() has to emit the six-byte
+sub.l #imm:32 instead.  compute_plussi_length() knows this and returns 6
+for that case, but its only caller passed need_flags unconditionally as
+false, so the insn was costed as two bytes.
+
+Four bytes too few is enough to make the branch selection pick an 8-bit
+displacement that does not reach.  gas defers every h8300 branch to the
+linker (linkrelax = 1) and the linker may only shrink, never grow, so the
+displacement is silently truncated to a byte and the branch jumps the
+wrong way.  Seen as a hang in uClibc-ng's memcpy(): the loop in
+_wordcopy_fwd_aligned() spans exactly 132 bytes, gcc computed 128.
+
+Introduced by gcc commit 7da97411b048 ("Use add/sub/neg insns to
+eliminate compare/test insns on H8"), which taught output_plussi() the
+need_flags distinction and prepared compute_plussi_length() for it but
+left the length attribute passing false.  Still present in gcc trunk.
+
+Reproducer, miscompiled with -Os -mh -mint32 at exactly 16 assignments:
+
+  extern volatile long v[16];
+  void f (long n) { do { v[0]=n; ... v[15]=n; n -= 4; } while (n != 0); }
+
+diff -Nur gcc-13.4.0.orig/gcc/config/h8300/addsub.md gcc-13.4.0/gcc/config/h8300/addsub.md
+--- gcc-13.4.0.orig/gcc/config/h8300/addsub.md	2026-08-30 15:56:00.012266632 +0200
++++ gcc-13.4.0/gcc/config/h8300/addsub.md	2026-08-30 15:56:00.156816287 +0200
+@@ -132,7 +132,7 @@
+   return output_plussi (operands, GET_CODE (x) != CLOBBER);
+ }
+   [(set (attr "length")
+-	(symbol_ref "compute_plussi_length (operands, false)"))])
++	(symbol_ref "compute_plussi_length (operands, GET_CODE (XVECEXP (PATTERN (insn), 0, 1)) != CLOBBER)"))])
+ 
+ ;; ----------------------------------------------------------------------
+ ;; SUBTRACT INSTRUCTIONS
