@@ -1,0 +1,63 @@
+diff -Nur linux-4.4.302.orig/arch/h8300/include/asm/bitops.h linux-4.4.302/arch/h8300/include/asm/bitops.h
+--- linux-4.4.302.orig/arch/h8300/include/asm/bitops.h	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/arch/h8300/include/asm/bitops.h	2026-08-31 00:23:11.784425023 +0200
+@@ -135,7 +135,7 @@
+ 			OP " %3,%1\n\t"					\
+ 			"rotxl.l %0\n\t"				\
+ 			: "=r"(retval), "+WU"(*b_addr)			\
+-			: "0" (retval), "i"(nr & 7));			\
++			: "0" (retval), "i"(nr & 7) : "cc");		\
+ 	} else {							\
+ 		__asm__("btst %s3,%1\n\t"				\
+ 			OP " %s3,%1\n\t"				\
+@@ -143,7 +143,7 @@
+ 			"inc.l #1,%0\n\t"				\
+ 			"1:"						\
+ 			: "=r"(retval), "+WU"(*b_addr)			\
+-			: "0" (retval), "r"(bit));			\
++			: "0" (retval), "r"(bit) : "cc");		\
+ 	}								\
+ 	return retval;							\
+ }
+diff -Nur linux-4.4.302.orig/arch/h8300/include/asm/cmpxchg.h linux-4.4.302/arch/h8300/include/asm/cmpxchg.h
+--- linux-4.4.302.orig/arch/h8300/include/asm/cmpxchg.h	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/arch/h8300/include/asm/cmpxchg.h	2026-08-31 00:23:11.783013840 +0200
+@@ -22,19 +22,22 @@
+ 		__asm__ __volatile__
+ 			("mov.b %2,%0\n\t"
+ 			 "mov.b %1,%2"
+-			 : "=&r" (tmp) : "r" (x), "m" (*__xg(ptr)));
++			 : "=&r" (tmp) : "r" (x), "m" (*__xg(ptr))
++			 : "cc");
+ 		break;
+ 	case 2:
+ 		__asm__ __volatile__
+ 			("mov.w %2,%0\n\t"
+ 			 "mov.w %1,%2"
+-			 : "=&r" (tmp) : "r" (x), "m" (*__xg(ptr)));
++			 : "=&r" (tmp) : "r" (x), "m" (*__xg(ptr))
++			 : "cc");
+ 		break;
+ 	case 4:
+ 		__asm__ __volatile__
+ 			("mov.l %2,%0\n\t"
+ 			 "mov.l %1,%2"
+-			 : "=&r" (tmp) : "r" (x), "m" (*__xg(ptr)));
++			 : "=&r" (tmp) : "r" (x), "m" (*__xg(ptr))
++			 : "cc");
+ 		break;
+ 	default:
+ 		tmp = 0;
+diff -Nur linux-4.4.302.orig/arch/h8300/include/asm/thread_info.h linux-4.4.302/arch/h8300/include/asm/thread_info.h
+--- linux-4.4.302.orig/arch/h8300/include/asm/thread_info.h	2022-02-03 09:27:54.000000000 +0100
++++ linux-4.4.302/arch/h8300/include/asm/thread_info.h	2026-08-31 00:23:11.781512536 +0200
+@@ -56,7 +56,8 @@
+ 	__asm__("mov.l	sp, %0\n\t"
+ 		"and.w	%1, %T0"
+ 		: "=&r"(ti)
+-		: "i" (~(THREAD_SIZE-1) & 0xffff));
++		: "i" (~(THREAD_SIZE-1) & 0xffff)
++		: "cc");
+ 	return ti;
+ }
+ 
