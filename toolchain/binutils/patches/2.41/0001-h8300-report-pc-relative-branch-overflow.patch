@@ -1,0 +1,39 @@
+h8300: report an out-of-range pc-relative branch instead of truncating
+
+The HOWTOs for R_H8_PCREL8 and R_H8_PCREL16 ask for complain_overflow_signed,
+but elf32_h8_final_link_relocate() writes the displacement with a bare
+bfd_put_8/bfd_put_16 and returns bfd_reloc_ok, so the check never runs.  An
+overflowing displacement is silently truncated and the branch goes somewhere
+else entirely.
+
+That matters more on h8300 than elsewhere: gas sets linkrelax = 1
+unconditionally (gas/config/tc-h8300.c), so it never resolves a branch itself,
+and elf32_h8_relax_section() can only delete bytes, never insert them.  Nothing
+between the compiler and the final image checks the range.
+
+Returning bfd_reloc_overflow is enough; elf32_h8_relocate_section() already
+turns it into the usual "relocation truncated to fit" diagnostic.
+
+diff -Nur binutils-2.41.orig/bfd/elf32-h8300.c binutils-2.41/bfd/elf32-h8300.c
+--- binutils-2.41.orig/bfd/elf32-h8300.c	2026-08-30 15:56:54.862707118 +0200
++++ binutils-2.41/bfd/elf32-h8300.c	2026-08-30 15:56:55.002949931 +0200
+@@ -402,6 +402,9 @@
+ 	 this minor issue.  */
+       value -= 2;
+ 
++      if ((bfd_signed_vma) value < -0x8000 || (bfd_signed_vma) value > 0x7fff)
++	return bfd_reloc_overflow;
++
+       bfd_put_16 (input_bfd, value, hit_data);
+       return bfd_reloc_ok;
+ 
+@@ -416,6 +419,9 @@
+ 	 this minor issue.  */
+       value -= 1;
+ 
++      if ((bfd_signed_vma) value < -0x80 || (bfd_signed_vma) value > 0x7f)
++	return bfd_reloc_overflow;
++
+       bfd_put_8 (input_bfd, value, hit_data);
+       return bfd_reloc_ok;
+ 
