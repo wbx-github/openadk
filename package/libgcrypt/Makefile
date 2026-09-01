@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libgcrypt
-PKG_VERSION:=		1.12.2
+PKG_VERSION:=		1.12.3
 PKG_RELEASE:=		1
-PKG_HASH:=		7ce33c2492221a0436f96a8500215e9f3e3dcb5fd26a757cd415e7a843babd5e
+PKG_HASH:=		98d1b0b3202d2b03fa754a35aa3cbbfcf526a3260d8d2ee213748001b1043006
 PKG_DESCR:=		crypto library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgpg-error
