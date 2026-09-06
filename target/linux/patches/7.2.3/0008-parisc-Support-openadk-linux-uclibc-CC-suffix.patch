@@ -1,0 +1,22 @@
+From 5a2fdd49d059cafa1588b1160593c8d6465fe033 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Sun, 6 Sep 2026 13:46:14 +0200
+Subject: [PATCH] parisc: Support openadk-linux-uclibc CC suffix
+
+---
+ arch/parisc/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/parisc/Makefile b/arch/parisc/Makefile
+index 4391783521bd9..cac2d082ca952 100644
+--- a/arch/parisc/Makefile
++++ b/arch/parisc/Makefile
+@@ -43,7 +43,7 @@ export LD_BFD
+ # This means that for 64BIT, both the 64-bit tools and the 32-bit tools
+ # need to be in the path.
+ CC_ARCHES_32 = hppa hppa2.0 hppa1.1
+-CC_SUFFIXES  = linux linux-gnu unknown-linux-gnu suse-linux
++CC_SUFFIXES  = linux linux-gnu unknown-linux-gnu suse-linux openadk-linux-uclibc
+ CROSS32_COMPILE := $(call cc-cross-prefix, \
+ 	$(foreach a,$(CC_ARCHES_32), \
+ 	$(foreach s,$(CC_SUFFIXES),$(a)-$(s)-)))

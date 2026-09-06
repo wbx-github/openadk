@@ -1,4 +1,4 @@
-From b6ffbcb525539139a9b2255b992622f92757ea37 Mon Sep 17 00:00:00 2001
+From 54195222e2ef6b124937ebd5374f5b8757ea35fa Mon Sep 17 00:00:00 2001
 From: Artur Rojek <contact@artur-rojek.eu>
 Date: Fri, 1 Aug 2025 22:52:22 +0200
 Subject: [PATCH] pcmcia: Add Hitachi HD6446x PCMCIA socket support
@@ -20,7 +20,7 @@ WIP code. DO NOT UPSTREAM!
  create mode 100644 include/pcmcia/hd6446x_pcc.h
 
 diff --git a/arch/sh/boards/mach-hp6xx/setup.c b/arch/sh/boards/mach-hp6xx/setup.c
-index 2ceead68d7bf..c697b8e1f5ac 100644
+index 2ceead68d7bf8..c697b8e1f5acb 100644
 --- a/arch/sh/boards/mach-hp6xx/setup.c
 +++ b/arch/sh/boards/mach-hp6xx/setup.c
 @@ -18,19 +18,23 @@
@@ -106,7 +106,7 @@ index 2ceead68d7bf..c697b8e1f5ac 100644
  	v |=	HD64461_STBCR_SURTST | HD64461_STBCR_SIRST	|
  		HD64461_STBCR_STM1ST | HD64461_STBCR_STM0ST	|
 diff --git a/arch/sh/cchips/hd6446x/hd64461.c b/arch/sh/cchips/hd6446x/hd64461.c
-index 81764882d87d..965486584ee5 100644
+index 81764882d87d3..965486584ee5a 100644
 --- a/arch/sh/cchips/hd6446x/hd64461.c
 +++ b/arch/sh/cchips/hd6446x/hd64461.c
 @@ -4,7 +4,9 @@
@@ -195,7 +195,7 @@ index 81764882d87d..965486584ee5 100644
  }
  
 diff --git a/arch/sh/include/asm/hd64461.h b/arch/sh/include/asm/hd64461.h
-index d2c485fa333b..91823ec07f79 100644
+index d2c485fa333b5..91823ec07f790 100644
 --- a/arch/sh/include/asm/hd64461.h
 +++ b/arch/sh/include/asm/hd64461.h
 @@ -17,9 +17,9 @@
@@ -212,10 +212,10 @@ index d2c485fa333b..91823ec07f79 100644
  /* Area 5 - Slot 1 - memory card only */
  #define	HD64461_PCC1_BASE	HD64461_IO_OFFSET(0x4000000)
 diff --git a/drivers/pcmcia/Kconfig b/drivers/pcmcia/Kconfig
-index dddb235dd020..f2434ca15c8e 100644
+index d1d25aa296ada..865df3dc70c24 100644
 --- a/drivers/pcmcia/Kconfig
 +++ b/drivers/pcmcia/Kconfig
-@@ -159,6 +159,13 @@ config PCMCIA_ALCHEMY_DEVBOARD
+@@ -129,6 +129,13 @@ config PCMCIA_ALCHEMY_DEVBOARD
  
  	  This driver is also available as a module called db1xxx_ss.ko
  
@@ -230,10 +230,10 @@ index dddb235dd020..f2434ca15c8e 100644
  	tristate "MyCable XXS1500 PCMCIA socket support"
  	depends on PCMCIA && MIPS_XXS1500
 diff --git a/drivers/pcmcia/Makefile b/drivers/pcmcia/Makefile
-index c9d51b150682..764df19be544 100644
+index ee2f204cbc218..51c4283c3d608 100644
 --- a/drivers/pcmcia/Makefile
 +++ b/drivers/pcmcia/Makefile
-@@ -33,6 +33,7 @@ obj-$(CONFIG_OMAP_CF)				+= omap_cf.o
+@@ -29,6 +29,7 @@ obj-$(CONFIG_OMAP_CF)				+= omap_cf.o
  obj-$(CONFIG_ELECTRA_CF)			+= electra_cf.o
  obj-$(CONFIG_PCMCIA_ALCHEMY_DEVBOARD)		+= db1xxx_ss.o
  obj-$(CONFIG_PCMCIA_MAX1600)			+= max1600.o
@@ -243,7 +243,7 @@ index c9d51b150682..764df19be544 100644
  sa1111_cs-$(CONFIG_ASSABET_NEPONSET)		+= sa1111_neponset.o
 diff --git a/drivers/pcmcia/hd6446x_pcc.c b/drivers/pcmcia/hd6446x_pcc.c
 new file mode 100644
-index 000000000000..31074f93b55b
+index 0000000000000..31074f93b55be
 --- /dev/null
 +++ b/drivers/pcmcia/hd6446x_pcc.c
 @@ -0,0 +1,453 @@
@@ -702,7 +702,7 @@ index 000000000000..31074f93b55b
 +module_platform_driver(hd64461_pcmcia_socket_driver);
 diff --git a/include/pcmcia/hd6446x_pcc.h b/include/pcmcia/hd6446x_pcc.h
 new file mode 100644
-index 000000000000..d1fe98f0a701
+index 0000000000000..d1fe98f0a7018
 --- /dev/null
 +++ b/include/pcmcia/hd6446x_pcc.h
 @@ -0,0 +1,9 @@
@@ -715,6 +715,3 @@ index 000000000000..d1fe98f0a701
 +};
 +
 +#endif /* _HD6446X_PCC_ */
--- 
-2.50.1
-

@@ -1,7 +1,7 @@
-From 871d1697a67642e2b2a3ffb577ef028bde83e483 Mon Sep 17 00:00:00 2001
+From 1c58c1ac71968ccc9e12a9cec17456131687b699 Mon Sep 17 00:00:00 2001
 From: Sam Price <thesamprice@gmail.com>
 Date: Fri, 21 Aug 2026 17:18:09 +0200
-Subject: [PATCH 6/6] microblaze: preserve the MSR carry flags across signals
+Subject: [PATCH] microblaze: preserve the MSR carry flags across signals
 
 setup_sigcontext() and restore_sigcontext() copy r0-r31, pc, ear, esr and
 fsr to and from the signal frame but never touch MSR.  The interrupted
@@ -54,7 +54,7 @@ Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
  1 file changed, 18 insertions(+)
 
 diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
-index 4956014a9937..6bbc16f98d5e 100644
+index 4956014a99379..6bbc16f98d5eb 100644
 --- a/arch/microblaze/kernel/signal.c
 +++ b/arch/microblaze/kernel/signal.c
 @@ -33,6 +33,7 @@
@@ -96,6 +96,3 @@ index 4956014a9937..6bbc16f98d5e 100644
  #undef COPY
  
  	err |= __put_user(mask, &sc->oldmask);
--- 
-2.47.3
-

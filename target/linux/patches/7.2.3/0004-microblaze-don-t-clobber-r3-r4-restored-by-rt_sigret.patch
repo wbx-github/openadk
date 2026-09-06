@@ -1,7 +1,7 @@
-From 962fccaf71c15530defface36a77fa8e0d623472 Mon Sep 17 00:00:00 2001
+From 4d787015fe9d0a65586d2dcb5ecd0b1b5d8c4844 Mon Sep 17 00:00:00 2001
 From: Ramin Moussavi <ramin.moussavi@yacoub.de>
 Date: Fri, 21 Aug 2026 17:18:07 +0200
-Subject: [PATCH 4/6] microblaze: don't clobber r3/r4 restored by rt_sigreturn
+Subject: [PATCH] microblaze: don't clobber r3/r4 restored by rt_sigreturn
 
 ret_from_trap begins by storing the system call return values r3 and r4
 back into the saved user pt_regs.  That is right for an ordinary system
@@ -60,10 +60,10 @@ Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
  1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
-index 582d7256d815..fea235f139d7 100644
+index 582d7256d8154..fea235f139d7a 100644
 --- a/arch/microblaze/kernel/entry.S
 +++ b/arch/microblaze/kernel/entry.S
-@@ -434,7 +434,13 @@ C_ENTRY(_user_exception):
+@@ -434,7 +434,13 @@
  C_ENTRY(ret_from_trap):
  	swi	r3, r1, PT_R3
  	swi	r4, r1, PT_R4
@@ -78,7 +78,7 @@ index 582d7256d815..fea235f139d7 100644
  	lwi	r11, r1, PT_MODE;
  /* See if returning to kernel mode, if so, skip resched &c.  */
  	bnei	r11, 2f;
-@@ -518,6 +524,15 @@ C_ENTRY(ret_from_kernel_thread):
+@@ -518,6 +524,15 @@ TRAP_return:		/* Make global symbol for debugging */
  
  C_ENTRY(sys_rt_sigreturn_wrapper):
  	addik	r30, r0, 0		/* no restarts */
@@ -94,6 +94,3 @@ index 582d7256d815..fea235f139d7 100644
  	brid	sys_rt_sigreturn	/* Do real work */
  	addik	r5, r1, 0;		/* add user context as 1st arg */
  
--- 
-2.47.3
-

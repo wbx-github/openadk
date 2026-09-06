@@ -1,0 +1,21 @@
+From 2bd8bfd0c5dcbeb91590b83028ff69d2e7d48e10 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Sun, 6 Sep 2026 13:47:12 +0200
+Subject: [PATCH] net: natsemi: Have MACSONIC select BITREVERSE
+
+---
+ drivers/net/ethernet/natsemi/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/ethernet/natsemi/Kconfig b/drivers/net/ethernet/natsemi/Kconfig
+index 0a92101aa3f1f..2facafc5adcbe 100644
+--- a/drivers/net/ethernet/natsemi/Kconfig
++++ b/drivers/net/ethernet/natsemi/Kconfig
+@@ -19,6 +19,7 @@ if NET_VENDOR_NATSEMI
+ config MACSONIC
+ 	tristate "Macintosh SONIC based ethernet (onboard, NuBus, LC, CS)"
+ 	depends on MAC
++	select BITREVERSE
+ 	help
+ 	  Support for NatSemi SONIC based Ethernet devices.  This includes
+ 	  the onboard Ethernet in many Quadras as well as some LC-PDS,

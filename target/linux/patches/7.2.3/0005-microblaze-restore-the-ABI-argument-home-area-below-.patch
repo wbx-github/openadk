@@ -1,8 +1,8 @@
-From 766e785ac2e6e4ff63fac1d7f445eb37ed3ead36 Mon Sep 17 00:00:00 2001
+From 60fcb203e892b05bbb48edb6eeee6ccd85d907bb Mon Sep 17 00:00:00 2001
 From: Ramin Moussavi <ramin.moussavi@yacoub.de>
 Date: Fri, 21 Aug 2026 17:18:08 +0200
-Subject: [PATCH 5/6] microblaze: restore the ABI argument home area below
- pt_regs (PTO)
+Subject: [PATCH] microblaze: restore the ABI argument home area below pt_regs
+ (PTO)
 
 The MicroBlaze ABI has the caller reserve stack space for the arguments
 it passes in registers: REG_PARM_STACK_SPACE is 24 and
@@ -59,7 +59,7 @@ Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
  5 files changed, 189 insertions(+), 165 deletions(-)
 
 diff --git a/arch/microblaze/include/asm/entry.h b/arch/microblaze/include/asm/entry.h
-index 9efadf12397c..05acf4d7bc4b 100644
+index 9efadf12397ca..05acf4d7bc4b1 100644
 --- a/arch/microblaze/include/asm/entry.h
 +++ b/arch/microblaze/include/asm/entry.h
 @@ -21,6 +21,19 @@
@@ -83,7 +83,7 @@ index 9efadf12397c..05acf4d7bc4b 100644
  DECLARE_PER_CPU(unsigned int, KSP); /* Saved kernel stack pointer */
  DECLARE_PER_CPU(unsigned int, KM); /* Kernel/user mode */
 diff --git a/arch/microblaze/include/asm/processor.h b/arch/microblaze/include/asm/processor.h
-index d59bdfffca7c..595c24db2728 100644
+index d59bdfffca7cc..595c24db27283 100644
 --- a/arch/microblaze/include/asm/processor.h
 +++ b/arch/microblaze/include/asm/processor.h
 @@ -73,7 +73,7 @@ unsigned long __get_wchan(struct task_struct *p);
@@ -96,10 +96,10 @@ index d59bdfffca7c..595c24db2728 100644
  #  define task_sp(task)	(task_regs(task)->r1)
  #  define task_pc(task)	(task_regs(task)->pc)
 diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
-index fea235f139d7..dfca6ce2d628 100644
+index fea235f139d7a..dfca6ce2d6284 100644
 --- a/arch/microblaze/kernel/entry.S
 +++ b/arch/microblaze/kernel/entry.S
-@@ -177,78 +177,78 @@ syscall_debug_table:
+@@ -177,78 +177,78 @@
  1:
  
  #define SAVE_REGS \
@@ -241,7 +241,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	andni	r11, r11, MSR_EIP;          /* clear EIP */             \
  	ori	r11, r11, MSR_EE | MSR_BIP; /* set EE and BIP */        \
  	mts	rmsr , r11;						\
-@@ -265,11 +265,11 @@ syscall_debug_table:
+@@ -265,11 +265,11 @@
  	lwi	r1, r0, TOPHYS(PER_CPU(ENTRY_SP));			\
  	/* FIXME: I can add these two lines to one */			\
  	/* tophys(r1,r1); */						\
@@ -256,7 +256,7 @@ index fea235f139d7..dfca6ce2d628 100644
  1:	/* User-mode state save.  */					\
  	lwi	r1, r0, TOPHYS(PER_CPU(CURRENT_SAVE)); /* get saved current */\
  	tophys(r1,r1);							\
-@@ -277,12 +277,13 @@ syscall_debug_table:
+@@ -277,12 +277,13 @@
  	/* MS these three instructions can be added to one */		\
  	/* addik	r1, r1, THREAD_SIZE; */				\
  	/* tophys(r1,r1); */						\
@@ -274,7 +274,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	/* MS: I am clearing UMS even in case when I come from kernel space */ \
  	clear_ums; 							\
  2:	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
-@@ -292,7 +293,7 @@ syscall_debug_table:
+@@ -292,7 +293,7 @@
  .extern cpuinfo
  
  C_ENTRY(mb_flush_dcache):
@@ -283,7 +283,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	SAVE_REGS
  
  	addik	r3, r0, cpuinfo
-@@ -305,12 +306,12 @@ C_ENTRY(mb_flush_dcache):
+@@ -305,12 +306,12 @@
  	addk	r9, r9, r8
  
  	RESTORE_REGS
@@ -298,7 +298,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	SAVE_REGS
  
  	addik	r3, r0, cpuinfo
-@@ -323,7 +324,7 @@ C_ENTRY(mb_invalidate_icache):
+@@ -323,7 +324,7 @@
  	addk	r9, r9, r8
  
  	RESTORE_REGS
@@ -307,7 +307,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	rtsd	r15, 8
  	nop
  
-@@ -350,18 +351,18 @@ C_ENTRY(_user_exception):
+@@ -350,18 +351,18 @@
  	addik	r1, r1, THREAD_SIZE;
  	tophys(r1,r1);
  
@@ -332,7 +332,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	tovirt(r1,r1)
  
  /* where the trap should return need -8 to adjust for rtsd r15, 8*/
-@@ -380,18 +381,18 @@ C_ENTRY(_user_exception):
+@@ -380,18 +381,18 @@
  	beqi	r11, 4f
  
  	addik	r3, r0, -ENOSYS
@@ -359,7 +359,7 @@ index fea235f139d7..dfca6ce2d628 100644
  4:
  /* Jump to the appropriate function for the system call number in r12
   * (r12 is not preserved), or return an error if r12 is not valid.
-@@ -432,8 +433,8 @@ C_ENTRY(_user_exception):
+@@ -432,8 +433,8 @@
  /* Entry point used to return from a syscall/trap */
  /* We re-enable BIP bit before state restore */
  C_ENTRY(ret_from_trap):
@@ -370,7 +370,7 @@ index fea235f139d7..dfca6ce2d628 100644
  /*
   * Entry point for returns that must not store r3/r4 back into pt_regs,
   * i.e. rt_sigreturn, which has already restored them from the signal
-@@ -441,7 +442,7 @@ C_ENTRY(ret_from_trap):
+@@ -441,7 +442,7 @@
   * so it stays correct if the number of stores above ever changes.
   */
  ret_from_trap_no_rval:
@@ -379,7 +379,7 @@ index fea235f139d7..dfca6ce2d628 100644
  /* See if returning to kernel mode, if so, skip resched &c.  */
  	bnei	r11, 2f;
  	/* We're returning to user mode, so check for various conditions that
-@@ -453,7 +454,7 @@ ret_from_trap_no_rval:
+@@ -453,7 +454,7 @@
  	beqi	r11, 1f
  
  	brlid	r15, do_syscall_trace_leave
@@ -388,7 +388,7 @@ index fea235f139d7..dfca6ce2d628 100644
  1:
  	/* We're returning to user mode, so check for various conditions that
  	 * trigger rescheduling. */
-@@ -472,7 +473,7 @@ ret_from_trap_no_rval:
+@@ -472,7 +473,7 @@
  	andi	r11, r19, _TIF_SIGPENDING | _TIF_NOTIFY_RESUME;
  	beqi	r11, 4f;		/* Signals to handle, handle them */
  
@@ -397,7 +397,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	bralid	r15, do_notify_resume;	/* Handle any signals */
  	add	r6, r30, r0;		/* Arg 2: int in_syscall */
  	add	r30, r0, r0		/* no more restarts */
-@@ -484,7 +485,11 @@ ret_from_trap_no_rval:
+@@ -484,7 +485,11 @@
  	VM_OFF;
  	tophys(r1,r1);
  	RESTORE_REGS_RTBD;
@@ -410,7 +410,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	lwi	r1, r1, PT_R1 - PT_SIZE;/* Restore user stack pointer. */
  	bri	6f;
  
-@@ -493,7 +498,7 @@ ret_from_trap_no_rval:
+@@ -493,7 +498,7 @@
  	VM_OFF;
  	tophys(r1,r1);
  	RESTORE_REGS_RTBD;
@@ -419,7 +419,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	tovirt(r1,r1);
  6:
  TRAP_return:		/* Make global symbol for debugging */
-@@ -534,7 +539,7 @@ C_ENTRY(sys_rt_sigreturn_wrapper):
+@@ -534,7 +539,7 @@ TRAP_return:		/* Make global symbol for debugging */
  	 */
  	addik	r15, r0, ret_from_trap_no_rval - 8
  	brid	sys_rt_sigreturn	/* Do real work */
@@ -428,7 +428,7 @@ index fea235f139d7..dfca6ce2d628 100644
  
  /*
   * HW EXCEPTION rutine start
-@@ -545,7 +550,7 @@ C_ENTRY(full_exception_trap):
+@@ -545,7 +550,7 @@ TRAP_return:		/* Make global symbol for debugging */
  	addik	r17, r17, -4
  	SAVE_STATE /* Save registers */
  	/* PC, before IRQ/trap - this is one instruction above */
@@ -437,7 +437,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	tovirt(r1,r1)
  	/* FIXME this can be store directly in PT_ESR reg.
  	 * I tested it but there is a fault */
-@@ -555,7 +560,7 @@ C_ENTRY(full_exception_trap):
+@@ -555,7 +560,7 @@ TRAP_return:		/* Make global symbol for debugging */
  	mfs	r7, rfsr;		/* save FSR */
  	mts	rfsr, r0;	/* Clear sticky fsr */
  	rted	r0, full_exception
@@ -446,7 +446,7 @@ index fea235f139d7..dfca6ce2d628 100644
  
  /*
   * Unaligned data trap.
-@@ -581,14 +586,14 @@ C_ENTRY(unaligned_data_trap):
+@@ -581,14 +586,14 @@ TRAP_return:		/* Make global symbol for debugging */
  	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
  	SAVE_STATE		/* Save registers.*/
  	/* PC, before IRQ/trap - this is one instruction above */
@@ -463,7 +463,7 @@ index fea235f139d7..dfca6ce2d628 100644
  
  /*
   * Page fault traps.
-@@ -611,30 +616,30 @@ C_ENTRY(unaligned_data_trap):
+@@ -611,30 +616,30 @@ TRAP_return:		/* Make global symbol for debugging */
  C_ENTRY(page_fault_data_trap):
  	SAVE_STATE		/* Save registers.*/
  	/* PC, before IRQ/trap - this is one instruction above */
@@ -499,7 +499,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	bnei	r11, 2f;		/* See if returning to kernel mode, */
  					/* ... if so, skip resched &c.  */
  
-@@ -666,7 +671,7 @@ C_ENTRY(ret_from_exc):
+@@ -666,7 +671,7 @@ TRAP_return:		/* Make global symbol for debugging */
  	 * complete register state.  Here we save anything not saved by
  	 * the normal entry sequence, so that it may be safely restored
  	 * (in a possibly modified form) after do_notify_resume returns. */
@@ -508,7 +508,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	bralid	r15, do_notify_resume;	/* Handle any signals */
  	addi	r6, r0, 0;		/* Arg 2: int in_syscall */
  	bri	1b
-@@ -678,7 +683,7 @@ C_ENTRY(ret_from_exc):
+@@ -678,7 +683,7 @@ TRAP_return:		/* Make global symbol for debugging */
  	tophys(r1,r1);
  
  	RESTORE_REGS_RTBD;
@@ -517,7 +517,7 @@ index fea235f139d7..dfca6ce2d628 100644
  
  	lwi	r1, r1, PT_R1 - PT_SIZE; /* Restore user stack pointer. */
  	bri	6f;
-@@ -687,7 +692,7 @@ C_ENTRY(ret_from_exc):
+@@ -687,7 +692,7 @@ TRAP_return:		/* Make global symbol for debugging */
  	VM_OFF;
  	tophys(r1,r1);
  	RESTORE_REGS_RTBD;
@@ -526,7 +526,7 @@ index fea235f139d7..dfca6ce2d628 100644
  
  	tovirt(r1,r1);
  6:
-@@ -720,10 +725,10 @@ C_ENTRY(_interrupt):
+@@ -720,10 +725,10 @@ EXC_return:		/* Make global symbol for debugging */
  	tophys(r1,r1); /* MS: I have in r1 physical address where stack is */
  	/* save registers */
  /* MS: Make room on the stack -> activation record */
@@ -539,7 +539,7 @@ index fea235f139d7..dfca6ce2d628 100644
  1:
  /* User-mode state save. */
   /* MS: get the saved current */
-@@ -733,23 +738,23 @@ C_ENTRY(_interrupt):
+@@ -733,23 +738,23 @@ EXC_return:		/* Make global symbol for debugging */
  	addik	r1, r1, THREAD_SIZE;
  	tophys(r1,r1);
  	/* save registers */
@@ -568,7 +568,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	bnei	r11, 2f;
  
  1:
-@@ -765,7 +770,7 @@ ret_from_irq:
+@@ -765,7 +770,7 @@ irq_call:rtbd	r0, do_IRQ;
  5:	andi	r11, r19, _TIF_SIGPENDING | _TIF_NOTIFY_RESUME;
  	beqid	r11, no_intr_resched
  /* Handle a signal return; Pending signals should be in r18. */
@@ -577,7 +577,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	bralid	r15, do_notify_resume;	/* Handle any signals */
  	addi	r6, r0, 0; /* Arg 2: int in_syscall */
  	bri	1b
-@@ -778,7 +783,7 @@ no_intr_resched:
+@@ -778,7 +783,7 @@ irq_call:rtbd	r0, do_IRQ;
  	VM_OFF;
  	tophys(r1,r1);
  	RESTORE_REGS
@@ -586,7 +586,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	lwi	r1, r1, PT_R1 - PT_SIZE;
  	bri	6f;
  /* MS: Return to kernel state. */
-@@ -801,7 +806,7 @@ restore:
+@@ -801,7 +806,7 @@ irq_call:rtbd	r0, do_IRQ;
  	VM_OFF /* MS: turn off MMU */
  	tophys(r1,r1)
  	RESTORE_REGS
@@ -595,7 +595,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	tovirt(r1,r1);
  6:
  IRQ_return: /* MS: Make global symbol for debugging */
-@@ -820,29 +825,29 @@ C_ENTRY(_xtmr_manager_reset):
+@@ -820,29 +825,29 @@ IRQ_return: /* MS: Make global symbol for debugging */
  	lwi	r1, r0, xmb_manager_stackpointer
  
  	/* Restore MSR */
@@ -632,7 +632,7 @@ index fea235f139d7..dfca6ce2d628 100644
  restore_tlb:
  	add	r6, r6, r1
  	add	r7, r7, r1
-@@ -868,9 +873,9 @@ ret_from_reset:
+@@ -868,9 +873,9 @@ IRQ_return: /* MS: Make global symbol for debugging */
  	VM_OFF
  	/* MS: Restore all regs */
  	RESTORE_REGS
@@ -645,7 +645,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	rtbd	r16, 0
  	nop
  
-@@ -885,11 +890,11 @@ C_ENTRY(_xmb_manager_break):
+@@ -885,11 +890,11 @@ IRQ_return: /* MS: Make global symbol for debugging */
  	 * Reserve memory in the stack for context store/restore
  	 * (which includes memory for storing tlbs (max two tlbs))
  	 */
@@ -660,7 +660,7 @@ index fea235f139d7..dfca6ce2d628 100644
  
  	lwi	r6, r0, TOPHYS(xmb_manager_baseaddr)
  	lwi	r7, r0, TOPHYS(xmb_manager_crval)
-@@ -903,25 +908,25 @@ C_ENTRY(_xmb_manager_break):
+@@ -903,25 +908,25 @@ IRQ_return: /* MS: Make global symbol for debugging */
  
  	/* Save the special purpose registers  */
  	mfs	r2, rpid
@@ -693,7 +693,7 @@ index fea235f139d7..dfca6ce2d628 100644
  save_tlb:
  	add	r6, r6, r1
  	add	r7, r7, r1
-@@ -978,28 +983,28 @@ C_ENTRY(_debug_exception):
+@@ -978,28 +983,28 @@ IRQ_return: /* MS: Make global symbol for debugging */
  	lwi	r1, r0, TOPHYS(PER_CPU(ENTRY_SP)); /* Reload kernel stack-ptr*/
  
  	/* BIP bit is set on entry, no interrupts can occur */
@@ -733,7 +733,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	addik	r15, r0, dbtrap_call; /* return address */
  	rtbd	r0, microblaze_kgdb_break
  	nop;
-@@ -1015,16 +1020,16 @@ C_ENTRY(_debug_exception):
+@@ -1015,16 +1020,16 @@ IRQ_return: /* MS: Make global symbol for debugging */
  	addik	r1, r1, THREAD_SIZE;	/* calculate kernel stack pointer */
  	tophys(r1,r1);
  
@@ -804,7 +804,7 @@ index fea235f139d7..dfca6ce2d628 100644
  	SAVE_REGS
  
  	/* Switch to real mode */
-@@ -1197,7 +1202,7 @@ xmb_inject_err:
+@@ -1197,7 +1202,7 @@ ENTRY(_switch_to)
  	nop;
  1:
  	RESTORE_REGS
@@ -814,10 +814,10 @@ index fea235f139d7..dfca6ce2d628 100644
  	nop;
  .end xmb_inject_err
 diff --git a/arch/microblaze/kernel/hw_exception_handler.S b/arch/microblaze/kernel/hw_exception_handler.S
-index 07ea23965f81..4693916be526 100644
+index 07ea23965f817..4693916be5267 100644
 --- a/arch/microblaze/kernel/hw_exception_handler.S
 +++ b/arch/microblaze/kernel/hw_exception_handler.S
-@@ -313,6 +313,11 @@ _MB_HW_ExceptionVectorTable:
+@@ -313,6 +313,11 @@
  .align 4
  .ent _hw_exception_handler
  _hw_exception_handler:
@@ -830,7 +830,7 @@ index 07ea23965f81..4693916be526 100644
  	/* Save date to kernel memory. Here is the problem
  	 * when you came from user space */
 diff --git a/arch/microblaze/kernel/process.c b/arch/microblaze/kernel/process.c
-index 6cbf642d7b80..090e1697ea7a 100644
+index 6cbf642d7b801..090e1697ea7ae 100644
 --- a/arch/microblaze/kernel/process.c
 +++ b/arch/microblaze/kernel/process.c
 @@ -19,6 +19,7 @@
@@ -859,6 +859,3 @@ index 6cbf642d7b80..090e1697ea7a 100644
  	childregs->msr |= MSR_UMS;
  
  	/* we should consider the fact that childregs is a copy of the parent
--- 
-2.47.3
-

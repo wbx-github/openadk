@@ -1,8 +1,8 @@
-From feb8514a3df395e73702246f649c4a5f0388d11f Mon Sep 17 00:00:00 2001
+From a56cf6415e7e5dedcfdf576368abcc00b9e3a911 Mon Sep 17 00:00:00 2001
 From: Ramin Moussavi <ramin.moussavi@yacoub.de>
 Date: Fri, 21 Aug 2026 17:18:06 +0200
-Subject: [PATCH 3/6] microblaze: reserve the ABI argument-home area in the
- signal frame
+Subject: [PATCH] microblaze: reserve the ABI argument-home area in the signal
+ frame
 
 The MicroBlaze procedure call standard reserves [r1+0] for the return
 address and lets a callee store its incoming register arguments r5..r10
@@ -33,7 +33,7 @@ Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
  1 file changed, 8 insertions(+)
 
 diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
-index c78a0ff48066..4956014a9937 100644
+index c78a0ff480660..4956014a99379 100644
 --- a/arch/microblaze/kernel/signal.c
 +++ b/arch/microblaze/kernel/signal.c
 @@ -49,6 +49,14 @@ struct sigframe {
@@ -51,6 +51,3 @@ index c78a0ff48066..4956014a9937 100644
  	struct siginfo info;
  	struct ucontext uc;
  	unsigned long tramp[2];	/* signal trampoline */
--- 
-2.47.3
-

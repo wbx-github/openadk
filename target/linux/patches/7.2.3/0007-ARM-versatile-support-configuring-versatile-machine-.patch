@@ -1,7 +1,8 @@
-From 77c038d93769c92ef54cdbb50388564d1b37987b Mon Sep 17 00:00:00 2001
+From 89f746d24f7d216d8f168a621a6e434a032040ab Mon Sep 17 00:00:00 2001
 From: Greg Ungerer <gerg@kernel.org>
 Date: Fri, 23 Sep 2016 13:37:34 +1000
-Subject: [PATCH] ARM: versatile: support configuring versatile machine for no-MMU
+Subject: [PATCH] ARM: versatile: support configuring versatile machine for
+ no-MMU
 
 Allow the arm versatile machine to be configured for no-MMU operation.
 
@@ -21,45 +22,17 @@ versatile is selected for the MMU enabled case.
 
 Signed-off-by: Greg Ungerer <gerg@kernel.org>
 ---
- arch/arm/Kconfig                    |   13 ++++++++++++-
- arch/arm/include/asm/mach/map.h     |    1 +
- arch/arm/mach-versatile/Kconfig     |    2 +-
- arch/arm/mach-versatile/versatile.c |    4 ++++
+ arch/arm/Kconfig                    | 13 ++++++++++++-
+ arch/arm/include/asm/mach/map.h     |  1 +
+ arch/arm/mach-versatile/Kconfig     |  2 +-
+ arch/arm/mach-versatile/versatile.c |  4 ++++
  4 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-versatile/versatile.c b/arch/arm/mach-versatile/versatile.c
-index 02ba68abe533..835b51bc597b 100644
---- a/arch/arm/mach-versatile/versatile.c
-+++ b/arch/arm/mach-versatile/versatile.c
-@@ -22,7 +22,11 @@
- #include <asm/mach/map.h>
- 
- /* macro to get at MMIO space when running virtually */
-+#ifdef CONFIG_MMU
- #define IO_ADDRESS(x)		(((x) & 0x0fffffff) + (((x) >> 4) & 0x0f000000) + 0xf0000000)
-+#else
-+#define IO_ADDRESS(x)		(x)
-+#endif
- #define __io_address(n)		((void __iomem __force *)IO_ADDRESS(n))
- 
- /*
-diff --git a/arch/arm/include/asm/mach/map.h b/arch/arm/include/asm/mach/map.h
-index 2b8970d8e5a2..41844ab6aec5 100644
---- a/arch/arm/include/asm/mach/map.h
-+++ b/arch/arm/include/asm/mach/map.h
-@@ -60,6 +60,7 @@ extern int ioremap_page(unsigned long virt, unsigned long phys,
- #else
- #define iotable_init(map,num)	do { } while (0)
- #define vm_reserve_area_early(a,s,c)	do { } while (0)
-+#define debug_ll_io_init()	do { } while (0)
- #endif
- 
- #endif
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index e24a9820e12f..342e1efa583a 100644
+index 9187240a02db5..b4ed559cbea8e 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
-@@ -307,12 +307,23 @@ config MMU
+@@ -323,12 +323,23 @@ config MMU
  	  Select if you want MMU-based virtualised addressing space
  	  support by paged memory management. If unsure, say 'Y'.
  
@@ -84,8 +57,20 @@ index e24a9820e12f..342e1efa583a 100644
  config ARCH_MMAP_RND_BITS_MIN
  	default 8
  
+diff --git a/arch/arm/include/asm/mach/map.h b/arch/arm/include/asm/mach/map.h
+index 2b8970d8e5a2f..41844ab6aec51 100644
+--- a/arch/arm/include/asm/mach/map.h
++++ b/arch/arm/include/asm/mach/map.h
+@@ -60,6 +60,7 @@ extern int ioremap_page(unsigned long virt, unsigned long phys,
+ #else
+ #define iotable_init(map,num)	do { } while (0)
+ #define vm_reserve_area_early(a,s,c)	do { } while (0)
++#define debug_ll_io_init()	do { } while (0)
+ #endif
+ 
+ #endif
 diff --git a/arch/arm/mach-versatile/Kconfig b/arch/arm/mach-versatile/Kconfig
-index b1519b4dc03a..2f1bf95daeb0 100644
+index 5136180784401..74d3dce15bdae 100644
 --- a/arch/arm/mach-versatile/Kconfig
 +++ b/arch/arm/mach-versatile/Kconfig
 @@ -1,7 +1,7 @@
@@ -97,5 +82,19 @@ index b1519b4dc03a..2f1bf95daeb0 100644
  	depends on CPU_LITTLE_ENDIAN
  	select ARM_AMBA
  	select ARM_TIMER_SP804
--- 
-2.25.1
+diff --git a/arch/arm/mach-versatile/versatile.c b/arch/arm/mach-versatile/versatile.c
+index 581c97dc4ed22..a52224d667c77 100644
+--- a/arch/arm/mach-versatile/versatile.c
++++ b/arch/arm/mach-versatile/versatile.c
+@@ -22,7 +22,11 @@
+ #include <asm/mach/map.h>
+ 
+ /* macro to get at MMIO space when running virtually */
++#ifdef CONFIG_MMU
+ #define IO_ADDRESS(x)		(((x) & 0x0fffffff) + (((x) >> 4) & 0x0f000000) + 0xf0000000)
++#else
++#define IO_ADDRESS(x)		(x)
++#endif
+ #define __io_address(n)		((void __iomem __force *)IO_ADDRESS(n))
+ 
+ /*
