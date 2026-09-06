@@ -112,3 +112,6 @@ config ADK_TARGET_WITH_SMP
 
 config ADK_TARGET_WITH_IOMMU
 	bool
+
+config ADK_TARGET_WITH_YAFFS_KERNEL
+	bool

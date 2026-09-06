@@ -96,6 +96,12 @@ endif
 ifeq ($(ADK_TARGET_FS),ubifs)
 targethelp:
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
+ifneq ($(ADK_TARGET_WITH_YAFFS_KERNEL),)
+	@echo 'Use the following command to write it to flash:'
+	@echo 'nand erase /dev/mtdX && yafut -d /dev/mtdX -i /path/to/kernel -o /kernel'
+	@echo 'There is also a prepared YAFFS image: $(FW_DIR)/${TARGET_KERNEL}.yaffs2'
+	@echo 'This might be written to flash using standard utilities'
+endif
 	@echo 'The UBI image is: ${FW_DIR}/${ROOTFSUBIFS}'
 	@echo 'Use the following command to write it to flash:'
 	@echo 'ubiformat /dev/mtdX -f /path/to/ubi.img'
@@ -120,6 +126,16 @@ endif
 
 kernel-install: kernel-strip
 	$(CP) $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/${TARGET_KERNEL}
+ifneq ($(ADK_TARGET_WITH_YAFFS_KERNEL),)
+	PATH='${HOST_PATH}'; \
+	PEB_SZ='${ADK_TARGET_FLASH_PEB_SIZE}'; \
+	KNL_SZ=$$(ls -l $(FW_DIR)/${TARGET_KERNEL} | cut -d' ' -f5); \
+	IMG_PEB=$$((($$KNL_SZ + $$PEB_SZ - 1) / $$PEB_SZ + 3)); \
+	dd if=/dev/zero bs=$$PEB_SZ count=$$IMG_PEB | \
+		tr '\000' '\377' >$(FW_DIR)/${TARGET_KERNEL}.yaffs2; \
+	yafut -d $(FW_DIR)/${TARGET_KERNEL}.yaffs2 -w $(ADK_YAFUT_OPTS) \
+		-i $(FW_DIR)/${TARGET_KERNEL} -E -P -S -o /kernel
+endif
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)

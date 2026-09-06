@@ -60,3 +60,8 @@ config ADK_JFFS2_OPTS
 	string
 	default "-l" if ADK_TARGET_LITTLE_ENDIAN
 	default "-b" if ADK_TARGET_BIG_ENDIAN
+
+config ADK_YAFUT_OPTS
+	string
+	default "-L" if ADK_TARGET_LITTLE_ENDIAN
+	default "-M" if ADK_TARGET_BIG_ENDIAN
