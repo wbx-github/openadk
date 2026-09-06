@@ -273,6 +273,7 @@ config ADK_LINUX_KERNEL_MTD_UBI
 config ADK_LINUX_KERNEL_UBIFS_FS
 	tristate "UBIFS Filesystem"
 	select ADK_LINUX_KERNEL_MTD_UBI
+	select ADK_LINUX_KERNEL_MISC_FILESYSTEMS
 	help
 	  UBIFS is a file system for flash devices which works on top of UBI.
 
