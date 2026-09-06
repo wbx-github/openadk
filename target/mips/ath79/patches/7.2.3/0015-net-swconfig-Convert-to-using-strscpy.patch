@@ -1,0 +1,30 @@
+From 126bb8ed199d01ecfa56f459a30793d66aad3c2b Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Tue, 1 Sep 2026 02:46:52 +0200
+Subject: [PATCH] net: swconfig: Convert to using strscpy
+
+The old strncpy was removed in commit 079a028d6327e ("string: Remove
+strncpy() from the kernel").
+
+Use strscpy instead which guarantees NUL-termination. Also it does not
+require a size-argument since destination is an array.
+
+Fixes: 99d0aa6985473 ("net: swconfig: adds openwrt switch layer")
+---
+ drivers/net/phy/swconfig_leds.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/net/phy/swconfig_leds.c b/drivers/net/phy/swconfig_leds.c
+index 1fcd4432b54ef..f2cb2c4654086 100644
+--- a/drivers/net/phy/swconfig_leds.c
++++ b/drivers/net/phy/swconfig_leds.c
+@@ -237,8 +237,7 @@ static ssize_t swconfig_trig_mode_store(struct device *dev,
+ 	char *p, *token;
+ 
+ 	/* take a copy since we don't want to trash the inbound buffer when using strsep */
+-	strncpy(copybuf, buf, sizeof(copybuf));
+-	copybuf[sizeof(copybuf) - 1] = 0;
++	strscpy(copybuf, buf);
+ 	p = copybuf;
+ 
+ 	while ((token = strsep(&p, " \t\n")) != NULL) {

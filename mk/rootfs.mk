@@ -29,7 +29,8 @@ UBIDEV:=	ubi.mtd=1 root=ubi0:rootfs
 endif
 
 ifeq ($(ADK_TARGET_SYSTEM_MIKROTIK_RB4XX),y)
-MTDDEV:=	root=/dev/mtdblock7
+MTDDEV:=	root=/dev/mtdblock3
+UBIDEV:=	ubi.mtd=3 root=ubi0:rootfs
 endif
 
 ifeq ($(ADK_TARGET_SYSTEM_PHYTEC_WEGA),y)

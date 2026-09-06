@@ -1,0 +1,99 @@
+From d77fe2b325ffe9a311b75e2b0f09f921468a4456 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Mon, 6 Jul 2026 01:34:19 +0200
+Subject: [PATCH] net: ag71xx: Support kmac bootloader parameter
+
+Mikrotik's bootloader passes the system's base MAC address via kernel
+parameter. Fall back to it if the device tree does not provide one.
+
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+---
+ .../net/ethernet/atheros/ag71xx/ag71xx_main.c | 46 ++++++++++++++++---
+ 1 file changed, 40 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/ethernet/atheros/ag71xx/ag71xx_main.c b/drivers/net/ethernet/atheros/ag71xx/ag71xx_main.c
+index 745a8d9ff4ee1..27289203322fc 100644
+--- a/drivers/net/ethernet/atheros/ag71xx/ag71xx_main.c
++++ b/drivers/net/ethernet/atheros/ag71xx/ag71xx_main.c
+@@ -29,6 +29,7 @@
+ 	| NETIF_MSG_TX_ERR)
+ 
+ static int ag71xx_msg_level = -1;
++static char *cmdline;
+ 
+ module_param_named(msg_level, ag71xx_msg_level, int, 0);
+ MODULE_PARM_DESC(msg_level, "Message level (-1=defaults,0=none,...,16=all)");
+@@ -1499,6 +1500,30 @@ static const struct net_device_ops ag71xx_netdev_ops = {
+ 	.ndo_validate_addr	= eth_validate_addr,
+ };
+ 
++static int ag71xx_parse_cmdline_mac(struct ag71xx *ag, const char *cmdline)
++{
++	u8 mac[ETH_ALEN];
++
++	if (!cmdline ||
++	    sscanf(cmdline,
++		   "%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx",
++		   &mac[0], &mac[1], &mac[2],
++		   &mac[3], &mac[4], &mac[5]) != ETH_ALEN)
++		return 1;
++
++	if (ag->mac_idx > 0) {
++		u32 macval = (((u32)mac[3]) << 16) +
++			     (((u32)mac[4]) << 8) +
++			     ((u32)mac[5]) + ag->mac_idx;
++		mac[3] = (macval >> 16) & 0xff;
++		mac[4] = (macval >> 8) & 0xff;
++		mac[5] = macval & 0xff;
++	}
++
++	eth_hw_addr_set(ag->dev, mac);
++	return 0;
++}
++
+ static int ag71xx_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+@@ -1662,11 +1687,13 @@ static int ag71xx_probe(struct platform_device *pdev)
+ 	ag->stop_desc->ctrl = 0;
+ 	ag->stop_desc->next = (u32) ag->stop_desc_dma;
+ 
+-	err = of_get_ethdev_address(np, dev);
+-	if (err) {
+-		if (err == -EPROBE_DEFER)
+-			return err;
++	if (of_property_read_u32(np, "qca,mac-idx", &ag->mac_idx))
++		ag->mac_idx = -1;
+ 
++	err = of_get_ethdev_address(np, dev);
++	if (err == -EPROBE_DEFER) {
++		return err;
++	} else if (err && ag71xx_parse_cmdline_mac(ag, cmdline)) {
+ 		dev_err(&pdev->dev, "invalid MAC address, using random address\n");
+ 		eth_hw_addr_random(dev);
+ 	}
+@@ -1681,8 +1708,6 @@ static int ag71xx_probe(struct platform_device *pdev)
+ 	    ag->phy_if_mode == PHY_INTERFACE_MODE_SGMII)
+ 		ag71xx_mux_select_sgmii_qca956x(np);
+ 
+-	if (of_property_read_u32(np, "qca,mac-idx", &ag->mac_idx))
+-		ag->mac_idx = -1;
+ 	if (ag->mii_base)
+ 		switch (ag->mac_idx) {
+ 		case 0:
+@@ -1764,6 +1789,15 @@ static void ag71xx_remove(struct platform_device *pdev)
+ 
+ }
+ 
++static int __init kmac_setup(char *s)
++{
++	cmdline = s;
++	return 1;
++}
++
++__setup("kmac=", kmac_setup);
++
++
+ static const struct of_device_id ag71xx_match[] = {
+ 	{ .compatible = "qca,ar7100-eth" },
+ 	{ .compatible = "qca,ar7240-eth" },

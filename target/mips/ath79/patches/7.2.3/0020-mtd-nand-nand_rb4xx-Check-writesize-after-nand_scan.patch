@@ -1,0 +1,34 @@
+From eeb462aea257fcea0d610b04c2eef6d4f56438eb Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Tue, 1 Sep 2026 00:41:42 +0200
+Subject: [PATCH] mtd: nand: nand_rb4xx: Check writesize after nand_scan
+
+The check is ineffective otherwise.
+---
+ drivers/mtd/nand/raw/nand_rb4xx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/mtd/nand/raw/nand_rb4xx.c b/drivers/mtd/nand/raw/nand_rb4xx.c
+index 4749e9f050548..d9a318a9b985d 100644
+--- a/drivers/mtd/nand/raw/nand_rb4xx.c
++++ b/drivers/mtd/nand/raw/nand_rb4xx.c
+@@ -185,9 +185,6 @@ static int rb4xx_nand_probe(struct platform_device *pdev)
+ 	mtd->dev.parent	= dev;
+ 	mtd_set_of_node(mtd, dev->of_node);
+ 
+-	if (mtd->writesize == 512)
+-		mtd_set_ooblayout(mtd, &rb4xx_nand_ecclayout_ops);
+-
+ 	nand->chip.ecc.engine_type	= NAND_ECC_ENGINE_TYPE_SOFT;
+ 	nand->chip.ecc.algo		= NAND_ECC_ALGO_HAMMING;
+ 	nand->chip.options		= NAND_NO_SUBPAGE_WRITE;
+@@ -204,6 +201,9 @@ static int rb4xx_nand_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return -ENXIO;
+ 
++	if (mtd->writesize == 512)
++		mtd_set_ooblayout(mtd, &rb4xx_nand_ecclayout_ops);
++
+ 	ret = mtd_device_register(mtd, NULL, 0);
+ 	if (ret) {
+ 		mtd_device_unregister(nand_to_mtd(&nand->chip));

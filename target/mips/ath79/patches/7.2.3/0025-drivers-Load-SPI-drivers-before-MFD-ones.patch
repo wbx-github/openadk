@@ -1,0 +1,33 @@
+From dec04081df3f8859f028c9e0d47d8f4aacbc7494 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Sun, 5 Jul 2026 11:30:56 +0200
+Subject: [PATCH] drivers: Load SPI drivers before MFD ones
+
+This is necessary on rb493g because rb4xx-cpld relies upon spi-rb4xx
+controller for correct operation.
+
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+---
+ drivers/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/Makefile b/drivers/Makefile
+index 0841ea851847e..02c03d1651842 100644
+--- a/drivers/Makefile
++++ b/drivers/Makefile
+@@ -73,6 +73,7 @@ obj-$(CONFIG_CONNECTOR)		+= connector/
+ obj-$(CONFIG_FB_I810)           += video/fbdev/i810/
+ 
+ obj-$(CONFIG_PARPORT)		+= parport/
++obj-$(CONFIG_SPI)		+= spi/
+ obj-y				+= base/ block/ misc/ mfd/ nfc/
+ obj-$(CONFIG_LIBNVDIMM)		+= nvdimm/
+ obj-y				+= dax/
+@@ -85,7 +86,6 @@ obj-y				+= nvme/
+ obj-$(CONFIG_ATA)		+= ata/
+ obj-$(CONFIG_TARGET_CORE)	+= target/
+ obj-$(CONFIG_MTD)		+= mtd/
+-obj-$(CONFIG_SPI)		+= spi/
+ obj-$(CONFIG_SPMI)		+= spmi/
+ obj-$(CONFIG_HSI)		+= hsi/
+ obj-$(CONFIG_SLIMBUS)		+= slimbus/

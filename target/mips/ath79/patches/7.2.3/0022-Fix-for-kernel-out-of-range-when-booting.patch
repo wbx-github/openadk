@@ -1,0 +1,40 @@
+From 19d271ada1861a5cd80bde5a51ecf5e30583509c Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Sun, 14 Jun 2026 02:25:16 +0200
+Subject: [PATCH] Fix for "kernel out of range" when booting
+
+Suggested solution found at:
+https://forum.openwrt.org/t/mikrotik-rb493g-cannot-boot-openwrt-from-ram/213841/4
+
+This code change goes along with .config change:
+> CONFIG_ZBOOT_LOAD_ADDRESS=0x80040000
+
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+---
+ arch/mips/ath79/Platform               | 2 +-
+ arch/mips/boot/compressed/decompress.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/mips/ath79/Platform b/arch/mips/ath79/Platform
+index 57744472ed2ee..fcb8efa1a7a6e 100644
+--- a/arch/mips/ath79/Platform
++++ b/arch/mips/ath79/Platform
+@@ -3,4 +3,4 @@
+ #
+ 
+ cflags-$(CONFIG_ATH79)		+= -I$(srctree)/arch/mips/include/asm/mach-ath79
+-load-$(CONFIG_ATH79)		= 0xffffffff80060000
++load-$(CONFIG_ATH79)		= 0xffffffff809b0000
+diff --git a/arch/mips/boot/compressed/decompress.c b/arch/mips/boot/compressed/decompress.c
+index 90021c6a8cab5..d340b7d29c46a 100644
+--- a/arch/mips/boot/compressed/decompress.c
++++ b/arch/mips/boot/compressed/decompress.c
+@@ -110,7 +110,7 @@ void decompress_kernel(unsigned long boot_heap_start)
+ 		dtb_size = fdt_totalsize((void *)&__appended_dtb);
+ 
+ 		/* last four bytes is always image size in little endian */
+-		image_size = get_unaligned_le32((void *)__image_end - 4);
++		image_size = get_unaligned_le32((void *)((uintptr_t)__image_end - 4));
+ 
+ 		/* The device tree's address must be properly aligned  */
+ 		image_size = ALIGN(image_size, STRUCT_ALIGNMENT);

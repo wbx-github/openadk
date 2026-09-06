@@ -1,0 +1,33 @@
+From a8867580a9183ff144fb886ad1b5be6133603043 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Sun, 5 Jul 2026 11:58:28 +0200
+Subject: [PATCH] spi: spi-rb4xx: Support SPI_CS_HIGH mode
+
+There is an mmc_spi on channel 2 of this bus which complains upon init:
+
+| mmc_spi spi0.2: setup: unsupported mode bits 4
+| mmc_spi spi0.2: can't change chip-select polarity
+
+But according to the SPI driver core [cf. commit 2df201e0067d8 ("spi:
+Support high CS when using descriptors")] all controllers using GPIO
+descriptors should support SPI_CS_HIGH (i.e., bit 4) and thus the mode
+bit is assumed either way. So just set it to silence the warning.
+
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+---
+ drivers/spi/spi-rb4xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/spi/spi-rb4xx.c b/drivers/spi/spi-rb4xx.c
+index 7b944f2819ec5..9f76d50833932 100644
+--- a/drivers/spi/spi-rb4xx.c
++++ b/drivers/spi/spi-rb4xx.c
+@@ -162,7 +162,7 @@ static int rb4xx_spi_probe(struct platform_device *pdev)
+ 
+ 	host->bus_num = 0;
+ 	host->num_chipselect = 3;
+-	host->mode_bits = SPI_TX_DUAL;
++	host->mode_bits = SPI_TX_DUAL | SPI_CS_HIGH;
+ 	host->bits_per_word_mask = SPI_BPW_MASK(8);
+ 	host->flags = SPI_CONTROLLER_MUST_TX;
+ 	host->transfer_one = rb4xx_transfer_one;

@@ -1,0 +1,778 @@
+From d8af554747cee2410683b69db40a882309f47fde Mon Sep 17 00:00:00 2001
+From: Christopher Hill <ch6574@gmail.com>
+Date: Mon, 1 Jun 2026 00:35:37 +0200
+Subject: [PATCH] ath79: add Mikrotik rb4xx series drivers
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This adds 3 Mikrotik rb4xx series drivers as follows:
+
+rb4xx-cpld: This is in the mfd subsystem, and is the parent CPLD device
+that interfaces between the SoC SPI bus and its two children below.
+rb4xx-gpio: This is the GPIO expander.
+rb4xx-nand: This is the NAND driver.
+
+The history of this code comes in three phases.
+
+1. The first is a May 2015 attempt to push the equivalient ar71xx rb4xx
+drivers upstream. See https://lore.kernel.org/patchwork/patch/940880/.
+
+Module-author: Gabor Juhos <juhosg@openwrt.org>
+Module-author: Imre Kaloz <kaloz@openwrt.org>
+Module-author: Bert Vermeulen <bert@biot.com>
+
+2. Next several ar71xx patches were applied bringing the code current.
+
+commit 7bbf4117c6fe4b764d9d7c62fb2bcf6dd93bff2c
+Submitted-by: Hauke Mehrtens <hauke@hauke-m.de>
+
+commit af79fdbe4af32a287798b579141204bda056b8aa
+commit 889272d92db689fd9c910243635e44c9d8323095
+commit e21cb649a235180563363b8af5ba8296b9ac0baa
+commit 7c09fa4a7492ca436f2c94bd9a465b7c5bbeed6f
+Submitted-by: Felix Fietkau <nbd@nbd.name>
+
+3. Finally a heavy refactor to split the driver into the three new
+subsystems, and updated to work with the device tree configuration, plus
+updates and review feedback incorporated
+
+Reviewed-by: Thibaut VARÈNE <hacks@slashdirt.org>
+Submitted-by: Christopher Hill <ch6574@gmail.com>
+---
+ drivers/gpio/Kconfig              |   6 +
+ drivers/gpio/Makefile             |   1 +
+ drivers/gpio/gpio-rb4xx.c         | 167 +++++++++++++++++++++
+ drivers/mfd/Kconfig               |   8 +
+ drivers/mfd/Makefile              |   1 +
+ drivers/mfd/rb4xx-cpld.c          | 176 ++++++++++++++++++++++
+ drivers/mtd/nand/raw/Kconfig      |   7 +
+ drivers/mtd/nand/raw/Makefile     |   1 +
+ drivers/mtd/nand/raw/nand_rb4xx.c | 240 ++++++++++++++++++++++++++++++
+ include/mfd/rb4xx-cpld.h          |  25 ++++
+ 10 files changed, 632 insertions(+)
+ create mode 100644 drivers/gpio/gpio-rb4xx.c
+ create mode 100644 drivers/mfd/rb4xx-cpld.c
+ create mode 100644 drivers/mtd/nand/raw/nand_rb4xx.c
+ create mode 100644 include/mfd/rb4xx-cpld.h
+
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index 28cf6d2e83c27..9534e4aa327d2 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -1940,6 +1940,12 @@ config GPIO_SODAVILLE
+ 	help
+ 	  Say Y here to support Intel Sodaville GPIO.
+ 
++config GPIO_RB4XX
++	tristate "GPIO expander for Mikrotik RB4xx series boards"
++	depends on MFD_RB4XX_CPLD
++	help
++	  GPIO driver for Mikrotik Routerboard RB4xx series.
++
+ endmenu
+ 
+ menu "SPI GPIO expanders"
+diff --git a/drivers/gpio/Makefile b/drivers/gpio/Makefile
+index 4d0e900402fcf..02d7a5ecc4f63 100644
+--- a/drivers/gpio/Makefile
++++ b/drivers/gpio/Makefile
+@@ -152,6 +152,7 @@ obj-$(CONFIG_GPIO_POLARFIRE_SOC)	+= gpio-mpfs.o
+ obj-$(CONFIG_GPIO_PXA)			+= gpio-pxa.o
+ obj-$(CONFIG_GPIO_QIXIS_FPGA)		+= gpio-qixis-fpga.o
+ obj-$(CONFIG_GPIO_RASPBERRYPI_EXP)	+= gpio-raspberrypi-exp.o
++obj-$(CONFIG_GPIO_RB4XX)		+= gpio-rb4xx.o
+ obj-$(CONFIG_GPIO_RC5T583)		+= gpio-rc5t583.o
+ obj-$(CONFIG_GPIO_RCAR)			+= gpio-rcar.o
+ obj-$(CONFIG_GPIO_RDA)			+= gpio-rda.o
+diff --git a/drivers/gpio/gpio-rb4xx.c b/drivers/gpio/gpio-rb4xx.c
+new file mode 100644
+index 0000000000000..ccb46f512f387
+--- /dev/null
++++ b/drivers/gpio/gpio-rb4xx.c
+@@ -0,0 +1,167 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * GPIO driver for the MikroTik RouterBoard 4xx series
++ *
++ * Copyright (C) 2008-2011 Gabor Juhos <juhosg@openwrt.org>
++ * Copyright (C) 2008 Imre Kaloz <kaloz@openwrt.org>
++ * Copyright (C) 2015 Bert Vermeulen <bert@biot.com>
++ * Copyright (C) 2020 Christopher Hill <ch6574@gmail.com>
++ *
++ * This file was based on the driver for Linux 2.6.22 published by
++ * MikroTik for their RouterBoard 4xx series devices.
++ *
++ * N.B. driver probe reports "DMA mask not set" warnings which are
++ * an artifact of using a platform_driver as an MFD device child.
++ * See conversation here https://lkml.org/lkml/2020/4/28/675
++ */
++#include <linux/platform_device.h>
++#include <linux/gpio/driver.h>
++#include <linux/module.h>
++#include <linux/of_device.h>
++#include <linux/version.h>
++
++#include <mfd/rb4xx-cpld.h>
++
++struct rb4xx_gpio {
++	struct rb4xx_cpld *cpld;
++	struct device *dev;
++
++	struct gpio_chip chip;
++	struct mutex lock;
++	u16 values;		/* bitfield of GPIO 0-8 current values */
++};
++
++static int rb4xx_gpio_cpld_set(struct rb4xx_gpio *gpio, unsigned int offset,
++			       int value)
++{
++	struct rb4xx_cpld *cpld = gpio->cpld;
++	u16 values;
++	int ret;
++
++	mutex_lock(&gpio->lock);
++	values = gpio->values;
++
++	if (value)
++		values |= BIT(offset);
++	else
++		values &= ~(BIT(offset));
++
++	if (values == gpio->values) {
++		ret = 0;
++		goto unlock;
++	}
++
++	if (offset < 8) {
++		ret = cpld->gpio_set_0_7(cpld, values & 0xff);
++	} else if (offset == 8) {
++		ret = cpld->gpio_set_8(cpld, values >> 8);
++	}
++
++	if(likely(!ret))
++		gpio->values = values;
++
++unlock:
++	mutex_unlock(&gpio->lock);
++	return ret;
++}
++
++static int rb4xx_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
++{
++	return 0; /* All 9 GPIOs are out */
++}
++
++static int rb4xx_gpio_direction_input(struct gpio_chip *chip,
++				      unsigned int offset)
++{
++	return -EOPNOTSUPP;
++}
++
++static int rb4xx_gpio_direction_output(struct gpio_chip *chip,
++				       unsigned int offset, int value)
++{
++	return rb4xx_gpio_cpld_set(gpiochip_get_data(chip), offset, value);
++}
++
++static int rb4xx_gpio_get(struct gpio_chip *chip, unsigned int offset)
++{
++	struct rb4xx_gpio *gpio = gpiochip_get_data(chip);
++	int ret;
++
++	mutex_lock(&gpio->lock);
++	ret = (gpio->values >> offset) & 0x1;
++	mutex_unlock(&gpio->lock);
++
++	return ret;
++}
++
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,17,0)
++static int
++#else
++static void
++#endif
++rb4xx_gpio_set(struct gpio_chip *chip, unsigned int offset,
++			   int value)
++{
++	rb4xx_gpio_cpld_set(gpiochip_get_data(chip), offset, value);
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,17,0)
++	return 0;
++#endif
++}
++
++static int rb4xx_gpio_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct device *parent = dev->parent;
++	struct rb4xx_gpio *gpio;
++	u32 val;
++	int err;
++
++	if (!parent)
++		return -ENODEV;
++
++	gpio = devm_kzalloc(dev, sizeof(*gpio), GFP_KERNEL);
++	if (!gpio)
++		return -ENOMEM;
++
++	platform_set_drvdata(pdev, gpio);
++	gpio->cpld	= dev_get_drvdata(parent);
++	gpio->dev	= dev;
++	gpio->values	= 0;
++
++	err = devm_mutex_init(&pdev->dev, &gpio->lock);
++	if (err)
++		return err;
++
++	gpio->chip.label		= "rb4xx-gpio";
++	gpio->chip.parent		= dev;
++	gpio->chip.owner		= THIS_MODULE;
++	gpio->chip.get_direction	= rb4xx_gpio_get_direction;
++	gpio->chip.direction_input	= rb4xx_gpio_direction_input;
++	gpio->chip.direction_output	= rb4xx_gpio_direction_output;
++	gpio->chip.get			= rb4xx_gpio_get;
++	gpio->chip.set			= rb4xx_gpio_set;
++	gpio->chip.ngpio		= 9;
++	gpio->chip.base			= -1;
++	gpio->chip.can_sleep		= 1;
++
++	if (!of_property_read_u32(dev->of_node, "base", &val))
++		gpio->chip.base = val;
++
++	return devm_gpiochip_add_data(&pdev->dev, &gpio->chip, gpio);
++}
++
++static struct platform_driver rb4xx_gpio_driver = {
++	.probe = rb4xx_gpio_probe,
++	.driver = {
++		.name = "rb4xx-gpio",
++	},
++};
++
++module_platform_driver(rb4xx_gpio_driver);
++
++MODULE_DESCRIPTION("Mikrotik RB4xx GPIO driver");
++MODULE_AUTHOR("Gabor Juhos <juhosg@openwrt.org>");
++MODULE_AUTHOR("Imre Kaloz <kaloz@openwrt.org>");
++MODULE_AUTHOR("Bert Vermeulen <bert@biot.com>");
++MODULE_AUTHOR("Christopher Hill <ch6574@gmail.com");
++MODULE_LICENSE("GPL v2");
+diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+index 763ce6a34782b..10d893399df3f 100644
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -2438,6 +2438,14 @@ config RAVE_SP_CORE
+ 	  Select this to get support for the Supervisory Processor
+ 	  device found on several devices in RAVE line of hardware.
+ 
++config MFD_RB4XX_CPLD
++	tristate "CPLD driver for Mikrotik RB4xx series boards"
++	select MFD_CORE
++	depends on ATH79 || COMPILE_TEST
++	help
++	  Enables support for the CPLD chip (NAND & GPIO) on Mikrotik
++	  Routerboard RB4xx series.
++
+ config SGI_MFD_IOC3
+ 	bool "SGI IOC3 core driver"
+ 	depends on PCI && MIPS && 64BIT
+diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
+index dd4bb7e77c336..0c65cb9d2b818 100644
+--- a/drivers/mfd/Makefile
++++ b/drivers/mfd/Makefile
+@@ -282,6 +282,7 @@ obj-$(CONFIG_MFD_KHADAS_MCU) 	+= khadas-mcu.o
+ obj-$(CONFIG_MFD_ACER_A500_EC)	+= acer-ec-a500.o
+ obj-$(CONFIG_MFD_QCOM_PM8008)	+= qcom-pm8008.o
+ 
++obj-$(CONFIG_MFD_RB4XX_CPLD)	+= rb4xx-cpld.o
+ obj-$(CONFIG_SGI_MFD_IOC3)	+= ioc3.o
+ obj-$(CONFIG_MFD_SIMPLE_MFD_I2C)	+= simple-mfd-i2c.o
+ obj-$(CONFIG_MFD_SMPRO)		+= smpro-core.o
+diff --git a/drivers/mfd/rb4xx-cpld.c b/drivers/mfd/rb4xx-cpld.c
+new file mode 100644
+index 0000000000000..3ec8e519de2c0
+--- /dev/null
++++ b/drivers/mfd/rb4xx-cpld.c
+@@ -0,0 +1,176 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * CPLD driver for the MikroTik RouterBoard 4xx series
++ *
++ * This driver provides access to a CPLD that interfaces between the SoC SPI bus
++ * and other devices. Behind the CPLD there is a NAND flash chip and five LEDs.
++ *
++ * The CPLD supports SPI two-wire mode, in which two bits are transferred per
++ * SPI clock cycle. The second bit is transmitted with the SoC's CS2 pin.
++ *
++ * The CPLD also acts as a GPIO expander.
++ *
++ * Copyright (C) 2008-2011 Gabor Juhos <juhosg@openwrt.org>
++ * Copyright (C) 2008 Imre Kaloz <kaloz@openwrt.org>
++ * Copyright (C) 2015 Bert Vermeulen <bert@biot.com>
++ * Copyright (C) 2020 Christopher Hill <ch6574@gmail.com>
++ *
++ * This file was based on the driver for Linux 2.6.22 published by
++ * MikroTik for their RouterBoard 4xx series devices.
++*/
++#include <linux/mfd/core.h>
++#include <linux/spi/spi.h>
++#include <linux/module.h>
++#include <linux/platform_device.h>
++
++#include <mfd/rb4xx-cpld.h>
++
++/* CPLD commands */
++#define CPLD_CMD_WRITE_NAND	0x08 /* send cmd, n x send data, send idle */
++#define CPLD_CMD_WRITE_CFG	0x09 /* send cmd, n x send cfg */
++#define CPLD_CMD_READ_NAND	0x0a /* send cmd, send idle, n x read data */
++#define CPLD_CMD_READ_FAST	0x0b /* send cmd, 4 x idle, n x read data */
++#define CPLD_CMD_GPIO8_HIGH	0x0c /* send cmd */
++#define CPLD_CMD_GPIO8_LOW	0x0d /* send cmd */
++
++static int rb4xx_cpld_write_nand(struct rb4xx_cpld *cpld, const void *tx_buf,
++				 unsigned int len)
++{
++	struct spi_message m;
++	static const u8 cmd = CPLD_CMD_WRITE_NAND;
++	struct spi_transfer t[3] = {
++		{
++			.tx_buf = &cmd,
++			.len = sizeof(cmd),
++		}, {
++			.tx_buf = tx_buf,
++			.len = len,
++			.tx_nbits = SPI_NBITS_DUAL,
++		}, {
++			.len = 1,
++			.tx_nbits = SPI_NBITS_DUAL,
++		},
++	};
++
++	spi_message_init(&m);
++	spi_message_add_tail(&t[0], &m);
++	spi_message_add_tail(&t[1], &m);
++	spi_message_add_tail(&t[2], &m);
++	return spi_sync(cpld->spi, &m);
++}
++
++static int rb4xx_cpld_read_nand(struct rb4xx_cpld *cpld, void *rx_buf,
++				unsigned int len)
++{
++	struct spi_message m;
++	static const u8 cmd[2] = {
++		CPLD_CMD_READ_NAND, 0
++	};
++	struct spi_transfer t[2] = {
++		{
++			.tx_buf = &cmd,
++			.len = sizeof(cmd),
++		}, {
++			.rx_buf = rx_buf,
++			.len = len,
++		},
++	};
++
++	spi_message_init(&m);
++	spi_message_add_tail(&t[0], &m);
++	spi_message_add_tail(&t[1], &m);
++	return spi_sync(cpld->spi, &m);
++}
++
++static int rb4xx_cpld_cmd(struct rb4xx_cpld *cpld, const void *tx_buf,
++			  unsigned int len)
++{
++	struct spi_message m;
++	struct spi_transfer t = {
++		.tx_buf = tx_buf,
++		.len = len,
++	};
++
++	spi_message_init(&m);
++	spi_message_add_tail(&t, &m);
++	return spi_sync(cpld->spi, &m);
++}
++
++static int rb4xx_cpld_gpio_set_0_7(struct rb4xx_cpld *cpld, u8 values)
++{
++	/* GPIO 0-7 change can be sent via command + bitfield */
++	u8 cmd[2] = {
++		CPLD_CMD_WRITE_CFG, values
++	};
++	return rb4xx_cpld_cmd(cpld, &cmd, 2);
++}
++
++static int rb4xx_cpld_gpio_set_8(struct rb4xx_cpld *cpld, u8 value)
++{
++	/* GPIO 8 uses dedicated high/low commands */
++	u8 cmd = CPLD_CMD_GPIO8_HIGH | !!(value);
++	return rb4xx_cpld_cmd(cpld, &cmd, 1);
++}
++
++static const struct mfd_cell rb4xx_cpld_cells[] = {
++	{
++		.name = "mikrotik,rb4xx-gpio",
++		.of_compatible = "mikrotik,rb4xx-gpio",
++	}, {
++		.name = "mikrotik,rb4xx-nand",
++		.of_compatible = "mikrotik,rb4xx-nand",
++	},
++};
++
++static int rb4xx_cpld_probe(struct spi_device *spi)
++{
++	struct device *dev = &spi->dev;
++	struct rb4xx_cpld *cpld;
++	int ret;
++
++	cpld = devm_kzalloc(dev, sizeof(*cpld), GFP_KERNEL);
++	if (!cpld)
++		return -ENOMEM;
++
++	dev_set_drvdata(dev, cpld);
++
++	cpld->spi		= spi;
++	cpld->write_nand	= rb4xx_cpld_write_nand;
++	cpld->read_nand		= rb4xx_cpld_read_nand;
++	cpld->gpio_set_0_7	= rb4xx_cpld_gpio_set_0_7;
++	cpld->gpio_set_8	= rb4xx_cpld_gpio_set_8;
++
++	spi->mode = SPI_MODE_0 | SPI_TX_DUAL;
++	ret = spi_setup(spi);
++	if (ret)
++		return ret;
++
++	return devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE,
++				    rb4xx_cpld_cells,
++				    ARRAY_SIZE(rb4xx_cpld_cells),
++				    NULL, 0, NULL);
++}
++
++static const struct of_device_id rb4xx_cpld_dt_match[] = {
++	{ .compatible = "mikrotik,rb4xx-cpld", },
++	{ },
++};
++MODULE_DEVICE_TABLE(of, rb4xx_cpld_dt_match);
++
++static struct spi_driver rb4xx_cpld_driver = {
++	.probe = rb4xx_cpld_probe,
++	.driver = {
++		.name = "rb4xx-cpld",
++		.bus = &spi_bus_type,
++		.of_match_table = rb4xx_cpld_dt_match,
++	},
++};
++
++module_spi_driver(rb4xx_cpld_driver);
++
++MODULE_DESCRIPTION("Mikrotik RB4xx CPLD driver");
++MODULE_AUTHOR("Gabor Juhos <juhosg@openwrt.org>");
++MODULE_AUTHOR("Imre Kaloz <kaloz@openwrt.org>");
++MODULE_AUTHOR("Bert Vermeulen <bert@biot.com>");
++MODULE_AUTHOR("Christopher Hill <ch6574@gmail.com");
++MODULE_LICENSE("GPL v2");
+diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
+index 1f4053e531fd8..66dce1868f770 100644
+--- a/drivers/mtd/nand/raw/Kconfig
++++ b/drivers/mtd/nand/raw/Kconfig
+@@ -538,4 +538,11 @@ config MTD_NAND_DISKONCHIP_BBTWRITE
+ 	  load time (assuming you build diskonchip as a module) with the module
+ 	  parameter "inftl_bbt_write=1".
+ 
++config MTD_NAND_RB4XX
++	tristate "Support for NAND driver for Mikrotik RB4xx series boards"
++	depends on MFD_RB4XX_CPLD
++	help
++	  Enables support for the NAND flash chip on Mikrotik Routerboard
++	  RB4xx series.
++
+ endif # MTD_RAW_NAND
+diff --git a/drivers/mtd/nand/raw/Makefile b/drivers/mtd/nand/raw/Makefile
+index 619760138d322..ad57ffa366a04 100644
+--- a/drivers/mtd/nand/raw/Makefile
++++ b/drivers/mtd/nand/raw/Makefile
+@@ -59,6 +59,7 @@ obj-$(CONFIG_MTD_NAND_PL35X)		+= pl35x-nand-controller.o
+ obj-$(CONFIG_MTD_NAND_RENESAS)		+= renesas-nand-controller.o
+ obj-$(CONFIG_MTD_NAND_NUVOTON_MA35)	+= nuvoton-ma35d1-nand-controller.o
+ obj-$(CONFIG_MTD_NAND_LOONGSON)		+= loongson-nand-controller.o
++obj-$(CONFIG_MTD_NAND_RB4XX)		+= nand_rb4xx.o
+ 
+ nand-objs := nand_base.o nand_legacy.o nand_bbt.o nand_timings.o nand_ids.o
+ nand-objs += nand_onfi.o
+diff --git a/drivers/mtd/nand/raw/nand_rb4xx.c b/drivers/mtd/nand/raw/nand_rb4xx.c
+new file mode 100644
+index 0000000000000..4749e9f050548
+--- /dev/null
++++ b/drivers/mtd/nand/raw/nand_rb4xx.c
+@@ -0,0 +1,240 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * NAND driver for the MikroTik RouterBoard 4xx series
++ *
++ * Copyright (C) 2008-2011 Gabor Juhos <juhosg@openwrt.org>
++ * Copyright (C) 2008 Imre Kaloz <kaloz@openwrt.org>
++ * Copyright (C) 2015 Bert Vermeulen <bert@biot.com>
++ * Copyright (C) 2020 Christopher Hill <ch6574@gmail.com>
++ *
++ * This file was based on the driver for Linux 2.6.22 published by
++ * MikroTik for their RouterBoard 4xx series devices.
++ *
++ * N.B. driver probe reports "DMA mask not set" warnings which are
++ * an artifact of using a platform_driver as an MFD device child.
++ * See conversation here https://lkml.org/lkml/2020/4/28/675
++ */
++#include <linux/platform_device.h>
++#include <linux/mtd/rawnand.h>
++#include <linux/gpio/consumer.h>
++#include <linux/module.h>
++#include <linux/of_device.h>
++#include <linux/version.h>
++
++#include <mfd/rb4xx-cpld.h>
++
++struct rb4xx_nand {
++	struct rb4xx_cpld *cpld;
++	struct device *dev;
++
++	struct nand_chip chip;
++	struct gpio_desc *ale;
++	struct gpio_desc *cle;
++	struct gpio_desc *nce;
++	struct gpio_desc *rdy;
++};
++
++static int rb4xx_ooblayout_ecc(struct mtd_info *mtd, int section,
++			       struct mtd_oob_region *oobregion)
++{
++	switch (section) {
++	case 0:
++		oobregion->offset = 8;
++		oobregion->length = 3;
++		return 0;
++	case 1:
++		oobregion->offset = 13;
++		oobregion->length = 3;
++		return 0;
++	default:
++		return -ERANGE;
++	}
++}
++
++static int rb4xx_ooblayout_free(struct mtd_info *mtd, int section,
++				struct mtd_oob_region *oobregion)
++{
++	switch (section) {
++	case 0:
++		oobregion->offset = 0;
++		oobregion->length = 4;
++		return 0;
++	case 1:
++		oobregion->offset = 4;
++		oobregion->length = 1;
++		return 0;
++	case 2:
++		oobregion->offset = 6;
++		oobregion->length = 2;
++		return 0;
++	case 3:
++		oobregion->offset = 11;
++		oobregion->length = 2;
++		return 0;
++	default:
++		return -ERANGE;
++	}
++}
++
++static const struct mtd_ooblayout_ops rb4xx_nand_ecclayout_ops = {
++	.ecc = rb4xx_ooblayout_ecc,
++	.free = rb4xx_ooblayout_free,
++};
++
++static u8 rb4xx_nand_read_byte(struct nand_chip *chip)
++{
++	struct rb4xx_nand *nand = chip->priv;
++	struct rb4xx_cpld *cpld = nand->cpld;
++	u8 data;
++	int ret;
++
++	ret = cpld->read_nand(cpld, &data, 1);
++	if (unlikely(ret))
++		return 0xff;
++
++	return data;
++}
++
++static void rb4xx_nand_write_buf(struct nand_chip *chip, const u8 *buf, int len)
++{
++	struct rb4xx_nand *nand = chip->priv;
++	struct rb4xx_cpld *cpld = nand->cpld;
++
++	cpld->write_nand(cpld, buf, len);
++}
++
++static void rb4xx_nand_read_buf(struct nand_chip *chip, u8 *buf, int len)
++{
++	struct rb4xx_nand *nand = chip->priv;
++	struct rb4xx_cpld *cpld = nand->cpld;
++
++	cpld->read_nand(cpld, buf, len);
++}
++
++static void rb4xx_nand_cmd_ctrl(struct nand_chip *chip, int dat,
++				unsigned int ctrl)
++{
++	struct rb4xx_nand *nand = chip->priv;
++	struct rb4xx_cpld *cpld = nand->cpld;
++	u8 data = dat;
++
++	if (ctrl & NAND_CTRL_CHANGE) {
++		gpiod_set_value_cansleep(nand->cle, !!(ctrl & NAND_CLE));
++		gpiod_set_value_cansleep(nand->ale, !!(ctrl & NAND_ALE));
++		gpiod_set_value_cansleep(nand->nce,  !(ctrl & NAND_NCE));
++	}
++
++	if (dat != NAND_CMD_NONE)
++		cpld->write_nand(cpld, &data, 1);
++}
++
++static int rb4xx_nand_dev_ready(struct nand_chip *chip)
++{
++	struct rb4xx_nand *nand = chip->priv;
++
++	return gpiod_get_value_cansleep(nand->rdy);
++}
++
++static int rb4xx_nand_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct device *parent = dev->parent;
++	struct rb4xx_nand *nand;
++	struct mtd_info *mtd;
++	int ret;
++
++	if (!parent)
++		return -ENODEV;
++
++	nand = devm_kzalloc(dev, sizeof(*nand), GFP_KERNEL);
++	if (!nand)
++		return -ENOMEM;
++
++	platform_set_drvdata(pdev, nand);
++	nand->cpld	= dev_get_drvdata(parent);
++	nand->dev	= dev;
++
++	nand->ale = devm_gpiod_get_index(dev, NULL, 0, GPIOD_OUT_LOW);
++	if (IS_ERR(nand->ale))
++		dev_err(dev, "missing gpio ALE: %ld\n", PTR_ERR(nand->ale));
++
++	nand->cle = devm_gpiod_get_index(dev, NULL, 1, GPIOD_OUT_LOW);
++	if (IS_ERR(nand->cle))
++		dev_err(dev, "missing gpio CLE: %ld\n", PTR_ERR(nand->cle));
++
++	nand->nce = devm_gpiod_get_index(dev, NULL, 2, GPIOD_OUT_LOW);
++	if (IS_ERR(nand->nce))
++		dev_err(dev, "missing gpio nCE: %ld\n", PTR_ERR(nand->nce));
++
++	nand->rdy = devm_gpiod_get_index(dev, NULL, 3, GPIOD_IN);
++	if (IS_ERR(nand->rdy))
++		dev_err(dev, "missing gpio RDY: %ld\n", PTR_ERR(nand->rdy));
++
++	if (IS_ERR(nand->ale) || IS_ERR(nand->cle) ||
++	    IS_ERR(nand->nce) || IS_ERR(nand->rdy))
++		return -ENOENT;
++
++	gpiod_set_consumer_name(nand->ale, "mikrotik:nand:ALE");
++	gpiod_set_consumer_name(nand->cle, "mikrotik:nand:CLE");
++	gpiod_set_consumer_name(nand->nce, "mikrotik:nand:nCE");
++	gpiod_set_consumer_name(nand->rdy, "mikrotik:nand:RDY");
++
++	mtd = nand_to_mtd(&nand->chip);
++	mtd->priv	= nand;
++	mtd->owner	= THIS_MODULE;
++	mtd->dev.parent	= dev;
++	mtd_set_of_node(mtd, dev->of_node);
++
++	if (mtd->writesize == 512)
++		mtd_set_ooblayout(mtd, &rb4xx_nand_ecclayout_ops);
++
++	nand->chip.ecc.engine_type	= NAND_ECC_ENGINE_TYPE_SOFT;
++	nand->chip.ecc.algo		= NAND_ECC_ALGO_HAMMING;
++	nand->chip.options		= NAND_NO_SUBPAGE_WRITE;
++	nand->chip.priv			= nand;
++
++	nand->chip.legacy.read_byte	= rb4xx_nand_read_byte;
++	nand->chip.legacy.write_buf	= rb4xx_nand_write_buf;
++	nand->chip.legacy.read_buf	= rb4xx_nand_read_buf;
++	nand->chip.legacy.cmd_ctrl	= rb4xx_nand_cmd_ctrl;
++	nand->chip.legacy.dev_ready	= rb4xx_nand_dev_ready;
++	nand->chip.legacy.chip_delay	= 25;
++
++	ret = nand_scan(&nand->chip, 1);
++	if (ret)
++		return -ENXIO;
++
++	ret = mtd_device_register(mtd, NULL, 0);
++	if (ret) {
++		mtd_device_unregister(nand_to_mtd(&nand->chip));
++		nand_cleanup(&nand->chip);
++		return ret;
++	}
++
++	return 0;
++}
++
++static void rb4xx_nand_remove(struct platform_device *pdev)
++{
++	struct rb4xx_nand *nand = platform_get_drvdata(pdev);
++
++	mtd_device_unregister(nand_to_mtd(&nand->chip));
++	nand_cleanup(&nand->chip);
++}
++
++static struct platform_driver rb4xx_nand_driver = {
++	.probe  = rb4xx_nand_probe,
++	.remove = rb4xx_nand_remove,
++	.driver = {
++		.name = "rb4xx-nand",
++	},
++};
++
++module_platform_driver(rb4xx_nand_driver);
++
++MODULE_DESCRIPTION("Mikrotik RB4xx NAND driver");
++MODULE_AUTHOR("Gabor Juhos <juhosg@openwrt.org>");
++MODULE_AUTHOR("Imre Kaloz <kaloz@openwrt.org>");
++MODULE_AUTHOR("Bert Vermeulen <bert@biot.com>");
++MODULE_AUTHOR("Christopher Hill <ch6574@gmail.com");
++MODULE_LICENSE("GPL v2");
+diff --git a/include/mfd/rb4xx-cpld.h b/include/mfd/rb4xx-cpld.h
+new file mode 100644
+index 0000000000000..d73617bfb1dc3
+--- /dev/null
++++ b/include/mfd/rb4xx-cpld.h
+@@ -0,0 +1,25 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * CPLD driver for the MikroTik RouterBoard 4xx series
++ *
++ * Copyright (C) 2008-2011 Gabor Juhos <juhosg@openwrt.org>
++ * Copyright (C) 2008 Imre Kaloz <kaloz@openwrt.org>
++ * Copyright (C) 2015 Bert Vermeulen <bert@biot.com>
++ * Copyright (C) 2020 Christopher Hill <ch6574@gmail.com>
++ *
++ * This file was based on the driver for Linux 2.6.22 published by
++ * MikroTik for their RouterBoard 4xx series devices.
++ */
++#include <linux/spi/spi.h>
++
++struct rb4xx_cpld {
++	struct spi_device *spi;
++
++	int (*write_nand)(struct rb4xx_cpld *self, const void *tx_buf,
++			  unsigned int len);
++	int (*read_nand)(struct rb4xx_cpld *self, void *rx_buf,
++			 unsigned int len);
++
++	int (*gpio_set_0_7)(struct rb4xx_cpld *self, u8 values);
++	int (*gpio_set_8)(struct rb4xx_cpld *self, u8 value);
++};

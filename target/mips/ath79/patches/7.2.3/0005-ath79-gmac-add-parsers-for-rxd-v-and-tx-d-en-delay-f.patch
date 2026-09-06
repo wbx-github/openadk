@@ -1,0 +1,27 @@
+From 3175a0bd35dc0e68a66cb8ae93c5e5eaa2b723a6 Mon Sep 17 00:00:00 2001
+From: Christian Lamparter <chunkeey@gmail.com>
+Date: Mon, 1 Jun 2026 00:08:54 +0200
+Subject: [PATCH] ath79: gmac: add parsers for rxd(v)- and tx(d|en)-delay for
+
+    ath79: gmac: add parsers for rxd(v)- and tx(d|en)-delay for AR9344
+
+    Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+---
+ arch/mips/include/asm/mach-ath79/ar71xx_regs.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/mips/include/asm/mach-ath79/ar71xx_regs.h b/arch/mips/include/asm/mach-ath79/ar71xx_regs.h
+index 5f837060724e4..f29f03b3fd8fd 100644
+--- a/arch/mips/include/asm/mach-ath79/ar71xx_regs.h
++++ b/arch/mips/include/asm/mach-ath79/ar71xx_regs.h
+@@ -1227,6 +1227,10 @@
+ #define AR934X_ETH_CFG_RDV_DELAY        BIT(16)
+ #define AR934X_ETH_CFG_RDV_DELAY_MASK   0x3
+ #define AR934X_ETH_CFG_RDV_DELAY_SHIFT  16
++#define AR934X_ETH_CFG_TXD_DELAY_MASK   0x3
++#define AR934X_ETH_CFG_TXD_DELAY_SHIFT  18
++#define AR934X_ETH_CFG_TXE_DELAY_MASK   0x3
++#define AR934X_ETH_CFG_TXE_DELAY_SHIFT  20
+ 
+ /*
+  * QCA953X GMAC Interface

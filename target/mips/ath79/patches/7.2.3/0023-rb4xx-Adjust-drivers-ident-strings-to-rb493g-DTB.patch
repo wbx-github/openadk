@@ -1,0 +1,59 @@
+From c15b6ff690bcf2d1acbaa9d083ff411bd71162be Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Mon, 29 Jun 2026 17:41:08 +0200
+Subject: [PATCH] rb4xx: Adjust drivers' ident strings to rb493g DTB
+
+Nand device is still not detected, no idea why:
+
+[    1.034616] rb4xx_cpld_probe: called
+[    1.038248] mfd_add_device: found match for pdev mikrotik,rb4xx-gpio
+[    1.045764] mikrotik,rb4xx-gpio mikrotik,rb4xx-gpio: DMA mask not set
+[    1.052372] gpio gpiochip1: Static allocation of GPIO base is deprecated, use dynamic allocation.
+[    1.063421] mfd_add_device: added device mikrotik,rb4xx-gpio
+[    1.069139] mfd_add_device: found match for pdev mikrotik,rb4xx-nand
+[    1.077223] mikrotik,rb4xx-nand mikrotik,rb4xx-nand: DMA mask not set
+[    1.083809] rb4xx_nand_probe: called
+[    1.087534] nand_detect: called for chip->id.data = 0000000000000000
+[    1.093962] drivers/mtd/nand/raw/nand_base.c:5139
+[    1.098771] drivers/mtd/nand/raw/nand_base.c:5148
+[    1.103625] drivers/mtd/nand/raw/nand_base.c:5159
+[    1.108447] drivers/mtd/nand/raw/nand_base.c:5176
+[    1.113176] drivers/mtd/nand/raw/nand_base.c:5183
+[    1.117891] drivers/mtd/nand/raw/nand_base.c:5217
+[    1.122778] drivers/mtd/nand/raw/nand_base.c:5234
+[    1.127487] nand: No NAND device found
+[    1.131299] mfd_add_device: added device mikrotik,rb4xx-nand
+[    1.137028] rb4xx_cpld_probe: return 0
+
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+---
+ drivers/gpio/gpio-rb4xx.c         | 2 +-
+ drivers/mtd/nand/raw/nand_rb4xx.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpio/gpio-rb4xx.c b/drivers/gpio/gpio-rb4xx.c
+index ccb46f512f387..87215d27609ec 100644
+--- a/drivers/gpio/gpio-rb4xx.c
++++ b/drivers/gpio/gpio-rb4xx.c
+@@ -153,7 +153,7 @@ static int rb4xx_gpio_probe(struct platform_device *pdev)
+ static struct platform_driver rb4xx_gpio_driver = {
+ 	.probe = rb4xx_gpio_probe,
+ 	.driver = {
+-		.name = "rb4xx-gpio",
++		.name = "mikrotik,rb4xx-gpio",
+ 	},
+ };
+ 
+diff --git a/drivers/mtd/nand/raw/nand_rb4xx.c b/drivers/mtd/nand/raw/nand_rb4xx.c
+index d9a318a9b985d..ec1c2062d5c3d 100644
+--- a/drivers/mtd/nand/raw/nand_rb4xx.c
++++ b/drivers/mtd/nand/raw/nand_rb4xx.c
+@@ -226,7 +226,7 @@ static struct platform_driver rb4xx_nand_driver = {
+ 	.probe  = rb4xx_nand_probe,
+ 	.remove = rb4xx_nand_remove,
+ 	.driver = {
+-		.name = "rb4xx-nand",
++		.name = "mikrotik,rb4xx-nand",
+ 	},
+ };
+ 

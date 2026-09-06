@@ -1,0 +1,37 @@
+From 925db1a86f6197e923183929259c17a00af63d0a Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Mon, 6 Jul 2026 14:22:20 +0200
+Subject: [PATCH] mips: dts: Customize rb4xx NAND partitions for OpenADK
+
+Fix up sizes to match old config just to avoid issues with routerboot
+kernel loading, add a cfgfs partition and set a generic name for the
+final big one.
+---
+ .../dts/mikrotik/ar7100_mikrotik_routerboard-4xx.dtsi | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/arch/mips/boot/dts/mikrotik/ar7100_mikrotik_routerboard-4xx.dtsi b/arch/mips/boot/dts/mikrotik/ar7100_mikrotik_routerboard-4xx.dtsi
+index 8a6b4cb682ee5..b51143e842740 100644
+--- a/arch/mips/boot/dts/mikrotik/ar7100_mikrotik_routerboard-4xx.dtsi
++++ b/arch/mips/boot/dts/mikrotik/ar7100_mikrotik_routerboard-4xx.dtsi
+@@ -140,12 +140,17 @@ partition@0 {
+ 
+ 				partition@40000 {
+ 					label = "kernel";
+-					reg = <0x0040000 0x0800000>;
++					reg = <0x0040000 0x03C0000>;
++				};
++
++				partition@400000 {
++					label = "cfgfs";
++					reg = <0x00400000 0x0400000>;
+ 				};
+ 
+ 				partition@840000 {
+-					label = "ubi";
+-					reg = <0x0840000 0x77c0000>;
++					label = "rootfs";
++					reg = <0x0800000 0x7800000>;
+ 				};
+ 			};
+ 		};
