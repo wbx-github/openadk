@@ -25,6 +25,7 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_MIKROTIK_RB532),y)
 BLOCKDEV:=	root=/dev/sda2
 MTDDEV:=	root=/dev/mtdblock1
+UBIDEV:=	ubi.mtd=1 root=ubi0:rootfs
 endif
 
 ifeq ($(ADK_TARGET_SYSTEM_MIKROTIK_RB4XX),y)
@@ -69,7 +70,7 @@ $(eval $(call rootfs_template,initramfs,INITRAMFS,rootfstype=tmpfs))
 $(eval $(call rootfs_template,initramfspiggyback,INITRAMFSPIGGYBACK,rootfstype=tmpfs))
 $(eval $(call rootfs_template,initramfsarchive,INITRAMFSARCHIVE,rootfstype=tmpfs))
 $(eval $(call rootfs_template,squashfs,SQUASHFS,$(MTDDEV) rootfstype=squashfs))
-$(eval $(call rootfs_template,ubifs,UBIFS,ubi.mtd=1 root=ubi0:rootfs rootfstype=ubifs))
+$(eval $(call rootfs_template,ubifs,UBIFS,$(UBIDEV) rootfstype=ubifs))
 $(eval $(call rootfs_template,jffs2,JFFS2,$(MTDDEV) rootfstype=jffs2))
 $(eval $(call rootfs_template,nfsroot,NFSROOT,root=/dev/nfs ip=dhcp))
 $(eval $(call rootfs_template,encrypted,ENCRYPTED))
