@@ -97,6 +97,8 @@ ifeq ($(ADK_TARGET_FS),ubifs)
 targethelp:
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
 	@echo 'The UBI image is: ${FW_DIR}/${ROOTFSUBIFS}'
+	@echo 'Use the following command to write it to flash:'
+	@echo 'ubiformat /dev/mtdX -f /path/to/ubi.img'
 endif
 
 kernel-strip:

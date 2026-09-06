@@ -17,7 +17,7 @@ PKG_SITES:=		ftp://ftp.infradead.org/pub/mtd-utils/
 
 DISTFILES:=		$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
-PKG_SUBPKGS:=		MTD_UTILS NANDWRITE NANDDUMP NANDTEST FLASH_ERASE FLASH_OTP_INFO FLASH_OTP_DUMP FLASH_LOCK
+PKG_SUBPKGS:=		MTD_UTILS NANDWRITE NANDDUMP NANDTEST FLASH_ERASE FLASH_OTP_INFO FLASH_OTP_DUMP FLASH_LOCK UBIFORMAT
 PKGSD_NANDWRITE:=	mtd-utils nandwrite utility
 PKGSD_NANDDUMP:=	mtd-utils nanddump utility
 PKGSD_NANDTEST:=	mtd-utils nandtest utility
@@ -25,6 +25,9 @@ PKGSD_FLASH_ERASE:=	mtd-utils flash_erase utility
 PKGSD_FLASH_OTP_INFO:=	mtd-utils flash_otp_info utility
 PKGSD_FLASH_OTP_DUMP:=	mtd-utils flash_otp_dump utility
 PKGSD_FLASH_LOCK:=	mtd-utils flash_lock/flash_unlock utilities
+PKGSD_UBIFORMAT:=	mtd-utils ubiformat utility
+
+PKGSS_UBIFORMAT:=	MTD_UTILS_WITH_UBIFS
 
 PKG_FLAVOURS_MTD_UTILS:=WITH_LZO WITH_UBIFS
 PKGFD_WITH_LZO:=	enable lzo support
@@ -42,6 +45,7 @@ $(eval $(call PKG_template,FLASH_ERASE,flash-erase,$(PKG_VERSION)-${PKG_RELEASE}
 $(eval $(call PKG_template,FLASH_OTP_INFO,flash-otp-info,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FLASH_OTP_INFO},${PKG_SECTION}))
 $(eval $(call PKG_template,FLASH_OTP_DUMP,flash-otp-dump,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FLASH_OTP_DUMP},${PKG_SECTION}))
 $(eval $(call PKG_template,FLASH_LOCK,flash-lock,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_FLASH_LOCK},${PKG_SECTION}))
+$(eval $(call PKG_template,UBIFORMAT,ubiformat,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKGSD_UBIFORMAT},${PKG_SECTION}))
 
 HOST_STYLE:=		auto
 HOST_CONFIGURE_ARGS+=	--disable-tests
@@ -107,6 +111,11 @@ flash-lock-install:
 	$(INSTALL_DIR) $(IDIR_FLASH_LOCK)/usr/sbin
 	${INSTALL_BIN} ${WRKINST}/usr/sbin/flash_{lock,unlock} \
 		${IDIR_FLASH_LOCK}/usr/sbin
+
+ubiformat-install:
+	$(INSTALL_DIR) $(IDIR_UBIFORMAT)/usr/sbin
+	$(INSTALL_BIN) $(WRKINST)/usr/sbin/ubiformat \
+		$(IDIR_UBIFORMAT)/usr/sbin
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
