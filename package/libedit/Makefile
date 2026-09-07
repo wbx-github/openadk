@@ -19,6 +19,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,LIBEDIT,libedit,$(PKG_VERSION)-$(PKG_RELEASE),$(PKG_DEPENDS),$(PKG_DESCR),$(PKG_SECTION),$(PKG_OPTS)))
 
+AUTOTOOL_STYLE:=	autoreconf
+
 libedit-install:
 	$(INSTALL_DIR) $(IDIR_LIBEDIT)/usr/lib
 	$(CP) $(WRKINST)/usr/lib/libedit*.so* \
