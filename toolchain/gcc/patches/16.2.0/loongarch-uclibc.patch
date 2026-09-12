@@ -1,0 +1,48 @@
+diff -Nur gcc-15.3.0.orig/gcc/config/loongarch/uclibc.h gcc-15.3.0/gcc/config/loongarch/uclibc.h
+--- gcc-15.3.0.orig/gcc/config/loongarch/uclibc.h	1970-01-01 01:00:00.000000000 +0100
++++ gcc-15.3.0/gcc/config/loongarch/uclibc.h	2026-06-28 10:42:54.366223029 +0200
+@@ -0,0 +1,23 @@
++/* Definitions for uCLibc C library support.
++   Copyright (C) 2024-2025 Free Software Foundation, Inc.
++
++This file is part of GCC.
++
++GCC is free software; you can redistribute it and/or modify
++it under the terms of the GNU General Public License as published by
++the Free Software Foundation; either version 3, or (at your option)
++any later version.
++
++GCC is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with GCC; see the file COPYING3.  If not see
++<http://www.gnu.org/licenses/>.  */
++
++
++#ifndef LA_DEFAULT_TARGET_UCLIBC
++#define LA_DEFAULT_TARGET_UCLIBC
++#endif
+diff -Nur gcc-15.3.0.orig/gcc/config.gcc gcc-15.3.0/gcc/config.gcc
+--- gcc-15.3.0.orig/gcc/config.gcc	2026-06-12 08:09:06.107518032 +0200
++++ gcc-15.3.0/gcc/config.gcc	2026-06-28 10:47:51.591407374 +0200
+@@ -2588,6 +2588,9 @@
+ 	tm_file="elfos.h gnu-user.h linux.h linux-android.h glibc-stdint.h ${tm_file}"
+ 	case ${target} in
+ 	  *-linux-musl*) tm_file="${tm_file} loongarch/musl.h"
++	  ;;
++	  *-linux-uclibc*) tm_file="${tm_file} loongarch/uclibc.h"
++	  ;;
+ 	esac
+ 	tm_file="${tm_file} loongarch/gnu-user.h loongarch/linux.h loongarch/loongarch-driver.h"
+ 	extra_options="${extra_options} linux-android.opt"
+@@ -5108,6 +5111,7 @@
+ 		case ${target} in
+ 		  *-linux-gnu*) triplet_os="linux-gnu";;
+ 		  *-linux-musl*) triplet_os="linux-musl";;
++		  *-linux-uclibc*) triplet_os="linux-uclibc";;
+ 		  *-elf*) triplet_os="elf";;
+ 		  *)
+ 			  echo "Unsupported target ${target}." 1>&2
