@@ -188,6 +188,7 @@ config ADK_TARGET_LIBC_UTILS
 	default n if ADK_TARGET_ARCH_C6X
 	default n if ADK_TARGET_ARCH_LM32
 	default n if ADK_TARGET_ARCH_H8300
+	default n if ADK_TARGET_ARCH_LOONGARCH
 	default y
 
 config ADK_TARGET_LIBC
