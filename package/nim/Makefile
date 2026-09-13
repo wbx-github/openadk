@@ -4,13 +4,13 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nim
-PKG_VERSION:=		2.2.10
+PKG_VERSION:=		2.2.12
 PKG_RELEASE:=		1
-PKG_HASH:=		7957b7ed004206bcf10bcc4f3b4744153878e62f2431552a9a8e9d3f40e8d5d5
+PKG_HASH:=		2639a06a5ea7a7fcf57df1e7e1ef4d1b2bee58c7ac9bd00dbd2aa5bea1e5a56a
 PKG_DESCR:=		nim programming language
 PKG_SECTION:=		dev/lang
 PKG_URL:=		https://nim-lang.org/
-PKG_SITES:=		https://github.com/nim-lang/nightlies/releases/download/2026-04-24-version-2-2-bfeb3146d1638b39f69007a4ae5a23e23ae4e5ef/
+PKG_SITES:=		https://github.com/nim-lang/nightlies/releases/download/2026-09-08-version-2-2-8e8fbf60693418dc95bb0d762fd660231d08a583/
 
 PKG_CFLINE_NIM:=	depends on ADK_HOST_ONLY
 
