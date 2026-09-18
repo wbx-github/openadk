@@ -455,13 +455,15 @@ config BUSYBOX_FEATURE_LZMA_FAST
 	a 1K bigger binary.
 
 config BUSYBOX_FEATURE_PATH_TRAVERSAL_PROTECTION
-	bool "Prevent extraction of filenames with /../ path component"
-	default y
+	bool
+	default n
 	help
 	busybox tar and unzip remove "PREFIX/../" (if it exists)
 	from extracted names.
 	This option enables this behavior for all other unpacking applets,
 	such as cpio, ar, rpm.
 	GNU cpio 2.15 has NO such sanity check.
+
+	Keep this disabled, it breaks ipkg.
 
 endmenu
