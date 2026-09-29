@@ -10,6 +10,8 @@ PKG_HASH:=		fe5383204467828cd495ee8d1d3c037a7eba1389c22bc6a041f627976f9061cc
 PKG_DESCR:=		command line editing library
 PKG_SECTION:=		libs/misc
 PKG_SITES:=		${MASTER_SITE_GNU:=readline/}
+PKG_DEPENDS:=		libncurses
+PKG_BUILDDEP:=		ncurses
 PKG_LIBNAME:=		libreadline
 PKG_OPTS:=		dev
 
