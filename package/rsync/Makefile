@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		rsync
-PKG_VERSION:=		3.5.0
+PKG_VERSION:=		3.5.1
 PKG_RELEASE:=		1
-PKG_HASH:=		c7ffd1ef653e99540f661e47cb00b7f9cad1ee6b972399b16f93d672656e0d33
+PKG_HASH:=		c55f9c9dc10fb8bec397b399a0fdded53cc9a2d8e30891bb0d63724d25c37bef
 PKG_DESCR:=		utility that provides fast incremental file transfer
 PKG_SECTION:=		net/misc
 PKG_DEPENDS:=		libpopt libopenssl zstd
@@ -24,9 +24,11 @@ $(eval $(call HOST_template,RSYNC,rsync,$(PKG_VERSION)-$(PKG_RELEASE)))
 $(eval $(call PKG_template,RSYNC,rsync,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 HOST_CONFIGURE_ARGS:=	--disable-xxhash \
+			--disable-idn \
 			--disable-zstd \
 			--disable-lz4
 CONFIGURE_ARGS:=	--disable-xxhash \
+			--disable-idn \
 			--enable-zstd \
 			--disable-lz4
 
