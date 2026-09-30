@@ -4,12 +4,12 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		nfs-utils
-PKG_VERSION:=		2.9.1
+PKG_VERSION:=		3.1.1
 PKG_RELEASE:=		1
-PKG_HASH:=		302846343bf509f8f884c23bdbd0fe853b7f7cbb6572060a9082279d13b21a2c
+PKG_HASH:=		7dbc05eb8b32828b322872b759a62cb3979cb4118f344dd8616813d1390e84e0
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
-PKG_DEPENDS:=		keyutils libtirpc rpcbind libmount libuuid libevent sqlite
+PKG_DEPENDS:=		keyutils libtirpc rpcbind libmount libuuid libevent libsqlite
 PKG_DEPENDS+=		libncurses libblkid libxml2 libnl libreadline
 PKG_BUILDDEP:=		keyutils libtirpc util-linux libevent sqlite ncurses libxml2
 PKG_BUILDDEP:=		libnl readline
@@ -39,14 +39,13 @@ $(eval $(call PKG_template,NFS_UTILS,nfs-utils,${PKG_VERSION}-${PKG_RELEASE},${P
 $(eval $(call PKG_template,NFS_UTILS_CLIENT,nfs-utils-client,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_NFS_UTILS_CLIENT},${PKGSD_NFS_UTILS_CLIENT},${PKG_SECTION}))
 $(eval $(call PKG_template,NFS_UTILS_SERVER,nfs-utils-server,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_NFS_UTILS_SERVER},${PKGSD_NFS_UTILS_SERVER},${PKG_SECTION}))
 
-TARGET_LDFLAGS+=	-lncursesw
-
 AUTOTOOL_STYLE:=	autoreconf
 ifeq ($(ADK_PACKAGE_NFS_UTILS_V4),y)
 CONFIGURE_ARGS+=	--enable-nfsv4 \
 			--disable-nfsv41 \
 			--with-krb5=${STAGING_TARGET_DIR}/usr \
-			--enable-gss
+			--enable-gss \
+			--enable-svcgss
 else
 CONFIGURE_ARGS+=	--disable-nfsv4 \
 			--disable-nfsv41 \
@@ -57,6 +56,8 @@ CONFIGURE_ENV+=		knfsd_cv_bsd_signals=no \
 			ac_cv_lib_nsl_gethostbyname=no
 CONFIGURE_ARGS+=	--without-tcp-wrappers \
 			--disable-nfsdcltrack \
+			--enable-nfsdctl \
+			--enable-nfsdcld \
 			--with-rpcgen=internal \
 			--disable-caps \
 			--enable-tirpc \
@@ -73,16 +74,23 @@ nfs-utils-server-install:
 	${INSTALL_DATA} ./files/nfsd.exports ${IDIR_NFS_UTILS_SERVER}/etc/exports
 	${INSTALL_BIN} ${WRKBUILD}/utils/nfsd/nfsd \
 		${IDIR_NFS_UTILS_SERVER}/usr/sbin/
+	${INSTALL_BIN} ${WRKBUILD}/utils/nfsdctl/nfsdctl \
+		${IDIR_NFS_UTILS_SERVER}/usr/sbin/
+	${INSTALL_BIN} ${WRKBUILD}/utils/nfsdcld/nfsdcld \
+		${IDIR_NFS_UTILS_SERVER}/usr/sbin/
 	${INSTALL_BIN} ${WRKBUILD}/utils/mountd/mountd \
 		${IDIR_NFS_UTILS_SERVER}/usr/sbin/
-ifeq ($(ADK_PACKAGE_NFS_UTILS_WITH_KERBEROS),y)
+ifeq ($(ADK_PACKAGE_NFS_UTILS_V4),y)
 	${INSTALL_DATA} ./files/idmapd.conf ${IDIR_NFS_UTILS_SERVER}/etc
-	${INSTALL_BIN} ${WRKBUILD}/utils/gssd/gssd \
+	${INSTALL_DIR} ${IDIR_NFS_UTILS_SERVER}/usr/lib/
+	${CP} ${WRKBUILD}/utils/gssd/gssd \
 		${IDIR_NFS_UTILS_SERVER}/usr/sbin/
-	${INSTALL_BIN} ${WRKBUILD}/utils/gssd/svcgssd \
+	${CP} ${WRKBUILD}/utils/gssd/.libs/svcgssd \
 		${IDIR_NFS_UTILS_SERVER}/usr/sbin/
-	${INSTALL_BIN} ${WRKBUILD}/utils/idmapd/idmapd \
+	${CP} ${WRKBUILD}/utils/idmapd/.libs/idmapd \
 		${IDIR_NFS_UTILS_SERVER}/usr/sbin/
+	${CP} ${WRKINST}/usr/lib/libnfsidmap.so.* \
+		${IDIR_NFS_UTILS_SERVER}/usr/lib/
 endif
 
 nfs-utils-install:
