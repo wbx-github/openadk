@@ -1,0 +1,12 @@
+--- nmap-7.991.orig/nmap.cc	2026-08-05 23:12:13.000000000 +0200
++++ nmap-7.991/nmap.cc	2026-09-30 01:43:12.530215796 +0200
+@@ -1858,7 +1858,9 @@ void nmap_free_mem() {
+   AllProbes::service_scan_free();
+   traceroute_hop_cache_clear();
+   nsock_set_default_engine(NULL);
++#ifndef NOLUA
+   close_nse();
++#endif
+ }
+ 
+ int nmap_main(int argc, char *argv[]) {

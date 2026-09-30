@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		nmap
-PKG_VERSION:=		7.99
+PKG_VERSION:=		7.991
 PKG_RELEASE:=		1
-PKG_HASH:=		df512492ffd108e53a27a06f26d8635bbe89e0e569455dc8ffef058c035d51b2
+PKG_HASH:=		a5d507f29437bef3bedd4771ff9aaa8fc1c2a109ddba1f5b1cf12027456929be
 PKG_DESCR:=		utility for network exploration or security auditing
 PKG_SECTION:=		net/security
 PKG_DEPENDS:=		libdnet libpcap pcre2 zlib
