@@ -5,6 +5,14 @@ choice ADK_TARGET_CPU
 prompt "CPU" if !ADK_TARGET_CHOOSE_ARCH
 
 # aarch64
+config ADK_TARGET_CPU_AARCH64_GENERIC
+        bool "generic"
+	select ADK_LINUX_64
+	select ADK_TARGET_SUPPORTS_THREADS
+	select ADK_TARGET_SUPPORTS_NPTL
+	select ADK_TARGET_WITH_MMU
+	depends on ADK_TARGET_ARCH_AARCH64
+
 config ADK_TARGET_CPU_AARCH64_CORTEX_A53
         bool "cortex-a53"
 	select ADK_LINUX_64
@@ -2049,8 +2057,10 @@ config ADK_TARGET_GCC_CPU
 	default "cortex-a17" if ADK_TARGET_CPU_ARM_CORTEX_A17
 	default "cortex-a53" if ADK_TARGET_CPU_ARM_CORTEX_A53
 	default "cortex-a57" if ADK_TARGET_CPU_ARM_CORTEX_A57
+	default "generic" if ADK_TARGET_CPU_AARCH64_GENERIC
 	default "cortex-a53" if ADK_TARGET_CPU_AARCH64_CORTEX_A53
 	default "cortex-a57" if ADK_TARGET_CPU_AARCH64_CORTEX_A57
+	default "cortex-a72" if ADK_TARGET_CPU_AARCH64_CORTEX_A72
 	default "cortex-a76" if ADK_TARGET_CPU_AARCH64_CORTEX_A76
 	default "cortex-m0" if ADK_TARGET_CPU_ARM_CORTEX_M0
 	default "cortex-m3" if ADK_TARGET_CPU_ARM_CORTEX_M3
