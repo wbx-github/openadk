@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		fontconfig
-PKG_VERSION:=		2.18.0
+PKG_VERSION:=		2.18.3
 PKG_RELEASE:=		1
-PKG_HASH:=		e7064a4725431ddba06ff8b971ec5a4b422e23b0169ce215747beedcb30e9073
+PKG_HASH:=		4f7b554a38cdf78c033f666c8871f3749e14a094f65a07f630c91ed0b43d35e3
 PKG_DESCR:=		library for configuring and customizing font access
 PKG_SECTION:=		libs/fonts
 PKG_DEPENDS:=		libfreetype libxml2
