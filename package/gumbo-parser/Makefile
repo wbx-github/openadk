@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gumbo-parser
-PKG_VERSION:=		0.13.2
+PKG_VERSION:=		0.14.1
 PKG_RELEASE:=		1
-PKG_HASH:=		dbdc159dc8e5c6f3f254e50bce689dd9e439064ff06c165d5653410a5714ab66
+PKG_HASH:=		ba5d13b9b508ec693613b3b61518163aced38f8e885f7e28dc047348a4e61365
 PKG_DESCR:=		html5 parser
 PKG_SECTION:=		libs/misc
 PKG_BUILDDEP:=		meson-host
