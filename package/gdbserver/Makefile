@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		gdbserver
-PKG_VERSION:=		17.2
+PKG_VERSION:=		18.1
 PKG_RELEASE:=		1
-PKG_HASH:=		1c036c0d72e4b3d1fb5c94c88632add6f9d76f4d7c4d2ea793c12a9f19a3228c
+PKG_HASH:=		cd9fc3fe2b47743840e42c1592d3d87f8302eb18639c0b8b4ba0898002e2348f
 PKG_DESCR:=		remote program debugger utility
 PKG_SECTION:=		app/debug
 PKG_NEEDS:=		c++ iconv
@@ -15,7 +15,7 @@ PKG_DEPENDS:=		libthread-db libgmp
 PKG_BUILDDEP:=		gmp
 
 PKG_LIBC_DEPENDS:=	!musl
-PKG_ARCH_DEPENDS:=	!microblaze !nds32
+PKG_ARCH_DEPENDS:=	!nds32
 
 ifeq ($(ADK_TOOLCHAIN_GDB_6_7_1),y)
 DISTFILES:=		gdb-6.7.1-avr32-2.1.5.tar.bz2
