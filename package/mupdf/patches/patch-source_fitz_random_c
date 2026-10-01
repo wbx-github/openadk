@@ -1,0 +1,26 @@
+--- mupdf-1.28.5-source.orig/source/fitz/random.c	2026-09-25 04:11:56.000000000 +0200
++++ mupdf-1.28.5-source/source/fitz/random.c	2026-10-01 03:48:01.638527629 +0200
+@@ -34,6 +34,14 @@
+ #else
+ #include <unistd.h> // for getentropy()
+ #endif
++#ifdef __UCLIBC__
++#if __UCLIBC_MAJOR__ < 1 || (__UCLIBC_MAJOR__ == 1 && __UCLIBC_MINOR__ == 0 && __UCLIBC_SUBLEVEL__ < 54) || \
++	!defined(__UCLIBC_LINUX_SPECIFIC__)
++#define NO_GETENTROPY // uClibc-ng before 1.0.54, or without UCLIBC_LINUX_SPECIFIC, does not have getentropy()
++#else
++#include <sys/random.h> // unistd.h declares getentropy() only with _DEFAULT_SOURCE
++#endif
++#endif
+ #endif
+ 
+ #ifdef _WIN32
+@@ -95,6 +103,8 @@ void fz_memrnd(fz_context *ctx, unsigned
+ 		// Android before 9.0 does not have getentropy(), but does have
+ 		// arc4random_buf that sources from /dev/urandom.
+ 		arc4random_buf(entropy, sizeof entropy);
++#elif defined(NO_GETENTROPY)
++		getentropy_fallback(entropy, sizeof entropy);
+ #else
+ 		if (getentropy(entropy, sizeof entropy) < 0)
+ 			getentropy_fallback(entropy, sizeof entropy);
