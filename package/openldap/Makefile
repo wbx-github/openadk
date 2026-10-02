@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		openldap
-PKG_VERSION:=		2.6.8
+PKG_VERSION:=		2.6.15
 PKG_RELEASE:=		1
-PKG_HASH:=		48969323e94e3be3b03c6a132942dcba7ef8d545f2ad35401709019f696c3c4e
+PKG_HASH:=		bc91225dbfc50354033b1303bc91d1a7f6ddd1dc32fac950d79c28fe66d6bca8
 PKG_DESCR:=		ldap client libraries
 PKG_SECTION:=		libs/misc
 PKG_DEPENDS:=		libsasl2 libuuid libncurses libopenssl
@@ -39,8 +39,6 @@ $(eval $(call PKG_template,OPENLDAP_SLAPD,openldap-slapd,${PKG_VERSION}-${PKG_RE
 CONFIGURE_ENV+=		ac_cv_func_memcmp_working=yes
 CONFIGURE_ARGS+= 	--enable-slapd \
 			--libexecdir=/usr/sbin \
-			--disable-bdb \
-			--disable-hdb \
 			--disable-relay \
 			--enable-dynamic \
 			--enable-syslog \
