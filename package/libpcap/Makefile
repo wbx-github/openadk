@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		libpcap
-PKG_VERSION:=		1.10.6
+PKG_VERSION:=		1.10.7
 PKG_RELEASE:=		1
-PKG_HASH:=		872dd11337fe1ab02ad9d4fee047c9da244d695c6ddf34e2ebb733efd4ed8aa9
+PKG_HASH:=		0b394ac90dbc0a9838ff97468e05c9c9a3e873dec2514cd58db65d859d296e31
 PKG_DESCR:=		low-level packet capture library
 PKG_SECTION:=		libs/net
 PKG_URL:=		http://www.tcpdump.org/
