@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kbd
-PKG_VERSION:=		2.4.0
+PKG_VERSION:=		2.10.0
 PKG_RELEASE:=		1
-PKG_HASH:=		55f0740458cfd3a84e775e50d7e8b92dc01846db1edad8e2411ccc293ece9b9f
+PKG_HASH:=		6e5ca4f8d76ee9e3a8db700b667f13e12aac9933828a64e1aaad93d26be9b479
 PKG_DESCR:=		keyboard and font utilities
 PKG_SECTION:=		sys/hw
 PKG_DEPENDS:=		libcheck
@@ -21,6 +21,8 @@ include $(ADK_TOPDIR)/mk/package.mk
 $(eval $(call PKG_template,KBD,kbd,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
 CONFIGURE_ARGS+=	--disable-vlock
+CONFIGURE_ENV+=         ac_cv_func_malloc_0_nonnull=yes \
+			ac_cv_func_realloc_0_nonnull=yes
 
 kbd-install:
 	$(INSTALL_DIR) $(IDIR_KBD)/usr/share
