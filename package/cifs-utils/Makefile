@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		cifs-utils
-PKG_VERSION:=		7.7
+PKG_VERSION:=		7.8
 PKG_RELEASE:=		1
-PKG_HASH:=		2f8aae9aa5ddd73fbaf4d61e2e5e19ef54124cbf2810b626820050e7bd2f6606
+PKG_HASH:=		b5321d3ff848d361c129aeec4ec8431642582b7036cb8a2a403667d5909d4172
 PKG_DESCR:=		network filesystem utilities
 PKG_SECTION:=		net/fs
 PKG_KDEPENDS:=		cifs
