@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gzip
-PKG_VERSION:=		1.14
+PKG_VERSION:=		1.15
 PKG_RELEASE:=		1
-PKG_HASH:=		01a7b881bd220bfdf615f97b8718f80bdfd3f6add385b993dcf6efd14e8c0ac6
+PKG_HASH:=		9aa0cc780dec156b8282844833b342ab7cb08c25d2cd9a1869cdd0df31deff48
 PKG_DESCR:=		compression utility
 PKG_SECTION:=		app/archive
 PKG_URL:=		http://www.gnu.org/software/gzip/

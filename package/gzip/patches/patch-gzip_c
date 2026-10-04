@@ -1,0 +1,19 @@
+--- gzip-1.15.orig/gzip.c	2026-09-19 08:35:07.000000000 +0200
++++ gzip-1.15/gzip.c	2026-10-05 01:14:46.222906538 +0200
+@@ -58,7 +58,6 @@ static char const license_msg[] =
+ 
+ #include "tailor.h"
+ 
+-#include "gzip.h"
+ #include "lzw.h"
+ #include "revision.h"
+ #include "version.h"
+@@ -99,6 +98,8 @@ static char const license_msg[] =
+ #  include <utimens.h>
+ #endif
+ 
++#include "gzip.h"
++
+ #ifndef MAX_PATH_LEN
+ #  define MAX_PATH_LEN   1024 /* max pathname length */
+ #endif
