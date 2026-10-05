@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		eudev
-PKG_VERSION:=		3.2.14
+PKG_VERSION:=		3.2.15
 PKG_RELEASE:=		1
-PKG_HASH:=		8da4319102f24abbf7fff5ce9c416af848df163b29590e666d334cc1927f006f
+PKG_HASH:=		eb69809fc0d1187f2463ab2149c53aa9f42a78e59f14ebea68eae6cb6b4fc1c3
 PKG_DESCR:=		device manager
 PKG_SECTION:=		sys/utils
 PKG_BUILDDEP:=		gperf-host
