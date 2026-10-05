@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		nginx
-PKG_VERSION:=		1.30.4
+PKG_VERSION:=		1.30.5
 PKG_RELEASE:=		1
-PKG_HASH:=		4261dc90e9e47c1c4041276e9aaa3d48ebe2e664f728e14fa95ae6c67d57a08b
+PKG_HASH:=		6c20565aa2325cb82216ae804f4a4ff1875179014759a381c42ddc8e11c4906d
 PKG_DESCR:=		powerful http reverse proxy and webserver
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		pcre2 zlib
