@@ -71,8 +71,12 @@ CONFIGURE_ARGS+=	--without-ssl \
 			--without-wolfssl
 endif
 
-CONFIGURE_ENV+=		curl_typeof_curl_socklen_t=socklen_t \
-			LDFLAGS='$(TARGET_LDFLAGS) -latomic'
+ifeq ($(ADK_TARGET_WITH_MMU),y)
+CONFIGURE_ENV+= 	LIBS="-latomic"
+endif
+
+CONFIGURE_ENV+=		curl_typeof_curl_socklen_t=socklen_t
+
 CONFIGURE_ARGS+=	--enable-cookies \
 			--enable-file \
 			--enable-ftp \
