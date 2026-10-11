@@ -40,6 +40,12 @@ endif
 OPENSSL_OPTIONS+=	threads no-err no-tests no-fuzz-libfuzzer no-fuzz-afl 
 OPENSSL_OPTIONS+=	no-rc5 no-rc2 no-md2 no-idea no-docs
 
+ifeq ($(ADK_TARGET_WITH_MMU),)
+OPENSSL_OPTIONS+=	-DHAVE_FORK=0 -DHAVE_MADVISE=0
+else
+TARGET_LDFLAGS+=	-latomic
+endif
+
 HOST_STYLE:=		manual
 CONFIG_STYLE:=		manual
 
@@ -79,7 +85,7 @@ do-configure:
 		PATH='$(TARGET_PATH)' \
 		CROSS_COMPILE='' \
 		CFLAGS="$(TARGET_CFLAGS)" \
-		LDFLAGS="$(TARGET_LDFLAGS) -latomic" \
+		LDFLAGS="$(TARGET_LDFLAGS)" \
 		./Configure $(CONFIG) \
 			--prefix=/usr \
 			--openssldir=/etc/ssl \
