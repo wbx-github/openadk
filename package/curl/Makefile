@@ -79,9 +79,9 @@ CONFIGURE_ENV+=		curl_typeof_curl_socklen_t=socklen_t
 
 CONFIGURE_ARGS+=	--enable-cookies \
 			--enable-file \
-			--enable-ftp \
 			--enable-http \
 			--enable-proxy \
+			--disable-ftp \
 			--disable-curldebug \
 			--disable-ntlm \
 			--disable-ntlm-wb \
