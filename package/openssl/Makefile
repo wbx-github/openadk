@@ -32,13 +32,13 @@ $(eval $(call PKG_template,LIBOPENSSL,libopenssl,${PKG_VERSION}-${PKG_RELEASE},$
 $(eval $(call PKG_template,OPENSSL_UTIL,openssl-util,${PKG_VERSION}-${PKG_RELEASE},${PKGSS_OPENSSL_UTIL},${PKGSD_OPENSSL_UTIL},${PKGSC_OPENSSL_UTIL}))
 
 ifeq ($(ADK_TARGET_USE_STATIC_LIBS_ONLY),y)
-OPENSSL_OPTIONS:=	no-shared zlib no-dso
+OPENSSL_OPTIONS:=	no-shared no-zlib no-dso
 else
 OPENSSL_OPTIONS:=	shared zlib-dynamic
 endif
 
 OPENSSL_OPTIONS+=	threads no-err no-tests no-fuzz-libfuzzer no-fuzz-afl 
-OPENSSL_OPTIONS+=	no-rc5 no-rc2 no-md2 no-idea no-docs
+OPENSSL_OPTIONS+=	no-rc5 no-rc2 no-md2 no-idea no-camellia no-docs
 
 ifeq ($(ADK_TARGET_WITH_MMU),)
 OPENSSL_OPTIONS+=	-DHAVE_FORK=0 -DHAVE_MADVISE=0
@@ -68,6 +68,10 @@ CONFIG:=		linux-x86_64
 endif
 ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
 CONFIG:=		linux-aarch64
+OPENSSL_OPTIONS+=	no-asm
+endif
+ifeq ($(ADK_TARGET_ARCH_RISCV64),y)
+CONFIG:=		linux64-riscv64
 OPENSSL_OPTIONS+=	no-asm
 endif
 
