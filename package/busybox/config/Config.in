@@ -549,7 +549,7 @@ config BUSYBOX_STACK_OPTIMIZATION_386
 
 config BUSYBOX_STATIC_LIBGCC
 	bool "Use -static-libgcc"
-	default y
+	default n
 	help
 	This option instructs gcc to link in a static version of its
 	support library, libgcc. This means that the binary will require
