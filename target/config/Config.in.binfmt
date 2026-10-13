@@ -56,6 +56,14 @@ config ADK_TARGET_BINFMT_FLAT_SEP_DATA
 
 endchoice
 
+# Set up stacksize 
+config ADK_TARGET_BINFMT_FLAT_STACKSIZE
+	int "FLAT stack size"
+	default 8192
+	depends on ADK_TARGET_BINFMT_FLAT
+	help
+	  Stack size to be configured while building apps.
+
 source "target/config/Config.in.elf2flt"
 
 config ADK_TARGET_BINFMT
