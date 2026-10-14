@@ -26,9 +26,15 @@ CONFIG_STYLE:=          manual
 BUILD_STYLE:=           manual
 INSTALL_STYLE:=         manual
 
-MUSL_LD_SO:=		"`echo 'void main(void) {}' |${TARGET_CC} ${TARGET_CFLAGS} -x c -o \
+ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
+READELF:=		$(TOOLCHAIN_DIR)/usr/bin/llvm-readelf
+else
+READELF:=		${TARGET_COMPILER_PREFIX}readelf
+endif
+
+MUSL_LD_SO:=		"`echo "int main(void) {}" | PATH="$(HOST_PATH)" ${TARGET_CC} ${TARGET_CFLAGS} ${TARGET_LDFLAGS} -x c -o \
 			$(BUILD_DIR)/.musl.tmp - >/dev/null 2>&1 ;\
-			${TARGET_COMPILER_PREFIX}readelf -l $(BUILD_DIR)/.musl.tmp 2>/dev/null \
+			$(READELF) -l $(BUILD_DIR)/.musl.tmp 2>/dev/null \
 			| grep 'program interpreter: /lib.*/ld-musl' | sed -e 's|.*lib.*/||'|sed -e 's|]||' ;\
 			rm $(BUILD_DIR)/.musl.tmp`"
 

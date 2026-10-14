@@ -36,11 +36,14 @@ endchoice
 config ADK_TARGET_CFLAGS_DISABLE_EH
 	bool "Disable exception handling and unwindung via compiler flags"
 	depends on !ADK_DEBUG
+	depends on ADK_BUILD_COMPILER_GCC
 	help
 	  Do not use this optimization flags if you are planning to use C++
 	  applications, which are often using exception handling.
 
 menu "Compiler language support"
+depends on ADK_BUILD_COMPILER_GCC
+
 config ADK_TOOLCHAIN_WITH_CXX
 	bool "enable C++"
 
@@ -58,6 +61,7 @@ config ADK_TOOLCHAIN_WITH_GO
 endmenu
 
 menu "Advanced Toolchain options"
+depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TOOLCHAIN_WITH_SANITIZER
 	bool "Enable libsanitizer in GCC"

@@ -3,6 +3,7 @@
 
 choice
 prompt "GNU debugger"
+depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TOOLCHAIN_WITHOUT_GDB
 	bool "disabled"

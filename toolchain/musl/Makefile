@@ -6,6 +6,7 @@ include ../rules.mk
 include Makefile.inc
 include ${ADK_TOPDIR}/mk/buildhlp.mk
 
+ifeq ($(ADK_BUILD_COMPILER_GCC),y)
 ifeq ($(ADK_TARGET_CPU_ARCH),ppc)
 GNU_TARGET_NAME:= $(subst ppc,powerpc,$(GNU_TARGET_NAME))
 endif
@@ -15,11 +16,17 @@ endif
 ifeq ($(ADK_TARGET_CPU_ARCH),ppc64le)
 GNU_TARGET_NAME:= $(subst ppc64le,powerpc64le,$(GNU_TARGET_NAME))
 endif
+endif
+
 # not yet possible
 TARGET_CFLAGS:=		$(filter-out -fstack-protector-all,$(TARGET_CFLAGS))
 TARGET_LDFLAGS:=	$(filter-out -fstack-protector-all,$(TARGET_LDFLAGS))
 # don't use fast-math for C library
 TARGET_CFLAGS:=         $(filter-out -ffast-math,$(TARGET_CFLAGS))
+
+ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
+TARGET_LDFLAGS+=	$(TOOLCHAIN_DIR)/usr/lib/clang/23/lib/$(ADK_TARGET_CPU_ARCH)-unknown-linux-musl$(ADK_TARGET_ABI)/libclang_rt.builtins.a
+endif
 
 $(WRKBUILD)/.configured:
 	(cd $(WRKBUILD); PATH='$(HOST_PATH)' \
@@ -30,11 +37,13 @@ $(WRKBUILD)/.configured:
 		--target=$(GNU_TARGET_NAME) \
 		--disable-gcc-wrapper \
 	)
+	PATH='$(HOST_PATH)' $(MAKE) -C $(WRKBUILD) \
+		CC='$(TARGET_CC)' CFLAGS='$(TARGET_CFLAGS)' DESTDIR=$(STAGING_TARGET_DIR) install-headers
 	touch $@
 
 $(WRKBUILD)/.compiled:
 	PATH='$(HOST_PATH)' $(MAKE) -C $(WRKBUILD) \
-		CC='$(TARGET_CC)' CFLAGS='$(TARGET_CFLAGS)' all
+		CC='$(TARGET_CC)' CFLAGS='$(TARGET_CFLAGS)' LDFLAGS='$(TARGET_LDFLAGS)' all
 	touch $@
 
 $(WRKBUILD)/.installed: $(WRKBUILD)/.compiled

@@ -83,8 +83,8 @@ endmenu
 menu "Toolchain settings"
 	visible if !ADK_TARGET_CHOOSE_ARCH
 
-source "target/config/Config.in.binutils"
 source "target/config/Config.in.compiler"
+source "target/config/Config.in.binutils"
 source "target/config/Config.in.gdb"
 source "target/config/Config.in.toolchain"
 endmenu

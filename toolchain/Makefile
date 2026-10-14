@@ -12,6 +12,10 @@
 
 include $(ADK_TOPDIR)/rules.mk
 
+ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
+TARGETS:=llvm compiler-rt
+COMPILER:=clang
+endif
 ifeq ($(ADK_BUILD_COMPILER_GCC),y)
 TARGETS:=binutils gmp mpfr mpc
 TARGETS+=gcc
@@ -61,8 +65,12 @@ clean: $(TARGETS_CLEAN)
 download: $(DOWNLOAD)
 final: $(FINAL)
 
+ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
+$(COMPILER)-configure: llvm-install $(ADK_TARGET_OS)-headers-configure $(CLIB)-configure compiler-rt-install libunwind-install $(CLIB)-install
+else
+ifeq ($(ADK_BUILD_COMPILER_GCC),y)
 $(COMPILER)-configure: binutils-install gmp-install mpfr-install mpc-install
-
+endif
 ifeq ($(ADK_TARGET_LIB_NEWLIB),y)
 $(CLIB)-install: $(COMPILER)-configure
 else
@@ -70,6 +78,7 @@ $(CLIB)-install: $(COMPILER)-configure $(ADK_TARGET_OS)-headers-configure
 endif
 $(COMPILER)-install: $(ELF2FLT) $(CLIB)-install
 $(COMPILER)-final: $(COMPILER)-install $(GDB)
+endif
 
 %-download:
 	$(START_TRACE) "toolchain/$(patsubst %-download,%,$@)/download.. "

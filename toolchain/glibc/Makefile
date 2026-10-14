@@ -36,6 +36,8 @@ GLIBC_ENV:=             PATH='${HOST_PATH}:${TARGET_PATH}' \
                         CXX="${TARGET_CXX}" \
                         AR="${TARGET_AR}" \
                         RANLIB="${TARGET_RANLIB}" \
+                        OBJDUMP="${TARGET_OBJDUMP}" \
+                        OBJCOPY="${TARGET_OBJCOPY}" \
                         libc_cv_gnu99_inline=yes \
 			libc_cv_initfini_array=yes
 
@@ -61,6 +63,12 @@ $(WRKBUILD)/.configured:
 			--prefix=/usr \
 			${GLIBC_CONFOPTS} \
 	);
+	(cd $(GLIBC_BUILD_DIR_FINAL); \
+		$(MAKE) install_root=$(STAGING_TARGET_DIR) \
+		install-bootstrap-headers=yes install-headers \
+	);
+	touch $(STAGING_TARGET_DIR)/usr/include/gnu/stubs.h
+	touch $(STAGING_TARGET_DIR)/usr/include/gnu/stubs-{32,x32,64,lp64,soft,hard}.h
 	touch $@
 
 $(WRKBUILD)/.compiled:
@@ -69,8 +77,6 @@ $(WRKBUILD)/.compiled:
 
 $(WRKBUILD)/.installed:
 	${GLIBC_ENV} $(MAKE) -C $(GLIBC_BUILD_DIR_FINAL) install_root=$(STAGING_TARGET_DIR) install
-	touch $(STAGING_TARGET_DIR)/usr/include/gnu/stubs.h
-	touch $(STAGING_TARGET_DIR)/usr/include/gnu/stubs-{32,x32,64,lp64,soft,hard}.h
 	mkdir -p ${STAGING_TARGET_DIR}/etc
 	${INSTALL_DATA} ${WRKBUILD}/posix/gai.conf ${STAGING_TARGET_DIR}/etc
 	${INSTALL_DATA} ${WRKBUILD}/nss/nsswitch.conf ${STAGING_TARGET_DIR}/etc
