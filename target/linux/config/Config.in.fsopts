@@ -3,9 +3,6 @@
 
 menu "Filesystem options"
 
-config ADK_LINUX_KERNEL_INOTIFY_USER
-	bool "Enable INOTIFY"
-
 config ADK_LINUX_KERNEL_DNOTIFY
 	bool "Enable DNOTIFY"
 
