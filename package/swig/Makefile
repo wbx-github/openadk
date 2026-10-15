@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		swig
-PKG_VERSION:=		4.4.1
+PKG_VERSION:=		4.5.1
 PKG_RELEASE:=		1
-PKG_HASH:=		40162a706c56f7592d08fd52ef5511cb7ac191f3593cf07306a0a554c6281fcf
+PKG_HASH:=		7fec50b27deddab5455a9633780b6341eddfb96215a7619e93a76eb27178f653
 PKG_DESCR:=		swig utility
 PKG_SECTION:=		dev/tools
 PKG_URL:=		http://www.swig.org/
