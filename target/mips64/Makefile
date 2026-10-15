@@ -6,6 +6,9 @@ include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
+ifeq ($(ADK_TARGET_KERNEL_VMLINUX_BIN),y)
+KERNEL:=$(LINUX_DIR)/arch/mips/boot/vmlinux.bin
+endif
 OSTRIP:=-R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id
 
 QEMU_ARGS:=-M malta
@@ -78,7 +81,11 @@ endif
 
 # image creation and kernel install
 kernel-strip:
+ifeq ($(ADK_TARGET_KERNEL_UIMAGE)$(ADK_TARGET_KERNEL_UIMAGEBIN)$(ADK_TARGET_KERNEL_UIMAGEGZ)$(ADK_TARGET_KERNEL_VMLINUX_BIN),)
 	$(TARGET_CROSS)objcopy $(OSTRIP) -S $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
+else
+	$(CP) $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
+endif
 
 kernel-install: kernel-strip
 	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/${TARGET_KERNEL}
