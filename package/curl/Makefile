@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		curl
-PKG_VERSION:=		8.21.0
+PKG_VERSION:=		8.23.0
 PKG_RELEASE:=		1
-PKG_HASH:=		aa1b66a70eace83dc624508745646c08ae561de512ab403adffb93ac87fc72e6
+PKG_HASH:=		8dadd7d2536a314f982ad05a651b713f426bf7d02cc2c76cffb9796f2218e6c5
 PKG_DESCR:=		client-side url transfer tool
 PKG_SECTION:=		net/http
 PKG_BUILDDEP:=		zlib
