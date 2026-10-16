@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kodi
-PKG_VERSION:=		22.0b1
+PKG_VERSION:=		22.0rc1
 PKG_RELEASE:=		1
-PKG_HASH:=		05cb0d19c1716b1121e7e69d4ac7f9a2d0c7228b2122510a8cb3adc47e609c73
+PKG_HASH:=		21daa839b978ff3fc6a7a058717fe9232f1ae4087d492b31c288eeffb2a7a447
 PKG_DESCR:=		software media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		python3 libsquish libopenssl libfmt rapidjson libpcre
@@ -15,18 +15,19 @@ PKG_DEPENDS+=		libflac libbz2 libtiff libnettle librtmp liblzo libXext
 PKG_DEPENDS+=		yajl tinyxml libsqlite libpcrecpp libncurses libpng
 PKG_DEPENDS+=		libpcre2 libcdio libfreetype libsamplerate libuuid
 PKG_DEPENDS+=		taglib libjasper libmp3lame libgpg-error giflib nghttp2
-PKG_DEPENDS+=		glib libdcadec libffmpeg harfbuzz exiv2
+PKG_DEPENDS+=		glib libdcadec libffmpeg harfbuzz exiv2 libgnutls libunistring
 PKG_DEPENDS+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
 PKG_DEPENDS+=		xkeyboard-config tinyxml2 libdisplay-info libudfread json
+PKG_DEPENDS+=		libtasn1
 PKG_BUILDDEP:=		python3 libass ffmpeg rtmpdump libudfread exiv2
-PKG_BUILDDEP+=		libmpeg2 libmad libjpeg-turbo fmt rapidjson
+PKG_BUILDDEP+=		libmpeg2 libmad libjpeg-turbo fmt rapidjson libtasn1
 PKG_BUILDDEP+=		curl flac bzip2 libtiff yajl cmake-host libdisplay-info
 PKG_BUILDDEP+=		tinyxml tinyxml2 sqlite pcre2 libcdio freetype libpng
 PKG_BUILDDEP+=		libsamplerate taglib libjasper giflib xkeyboard-config
-PKG_BUILDDEP+=		glib libmodplug libgpg-error libxshmfence
+PKG_BUILDDEP+=		glib libmodplug libgpg-error libxshmfence gnutls
 PKG_BUILDDEP+=		swig-host liblzo-host libpng-host libjpeg-turbo-host
 PKG_BUILDDEP+=		zip-host giflib-host libsquish libdcadec
-PKG_BUILDDEP+=		openssl bzip2 liblzo harfbuzz pcre json
+PKG_BUILDDEP+=		openssl bzip2 liblzo harfbuzz pcre json libunistring
 PKG_BUILDDEP+=		flatbuffers fstrcmp spdlog mesa libinput libxkbcommon
 PKG_BUILDDEP+=		kodi-texturepacker-host
 PKG_NEEDS:=		threads c++ data iconv
@@ -101,10 +102,7 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DDEPENDS_PATH=$(STAGING_TARGET_DIR)/usr \
 			-DWITH_JSONSCHEMABUILDER=$(STAGING_HOST_DIR)/usr/bin/JsonSchemaBuilder \
 			-DWITH_TEXTUREPACKER=$(STAGING_HOST_DIR)/usr/bin/TexturePacker \
-			-DCMAKE_EXE_LINKER_FLAGS="-latomic" \
-			-DLIBDVDCSS_URL=$(DL_DIR)/libdvdcss-1.4.3-Next-Nexus-Alpha2-2.tar.gz \
-			-DLIBDVDNAV_URL=$(DL_DIR)/libdvdnav-6.1.1-Next-Nexus-Alpha2-2.tar.gz \
-			-DLIBDVDREAD_URL=$(DL_DIR)/libdvdread-6.1.3-Next-Nexus-Alpha2-2.tar.gz
+			-DCMAKE_EXE_LINKER_FLAGS="-latomic"
 			
 ifeq ($(ADK_TARGET_ARCH_AARCH64),y)
 CMAKE_FLAGS+=		-DWITH_ARCH=aarch64 \
@@ -170,18 +168,11 @@ endif
 
 XAKE_FLAGS+=		VERBOSE=1
 
-KODI_LIBDVDCSS_VERSION 	= 1.4.3-Next-Nexus-Alpha2-2
-KODI_LIBDVDNAV_VERSION 	= 6.1.1-Next-Nexus-Alpha2-2
-KODI_LIBDVDREAD_VERSION = 6.1.3-Next-Nexus-Alpha2-2
-
 pre-configure:
 	(cd $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src && PATH='$(HOST_PATH)' cmake .)
 	PATH='$(HOST_PATH)' make -C $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src
 	cp $(WRKSRC)/tools/depends/native/JsonSchemaBuilder/src/JsonSchemaBuilder \
 		$(STAGING_HOST_DIR)/usr/bin/JsonSchemaBuilder
-	(cd $(DL_DIR) && wget -O libdvdcss-$(KODI_LIBDVDCSS_VERSION).tar.gz https://github.com/xbmc/libdvdcss/archive/refs/tags/$(KODI_LIBDVDCSS_VERSION).tar.gz)
-	(cd $(DL_DIR) && wget -O libdvdnav-$(KODI_LIBDVDNAV_VERSION).tar.gz https://github.com/xbmc/libdvdnav/archive/refs/tags/$(KODI_LIBDVDNAV_VERSION).tar.gz)
-	(cd $(DL_DIR) && wget -O libdvdread-$(KODI_LIBDVDREAD_VERSION).tar.gz https://github.com/xbmc/libdvdread/archive/refs/tags/$(KODI_LIBDVDREAD_VERSION).tar.gz)
 
 kodi-install:
 	$(INSTALL_DIR) $(STAGING_TARGET_DIR)/usr/share/kodi
