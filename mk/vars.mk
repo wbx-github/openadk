@@ -116,7 +116,7 @@ TARGET_CC:=		clang --target=$(GNU_TARGET_NAME) --sysroot=$(STAGING_TARGET_DIR)
 TARGET_CXX:=		clang++ --target=$(GNU_TARGET_NAME) --sysroot=$(STAGING_TARGET_DIR)
 TARGET_LDFLAGS:=	-fuse-ld=lld -rtlib=compiler-rt
 ifeq ($(ADK_TARGET_LIB_UCLIBC_NG),y)
-TARGET_LDFLAGS:=	-fuse-ld=lld -rtlib=compiler-rt -Wl,--dynamic-linker,/lib/ld-uClibc.so.1
+TARGET_LDFLAGS:=	-fuse-ld=lld -rtlib=compiler-rt -unwindlib=libunwind -Wl,--dynamic-linker,/lib/ld-uClibc.so.1
 endif
 endif
 
