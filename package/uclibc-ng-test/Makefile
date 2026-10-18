@@ -8,7 +8,7 @@ PKG_VERSION:=		git
 PKG_RELEASE:=		1
 PKG_DESCR:=		embedded c library testsuite
 PKG_SECTION:=		base/tests
-PKG_URL:=		http://www.uclibc-ng.org
+PKG_URL:=		https://uclibc-ng.org
 PKG_SITES:=		https://git.uclibc-ng.org/git/uclibc-ng-test.git
 
 PKG_NOPARALLEL:=	1
