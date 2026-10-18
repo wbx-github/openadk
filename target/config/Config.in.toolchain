@@ -61,12 +61,12 @@ config ADK_TOOLCHAIN_WITH_GO
 endmenu
 
 menu "Advanced Toolchain options"
-depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TOOLCHAIN_WITH_SANITIZER
 	bool "Enable libsanitizer in GCC"
 	select ADK_TOOLCHAIN_WITH_CXX
 	depends on ADK_TOOLCHAIN_GCC_15
+	depends on ADK_BUILD_COMPILER_GCC
 	help
 	  You have to add TARGET_CFLAGS/TARGET_LDFLAGS/TARGET_CXXFLAGS on
 	  your own to the packages you want to check.
@@ -77,9 +77,11 @@ config ADK_TOOLCHAIN_WITH_SSP
 config ADK_TARGET_USE_SSP
 	bool "Use Stack Smashing Protection for all packages"
 	select ADK_TOOLCHAIN_WITH_SSP
+	depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TARGET_USE_PIE
 	bool "Use Position Independent Executable for packages with have support for it"
+	depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TOOLCHAIN_WITH_LTO
 	bool
@@ -87,26 +89,30 @@ config ADK_TOOLCHAIN_WITH_LTO
 config ADK_TARGET_USE_LTO
 	bool "Use Link Time Optimization for all packages"
 	select ADK_TOOLCHAIN_WITH_LTO
+	depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TARGET_USE_LD_RELRO
 	bool "Use LD read-only (-z relro) relocations for all packages"
+	depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TARGET_USE_LD_BIND_NOW
 	bool "Use LD bind now (-z now) for all packages"
+	depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TARGET_USE_LD_GC
 	bool "Use LD garbage collection for all packages"
+	depends on ADK_BUILD_COMPILER_GCC
 
 config ADK_TARGET_USE_GNU_HASHSTYLE
 	bool "Use GNU hashstyle for all packages"
-	depends on !ADK_TARGET_ARCH_MIPS
-	depends on !ADK_TARGET_ARCH_MIPS64
+	default y if ADK_BUILD_COMPILER_LLVM
 	help
 	  Performance optimization for applications with lot of shared library
 	  dependencies. See http://www.akkadia.org/drepper/dsohowto.pdf
 
 config ADK_DEBUG
 	bool "Compile applications with debug support and do not strip"
+	depends on ADK_BUILD_COMPILER_GCC
 	help
 	  All software for the target will be compiled with:
 	  -fno-omit-frame-pointer
@@ -124,12 +130,14 @@ config ADK_DEBUG_STRIP
 
 config ADK_STATIC_TOOLCHAIN
 	bool "Build the toolchain components statically (portable host binaries)"
+	depends on ADK_BUILD_COMPILER_GCC
 	help
 	  If you want to create more portable toolchains, build them static.
 
 config ADK_PRELINK
 	bool "Prelink binaries and libraries in Image"
 	depends on ADK_TARGET_OS_LINUX
+	depends on ADK_BUILD_COMPILER_GCC
 	help
 	  Do prelinking for faster loading of binaries.
 

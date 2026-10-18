@@ -66,7 +66,7 @@ download: $(DOWNLOAD)
 final: $(FINAL)
 
 ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
-$(COMPILER)-configure: llvm-install $(ADK_TARGET_OS)-headers-configure $(CLIB)-configure compiler-rt-install libunwind-install $(CLIB)-install
+$(COMPILER)-configure: llvm-install $(ADK_TARGET_OS)-headers-configure $(CLIB)-configure compiler-rt-install $(CLIB)-install libunwind-install
 else
 ifeq ($(ADK_BUILD_COMPILER_GCC),y)
 $(COMPILER)-configure: binutils-install gmp-install mpfr-install mpc-install
