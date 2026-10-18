@@ -55,7 +55,7 @@ $(WRKBUILD)/.compiled: $(WRKBUILD)/.configured
 
 $(WRKBUILD)/.installed: $(WRKBUILD)/.compiled
 	cd $(WRKBUILD) && \
-		DESTDIR="$(TOOLCHAIN_DIR)" ninja -C build-libunwind install
+		DESTDIR="$(STAGING_TARGET_DIR)" ninja -C build-libunwind install
 	touch $@
 
 include ${ADK_TOPDIR}/mk/toolchain.mk

@@ -21,7 +21,7 @@ INSTALL_STYLE:=		manual
 
 llvm-libgcc-install:
 	${INSTALL_DIR} ${IDIR_LLVM_LIBGCC}/$(ADK_TARGET_LIBC_PATH)
-	${CP} ${TOOLCHAIN_DIR}/usr/lib/libgcc*.so* ${IDIR_LLVM_LIBGCC}/$(ADK_TARGET_LIBC_PATH)
-	${CP} ${TOOLCHAIN_DIR}/usr/lib/libunwind.so* ${IDIR_LLVM_LIBGCC}/$(ADK_TARGET_LIBC_PATH)
+	${CP} ${STAGING_TARGET_DIR}/usr/lib/libgcc*.so* ${IDIR_LLVM_LIBGCC}/$(ADK_TARGET_LIBC_PATH)
+	${CP} ${STAGING_TARGET_DIR}/usr/lib/libunwind.so* ${IDIR_LLVM_LIBGCC}/$(ADK_TARGET_LIBC_PATH)
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk
