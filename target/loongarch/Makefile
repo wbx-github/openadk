@@ -7,7 +7,7 @@ include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/arch/loongarch/boot/vmlinux.efi
 
-QEMU_ARGS:=-M virt -m 512 -bios target/loongarch/QEMU_EFI.fd
+QEMU_ARGS:=-M virt -m 512 -netdev user,id=eth0 -device virtio-net-pci,netdev=eth0
 QEMU_ARGS+=-nographic
 
 # target helper text
