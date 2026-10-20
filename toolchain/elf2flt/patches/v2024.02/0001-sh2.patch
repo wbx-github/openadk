@@ -1,6 +1,6 @@
-diff -Nur elf2flt-v2023.09.orig/elf2flt.c elf2flt-v2023.09/elf2flt.c
---- elf2flt-v2023.09.orig/elf2flt.c	2023-12-22 10:44:11.000000000 +0100
-+++ elf2flt-v2023.09/elf2flt.c	2023-12-23 02:26:06.323239781 +0100
+diff -Nur elf2flt-v2024.02.orig/elf2flt.c elf2flt-v2024.02/elf2flt.c
+--- elf2flt-v2024.02.orig/elf2flt.c	2024-05-08 20:49:03.000000000 +0200
++++ elf2flt-v2024.02/elf2flt.c	2026-10-18 19:56:22.176875356 +0200
 @@ -73,7 +73,7 @@
  #define FLAT_NIOS2_R_HIADJ_LO	2
  #define FLAT_NIOS2_R_CALL26		4
@@ -10,7 +10,19 @@ diff -Nur elf2flt-v2023.09.orig/elf2flt.c elf2flt-v2023.09/elf2flt.c
  #include <elf/sh.h>
  #elif defined(TARGET_sparc)
  #include <elf/sparc.h>
-@@ -109,8 +109,10 @@
+@@ -93,6 +93,11 @@
+ #include "flat.h"     /* Binary flat header description                      */
+ #include "compress.h"
+ 
++#if defined(TARGET_sh2) || defined(TARGET_sh2eb)
++#undef ALWAYS_RELOC_TEXT
++#define ALWAYS_RELOC_TEXT 1
++#endif
++
+ #ifdef TARGET_e1
+ #include <e1.h>
+ #endif
+@@ -109,8 +114,10 @@
  #define	ARCH	"sparc"
  #elif defined(TARGET_v850)
  #define	ARCH	"v850"
@@ -23,7 +35,19 @@ diff -Nur elf2flt-v2023.09.orig/elf2flt.c elf2flt-v2023.09/elf2flt.c
  #elif defined(TARGET_h8300)
  #define	ARCH	"h8300"
  #elif defined(TARGET_microblaze)
-@@ -1289,7 +1291,7 @@
+@@ -758,6 +765,11 @@
+ 
+ 				    flat_reloc_count++;
+ 				    break;
++#elif defined(TARGET_sh2) || defined(TARGET_sh2eb)
++				case R_SH_DIR32:
++					goto good_32bit_resolved_reloc;
++				case R_SH_REL32:
++					continue;
+ #elif defined (TARGET_h8300)
+ 				case R_H8_DIR32:
+ 				case R_H8_DIR32A16:
+@@ -1291,7 +1303,7 @@
  #endif /* TARGET_sparc */
  
  
@@ -32,7 +56,7 @@ diff -Nur elf2flt-v2023.09.orig/elf2flt.c elf2flt-v2023.09/elf2flt.c
  				case R_SH_DIR32:
  					relocation_needed = 1;
  					sym_vma = elf2flt_bfd_section_vma(sym_section);
-@@ -1300,7 +1302,7 @@
+@@ -1302,7 +1314,7 @@
  					sym_addr += sym_vma + q->addend;
  					sym_addr -= q->address;
  					break;
