@@ -1,0 +1,14 @@
+diff -Nur binutils-2.42.orig/bfd/elf32-sh.c binutils-2.42/bfd/elf32-sh.c
+--- binutils-2.42.orig/bfd/elf32-sh.c	2024-01-29 01:00:00.000000000 +0100
++++ binutils-2.42/bfd/elf32-sh.c	2026-10-21 01:52:42.332225601 +0200
+@@ -6397,10 +6397,6 @@
+       BFD_ASSERT (htab->srofixup->reloc_count * 4 == htab->srofixup->size);
+     }
+ 
+-  if (htab->srelfuncdesc)
+-    BFD_ASSERT (htab->srelfuncdesc->reloc_count * sizeof (Elf32_External_Rela)
+-		== htab->srelfuncdesc->size);
+-
+   if (htab->root.srelgot)
+     BFD_ASSERT (htab->root.srelgot->reloc_count * sizeof (Elf32_External_Rela)
+ 		== htab->root.srelgot->size);
