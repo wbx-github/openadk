@@ -1,0 +1,11 @@
+diff -Nur elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/elf2flt.ld.in elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/elf2flt.ld.in
+--- elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12.orig/elf2flt.ld.in	2026-10-24 04:36:52.482886658 +0200
++++ elf2flt-453398f917d167f8c308c8f997270c48ae8f8b12/elf2flt.ld.in	2026-10-24 04:40:12.864568684 +0200
+@@ -75,6 +75,7 @@
+ R_RODAT 	*(.rodata1)
+ R_RODAT 	*(.rodata.*)
+ R_RODAT 	*(.gnu.linkonce.r*)
++R_RODAT		*(.rofixup)
+ 		*(.data)
+ 		*(.data1)
+ 		*(.data.*)
