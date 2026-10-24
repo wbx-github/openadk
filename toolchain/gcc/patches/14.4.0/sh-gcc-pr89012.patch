@@ -1,0 +1,21 @@
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=89012
+
+diff -Nur gcc-14.4.0.orig/gcc/config/sh/sh.cc gcc-14.4.0/gcc/config/sh/sh.cc
+--- gcc-14.4.0.orig/gcc/config/sh/sh.cc	2026-06-26 10:13:42.000000000 +0200
++++ gcc-14.4.0/gcc/config/sh/sh.cc	2026-10-24 03:51:05.952477697 +0200
+@@ -2890,9 +2890,12 @@
+ 
+   if (TARGET_FDPIC && GET_CODE (pat) == PARALLEL)
+     {
+-      rtx t = XVECEXP (pat, 0, XVECLEN (pat, 0) - 1);
+-      if (GET_CODE (t) == USE && unspec_caller_rtx_p (XEXP (t, 0)))
+-	return true;
++      for (int i = 0; i < XVECLEN (pat, 0); i++)
++       {
++         rtx t = XVECEXP (pat, 0, i);
++         if (GET_CODE (t) == USE && unspec_caller_rtx_p (XEXP (t, 0)))
++           return true;
++       }
+     }
+ 
+   if (GET_CODE (pat) != SET)

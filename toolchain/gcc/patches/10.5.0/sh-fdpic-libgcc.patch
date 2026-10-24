@@ -1,0 +1,30 @@
+diff -Nur gcc-11.5.0.orig/libgcc/unwind-dw2-fde-dip.c gcc-11.5.0/libgcc/unwind-dw2-fde-dip.c
+--- gcc-11.5.0.orig/libgcc/unwind-dw2-fde-dip.c	2024-07-19 07:52:46.805543013 +0200
++++ gcc-11.5.0/libgcc/unwind-dw2-fde-dip.c	2026-05-05 02:36:21.858199545 +0200
+@@ -125,7 +125,7 @@
+ {
+   _Unwind_Ptr pc_low;
+   _Unwind_Ptr pc_high;
+-#if defined __FRV_FDPIC__ || defined __BFIN_FDPIC__
++#if defined __FRV_FDPIC__ || defined __BFIN_FDPIC__ || defined __SH_FDPIC__
+   struct elf32_fdpic_loadaddr load_base;
+ #else
+   _Unwind_Ptr load_base;
+@@ -168,7 +168,7 @@
+   struct unw_eh_callback_data *data = (struct unw_eh_callback_data *) ptr;
+   const ElfW(Phdr) *phdr, *p_eh_frame_hdr, *p_dynamic;
+   long n, match;
+-#if defined __FRV_FDPIC__ || defined __BFIN_FDPIC__
++#if defined __FRV_FDPIC__ || defined __BFIN_FDPIC__ || defined __SH_FDPIC__
+   struct elf32_fdpic_loadaddr load_base;
+ #else
+   _Unwind_Ptr load_base;
+@@ -352,7 +352,7 @@
+ 	    break;
+ 	  }
+     }
+-# elif (defined __FRV_FDPIC__ || defined __BFIN_FDPIC__) && defined __linux__
++# elif (defined __FRV_FDPIC__ || defined __BFIN_FDPIC__ || __SH_FDPIC__) && defined __linux__
+   data->dbase = load_base.got_value;
+ # else
+ #  error What is DW_EH_PE_datarel base on this platform?
