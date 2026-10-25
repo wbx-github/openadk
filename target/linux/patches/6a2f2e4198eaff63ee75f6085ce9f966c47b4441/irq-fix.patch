@@ -1,0 +1,46 @@
+diff -Nur linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441.orig/arch/lm32/kernel/irq.c linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441/arch/lm32/kernel/irq.c
+--- linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441.orig/arch/lm32/kernel/irq.c	2026-10-24 04:18:55.000000000 +0200
++++ linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441/arch/lm32/kernel/irq.c	2026-10-25 11:29:36.702351614 +0100
+@@ -31,7 +31,8 @@
+ 	uint32_t mask = lm32_pic_get_irq_mask(data);
+ 	uint32_t im;
+ 
+-	__asm__ __volatile__("rcsr %0, IM\n"
++	__asm__ __volatile__("wcsr IP, %1\n"      /* drop stale latched pending bit */
++			     "rcsr %0, IM\n"
+ 			     "or %0, %0, %1\n"
+ 			     "wcsr IM, %0\n"
+ 			     : "=&r"(im) : "r"(mask));
+@@ -43,6 +44,22 @@
+ 	.irq_unmask	= lm32_pic_irq_unmask,
+ };
+ 
++static void lm32_pic_irq_ack(struct irq_data *data)
++{
++	uint32_t mask = lm32_pic_get_irq_mask(data);
++
++	/* IP is write-1-to-clear */
++	__asm__ __volatile__("wcsr IP, %0\n" : : "r"(mask));
++}
++
++/* same chip plus ack, for pulse/edge interrupts such as QEMU's timer */
++static struct irq_chip lm32_irq_edge_chip = {
++	.name		= "LM32 PIC",
++	.irq_ack	= lm32_pic_irq_ack,
++	.irq_mask	= lm32_pic_irq_mask,
++	.irq_unmask	= lm32_pic_irq_unmask,
++};
++
+ void __init init_IRQ(void)
+ {
+ 	unsigned int irq;
+@@ -55,6 +72,9 @@
+ 		irq_set_chip_data(irq, (void *)(1 << irq));
+ 		irq_set_handler(irq, handle_level_irq);
+ 	}
++
++	/* QEMU milkymist timer0 (irq 2) is a latched pulse */
++	irq_set_chip_and_handler(2, &lm32_irq_edge_chip, handle_edge_irq);
+ }
+ 
+ int arch_show_interrupts(struct seq_file *p, int prec)

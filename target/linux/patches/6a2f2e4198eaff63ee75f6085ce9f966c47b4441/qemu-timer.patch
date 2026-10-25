@@ -1,0 +1,174 @@
+diff -Nur linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441.orig/arch/lm32/platforms/milkymist/time.c linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441/arch/lm32/platforms/milkymist/time.c
+--- linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441.orig/arch/lm32/platforms/milkymist/time.c	2026-10-24 04:18:55.000000000 +0200
++++ linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441/arch/lm32/platforms/milkymist/time.c	2026-10-25 12:10:45.492420420 +0100
+@@ -1,18 +1,7 @@
+ /*
+- *  Copyright (C) 2011, Lars-Peter Clausen <lars@metafoo.de>
+- *  Clockevent and clocksource driver for the Milkymist sysctl timers
+- *
+- *  This program is free software; you can redistribute it and/or modify it
+- *  under  the terms of the GNU General  Public License as published by the
+- *  Free Software Foundation;  either version 2 of the License, or (at your
+- *  option) any later version.
+- *
+- *  You should have received a copy of the GNU General Public License along
+- *  with this program; if not, write to the Free Software Foundation, Inc.,
+- *  675 Mass Ave, Cambridge, MA 02139, USA.
+- *
++ * Clockevent driver for the Milkymist sysctl timer0 as modelled by QEMU
++ * (hw/timer/milkymist-sysctl.c): 32-bit word registers at 0xe0001000.
+  */
+-
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+ 
+@@ -21,56 +10,34 @@
+ #include <linux/timex.h>
+ #include <linux/io.h>
+ 
+-// TODO: use the DTS?
+-#define TIMER0_BASE		0xe0001800
+-
+-#define TIMER0_CSR(x)		((void *)(TIMER0_BASE+(x)))
+-
+-#define CSR_TIMER0_EN		TIMER0_CSR(0x00)
+-
+-#define CSR_TIMER0_COUNT3	TIMER0_CSR(0x04)
+-#define CSR_TIMER0_COUNT2	TIMER0_CSR(0x08)
+-#define CSR_TIMER0_COUNT1	TIMER0_CSR(0x0C)
+-#define CSR_TIMER0_COUNT0	TIMER0_CSR(0x10)
+-
+-#define CSR_TIMER0_RELOAD3	TIMER0_CSR(0x14)
+-#define CSR_TIMER0_RELOAD2	TIMER0_CSR(0x18)
+-#define CSR_TIMER0_RELOAD1	TIMER0_CSR(0x1C)
+-#define CSR_TIMER0_RELOAD0	TIMER0_CSR(0x20)
++#define SYSCTL_BASE		0xe0001000
++#define SYSCTL_REG(x)		((void *)(SYSCTL_BASE + (x)))
+ 
+-#define CSR_TIMER0_EV_STAT	TIMER0_CSR(0x24)
+-#define CSR_TIMER0_EV_PENDING	TIMER0_CSR(0x28)
+-#define CSR_TIMER0_EV_ENABLE	TIMER0_CSR(0x2C)
++#define CSR_TIMER0_CONTROL	SYSCTL_REG(0x10)
++#define CSR_TIMER0_COMPARE	SYSCTL_REG(0x14)
++#define CSR_TIMER0_COUNTER	SYSCTL_REG(0x18)
++#define CSR_CLK_FREQUENCY	SYSCTL_REG(0x74)
+ 
+-#define TIMER0_INTERRUPT	1
++#define CTRL_ENABLE		(1 << 0)
++#define CTRL_AUTORESTART	(1 << 1)
+ 
++/* QEMU wires sysctl as gpio=1, timer0=2, timer1=3 */
++#define TIMER0_INTERRUPT	2
+ 
+ static uint32_t milkymist_ticks_per_jiffy;
+ 
+-static inline void milkymist_timer_set_counter(uint32_t value)
++static void milkymist_timer_stop(void)
+ {
+-	iowrite32be((value & 0xff000000) >> 24, CSR_TIMER0_COUNT3);
+-	iowrite32be((value & 0x00ff0000) >> 16, CSR_TIMER0_COUNT2);
+-	iowrite32be((value & 0x0000ff00) >> 8, CSR_TIMER0_COUNT1);
+-	iowrite32be(value & 0x000000ff, CSR_TIMER0_COUNT0);
++	iowrite32be(0, CSR_TIMER0_CONTROL);
+ }
+ 
+-static inline void milkymist_timer_set_reload(uint32_t value)
++/* The model counts compare - counter ticks, so counter = 0 gives 'ticks'. */
++static void milkymist_timer_start(uint32_t ticks, uint32_t flags)
+ {
+-	iowrite32be((value & 0xff000000) >> 24, CSR_TIMER0_RELOAD3);
+-	iowrite32be((value & 0x00ff0000) >> 16, CSR_TIMER0_RELOAD2);
+-	iowrite32be((value & 0x0000ff00) >> 8, CSR_TIMER0_RELOAD1);
+-	iowrite32be(value & 0x000000ff, CSR_TIMER0_RELOAD0);
+-}
+-
+-static inline void milkymist_timer_disable(void)
+-{
+-	iowrite32be(0, CSR_TIMER0_EN);
+-}
+-
+-static inline void milkymist_timer_enable(void)
+-{
+-	iowrite32be(1, CSR_TIMER0_EN);
++	iowrite32be(0, CSR_TIMER0_CONTROL);
++	iowrite32be(ticks, CSR_TIMER0_COMPARE);
++	iowrite32be(0, CSR_TIMER0_COUNTER);
++	iowrite32be(CTRL_ENABLE | flags, CSR_TIMER0_CONTROL);
+ }
+ 
+ cycles_t get_cycles(void)
+@@ -82,12 +49,8 @@
+ {
+ 	struct clock_event_device *cd = devid;
+ 
+-	if (cd->mode != CLOCK_EVT_MODE_PERIODIC)
+-		milkymist_timer_disable();
+-
++	/* No ack register: the model just pulses the IRQ line. */
+ 	cd->event_handler(cd);
+-	
+-	iowrite32be(1, CSR_TIMER0_EV_PENDING);
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -96,22 +59,12 @@
+ {
+ 	switch (mode) {
+ 	case CLOCK_EVT_MODE_PERIODIC:
+-		milkymist_timer_disable();
+-		milkymist_timer_set_counter(milkymist_ticks_per_jiffy);
+-		milkymist_timer_set_reload(milkymist_ticks_per_jiffy);
+-		milkymist_timer_enable();
+-		break;
+ 	case CLOCK_EVT_MODE_RESUME:
+-		milkymist_timer_enable();
++		milkymist_timer_start(milkymist_ticks_per_jiffy, CTRL_AUTORESTART);
+ 		break;
+ 	case CLOCK_EVT_MODE_ONESHOT:
+-		milkymist_timer_disable();
+-		milkymist_timer_set_counter(milkymist_ticks_per_jiffy);
+-		milkymist_timer_set_reload(0);
+-		milkymist_timer_enable();
+-		break;
+ 	case CLOCK_EVT_MODE_SHUTDOWN:
+-		milkymist_timer_disable();
++		milkymist_timer_stop();
+ 		break;
+ 	default:
+ 		break;
+@@ -121,10 +74,7 @@
+ static int milkymist_clockevent_set_next(unsigned long evt,
+ 	struct clock_event_device *cd)
+ {
+-	milkymist_timer_disable();
+-	milkymist_timer_set_counter(evt);
+-	milkymist_timer_enable();
+-
++	milkymist_timer_start(evt, 0);	/* one shot: model clears ENABLE on expiry */
+ 	return 0;
+ }
+ 
+@@ -146,15 +96,19 @@
+ 
+ void __init plat_time_init(void)
+ {
+-	milkymist_ticks_per_jiffy = DIV_ROUND_CLOSEST(CONFIG_CPU_CLOCK, HZ);
++	uint32_t freq = ioread32be(CSR_CLK_FREQUENCY);
++
++	if (!freq)
++		freq = CONFIG_CPU_CLOCK;
++
++	milkymist_ticks_per_jiffy = DIV_ROUND_CLOSEST(freq, HZ);
+ 
+-	clockevents_calc_mult_shift(&milkymist_clockevent, CONFIG_CPU_CLOCK, 5);
++	clockevents_calc_mult_shift(&milkymist_clockevent, freq, 5);
+ 	milkymist_clockevent.min_delta_ns = clockevent_delta2ns(100, &milkymist_clockevent);
+-	milkymist_clockevent.max_delta_ns = clockevent_delta2ns(0xffff, &milkymist_clockevent);
++	milkymist_clockevent.max_delta_ns = clockevent_delta2ns(0x7fffffff, &milkymist_clockevent);
+ 	milkymist_clockevent.cpumask = cpumask_of(0);
+ 
+ 	clockevents_register_device(&milkymist_clockevent);
+ 
+-	iowrite32be(1, CSR_TIMER0_EV_ENABLE);
+ 	setup_irq(TIMER0_INTERRUPT, &timer_irqaction);
+ }
