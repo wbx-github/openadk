@@ -11,7 +11,7 @@ append() {
 }
 
 load_modules() {
-	if [ -d /lib/modules/$(uname -r) ]; then
+	if [ -d "/lib/modules/$(uname -r)" ]; then
   		(sed "s,^[^#][^[:space:]]*,insmod /lib/modules/$(uname -r)/&.ko," $* | sh 2>&- || :)
 	fi
 }
