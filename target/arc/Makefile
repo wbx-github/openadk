@@ -14,7 +14,6 @@ KERNEL:=$(LINUX_DIR)/arch/arc/boot/loader
 endif
 
 QEMU_ARGS:=-monitor none -serial stdio
-QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 QEMU_ARGS+=${ADK_QEMU_ARGS}
 
 ifeq ($(ADK_TARGET_CPU_ARC_ARC700),y)
@@ -25,16 +24,19 @@ endif
 ifeq ($(ADK_TARGET_CPU_ARC_ARCHS),y)
 QEMU:=qemu-system-arc
 QEMU_ARGS+=-cpu archs
+QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 endif
 
 ifeq ($(ADK_TARGET_CPU_ARC_ARC32),y)
 QEMU:=qemu-system-arc
 QEMU_ARGS+=-cpu hs5x -M virt,ram_start=0
+QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 endif
 
 ifeq ($(ADK_TARGET_CPU_ARC_ARC64),y)
 QEMU:=qemu-system-arc64
 QEMU_ARGS+=-cpu hs6x -M virt,ram_start=0
+QEMU_ARGS+=-netdev user,id=eth0 -device virtio-net-device,netdev=eth0
 endif
 
 # target helper text
