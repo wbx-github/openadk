@@ -1,8 +1,8 @@
 config ADK_TARGET_SYSTEM_QEMU_LM32
-	bool "Qemu Emulator"
+	bool "Qemu LM32 Emulator"
 	select ADK_TARGET_QEMU
 	select ADK_TARGET_CPU_LM32
 	select ADK_TARGET_KERNEL_SIMPLEIMAGE
+	select ADK_TARGET_WITH_NET
 	help
 	  Support for Qemu Emulator LM32 architecture.
-

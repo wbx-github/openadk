@@ -1,9 +1,11 @@
 config ADK_TARGET_SYSTEM_QEMU_SH
-	bool "Qemu Emulator"
+	bool "Qemu SuperH Emulator"
 	select ADK_TARGET_QEMU
 	select ADK_TARGET_CPU_SH_SH4
 	select ADK_TARGET_KERNEL_ZIMAGE
 	select ADK_TARGET_KERNEL_WITH_COMPRESSION
+	select ADK_TARGET_WITH_NET
+	select ADK_TARGET_WITH_NETDEVICE
 	help
-	  Support for Qemu Emulator SUPERH architecture.
+	  Support for Qemu Emulator SUPERH (SH4) architecture.
 

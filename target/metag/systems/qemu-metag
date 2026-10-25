@@ -1,8 +1,7 @@
 config ADK_TARGET_SYSTEM_QEMU_METAG
-	bool "Qemu Emulator"
+	bool "Qemu METAG Emulator"
 	select ADK_TARGET_CPU_METAG
 	select ADK_TARGET_QEMU
-	select ADK_TARGET_PACKAGE_TXZ
+	select ADK_TARGET_WITH_NET
 	help
-	  METAG Qemu support.
-
+	  Qemu support for METAG architecture.

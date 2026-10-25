@@ -1,7 +1,9 @@
 config ADK_TARGET_SYSTEM_QEMU_CSKY
-	bool "Qemu Emulator"
+	bool "Qemu C-SKY Emulator"
 	select ADK_TARGET_QEMU
 	select ADK_TARGET_KERNEL_WITH_COMPRESSION
+	select ADK_TARGET_WITH_NET
+	select ADK_TARGET_WITH_NETDEVICE
 	help
 	  Qemu Emulator for C-SKY architecture.
 

@@ -1,7 +1,7 @@
 config ADK_TARGET_SYSTEM_QEMU_KVX
-	bool "Qemu Emulator"
+	bool "Qemu KVX Emulator"
 	select ADK_TARGET_QEMU
 	select ADK_TARGET_CPU_KVX
+	select ADK_TARGET_WITH_NET
 	help
-	  Support for Qemu Emulator KVX architecture.
-
+	  Support Qemu Emulator for KVX architecture.
