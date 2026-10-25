@@ -1,0 +1,32 @@
+diff -Nur linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441.orig/arch/lm32/kernel/signal.c linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441/arch/lm32/kernel/signal.c
+--- linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441.orig/arch/lm32/kernel/signal.c	2026-10-24 04:18:55.000000000 +0200
++++ linux-6a2f2e4198eaff63ee75f6085ce9f966c47b4441/arch/lm32/kernel/signal.c	2026-10-25 13:18:16.954624406 +0100
+@@ -251,6 +251,14 @@
+ 
+ 	if (signr > 0) {
+ 		/* Whee!  Actually deliver the signal.  */
++		/* LM32FIX: the syscall result is passed in "retval" and entry.S stores it into
++		 * the pt_regs r1 slot only after manage_signals() has returned.  Store it now,
++		 * otherwise the signal frame saves the stale first syscall argument in r1 and
++		 * rt_sigreturn makes the interrupted syscall return that value.  Restart
++		 * codes keep the original argument. */
++		if (retval != -ERESTARTNOHAND && retval != -ERESTARTSYS &&
++		    retval != -ERESTARTNOINTR && retval != -ERESTART_RESTARTBLOCK)
++			regs->r1 = retval;
+ 		handle_signal(signr, &info, &ka, oldset, regs);
+ 		if (test_thread_flag(TIF_RESTORE_SIGMASK))
+ 			clear_thread_flag(TIF_RESTORE_SIGMASK);
+@@ -284,6 +292,13 @@
+ {
+ 	unsigned long flags;
+ 
++	if (retval == -1)
++		printk(KERN_INFO "ret -1: nr=%ld pid=%d comm=%s ea=%lx args=%lx %lx %lx %lx\n",
++		       (long)regs->r8, current->pid, current->comm,
++		       (unsigned long)regs->ea,
++		       (unsigned long)regs->r1, (unsigned long)regs->r2,
++		       (unsigned long)regs->r3, (unsigned long)regs->r4);
++
+ 	if (!user_mode(regs))
+ 		return retval;
+ 
