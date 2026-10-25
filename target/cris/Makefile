@@ -5,10 +5,17 @@ include $(ADK_TOPDIR)/rules.mk
 include $(ADK_TOPDIR)/mk/kernel-build.mk
 include $(ADK_TOPDIR)/mk/image.mk
 
+KERNEL:=$(LINUX_DIR)/vmlinux
 ifeq ($(ADK_TARGET_SYSTEM_FOXBOARD_LX832),y)
 KERNEL:=$(LINUX_DIR)/arch/cris/boot/zImage
-else
+endif
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_CRISV32),y)
 KERNEL:=$(LINUX_DIR)/arch/cris/boot/Image
+endif
+
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_CRISV10),y)
+QEMU_ARGS:=-M etrax100lx -nographic -monitor none -append console=ttyS0
+else
 QEMU_ARGS:=-M axis-dev88 -nographic -monitor none
 endif
 
@@ -22,9 +29,13 @@ ifeq ($(ADK_TARGET_FS),initramfs)
 targethelp:
 	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
 	@echo 'The initramfs image is: ${FW_DIR}/${INITRAMFS}'
-ifeq ($(ADK_TARGET_QEMU),y)
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_CRISV10),y)
 	@echo "Start qemu with following command line:"
-	@echo 'qemu-system-${ADK_TARGET_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) -initrd ${FW_DIR}/${INITRAMFS}'
+	@echo 'qemu-system-cris ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) -initrd ${FW_DIR}/${INITRAMFS}'
+endif
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_CRISV32),y)
+	@echo "Start qemu with following command line:"
+	@echo 'qemu-system-cris32 ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL) -initrd ${FW_DIR}/${INITRAMFS}'
 endif
 endif
 
@@ -36,9 +47,13 @@ endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
 targethelp:
 	@echo 'The kernel+initramfs file is: $(FW_DIR)/${TARGET_KERNEL}'
-ifeq ($(ADK_TARGET_QEMU),y)
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_CRISV10),y)
 	@echo "Start qemu with following command line:"
-	@echo 'qemu-system-${ADK_TARGET_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+	@echo 'qemu-system-cris ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+endif
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_CRISV32),y)
+	@echo "Start qemu with following command line:"
+	@echo 'qemu-system-cris32 ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)

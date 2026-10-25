@@ -1,0 +1,22 @@
+# cris v10: fill the delay slot after "ba ret_from_sys_call" (Linux 4.9.156).
+# 1703a219f7f5 ("cris: switch to generic kernel_execve/sys_execve", v3.7)
+# replaced the never-returning "jsr sys_exit" at the end of
+# ret_from_kernel_thread with "ba ret_from_sys_call" and forgot the nop for
+# the delay slot.  The slot then holds "bdap 68,$sp", the first insn of
+# ret_from_intr -- an addressing prefix, which the ETRAX 100LX Programmer's
+# Manual forbids in a delay slot.  The prefix still applies at the branch
+# target, so "movs.w -8192,$r0" in ret_from_sys_call yields garbage and init
+# dies on its first return to user mode (seen under qemu-system-cris; what
+# the silicon does is undocumented).  The arch-v32 copy of the same change
+# has the nop.  arch/cris was removed in v4.17, so v3.7..v4.16 all carry it.
+diff -Nur linux-4.9.337.orig/arch/cris/arch-v10/kernel/entry.S linux-4.9.337/arch/cris/arch-v10/kernel/entry.S
+--- linux-4.9.337.orig/arch/cris/arch-v10/kernel/entry.S	2023-01-07 12:07:38.000000000 +0100
++++ linux-4.9.337/arch/cris/arch-v10/kernel/entry.S	2026-10-25 20:33:08.310241777 +0100
+@@ -89,6 +89,7 @@
+ 	jsr	$r1		; call the payload
+ 	moveq	0, $r9		; no syscall restarts, TYVM...
+ 	ba  ret_from_sys_call
++	nop
+ 
+ ret_from_intr:
+ 	;; check for resched if preemptive kernel or if we're going back to user-mode
