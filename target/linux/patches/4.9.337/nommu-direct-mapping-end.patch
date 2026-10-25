@@ -1,0 +1,13 @@
+--- linux-4.9.337.orig/mm/nommu.c	2023-02-01 08:27:22.000000000 +0100
++++ linux-4.9.337/mm/nommu.c	2026-10-25 16:37:37.000000000 +0100
+@@ -1351,6 +1351,10 @@
+ 					goto error_just_free;
+ 
+ 				capabilities &= ~NOMMU_MAP_DIRECT;
++			} else if (addr + len <= addr) {
++				/* vm_end is exclusive and must fit */
++				ret = -EINVAL;
++				goto error_just_free;
+ 			} else {
+ 				vma->vm_start = region->vm_start = addr;
+ 				vma->vm_end = region->vm_end = addr + len;
