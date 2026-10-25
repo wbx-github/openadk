@@ -2,6 +2,7 @@
 #PKG busybox
 #INIT 40
 . /etc/rc.conf
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 case $1 in
 autostart)
 	test x"${network:-NO}" = x"NO" && exit 0
