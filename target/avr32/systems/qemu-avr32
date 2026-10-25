@@ -1,0 +1,7 @@
+config ADK_TARGET_SYSTEM_QEMU_AVR32
+	bool "Qemu AVR32"
+	select ADK_TARGET_CPU_AVR32
+	select ADK_TARGET_QEMU
+	help
+	  Qemu AVR32 support.
+
