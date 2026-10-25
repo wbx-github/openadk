@@ -9,11 +9,11 @@ autostart)
 	;;
 start)
 	[ -f /etc/network/interfaces ] || exit 1
-	ifup -a > /dev/null
+	/sbin/ifup -a > /dev/null
 	;;
 autostop|stop)
 	[ -f /etc/network/interfaces ] || exit 1
-	ifdown -a > /dev/null
+	/sbin/ifdown -a > /dev/null
 	;;
 restart)
 	sh $0 stop
