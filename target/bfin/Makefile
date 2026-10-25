@@ -11,6 +11,8 @@ else
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 endif
 
+QEMU_ARGS:=-M bf537-stamp -nographic
+
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
@@ -32,6 +34,10 @@ targethelp:
 ifeq ($(ADK_TARGET_SIM),y)
 	@echo "Run the simulator via:"
 	@echo '$(TARGET_CROSS)run --environment operating --model bf512 $(FW_DIR)/$(TARGET_KERNEL)'
+endif
+ifeq ($(ADK_TARGET_QEMU),y)
+	@echo "Start qemu with following command line:"
+	@echo 'qemu-system-${ADK_TARGET_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)

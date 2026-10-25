@@ -1,0 +1,9 @@
+config ADK_TARGET_SYSTEM_QEMU_BF537
+	bool "Qemu Bfin ADSP-BF537"
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_CPU_BFIN_BF537
+	select ADK_TARGET_PACKAGE_TXZ
+	help
+	  Analog Devices ADSP-BF537 STAMP
+	  http://www.analog.com/en/products/processors-dsp/blackfin/bf537-stamp.html
+
