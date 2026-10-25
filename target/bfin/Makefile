@@ -11,7 +11,7 @@ else
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 endif
 
-QEMU_ARGS:=-M bf537-stamp -nographic
+QEMU_ARGS:=-M bf537-stamp -nographic -m 256
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
