@@ -8,8 +8,8 @@ include $(ADK_TOPDIR)/mk/image.mk
 KERNEL:=$(LINUX_DIR)/arch/lm32/boot/simpleImage.milkymist_one
 
 QEMU_ARGS:=-M milkymist 
-QEMU_ARGS+=-nographic -monitor pty -serial stdio -append "console=ttyS0 lpj=250"
-#
+QEMU_ARGS+=-nographic -monitor pty -serial stdio
+
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
