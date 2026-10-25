@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		ethtool
-PKG_VERSION:=		6.14
+PKG_VERSION:=		7.2
 PKG_RELEASE:=		1
-PKG_HASH:=		9338bb00e492878d3bbe3cd2894e60db35813634c208db0b20f5c7ee84da69b1
+PKG_HASH:=		44256ddf4631ed08d816b7b8725f4b2e0f05e96b8c7ca64ee5c81449da2b6507
 PKG_DESCR:=		display or change ethernet card settings
 PKG_DEPENDS:=		libmnl
 PKG_BUILDDEP:=		libmnl
