@@ -8,6 +8,9 @@ endif
 ifeq ($(ADK_TARGET_ARCH_MICROBLAZE),y)
 KERNEL_MAKE_OPTS:=	CC="$(TARGET_CC) -fno-tree-loop-distribute-patterns"
 endif
+ifeq ($(ADK_TARGET_ARCH_TILE),y)
+KERNEL_MAKE_OPTS:=	CC="$(TARGET_CC) -fno-tree-loop-distribute-patterns"
+endif
 
 ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
 KERNEL_MAKE_OPTS+=	LLVM=1 LLVM_IAS=1
