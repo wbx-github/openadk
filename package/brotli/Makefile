@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		brotli
-PKG_VERSION:=		1.2.0
+PKG_VERSION:=		1.2.1
 PKG_RELEASE:=		1
-PKG_HASH:=		816c96e8e8f193b40151dad7e8ff37b1221d019dbcb9c35cd3fadbfe6477dfec
+PKG_HASH:=		98d35d11a78dc453aebb7d10c3748f3f73ff78c8267c0dc697b8631f67bf7e8f
 PKG_DESCR:=		compression library
 PKG_SECTION:=		libs/comp
 PKG_URL:=		https://github.com/google/brotli
