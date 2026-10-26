@@ -1,0 +1,20 @@
+diff -Nur gcc-13.5.0.orig/gcc/config/sh/linux.h gcc-13.5.0/gcc/config/sh/linux.h
+--- gcc-13.5.0.orig/gcc/config/sh/linux.h	2026-09-11 09:08:56.562155671 +0200
++++ gcc-13.5.0/gcc/config/sh/linux.h	2026-10-26 07:16:59.508767026 +0100
+@@ -20,6 +20,16 @@
+ 
+ /* Run-time Target Specification.  */
+ 
++#undef STARTFILE_SPEC
++#define STARTFILE_SPEC \
++  "%{!shared: crt1.o%s} crti.o%s " \
++  "%{mfdpic:crtreloc.o%s} " \
++  "%{!shared:crtbegin.o%s} %{shared:crtbeginS.o%s}"
++
++#undef ENDFILE_SPEC
++#define ENDFILE_SPEC \
++  "%{!shared:crtend.o%s} %{shared:crtendS.o%s} crtn.o%s"
++
+ /* Enable DWARF 2 exceptions.  */
+ #undef DWARF2_UNWIND_INFO
+ #define DWARF2_UNWIND_INFO 1
