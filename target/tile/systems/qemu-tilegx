@@ -1,0 +1,8 @@
+config ADK_TARGET_SYSTEM_QEMU_TILEGX
+	bool "Qemu TileGX Emulator"
+	select ADK_TARGET_CPU_TILE_TILEGX
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_WITH_NET
+	select ADK_TARGET_WITH_NETDEVICE
+	help
+	  Qemu Emulator for TileGX architecture.
