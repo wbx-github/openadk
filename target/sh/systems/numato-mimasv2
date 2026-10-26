@@ -4,6 +4,7 @@ config ADK_TARGET_SYSTEM_NUMATO_MIMASV2
 	select ADK_TARGET_CPU_SH_J2
 	select ADK_TARGET_WITH_SERIAL
 	select ADK_TARGET_WITH_BLOCK
+	select ADK_TARGET_WITH_NET
 	select ADK_HOST_BUILD_DTC
 	help
 	  Support for Numato Mimas v2 FPGA with J2 Core Bitstream (sh2eb).
