@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		chawan
-PKG_VERSION:=		0.4.4
+PKG_VERSION:=		0.5.1
 PKG_RELEASE:=		1
-PKG_HASH:=		e0a06e1504e10a51c6009751d79b798c98d8274e559fe195d4b4b7ddadf91bb8
+PKG_HASH:=		67a54f10acd2dcda6c62bca825ccaf228f94d04ba9dc85c9369930c58d12ec21
 PKG_DESCR:=		console www browser
 PKG_SECTION:=		app/browser
 PKG_DEPENDS:=		libopenssl brotli libssh2 ca-certificates
@@ -33,7 +33,7 @@ endif
 endif
 
 XAKE_FLAGS:=		FLAGS="--os:linux --cpu:$(ARCH) --gcc.exe:$(ADK_TARGET_CPU_ARCH)-$(ADK_VENDOR)-linux-$(ADK_TARGET_SUFFIX)-gcc --gcc.linkerexe:$(ADK_TARGET_CPU_ARCH)-$(ADK_VENDOR)-linux-$(ADK_TARGET_SUFFIX)-gcc"
-XAKE_FLAGS+=		PREFIX="/usr" FORCE_POLL_MODE=2
+XAKE_FLAGS+=		PREFIX="/usr" FORCE_POLL_MODE=2 embed_startup=0
 CONFIG_STYLE:=		manual
 
 chawan-install:
