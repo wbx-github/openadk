@@ -31,6 +31,7 @@ sparc
 sparc64
 sh
 tile
+v850
 x86
 x86_64
 xtensa

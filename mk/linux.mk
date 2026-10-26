@@ -17,7 +17,8 @@ PKG_SITES:=  	${MASTER_SITE_KERNEL:=kernel/v7.x/} \
 		${MASTER_SITE_KERNEL:=kernel/v3.x/} \
 		${MASTER_SITE_KERNEL:=kernel/v3.0/testing/} \
 		${MASTER_SITE_KERNEL:=kernel/v4.x/testing/} \
-		${MASTER_SITE_KERNEL:=kernel/v2.6/longterm/v2.6.32/}
+		${MASTER_SITE_KERNEL:=kernel/v2.6/longterm/v2.6.32/} \
+		${MASTER_SITE_KERNEL:=kernel/v2.6/}
 PKG_HASH:=	$(KERNEL_HASH)
 DISTFILES=	$(PKG_NAME)-$(PKG_VERSION).tar.xz
 endif

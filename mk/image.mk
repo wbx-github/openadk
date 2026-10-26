@@ -45,7 +45,12 @@ $(error No login shell configured!)
 endif
 endif
 
+ifeq ($(ADK_TARGET_MINIMAL_USERLAND),y)
+# no base-files: there is no /etc to set up
+imageprepare:
+else
 imageprepare: image-prepare-post extra-install prelink
+endif
 
 # if an extra directory exist in ADK_TOPDIR, copy all content over the 
 # root directory, do the same if make extra=/dir/to/extra is used

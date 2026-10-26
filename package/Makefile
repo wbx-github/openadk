@@ -22,6 +22,11 @@ endif
 
 include $(ADK_TOPDIR)/package/Depends.mk
 
+ifeq ($(ADK_TARGET_MINIMAL_USERLAND),y)
+# without a C library only the mini-init packages can be built
+package-y:=$(filter mini-init-%,$(package-y))
+endif
+
 COMPILE_PACKAGES:=$(patsubst %,%-compile,$(package-y))
 HOST_COMPILE_PACKAGES:=$(patsubst %,%-host-compile,$(hostpackage-y))
 INSTALL_PACKAGES:=$(patsubst %,%-install,$(package-y))
@@ -35,7 +40,7 @@ all: compile
 download: $(patsubst %,%-download,$(package-y))
 clean: $(patsubst %,%-clean,$(package-) $(package-y) base-files)
 hostcompile: $(HOST_COMPILE_PACKAGES)
-ifeq ($(ADK_APPLIANCE_TOOLCHAIN),y)
+ifneq ($(ADK_APPLIANCE_TOOLCHAIN)$(ADK_TARGET_MINIMAL_USERLAND),)
 compile: $(COMPILE_PACKAGES)
 install: $(INSTALL_PACKAGES)
 else

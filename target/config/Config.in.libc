@@ -41,6 +41,7 @@ config ADK_TARGET_LIB_UCLIBC_NG
 		ADK_TARGET_ARCH_SPARC || \
 		ADK_TARGET_ARCH_SPARC64 || \
 		ADK_TARGET_ARCH_TILE || \
+		ADK_TARGET_ARCH_V850 || \
 		ADK_TARGET_ARCH_X86 || \
 		ADK_TARGET_ARCH_X86_64 || \
 		ADK_TARGET_ARCH_XTENSA) && ADK_TARGET_OS_LINUX
@@ -182,6 +183,16 @@ config ADK_TARGET_LIB_NEWLIB_GIT
 	depends on ADK_TARGET_LIB_NEWLIB && ADK_EXPERIMENTAL
 
 endchoice
+
+config ADK_TARGET_MINIMAL_USERLAND
+	bool "Minimal userland without a C library"
+	depends on ADK_TARGET_OS_LINUX && ADK_TARGET_ARCH_V850
+	default y
+	select ADK_PACKAGE_MINI_INIT_V850 if ADK_TARGET_ARCH_V850
+	help
+	  Build only the bootstrap compiler, the kernel and an initramfs
+	  holding a tiny assembler /init that prints one line.  Meant for
+	  bringing up an architecture whose C library is not ported yet.
 
 config ADK_TARGET_LIBC_UTILS
 	bool

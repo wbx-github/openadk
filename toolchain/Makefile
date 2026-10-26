@@ -63,7 +63,12 @@ TARGETS_CLEAN:=$(patsubst %,%-clean,$(TARGETS))
 install: $(TARGETS_INSTALL)
 clean: $(TARGETS_CLEAN)
 download: $(DOWNLOAD)
+ifeq ($(ADK_TARGET_MINIMAL_USERLAND),y)
+# no C library: the bootstrap compiler builds kernel and mini-init
+final: $(COMPILER)-configure $(ADK_TARGET_OS)-headers-configure $(ELF2FLT)
+else
 final: $(FINAL)
+endif
 
 ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
 $(COMPILER)-configure: llvm-install $(ADK_TARGET_OS)-headers-configure $(CLIB)-configure compiler-rt-install $(CLIB)-install libunwind-install
