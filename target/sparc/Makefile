@@ -16,10 +16,17 @@ ifeq ($(ADK_TARGET_KERNEL_VMLINUX_AOUT),y)
 KERNEL:=$(LINUX_DIR)/arch/sparc/boot/image
 endif
 
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_SPARC_LEON3),y)
+QEMU_ARGS:=-M leon3_generic
+QEMU_ARGS+=-nographic
+endif
+
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_SPARC),y)
 QEMU_ARGS:=-M SS-10
 QEMU_ARGS+=${ADK_QEMU_ARGS}
 ifeq ($(ADK_TARGET_FS),archive)
 QEMU_ARGS+=-append "root=/dev/sda1"
+endif
 endif
 
 # target helper text
@@ -74,6 +81,14 @@ else
 	cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/$(TARGET_KERNEL)
 endif
 
+mklinuximg:
+ifeq ($(ADK_TARGET_SYSTEM_QEMU_SPARC_LEON3),y)
+	PATH='$(HOST_PATH)' CROSS_COMPILE=sparc-leon3-linux-uclibc- \
+	     mklinuximg $(KERNEL) $(FW_DIR)/$(TARGET_KERNEL) \
+	     -cmdline "console=ttyS0,38400" -cflags "--sysroot=$(STAGING_TARGET_DIR)" \
+	     -strip
+endif
+
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)
 imageinstall: $(FW_DIR)/$(ROOTFSTARBALL) targethelp
@@ -85,7 +100,7 @@ ifeq ($(ADK_TARGET_FS),initramfsarchive)
 imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
-imageinstall: createinitramfs targethelp
+imageinstall: createinitramfs mklinuximg targethelp
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)
 imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp

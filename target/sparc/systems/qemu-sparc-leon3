@@ -1,0 +1,7 @@
+config ADK_TARGET_SYSTEM_QEMU_SPARC_LEON3
+	bool "Qemu Sparc LEON3 Emulator"
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_CPU_SPARC_LEON3
+	select ADK_TARGET_WITH_NET
+	help
+	  Support for Qemu Emulator SPARC LEON3 architecture.
