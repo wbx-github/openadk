@@ -46,6 +46,10 @@ endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
 targethelp:
 	@echo 'The kernel+initramfs file is: $(FW_DIR)/${TARGET_KERNEL}'
+ifeq ($(ADK_TARGET_QEMU),y)
+	@echo "Start qemu with following options:"
+	@echo 'qemu-system-h8300 $(QEMU_ARGS) -nographic -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+endif
 ifeq ($(ADK_TARGET_SIM),y)
 	@echo "Run the simulator via:"
 	@echo '$(TARGET_CROSS)gdb $(FW_DIR)/$(TARGET_KERNEL)'
