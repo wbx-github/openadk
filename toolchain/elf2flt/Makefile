@@ -14,11 +14,11 @@ ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_47),y)
 BINUTILS_VERSION:=	2.47
 BFDLIB:=		.libs/libbfd.a
 endif
-ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_46),y)
+ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_46_1),y)
 BINUTILS_VERSION:=	2.46.1
 BFDLIB:=		.libs/libbfd.a
 endif
-ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_45),y)
+ifeq ($(ADK_TOOLCHAIN_BINUTILS_2_45_1),y)
 BINUTILS_VERSION:=	2.45.1
 BFDLIB:=		.libs/libbfd.a
 endif
