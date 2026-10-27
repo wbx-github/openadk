@@ -1,0 +1,9 @@
+config ADK_TARGET_SYSTEM_QEMU_J2
+	bool "Qemu J2 Emulator"
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_CPU_SH_J2
+	select ADK_TARGET_BIG_ENDIAN
+	select ADK_TARGET_WITH_NET
+	help
+	  Support for Qemu Emulator J2 architecture.
+
