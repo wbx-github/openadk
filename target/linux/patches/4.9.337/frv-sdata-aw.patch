@@ -1,0 +1,15 @@
+# frv: .sdata of switch_to.S is allocated and writable.
+# A bare '.section .sdata' gives a section without flags; current
+# binutils put it in no LOAD segment, so __kernel_frame0_ptr was never
+# loaded and the stack pointer was 0 after head.S.
+--- a/arch/frv/kernel/switch_to.S
++++ b/arch/frv/kernel/switch_to.S
+@@ -25,7 +25,7 @@
+ 	dcf		@(gr30,gr0)
+ .endm
+ 
+-	.section	.sdata
++	.section	.sdata,"aw"
+ 	.balign		8
+ 
+ 	# address of frame 0 (userspace) on current kernel stack

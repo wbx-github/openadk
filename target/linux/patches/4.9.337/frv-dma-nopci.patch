@@ -1,0 +1,20 @@
+# frv: build the DMA mapping operations without PCI as well.
+# pci-dma(-nommu).o sat inside the CONFIG_PCI block, so a kernel without
+# PCI had no frv_dma_ops and did not link.
+--- a/arch/frv/mb93090-mb00/Makefile
++++ b/arch/frv/mb93090-mb00/Makefile
+@@ -4,12 +4,13 @@
+ 
+ ifeq "$(CONFIG_PCI)" "y"
+ obj-y := pci-frv.o pci-irq.o pci-vdk.o
++endif
+ 
++# the DMA mapping operations are needed with or without PCI
+ ifeq "$(CONFIG_MMU)" "y"
+ obj-y += pci-dma.o
+ else
+ obj-y += pci-dma-nommu.o
+ endif
+-endif
+ 
+ obj-$(CONFIG_MTD) += flash.o

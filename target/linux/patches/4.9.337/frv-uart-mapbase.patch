@@ -1,0 +1,22 @@
+# frv: give the on-chip UARTs a mapbase.
+# serial8250_request_std_resource() refuses UPIO_MEM ports without one,
+# so autoconfig never ran, the UART never got its interrupts enabled and
+# nothing written to the console from user space came out.
+--- a/arch/frv/kernel/setup.c
++++ b/arch/frv/kernel/setup.c
+@@ -191,6 +191,7 @@ static int __pminitdata clock_doubled;
+ static struct uart_port __pminitdata __frv_uart0 = {
+ 	.uartclk		= 0,
+ 	.membase		= (char *) UART0_BASE,
++	.mapbase		= UART0_BASE,
+ 	.irq			= IRQ_CPU_UART0,
+ 	.regshift		= 3,
+ 	.iotype			= UPIO_MEM,
+@@ -200,6 +201,7 @@ static struct uart_port __pminitdata __frv_uart0 = {
+ static struct uart_port __pminitdata __frv_uart1 = {
+ 	.uartclk		= 0,
+ 	.membase		= (char *) UART1_BASE,
++	.mapbase		= UART1_BASE,
+ 	.irq			= IRQ_CPU_UART1,
+ 	.regshift		= 3,
+ 	.iotype			= UPIO_MEM,

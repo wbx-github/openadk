@@ -7,6 +7,8 @@ include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 
+QEMU_ARGS:=-M mb93091 -nographic -m 256
+
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
@@ -28,6 +30,10 @@ targethelp:
 ifeq ($(ADK_TARGET_SIM),y)
 	@echo "Run the simulator via:"
 	@echo '$(TARGET_CROSS)run --environment operating --model fr400 $(FW_DIR)/$(TARGET_KERNEL)'
+endif
+ifeq ($(ADK_TARGET_QEMU),y)
+	@echo "Start qemu with following command line:"
+	@echo 'qemu-system-${ADK_TARGET_ARCH} ${QEMU_ARGS} -kernel $(FW_DIR)/$(TARGET_KERNEL)'
 endif
 endif
 ifeq ($(ADK_TARGET_FS),nfsroot)

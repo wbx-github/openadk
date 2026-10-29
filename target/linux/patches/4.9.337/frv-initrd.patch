@@ -1,0 +1,62 @@
+# frv: take an initrd from the command line on uClinux.
+# BLK_DEV_INITRD was 'depends on BROKEN || !FRV', and arch/frv has no way
+# to learn where a boot loader put an initrd.  qemu's mb93091 machine
+# appends initrd=<start>,<size> to the command line; reserve that range
+# in bootmem and hand it to the generic initrd code.
+# arch/frv is gone since Linux 4.17, so this cannot go upstream.
+--- a/arch/frv/kernel/setup.c
++++ b/arch/frv/kernel/setup.c
+@@ -30,6 +30,7 @@
+ #include <linux/serial_core.h>
+ #include <linux/serial_reg.h>
+ #include <linux/serial_8250.h>
++#include <linux/initrd.h>
+ 
+ #include <asm/setup.h>
+ #include <asm/irq.h>
+@@ -718,6 +719,35 @@ void calibrate_delay(void)
+ } /* end calibrate_delay() */
+ 
+ /*****************************************************************************/
++#if defined(CONFIG_BLK_DEV_INITRD) && !defined(CONFIG_MMU)
++/*
++ * "initrd=<start>,<size>" on the command line: the boot loader has put an
++ * initrd there.  setup_arch() does not parse early parameters, so this runs
++ * from start_kernel() afterwards, while bootmem is still in charge of the
++ * memory.
++ */
++static int __init early_initrd(char *p)
++{
++	unsigned long start, size;
++	char *endp;
++
++	start = memparse(p, &endp);
++	if (*endp != ',')
++		return 0;
++	size = memparse(endp + 1, NULL);
++
++	if (reserve_bootmem(start, size, BOOTMEM_EXCLUSIVE)) {
++		pr_err("initrd at %lx+%lx overlaps memory in use, ignored\n",
++		       start, size);
++		return 0;
++	}
++	initrd_start = start;
++	initrd_end = start + size;
++	return 0;
++}
++early_param("initrd", early_initrd);
++#endif
++
+ /*
+  * look through the command line for some things we need to know immediately
+  */
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1300,7 +1300,6 @@ config RELAY
+ 
+ config BLK_DEV_INITRD
+ 	bool "Initial RAM filesystem and RAM disk (initramfs/initrd) support"
+-	depends on BROKEN || !FRV
+ 	help
+ 	  The initial RAM filesystem is a ramfs which is loaded by the
+ 	  boot loader (loadlin or lilo) and that is mounted as root
