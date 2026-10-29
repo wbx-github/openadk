@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		patch
-PKG_VERSION:=		2.7.6
+PKG_VERSION:=		2.8.1
 PKG_RELEASE:=		1
-PKG_HASH:=		ac610bda97abe0d9f6b7c963255a11dcb196c25e337c61f94e4778d632f1d8fd
+PKG_HASH:=		3240c7959c5347c8ed347e3c4201c0337bf4240d5cf09d68889e58eeaba30e17
 PKG_DESCR:=		patch utility
 PKG_SECTION:=		sys/utils
 PKG_URL:=		http://www.gnu.org/software/patch/
