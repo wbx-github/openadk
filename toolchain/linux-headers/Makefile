@@ -38,11 +38,6 @@ ifneq ($(ADK_DISABLE_KERNEL_PATCHES),y)
 	$(TRACE) kernel-patch
 	$(PATCH) $(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/linux-$(KERNEL_FILE_VER) \
 		$(ADK_TOPDIR)/target/linux/patches/$(KERNEL_FILE_VER) *.patch $(MAKE_TRACE)
-ifeq ($(ADK_KERNEL_PATCH_REALTIME),y)
-	$(TRACE) linux-rt-kernel-patch
-	$(PATCH) $(TOOLCHAIN_BUILD_DIR)/w-$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)/linux-$(KERNEL_FILE_VER) \
-		$(ADK_TOPDIR)/target/linux/patches/$(KERNEL_FILE_VER) patch-realtime $(MAKE_TRACE)
-endif
 endif
 ifneq ($(ADK_DISABLE_TARGET_KERNEL_PATCHES),y)
 	$(TRACE) kernel-target-patch

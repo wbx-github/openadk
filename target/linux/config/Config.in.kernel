@@ -150,53 +150,29 @@ config ADK_LINUX_KERNEL_MIPS_FP_SUPPORT
 	bool
 	default y
 
-config ADK_LINUX_KERNEL_PATCH_REALTIME
-	bool
-	
 choice
 prompt "preemptive mode"
 
-config ADK_LINUX_KERNEL_PREEMPT_NONE
-	bool "No Forced Preemption (Server)"
-	help
-	  No Forced Preemption (Server)
-
-config ADK_LINUX_KERNEL_PREEMPT_VOLUNTARY
-	bool "Voluntary Kernel Preemption (Desktop)"
-	select ADK_LINUX_KERNEL_HIGH_RES_TIMERS
-	help
-	  Voluntary Kernel Preemption (Desktop)
-
-config ADK_LINUX_KERNEL_PREEMPT__LL
+config ADK_LINUX_KERNEL_PREEMPT
 	bool "Preemptible Kernel (Low-Latency Desktop)"
 	select ADK_LINUX_KERNEL_HIGH_RES_TIMERS
-	help
-	  Preemptible Kernel (Low-Latency Desktop)
 
-config ADK_LINUX_KERNEL_PREEMPT_RTB
-	bool "Preemptible Kernel (Basic RealTime)"
+config ADK_LINUX_KERNEL_PREEMPT_LAZY
+	bool "Scheduler controlled preemption model"
 	select ADK_LINUX_KERNEL_HIGH_RES_TIMERS
-	select ADK_LINUX_KERNEL_PATCH_REALTIME
-	depends on !ADK_LINUX_KERNEL_OPROFILE
-	depends on ADK_TARGET_KERNEL_VERSION_4_4 \
-		|| ADK_TARGET_KERNEL_VERSION_4_9 \
-		|| (ADK_TARGET_KERNEL_VERSION_GIT && ADK_TARGET_BOARD_BCM28XX)
-        help
-	  Preemptible Kernel (Basic RT)
-
-config ADK_LINUX_KERNEL_PREEMPT_RT_FULL
-	bool "Fully Preemptible Kernel (RealTime)"
-	select ADK_LINUX_KERNEL_HIGH_RES_TIMERS
-	select ADK_LINUX_KERNEL_PATCH_REALTIME
-	depends on !ADK_LINUX_KERNEL_OPROFILE
-	depends on ADK_TARGET_KERNEL_VERSION_4_4 \
-		|| ADK_TARGET_KERNEL_VERSION_4_9 \
-		|| (ADK_TARGET_KERNEL_VERSION_GIT && ADK_TARGET_BOARD_BCM28XX)
-        help
-	  Fully Preemptible Kernel (RealTime)
-	  https://www.kernel.org/pub/linux/kernel/projects/rt/
 
 endchoice
+
+config ADK_LINUX_KERNEL_PREEMPT_RT
+	bool "Fully Preemptible Kernel (RealTime)"
+	select ADK_LINUX_KERNEL_HIGH_RES_TIMERS
+	depends on !ADK_LINUX_KERNEL_OPROFILE
+	depends on ADK_TARGET_LINUX_KERNEL_VERSION_6_12 \
+		|| ADK_TARGET_LINUX_KERNEL_VERSION_6_18 \
+		|| ADK_TARGET_LINUX_KERNEL_VERSION_7_2 \
+		|| ADK_TARGET_LINUX_KERNEL_VERSION_7_3
+        help
+	  Fully Preemptible Kernel (RealTime)
 
 config ADK_LINUX_KERNEL_HIGH_RES_TIMERS
 	bool "Enable high resolution timers"
