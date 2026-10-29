@@ -1,0 +1,7 @@
+config ADK_TARGET_SYSTEM_QEMU_IA64
+	bool "Qemu IA64 Emulator"
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_CPU_IA64
+	select ADK_TARGET_WITH_NET
+	help
+	  Qemu support for IA64 architecture.
