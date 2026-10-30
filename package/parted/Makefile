@@ -4,14 +4,14 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		parted
-PKG_VERSION:=		3.6
+PKG_VERSION:=		3.8
 PKG_RELEASE:=		1
-PKG_HASH:=		3b43dbe33cca0f9a18601ebab56b7852b128ec1a3df3a9b30ccde5e73359e612
+PKG_HASH:=		a2b7811f47b0ddb1f7b1d0aa456f7c1270da70708ce231c2fe054c7199eafa63
 PKG_DESCR:=		partition table editor
 PKG_SECTION:=		sys/fs
 PKG_DEPENDS:=		libblkid libuuid libncurses
 PKG_BUILDDEP:=		util-linux ncurses
-PKG_NEEDS:=		threads iconv
+PKG_NEEDS:=		threads iconv locale
 PKG_URL:=		http://www.gnu.org/software/parted/index.shtml
 PKG_SITES:=		$(MASTER_SITE_GNU:=parted/)
 
