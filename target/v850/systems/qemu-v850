@@ -1,0 +1,7 @@
+config ADK_TARGET_SYSTEM_QEMU_V850
+	bool "Qemu V850E Emulator"
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_CPU_V850
+	help
+	  Support for the GDB V850E simulator platform of Linux 2.6.26,
+	  as emulated by qemu-system-v850 -M v850-sim.

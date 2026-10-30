@@ -1,0 +1,11 @@
+--- a/kernel/timeconst.pl
++++ b/kernel/timeconst.pl
+@@ -370,7 +370,7 @@
+ 	}
+ 
+ 	@val = @{$canned_values{$hz}};
+-	if (!defined(@val)) {
++	if (!@val) {
+ 		@val = compute_values($hz);
+ 	}
+ 	output($hz, @val);

@@ -1,0 +1,110 @@
+--- elf2flt-v2024.02.orig/elf2flt.c
++++ elf2flt-v2024.02/elf2flt.c
+@@ -106,6 +106,42 @@
+ #define TARGET_v850
+ #endif
+ 
++#ifdef TARGET_v850
++/* Objects for the RH850 ABI (the default since binutils 2.24) carry
++   the V800 relocation numbers; map them to the V850 ones that the
++   code below knows.  */
++static int v850_reloc_type(const arelent *r)
++{
++	switch (r->howto->type) {
++	case R_V810_WORD:
++	case R_V810_ABS32:
++		return R_V850_ABS32;
++	case R_V810_WHI1:
++		return R_V850_HI16_S;
++	case R_V810_WHI:
++		return R_V850_HI16;
++	case R_V810_WLO:
++		return R_V850_LO16;
++	case R_V810_WLO_1:
++		/* lower half of a ld.w/st.w displacement, bit 0 is the
++		   opcode; elf2flt calls this a ZDA_15_16_OFFSET  */
++		return R_V850_ZDA_15_16_OFFSET;
++	case R_V850_PC9:
++		return R_V850_9_PCREL;
++	case R_V850_PCR22:
++	case R_V850_PC16U:
++	case R_V850_PC17:
++	case R_V850_PC32:
++		return R_V850_22_PCREL;
++	default:
++		return r->howto->type;
++	}
++}
++#define RELOC_TYPE(r)	v850_reloc_type(r)
++#else
++#define RELOC_TYPE(r)	((r)->howto->type)
++#endif
++
+ #if defined(TARGET_m68k)
+ #define	ARCH	"m68k/coldfire"
+ #elif defined(TARGET_arm)
+@@ -497,7 +533,7 @@
+ 			/* Skip this relocation entirely if possible (we
+ 			   do this early, before doing any other
+ 			   processing on it).  */
+-			switch ((*p)->howto->type) {
++			switch (RELOC_TYPE(*p)) {
+ 			case R_V850_9_PCREL:
+ 			case R_V850_22_PCREL:
+ 			case R_V850_SDA_16_16_OFFSET:
+@@ -559,7 +595,7 @@
+ 				   the program text.  How this is handled may
+ 				   still depend on the particular relocation
+ 				   though.  */
+-				switch (q->howto->type) {
++				switch (RELOC_TYPE(q)) {
+ #ifdef TARGET_v850
+ 					int r2_type;
+ 				case R_V850_HI16_S:
+@@ -572,7 +608,7 @@
+ 					if (relcount == 0)
+ 						r2_type = R_V850_NONE;
+ 					else
+-						r2_type = p[1]->howto->type;
++						r2_type = RELOC_TYPE(p[1]);
+ 					if ((r2_type == R_V850_ZDA_15_16_OFFSET
+ 					     || r2_type == R_V850_LO16)
+ 					    && (p[0]->sym_ptr_ptr
+@@ -629,7 +665,7 @@
+ 					/* See if this is actually the
+ 					   2nd half of a pair.  */
+ 					if (p > relpp
+-					    && (p[-1]->howto->type
++					    && (RELOC_TYPE(p[-1])
+ 						== R_V850_HI16_S)
+ 					    && (p[-1]->sym_ptr_ptr
+ 						== p[0]->sym_ptr_ptr)
+@@ -640,6 +676,10 @@
+ 
+ 				case R_V850_HI16:
+ 					goto bad_resolved_reloc;
++				case R_V850_ABS32:
++					/* binfmt_flat reads plain 32-bit
++					   values in network byte order */
++					goto good_32bit_resolved_reloc_update_text;
+ 				default:
+ 					goto good_32bit_resolved_reloc;
+ #elif defined(TARGET_microblaze)
+@@ -928,7 +968,7 @@
+ 				}
+ #endif
+ 
+-				switch ((*p)->howto->type) {
++				switch (RELOC_TYPE(*p)) {
+ 
+ #if defined(TARGET_m68k)
+ 				case R_68K_32:
+@@ -1590,7 +1630,7 @@
+ 				}
+ #else /* ! TARGET_arm && ! TARGET_e1 && ! TARGET_bfin */
+ 
+-				switch (q->howto->type) {
++				switch (RELOC_TYPE(q)) {
+ #ifdef TARGET_v850
+ 				case R_V850_HI16_S:
+ 				case R_V850_HI16:

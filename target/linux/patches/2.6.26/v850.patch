@@ -1,0 +1,345 @@
+--- a/arch/v850/Makefile
++++ b/arch/v850/Makefile
+@@ -16,7 +16,8 @@
+ 
+ arch_dir = arch/v850
+ 
+-KBUILD_CFLAGS += -mv850e
++KBUILD_CFLAGS += -mv850e -std=gnu89 -fcommon -fno-pie -fno-delete-null-pointer-checks
++KBUILD_AFLAGS += -mv850e
+ # r16 is a fixed pointer to the current task
+ KBUILD_CFLAGS += -ffixed-r16 -mno-prolog-function
+ KBUILD_CFLAGS += -fno-builtin
+--- a/arch/v850/Kconfig
++++ b/arch/v850/Kconfig
+@@ -351,3 +351,9 @@
+ source "lib/Kconfig"
+ 
+ #############################################################################
++
++config NO_IOPORT
++	def_bool y
++
++config NO_DMA
++	def_bool y
+--- a/arch/v850/kernel/irq.c
++++ b/arch/v850/kernel/irq.c
+@@ -16,6 +16,7 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/irq.h>
++#include <asm/irq_regs.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+ #include <linux/kernel_stat.h>
+@@ -100,9 +101,12 @@
+    interrupt.  */
+ unsigned int handle_irq (int irq, struct pt_regs *regs)
+ {
++	struct pt_regs *old_regs = set_irq_regs(regs);
++
+ 	irq_enter();
+-	__do_IRQ(irq, regs);
++	__do_IRQ(irq);
+ 	irq_exit();
++	set_irq_regs(old_regs);
+ 	return 1;
+ }
+ 
+@@ -111,7 +115,7 @@
+    to IRQ_TYPE.  An IRQ_TYPE of 0 means to use a generic interrupt type.  */
+ void __init
+ init_irq_handlers (int base_irq, int num, int interval,
+-		   struct hw_interrupt_type *irq_type)
++		   struct irq_chip *irq_type)
+ {
+ 	while (num-- > 0) {
+ 		irq_desc[base_irq].status  = IRQ_DISABLED;
+--- a/arch/v850/kernel/time.c
++++ b/arch/v850/kernel/time.c
+@@ -46,7 +46,7 @@
+ #ifndef CONFIG_SMP
+ 	update_process_times(user_mode(regs));
+ #endif
+-	profile_tick(CPU_PROFILING, regs);
++	profile_tick(CPU_PROFILING);
+ #if 0
+ 	/*
+ 	 * If we have an externally synchronized Linux clock, then update
+@@ -99,8 +99,17 @@
+ 	.dev_id = &timer_dev_id,
+ };
+ 
++/* timekeeping_init() sets xtime from this; writing xtime directly
++   leaves the clocksource state behind it.  */
++unsigned long read_persistent_clock (void)
++{
++	struct timespec ts;
++
++	mach_gettimeofday (&ts);
++	return ts.tv_sec;
++}
++
+ void time_init (void)
+ {
+-	mach_gettimeofday (&xtime);
+ 	mach_sched_init (&timer_irqaction);
+ }
+--- a/arch/v850/kernel/process.c
++++ b/arch/v850/kernel/process.c
+@@ -23,6 +23,16 @@
+ #include <linux/user.h>
+ #include <linux/a.out.h>
+ #include <linux/reboot.h>
++#include <linux/err.h>
++#include <linux/fs.h>
++
++/* Kernel-side syscall register usage, formerly in <asm/unistd.h> */
++#define SYSCALL_NUM	"r12"
++#define SYSCALL_ARG0	"r6"
++#define SYSCALL_RET	"r10"
++#define SYSCALL_SHORT_TRAP	"0"
++#define SYSCALL_SHORT_CLOBBERS	"r1", "r5", "r11", "r15", "r17", "r18", \
++				"r19", "r13", "r14"
+ 
+ #include <asm/uaccess.h>
+ #include <asm/system.h>
+--- a/arch/v850/kernel/vmlinux.lds.S
++++ b/arch/v850/kernel/vmlinux.lds.S
+@@ -63,6 +63,12 @@
+ 		___start___ksymtab_gpl = .;				      \
+ 			*(__ksymtab_gpl)				      \
+ 		___stop___ksymtab_gpl = .;				      \
++		___start___ksymtab_unused = .;				      \
++			*(__ksymtab_unused)				      \
++		___stop___ksymtab_unused = .;				      \
++		___start___ksymtab_unused_gpl = .;				      \
++			*(__ksymtab_unused_gpl)				      \
++		___stop___ksymtab_unused_gpl = .;				      \
+ 		/* Kernel symbol table: GPL-future symbols */		      \
+ 		___start___ksymtab_gpl_future = .;			      \
+ 			*(__ksymtab_gpl_future)				      \
+@@ -77,6 +83,12 @@
+ 		___start___kcrctab_gpl = .;				      \
+ 			*(__kcrctab_gpl)				      \
+ 		___stop___kcrctab_gpl = .;				      \
++		___start___kcrctab_unused = .;				      \
++			*(__kcrctab_unused)				      \
++		___stop___kcrctab_unused = .;				      \
++		___start___kcrctab_unused_gpl = .;				      \
++			*(__kcrctab_unused_gpl)				      \
++		___stop___kcrctab_unused_gpl = .;				      \
+ 		/* Kernel symbol table: GPL-future symbols */		      \
+ 		___start___kcrctab_gpl_future = .;			      \
+ 			*(__kcrctab_gpl_future)				      \
+@@ -93,6 +105,8 @@
+ 		_text = .;						      \
+ 		__stext = . ;						      \
+ 		TEXT_TEXT						      \
++		*(.text.unlikely .text.unlikely.* .text.hot .text.hot.*) \
++		*(.text.startup .text.startup.*)			      \
+ 		SCHED_TEXT						      \
+ 			*(.exit.text)	/* 2.5 convention */		      \
+ 			*(.text.exit)	/* 2.4 convention */		      \
+@@ -198,6 +212,8 @@
+ 		___initramfs_start = . ;				      \
+ 			*(.init.ramfs)					      \
+ 		___initramfs_end = . ;
++#else
++#define INITRAMFS_CONTENTS
+ #endif
+ 
+ /* Where the initial bootmap (bitmap for the boot-time memory allocator) 
+--- a/arch/v850/kernel/sim.ld
++++ b/arch/v850/kernel/sim.ld
+@@ -10,4 +10,5 @@
+ SECTIONS {
+ 	.intv : { INTV_CONTENTS } > INTV
+ 	.ram : { RAMK_KRAM_CONTENTS } > RAM
++	.notes : { *(.note.gnu.build-id) } > RAM
+ }
+--- a/arch/v850/kernel/sim.c
++++ b/arch/v850/kernel/sim.c
+@@ -33,9 +33,11 @@
+ extern void simcons_poll_ttys (void);
+ extern void set_mem_root (void *addr, size_t len, char *cmd_line);
+ 
++#ifdef CONFIG_MTD
+ static int read_file (const char *name,
+ 		      unsigned long *addr, unsigned long *len,
+ 		      const char **err);
++#endif
+ 
+ void __init mach_setup (char **cmdline)
+ {
+@@ -44,6 +46,9 @@
+ 
+ 	simcons_setup ();
+ 
++#ifdef CONFIG_MTD
++	/* rootfs.image goes to slram, which needs MTD; without it the
++	   root filesystem comes from the initramfs.  */
+ 	printk (KERN_INFO "Reading root filesystem: %s", ROOT_FS);
+ 
+ 	if (read_file (ROOT_FS, &root_dev_addr, &root_dev_len, &err)) {
+@@ -52,6 +57,7 @@
+ 			      *cmdline);
+ 	} else
+ 		printk ("...%s failed!\n", err);
++#endif
+ }
+ 
+ void mach_get_physical_ram (unsigned long *ram_start, unsigned long *ram_len)
+@@ -116,6 +122,7 @@
+ }
+ 
+ 
++#ifdef CONFIG_MTD
+ /* Load data from a file called NAME into ram.  The address and length
+    of the data image are returned in ADDR and LEN.  */
+ static int __init
+@@ -170,3 +177,4 @@
+ 
+ 	return 1;
+ }
++#endif
+--- a/arch/v850/kernel/setup.c
++++ b/arch/v850/kernel/setup.c
+@@ -197,6 +197,23 @@
+ 	}
+ }
+ 
++#ifdef CONFIG_BLK_DEV_INITRD
++void free_initrd_mem (unsigned long start, unsigned long end)
++{
++	unsigned long addr;
++
++	printk ("Freeing initrd memory: %ldK freed\n", (end - start) / 1024);
++
++	for (addr = start; addr < end; addr += PAGE_SIZE) {
++		struct page *page = virt_to_page (addr);
++		ClearPageReserved (page);
++		init_page_count (page);
++		__free_page (page);
++		total_ram_pages++;
++	}
++}
++#endif
++
+ 
+ /* Initialize the `bootmem allocator'.  RAM_START and RAM_LEN identify
+    what RAM may be used.  */
+--- a/arch/v850/kernel/v850_ksyms.c
++++ b/arch/v850/kernel/v850_ksyms.c
+@@ -20,7 +20,9 @@
+ 
+ /* platform dependent support */
+ EXPORT_SYMBOL (kernel_thread);
++#ifdef CONFIG_BUG
+ EXPORT_SYMBOL (__bug);
++#endif
+ 
+ /* Networking helper routines. */
+ EXPORT_SYMBOL (csum_partial_copy_nocheck);
+--- a/arch/v850/lib/memset.c
++++ b/arch/v850/lib/memset.c
+@@ -42,7 +42,7 @@
+ 			     "sst.w %0, 8[ep]; sst.w %0, 12[ep];"
+ 			     "sst.w %0, 16[ep]; sst.w %0, 20[ep];"
+ 			     "sst.w %0, 24[ep]; sst.w %0, 28[ep]"
+-			     :: "r" (val) : "memory");
++			     :: "r" (val), "r" (ptr) : "memory");
+ 			ptr += 32;
+ 		}
+ 		count %= 32;
+--- a/include/asm-v850/entry.h
++++ b/include/asm-v850/entry.h
+@@ -28,7 +28,9 @@
+ #define KERNEL_VAR_SPACE_ADDR	R0_RAM_ADDR
+ 
+ #ifdef __ASSEMBLY__
+-#define KERNEL_VAR(addr)	addr[r0]
++/* Modern gas no longer wraps a 32-bit address into the signed 16-bit
++   displacement, so give it the negative value.  */
++#define KERNEL_VAR(addr)	((addr) - (((addr) & 0x80000000) << 1))[r0]
+ #else
+ #define KERNEL_VAR(addr)	(*(volatile unsigned long *)(addr))
+ #endif
+--- a/include/asm-v850/uaccess.h
++++ b/include/asm-v850/uaccess.h
+@@ -56,25 +56,28 @@
+ 
+ extern int bad_user_access_length (void);
+ 
++/* No temporary of type typeof(*(ptr)): it inherits a const from ptr and
++   newer gcc refuses to assign to it.  */
+ #define __get_user(var, ptr)						      \
+   ({									      \
+ 	  int __gu_err = 0;						      \
+-	  typeof(*(ptr)) __gu_val = 0;					      \
+ 	  switch (sizeof (*(ptr))) {					      \
+ 	  case 1:							      \
+ 	  case 2:							      \
+ 	  case 4:							      \
+-		  __gu_val = *(ptr);					      \
++		  (var) = *(ptr);					      \
+ 		  break;						      \
+-	  case 8:							      \
+-		  memcpy(&__gu_val, ptr, sizeof(__gu_val));		      \
++	  case 8: {							      \
++		  unsigned long long __gu_tmp;				      \
++		  memcpy(&__gu_tmp, ptr, sizeof(__gu_tmp));		      \
++		  (var) = *(typeof(*(ptr)) *)&__gu_tmp;			      \
+ 		  break;						      \
++	  }								      \
+ 	  default:							      \
+-		  __gu_val = 0;						      \
++		  (var) = 0;						      \
+ 		  __gu_err = __get_user_bad ();				      \
+ 		  break;						      \
+ 	  }								      \
+-	  (var) = __gu_val;						      \
+ 	  __gu_err;							      \
+   })
+ #define __get_user_bad()	(bad_user_access_length (), (-EFAULT))
+@@ -155,5 +158,6 @@
+ 	memset (to, 0, n);
+ 	return 0;
+ }
++#define __clear_user clear_user
+ 
+ #endif /* __V850_UACCESS_H__ */
+--- a/include/asm-v850/irq.h
++++ b/include/asm-v850/irq.h
+@@ -42,9 +42,10 @@
+ /* Initialize irq handling for IRQs.
+    BASE_IRQ, BASE_IRQ+INTERVAL, ..., BASE_IRQ+NUM*INTERVAL
+    to IRQ_TYPE.  An IRQ_TYPE of 0 means to use a generic interrupt type.  */
++struct irq_chip;
+ extern void
+ init_irq_handlers (int base_irq, int num, int interval,
+-		   struct hw_interrupt_type *irq_type);
++		   struct irq_chip *irq_type);
+ 
+ /* Handle interrupt IRQ.  REGS are the registers at the time of ther
+    interrupt.  */
+--- a/include/asm-v850/unistd.h
++++ b/include/asm-v850/unistd.h
+@@ -227,6 +227,8 @@
+ #define __ARCH_WANT_SYS_SIGPROCMASK
+ #define __ARCH_WANT_SYS_RT_SIGACTION
+ 
++#include <asm/clinkage.h>
++
+ /*
+  * "Conditional" syscalls
+  */
+--- a/include/asm-v850/pgtable.h
++++ b/include/asm-v850/pgtable.h
+@@ -56,4 +56,6 @@
+ extern unsigned int kobjsize(const void *objp);
+ 
+ 
++#include <asm-generic/pgtable.h>
++
+ #endif /* __V850_PGTABLE_H__ */

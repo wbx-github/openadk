@@ -1,0 +1,17 @@
+#define ASM_SPEC "%(subtarget_asm_spec) %{m850es:-mv850e1}%{!mv850es:%{mv*:-mv%*}} \
+%{mrelax:-mrelax} \
+%{m8byte-align:-m8byte-align} \
+%{msoft-float:-msoft-float} \
+%{mhard-float:-mhard-float} \
+%{mgcc-abi:-mgcc-abi}"
+--- a/gcc/config/v850/v850.h	2026-10-26 18:48:03.125269762 +0000
++++ b/gcc/config/v850/v850.h	2026-10-26 18:48:12.458763896 +0000
+@@ -105,7 +105,7 @@
+ #define TARGET_V850E_UP    ((TARGET_V850E)    || TARGET_V850E2_UP)
+ #define TARGET_ALL         ((TARGET_V850)     || TARGET_V850E_UP)
+ 
+-#define ASM_SPEC "%{m850es:-mv850e1}%{!mv850es:%{mv*:-mv%*}} \
++#define ASM_SPEC "%(subtarget_asm_spec) %{m850es:-mv850e1}%{!mv850es:%{mv*:-mv%*}} \
+ %{mrelax:-mrelax} \
+ %{m8byte-align:-m8byte-align} \
+ %{msoft-float:-msoft-float} \

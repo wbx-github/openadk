@@ -1,0 +1,34 @@
+--- a/gcc/config/v850/v850.cc	2026-08-07 07:46:06.012500275 +0000
++++ b/gcc/config/v850/v850.cc	2026-10-26 18:39:54.653104875 +0000
+@@ -3220,6 +3220,21 @@
+ }
+ 
+ 
++/* Worker function for TARGET_MD_ASM_ADJUST.  Under cc0 every asm
++   clobbered the flags; keep that, existing asm relies on it.  */
++
++static rtx_insn *
++v850_md_asm_adjust (vec<rtx> & /*outputs*/, vec<rtx> & /*inputs*/,
++		    vec<machine_mode> & /*input_modes*/,
++		    vec<const char *> & /*constraints*/,
++		    vec<rtx> & /*uses*/, vec<rtx> &clobbers,
++		    HARD_REG_SET &clobbered_regs, location_t /*loc*/)
++{
++  clobbers.safe_push (gen_rtx_REG (CCmode, CC_REGNUM));
++  SET_HARD_REG_BIT (clobbered_regs, CC_REGNUM);
++  return NULL;
++}
++
+ /* Initialize the GCC target structure.  */
+ 
+ #undef  TARGET_OPTION_OVERRIDE
+@@ -3339,6 +3354,9 @@
+ #undef TARGET_DOCUMENTATION_NAME
+ #define TARGET_DOCUMENTATION_NAME "V850"
+ 
++#undef  TARGET_MD_ASM_ADJUST
++#define TARGET_MD_ASM_ADJUST v850_md_asm_adjust
++
+ struct gcc_target targetm = TARGET_INITIALIZER;
+ 
+ #include "gt-v850.h"

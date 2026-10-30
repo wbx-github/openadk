@@ -1,0 +1,37 @@
+--- a/block/scsi_ioctl.c
++++ b/block/scsi_ioctl.c
+@@ -60,7 +60,7 @@
+ 
+ static int sg_get_timeout(struct request_queue *q)
+ {
+-	return q->sg_timeout / (HZ / USER_HZ);
++	return jiffies_to_clock_t(q->sg_timeout);
+ }
+ 
+ static int sg_set_timeout(struct request_queue *q, int __user *p)
+@@ -68,7 +68,7 @@
+ 	int timeout, err = get_user(timeout, p);
+ 
+ 	if (!err)
+-		q->sg_timeout = timeout * (HZ / USER_HZ);
++		q->sg_timeout = clock_t_to_jiffies(timeout);
+ 
+ 	return err;
+ }
+--- a/kernel/time/jiffies.c
++++ b/kernel/time/jiffies.c
+@@ -48,7 +48,14 @@
+  * HZ shrinks, so values greater then 8 overflow 32bits when
+  * HZ=100.
+  */
++/* NSEC_PER_JIFFY << JIFFIES_SHIFT must fit 32 bits; it grows as HZ shrinks */
++#if HZ < 34
++#define JIFFIES_SHIFT	6
++#elif HZ < 67
++#define JIFFIES_SHIFT	7
++#else
+ #define JIFFIES_SHIFT	8
++#endif
+ 
+ static cycle_t jiffies_read(void)
+ {

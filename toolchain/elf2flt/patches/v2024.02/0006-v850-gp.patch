@@ -1,0 +1,26 @@
+diff -Nur elf2flt-v2024.02.orig/elf2flt.ld.in elf2flt-v2024.02/elf2flt.ld.in
+--- elf2flt-v2024.02.orig/elf2flt.ld.in	2024-05-08 20:49:03.000000000 +0200
++++ elf2flt-v2024.02/elf2flt.ld.in	2026-10-30 07:50:11.734100786 +0100
+@@ -104,6 +104,7 @@
+ 		. = ALIGN(0x20) ;
+ 		LONG(-1)
+ 		. = ALIGN(0x20) ;
++V850_GP:	PROVIDE (__gp = . + 0x8000);
+ RISCV_GP:	__global_pointer$ = . + 0x800 ;
+ R_RODAT:	*(.rodata)
+ R_RODAT:	*(.rodata1)
+diff -Nur elf2flt-v2024.02.orig/ld-elf2flt.c elf2flt-v2024.02/ld-elf2flt.c
+--- elf2flt-v2024.02.orig/ld-elf2flt.c	2024-05-08 20:49:03.000000000 +0200
++++ elf2flt-v2024.02/ld-elf2flt.c	2026-10-30 07:50:26.974801452 +0100
+@@ -332,6 +332,11 @@
+ 	else
+ 		append_sed(&sed, "^RISCV_GP:", NULL);
+ 
++	if (streq(TARGET_CPU, "v850"))
++		append_sed(&sed, "^V850_GP:", "");
++	else
++		append_sed(&sed, "^V850_GP:", NULL);
++
+ 	/* Locate the default linker script, if we don't have one provided. */
+ 	if (!linker_script)
+ 		linker_script = concat(ldscriptpath, "/elf2flt.ld", NULL);
