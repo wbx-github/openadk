@@ -4,9 +4,9 @@
 include ${ADK_TOPDIR}/rules.mk
 
 PKG_NAME:=		python3
-PKG_VERSION:=		3.14.8
+PKG_VERSION:=		3.15.2
 PKG_RELEASE:=		1
-PKG_HASH:=		c2215904f02b175596dc49351585104f4bc20341e1c47378b26a2c274360ce73
+PKG_HASH:=		8b5536d280142ecf6cdfe15d12a21ba1c65e300bbf7b28a8d0cdb849575797de
 PKG_DESCR:=		python scripting language
 PKG_SECTION:=		dev/lang
 PKG_DEPENDS:=		libffi zlib libexpat
@@ -52,9 +52,9 @@ define PKG_mod_template
 INSTALL_MODS_$${ADK_PACKAGE_${1}}+=    ${2}-install
 
 ${2}-install:
-	${INSTALL_DIR} $$(IDIR_$(1))/usr/lib/python3.14/lib-dynload
+	${INSTALL_DIR} $$(IDIR_$(1))/usr/lib/python3.15/lib-dynload
 	for m in ${2}; do \
-		${INSTALL_DATA} $(WRKINST)/usr/lib/python3.14/lib-dynload/$$$${m}*.so $$(IDIR_$(1))/usr/lib/python3.14/lib-dynload ;\
+		${INSTALL_DATA} $(WRKINST)/usr/lib/python3.15/lib-dynload/$$$${m}*.so $$(IDIR_$(1))/usr/lib/python3.15/lib-dynload ;\
 	done
 endef
 
@@ -81,7 +81,7 @@ $(eval $(call PKG_mod_template,PYTHON3_MOD_READLINE,readline))
 MAKE_ENV+=		HOSTPGEN=$(STAGING_HOST_DIR)/usr/bin/pgen3
 FAKE_FLAGS+=		ENSUREPIP=no
 CONFIGURE_ARGS:=	--with-system-expat \
-			--disable-test-modules \
+			--enable-test-modules \
 			--with-build-python=$(STAGING_HOST_DIR)/usr/bin/python3
 
 CONFIGURE_ENV+=		ac_cv_have_long_long_format=yes \
@@ -98,15 +98,15 @@ endif
 
 python3-install: ${INSTALL_MODS_y} ${INSTALL_MODS_m}
 	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/bin ${IDIR_PYTHON3}/usr/lib
-	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.14
-	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.14
+	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/lib/python3.15
+	${INSTALL_DIR} ${IDIR_PYTHON3}/usr/include/python3.15
 	${CP} ${WRKINST}/usr/bin/python3* ${IDIR_PYTHON3}/usr/bin
 	${CP} ${WRKINST}/usr/lib/libpython*.so* ${IDIR_PYTHON3}/usr/lib
-	${CP} ${WRKINST}/usr/lib/python3.14/* ${IDIR_PYTHON3}/usr/lib/python3.14
-	${CP} ${WRKINST}/usr/include/python3.14/pyconfig.h \
-		 ${IDIR_PYTHON3}/usr/include/python3.14
+	${CP} ${WRKINST}/usr/lib/python3.15/* ${IDIR_PYTHON3}/usr/lib/python3.15
+	${CP} ${WRKINST}/usr/include/python3.15/pyconfig.h \
+		 ${IDIR_PYTHON3}/usr/include/python3.15
 	@-for i in zlib _bz2 _curses _ssl _gdbm _sqlite pyexpat readline; do \
-		rm ${IDIR_PYTHON3}/usr/lib/python3.14/lib-dynload/$${i}*so; \
+		rm ${IDIR_PYTHON3}/usr/lib/python3.15/lib-dynload/$${i}*so; \
 	done
 
 include ${ADK_TOPDIR}/mk/host-bottom.mk
