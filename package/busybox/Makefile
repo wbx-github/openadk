@@ -44,21 +44,21 @@ do-configure:
 		symbol=$$(echo $$sym|sed -e "s#=y##"); \
 		case $$symbol in \
 		  GREP) \
-			printf "# CONFIG_GREP is not set\n" >> ${WRKBUILD}/.config; \
-			printf "# CONFIG_EGREP is not set\n" >> ${WRKBUILD}/.config; \
-			printf "# CONFIG_FGREP is not set\n" >> ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_GREP\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_EGREP\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_FGREP\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
 			;; \
 		  KMOD) \
-			printf "# CONFIG_MODINFO is not set\n" >> ${WRKBUILD}/.config; \
-			printf "# CONFIG_MODPROBE_SMALL is not set\n" >> ${WRKBUILD}/.config; \
-			printf "# CONFIG_INSMOD is not set\n" >> ${WRKBUILD}/.config; \
-			printf "# CONFIG_RMMOD is not set\n" >> ${WRKBUILD}/.config; \
-			printf "# CONFIG_LSMOD is not set\n" >> ${WRKBUILD}/.config; \
-			printf "# CONFIG_MODPROBE is not set\n" >> ${WRKBUILD}/.config; \
-			printf "# CONFIG_DEPMOD is not set\n" >> ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_MODINFO\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_INSMOD\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_RMMOD\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_LSMOD\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_MODPROBE\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_DEPMOD\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
+			$(SED) 's/.*\(CONFIG_MODPROBE_SMALL\)=.*/# \1 is not set/' ${WRKBUILD}/.config; \
 			;; \
 		  *) \
-			printf "# CONFIG_$${symbol} is not set\n" >> ${WRKBUILD}/.config; \
+			$(SED) "s/.*\(CONFIG_$${symbol}\)=.*/# \1 is not set/" ${WRKBUILD}/.config; \
 			;; \
 		esac \
 	done
