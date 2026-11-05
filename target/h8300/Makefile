@@ -25,13 +25,23 @@ endif
 
 QEMU_ARGS:=${ADK_QEMU_ARGS}
 ifeq ($(ADK_TARGET_SYSTEM_QEMU_H8300),y)
-QEMU_ARGS+=-M edosk2674 -append "console=ttySC2,38400"
+QEMU_ARGS+=-M edosk2674,ram-base=0x100000
+QEMU_ARGS+=-m 14
+ifeq ($(ADK_TARGET_QEMU_WITH_BLOCK),y)
+QEMU_ARGS+=-device virtio-blk-device,drive=hd -drive file=qemu-h8300.img,format=raw,if=none,id=hd
+endif
 endif
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSTARBALL)"
+ifeq ($(ADK_TARGET_QEMU),y)
+	@echo "Use following command to create a QEMU Image:"
+	@echo "./scripts/create.sh qemu-${ADK_TARGET_CPU_ARCH}.img $(FW_DIR)/$(ROOTFSTARBALL)"
+	@echo "Start qemu with following options:"
+	@echo 'qemu-system-h8300 $(QEMU_ARGS) -nographic -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)
 targethelp:

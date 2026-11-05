@@ -1,0 +1,27 @@
+# h8300: signal frame must go through regs->sp, not _sw_usp.
+# RESTORE_ALL takes the user stack pointer from pt_regs (LSP), so wrusp() in
+# setup_rt_frame() and restore_sigcontext() had no effect: the handler ran on
+# the interrupted stack, its return address was whatever lay there, and
+# sigreturn restored the wrong stack.  A signal that interrupts a blocking
+# system call (waitpid in pclose) sent the process to address 0.
+# Backport of the upstream change (5.15 arch/h8300/kernel/signal.c).
+--- a/arch/h8300/kernel/signal.c
++++ b/arch/h8300/kernel/signal.c
+@@ -95,7 +95,7 @@
+ 	regs->ccr |= ccr;
+ 	regs->orig_er0 = -1;		/* disable syscall checks */
+ 	err |= __get_user(usp, &usc->sc_usp);
+-	wrusp(usp);
++	regs->sp = usp;
+ 
+ 	err |= __get_user(er0, &usc->sc_er0);
+ 	*pd0 = er0;
+@@ -196,7 +196,7 @@
+ 		return -EFAULT;
+ 
+ 	/* Set up registers for signal handler */
+-	wrusp((unsigned long) frame);
++	regs->sp  = (unsigned long)frame;
+ 	regs->pc  = (unsigned long) ksig->ka.sa.sa_handler;
+ 	regs->er0 = ksig->sig;
+ 	regs->er1 = (unsigned long)&(frame->info);

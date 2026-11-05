@@ -1,0 +1,32 @@
+# h8300: take fallocate's offsets as 32-bit halves.
+# gcc passes a long long in two registers only while two are left, so both
+# offsets of sys_fallocate(int, int, loff_t, loff_t) come from the stack,
+# where the syscall entry has er4, er5, er6 and then er3.  User space hands
+# the halves over in er3..er6, high word first: every fallocate failed with
+# EFBIG.  A wrapper takes them the way the C library passes them.
+# Same class as kernel-avr32-fallocate.patch.
+--- a/arch/h8300/kernel/syscalls.c
++++ b/arch/h8300/kernel/syscalls.c
+@@ -7,6 +7,22 @@
+ 
+ #define sys_mmap2 sys_mmap_pgoff
+ 
++/*
++ * gcc passes a long long in two registers only while two are left, and
++ * spills it to the stack otherwise.  For fallocate(int, int, loff_t,
++ * loff_t) that puts both offsets on the stack, where the syscall entry
++ * has er4, er5, er6 and then er3 -- not the order the C library hands
++ * the six 32-bit halves over in.  Take them as halves, high word first.
++ */
++asmlinkage long sys_h8300_fallocate(int fd, int mode,
++				    unsigned long off_hi, unsigned long off_lo,
++				    unsigned long len_hi, unsigned long len_lo)
++{
++	return sys_fallocate(fd, mode, ((loff_t)off_hi << 32) | off_lo,
++			     ((loff_t)len_hi << 32) | len_lo);
++}
++#define sys_fallocate sys_h8300_fallocate
++
+ asmlinkage int sys_rt_sigreturn(void);
+ 
+ void *_sys_call_table[__NR_syscalls] = {

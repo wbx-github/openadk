@@ -1,5 +1,9 @@
---- linux-4.4.302.orig/drivers/clocksource/h8300_tpu.c
-+++ linux-4.4.302/drivers/clocksource/h8300_tpu.c
+# h8300: start the TPU channels the clocksource uses.
+# The driver never set the channels' bits in TSTR, so the counters stood
+# still.  Take the common register block as a third resource and the two
+# channels from "renesas,channel", and start/stop them with the clocksource.
+--- a/drivers/clocksource/h8300_tpu.c
++++ b/drivers/clocksource/h8300_tpu.c
 @@ -31,12 +31,17 @@
  #define TGRC	12
  #define TGRD	14
@@ -82,27 +86,3 @@
  
  	p->cs.name = pdev->name;
  	p->cs.rating = 200;
---- linux-4.4.302.orig/arch/h8300/boot/dts/edosk2674.dts
-+++ linux-4.4.302/arch/h8300/boot/dts/edosk2674.dts
-@@ -70,7 +70,8 @@
- 
- 	tpu: timer@ffffe0 {
- 		compatible = "renesas,tpu";
--		reg = <0xffffe0 16>, <0xfffff0 12>;
-+		reg = <0xffffe0 16>, <0xfffff0 12>, <0xffffc0 8>;
-+		renesas,channel = <1 2>;
- 		clocks = <&fclk>;
- 		clock-names = "fck";
- 	};
---- linux-4.4.302.orig/arch/h8300/boot/dts/h8s_sim.dts
-+++ linux-4.4.302/arch/h8300/boot/dts/h8s_sim.dts
-@@ -69,7 +69,8 @@
- 
- 	tpu: timer@ffffe0 {
- 		compatible = "renesas,tpu";
--		reg = <0xffffe0 16>, <0xfffff0 12>;
-+		reg = <0xffffe0 16>, <0xfffff0 12>, <0xffffc0 8>;
-+		renesas,channel = <1 2>;
- 		clocks = <&fclk>;
- 		clock-names = "fck";
- 	};

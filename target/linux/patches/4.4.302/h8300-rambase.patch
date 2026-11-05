@@ -1,0 +1,26 @@
+# h8300: make the RAM base configurable (CONFIG_RAMBASE).
+# vmlinux.lds.S linked a RAM kernel at a fixed 0x400000, the EDOSK2674's
+# DRAM.  With the DRAM moved down to 0x100000 the kernel has to be linked
+# there; the default stays 0x400000.
+--- a/arch/h8300/Kconfig.cpu
++++ b/arch/h8300/Kconfig.cpu
+@@ -96,4 +96,8 @@
+         hex "Load offset"
+ 	default 0
+ 
++config RAMBASE
++	hex "RAM base address"
++	default 0x400000
++
+ endmenu
+--- a/arch/h8300/kernel/vmlinux.lds.S
++++ b/arch/h8300/kernel/vmlinux.lds.S
+@@ -3,7 +3,7 @@
+ #include <asm/thread_info.h>
+ 
+ #define ROMTOP 0x000000
+-#define RAMTOP 0x400000
++#define RAMTOP CONFIG_RAMBASE
+ 
+ jiffies = jiffies_64 + 4;
+ 

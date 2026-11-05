@@ -1,0 +1,17 @@
+# h8300: run system calls with interrupts enabled.
+# TRAPA sets the I bit, and _system_call only cleared UI: every system call
+# ran with interrupts masked, a sleeping one was woken only by luck, and the
+# timer stalled while a long one ran.  Upstream fixed it later (5.x clears
+# both bits after set_esp0).
+--- a/arch/h8300/kernel/entry.S
++++ b/arch/h8300/kernel/entry.S
+@@ -236,7 +236,8 @@
+ 	subs	#4,sp				/* dummy LVEC */
+ 	SAVE_ALL
+ 	/* er0: syscall nr */
+-	andc	#0xbf,ccr
++	/* TRAPA sets I in CCR; run the syscall with interrupts enabled */
++	andc	#0x3f,ccr
+ 	mov.l	er0,er4
+ 
+ 	/* save top of frame */

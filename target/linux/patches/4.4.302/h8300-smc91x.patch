@@ -1,0 +1,52 @@
+# smc91x: allow it on h8300 and build it without GPIOLIB.
+# The EDOSK2674 has an SMC LAN91C96.  The control GPIO helpers only exist
+# with GPIOLIB, which h8300 does not have; without them there is nothing to
+# toggle.
+--- a/drivers/net/ethernet/smsc/Kconfig
++++ b/drivers/net/ethernet/smsc/Kconfig
+@@ -7,7 +7,7 @@
+ 	default y
+ 	depends on ARM || ARM64 || ATARI_ETHERNAT || BLACKFIN || COLDFIRE || \
+ 		   ISA || M32R || MAC || MIPS || MN10300 || NIOS2 || PCI || \
+-		   PCMCIA || SUPERH || XTENSA
++		   PCMCIA || SUPERH || XTENSA || H8300
+ 	---help---
+ 	  If you have a network (Ethernet) card belonging to this class, say Y.
+ 
+@@ -36,9 +36,8 @@
+ 	tristate "SMC 91C9x/91C1xxx support"
+ 	select CRC32
+ 	select MII
+-	depends on !OF || GPIOLIB
+ 	depends on ARM || ARM64 || ATARI_ETHERNAT || BLACKFIN || COLDFIRE || \
+-		   M32R || MIPS || MN10300 || NIOS2 || SUPERH || XTENSA
++		   M32R || MIPS || MN10300 || NIOS2 || SUPERH || XTENSA || H8300
+ 	---help---
+ 	  This is a driver for SMC's 91x series of Ethernet chipsets,
+ 	  including the SMC91C94 and the SMC91C111. Say Y if you want it
+--- a/drivers/net/ethernet/smsc/smc91x.c
++++ b/drivers/net/ethernet/smsc/smc91x.c
+@@ -2204,6 +2204,7 @@
+ };
+ MODULE_DEVICE_TABLE(of, smc91x_match);
+ 
++#if defined(CONFIG_GPIOLIB)
+ /**
+  * of_try_set_control_gpio - configure a gpio if it exists
+  */
+@@ -2228,6 +2229,15 @@
+ 
+ 	return 0;
+ }
++#else
++static int try_toggle_control_gpio(struct device *dev,
++                                  struct gpio_desc **desc,
++                                  const char *name, int index,
++                                  int value, unsigned int nsdelay)
++{
++	return 0;
++}
++#endif
+ #endif
+ 
+ /*

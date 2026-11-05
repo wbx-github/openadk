@@ -1,6 +1,10 @@
-diff -Nur linux-4.4.302.orig/arch/h8300/include/asm/bitops.h linux-4.4.302/arch/h8300/include/asm/bitops.h
---- linux-4.4.302.orig/arch/h8300/include/asm/bitops.h	2022-02-03 09:27:54.000000000 +0100
-+++ linux-4.4.302/arch/h8300/include/asm/bitops.h	2026-08-31 00:23:11.784425023 +0200
+# h8300: declare the condition codes clobbered in inline assembly.
+# gcc 12 dropped cc0 from the H8 backend and now keeps values in the flags
+# across instructions; asm statements that change them (btst/bset/rotxl,
+# mov, and.w) have to say so, or a compare before them is used after.
+# Needed to build 4.4 with gcc 13.
+--- a/arch/h8300/include/asm/bitops.h
++++ b/arch/h8300/include/asm/bitops.h
 @@ -135,7 +135,7 @@
  			OP " %3,%1\n\t"					\
  			"rotxl.l %0\n\t"				\
@@ -19,9 +23,8 @@ diff -Nur linux-4.4.302.orig/arch/h8300/include/asm/bitops.h linux-4.4.302/arch/
  	}								\
  	return retval;							\
  }
-diff -Nur linux-4.4.302.orig/arch/h8300/include/asm/cmpxchg.h linux-4.4.302/arch/h8300/include/asm/cmpxchg.h
---- linux-4.4.302.orig/arch/h8300/include/asm/cmpxchg.h	2022-02-03 09:27:54.000000000 +0100
-+++ linux-4.4.302/arch/h8300/include/asm/cmpxchg.h	2026-08-31 00:23:11.783013840 +0200
+--- a/arch/h8300/include/asm/cmpxchg.h
++++ b/arch/h8300/include/asm/cmpxchg.h
 @@ -22,19 +22,22 @@
  		__asm__ __volatile__
  			("mov.b %2,%0\n\t"
@@ -48,9 +51,8 @@ diff -Nur linux-4.4.302.orig/arch/h8300/include/asm/cmpxchg.h linux-4.4.302/arch
  		break;
  	default:
  		tmp = 0;
-diff -Nur linux-4.4.302.orig/arch/h8300/include/asm/thread_info.h linux-4.4.302/arch/h8300/include/asm/thread_info.h
---- linux-4.4.302.orig/arch/h8300/include/asm/thread_info.h	2022-02-03 09:27:54.000000000 +0100
-+++ linux-4.4.302/arch/h8300/include/asm/thread_info.h	2026-08-31 00:23:11.781512536 +0200
+--- a/arch/h8300/include/asm/thread_info.h
++++ b/arch/h8300/include/asm/thread_info.h
 @@ -56,7 +56,8 @@
  	__asm__("mov.l	sp, %0\n\t"
  		"and.w	%1, %T0"
