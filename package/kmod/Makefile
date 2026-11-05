@@ -4,19 +4,31 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kmod
-PKG_VERSION:=		34.2
+PKG_VERSION:=		34.3
 PKG_RELEASE:=		1
-PKG_HASH:=		5a5d5073070cc7e0c7a7a3c6ec2a0e1780850c8b47b3e3892226b93ffcb9cb54
+PKG_HASH:=		985554de49c21a58abd68c6cda2251384e1e5bb08b3b14c7f02b51f4c90c2958
 PKG_DESCR:=		kernel module utils
 PKG_SECTION:=		sys/utils
 PKG_DEPENDS:=		libkmod
 PKG_SITES:=		https://www.kernel.org/pub/linux/utils/kernel/kmod/
 PKG_LIBNAME:=		libkmod
 PKG_OPTS:=		dev
+PKG_BB:=		1
 
 PKG_SUBPKGS:=		KMOD LIBKMOD
 PKGSD_LIBKMOD:=		kernel module library
 PKGSC_LIBKMOD:=		libs/misc
+
+PKG_FLAVOURS_KMOD:=	ZLIB XZ ZSTD
+PKGFD_ZLIB:=		zlib support
+PKGFB_ZLIB:=		zlib
+PKGFS_ZLIB:=		zlib
+PKGFD_XZ:=		xz support
+PKGFB_XZ:=		xz
+PKGFS_XZ:=		xz
+PKGFD_ZSTD:=		zstd support
+PKGFB_ZSTD:=		zstd
+PKGFS_ZSTD:=		zstd
 
 include $(ADK_TOPDIR)/mk/host.mk
 include $(ADK_TOPDIR)/mk/package.mk
@@ -28,6 +40,22 @@ $(eval $(call PKG_template,LIBKMOD,libkmod,$(PKG_VERSION)-${PKG_RELEASE},${PKGSS
 CONFIG_STYLE:=		minimal
 CONFIGURE_ARGS+=	--host=${GNU_TARGET_NAME} \
 			--disable-manpages
+
+ifneq ($(ADK_PACKAGE_KMOD_ZLIB),)
+CONFIGURE_ARGS+=	--with-zlib
+else
+CONFIGURE_ARGS+=	--without-zlib
+endif
+ifneq ($(ADK_PACKAGE_KMOD_XZ),)
+CONFIGURE_ARGS+=	--with-xz
+else
+CONFIGURE_ARGS+=	--without-xz
+endif
+ifneq ($(ADK_PACKAGE_KMOD_ZSTD),)
+CONFIGURE_ARGS+=	--with-zstd
+else
+CONFIGURE_ARGS+=	--without-zstd
+endif
 
 HOST_CONFIGURE_ARGS+=	--disable-manpages \
 			--disable-logging
