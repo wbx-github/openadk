@@ -152,6 +152,10 @@ config ADK_LINUX_KERNEL_MIPS_FP_SUPPORT
 
 choice
 prompt "preemptive mode"
+depends on ADK_TARGET_LINUX_KERNEL_VERSION_6_12 \
+	|| ADK_TARGET_LINUX_KERNEL_VERSION_6_18 \
+	|| ADK_TARGET_LINUX_KERNEL_VERSION_7_2 \
+	|| ADK_TARGET_LINUX_KERNEL_VERSION_7_3
 
 config ADK_LINUX_KERNEL_PREEMPT
 	bool "Preemptible Kernel (Low-Latency Desktop)"
