@@ -17,7 +17,7 @@ PKG_URL:=		http://www.python.org/
 PKG_SITES:=		https://www.python.org/ftp/python/$(PKG_VERSION)/
 
 PKG_FLAVOURS_PYTHON3:=	MOD_ZLIB MOD_BZ2 MOD_SQLITE MOD_GDBM
-PKG_FLAVOURS_PYTHON3+=	MOD_NCURSES MOD_OPENSSL MOD_READLINE
+PKG_FLAVOURS_PYTHON3+=	MOD_NCURSES MOD_OPENSSL MOD_READLINE MOD_EXPAT
 			
 PKGFD_MOD_ZLIB:=	zlib support
 PKGFB_MOD_ZLIB:=	zlib
@@ -40,6 +40,9 @@ PKGFS_MOD_READLINE:=	libreadline
 PKGFD_MOD_OPENSSL:=	openssl support
 PKGFB_MOD_OPENSSL:=	openssl
 PKGFS_MOD_OPENSSL:=	libopenssl
+PKGFD_MOD_EXPAT:=	expat support
+PKGFB_MOD_EXPAT:=	expat
+PKGFS_MOD_EXPAT:=	libexpat
 
 DISTFILES:=		Python-${PKG_VERSION}.tar.xz
 WRKDIST=		${WRKDIR}/Python-${PKG_VERSION}
@@ -69,6 +72,7 @@ $(eval $(call PKG_template,PYTHON3_MOD_GDBM,python3-mod-gdbm,$(PKG_VERSION)-${PK
 $(eval $(call PKG_template,PYTHON3_MOD_NCURSES,python3-mod-ncurses,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_NCURSES},${PKGFD_MOD_NCURSES},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_OPENSSL,python3-mod-openssl,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_OPENSSL},${PKGFD_MOD_OPENSSL},${PKG_SECTION}))
 $(eval $(call PKG_template,PYTHON3_MOD_READLINE,python3-mod-readline,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_READLINE},${PKGFD_MOD_READLINE},${PKG_SECTION}))
+$(eval $(call PKG_template,PYTHON3_MOD_EXPAT,python3-mod-expat,$(PKG_VERSION)-${PKG_RELEASE},${PKGFS_MOD_EXPAT},${PKGFD_MOD_EXPAT},${PKG_SECTION}))
 
 $(eval $(call PKG_mod_template,PYTHON3_MOD_ZLIB,zlib))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_BZ2,_bz2))
@@ -77,6 +81,7 @@ $(eval $(call PKG_mod_template,PYTHON3_MOD_GDBM,_gdbm))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_NCURSES,_curses))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_OPENSSL,_ssl))
 $(eval $(call PKG_mod_template,PYTHON3_MOD_READLINE,readline))
+$(eval $(call PKG_mod_template,PYTHON3_MOD_EXPAT,pyexpat))
 
 MAKE_ENV+=		HOSTPGEN=$(STAGING_HOST_DIR)/usr/bin/pgen3
 FAKE_FLAGS+=		ENSUREPIP=no
