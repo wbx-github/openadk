@@ -12,8 +12,8 @@ PKG_SECTION:=		net/security
 PKG_KDEPENDS:=		net-key inet-esp xfrm-user inet-xfrm-mode-transport
 PKG_KDEPENDS+=		inet-xfrm-mode-tunnel
 PKG_NEEDS:=		threads
-PKG_URL:=		http://strongswan.org/index.htm
-PKG_SITES:=		http://download.strongswan.org/
+PKG_URL:=		https://strongswan.org
+PKG_SITES:=		https://download.strongswan.org/
 
 DISTFILES:=		${PKG_NAME}-${PKG_VERSION}.tar.gz
 
