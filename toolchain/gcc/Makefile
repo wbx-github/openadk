@@ -251,7 +251,11 @@ GCC_CONFOPTS+=		--without-long-double-128
 endif
 
 ifeq ($(ADK_TARGET_ARCH_PPC),y)
-GCC_CONFOPTS+=		--with-long-double-64 --enable-secureplt
+ifeq ($(ADK_TARGET_ARCH_PPC_WITH_SPE),y)
+GCC_CONFOPTS+=		--with-long-double-128 --enable-secureplt
+else
+GCC_CONFOPTS+=		--without-long-double-128 --enable-secureplt
+endif
 endif
 
 ifeq ($(ADK_TARGET_ARCH_PPC64),y)
