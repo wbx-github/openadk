@@ -7,7 +7,7 @@ include $(ADK_TOPDIR)/mk/image.mk
 
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 
-QEMU_ARGS:=-M virt -nographic -m 256
+QEMU_ARGS:=-M virt -nographic -m 1024
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)

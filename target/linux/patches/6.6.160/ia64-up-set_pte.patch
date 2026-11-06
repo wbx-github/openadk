@@ -1,0 +1,20 @@
+--- a/arch/ia64/include/asm/pgtable.h	2026-10-26 00:57:10.594927404 +0100
++++ b/arch/ia64/include/asm/pgtable.h	2026-10-26 00:57:10.598927504 +0100
+@@ -356,7 +356,7 @@
+ 	pte_t pte = *ptep;
+ 	if (!pte_young(pte))
+ 		return 0;
+-	set_pte_at(vma->vm_mm, addr, ptep, pte_mkold(pte));
++	set_pte(ptep, pte_mkold(pte));
+ 	return 1;
+ #endif
+ }
+@@ -385,7 +385,7 @@
+ 	} while (cmpxchg((unsigned long *) ptep, old, new) != old);
+ #else
+ 	pte_t old_pte = *ptep;
+-	set_pte_at(mm, addr, ptep, pte_wrprotect(old_pte));
++	set_pte(ptep, pte_wrprotect(old_pte));
+ #endif
+ }
+ 
