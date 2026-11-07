@@ -72,6 +72,7 @@ kernel-strip:
 kernel-install: kernel-strip
 ifeq ($(ADK_TARGET_SYSTEM_MIKROTIK_RB333),y)
 	@cp $(BUILD_DIR)/linux/arch/powerpc/boot/dtbImage.rb333.elf $(FW_DIR)/$(TARGET_KERNEL)
+	PATH='$(HOST_PATH)' $(TARGET_CROSS)objcopy --add-section kernparm=$(ADK_TOPDIR)/target/ppc/rb333/kernel_parameters.dat $(FW_DIR)/$(TARGET_KERNEL)
 else
 	@cp $(BUILD_DIR)/$(TARGET_KERNEL) $(FW_DIR)/${TARGET_KERNEL}
 endif
