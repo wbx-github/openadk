@@ -151,7 +151,7 @@ config ADK_TARGET_ROOTFS_INITRAMFSARCHIVE
 	  Use this option if your planning to create a initramfs.
 
 config ADK_TARGET_ROOTFS_ARCHIVE
-	bool "Archive usable for ext4 filesystems"
+	bool "Archive usable for ext2/ext4 filesystems"
 	select ADK_HOST_NEED_GENEXT2FS if ADK_TARGET_QEMU
 	select ADK_LINUX_KERNEL_EXT2_FS if ADK_TARGET_OS_LINUX
 	select ADK_LINUX_KERNEL_EXT4_FS if ADK_TARGET_OS_LINUX
