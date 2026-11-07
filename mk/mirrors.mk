@@ -13,7 +13,6 @@ MASTER_SITE_MIRBSD?=	\
 ifeq ($(ADK_TARGET_KERNEL_NO_MIRROR),)
 MASTER_SITE_KERNEL?=	\
 	https://www.kernel.org/pub/linux/ \
-	http://www.kernel.org/pub/linux/ \
 
 else
 MASTER_SITE_KERNEL?=	\
