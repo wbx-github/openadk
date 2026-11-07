@@ -1,0 +1,8 @@
+config ADK_TARGET_SYSTEM_QEMU_NDS32
+	bool "Qemu NDS32 Emulator"
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_CPU_NDS32
+	select ADK_TARGET_LITTLE_ENDIAN
+	select ADK_TARGET_WITH_NET
+	help
+	  Qemu support for NDS32 architecture.
