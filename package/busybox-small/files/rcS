@@ -1,0 +1,16 @@
+#!/bin/sh
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+# disable kernel messages
+if [ -f /proc/sys/kernel/printk ];then
+	echo 0 > /proc/sys/kernel/printk
+fi
+/bin/ln -s /proc/self/fd/0 /dev/stdin
+/bin/ln -s /proc/self/fd/1 /dev/stdout
+/bin/ln -s /proc/self/fd/2 /dev/stderr
+/bin/ln -s /proc/self/fd /dev/fd
+echo "System initialization ..."
+/bin/chown 0:0 /tmp
+/bin/chmod 1777 /tmp
+if [ -f /etc/init.d/adktest ]; then
+  /etc/init.d/adktest start
+fi

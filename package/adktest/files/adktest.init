@@ -1,6 +1,7 @@
 #!/bin/sh
 #PKG adktest
 #INIT 90
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 . /etc/rc.conf
 
 case $1 in
@@ -11,18 +12,16 @@ autostart)
 	exec sh $0 start
 	;;
 start)
-	grep -q shell /proc/cmdline
+	/bin/grep -q shell /proc/cmdline 2>/dev/null
 	if [ $? -eq 0 ];then
 		exit 0
 	fi
 	echo "Starting test script ..."
 	if [ -x /run.sh ];then
-		mount -o remount,rw /
+		/bin/mount -o remount,rw / 2>/dev/null
 		/run.sh
-		quit
 	else
 		echo "no run.sh found"
-		quit
 	fi
 	;;
 *)
