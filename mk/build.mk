@@ -436,7 +436,7 @@ defconfig: .menu $(CONFIG)/conf
 	fi
 	@if [ ! -z "$(ADK_TARGET_FS)" ];then \
 		grep "^config" target/config/Config.in.rootfs \
-			|grep -i "$(ADK_TARGET_FS)" \
+			|grep -i "$(ADK_TARGET_FS)$$" \
 			|sed -e "s#^config \(.*\)#\1=y#" \
 			>> $(ADK_TOPDIR)/.defconfig; \
 	fi
