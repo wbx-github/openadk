@@ -3045,3 +3045,54 @@ diff -Nur linux-4.14.336.orig/drivers/mtd/nand/rbppc_nand.c linux-4.14.336/drive
 +
 +module_init(rbppc_nand_init);
 +module_exit(rbppc_nand_exit);
+diff -Nur linux-4.14.336.orig/arch/powerpc/boot/Makefile linux-4.14.336/arch/powerpc/boot/Makefile
+--- linux-4.14.336.orig/arch/powerpc/boot/Makefile	2026-11-08 00:24:59.071934092 +0100
++++ linux-4.14.336/arch/powerpc/boot/Makefile	2026-11-08 00:25:28.735888774 +0100
+@@ -26,7 +26,7 @@
+ BOOTCFLAGS    := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+ 		 -fno-strict-aliasing -Os -msoft-float -mno-altivec -mno-vsx \
+ 		 -pipe -fomit-frame-pointer -fno-builtin -fPIC -nostdinc \
+-		 -D$(compress-y)
++		 -D$(compress-y) -std=gnu89
+ 
+ BOOTCC := $(CC)
+ ifdef CONFIG_PPC64_BOOT_WRAPPER
+diff -Nur linux-4.14.336.orig/arch/powerpc/boot/util.S linux-4.14.336/arch/powerpc/boot/util.S
+--- linux-4.14.336.orig/arch/powerpc/boot/util.S	2024-01-10 14:45:41.000000000 +0100
++++ linux-4.14.336/arch/powerpc/boot/util.S	2026-11-08 00:25:39.375884586 +0100
+@@ -46,12 +46,12 @@
+ 	srwi	r4,r4,16
+ 	cmpwi	0,r4,1		/* 601 ? */
+ 	bne	.Ludelay_not_601
+-00:	li	r0,86	/* Instructions / microsecond? */
++5:	li	r0,86	/* Instructions / microsecond? */
+ 	mtctr	r0
+ 10:	addi	r0,r0,0 /* NOP */
+ 	bdnz	10b
+ 	subic.	r3,r3,1
+-	bne	00b
++	bne	5b
+ 	blr
+ 
+ .Ludelay_not_601:
+diff -Nur linux-4.14.336.orig/arch/powerpc/platforms/83xx/rb333.c linux-4.14.336/arch/powerpc/platforms/83xx/rb333.c
+--- linux-4.14.336.orig/arch/powerpc/platforms/83xx/rb333.c	2026-11-08 00:24:59.071934092 +0100
++++ linux-4.14.336/arch/powerpc/platforms/83xx/rb333.c	2026-11-08 00:33:18.520184286 +0100
+@@ -50,8 +50,6 @@
+ #endif
+ 
+ #ifdef CONFIG_QUICC_ENGINE
+-	qe_reset();
+-
+ 	if ((np = of_find_node_by_name(NULL, "par_io")) != NULL) {
+ 		par_io_init(np);
+ 		of_node_put(np);
+@@ -76,6 +74,8 @@
+ 	of_node_put(np);
+ 
+ #ifdef CONFIG_QUICC_ENGINE
++	qe_reset();
++
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,qe-ic");
+ 	if (!np)
+ 		return;
