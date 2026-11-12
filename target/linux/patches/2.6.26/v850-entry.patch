@@ -1,0 +1,31 @@
+v850: pass syscall args 5 and 6 where the compiler expects them
+
+diff -Nur linux-2.6.26.orig/arch/v850/kernel/entry.S linux-2.6.26/arch/v850/kernel/entry.S
+--- linux-2.6.26.orig/arch/v850/kernel/entry.S	2008-07-13 23:51:29.000000000 +0200
++++ linux-2.6.26/arch/v850/kernel/entry.S	2026-11-12 06:11:42.153181975 +0100
+@@ -545,13 +545,13 @@
+ 	// Push extra arguments on the stack.  Note that by default, the trap
+ 	// handler reserves enough stack space for 6 arguments, so we don't
+ 	// have to make any additional room.
+-	st.w	r13, 16[sp]		// arg 5
+-	st.w	r14, 20[sp]		// arg 6
++	st.w	r13, 0[sp]		// arg 5
++	st.w	r14, 4[sp]		// arg 6
+ 
+ 	// Make sure r13 and r14 are preserved, in case we have to restart a
+ 	// system call because of a signal (ep has already been set by caller).
+ 	st.w	r13, PTO+PT_GPR(13)[sp]
+-	st.w	r14, PTO+PT_GPR(13)[sp]
++	st.w	r14, PTO+PT_GPR(14)[sp]
+ 	mov	hilo(ret_from_long_syscall), lp
+ 
+ 	MAKE_SYS_CALL			// Jump to the syscall function.
+@@ -561,7 +561,7 @@
+    r13/r14 if the general trap mechanism doesnt' do so.  */
+ L_ENTRY(ret_from_long_syscall):
+ 	ld.w	PTO+PT_GPR(13)[sp], r13 // Restore the extra registers
+-	ld.w	PTO+PT_GPR(13)[sp], r14
++	ld.w	PTO+PT_GPR(14)[sp], r14
+ 	br	ret_from_trap		// The rest is the same as other traps
+ END(ret_from_long_syscall)
+ 
