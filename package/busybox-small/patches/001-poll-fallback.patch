@@ -1,0 +1,89 @@
+diff -Nur busybox-1.38.0.orig/libbb/poll_with_signals.c busybox-1.38.0/libbb/poll_with_signals.c
+--- busybox-1.38.0.orig/libbb/poll_with_signals.c	2025-07-13 15:17:21.000000000 +0200
++++ busybox-1.38.0/libbb/poll_with_signals.c	2026-10-30 03:12:57.130733529 +0100
+@@ -22,27 +22,62 @@
+  */
+ int FAST_FUNC check_got_signal_and_poll(struct pollfd pfd[1], int timeout)
+ {
+-	int n;
+-	struct timespec tv;
+-	sigset_t orig_mask;
+-
+-	if (bb_got_signal) /* optimization */
+-		goto eintr;
+-
+-	if (timeout >= 0) {
+-		tv.tv_sec = timeout / 1000;
+-		tv.tv_nsec = (timeout % 1000) * 1000000;
+-	}
+-	/* test bb_got_signal, then poll(), atomically wrt signals */
+-	sigfillset(&orig_mask);
+-	sigprocmask2(SIG_BLOCK, &orig_mask);
+-	if (bb_got_signal) {
+-		sigprocmask2(SIG_SETMASK, &orig_mask);
+- eintr:
+-		errno = EINTR; /* inform the caller that we got a signal */
+-		return -1;
+-	}
+-	n = ppoll(pfd, 1, timeout >= 0 ? &tv : NULL, &orig_mask);
+-	sigprocmask2(SIG_SETMASK, &orig_mask);
+-	return n;
++#ifdef __NR_ppoll
++        int n;
++        struct timespec tv;
++        sigset_t orig_mask;
++
++        if (bb_got_signal)
++                goto eintr;
++
++        if (timeout >= 0) {
++                tv.tv_sec = timeout / 1000;
++                tv.tv_nsec = (timeout % 1000) * 1000000;
++        }
++
++        sigfillset(&orig_mask);
++        sigprocmask2(SIG_BLOCK, &orig_mask);
++
++        if (bb_got_signal) {
++                sigprocmask2(SIG_SETMASK, &orig_mask);
++                goto eintr;
++        }
++
++        n = ppoll(pfd, 1, timeout >= 0 ? &tv : NULL, &orig_mask);
++        sigprocmask2(SIG_SETMASK, &orig_mask);
++        return n;
++
++eintr:
++        errno = EINTR;
++        return -1;
++
++#else
++        int n;
++        int remaining = timeout;
++
++        while (1) {
++                if (bb_got_signal) {
++                        errno = EINTR;
++                        return -1;
++                }
++
++                n = poll(pfd, 1,
++                         remaining < 0 || remaining > 100
++                         ? 100 : remaining);
++
++                if (n != 0)
++                        return n;
++
++                if (bb_got_signal) {
++                        errno = EINTR;
++                        return -1;
++                }
++
++                if (timeout >= 0) {
++                        if (remaining <= 100)
++                                return 0;
++                        remaining -= 100;
++                }
++        }
++#endif
+ }
