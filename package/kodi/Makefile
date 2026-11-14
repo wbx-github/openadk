@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kodi
-PKG_VERSION:=		22.0rc1
+PKG_VERSION:=		22.0rc2
 PKG_RELEASE:=		1
-PKG_HASH:=		21daa839b978ff3fc6a7a058717fe9232f1ae4087d492b31c288eeffb2a7a447
+PKG_HASH:=		e704ca70bcccd41baf409f6d54119add52a03f34e6eea3f11c6304f1553b4397
 PKG_DESCR:=		software media player
 PKG_SECTION:=		mm/video
 PKG_DEPENDS:=		python3 libsquish libopenssl libfmt rapidjson libpcre
@@ -78,9 +78,9 @@ CMAKE_FLAGS+= 		-DENABLE_CCACHE=OFF \
 			-DENABLE_INTERNAL_FFMPEG=ON \
 			-DENABLE_INTERNAL_RapidJSON=OFF \
 			-DPYTHON_EXECUTABLE=$(STAGING_HOST_DIR)/usr/bin/python3 \
-			-DPYTHON_INCLUDE_DIRS=$(STAGING_TARGET_DIR)/usr/include/python3.14 \
-			-DPYTHON_PATH=$(STAGING_TARGET_DIR)/usr/lib/python3.14 \
-			-DPYTHON_VER=3.14 \
+			-DPYTHON_INCLUDE_DIRS=$(STAGING_TARGET_DIR)/usr/include/python3.15 \
+			-DPYTHON_PATH=$(STAGING_TARGET_DIR)/usr/lib/python3.15 \
+			-DPYTHON_VER=3.15 \
 			-DKODI_DEPENDSBUILD=OFF \
 			-DENABLE_OPENSSL=ON \
 			-DENABLE_MYSQLCLIENT=OFF \
