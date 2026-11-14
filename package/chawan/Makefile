@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		chawan
-PKG_VERSION:=		0.5.1
+PKG_VERSION:=		0.5.2
 PKG_RELEASE:=		1
-PKG_HASH:=		67a54f10acd2dcda6c62bca825ccaf228f94d04ba9dc85c9369930c58d12ec21
+PKG_HASH:=		21201936aa3a5ff0117fd55bfa1805ab77647761f4341fd2f77eca15bb66c807
 PKG_DESCR:=		console www browser
 PKG_SECTION:=		app/browser
 PKG_DEPENDS:=		libopenssl brotli libssh2 ca-certificates
