@@ -14,3 +14,4 @@ echo "System initialization ..."
 if [ -f /etc/init.d/adktest ]; then
   /etc/init.d/adktest start
 fi
+/bin/sh

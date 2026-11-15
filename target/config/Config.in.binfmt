@@ -64,7 +64,7 @@ config ADK_TARGET_BINFMT_FLAT_STACKSIZE
 	help
 	  Stack size to be configured while building apps.
 
-source "target/config/Config.in.elf2flt"
+#source "target/config/Config.in.elf2flt"
 
 config ADK_TARGET_BINFMT
 	string
