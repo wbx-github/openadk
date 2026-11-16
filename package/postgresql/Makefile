@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		postgresql
-PKG_VERSION:=		18.6
+PKG_VERSION:=		18.7
 PKG_RELEASE:=		1
-PKG_HASH:=		983ee554ec53dbeb9b70797bef9fcf4e67e117e7e48ca1463cc80b3ff8e8ff3f
+PKG_HASH:=		19c2dc7d8520e10532d082b43c36c4d2dcc6cd9e40506c6f598e7338f84bbde7
 PKG_DESCR:=		postgresql database library
 PKG_SECTION:=		libs/db
 PKG_DEPENDS:=		icu4c
