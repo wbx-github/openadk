@@ -13,7 +13,7 @@ PKG_DEPENDS:=		libgmp
 PKG_BUILDDEP:=		gmp
 HOST_BUILDDEP:=		gmp-host
 PKG_URL:=		http://www.lysator.liu.se/~nisse/
-PKG_SITES:=		http://www.lysator.liu.se/~nisse/archive/
+PKG_SITES:=		https://ftp.gnu.org/gnu/nettle/
 PKG_OPTS:=		dev
 
 DISTFILES:=             nettle-${PKG_VERSION}.tar.gz
