@@ -11,8 +11,6 @@ PKG_SECTION:=		base/tests
 PKG_URL:=		https://uclibc-ng.org
 PKG_SITES:=		https://git.uclibc-ng.org/git/uclibc-ng-test.git
 
-PKG_NOPARALLEL:=	1
-
 PKG_SUBPKGS:=		UCLIBC_NG_TEST UCLIBC_NG_TEST_ALL UCLIBC_NG_TEST_NPTL UCLIBC_NG_TEST_WCHAR UCLIBC_NG_TEST_MATH
 PKG_SUBPKGS+=		UCLIBC_NG_TEST_OTHER
 PKGSD_UCLIBC_NG_TEST_ALL:=		all uClibc-ng tests
