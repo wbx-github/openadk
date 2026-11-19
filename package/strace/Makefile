@@ -27,7 +27,8 @@ CONFIGURE_ENV+=		st_cv_m32_mpers=no \
 endif
 
 AUTOTOOL_STYLE:=	autoreconf
-CONFIGURE_ARGS+=	--enable-mpers=check
+CONFIGURE_ARGS+=	--enable-mpers=check \
+			--without-libdw
 INSTALL_STYLE:=		manual
 
 do-install:
