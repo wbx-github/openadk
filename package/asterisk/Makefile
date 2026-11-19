@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		asterisk
-PKG_VERSION:=		22.11.0
+PKG_VERSION:=		24.0.0
 PKG_RELEASE:=		1
-PKG_HASH:=		3bd5ee040509a3d3cd9b1ba9520c18e6ec0a7e7981ca68c457dcd36ba3c54d94
+PKG_HASH:=		ece42a75bc965180007c56b03f2fd1dc8484eb84fc4cddc090db0ee5d5da1af9
 PKG_DESCR:=		open source pbx
 PKG_SECTION:=		net/voip
 PKG_DEPENDS:=		libncurses libcurl libopenssl libedit libuuid libjansson
@@ -61,6 +61,7 @@ CONFIGURE_ARGS=		--with-z=${STAGING_TARGET_DIR}/usr \
 			--without-gtk2 \
 			--without-iksemel \
 			--without-imap \
+			--without-ldap \
 			--without-netsnmp \
 			--without-newt \
 			--without-popt \
