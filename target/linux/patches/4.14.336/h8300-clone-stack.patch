@@ -1,0 +1,41 @@
+# h8300: clone() with a new stack must return on that stack.
+# copy_thread() only set thread.usp, but the child returns to user space
+# through childregs->sp, so it ran on the parent's stack.  Point
+# childregs->sp at the new stack, below the frame RESTORE_ALL builds there.
+# Fixes clone()/pthread_create() hanging.
+--- a/arch/h8300/kernel/process.c
++++ b/arch/h8300/kernel/process.c
+@@ -106,6 +106,16 @@
+ {
+ }
+ 
++/*
++ * RESTORE_ALL returns to user space by building the exception frame
++ * (er0, vector, [exr,] ccr/pc) at the saved user sp and doing rte.
++ */
++#if defined(CONFIG_CPU_H8S)
++#define USER_FRAME_SIZE	14
++#else
++#define USER_FRAME_SIZE	12
++#endif
++
+ int copy_thread(unsigned long clone_flags,
+ 		unsigned long usp, unsigned long topstk,
+ 		struct task_struct *p)
+@@ -123,7 +133,15 @@
+ 		*childregs = *current_pt_regs();
+ 		childregs->er0 = 0;
+ 		childregs->retpc = (unsigned long) ret_from_fork;
+-		p->thread.usp = usp ?: rdusp();
++		/*
++		 * clone() with a new stack: the child returns through
++		 * childregs->sp, so point it at the new stack and leave
++		 * room for the frame RESTORE_ALL writes there.  Otherwise
++		 * the child runs on the parent's stack.
++		 */
++		if (usp)
++			childregs->sp = usp - USER_FRAME_SIZE;
++		p->thread.usp = childregs->sp;
+ 	}
+ 	p->thread.ksp = (unsigned long)childregs;
+ 

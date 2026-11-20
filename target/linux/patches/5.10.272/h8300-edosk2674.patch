@@ -1,0 +1,460 @@
+# 5.10: h8300 uses memblock, and free_area_init() now takes the zone start
+# from memblock and marks the pages below the RAM base reserved, so the old
+# mm/init.c zone-hole change is not needed any more; only the debug output
+# in bootmem_init() is kept.  The h8s intc uses void __iomem * for IPRA/addr.
+--- a/arch/h8300/boot/dts/edosk2674.dts
++++ b/arch/h8300/boot/dts/edosk2674.dts
+@@ -7,7 +7,7 @@ / {
+ 	interrupt-parent = <&h8intc>;
+ 
+ 	chosen {
+-		bootargs = "console=ttySC2,38400";
++		bootargs = "console=ttySC2,38400 clocksource=jiffies ip=dhcp root=/dev/nfs rw";
+ 		stdout-path = &sci2;
+ 	};
+ 	aliases {
+@@ -71,7 +71,8 @@ bsc: memory-controller@fffec0 {
+ 
+ 	tpu: timer@ffffe0 {
+ 		compatible = "renesas,tpu";
+-		reg = <0xffffe0 16>, <0xfffff0 12>;
++		reg = <0xffffe0 16>, <0xfffff0 12>, <0xffffc0 8>;
++		renesas,channel = <1 2>;
+ 		clocks = <&fclk>;
+ 		clock-names = "fck";
+ 	};
+@@ -105,4 +106,11 @@ sci2: serial@ffff88 {
+ 		clocks = <&fclk>;
+ 		clock-names = "fck";
+ 	};
++
++	ethernet@f80000 {
++		compatible = "smsc,lan91c94";
++		reg = <0xf80000 0x10>;
++		interrupts = <16 2>;
++	};
++
+ };
+--- a/arch/h8300/include/asm/irqflags.h
++++ b/arch/h8300/include/asm/irqflags.h
+@@ -15,12 +15,12 @@ static inline h8300flags arch_local_save_flags(void)
+ 
+ static inline void arch_local_irq_disable(void)
+ {
+-	__asm__ volatile ("orc  #0xc0,ccr");
++	__asm__ volatile ("orc  #0xc0,ccr" : : : "memory", "cc");
+ }
+ 
+ static inline void arch_local_irq_enable(void)
+ {
+-	__asm__ volatile ("andc #0x3f,ccr");
++	__asm__ volatile ("andc #0x3f,ccr" : : : "memory", "cc");
+ }
+ 
+ static inline h8300flags arch_local_irq_save(void)
+@@ -28,13 +28,13 @@ static inline h8300flags arch_local_irq_save(void)
+ 	h8300flags flags;
+ 
+ 	__asm__ volatile ("stc ccr,%w0\n\t"
+-		      "orc  #0xc0,ccr" : "=r" (flags));
++		      "orc  #0xc0,ccr" : "=r" (flags) : : "memory", "cc");
+ 	return flags;
+ }
+ 
+ static inline void arch_local_irq_restore(h8300flags flags)
+ {
+-	__asm__ volatile ("ldc %w0,ccr" : : "r" (flags) : "cc");
++	__asm__ volatile ("ldc %w0,ccr" : : "r" (flags) : "memory", "cc");
+ }
+ 
+ static inline int arch_irqs_disabled_flags(unsigned long flags)
+@@ -55,13 +55,17 @@ static inline h8300flags arch_local_save_flags(void)
+ 
+ static inline void arch_local_irq_disable(void)
+ {
+-	__asm__ volatile ("orc #0x80,ccr\n\t");
++	/* CCR.I masks in interrupt control mode 0, EXR level 7 in mode 2 */
++	__asm__ volatile ("orc #0x80,ccr\n\t"
++		      "orc #7,exr\n\t"
++		      : : : "memory", "cc");
+ }
+ 
+ static inline void arch_local_irq_enable(void)
+ {
+ 	__asm__ volatile ("andc #0x7f,ccr\n\t"
+-		      "andc #0xf0,exr\n\t");
++		      "andc #0xf8,exr\n\t"
++		      : : : "memory", "cc");
+ }
+ 
+ static inline h8300flags arch_local_irq_save(void)
+@@ -71,7 +75,8 @@ static inline h8300flags arch_local_irq_save(void)
+ 	__asm__ volatile ("stc ccr,%w0\n\t"
+ 		      "stc exr,%x0\n\t"
+ 		      "orc  #0x80,ccr\n\t"
+-		      : "=r" (flags));
++		      "orc  #7,exr\n\t"
++		      : "=r" (flags) : : "memory", "cc");
+ 	return flags;
+ }
+ 
+@@ -79,12 +84,13 @@ static inline void arch_local_irq_restore(h8300flags flags)
+ {
+ 	__asm__ volatile ("ldc %w0,ccr\n\t"
+ 		      "ldc %x0,exr"
+-		      : : "r" (flags) : "cc");
++		      : : "r" (flags) : "memory", "cc");
+ }
+ 
+ static inline int arch_irqs_disabled_flags(h8300flags flags)
+ {
+-	return (flags & 0x0080) == 0x0080;
++	/* low byte = CCR (I bit 7), high byte = EXR (mask level bits 2:0) */
++	return (flags & 0x0080) == 0x0080 || ((flags >> 8) & 7) == 7;
+ }
+ 
+ #endif
+--- a/arch/h8300/kernel/entry.S
++++ b/arch/h8300/kernel/entry.S
+@@ -78,6 +78,23 @@ INTERRUPTS = 128
+ 	.endm
+ #endif
+ 
++/*
++ * H8S: the interrupt mask is CCR.I in interrupt control mode 0 but the EXR
++ * mask level in mode 2.  Mask/unmask both so the kernel works in either.
++ */
++#if defined(CONFIG_CPU_H8S)
++	.macro	IRQ_OFF_EXR
++	orc	#7,exr
++	.endm
++	.macro	IRQ_ON_EXR
++	andc	#0xf8,exr
++	.endm
++#else
++	.macro	IRQ_OFF_EXR
++	.endm
++	.macro	IRQ_ON_EXR
++	.endm
++#endif
+ 
+ /* CPU context save/restore macros. */
+ 
+@@ -132,6 +149,7 @@ INTERRUPTS = 128
+ 	bne	7f
+ 
+ 	orc	#0xc0,ccr
++	IRQ_OFF_EXR
+ 	mov.l	@(LSP-LER1:16,sp),er0
+ 	mov.l	@(LER0-LER1:16,sp),er1		/* restore ER0 */
+ 	mov.l	er1,@er0
+@@ -238,10 +256,13 @@ _interrupt_entry:
+ 	jmp	@ret_from_interrupt
+ 
+ _system_call:
++	IRQ_OFF_EXR				/* TRAPA does not mask in mode 2 */
+ 	subs	#4,sp				/* dummy LVEC */
+ 	SAVE_ALL
+ 	/* er0: syscall nr */
+-	andc	#0xbf,ccr
++	/* TRAPA sets I in CCR; run the syscall with interrupts enabled */
++	andc	#0x3f,ccr
++	IRQ_ON_EXR
+ 	mov.l	er0,er4
+ 
+ 	/* save top of frame */
+@@ -277,6 +298,7 @@ _system_call:
+ 	jsr	@do_syscall_trace_leave
+ 2:
+ 	orc	#0xc0,ccr
++	IRQ_OFF_EXR
+ 	bra	resume_userspace
+ 
+ badsys:
+@@ -364,6 +386,7 @@ _resume:
+ 
+ 	/* disable interrupts */
+ 	orc	#0xc0,ccr
++	IRQ_OFF_EXR
+ 	mov.l	@_sw_usp,er3
+ 	mov.l	er3,@(THREAD_USP:16,er0)
+ 	mov.l	sp,@(THREAD_KSP:16,er0)
+--- a/arch/h8300/kernel/setup.c
++++ b/arch/h8300/kernel/setup.c
+@@ -85,6 +85,12 @@ static void __init bootmem_init(void)
+ 	max_low_pfn = PFN_DOWN(memory_end);
+ 	max_pfn = max_low_pfn;
+ 
++	pr_info("H8300: start=%08lx end=%08lx end_of_DRAM=%08lx\n",
++		memory_start, memory_end,
++		(unsigned long)memblock_end_of_DRAM());
++	pr_info("H8300: min_low_pfn=%lu max_low_pfn=%lu\n",
++		min_low_pfn, max_low_pfn);
++
+ 	memblock_reserve(__pa(_stext), _end - _stext);
+ 
+ 	early_init_fdt_reserve_self();
+--- a/drivers/irqchip/irq-renesas-h8s.c
++++ b/drivers/irqchip/irq-renesas-h8s.c
+@@ -7,13 +7,42 @@
+ 
+ #include <linux/irq.h>
+ #include <linux/irqchip.h>
++#include <linux/timer.h>
++#include <linux/jiffies.h>
++#include <linux/init.h>
++#include <linux/sched.h>
++#include <linux/string.h>
++#include <linux/workqueue.h>
++#include <linux/delay.h>
++#include <linux/irqflags.h>
++#include <linux/netdevice.h>
++#include <net/net_namespace.h>
++#include <linux/smp.h>
+ #include <linux/of_address.h>
+ #include <linux/of_irq.h>
+ #include <asm/io.h>
+ 
++/*
++ * 4.9+ has no ctrl_inw/ctrl_outw from asm/io.h.  Use raw (native
++ * big-endian) accesses: the generic readw/writew byte-swap on H8/300.
++ */
++#define ctrl_inw(a)	__raw_readw((void __iomem *)(unsigned long)(a))
++#define ctrl_outw(v, a)	__raw_writew((v), (void __iomem *)(unsigned long)(a))
++
+ static void *intc_baseaddr;
++static unsigned long h8s_ack_cnt;	/* external IRQ acks, for debugging */
+ #define IPRA (intc_baseaddr)
+ 
++/* External IRQ0-IRQ15 are hardware irq 16-31 */
++#define EXT_IRQ_FIRST	16
++#define EXT_IRQ_LAST	31
++
++/* ISCRH: IRQ15-8, ISCRL: IRQ7-0, 2 bits per pin (verify in the manual) */
++#define H8S_ISCRH	0xFFFE1A
++#define H8S_ISCRL	0xFFFE1C
++#define H8S_IER		0xFFFF32
++#define H8S_ISR		0xFFFF34
++
+ static const unsigned char ipr_table[] = {
+ 	0x03, 0x02, 0x01, 0x00, 0x13, 0x12, 0x11, 0x10, /* 16 - 23 */
+ 	0x23, 0x22, 0x21, 0x20, 0x33, 0x32, 0x31, 0x30, /* 24 - 31 */
+@@ -31,45 +60,182 @@ static const unsigned char ipr_table[] = {
+ 	0xa0, 0xa0, 0xa0, 0xa0, 0xa0, 0xa0, 0xa0, 0xa0, /* 120 - 127 */
+ };
+ 
+-static void h8s_disable_irq(struct irq_data *data)
++/* bit in IER/ISR for an external IRQ pin, 0 for every other interrupt */
++static inline unsigned short h8s_ext_bit(struct irq_data *data)
++{
++	unsigned long hw = irqd_to_hwirq(data);
++
++	if (hw < EXT_IRQ_FIRST || hw > EXT_IRQ_LAST)
++		return 0;
++	return 1 << (hw - EXT_IRQ_FIRST);
++}
++
++static inline void h8s_ier_set(unsigned short bit)
++{
++	ctrl_outw(ctrl_inw(H8S_IER) | bit, H8S_IER);
++}
++
++static inline void h8s_ier_clr(unsigned short bit)
++{
++	ctrl_outw(ctrl_inw(H8S_IER) & ~bit, H8S_IER);
++}
++
++static inline void h8s_isr_clr(unsigned short bit)
++{
++	/*
++	 * A flag is cleared by reading it as 1 and then writing 0 to it.
++	 * Writing 1 to the other bits has no effect, so write ~bit instead
++	 * of a read-modify-write of the whole register.
++	 */
++	if (ctrl_inw(H8S_ISR) & bit)
++		ctrl_outw((unsigned short)~bit, H8S_ISR);
++}
++
++static void h8s_ipr(struct irq_data *data, int on)
+ {
+ 	int pos;
+ 	void __iomem *addr;
+ 	unsigned short pri;
+-	int irq = data->irq;
++	int irq = irqd_to_hwirq(data);
+ 
+ 	addr = IPRA + ((ipr_table[irq - 16] & 0xf0) >> 3);
+ 	pos = (ipr_table[irq - 16] & 0x0f) * 4;
+ 	pri = ~(0x000f << pos);
+-	pri &= readw(addr);
+-	writew(pri, addr);
++	pri &= ctrl_inw(addr);
++	if (on)
++		pri |= 1 << pos;
++	ctrl_outw(pri, addr);
++}
++
++static void h8s_disable_irq(struct irq_data *data)
++{
++	unsigned short bit = h8s_ext_bit(data);
++
++	h8s_ipr(data, 0);
++	if (bit)
++		h8s_ier_clr(bit);
+ }
+ 
+ static void h8s_enable_irq(struct irq_data *data)
+ {
+-	int pos;
+-	void __iomem *addr;
+-	unsigned short pri;
+-	int irq = data->irq;
++	unsigned short bit = h8s_ext_bit(data);
+ 
+-	addr = IPRA + ((ipr_table[irq - 16] & 0xf0) >> 3);
+-	pos = (ipr_table[irq - 16] & 0x0f) * 4;
+-	pri = ~(0x000f << pos);
+-	pri &= readw(addr);
+-	pri |= 1 << pos;
+-	writew(pri, addr);
++	if (bit) {
++		pr_info("h8s-intc: enable hwirq %lu: IER=%04x ISR=%04x ISCRH=%04x ISCRL=%04x\n",
++			irqd_to_hwirq(data), ctrl_inw(H8S_IER),
++			ctrl_inw(H8S_ISR), ctrl_inw(H8S_ISCRH),
++			ctrl_inw(H8S_ISCRL));
++		/*
++		 * Do NOT clear ISR here: an edge that arrived while the irq
++		 * was disabled (disable_irq()/enable_irq()) is latched in ISR
++		 * and must be delivered once IER is set again.  The flag is
++		 * cleared in set_type and at init only.
++		 */
++		h8s_ier_set(bit);
++	}
++	h8s_ipr(data, 1);
++}
++
++/* mask/unmask/ack are used by the edge and level flow handlers */
++static void h8s_mask_irq(struct irq_data *data)
++{
++	unsigned short bit = h8s_ext_bit(data);
++
++	if (bit)
++		h8s_ier_clr(bit);
++	else
++		h8s_ipr(data, 0);
++}
++
++static void h8s_unmask_irq(struct irq_data *data)
++{
++	unsigned short bit = h8s_ext_bit(data);
++
++	if (bit)
++		h8s_ier_set(bit);
++	else
++		h8s_ipr(data, 1);
++}
++
++static void h8s_ack_irq(struct irq_data *data)
++{
++	unsigned short bit = h8s_ext_bit(data);
++
++	if (bit) {
++		h8s_ack_cnt++;
++		h8s_isr_clr(bit);
++	}
++}
++
++static int h8s_set_type(struct irq_data *data, unsigned int type)
++{
++	unsigned short bit = h8s_ext_bit(data);
++	unsigned int hw = irqd_to_hwirq(data) - EXT_IRQ_FIRST;
++	unsigned short ier, val, sense;
++	unsigned long reg;
++	irq_flow_handler_t handler;
++
++	if (!bit)
++		return -EINVAL;
++
++	/* pin sense: 00 low level, 01 falling, 10 rising, 11 both edges */
++	switch (type & IRQ_TYPE_SENSE_MASK) {
++	case IRQ_TYPE_LEVEL_LOW:
++		sense = 0;
++		handler = handle_level_irq;
++		break;
++	case IRQ_TYPE_EDGE_FALLING:
++		sense = 1;
++		handler = handle_edge_irq;
++		break;
++	case IRQ_TYPE_EDGE_RISING:
++		sense = 2;
++		handler = handle_edge_irq;
++		break;
++	case IRQ_TYPE_EDGE_BOTH:
++		sense = 3;
++		handler = handle_edge_irq;
++		break;
++	default:
++		/* the pins cannot sense a high level */
++		return -EINVAL;
++	}
++
++	ier = ctrl_inw(H8S_IER);
++	ctrl_outw(ier & ~bit, H8S_IER);
++
++	reg = (hw < 8) ? H8S_ISCRL : H8S_ISCRH;
++	val = ctrl_inw(reg);
++	val &= ~(3 << ((hw & 7) * 2));
++	val |= sense << ((hw & 7) * 2);
++	ctrl_outw(val, reg);
++
++	h8s_isr_clr(bit);
++	ctrl_outw(ier, H8S_IER);
++
++	irq_set_handler_locked(data, handler);
++	pr_info("h8s-intc: hwirq %lu set_type %u (sense %u)\n",
++		irqd_to_hwirq(data), type & IRQ_TYPE_SENSE_MASK, sense);
++	return 0;
+ }
+ 
+ struct irq_chip h8s_irq_chip = {
+ 	.name		= "H8S-INTC",
+ 	.irq_enable	= h8s_enable_irq,
+ 	.irq_disable	= h8s_disable_irq,
++	.irq_mask	= h8s_mask_irq,
++	.irq_unmask	= h8s_unmask_irq,
++	.irq_ack	= h8s_ack_irq,
++	.irq_set_type	= h8s_set_type,
+ };
+ 
+ static __init int irq_map(struct irq_domain *h, unsigned int virq,
+ 			  irq_hw_number_t hw_irq_num)
+ {
+-       irq_set_chip_and_handler(virq, &h8s_irq_chip, handle_simple_irq);
++       irq_set_chip_and_handler(virq, &h8s_irq_chip,
++				(hw_irq_num >= EXT_IRQ_FIRST &&
++				 hw_irq_num <= EXT_IRQ_LAST) ?
++				handle_edge_irq : handle_simple_irq);
+ 
+        return 0;
+ }
+@@ -88,10 +254,19 @@ static int __init h8s_intc_of_init(struct device_node *intc,
+ 	intc_baseaddr = of_iomap(intc, 0);
+ 	BUG_ON(!intc_baseaddr);
+ 
++	/* what the boot monitor left in the external IRQ registers */
++	pr_info("h8s-intc: at init IER=%04x ISR=%04x ISCRH=%04x ISCRL=%04x\n",
++		ctrl_inw(H8S_IER), ctrl_inw(H8S_ISR),
++		ctrl_inw(H8S_ISCRH), ctrl_inw(H8S_ISCRL));
++
++	/* no external IRQ enabled, no stale flag left by the boot monitor */
++	ctrl_outw(0x0000, H8S_IER);
++	ctrl_outw(0x0000, H8S_ISR);
++
+ 	/* All interrupt priority is 0 (disable) */
+ 	/* IPRA to IPRK */
+ 	for (n = 0; n <= 'k' - 'a'; n++)
+-		writew(0x0000, IPRA + (n * 2));
++		ctrl_outw(0x0000, IPRA + (n * 2));
+ 
+ 	domain = irq_domain_add_linear(intc, NR_IRQS, &irq_ops, NULL);
+ 	BUG_ON(!domain);

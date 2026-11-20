@@ -1,0 +1,131 @@
+# h8300: device tree for the qemu fork's edosk2674 with a virtio disk.
+# The qemu fork (lordrasmus/qemu, branch uclibc-ng) puts a virtio-mmio
+# transport at 0xf90000 on the A/D converter's vector 38 and lets the DRAM
+# start at 0x100000 (-M edosk2674,ram-base=0x100000).  14 MiB of memory from
+# there, the root file system on /dev/vda, the SMC91C96 at 0xf80000 as eth0.
+# clocksource=jiffies: the TPU only counts once the timer8 tick runs.
+# Build with CONFIG_H8300_BUILTIN_DTB="edosk2674-virtio".
+--- /dev/null
++++ b/arch/h8300/boot/dts/edosk2674-virtio.dts
+@@ -0,0 +1,121 @@
++/dts-v1/;
++/ {
++	compatible = "renesas,edosk2674";
++	#address-cells = <1>;
++	#size-cells = <1>;
++	interrupt-parent = <&h8intc>;
++
++	chosen {
++		bootargs = "console=ttySC2,38400 clocksource=jiffies root=/dev/vda1 rootfstype=ext2 rw";
++		stdout-path = &sci2;
++	};
++	aliases {
++		serial0 = &sci0;
++		serial1 = &sci1;
++		serial2 = &sci2;
++	};
++
++	xclk: oscillator {
++		#clock-cells = <0>;
++		compatible = "fixed-clock";
++		clock-frequency = <33333333>;
++		clock-output-names = "xtal";
++	};
++	pllclk: pllclk {
++		compatible = "renesas,h8s2678-pll-clock";
++		clocks = <&xclk>;
++		#clock-cells = <0>;
++		reg = <0xffff3b 1>, <0xffff45 1>;
++	};
++	core_clk: core_clk {
++		compatible = "renesas,h8300-div-clock";
++		clocks = <&pllclk>;
++		#clock-cells = <0>;
++		reg = <0xffff3b 1>;
++		renesas,width = <3>;
++	};
++	fclk: fclk {
++		compatible = "fixed-factor-clock";
++		clocks = <&core_clk>;
++		#clock-cells = <0>;
++		clock-div = <1>;
++		clock-mult = <1>;
++	};
++
++	memory@100000 {
++		device_type = "memory";
++		reg = <0x100000 0xe00000>;
++	};
++
++	cpus {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		cpu@0 {
++			compatible = "renesas,h8300";
++			clock-frequency = <33333333>;
++		};
++	};
++
++	h8intc: interrupt-controller@fffe00 {
++		compatible = "renesas,h8s-intc", "renesas,h8300-intc";
++		#interrupt-cells = <2>;
++		interrupt-controller;
++		reg = <0xfffe00 24>;
++	};
++
++	bsc: memory-controller@fffec0 {
++		compatible = "renesas,h8s-bsc", "renesas,h8300-bsc";
++		reg = <0xfffec0 24>;
++	};
++
++	tpu: timer@ffffe0 {
++		compatible = "renesas,tpu";
++		reg = <0xffffe0 16>, <0xfffff0 12>, <0xffffc0 8>;
++		renesas,channel = <1 2>;
++		clocks = <&fclk>;
++		clock-names = "fck";
++	};
++
++	timer8: timer@ffffb0 {
++		compatible = "renesas,8bit-timer";
++		reg = <0xffffb0 10>;
++		interrupts = <72 0>;
++		clocks = <&fclk>;
++		clock-names = "fck";
++	};
++
++	sci0: serial@ffff78 {
++		compatible = "renesas,sci";
++		reg = <0xffff78 8>;
++		interrupts = <88 0>, <89 0>, <90 0>, <91 0>;
++		clocks = <&fclk>;
++		clock-names = "sci_ick";
++	};
++	sci1: serial@ffff80 {
++		compatible = "renesas,sci";
++		reg = <0xffff80 8>;
++		interrupts = <92 0>, <93 0>, <94 0>, <95 0>;
++		clocks = <&fclk>;
++		clock-names = "sci_ick";
++	};
++	sci2: serial@ffff88 {
++		compatible = "renesas,sci";
++		reg = <0xffff88 8>;
++		interrupts = <96 0>, <97 0>, <98 0>, <99 0>;
++		clocks = <&fclk>;
++		clock-names = "sci_ick";
++	};
++
++	ethernet@f80000 {
++		compatible = "smsc,lan91c94";
++		reg = <0xf80000 0x10>;
++		interrupts = <16 0>;
++	};
++
++	/* qemu only: virtio-mmio at the A/D converter's vector */
++	virtio@f90000 {
++		compatible = "virtio,mmio";
++		reg = <0xf90000 0x200>;
++		interrupts = <38 0>;
++	};
++};

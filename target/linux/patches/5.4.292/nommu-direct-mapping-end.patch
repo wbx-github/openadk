@@ -1,0 +1,13 @@
+--- a/mm/nommu.c
++++ b/mm/nommu.c
+@@ -1244,6 +1244,10 @@ unsigned long do_mmap(struct file *file,
+ 					goto error_just_free;
+ 
+ 				capabilities &= ~NOMMU_MAP_DIRECT;
++			} else if (addr + len <= addr) {
++				/* vm_end is exclusive and must fit */
++				ret = -EINVAL;
++				goto error_just_free;
+ 			} else {
+ 				vma->vm_start = region->vm_start = addr;
+ 				vma->vm_end = region->vm_end = addr + len;
