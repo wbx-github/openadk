@@ -1,0 +1,23 @@
+# sh-sci: do not log receive overruns.
+# qemu's SCI model overruns when the console input arrives in one burst, and
+# the notice landed in the middle of the test output.  The overrun is still
+# counted and passed on as TTY_OVERRUN.
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -889,8 +889,6 @@
+ 		/* overrun error */
+ 		if (tty_insert_flip_char(tport, 0, TTY_OVERRUN))
+ 			copied++;
+-
+-		dev_notice(port->dev, "overrun error\n");
+ 	}
+ 
+ 	if (status & SCxSR_FER(port)) {
+@@ -963,7 +961,6 @@
+ 		tty_insert_flip_char(tport, 0, TTY_OVERRUN);
+ 		tty_flip_buffer_push(tport);
+ 
+-		dev_dbg(port->dev, "overrun error\n");
+ 		copied++;
+ 	}
+ 

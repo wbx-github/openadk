@@ -1,0 +1,92 @@
+# h8300: start the TPU channels the clocksource uses.
+# The driver never set the channels' bits in TSTR, so the counters stood
+# still.  Take the common register block as a third resource and the two
+# channels from "renesas,channel", and start/stop them with the clocksource.
+# Rebased to 4.9 (OF clocksource driver, of_iomap/ioread8/iowrite8).
+--- a/drivers/clocksource/h8300_tpu.c
++++ b/drivers/clocksource/h8300_tpu.c
+@@ -21,10 +21,15 @@
+ 
+ #define TCFV	0x10
+ 
++/* Common registers */
++#define TSTR	0
++
+ struct tpu_priv {
+ 	struct clocksource cs;
+ 	void __iomem *mapbase1;
+ 	void __iomem *mapbase2;
++	void __iomem *mapcommon;
++	unsigned char enb;
+ 	raw_spinlock_t lock;
+ 	unsigned int cs_enabled;
+ };
+@@ -88,6 +93,8 @@
+ 	iowrite16be(0, p->mapbase2 + TCNT);
+ 	iowrite8(0x0f, p->mapbase1 + TCR);
+ 	iowrite8(0x03, p->mapbase2 + TCR);
++	iowrite8(ioread8(p->mapcommon + TSTR) | p->enb,
++		 p->mapcommon + TSTR);
+ 
+ 	p->cs_enabled = true;
+ 	return 0;
+@@ -99,6 +106,8 @@
+ 
+ 	WARN_ON(!p->cs_enabled);
+ 
++	iowrite8(ioread8(p->mapcommon + TSTR) & ~p->enb,
++		 p->mapcommon + TSTR);
+ 	iowrite8(0, p->mapbase1 + TCR);
+ 	iowrite8(0, p->mapbase2 + TCR);
+ 	p->cs_enabled = false;
+@@ -118,13 +127,24 @@
+ 
+ #define CH_L 0
+ #define CH_H 1
++#define REG_COMM 2
+ 
+ static int __init h8300_tpu_init(struct device_node *node)
+ {
+-	void __iomem *base[2];
++	void __iomem *base[3];
+ 	struct clk *clk;
++	u32 ch[2];
++	int i;
+ 	int ret = -ENXIO;
+ 
++	for (i = 0; i < 2; i++) {
++		if (of_property_read_u32_index(node, "renesas,channel",
++					       i, &ch[i]) || ch[i] > 5) {
++			pr_err("renesas,channel missing for clocksource\n");
++			return -EINVAL;
++		}
++	}
++
+ 	clk = of_clk_get(node, 0);
+ 	if (IS_ERR(clk)) {
+ 		pr_err("failed to get clock for clocksource\n");
+@@ -141,14 +161,23 @@
+ 		pr_err("failed to map registers for clocksource\n");
+ 		goto unmap_L;
+ 	}
++	base[REG_COMM] = of_iomap(node, REG_COMM);
++	if (!base[REG_COMM]) {
++		pr_err("failed to map registers for clocksource\n");
++		goto unmap_H;
++	}
+ 
+ 	tpu_priv.mapbase1 = base[CH_L];
+ 	tpu_priv.mapbase2 = base[CH_H];
++	tpu_priv.mapcommon = base[REG_COMM];
++	tpu_priv.enb = BIT(ch[CH_L]) | BIT(ch[CH_H]);
+ 
+ 	return clocksource_register_hz(&tpu_priv.cs, clk_get_rate(clk) / 64);
+ 
+-unmap_L:
++unmap_H:
+ 	iounmap(base[CH_H]);
++unmap_L:
++	iounmap(base[CH_L]);
+ free_clk:
+ 	clk_put(clk);
+ 	return ret;
