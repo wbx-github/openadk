@@ -1,0 +1,61 @@
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=128906
+
+--- a/gcc/config/h8300/testcompare.md
++++ b/gcc/config/h8300/testcompare.md
+@@ -524,8 +524,8 @@
+       }
+     gcc_unreachable ();
+   }
+-;; XXXSImode is 2 bytes longer
+-  [(set_attr "length" "8")])
++;; stc + shlr.b/bld + and.l #1 or xor.l + bst/bist: SImode is 10 bytes
++  [(set (attr "length") (symbol_ref "<MODE>mode == SImode ? 10 : 8"))])
+ 
+ (define_insn "*store_z_<mode>_sb"
+   [(set (match_operand:HSI 0 "register_operand" "=r")
+@@ -549,8 +549,8 @@
+       }
+     gcc_unreachable ();
+   }
+-  ;; XXX SImode is larger
+-  [(set_attr "length" "8")])
++  ;; stc + bld/bild + xor.l + rotxr.l: SImode is 10 bytes
++  [(set (attr "length") (symbol_ref "<MODE>mode == SImode ? 10 : 8"))])
+ 
+ (define_insn "*store_z_<mode>_neg"
+   [(set (match_operand:HSI 0 "register_operand" "=r")
+@@ -573,8 +573,8 @@
+       }
+     gcc_unreachable ();
+   }
+-  ;; XXX simode is an instruction longer
+-  [(set_attr "length" "8")])
++  ;; exts.l is one more 2 byte instruction: SImode is 10 bytes
++  [(set (attr "length") (symbol_ref "<MODE>mode == SImode ? 10 : 8"))])
+ 
+ (define_insn "*store_z_<mode>_and"
+   [(set (match_operand:HSI 0 "register_operand" "=r")
+@@ -587,19 +587,19 @@
+ 	if (<CODE> == NE)
+ 	  return "bld\t#0,%X1\;stc\tccr,%X0\;band\t#2,%X0\;xor.w\t%T0,%T0\;bst\t#0,%X0";
+ 	else
+-	  return "bild\t#0,%X1\;stc\tccr,%X0\;band\t#2,%X0\;xor.w\t%T0,%T0\;bist\t#0,X0";
++	  return "bild\t#0,%X1\;stc\tccr,%X0\;band\t#2,%X0\;xor.w\t%T0,%T0\;bist\t#0,%X0";
+       }
+     else if (<MODE>mode == SImode)
+       {
+ 	if (<CODE> == NE)
+ 	  return "bld\t#0,%X1\;stc\tccr,%X0\;band\t#2,%X0\;xor.l\t%S0,%S0\;bst\t#0,%X0";
+ 	else
+-	  return "bild\t#0,%X1\;stc\tccr,%X0\;band\t#2,%X0\;xor.l\t%S0,%S0\;bist\t#0,X0";
++	  return "bild\t#0,%X1\;stc\tccr,%X0\;band\t#2,%X0\;xor.l\t%S0,%S0\;bist\t#0,%X0";
+       }
+     gcc_unreachable ();
+   }
+-  ;; XXX simode is an instruction longer
+-  [(set_attr "length" "8")])
++  ;; bld/bild + stc + band + xor + bst/bist: 10 bytes, xor.l adds 2 for SImode
++  [(set (attr "length") (symbol_ref "<MODE>mode == SImode ? 12 : 10"))])
+ 
+ ;; We can test the upper byte of a HImode register and the upper word
+ ;; of a SImode register
