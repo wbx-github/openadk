@@ -1,0 +1,38 @@
+diff -Nur linux-2.6.26.orig/include/linux/log2.h linux-2.6.26/include/linux/log2.h
+--- linux-2.6.26.orig/include/linux/log2.h	2008-07-13 23:51:29.000000000 +0200
++++ linux-2.6.26/include/linux/log2.h	2026-11-21 09:13:19.330391218 +0100
+@@ -16,12 +16,6 @@
+ #include <linux/bitops.h>
+ 
+ /*
+- * deal with unrepresentable constant logarithms
+- */
+-extern __attribute__((const, noreturn))
+-int ____ilog2_NaN(void);
+-
+-/*
+  * non-constant log of base 2 calculators
+  * - the arch may override these in asm/bitops.h if they can be implemented
+  *   more efficiently than using fls() and fls64()
+@@ -85,7 +79,7 @@
+ #define ilog2(n)				\
+ (						\
+ 	__builtin_constant_p(n) ? (		\
+-		(n) < 1 ? ____ilog2_NaN() :	\
++		(n) < 2 ? 0 :			\
+ 		(n) & (1ULL << 63) ? 63 :	\
+ 		(n) & (1ULL << 62) ? 62 :	\
+ 		(n) & (1ULL << 61) ? 61 :	\
+@@ -148,10 +142,7 @@
+ 		(n) & (1ULL <<  4) ?  4 :	\
+ 		(n) & (1ULL <<  3) ?  3 :	\
+ 		(n) & (1ULL <<  2) ?  2 :	\
+-		(n) & (1ULL <<  1) ?  1 :	\
+-		(n) & (1ULL <<  0) ?  0 :	\
+-		____ilog2_NaN()			\
+-				   ) :		\
++		1 ) :				\
+ 	(sizeof(n) <= 4) ?			\
+ 	__ilog2_u32(n) :			\
+ 	__ilog2_u64(n)				\
+
