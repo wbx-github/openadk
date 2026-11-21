@@ -1,0 +1,18 @@
+sched_clock: count from boot, not from INITIAL_JIFFIES
+
+The default sched_clock() multiplies the raw jiffies value, which starts
+at INITIAL_JIFFIES (five minutes before the 32-bit wrap).  printk
+timestamps therefore start at about 178956670 s on HZ=24 and jump back
+to 0 when jiffies wraps.  Subtract INITIAL_JIFFIES, as later kernels do.
+
+diff -Nur linux-2.6.26.orig/kernel/sched_clock.c linux-2.6.26/kernel/sched_clock.c
+--- linux-2.6.26.orig/kernel/sched_clock.c	2026-11-21 11:50:41.015303375 +0100
++++ linux-2.6.26/kernel/sched_clock.c	2026-11-21 11:50:41.017661796 +0100
+@@ -242,5 +242,6 @@
+  */
+ unsigned long long __attribute__((weak)) sched_clock(void)
+ {
+-	return (unsigned long long)jiffies * (NSEC_PER_SEC / HZ);
++	return (unsigned long long)(jiffies - INITIAL_JIFFIES)
++					* (NSEC_PER_SEC / HZ);
+ }

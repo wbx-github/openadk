@@ -1,0 +1,61 @@
+v850: fix word order of the 64-bit libgcc helpers
+
+The DImode helpers in arch/v850/lib were copied from a big-endian
+target and declare the high word first.  v850 is little-endian, so
+__ashldi3, __ashrdi3, __lshrdi3 and __muldi3 mixed up the two halves:
+shifts by 32 or more returned the wrong word and 64-bit products were
+wrong.  Timekeeping (cyc2ns, xtime accumulation) and the jiffies
+conversions use them, so the clock never advanced and every sleep hung.
+
+diff -Nur linux-2.6.26.orig/arch/v850/lib/ashldi3.c linux-2.6.26/arch/v850/lib/ashldi3.c
+--- linux-2.6.26.orig/arch/v850/lib/ashldi3.c	2026-11-21 11:43:51.734030658 +0100
++++ linux-2.6.26/arch/v850/lib/ashldi3.c	2026-11-21 11:43:51.736390477 +0100
+@@ -25,7 +25,8 @@
+ typedef		 int DItype	__attribute__ ((mode (DI)));
+ typedef int word_type __attribute__ ((mode (__word__)));
+ 
+-struct DIstruct {SItype high, low;};
++/* v850 is little-endian: the low word comes first.  */
++struct DIstruct {SItype low, high;};
+ 
+ typedef union
+ {
+diff -Nur linux-2.6.26.orig/arch/v850/lib/ashrdi3.c linux-2.6.26/arch/v850/lib/ashrdi3.c
+--- linux-2.6.26.orig/arch/v850/lib/ashrdi3.c	2026-11-21 11:43:51.738449637 +0100
++++ linux-2.6.26/arch/v850/lib/ashrdi3.c	2026-11-21 11:43:51.738917213 +0100
+@@ -25,7 +25,8 @@
+ typedef		 int DItype	__attribute__ ((mode (DI)));
+ typedef int word_type __attribute__ ((mode (__word__)));
+ 
+-struct DIstruct {SItype high, low;};
++/* v850 is little-endian: the low word comes first.  */
++struct DIstruct {SItype low, high;};
+ 
+ typedef union
+ {
+diff -Nur linux-2.6.26.orig/arch/v850/lib/lshrdi3.c linux-2.6.26/arch/v850/lib/lshrdi3.c
+--- linux-2.6.26.orig/arch/v850/lib/lshrdi3.c	2026-11-21 11:43:51.742802332 +0100
++++ linux-2.6.26/arch/v850/lib/lshrdi3.c	2026-11-21 11:43:51.742917214 +0100
+@@ -25,7 +25,8 @@
+ typedef		 int DItype	__attribute__ ((mode (DI)));
+ typedef int word_type __attribute__ ((mode (__word__)));
+ 
+-struct DIstruct {SItype high, low;};
++/* v850 is little-endian: the low word comes first.  */
++struct DIstruct {SItype low, high;};
+ 
+ typedef union
+ {
+diff -Nur linux-2.6.26.orig/arch/v850/lib/muldi3.c linux-2.6.26/arch/v850/lib/muldi3.c
+--- linux-2.6.26.orig/arch/v850/lib/muldi3.c	2026-11-21 11:43:51.747142030 +0100
++++ linux-2.6.26/arch/v850/lib/muldi3.c	2026-11-21 11:43:51.749416117 +0100
+@@ -36,7 +36,8 @@
+ typedef		 int DItype	__attribute__ ((mode (DI)));
+ typedef int word_type __attribute__ ((mode (__word__)));
+ 
+-struct DIstruct {SItype high, low;};
++/* v850 is little-endian: the low word comes first.  */
++struct DIstruct {SItype low, high;};
+ 
+ typedef union
+ {

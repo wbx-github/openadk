@@ -1,0 +1,25 @@
+v850: do not share the parent's vmlist with a cloned mm
+
+dup_mm() memcpy()s the parent's mm_struct for a clone without CLONE_VM,
+and on 2.6.26 noMMU the list of memory regions lives in
+mm->context.vmlist.  init_new_context() left it alone, so the child
+pointed at the parent's list and exit_mmap() freed the parent's entries
+and dropped the usage count of its regions when the child exited.
+The parent then ran on freed memory (test/unistd/clone hung).
+
+Start the child with an empty vmlist, like newer noMMU kernels do.
+
+diff -Nur linux-2.6.26.orig/include/asm-v850/mmu_context.h linux-2.6.26/include/asm-v850/mmu_context.h
+--- linux-2.6.26.orig/include/asm-v850/mmu_context.h	2026-11-21 11:59:21.273422235 +0100
++++ linux-2.6.26/include/asm-v850/mmu_context.h	2026-11-21 11:59:21.280944762 +0100
+@@ -4,7 +4,9 @@
+ #include <asm-generic/mm_hooks.h>
+ 
+ #define destroy_context(mm)		((void)0)
+-#define init_new_context(tsk,mm)	0
++/* A clone without CLONE_VM gets a copy of the parent's mm_struct; do not
++   let it inherit (and free on exit) the parent's vmlist.  */
++#define init_new_context(tsk,mm)	((mm)->context.vmlist = NULL, 0)
+ #define switch_mm(prev,next,tsk)	((void)0)
+ #define deactivate_mm(tsk,mm)		do { } while (0)
+ #define activate_mm(prev,next)		((void)0)
