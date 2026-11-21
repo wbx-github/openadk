@@ -1,0 +1,19 @@
+# smc91x: only use the 8-bit-only accessors on H8/300H boards.
+# 4.9 added an H8300 block with SMC_CAN_USE_16BIT 0, but the EDOSK2674 DT
+# node probes with SMC91X_USE_16BIT, so packet data goes through
+# SMC_outsw/SMC_insw, which are BUG() there - a no-op with CONFIG_BUG=n.
+# Nothing is ever sent.  Let the H8S use the default (16-bit) accessors
+# as it did on 4.4.
+--- a/drivers/net/ethernet/smsc/smc91x.h
++++ b/drivers/net/ethernet/smsc/smc91x.h
+@@ -213,7 +213,9 @@
+ 
+ #define SMC_IRQ_FLAGS		0
+ 
+-#elif defined(CONFIG_H8300)
++#elif defined(CONFIG_H8300) && defined(CONFIG_CPU_H8300H)
++/* 8-bit bus boards (AE-3068/69).  The H8S EDOSK2674 has the chip on a
++   16-bit bus and uses the default configuration below. */
+ #define SMC_CAN_USE_8BIT	1
+ #define SMC_CAN_USE_16BIT	0
+ #define SMC_CAN_USE_32BIT	0
