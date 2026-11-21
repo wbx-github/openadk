@@ -1,0 +1,19 @@
+# h8300: memset() must not touch memory for a zero length.
+# For an odd address memset stores one byte and decrements the count
+# before checking it, so memset(odd, c, 0) wraps the count to 0xffffffff
+# and clears memory until the machine hangs.  Since 5.14 this happens at
+# boot: struct per_cpu_zonestat is empty on !SMP && !NUMA, boot_zonestats
+# lands on an odd address, and per_cpu_pages_init() memsets 0 bytes of it
+# with interrupts off -- the kernel hangs before the console comes up.
+--- a/arch/h8300/lib/memset.S
++++ b/arch/h8300/lib/memset.S
+@@ -20,6 +20,9 @@
+ ;; returns ptr, as C wants and gcc assumes
+ memset:
+ 	mov.l	er0,@-sp
++	;; count == 0: nothing to do (the odd-address path would wrap it)
++	mov.l	er2,er2
++	beq	6f
+ 	btst	#0,r0l
+ 	beq	2f
+ 
