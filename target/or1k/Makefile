@@ -36,6 +36,9 @@ ifeq ($(ADK_TARGET_SYSTEM_DE0_NANO),y)
 endif
 endif
 
+initramfs-strip:
+	$(TARGET_CROSS)objcopy $(OSTRIP) -S $(KERNEL) $(FW_DIR)/$(TARGET_KERNEL) 
+
 kernel-strip:
 	$(TARGET_CROSS)objcopy $(OSTRIP) -S $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
 
@@ -50,5 +53,5 @@ ifeq ($(ADK_TARGET_FS),initramfsarchive)
 imageinstall: kernel-install $(FW_DIR)/$(ROOTFSUSERTARBALL) targethelp
 endif
 ifeq ($(ADK_TARGET_FS),initramfspiggyback)
-imageinstall: createinitramfs targethelp
+imageinstall: createinitramfs initramfs-strip targethelp
 endif
