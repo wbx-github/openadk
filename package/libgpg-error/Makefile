@@ -38,6 +38,9 @@ endif
 ifeq ($(ADK_TARGET_ARCH_NIOS2),y)
 LIBGPG_PREFIX:=		nios2-unknown-linux-gnu
 endif
+ifeq ($(ADK_TARGET_ARCH_OR1K),y)
+LIBGPG_PREFIX:=		or1k-unknown-linux-gnu
+endif
 ifeq ($(ADK_TARGET_ARCH_PPC),y)
 LIBGPG_PREFIX:=		powerpc-unknown-linux-gnu
 endif
