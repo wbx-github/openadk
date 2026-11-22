@@ -1,0 +1,59 @@
+ARC: io.h: don't let the compiler pick indexed addresses for MMIO stores
+
+__raw_write{b,w,l}() pass the target as a generic "m" memory operand.
+GCC may satisfy that with a register+register ([b,c]) address, which
+ARC loads support but stores do not, so the assembler rejects the
+instruction. This breaks e.g. drivers/net/pcs/pcs-xpcs-plat.c:
+
+  ./arch/arc/include/asm/io.h:136: Error: inappropriate arguments for opcode 'stw'
+
+Pass the address in a register and use the plain [reg] form for all
+three store accessors. The "memory" clobber keeps the ordering as before;
+the only cost is that a constant offset can no longer be folded into the
+store instruction, which is irrelevant for MMIO.
+
+---
+ arch/arc/include/asm/io.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/arch/arc/include/asm/io.h b/arch/arc/include/asm/io.h
+--- a/arch/arc/include/asm/io.h
++++ b/arch/arc/include/asm/io.h
+@@ -124,9 +124,9 @@
+ static inline void __raw_writeb(u8 b, volatile void __iomem *addr)
+ {
+ 	__asm__ __volatile__(
+-	"	stb%U1 %0, %1	\n"
++	"	stb %0, [%1]	\n"
+ 	:
+-	: "r" (b), "m" (*(volatile u8 __force *)addr)
++	: "r" (b), "r" (addr)
+ 	: "memory");
+ }
+ 
+@@ -134,9 +134,9 @@
+ static inline void __raw_writew(u16 s, volatile void __iomem *addr)
+ {
+ 	__asm__ __volatile__(
+-	"	stw%U1 %0, %1	\n"
++	"	stw %0, [%1]	\n"
+ 	:
+-	: "r" (s), "m" (*(volatile u16 __force *)addr)
++	: "r" (s), "r" (addr)
+ 	: "memory");
+ 
+ }
+@@ -145,9 +145,9 @@
+ static inline void __raw_writel(u32 w, volatile void __iomem *addr)
+ {
+ 	__asm__ __volatile__(
+-	"	st%U1 %0, %1	\n"
++	"	st %0, [%1]	\n"
+ 	:
+-	: "r" (w), "m" (*(volatile u32 __force *)addr)
++	: "r" (w), "r" (addr)
+ 	: "memory");
+ 
+ }
+-- 
+2.47.0
