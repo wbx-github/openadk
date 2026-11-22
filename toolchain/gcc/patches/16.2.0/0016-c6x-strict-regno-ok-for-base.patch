@@ -1,0 +1,48 @@
+c6x: make REGNO_OK_FOR_BASE_P/INDEX_P always strict
+
+c6x.h defined REGNO_OK_FOR_BASE_P and REGNO_OK_FOR_INDEX_P depending on
+REG_OK_STRICT, which only reload.cc defines.  These macros are expanded
+in the inline functions of addresses.h (ok_for_base_p_1,
+regno_ok_for_base_p), which have external linkage.  Every file that
+includes addresses.h emits its own copy, and the linker keeps just one.
+When cc1 is built without inlining (e.g. -O0), reload ends up calling
+the non-strict copy from ira-costs.cc, which returns true for any
+register.  Reload then accepts a spilled pseudo as the base of a
+POST_MODIFY address, emits no reload, and later replaces the pseudo by
+its stack slot inside the auto-modify address.  The result is invalid
+RTL and an ICE in df_install_refs after reload, e.g. for busybox
+networking/tcpudp.c:
+
+  internal compiler error: Segmentation fault (during RTL pass: reload)
+
+Define the macros as the strict variants unconditionally, like most
+other targets do.  ira-costs.cc handles pseudos itself before calling
+ok_for_base_p_1, and c6x_legitimate_address_p uses the explicit
+*_STRICT_P / *_NONSTRICT_P macros, so nothing else changes.
+
+---
+ gcc/config/c6x/c6x.h | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+--- a/gcc/config/c6x/c6x.h
++++ b/gcc/config/c6x/c6x.h
+@@ -274,13 +274,14 @@
+    || (reg_renumber[X] >= 0 && reg_renumber[X] < FIRST_PSEUDO_REGISTER))
+ #define REGNO_OK_FOR_INDEX_NONSTRICT_P(X) 1
+ 
+-#ifdef REG_OK_STRICT
++/* These must not depend on REG_OK_STRICT: they are expanded inside the
++   inline functions of addresses.h (ok_for_base_p_1 etc.), which have
++   external linkage, so only one copy survives in the compiler.  If the
++   non-strict copy wins, reload accepts spilled pseudos as base registers
++   (e.g. in POST_MODIFY addresses) and leaves invalid RTL behind.  Callers
++   that want to allow pseudos (ira-costs.cc) check for them first.  */
+ #define REGNO_OK_FOR_BASE_P(X) REGNO_OK_FOR_BASE_STRICT_P (X)
+ #define REGNO_OK_FOR_INDEX_P(X) REGNO_OK_FOR_INDEX_STRICT_P (X)
+-#else
+-#define REGNO_OK_FOR_BASE_P(X) REGNO_OK_FOR_BASE_NONSTRICT_P (X)
+-#define REGNO_OK_FOR_INDEX_P(X) REGNO_OK_FOR_INDEX_NONSTRICT_P (X)
+-#endif
+ 
+ #define CLASS_MAX_NREGS(class, mode) \
+   ((GET_MODE_SIZE (mode) + UNITS_PER_WORD - 1) / UNITS_PER_WORD)

@@ -1,0 +1,52 @@
+Subject: [PATCH] c6x: avoid call debug labels inside execute packets
+
+With -g and var-tracking, dwarf2out emits a label for
+DW_AT_call_return_pc right after every call that carries a
+REG_CALL_ARG_LOCATION note.  c6x puts calls first in their execute
+packet, so the label lands between the call and the parallel insns:
+
+	callp	.s2	(consume_seq), B3
+  .LVL9:
+  ||	mv	.l1x	B4, A4
+
+and gas fails with "label not at start of execute packet".  This
+breaks libgcc's shared build (hardcfr.c is compiled with -g).
+
+c6x runs var-tracking itself in c6x_reorg, before the bundles are
+formed, so drop the call site note from calls that share a packet with
+other insns when building the bundle.  Only call site debug info for
+those calls is lost; code generation is unchanged.
+
+The bundled calls can carry the REG_CALL_ARG_LOCATION note more than
+once (seen with callp in hardcfr.c), so all of them must be removed.
+
+---
+ gcc/config/c6x/c6x.cc | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+--- a/gcc/config/c6x/c6x.cc
++++ b/gcc/config/c6x/c6x.cc
+@@ -4589,6 +4589,23 @@
+   rtx_insn *t;
+   int i;
+ 
++  /* With var-tracking, the debug back end emits a label for
++     DW_AT_call_return_pc right after any call carrying a
++     REG_CALL_ARG_LOCATION note.  If the call shares its execute packet
++     with other insns, that label would end up in the middle of the
++     packet, which the assembler rejects.  Drop the call site
++     information for such calls.  A call can carry more than one such
++     note, so remove all of them.  */
++  if (n_filled > 1)
++    for (i = 0; i < n_filled; i++)
++      if (CALL_P (slot[i]))
++	{
++	  rtx note;
++	  while ((note = find_reg_note (slot[i], REG_CALL_ARG_LOCATION,
++					NULL_RTX)) != NULL_RTX)
++	    remove_note (slot[i], note);
++	}
++
+   seq = gen_rtx_SEQUENCE (VOIDmode, gen_rtvec_v (n_filled, slot));
+   bundle = make_insn_raw (seq);
+   BLOCK_FOR_INSN (bundle) = BLOCK_FOR_INSN (slot[0]);
