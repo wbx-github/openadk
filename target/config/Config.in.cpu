@@ -2046,7 +2046,7 @@ config ADK_TARGET_GCC_CPU
 	default "68040" if ADK_TARGET_CPU_M68K_68040
 	default "68060" if ADK_TARGET_CPU_M68K_68060
 	default "arc700" if ADK_TARGET_CPU_ARC_ARC700
-	default "archs" if ADK_TARGET_CPU_ARC_ARCHS
+	default "hs38_linux" if ADK_TARGET_CPU_ARC_ARCHS
 	default "hs5x" if ADK_TARGET_CPU_ARC_ARC32
 	default "arm920t" if ADK_TARGET_CPU_ARM_ARM920T
 	default "arm1176jzf-s" if ADK_TARGET_CPU_ARM_ARM1176JZF_S
