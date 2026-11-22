@@ -90,7 +90,7 @@ ifeq ($(ADK_PACKAGE_UCLIBC_NG_TEST_NPTL),y)
 endif
 ifeq ($(ADK_PACKAGE_UCLIBC_NG_TEST_WCHAR),y)
 	mkdir -p ${IDIR_UCLIBC_NG_TEST_WCHAR}/usr/lib/uclibc-ng-test/test
-	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/nptl \
+	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/locale-mbwc \
 		${IDIR_UCLIBC_NG_TEST_WCHAR}/usr/lib/uclibc-ng-test/test
 	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner* \
 		${IDIR_UCLIBC_NG_TEST_WCHAR}/usr/lib/uclibc-ng-test/test
