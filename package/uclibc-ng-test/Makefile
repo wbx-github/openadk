@@ -82,7 +82,7 @@ ifeq ($(ADK_PACKAGE_UCLIBC_NG_TEST_NPTL),y)
 	mkdir -p ${IDIR_UCLIBC_NG_TEST_NPTL}/usr/lib/uclibc-ng-test/test
 	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/nptl \
 		${IDIR_UCLIBC_NG_TEST_NPTL}/usr/lib/uclibc-ng-test/test
-	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner.sh \
+	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner* \
 		${IDIR_UCLIBC_NG_TEST_NPTL}/usr/lib/uclibc-ng-test/test
 	cat $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner.in \
 		| gawk '$$4 == "nptl"' > \
@@ -92,7 +92,7 @@ ifeq ($(ADK_PACKAGE_UCLIBC_NG_TEST_WCHAR),y)
 	mkdir -p ${IDIR_UCLIBC_NG_TEST_WCHAR}/usr/lib/uclibc-ng-test/test
 	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/nptl \
 		${IDIR_UCLIBC_NG_TEST_WCHAR}/usr/lib/uclibc-ng-test/test
-	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner.sh \
+	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner* \
 		${IDIR_UCLIBC_NG_TEST_WCHAR}/usr/lib/uclibc-ng-test/test
 	cat $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner.in \
 		| gawk '$$4 == "locale-mbwc"' > \
@@ -102,7 +102,7 @@ ifeq ($(ADK_PACKAGE_UCLIBC_NG_TEST_MATH),y)
 	mkdir -p ${IDIR_UCLIBC_NG_TEST_MATH}/usr/lib/uclibc-ng-test/test
 	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/math \
 		${IDIR_UCLIBC_NG_TEST_MATH}/usr/lib/uclibc-ng-test/test
-	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner.sh \
+	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner* \
 		${IDIR_UCLIBC_NG_TEST_NPTL}/usr/lib/uclibc-ng-test/test
 	cat $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner.in \
 		| gawk '$$4 == "math"' > \
@@ -116,7 +116,7 @@ ifeq ($(ADK_PACKAGE_UCLIBC_NG_TEST_OTHER),y)
 		${IDIR_UCLIBC_NG_TEST_OTHER}/usr/lib/uclibc-ng-test/test
 	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/{stdio,stdlib,string,termios,time,tls,unistd,iconv} \
 		${IDIR_UCLIBC_NG_TEST_OTHER}/usr/lib/uclibc-ng-test/test
-	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner.sh \
+	${CP} $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner* \
 		${IDIR_UCLIBC_NG_TEST_OTHER}/usr/lib/uclibc-ng-test/test
 	cat $(WRKINST)/usr/lib/uclibc-ng-test/test/uclibcng-testrunner.in \
 		| gawk '$$4 !~ /^(nptl|math|locale-mbwc)$$/' > \
