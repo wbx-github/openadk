@@ -1,0 +1,62 @@
+openrisc: use the tick timer as sched_clock
+
+OpenRISC registers its tick timer (TTCR) as clocksource, but not as
+sched_clock, so sched_clock() falls back to the jiffies based default.
+The scheduler accounts task runtime with sched_clock(), which makes the
+POSIX CPU clocks tick in 1/HZ steps (4ms with HZ=250).  This causes the
+glibc/uClibc-ng test tst-cpuclock2 to fail, e.g.:
+
+  clock_nanosleep on process slept 96000000 (outside reasonable range)
+
+Select GENERIC_SCHED_CLOCK and register the 32 bit tick timer counter,
+which runs at the CPU clock frequency, as sched_clock.
+
+---
+--- a/arch/openrisc/Kconfig
++++ b/arch/openrisc/Kconfig
+@@ -33,6 +33,7 @@
+ 	select HAVE_RSEQ
+ 	select GENERIC_ATOMIC64
+ 	select GENERIC_CLOCKEVENTS_BROADCAST
++	select GENERIC_SCHED_CLOCK
+ 	select GENERIC_SMP_IDLE_THREAD
+ 	select MODULES_USE_ELF_RELA
+ 	select HAVE_DEBUG_STACKOVERFLOW
+--- a/arch/openrisc/kernel/time.c
++++ b/arch/openrisc/kernel/time.c
+@@ -21,6 +21,7 @@
+ #include <linux/irq.h>
+ #include <linux/io.h>
+ #include <linux/of_clk.h>
++#include <linux/sched_clock.h>
+ 
+ #include <asm/cpuinfo.h>
+ #include <asm/time.h>
+@@ -142,6 +143,11 @@
+ 	return (u64) mfspr(SPR_TTCR);
+ }
+ 
++static u64 notrace openrisc_sched_clock_read(void)
++{
++	return (u64) mfspr(SPR_TTCR);
++}
++
+ static struct clocksource openrisc_timer = {
+ 	.name = "openrisc_timer",
+ 	.rating = 200,
+@@ -160,6 +166,15 @@
+ 	/* Enable the incrementer: 'continuous' mode with interrupt disabled */
+ 	mtspr(SPR_TTMR, SPR_TTMR_CR);
+ 
++	/*
++	 * Use the tick timer as sched_clock as well.  Otherwise sched_clock()
++	 * falls back to jiffies and task CPU time accounting (and with it
++	 * CLOCK_PROCESS_CPUTIME_ID/CLOCK_THREAD_CPUTIME_ID) only has a
++	 * resolution of 1/HZ.
++	 */
++	sched_clock_register(openrisc_sched_clock_read, 32,
++			     cpuinfo->clock_frequency);
++
+ 	return 0;
+ }
+ 
