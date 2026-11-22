@@ -205,8 +205,8 @@ TARGET_LDFLAGS+=	-mid-shared-library
 endif
 
 ifeq ($(ADK_TARGET_BINFMT_DSBT),y)
-TARGET_CFLAGS+=		-mdsbt
-TARGET_CXXFLAGS+=	-mdsbt
+TARGET_CFLAGS+=		-mdsbt -msdata=none
+TARGET_CXXFLAGS+=	-mdsbt -msdata=none
 endif
 
 # security optimization, see http://www.akkadia.org/drepper/dsohowto.pdf

@@ -1,0 +1,8 @@
+config ADK_TARGET_SYSTEM_QEMU_C6X
+	bool "Qemu C6X Emulator"
+	select ADK_TARGET_CPU_C6X
+	select ADK_TARGET_QEMU
+	select ADK_TARGET_LITTLE_ENDIAN
+	select ADK_TARGET_WITH_NET
+	help
+	  Qemu support for C6X architecture.
