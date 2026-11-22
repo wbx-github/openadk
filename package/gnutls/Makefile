@@ -4,16 +4,16 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		gnutls
-PKG_VERSION:=		3.8.13
+PKG_VERSION:=		3.8.14
 PKG_RELEASE:=		1
-PKG_HASH:=		ffed8ec1bf09c2426d4f14aae377de4753b53e537d685e604e99a8b16ca9c97e
+PKG_HASH:=		7e2d258071f5db9620aa7ff34259331d004f7beafa3eb18560cfaf60acfbf02a
 PKG_DESCR:=		transport layer security library
 PKG_SECTION:=		libs/crypto
 PKG_DEPENDS:=		libgcrypt libtasn1 zlib libnettle libgmp libunistring
 PKG_BUILDDEP:=		libgcrypt liblzo libtasn1
 PKG_BUILDDEP+=		zlib ncurses libnettle libunistring
 HOST_BUILDDEP:=		libnettle-host libtasn1-host libunistring-host
-PKG_URL:=		http://www.gnutls.org/
+PKG_URL:=		https://www.gnutls.org/
 PKG_SITES:=		https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/
 PKG_LIBNAME:=		libgnutls
 PKG_OPTS:=		dev
