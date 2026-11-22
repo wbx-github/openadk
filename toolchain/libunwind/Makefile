@@ -5,15 +5,13 @@ include $(ADK_TOPDIR)/rules.mk
 include ../rules.mk
 include Makefile.inc
 
-WRKDIST=$(WRKDIR)/llvm-project-llvmorg-$(PKG_VERSION)
-
 include ${ADK_TOPDIR}/mk/buildhlp.mk
 
 $(WRKBUILD)/.configured:
 	# required for llvm-libgcc
 	echo "--target=$(GNU_TARGET_NAME)" > $(TOOLCHAIN_DIR)/usr/bin/clang.cfg
-	cd $(WRKBUILD) && \
-	cmake -G Ninja -S runtimes -B build-libunwind \
+	mkdir -p $(WRKBUILD) && \
+	cmake -G Ninja -S $(WRKSRC)/runtimes -B $(WRKBUILD) \
 	    -DCMAKE_BUILD_TYPE=Release \
 	    -DCMAKE_INSTALL_PREFIX=/usr \
 	    -DLLVM_ENABLE_RUNTIMES=llvm-libgcc \
@@ -49,13 +47,11 @@ $(WRKBUILD)/.configured:
 	touch $@
 
 $(WRKBUILD)/.compiled: $(WRKBUILD)/.configured
-	cd $(WRKBUILD) && \
-		ninja -C build-libunwind
+	ninja -C $(WRKBUILD)
 	touch $@
 
 $(WRKBUILD)/.installed: $(WRKBUILD)/.compiled
-	cd $(WRKBUILD) && \
-		DESTDIR="$(STAGING_TARGET_DIR)" ninja -C build-libunwind install
+	DESTDIR="$(STAGING_TARGET_DIR)" ninja -C $(WRKBUILD) install
 	touch $@
 
 include ${ADK_TOPDIR}/mk/toolchain.mk

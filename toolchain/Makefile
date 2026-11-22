@@ -13,8 +13,8 @@
 include $(ADK_TOPDIR)/rules.mk
 
 ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
-TARGETS:=llvm compiler-rt
-COMPILER:=clang
+TARGETS:=llvm compiler-rt libunwind
+COMPILER:=llvm
 endif
 ifeq ($(ADK_BUILD_COMPILER_GCC),y)
 TARGETS:=binutils gmp mpfr mpc
@@ -65,13 +65,24 @@ clean: $(TARGETS_CLEAN)
 download: $(DOWNLOAD)
 ifeq ($(ADK_TARGET_MINIMAL_USERLAND),y)
 # no C library: the bootstrap compiler builds kernel and mini-init
+ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
+final: llvm-install $(ADK_TARGET_OS)-headers-configure $(ELF2FLT)
+else
 final: $(COMPILER)-configure $(ADK_TARGET_OS)-headers-configure $(ELF2FLT)
+endif
 else
 final: $(FINAL)
 endif
 
 ifeq ($(ADK_BUILD_COMPILER_LLVM),y)
-$(COMPILER)-configure: llvm-install $(ADK_TARGET_OS)-headers-configure $(CLIB)-configure compiler-rt-install $(CLIB)-install libunwind-install
+# compiler-rt and libunwind build from the source tree llvm extracts
+compiler-rt-prepare libunwind-prepare: llvm-prepare
+# llvm -> libc headers -> compiler-rt -> libc -> libunwind -> llvm-final
+$(CLIB)-configure: llvm-install $(ADK_TARGET_OS)-headers-configure
+compiler-rt-configure: $(CLIB)-configure
+$(CLIB)-install: compiler-rt-install
+libunwind-configure: $(CLIB)-install
+llvm-final: libunwind-install
 else
 ifeq ($(ADK_BUILD_COMPILER_GCC),y)
 $(COMPILER)-configure: binutils-install gmp-install mpfr-install mpc-install

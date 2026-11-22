@@ -5,8 +5,6 @@ include $(ADK_TOPDIR)/rules.mk
 include ../rules.mk
 include Makefile.inc
 
-WRKDIST=$(WRKDIR)/llvm-project-llvmorg-$(PKG_VERSION)
-
 include ${ADK_TOPDIR}/mk/buildhlp.mk
 
 ifeq ($(ADK_TARGET_LIB_GLIBC),y)
@@ -23,8 +21,8 @@ LLVM_ASM_FLAGS:=-march=armv7-a
 endif
 
 $(WRKBUILD)/.configured:
-	cd $(WRKBUILD) && \
-	cmake -G Ninja -S compiler-rt -B build \
+	mkdir -p $(WRKBUILD) && \
+	cmake -G Ninja -S $(WRKSRC)/compiler-rt -B $(WRKBUILD) \
     		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_C_COMPILER=$(TOOLCHAIN_DIR)/usr/bin/clang \
@@ -54,13 +52,11 @@ $(WRKBUILD)/.configured:
 	touch $@
 
 $(WRKBUILD)/.compiled: $(WRKBUILD)/.configured
-	cd $(WRKBUILD) && \
-		ninja -C build builtins crt
+	ninja -C $(WRKBUILD) builtins crt
 	touch $@
 
 $(WRKBUILD)/.installed: $(WRKBUILD)/.compiled
-	cd $(WRKBUILD) && \
-		DESTDIR=$(TOOLCHAIN_DIR) ninja -C build install-builtins install-crt
+	DESTDIR=$(TOOLCHAIN_DIR) ninja -C $(WRKBUILD) install-builtins install-crt
 	cd $(TOOLCHAIN_DIR)/usr/lib/clang/23/lib/$(ADK_TARGET_CPU_ARCH)-unknown-linux-$(LLVM_LIBC)/ && \
 		ln -sf clang_rt.crtbegin.o crtbegin.o
 	cd $(TOOLCHAIN_DIR)/usr/lib/clang/23/lib/$(ADK_TARGET_CPU_ARCH)-unknown-linux-$(LLVM_LIBC)/ && \
