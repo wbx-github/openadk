@@ -8,11 +8,21 @@ include $(ADK_TOPDIR)/mk/image.mk
 KERNEL:=$(LINUX_DIR)/$(ADK_TARGET_KERNEL)
 
 QEMU_ARGS:=-M mb93091 -nographic -m 256
+ifeq ($(ADK_TARGET_QEMU_WITH_BLOCK),y)
+QEMU_ARGS+=-device virtio-blk-device,drive=hd -drive file=qemu-frv.img,format=raw,if=none,id=hd
+QEMU_ARGS+=-append "virtio_mmio.device=0x200@0xfc000000:5 root=/dev/vda1"
+endif
 
 # target helper text
 ifeq ($(ADK_TARGET_FS),archive)
 targethelp:
 	@echo "The RootFS tarball is: $(FW_DIR)/$(ROOTFSTARBALL)"
+ifeq ($(ADK_TARGET_QEMU),y)
+	@echo "Use following command to create a QEMU Image:"
+	@echo "./scripts/create.sh qemu-${ADK_TARGET_CPU_ARCH}.img $(FW_DIR)/$(ROOTFSTARBALL)"
+	@echo "Start qemu with following options:"
+	@echo 'qemu-system-frv $(QEMU_ARGS) -nographic -kernel $(FW_DIR)/$(TARGET_KERNEL)'
+endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)
 targethelp:
