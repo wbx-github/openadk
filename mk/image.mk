@@ -179,6 +179,7 @@ ${STAGING_TARGET_DIR}/${INITRAMFS}_list: ${TARGET_DIR}/.adk
 		echo "nod /dev/random 0666 0 0 c 1 8"; \
 		echo "nod /dev/urandom 0666 0 0 c 1 9"; \
 		echo "nod /dev/ttyS0 0660 0 0 c 4 64"; \
+		echo "slink /dev/simcons0 /dev/ttyS0 644 0 0"; \
 		echo "nod /dev/ttysclp0 0660 0 0 c 4 65"; \
 		echo "nod /dev/ttyB0 0660 0 0 c 11 0"; \
 		echo "nod /dev/ttyB1 0660 0 0 c 11 1"; \
