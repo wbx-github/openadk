@@ -1,0 +1,16 @@
+v850: __put_user() wrote 0 instead of the value for 64-bit types
+
+This broke e.g. d_ino/d_off in getdents64, so glob() skipped all entries.
+
+diff -Nur linux-2.6.26.orig/include/asm-v850/uaccess.h linux-2.6.26/include/asm-v850/uaccess.h
+--- linux-2.6.26.orig/include/asm-v850/uaccess.h	2026-11-24 23:27:25.974780966 +0100
++++ linux-2.6.26/include/asm-v850/uaccess.h	2026-11-24 23:27:26.012492253 +0100
+@@ -89,7 +89,7 @@
+ 		  *(ptr) = (var);					      \
+ 		  break;						      \
+ 	  case 8: {							      \
+-	  	  typeof(*(ptr)) __pu_val = 0;				      \
++	  	  typeof(*(ptr)) __pu_val = (var);				      \
+ 		  memcpy(ptr, &__pu_val, sizeof(__pu_val));		      \
+ 		  }							      \
+ 		  break;						      \
