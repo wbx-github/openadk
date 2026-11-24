@@ -8,6 +8,8 @@
 # 4) install kernel-headers
 # 5) build and install full libc
 # 6) build and install full gcc
+# 6a) uClibc-ng only: rebuild and reinstall libc with the full gcc,
+#     so it is linked against the final libgcc and crt files
 # 7) build and install gdb debugger
 
 include $(ADK_TOPDIR)/rules.mk
@@ -94,6 +96,14 @@ $(CLIB)-install: $(COMPILER)-configure $(ADK_TARGET_OS)-headers-configure
 endif
 $(COMPILER)-install: $(ELF2FLT) $(CLIB)-install
 $(COMPILER)-final: $(COMPILER)-install $(GDB)
+ifeq ($(ADK_BUILD_COMPILER_GCC)$(ADK_TARGET_LIB_UCLIBC_NG),yy)
+# The first uClibc-ng build uses the initial gcc, whose libgcc.a and
+# crt files are built without libc headers, with --disable-shared and
+# without TARGET_CFLAGS. Rebuild the C library with the full gcc
+# before gcc-final strips the staging directory.
+$(CLIB)-rebuild: $(COMPILER)-install
+$(COMPILER)-final: $(CLIB)-rebuild
+endif
 endif
 
 %-download:
@@ -147,6 +157,12 @@ endif
 		$(MAKE) -C $(patsubst %-install,%,$@) install \
 		    CC='$(HOST_CC)' CFLAGS='$(HOST_CFLAGS)' CXXFLAGS='$(HOST_STATIC_CXXFLAGS)' $(MAKE_TRACE); \
 	fi
+	$(CMD_TRACE) " done"
+	$(END_TRACE)
+
+%-rebuild: %-install
+	$(START_TRACE) "toolchain/$(patsubst %-rebuild,%,$@)/rebuild.. "
+	@$(MAKE) -C $(patsubst %-rebuild,%,$@) rebuild $(MAKE_TRACE)
 	$(CMD_TRACE) " done"
 	$(END_TRACE)
 

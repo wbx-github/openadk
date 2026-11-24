@@ -461,4 +461,20 @@ ifeq ($(ADK_TARGET_LIBC_UTILS),y)
 endif
 	touch $@
 
+# rebuild with the full gcc: drop all objects (.config is kept by
+# "make clean"), then run the compile and install steps again
+$(WRKBUILD)/.rebuilt: $(WRKBUILD)/.installed
+	PATH='$(HOST_PATH)' $(MAKE) -C $(WRKBUILD) \
+		ARCH="$(ADK_TARGET_ARCH)" \
+		CROSS_COMPILE="$(TARGET_CROSS)" \
+		CC='$(TARGET_CC)' \
+		HOSTCC="$(HOST_CC)" \
+		VERBOSE=1 \
+		clean
+	rm -f $(WRKBUILD)/.compiled $(WRKBUILD)/.installed
+	$(MAKE) install
+	touch $@
+
+rebuild: $(WRKBUILD)/.rebuilt
+
 include ${ADK_TOPDIR}/mk/toolchain.mk
