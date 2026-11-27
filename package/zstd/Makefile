@@ -4,9 +4,9 @@
 include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		zstd
-PKG_VERSION:=		1.5.7
+PKG_VERSION:=		1.6.0
 PKG_RELEASE:=		1
-PKG_HASH:=		37d7284556b20954e56e1ca85b80226768902e2edabd3b649e9e72c0c9012ee3
+PKG_HASH:=		289bb207935e5b4f241239f9832e665fa6b9636c3f87f479e125371e13842b8e
 PKG_DESCR:=		zstandard compression application
 PKG_SECTION:=		app/archive
 PKG_SITES:=		https://github.com/facebook/zstd/archive/refs/tags/
