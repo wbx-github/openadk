@@ -1,0 +1,23 @@
+powerpcspe: *frob_tf_ti must not overlap its input
+
+*frob_tf_ti moves a TImode value held in four 32-bit GPRs into TFmode,
+two 64-bit GPRs, with two evmergelo.  The output had no earlyclobber,
+so the register allocator could put it on top of the input: for TI in
+r6..r9 and TF in r8..r9 the first evmergelo writes r8 before the second
+one reads it, and the low double of an IBM long double comes out as a
+copy of a word of the high one.  Seen after __gcc_qdiv returns with
+-mlong-double-128 -O2 on e500v2; every long double result passing
+through TImode can be hit.  *frob_ti_tf, the opposite direction,
+already has "=&r".
+
+--- gcc-8.5.0.orig/gcc/config/powerpcspe/spe.md	2026-11-27 14:59:30.928968199 +0100
++++ gcc-8.5.0/gcc/config/powerpcspe/spe.md	2026-11-27 14:59:31.109972837 +0100
+@@ -2314,7 +2314,7 @@
+ })
+ 
+ (define_insn "*frob_tf_ti"
+-  [(set (match_operand:TF 0 "gpc_reg_operand" "=r")
++  [(set (match_operand:TF 0 "gpc_reg_operand" "=&r")
+         (subreg:TF (match_operand:TI 1 "gpc_reg_operand" "r") 0))]
+   "TARGET_E500_DOUBLE"
+ {
