@@ -1,0 +1,11 @@
+diff -Nur linux-6.18.65.orig/include/linux/math64.h linux-6.18.65/include/linux/math64.h
+--- linux-6.18.65.orig/include/linux/math64.h	2026-11-23 08:36:46.000000000 +0100
++++ linux-6.18.65/include/linux/math64.h	2026-11-27 23:04:04.481212443 +0100
+@@ -3,6 +3,7 @@
+ #define _LINUX_MATH64_H
+ 
+ #include <linux/types.h>
++#include <linux/compiler.h>   /* OPTIMIZER_HIDE_VAR for vdso/math64.h */
+ #include <linux/math.h>
+ #include <asm/div64.h>
+ #include <vdso/math64.h>
