@@ -1,0 +1,10 @@
+--- chawan-v0.5.3.orig/lib/quickjs/quickjs.c	2026-11-21 18:40:40.000000000 +0100
++++ chawan-v0.5.3/lib/quickjs/quickjs.c	2026-11-27 02:16:21.318405060 +0100
+@@ -30,7 +30,6 @@
+ #include <assert.h>
+ #include <sys/time.h>
+ #include <time.h>
+-#include <fenv.h>
+ #include <math.h>
+ #if defined(__APPLE__)
+ #include <malloc/malloc.h>
