@@ -1,0 +1,27 @@
+--- a/drivers/gpu/drm/panel/panel-simple.c	2026-11-23 03:00:23.632977733 +0100
++++ b/drivers/gpu/drm/panel/panel-simple.c	2026-11-23 03:00:23.657611269 +0100
+@@ -2404,15 +2404,20 @@
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+ };
+ 
++/*
++ * Ben NanoNote: values are in pixels, ingenic-drm multiplies the horizontal
++ * timings and the clock by 3 for the 3x8 serial bus. This matches the
++ * timing used by the NanoNote U-Boot (25.2 MHz dot clock, 70 Hz).
++ */
+ static const struct display_timing giantplus_gpm940b0_timing = {
+-	.pixelclock = { 13500000, 27000000, 27500000 },
++	.pixelclock = { 4500000, 8400000, 9166666 },
+ 	.hactive = { 320, 320, 320 },
+-	.hfront_porch = { 14, 686, 718 },
+-	.hback_porch = { 50, 70, 255 },
++	.hfront_porch = { 5, 91, 239 },
++	.hback_porch = { 17, 46, 85 },
+ 	.hsync_len = { 1, 1, 1 },
+ 	.vactive = { 240, 240, 240 },
+ 	.vfront_porch = { 1, 1, 179 },
+-	.vback_porch = { 1, 21, 31 },
++	.vback_porch = { 1, 20, 31 },
+ 	.vsync_len = { 1, 1, 6 },
+ 	.flags = DISPLAY_FLAGS_HSYNC_LOW | DISPLAY_FLAGS_VSYNC_LOW,
+ };

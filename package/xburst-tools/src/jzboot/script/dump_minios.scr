@@ -1,0 +1,25 @@
+echo "Dumping script"
+nquery 0
+
+#set NAND_RAW 1
+set NAND_ECCPOS 3
+rebuildcfg
+boot
+
+echo "Configured for bootloader IO!"
+
+ndump_oob 0 0 128 "dump/nand.bin"
+
+set NAND_RAW
+set NAND_ECCPOS 8
+rebuildcfg
+boot
+
+echo "Configuration restored"
+
+ndump 0 128 66 "dump/loader.bin"
+ndump 0 256 1 "dump/def_boot.bin"
+ndump 0 512 3061 "dump/img_boot.bin"
+ndump 0 8192 8192 "dump/minios.bin"
+ndump 0 32768 32768 "dump/res.bin"
+

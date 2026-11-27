@@ -1,0 +1,22 @@
+This Debian package is developed in a Git repository (see the Vcs-Git field
+of debian/control).  To build from a git checkout:
+
+	debian/rules get-orig-source VERSION=201007
+	debian/autogen.sh
+	debuild
+
+This requires a mipsel-openwrt-linux- cross-toolchain in your $PATH.  You
+can get one by building the development environment from Qi Hardware, for
+example.
+
+  git://projects.qi-hardware.com/openwrt-xburst.git xburst
+
+See the Qi Hardware wiki for details.
+
+  http://en.qi-hardware.com/wiki/Building_Software_Image
+
+To build a released version of this package, no special instructions apply.
+“dpkg-buildpackage” or “apt-get -b source xburst-tools” should work as
+usual.
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Mon, 05 Apr 2010 06:21:12 -0500

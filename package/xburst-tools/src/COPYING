@@ -1,0 +1,4 @@
+jzboot/firmware/spl_stage1.bin, jzboot/firmware/spl_stage2_usb.bin are (c) Ingenic Semiconductor Co.,Ltd.
+ingenic.h is based on code by Ingenic Semiconductor Co.,Ltd.
+
+All other files have their authors and licenses described at their beginning.

@@ -15,6 +15,9 @@ endif
 ifeq ($(ADK_TARGET_KERNEL_UIMAGEBIN),y)
 KERNEL:=$(LINUX_DIR)/arch/mips/boot/uImage.bin
 endif
+ifeq ($(ADK_TARGET_KERNEL_UZIMAGEBIN),y)
+KERNEL:=$(LINUX_DIR)/arch/mips/boot/uzImage.bin
+endif
 ifeq ($(ADK_TARGET_KERNEL_VMLINUX_BIN),y)
 KERNEL:=$(LINUX_DIR)/arch/mips/boot/vmlinux.bin
 endif
@@ -50,6 +53,13 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_IMGTEC_CI20),y)
 	@echo "Use following command to install it on SD card:"
 	@echo "sudo ./scripts/install.sh $(ADK_TARGET_SYSTEM) /dev/sdX $(FW_DIR)/$(ROOTFSTARBALL)"
+endif
+ifeq ($(ADK_TARGET_SYSTEM_QI_NANONOTE),y)
+	@echo 'The kernel file is: $(FW_DIR)/${TARGET_KERNEL}'
+	@echo "Extract the RootFS tarball to the first partition of a microSD card (must be ext2)"
+	@echo "and copy the kernel to /boot/uImage on it. Hold M while powering on to boot from SD."
+	@echo "Flash the kernel to the NAND kernel partition (stock U-Boot reads max. 2 MiB):"
+	@echo "flash_erase /dev/mtd1 0 0 && nandwrite -p /dev/mtd1 /boot/uImage"
 endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)
@@ -108,7 +118,7 @@ endif
 endif
 
 kernel-strip:
-ifeq ($(ADK_TARGET_KERNEL_UIMAGE)$(ADK_TARGET_KERNEL_UIMAGEBIN)$(ADK_TARGET_KERNEL_UIMAGEGZ)$(ADK_TARGET_KERNEL_VMLINUX_BIN),)
+ifeq ($(ADK_TARGET_KERNEL_UIMAGE)$(ADK_TARGET_KERNEL_UIMAGEBIN)$(ADK_TARGET_KERNEL_UIMAGEGZ)$(ADK_TARGET_KERNEL_UZIMAGEBIN)$(ADK_TARGET_KERNEL_VMLINUX_BIN),)
 	$(TARGET_CROSS)objcopy $(OSTRIP) -S $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
 else
 	$(CP) $(KERNEL) $(BUILD_DIR)/$(TARGET_KERNEL)
@@ -139,7 +149,11 @@ endif
 
 # filesystem specific targets
 ifeq ($(ADK_TARGET_FS),archive)
+ifeq ($(ADK_TARGET_SYSTEM_QI_NANONOTE),y)
+imageinstall: kernel-install $(FW_DIR)/$(ROOTFSTARBALL) targethelp
+else
 imageinstall: $(FW_DIR)/$(ROOTFSTARBALL) targethelp
+endif
 endif
 ifeq ($(ADK_TARGET_FS),initramfs)
 imageinstall: kernel-install $(FW_DIR)/$(INITRAMFS) targethelp

@@ -1,0 +1,105 @@
+diff -ru a/drivers/mtd/nand/raw/ingenic/ingenic_ecc.c b/drivers/mtd/nand/raw/ingenic/ingenic_ecc.c
+--- a/drivers/mtd/nand/raw/ingenic/ingenic_ecc.c	2026-11-23 03:49:23.848751440 +0100
++++ b/drivers/mtd/nand/raw/ingenic/ingenic_ecc.c	2026-11-23 03:49:23.903114945 +0100
+@@ -25,6 +25,12 @@
+  * Return: 0 on success, -ETIMEDOUT if timed out while waiting for ECC
+  * controller.
+  */
++void ingenic_ecc_hwctl(struct ingenic_ecc *ecc, bool encode)
++{
++	if (ecc->ops->hwctl)
++		ecc->ops->hwctl(ecc, encode);
++}
++
+ int ingenic_ecc_calculate(struct ingenic_ecc *ecc,
+ 			  struct ingenic_ecc_params *params,
+ 			  const u8 *buf, u8 *ecc_code)
+diff -ru a/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h b/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h
+--- a/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h	2026-11-23 03:49:23.845494643 +0100
++++ b/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h	2026-11-23 03:49:23.901990654 +0100
+@@ -26,6 +26,7 @@
+ };
+ 
+ #if IS_ENABLED(CONFIG_MTD_NAND_INGENIC_ECC)
++void ingenic_ecc_hwctl(struct ingenic_ecc *ecc, bool encode);
+ int ingenic_ecc_calculate(struct ingenic_ecc *ecc,
+ 			  struct ingenic_ecc_params *params,
+ 			  const u8 *buf, u8 *ecc_code);
+@@ -36,6 +37,10 @@
+ void ingenic_ecc_release(struct ingenic_ecc *ecc);
+ struct ingenic_ecc *of_ingenic_ecc_get(struct device_node *np);
+ #else /* CONFIG_MTD_NAND_INGENIC_ECC */
++static inline void ingenic_ecc_hwctl(struct ingenic_ecc *ecc, bool encode)
++{
++}
++
+ static inline int ingenic_ecc_calculate(struct ingenic_ecc *ecc,
+ 			  struct ingenic_ecc_params *params,
+ 			  const u8 *buf, u8 *ecc_code)
+@@ -62,6 +67,8 @@
+ 
+ struct ingenic_ecc_ops {
+ 	void (*disable)(struct ingenic_ecc *ecc);
++	/* optional: called before the data transfer of each ECC step */
++	void (*hwctl)(struct ingenic_ecc *ecc, bool encode);
+ 	int (*calculate)(struct ingenic_ecc *ecc,
+ 			 struct ingenic_ecc_params *params,
+ 			 const u8 *buf, u8 *ecc_code);
+diff -ru a/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c b/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c
+--- a/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c	2026-11-23 03:49:23.851879922 +0100
++++ b/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c	2026-11-23 03:49:23.903217268 +0100
+@@ -141,8 +141,16 @@
+ static void ingenic_nand_ecc_hwctl(struct nand_chip *chip, int mode)
+ {
+ 	struct ingenic_nand *nand = to_ingenic_nand(nand_to_mtd(chip));
++	struct ingenic_nfc *nfc = to_ingenic_nfc(nand->chip.controller);
+ 
+ 	nand->reading = (mode == NAND_ECC_READ);
++
++	/*
++	 * The JZ4740 RS engine snoops the data on the NAND bus, so it has
++	 * to be reset and enabled before the data of each step is transferred.
++	 */
++	if (nfc->ecc)
++		ingenic_ecc_hwctl(nfc->ecc, !nand->reading);
+ }
+ 
+ static int ingenic_nand_ecc_calculate(struct nand_chip *chip, const u8 *dat,
+diff -ru a/drivers/mtd/nand/raw/ingenic/jz4740_ecc.c b/drivers/mtd/nand/raw/ingenic/jz4740_ecc.c
+--- a/drivers/mtd/nand/raw/ingenic/jz4740_ecc.c	2026-11-23 03:49:23.854865206 +0100
++++ b/drivers/mtd/nand/raw/ingenic/jz4740_ecc.c	2026-11-23 03:49:23.904121784 +0100
+@@ -70,8 +70,7 @@
+ 	unsigned int timeout = 1000;
+ 	int i;
+ 
+-	jz4740_ecc_reset(ecc, true);
+-
++	/* engine was reset and enabled in jz4740_ecc_hwctl() before the data */
+ 	do {
+ 		status = readl(ecc->base + JZ_REG_NAND_IRQ_STAT);
+ 	} while (!(status & JZ_NAND_STATUS_ENC_FINISH) && --timeout);
+@@ -122,8 +121,7 @@
+ 	uint32_t reg, status, error;
+ 	unsigned int timeout = 1000;
+ 
+-	jz4740_ecc_reset(ecc, false);
+-
++	/* engine was reset and enabled in jz4740_ecc_hwctl() before the data */
+ 	for (i = 0; i < params->bytes; ++i)
+ 		writeb(ecc_code[i], ecc->base + JZ_REG_NAND_PAR0 + i);
+ 
+@@ -171,8 +169,14 @@
+ 	writel(reg, ecc->base + JZ_REG_NAND_ECC_CTRL);
+ }
+ 
++static void jz4740_ecc_hwctl(struct ingenic_ecc *ecc, bool encode)
++{
++	jz4740_ecc_reset(ecc, encode);
++}
++
+ static const struct ingenic_ecc_ops jz4740_ecc_ops = {
+ 	.disable = jz4740_ecc_disable,
++	.hwctl = jz4740_ecc_hwctl,
+ 	.calculate = jz4740_ecc_calculate,
+ 	.correct = jz4740_ecc_correct,
+ };

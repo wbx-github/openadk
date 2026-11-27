@@ -1,0 +1,22 @@
+Source: xburst-tools
+Section: misc
+Priority: extra
+Maintainer: Xiangfu Liu <xiangfu@sharism.cc>
+Build-Depends: debhelper (>= 9),
+	pkg-config, autoconf, automake,
+	libusb-dev, libconfuse-dev, libusb-1.0-0-dev,
+	libreadline-dev
+Build-Conflicts: automake1.4
+Standards-Version: 3.9.4
+Vcs-Git: git://projects.qi-hardware.com/xburst-tools.git
+Vcs-Browser: http://projects.qi-hardware.com/p/xburst-tools/source/changes/master/
+Homepage: http://projects.qi-hardware.com/p/xburst-tools/
+
+Package: xburst-tools
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: tools for Ingenic XBurst CPU USB boot and NAND flash access
+ xburst-tools contains tools for Ingenic XBurst CPU device booting.
+ It can flash bootloader, kernel, rootfs to Ingenic XBurst CPU
+ device NAND, and also has test functions for Ingenic XBurst CPU 
+ devices.

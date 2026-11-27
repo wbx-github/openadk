@@ -37,6 +37,12 @@ ifeq ($(ADK_TARGET_SYSTEM_PHYTEC_WEGA),y)
 BLOCKDEV:=	root=/dev/mmcblk0p2
 endif
 
+ifeq ($(ADK_TARGET_SYSTEM_QI_NANONOTE),y)
+BLOCKDEV:=	root=/dev/mmcblk0p1
+MTDDEV:=	root=/dev/mtdblock2
+UBIDEV:=	ubi.mtd=2 root=ubi0:rootfs
+endif
+
 ifeq ($(ADK_TARGET_SYSTEM_ACMESYSTEMS_FOXG20),y)
 BLOCKDEV:=	root=/dev/mmcblk0p2
 endif

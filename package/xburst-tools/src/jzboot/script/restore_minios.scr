@@ -1,0 +1,42 @@
+#11.12.2010 --rzk
+# orig from http://pastie.org/1368586
+# fixes by whitequark
+
+echo "---- Restore MINIOS script ----"
+echo "Including initial config for 4750 XZ0032 board"
+source config/boot.cfg
+echo "jzboot successfully configured for XZ0032"
+
+echo "Erasing all flash"
+nerase 0 0 4096
+echo "Erased all flash"
+
+echo "Configuring for bootloader IO"
+source script/ecc_boot.scr
+echo "Configured for bootloader IO"
+
+echo "Flashing SPL (nand.bin)"
+nprogram 0 0 nand.bin
+echo "Flashed SPL (nand.bin)"
+
+echo "Configuring for standard IO"
+source script/ecc_normal.scr
+echo "Configured for standard IO"
+
+echo "Flashing loader.bin"
+nprogram 0 128 dump/loader.bin
+echo "Flashed loader.bin"
+echo "Flashing def_boot.bin"
+nprogram 0 256 dump/def_boot.bin
+echo "Flashed def_boot.bin"
+echo "Flashing img_boot.bin"
+nprogram 0 512 dump/img_boot.bin
+echo "Flashed img_boot.bin"
+echo "Flashing minios.bin"
+nprogram 0 8192 dump/minios.bin
+echo "Flashed minios.bin"
+echo "Flashing res.bin"
+nprogram 0 32768 dump/res.bin
+echo "Flashed res.bin"
+
+echo "---- All done ----"

@@ -1,0 +1,11 @@
+echo-kernel.bin
+echo-kernel.dump
+echo-kernel.lst
+echo-kernel.o
+echo-kernel.sym
+echo-kernel.map
+echo-kernel.elf
+head.lst
+head.o
+serial.lst
+serial.o

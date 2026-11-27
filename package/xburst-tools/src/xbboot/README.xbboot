@@ -1,0 +1,29 @@
+*
+* xbboot
+*
+* Use the Ingenic XBurst USB boot protocol to boot, load binaries
+* into memory and execute them.
+*
+
+Authors: Wolfgang Spraul <wolfgang@sharism.cc>
+         Xiangfu Liu <xiangfu@sharism.cc>
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version
+3 of the License, or (at your option) any later version.
+
+Build Requirements: libusb-dev
+
+Build and Installation:
+  cd ../
+  ./autogen.sh
+  ./configure --enable-firmware --prefix=/usr
+  make
+  make install
+    *) make install will install the xbboot binary to /usr/bin/xbboot
+       and the bootloader running on the device into /usr/share/xburst-tools
+
+Examples:
+ sudo xbboot -u 0x80600000 /PATH/TO/zImage
+ sudo xbboot -u 0x80100000 /PATH/TO/u-boot.bin

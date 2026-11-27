@@ -1,0 +1,5 @@
+.deps
+host_main.o
+Makefile
+Makefile.in
+xbboot

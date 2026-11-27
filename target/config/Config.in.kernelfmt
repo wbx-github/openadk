@@ -25,6 +25,9 @@ config ADK_TARGET_KERNEL_UIMAGEBIN
 config ADK_TARGET_KERNEL_UIMAGEGZ
 	bool
 
+config ADK_TARGET_KERNEL_UZIMAGEBIN
+	bool
+
 config ADK_TARGET_KERNEL_BZIMAGE
 	bool
 
@@ -62,6 +65,7 @@ config ADK_TARGET_KERNEL
 	default "uImage" if ADK_TARGET_KERNEL_UIMAGE
 	default "uImage.bin" if ADK_TARGET_KERNEL_UIMAGEBIN
 	default "uImage.gz" if ADK_TARGET_KERNEL_UIMAGEGZ
+	default "uzImage.bin" if ADK_TARGET_KERNEL_UZIMAGEBIN
 	default "zImage" if ADK_TARGET_KERNEL_ZIMAGE
 	default "Image" if ADK_TARGET_KERNEL_IMAGE
 	default "linux.bin" if ADK_TARGET_KERNEL_LINUXBIN

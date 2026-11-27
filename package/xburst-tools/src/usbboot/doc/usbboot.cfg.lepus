@@ -1,0 +1,30 @@
+# [PLL]
+EXTCLK = 12	#Define the external crystal in MHz
+CPUSPEED = 240	#Define the PLL output frequency
+PHMDIV = 3	#Define the frequency divider ratio of PLL=CCLK:PCLK=HCLK=MCLK
+BOUDRATE = 115200	#Define the uart boudrate
+USEUART = 1	#Use which uart, 0/1 for jz4740,0/1/2/3 for jz4750
+
+# [SDRAM]
+BUSWIDTH = 32	#The bus width of the SDRAM in bits (16|32)
+BANKS  = 4	#The bank number (2|4)
+ROWADDR	= 12	#Row address width in bits (11-13)
+COLADDR	= 9	#Column address width in bits (8-12)
+ISMOBILE = 1	#Define whether SDRAM is mobile SDRAM, this only valid for Jz4750 ,1:yes 0:no
+ISBUSSHARE = 0	#Define whether SDRAM bus share with NAND 1:shared 0:unshared
+# SDRAMTYPE = 2	#Define SDRAM Type	0:sdram	1:ddr1	2:ddr2	3:mobile ddr
+
+# [NAND]
+NAND_BUSWIDTH = 8	#The width of the NAND flash chip in bits (8|16|32)
+NAND_ROWCYCLES = 3	#The row address cycles (2|3)
+NAND_PAGESIZE = 4096	#The page size of the NAND chip in bytes(512|2048|4096)
+NAND_PAGEPERBLOCK = 128 	#The page number per block
+NAND_FORCEERASE = 1	#The force to erase flag (0|1)
+NAND_OOBSIZE = 128	#oob size in byte
+NAND_ECCPOS = 24	#Specify the ECC offset inside the oob data (0-[oobsize-1])
+NAND_BADBLOCKPOS = 0	#Specify the badblock flag offset inside the oob (0-[oobsize-1])
+NAND_BADBLOCKPAGE = 0   	#Specify the page number of badblock flag inside a block(0-[PAGEPERBLOCK-1])
+NAND_PLANENUM = 1	#The planes number of target nand flash
+NAND_BCHBIT = 8	#Specify the hardware BCH algorithm for 4750 (4|8)
+NAND_WPPIN = 0	#Specify the write protect pin number
+NAND_BLOCKPERCHIP = 0	#Specify the block number per chip,0 means ignore

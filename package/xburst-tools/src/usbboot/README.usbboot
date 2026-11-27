@@ -1,0 +1,39 @@
+*
+* usbboot
+*
+* Utility to respond to the Ingenic XBurst USB boot protocol, provide
+* initial boot stages and ability to access NAND on device.
+*
+
+Authors: Ingenic Semiconductor, Inc.
+         Xiangfu Liu <xiangfu@sharism.cc>
+         Marek Lindner <lindner_marek@yahoo.de>
+         Wolfgang Spraul <wolfgang@sharism.cc>
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version
+3 of the License, or (at your option) any later version.
+
+usbboot is the Linux version and rewrite of a Windows utility from Ingenic also called usbboot.
+Homepage: http://www.ingenic.cn/eng/productServ/kfyd/compiler/pffaqContents.aspx#questionAnchor8
+Windows Binary: ftp://ftp.ingenic.cn/3sw/00tools/usb_boot/tools/usbboot1.4b-tools.zip
+Windows Sources: ftp://ftp.ingenic.cn/3sw/00tools/usb_boot/tools/usbboot1.4b-sources.zip
+Manual: ftp://ftp.ingenic.cn/3sw/00tools/usb_boot/manual/USB_Boot_Tool_Manual_1.4_EN.pdf
+
+Build Requirements: libusb-dev, libconfuse-dev
+
+Build and Installation:
+  cd ../
+  ./autogen.sh
+  ./configure --enable-firmware --prefix=/usr
+  make
+  make install
+    *) make install will install the 'usbboot' binary to /usr/bin/usbboot,
+       the stage 1 and 2 bootloaders to /usr/share/xburst-tools/,
+       usbboot.cfg configuration file into /etc/xburst-tools.
+
+Examples:
+  sudo usbboot (invoking usbboot without options will let you enter commands at the usbboot prompt)
+  sudo usbboot  -c "boot"
+  sudo usbboot  -c "nprog 0 u-boot-nand.bin 0 0 -n"

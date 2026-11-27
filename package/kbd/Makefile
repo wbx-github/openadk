@@ -5,12 +5,12 @@ include $(ADK_TOPDIR)/rules.mk
 
 PKG_NAME:=		kbd
 PKG_VERSION:=		2.10.0
-PKG_RELEASE:=		1
+PKG_RELEASE:=		2
 PKG_HASH:=		6e5ca4f8d76ee9e3a8db700b667f13e12aac9933828a64e1aaad93d26be9b479
 PKG_DESCR:=		keyboard and font utilities
 PKG_SECTION:=		sys/hw
-PKG_DEPENDS:=		libcheck
-PKG_BUILDDEP:=		flex-host bison-host check
+PKG_DEPENDS:=		libcheck zlib
+PKG_BUILDDEP:=		flex-host bison-host check zlib
 PKG_URL:=		http://kbd-project.org/
 PKG_SITES:=		https://mirrors.edge.kernel.org/pub/linux/utils/kbd/
 
@@ -20,7 +20,11 @@ include $(ADK_TOPDIR)/mk/package.mk
 
 $(eval $(call PKG_template,KBD,kbd,$(PKG_VERSION)-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION}))
 
-CONFIGURE_ARGS+=	--disable-vlock
+CONFIGURE_ARGS+=	--disable-vlock \
+			--with-zlib \
+			--without-bzip2 \
+			--without-lzma \
+			--without-zstd
 CONFIGURE_ENV+=         ac_cv_func_malloc_0_nonnull=yes \
 			ac_cv_func_realloc_0_nonnull=yes
 
@@ -52,6 +56,10 @@ endif
 ifeq ($(ADK_TARGET_SYSTEM_SHARP_ZAURUS),y)
 	$(INSTALL_DIR) $(IDIR_KBD)/etc
 	$(CP) ./files/zaurus.map $(IDIR_KBD)/etc
+endif
+ifeq ($(ADK_TARGET_SYSTEM_QI_NANONOTE),y)
+	$(INSTALL_DIR) $(IDIR_KBD)/etc
+	$(CP) ./files/qi-nanonote.map $(IDIR_KBD)/etc
 endif
 
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

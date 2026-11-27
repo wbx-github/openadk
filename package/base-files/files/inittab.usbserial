@@ -1,0 +1,1 @@
+ttyGS0::respawn:/sbin/getty -i -L ttyGS0 115200 vt100

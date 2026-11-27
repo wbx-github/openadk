@@ -79,6 +79,10 @@ config ADK_HOST_BUILD_ETRAX_TOOLS
 	default y if ADK_TARGET_SYSTEM_FOXBOARD_LX832
 	default n
 
+config ADK_HOST_BUILD_XBURST_TOOLS
+	bool
+	default n
+
 config ADK_HOST_BUILD_FILE
 	bool
 	default n

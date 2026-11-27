@@ -16,12 +16,15 @@ PKG_OPTS:=		dev
 
 DISTFILES:=             ${PKG_NAME}-${PKG_VERSION}.tar.bz2
 
+include ${ADK_TOPDIR}/mk/host.mk
 include ${ADK_TOPDIR}/mk/package.mk
 
+$(eval $(call HOST_template,LIBUSB_COMPAT,libusb-compat,${PKG_VERSION}-${PKG_RELEASE}))
 $(eval $(call PKG_template,LIBUSB_COMPAT,libusb-compat,${PKG_VERSION}-${PKG_RELEASE},${PKG_DEPENDS},${PKG_DESCR},${PKG_SECTION},${PKG_OPTS}))
 
 libusb-compat-install:
 	${INSTALL_DIR} ${IDIR_LIBUSB_COMPAT}/usr/lib
 	${CP} ${WRKINST}/usr/lib/libusb*.so* ${IDIR_LIBUSB_COMPAT}/usr/lib
 
+include ${ADK_TOPDIR}/mk/host-bottom.mk
 include ${ADK_TOPDIR}/mk/pkg-bottom.mk

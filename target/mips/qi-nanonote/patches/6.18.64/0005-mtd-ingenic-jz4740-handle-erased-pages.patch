@@ -1,0 +1,18 @@
+--- a/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c	2026-11-23 13:11:13.827717503 +0100
++++ b/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c	2026-11-23 13:11:13.911283185 +0100
+@@ -248,8 +248,14 @@
+ 	if (chip->bbt_options & NAND_BBT_USE_FLASH)
+ 		chip->bbt_options |= NAND_BBT_NO_OOB;
+ 
+-	if (nfc->soc_info->oob_first)
++	if (nfc->soc_info->oob_first) {
+ 		chip->ecc.read_page = nand_read_page_hwecc_oob_first;
++		/*
++		 * The JZ4740 RS decoder reports erased (all 0xff) chunks as
++		 * uncorrectable, let the NAND core detect erased pages.
++		 */
++		chip->ecc.options |= NAND_ECC_GENERIC_ERASED_CHECK;
++	}
+ 
+ 	/* For legacy reasons we use a different layout on the qi,lb60 board. */
+ 	if (of_machine_is_compatible("qi,lb60"))

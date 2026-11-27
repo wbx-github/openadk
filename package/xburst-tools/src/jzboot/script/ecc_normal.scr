@@ -1,0 +1,3 @@
+set NAND_ECCPOS 8
+rebuildcfg
+boot

@@ -1,0 +1,80 @@
+xburst-tools version: 201206
+  [ Xiangfu Liu ]
+  * add firmware makefile
+  * fix errir on BIG-ENDBIAN system
+
+xburst-tools version: 201105
+  [ Xiangfu Liu ]
+  * add new xburst tool: jzboot:
+    http://projects.qi-hardware.com/index.php/p/jzboot/
+  * debian/control: add jzboot depends
+  * when startpage == 0 do NOT check the nand data
+
+xburst-tools version: 201103
+  [ Xiangfu Liu ]
+  * new command `reset`
+  * some code style cleanup
+
+xburst-tools version: 201012
+  [ Xiangfu Liu ]
+  * usbboot: don't skip bad block when nand erase
+  * usbboot: remove check root permissions
+
+  [ Sergey Kvachonok ]
+  * Make CROSS_COMPILE configure script variable
+  * Add firmware clean target to automake clean-local
+  * Add configure cross-compiler check
+
+xburst-tools version: 201007
+
+  [ Xiangfu Liu ]
+  * New snapshot, taken from commit 77a7270
+  * remove the static prefix and datadir
+
+  [ Xiangfu Liu ]
+  * New snapshot, taken from commit 3201fd5
+  * add JZ4760 code. xboot works fine with JZ4760 LEPUS EVB
+  * add miss head file stdint.h. fix compile error in Gentoo system
+  * remove useless files, come code cleanup.
+
+ -- Xiangfu Liu <xiangfu@sharism.cc>  Sat, 31 Jul 2010 00:10:57 +0800
+
+xburst-tools (0.0+201005-0.1) local; urgency=low
+
+  [ Jonathan Nieder ]
+  * New snapshot, taken from commit 18cac78
+  * debian/rules:
+    - rewrite as a minimal rules file using dh
+    - add a get-orig-source target
+    - install firmware built at packaging time to avoid requiring a
+      mipsel cross-compiler on buildds
+  * debian/README.source: add instructions for re-building the firmware
+  * debian/autogen.sh: new script
+  * Build-Depends: debhelper (>= 7.4.10), for the --parallel option.
+  * Build-Conflicts: automake1.4
+  * debian/control: add information about the source repository
+  * remove the outdated watch file
+  * Standards-Version: 3.8.4
+  * use dpkg source format 3.0 (quilt)
+
+  [ Xiangfu Liu ]
+  * add xbboot tool and firmware
+  * add xbboot manual to package
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Tue, 11 May 2010 00:15:01 -0500
+
+xburst-tools (0.0+201002-1) unstable; urgency=low
+
+  * from commit d8105c6d
+  * work with software usbboot
+  * don't wrtie cc data if page is empty
+  * use autoconf-provided variables instead of absolute
+  * some code cleanup
+
+ -- Xiangfu Liu <xiangfu@sharism.cc>  Tue, 25 Feb 2010 11:21:51 +0800
+
+xburst-tools (0.0+200906-1) unstable; urgency=low
+
+  * Initial release, from commit 710c10c1 (Closes: #535429).
+
+ -- Xiangfu Liu <xiangfu@sharism.cc>  Tue, 30 Jun 2009 14:28:36 +0800

@@ -1,0 +1,11 @@
+/stage1.bin
+/xburst_stage1.bin
+/xburst_stage2.bin
+/changelog.upstream
+
+/files
+
+/*.debhelper.log
+/*.substvars
+
+/xburst-tools

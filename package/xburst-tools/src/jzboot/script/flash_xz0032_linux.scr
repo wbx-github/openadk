@@ -1,0 +1,27 @@
+#11.12.2010 --rzk
+# orig from http://pastie.org/1368585
+# fixes by whitequark
+
+echo "---- Linux kernel+loader+rootfs flashing script ----"
+
+echo "Including initial config for 4750 XZ0032 board"
+source config/boot.cfg
+echo "jzboot successfully configured for XZ0032"
+
+echo "Erasing all flash"
+nerase 0 0 4096
+echo "Erased all flash"
+
+echo "Flashing loader"
+nprogram 0 0 u-boot-nand.bin
+echo "Flashed loader"
+
+echo "Flashing kernel"
+nprogram 0 512 uImage
+echo "Flashed kernel"
+
+echo "Flashing rootfs"
+nprogram_oob 0 8192 rootfs.ubifs
+echo "Flashed rootfs"
+
+echo "---- All done ----"

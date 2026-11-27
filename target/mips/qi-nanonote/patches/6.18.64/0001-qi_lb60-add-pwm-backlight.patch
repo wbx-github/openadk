@@ -1,0 +1,38 @@
+--- a/arch/mips/boot/dts/ingenic/qi_lb60.dts	2026-11-23 02:49:10.704377388 +0100
++++ b/arch/mips/boot/dts/ingenic/qi_lb60.dts	2026-11-23 02:49:10.757906285 +0100
+@@ -215,10 +215,22 @@
+ 		io-channels = <&adc INGENIC_ADC_AUX>;
+ 	};
+ 
++	backlight: backlight {
++		compatible = "pwm-backlight";
++		pwms = <&pwm 7 30000 0>;
++		brightness-levels = <0 255>;
++		num-interpolated-steps = <255>;
++		default-brightness-level = <145>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&pins_pwm7>;
++	};
++
+ 	panel: panel {
+ 		compatible = "giantplus,gpm940b0";
+ 
+ 		power-supply = <&vcc>;
++		backlight = <&backlight>;
+ 
+ 		port {
+ 			panel_input: endpoint {
+@@ -321,6 +333,12 @@
+ 		groups = "lcd-8bit";
+ 	};
+ 
++	pins_pwm7: pwm7 {
++		function = "pwm7";
++		groups = "pwm7";
++		bias-disable;
++	};
++
+ 	pins_nemc: nemc {
+ 		function = "nand";
+ 		groups = "nand-fre-fwe", "nand-cs1";

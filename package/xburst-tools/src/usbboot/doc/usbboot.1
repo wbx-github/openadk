@@ -1,0 +1,45 @@
+.TH USBBOOT 1 "July 7, 2009"
+.SH NAME
+usbboot \- Tools for Ingenic XBurst CPU USB Boot and NAND flash access
+.SH SYNOPSIS
+.B usbboot \fR[\fB\-hvc\fR]
+.SH DESCRIPTION
+.B usbboot
+xburst-tools contains tools for Ingenic XBurst CPU device booting.
+It can flash bootloader, kernel, rootfs to Ingenic XBurst CPU
+device NAND, and also has test functions for Ingenic XBurst CPU 
+devices.
+.SH OPTIONS
+.TP
+run without options to enter commands via usbboot prompt
+.TP
+.BR "\-c, \-\-command"
+Direct run the commands, split by ';'
+.TP
+.B "\-h, \-\-help"
+Show a help text and exit.
+.TP
+.B "\-v, \-\-version"
+Show version information and exit.
+.SH EXAMPLES
+Here are some examples for the usage of usbboot in the Qi Hardware Project
+device:
+.PP
+Run command 'boot' to boot the device:
+.br
+.B "  $ usbboot -c 'boot' "
+.PP
+Please report any further bugs at
+.B xiangfu@sharism.cc
+.SH LICENCE
+.B usbboot
+is covered by the GNU General Public License (GPL), version 3 or later.
+.SH AUTHORS
+Xiangfu Liu <xiangfu@sharism.cc>
+.br
+Marek Lindner <lindner_marek@yahoo.de>
+.br
+Wolfgang Spraul <wolfgang@sharism.cc>
+.PP
+This manual page was written by Xiangfu Liu <xiangfu@sharism.cc>
+It is licensed under the terms of the GNU GPL (version 3 or later).

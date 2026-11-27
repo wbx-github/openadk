@@ -1,0 +1,66 @@
+.TH XBBOOT 1 "May 5, 2010"
+.SH NAME
+xbboot \- Ingenic XBurst USB Boot Vendor Requests
+.SH SYNOPSIS
+.B xbboot [vendor_request] ...
+.SH DESCRIPTION
+.B xbboot
+xburst-tools contains tools for Ingenic XBurst CPU device booting.
+It can flash bootloader, kernel, rootfs to Ingenic XBurst CPU
+device NAND, and also has test functions for Ingenic XBurst CPU 
+devices.
+.SH OPTIONS
+.TP
+.BR "\-u, \-\-upload"
+upload file at <path> to <address> then jump to <address>
+.TP
+.B "\-h, \-\-help"
+Show a help text and exit.
+.TP
+.B "\-v, \-\-version"
+Show version information and exit.
+.SH VENDOR REQUEST
+.br 
+.B bulk_read <len>
+read len bulk bytes from USB, write to stdout
+.br
+.B bulk_write <path>
+write file at <path> to USB
+.br
+.B [get_info | VR_GET_CPU_INFO]
+read 8-byte CPU info and write to stdout
+.br
+.B [set_addr | VR_SET_DATA_ADDRESS] <addr>
+send memory address
+.br
+.B [set_len | VR_SET_DATA_LENGTH] <len>
+send data length
+.br
+.B [flush_cache | VR_FLUSH_CACHES]
+flush I-Cache and D-Cache
+.br
+.B [start1 | VR_PROGRAM_START1] <addr>
+transfer data from D-Cache to I-Cache and branch to I-Cache
+.br
+.B [start2 | VR_PROGRAM_START2] <addr>
+branch to <addr> directly
+.SH EXAMPLES
+Here are some examples for the usage of xbboot in the Qi Hardware Project
+device:
+.PP
+Upload u-boot.bin to device memory: 0x80100000, then jump to 0x80100000.
+.br
+.B "  $ sudo xbboot -u 0x80100000 /PATH/TO/u-boot.bin  "
+.PP
+Please report any further bugs at
+.B xiangfu@sharism.cc
+.SH LICENCE
+.B xbboot
+is covered by the GNU General Public License (GPL), version 3 or later.
+.SH AUTHORS
+Xiangfu Liu <xiangfu@sharism.cc>
+.br
+Wolfgang Spraul <wolfgang@sharism.cc>
+.PP
+This manual page was written by Xiangfu Liu <xiangfu@sharism.cc>
+It is licensed under the terms of the GNU GPL (version 3 or later).

@@ -6,7 +6,7 @@ include $(ADK_TOPDIR)/mk/rootfs.mk
 
 PKG_NAME:=		base-files
 PKG_VERSION:=		1.1
-PKG_RELEASE:=		30
+PKG_RELEASE:=		31
 PKG_SECTION:=		base/apps
 PKG_DESCR:=		basic files and scripts
 
@@ -90,6 +90,8 @@ endif
 	    cat ./files/inittab.vga >> $(IDIR_BASE_FILES)/etc/inittab
 	test -z $(ADK_RUNTIME_GETTY_SERIAL) || \
 	    cat ./files/inittab.serial >> $(IDIR_BASE_FILES)/etc/inittab
+	test -z $(ADK_RUNTIME_GETTY_USB_SERIAL) || \
+	    cat ./files/inittab.usbserial >> $(IDIR_BASE_FILES)/etc/inittab
 	$(SED) 's#@DEVICE@#$(ADK_RUNTIME_CONSOLE_SERIAL_DEVICE)#g' $(IDIR_BASE_FILES)/etc/inittab
 	$(SED) 's#@SPEED@#$(ADK_RUNTIME_CONSOLE_SERIAL_SPEED)#' $(IDIR_BASE_FILES)/etc/inittab
 	$(SED) 's#@AUTOLOGIN@#$(ADK_RUNTIME_GETTY_SERIAL_AUTOLOGIN_STANZA)#' $(IDIR_BASE_FILES)/etc/inittab

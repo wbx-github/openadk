@@ -1,0 +1,77 @@
+--- a/drivers/pinctrl/pinctrl-ingenic.c	2026-11-23 22:43:01.045328202 +0100
++++ b/drivers/pinctrl/pinctrl-ingenic.c	2026-11-24 08:12:20.566357814 +0100
+@@ -3677,12 +3677,26 @@
+ 
+ 	gpiochip_enable_irq(gc, irq);
+ 
+-	if (is_soc_or_above(jzgc->jzpc, ID_JZ4770))
++	if (is_soc_or_above(jzgc->jzpc, ID_JZ4770)) {
+ 		ingenic_gpio_set_bit(jzgc, JZ4770_GPIO_INT, irq, true);
+-	else if (is_soc_or_above(jzgc->jzpc, ID_JZ4740))
++	} else if (is_soc_or_above(jzgc->jzpc, ID_JZ4740)) {
++		unsigned int type = irqd_get_trigger_type(irqd);
++
++		/*
++		 * On JZ4740 the trigger bits share the DIR/TRIG registers with
++		 * the GPIO function. While the pin was used as plain GPIO input
++		 * (e.g. by a matrix keypad scan) they got overwritten, so switch
++		 * to interrupt mode first and then restore the trigger type.
++		 */
+ 		ingenic_gpio_set_bit(jzgc, JZ4740_GPIO_SELECT, irq, true);
+-	else
++		if (type == IRQ_TYPE_EDGE_BOTH)
++			type = ingenic_gpio_get_value(jzgc, irq) ?
++				IRQ_TYPE_LEVEL_LOW : IRQ_TYPE_LEVEL_HIGH;
++		if (type != IRQ_TYPE_NONE)
++			irq_set_type(jzgc, irq, type);
++	} else {
+ 		ingenic_gpio_set_bit(jzgc, JZ4730_GPIO_GPIER, irq, true);
++	}
+ 
+ 	ingenic_gpio_irq_unmask(irqd);
+ }
+@@ -3695,12 +3709,21 @@
+ 
+ 	ingenic_gpio_irq_mask(irqd);
+ 
+-	if (is_soc_or_above(jzgc->jzpc, ID_JZ4770))
++	if (is_soc_or_above(jzgc->jzpc, ID_JZ4770)) {
+ 		ingenic_gpio_set_bit(jzgc, JZ4770_GPIO_INT, irq, false);
+-	else if (is_soc_or_above(jzgc->jzpc, ID_JZ4740))
++	} else if (is_soc_or_above(jzgc->jzpc, ID_JZ4740)) {
++		/*
++		 * In interrupt mode DIR selects the trigger type, in GPIO mode
++		 * it selects the direction. Clear it while still in interrupt
++		 * mode, so the pin does not become an output (e.g. a keypad
++		 * row driving low) when leaving interrupt mode. The trigger
++		 * type is restored in ingenic_gpio_irq_enable().
++		 */
++		ingenic_gpio_set_bit(jzgc, JZ4740_GPIO_DIR, irq, false);
+ 		ingenic_gpio_set_bit(jzgc, JZ4740_GPIO_SELECT, irq, false);
+-	else
++	} else {
+ 		ingenic_gpio_set_bit(jzgc, JZ4730_GPIO_GPIER, irq, false);
++	}
+ 
+ 	gpiochip_disable_irq(gc, irq);
+ }
+@@ -3713,10 +3736,18 @@
+ 	bool high;
+ 
+ 	if ((irqd_get_trigger_type(irqd) == IRQ_TYPE_EDGE_BOTH) &&
+-	    !is_soc_or_above(jzgc->jzpc, ID_X2000)) {
++	    !is_soc_or_above(jzgc->jzpc, ID_X2000) &&
++	    (is_soc_or_above(jzgc->jzpc, ID_JZ4770) ||
++	     !is_soc_or_above(jzgc->jzpc, ID_JZ4740) ||
++	     (ingenic_gpio_read_reg(jzgc, JZ4740_GPIO_SELECT) & BIT(irq)))) {
+ 		/*
+ 		 * Switch to an interrupt for the opposite edge to the one that
+ 		 * triggered the interrupt being ACKed.
++		 *
++		 * On JZ4740 only do this while the pin is in interrupt mode:
++		 * in GPIO mode the DIR bit selects the pin direction, and
++		 * setting it would turn an input into an output. The trigger
++		 * is restored in ingenic_gpio_irq_enable() instead.
+ 		 */
+ 		high = ingenic_gpio_get_value(jzgc, irq);
+ 		if (high)

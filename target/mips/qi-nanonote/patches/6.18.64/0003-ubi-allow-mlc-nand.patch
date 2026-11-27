@@ -1,0 +1,21 @@
+--- a/drivers/mtd/ubi/build.c	2026-11-23 03:30:35.540035461 +0100
++++ b/drivers/mtd/ubi/build.c	2026-11-23 03:30:35.580515856 +0100
+@@ -895,12 +895,14 @@
+ 	 * Relax this rule if the partition we're attaching to operates in SLC
+ 	 * mode.
+ 	 */
++	/*
++	 * OpenADK/Ben NanoNote: the NanoNote has only MLC NAND and has
++	 * always used UBIFS on it. Warn instead of refusing.
++	 */
+ 	if (mtd->type == MTD_MLCNANDFLASH &&
+-	    !(mtd->flags & MTD_SLC_ON_MLC_EMULATION)) {
+-		pr_err("ubi: refuse attaching mtd%d - MLC NAND is not supported\n",
++	    !(mtd->flags & MTD_SLC_ON_MLC_EMULATION))
++		pr_warn("ubi: attaching MLC NAND mtd%d, data loss on power cut is possible\n",
+ 			mtd->index);
+-		return -EINVAL;
+-	}
+ 
+ 	/* UBI cannot work on flashes with zero erasesize. */
+ 	if (!mtd->erasesize) {

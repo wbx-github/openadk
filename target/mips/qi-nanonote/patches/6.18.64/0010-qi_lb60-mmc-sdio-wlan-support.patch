@@ -1,0 +1,39 @@
+--- a/arch/mips/boot/dts/ingenic/qi_lb60.dts
++++ b/arch/mips/boot/dts/ingenic/qi_lb60.dts
+@@ -361,7 +361,7 @@
+ 		mmc {
+ 			function = "mmc";
+ 			groups = "mmc-1bit", "mmc-4bit";
+-			bias-disable;
++			bias-pull-up;
+ 		};
+ 
+ 		mmc-gpios {
+@@ -369,6 +369,13 @@
+ 			bias-disable;
+ 		};
+ 	};
++
++	/* MMC bus driven low while the slot is powered off */
++	pins_mmc_sleep: mmc-sleep {
++		pins = "PD8", "PD9", "PD10", "PD11", "PD12", "PD13";
++		bias-disable;
++		output-low;
++	};
+ };
+ 
+ &mmc {
+@@ -377,8 +384,12 @@
+ 	cd-gpios = <&gpd 0 GPIO_ACTIVE_HIGH>;
+ 	vmmc-supply = <&mmc_power>;
+ 
+-	pinctrl-names = "default";
++	/* SDIO WLAN cards (Spectec SDW-823, KS7010) need time after power-up */
++	post-power-on-delay-ms = <200>;
++
++	pinctrl-names = "default", "sleep";
+ 	pinctrl-0 = <&pins_mmc>;
++	pinctrl-1 = <&pins_mmc_sleep>;
+ };
+ 
+ &tcu {

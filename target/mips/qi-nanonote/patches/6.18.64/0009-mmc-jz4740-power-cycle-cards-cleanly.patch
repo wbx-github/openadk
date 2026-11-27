@@ -1,0 +1,94 @@
+--- a/drivers/mmc/host/jz4740_mmc.c
++++ b/drivers/mmc/host/jz4740_mmc.c
+@@ -179,6 +179,11 @@
+ 	struct dma_chan *dma_tx;
+ 	bool use_dma;
+ 
++	/* optional "sleep" pin state: bus driven low while powered off */
++	struct pinctrl *pinctrl;
++	struct pinctrl_state *pins_default;
++	struct pinctrl_state *pins_sleep;
++
+ /* The DMA trigger level is 8 words, that is to say, the DMA read
+  * trigger is when data words in MSC_RXFIFO is >= 8 and the DMA write
+  * trigger is when data words in MSC_TXFIFO is < 8.
+@@ -451,6 +456,12 @@
+ 	do {
+ 		status = readl(host->base + JZ_REG_MMC_STATUS);
+ 	} while (status & JZ_MMC_STATUS_IS_RESETTING && --timeout);
++
++	/*
++	 * Maximum response timeout (the reset default is 64 clocks), as the
++	 * Ingenic BSP does; some SDIO cards answer slowly.
++	 */
++	writel(0xff, host->base + JZ_REG_MMC_RESTO);
+ }
+ 
+ static void jz4740_mmc_request_done(struct jz4740_mmc_host *host)
+@@ -948,8 +959,25 @@
+ 	switch (ios->power_mode) {
+ 	case MMC_POWER_UP:
+ 		jz4740_mmc_reset(host);
++		if (host->pins_sleep) {
++			/*
++			 * Give the card a real power cycle. With the slot
++			 * switched off but CMD/CLK/DAT still high, a card is
++			 * powered through its I/O pins; SDIO WLAN cards like
++			 * the KS7010 then never get a power-on reset and do
++			 * not answer CMD5.
++			 */
++			pinctrl_select_state(host->pinctrl, host->pins_sleep);
++			if (!IS_ERR(mmc->supply.vmmc))
++				mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, 0);
++			msleep(500);
++		}
+ 		if (!IS_ERR(mmc->supply.vmmc))
+ 			mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, ios->vdd);
++		if (host->pins_sleep) {
++			msleep(10);
++			pinctrl_select_state(host->pinctrl, host->pins_default);
++		}
+ 		host->cmdat |= JZ_MMC_CMDAT_INIT;
+ 		clk_prepare_enable(host->clk);
+ 		break;
+@@ -965,6 +993,8 @@
+ 	case MMC_POWER_OFF:
+ 		if (!IS_ERR(mmc->supply.vmmc))
+ 			mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, 0);
++		if (host->pins_sleep)
++			pinctrl_select_state(host->pinctrl, host->pins_sleep);
+ 		if (!IS_ERR(mmc->supply.vqmmc) && host->vqmmc_enabled) {
+ 			regulator_disable(mmc->supply.vqmmc);
+ 			host->vqmmc_enabled = false;
+@@ -990,6 +1020,14 @@
+ 	default:
+ 		break;
+ 	}
++
++	/*
++	 * jz4740_mmc_set_clock_rate() stops the bus clock. Keep it running
++	 * while the card is powered, as most hosts do; SDIO cards may need
++	 * clock cycles before they answer.
++	 */
++	if (ios->clock && ios->power_mode != MMC_POWER_OFF)
++		jz4740_mmc_clock_enable(host, false);
+ }
+ 
+ static void jz4740_mmc_enable_sdio_irq(struct mmc_host *mmc, int enable)
+@@ -1065,6 +1103,16 @@
+ 	if (host->irq < 0)
+ 		return host->irq;
+ 
++	host->pinctrl = devm_pinctrl_get(&pdev->dev);
++	if (!IS_ERR(host->pinctrl)) {
++		host->pins_default = pinctrl_lookup_state(host->pinctrl,
++							  PINCTRL_STATE_DEFAULT);
++		host->pins_sleep = pinctrl_lookup_state(host->pinctrl,
++							PINCTRL_STATE_SLEEP);
++		if (IS_ERR(host->pins_default) || IS_ERR(host->pins_sleep))
++			host->pins_sleep = NULL;
++	}
++
+ 	host->clk = devm_clk_get(&pdev->dev, "mmc");
+ 	if (IS_ERR(host->clk))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(host->clk),

@@ -194,6 +194,22 @@ config ADK_LINUX_KERNEL_ATH6KL
 	help
 	  Driver for Atheros wireless 6KL
 
+config ADK_LINUX_KERNEL_KS7010
+	tristate "KeyStream KS7010 SDIO wireless driver"
+	select ADK_LINUX_KERNEL_WIRELESS
+	select ADK_LINUX_KERNEL_WIRELESS_EXT
+	select ADK_LINUX_KERNEL_FW_LOADER
+	select ADK_LINUX_KERNEL_CRYPTO_MICHAEL_MIC
+	select ADK_PACKAGE_KS7010_FIRMWARE
+	depends on ADK_TARGET_WITH_SDIO
+	depends on ADK_TARGET_LINUX_KERNEL_VERSION_6_18
+	default m if ADK_TARGET_SYSTEM_QI_NANONOTE
+	default n
+	help
+	  Driver for KeyStream KS7010 based SDIO cards, e.g. the
+	  Spectec SDW-821/SDW-823 microSD WLAN cards. Wireless
+	  Extensions only, use wireless-tools or wpa_supplicant -Dwext.
+
 config ADK_LINUX_KERNEL_ATH5K
 	tristate "Atheros 5xxx wireless driver"
 	select ADK_LINUX_KERNEL_MAC80211_LEDS

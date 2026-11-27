@@ -1,0 +1,5 @@
+Needs libusb-1.0 (not 0.1!) to work. Readline is optional.
+To build:
+  make -C src
+If you have readline (recommended):
+  make -C src READLINE=1

@@ -1,0 +1,26 @@
+Build Requirements: libusb-dev, libconfuse-dev
+  This requires a mipsel-openwrt-linux- cross-toolchain in your $PATH.  You
+  can get one by building the development environment from Qi Hardware, for
+  example.
+
+    git://projects.qi-hardware.com/openwrt-xburst.git xburst
+
+  See the Qi Hardware wiki for details.
+
+    http://en.qi-hardware.com/wiki/Building_Software_Image
+
+Build and Installation:
+  git submodule update --init
+  ./autogen.sh
+  ./configure --enable-firmware CROSS_COMPILE=mipsel-openwrt-linux- --prefix=/usr --sysconfdir=/etc
+  make
+  make install
+    *) make install will install the 'usbboot' and 'xbboot' binary to /usr/bin/usbboot,
+       target stages to /usr/share/xburst-tools/, usbboot configure file 'usbboot.cfg'
+       file into /etc/xburst-tools.
+
+Buile Debian Package:
+  Please read debian/README.source
+
+Create Source tarball, for example, version is: '201007'
+  git archive -v --format=tar 201007 | bzip2 > ../xburst-tools_201007.tar.bz2 
